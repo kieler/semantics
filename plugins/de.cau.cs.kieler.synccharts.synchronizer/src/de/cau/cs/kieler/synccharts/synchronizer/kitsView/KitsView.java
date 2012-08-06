@@ -12,6 +12,7 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.synccharts.synchronizer.kitsView;
+// SUPPRESS CHECKSTYLE PREVIOUS PackageName
 
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -35,6 +36,8 @@ import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
  * @kieler.ignore (excluded from review process)
  */
 public class KitsView extends ViewPart {
+    
+    private static final long DELAY = 2000L; 
 
     private EmbeddedXtextEditor kitsEditor;
 
@@ -47,7 +50,7 @@ public class KitsView extends ViewPart {
     private StackLayout layout;
 
     @Override
-    public void createPartControl(Composite parent) {
+    public void createPartControl(final Composite parent) {
         layout = new StackLayout();        
         parent.setLayout(layout);
 
@@ -63,10 +66,10 @@ public class KitsView extends ViewPart {
         actionsEditor = new EmbeddedXtextEditor(parent, actionsInjector);
         
         actionsEditor.getDocument().addModelListener(new IXtextModelListener() {
-            public void modelChanged(XtextResource resource) {
+            public void modelChanged(final XtextResource resource) {
                 synchronizer.cancel();
                 if (!documentHasErrors(actionsEditor.getDocument())) {
-                    synchronizer.schedule(2000L);
+                    synchronizer.schedule(DELAY);
                 }
             }
         });
@@ -74,10 +77,10 @@ public class KitsView extends ViewPart {
         kitsStateEditor = new EmbeddedXtextEditor(parent, kitsStateInjector);
         
         kitsStateEditor.getDocument().addModelListener(new IXtextModelListener() {
-            public void modelChanged(XtextResource resource) {
+            public void modelChanged(final XtextResource resource) {
                 synchronizer.cancel();
                 if (!documentHasErrors(kitsStateEditor.getDocument())) {
-                    synchronizer.schedule(2000L);
+                    synchronizer.schedule(DELAY);
                 }
             }
         });
@@ -86,17 +89,18 @@ public class KitsView extends ViewPart {
         kitsEditor = new EmbeddedXtextEditor(parent, kitsInjector);
         
         kitsEditor.getDocument().addModelListener(new IXtextModelListener() {
-            public void modelChanged(XtextResource resource) {
+            public void modelChanged(final XtextResource resource) {
                 synchronizer.cancel();
                 if (!documentHasErrors(kitsEditor.getDocument())) {
-                    synchronizer.schedule(2000L);
+                    synchronizer.schedule(DELAY);
                 }
             }
         });
 
         layout.topControl = kitsEditor.getViewer().getControl();
         
-        synchronizer = new SyncChartSynchronizerJob("SyncChartsSynchronizer", actionsEditor, kitsEditor, kitsStateEditor);
+        synchronizer = new SyncChartSynchronizerJob("SyncChartsSynchronizer", actionsEditor,
+                kitsEditor, kitsStateEditor);
 
         ((ISelectionService) getSite().getService(ISelectionService.class))
                 .addSelectionListener(synchronizer);
@@ -112,10 +116,9 @@ public class KitsView extends ViewPart {
      */
     private boolean documentHasErrors(final IXtextDocument xtextDocument) {
         return (xtextDocument.readOnly(new IUnitOfWork<Boolean, XtextResource>() {
-            public Boolean exec(XtextResource state) throws Exception {
+            public Boolean exec(final XtextResource state) throws Exception {
                 IParseResult parseResult = state.getParseResult();
                 return !state.getErrors().isEmpty() || parseResult == null
-//                        || !parseResult.getParseErrors().isEmpty();
                         || parseResult.getSyntaxErrors().iterator().hasNext();
             }
         }));

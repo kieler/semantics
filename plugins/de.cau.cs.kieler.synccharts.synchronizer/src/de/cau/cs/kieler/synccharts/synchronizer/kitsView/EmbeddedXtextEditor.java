@@ -1,3 +1,4 @@
+//CHECKSTYLEOFF PackageName|Header|Javadoc|NeedBraces|FinalParameters|LineLength|StaticVariableName|MagicNumber|VisibilityModifier|HiddenField|AvoidNestedBlock
 /**
  * Copyright (c) 2010 ProxiAD
  * 
@@ -10,14 +11,6 @@
  *    Obeo - initial API and implementation
  *    itemis AG - source viewer configuration
  *    Sebastian Zarnekow (itemis AG) - synthetic resource creation and source viewer configuration 
- */
-/*
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
- * further developed by
- *     Christian Schneider
  */
 package de.cau.cs.kieler.synccharts.synchronizer.kitsView;
 
@@ -62,7 +55,6 @@ import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.IVerticalRulerColumn;
 import org.eclipse.jface.text.source.IVerticalRulerExtension;
 import org.eclipse.jface.text.source.OverviewRuler;
-import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -127,685 +119,724 @@ import de.cau.cs.kieler.core.WrappedException;
  */
 public class EmbeddedXtextEditor {
 
-	private static final String XTEXT_UI_FORMAT_ACTION = "org.eclipse.xtext.ui.FormatAction";
-	private static final String XTEXT_UI_TOGGLE_SL_COMMENT_ACTION = "org.eclipse.xtext.ui.ToggleCommentAction";
+    private static final String XTEXT_UI_FORMAT_ACTION = "org.eclipse.xtext.ui.FormatAction";
+    private static final String XTEXT_UI_TOGGLE_SL_COMMENT_ACTION = "org.eclipse.xtext.ui.ToggleCommentAction";
 
-	private Composite fControl;
-	private int fStyle;
-	
-	private XtextSourceViewer fSourceViewer;
-	private XtextResource fResource;
-	private XtextDocument fDocument;
-	
-	@Inject
-	@Named(Constants.FILE_EXTENSIONS)
-	private String fFileExtension;
+    private Composite fControl;
+    private int fStyle;
 
-	private XtextSourceViewerConfiguration fViewerConfiguration;
-	
-	@Inject
-	private HighlightingHelper fHighlightingHelper;
-	
-	@Inject
-	private IResourceSetProvider fResourceSetProvider;
+    private XtextSourceViewer fSourceViewer;
+    private XtextResource fResource;
+    private XtextDocument fDocument;
 
-	@Inject
-	private IGrammarAccess fGrammarAccess;
-	
-	@Inject
-	private XtextSourceViewer.Factory fSourceViewerFactory;
+    @Inject
+    @Named(Constants.FILE_EXTENSIONS)
+    private String fFileExtension;
 
-	@Inject
-	private Provider<XtextSourceViewerConfiguration> fSourceViewerConfigurationProvider;
+    private XtextSourceViewerConfiguration fViewerConfiguration;
 
-	@Inject
-	private Provider<XtextDocument> fDocumentProvider;
+    @Inject
+    private HighlightingHelper fHighlightingHelper;
 
-	@Inject
-	private IResourceValidator fResourceValidator;
+    @Inject
+    private IResourceSetProvider fResourceSetProvider;
 
-	@Inject
-	private IPreferenceStoreAccess fPreferenceStoreAccess;
-	
-	@Inject
-	private ICharacterPairMatcher characterPairMatcher;
-	
-	@Inject(optional = true)
-	private AnnotationPainter.IDrawingStrategy projectionAnnotationDrawingStrategy;
-	
+    @Inject
+    private IGrammarAccess fGrammarAccess;
 
-//	// CHSCH:
-//	@Inject
-//	private IDocumentEditor documentEditor;
-	
-	private IPreferenceStore fPreferenceStore;
+    @Inject
+    private XtextSourceViewer.Factory fSourceViewerFactory;
 
-	/** The editor's font. */
-	private Font fFont;
-	// CHSCH end
-	
-	
-	private EmbeddedFoldingStructureProvider fFoldingStructureProvider;
-	
-	private IOverviewRuler fOverviewRuler;
-	
-	private IAnnotationAccess fAnnotationAccess;
-	
-	/**
-	 * Creates a new EmbeddedXtextEditor.
-	 * 
-	 * @param control the parent composite that will contain the editor
-	 * @param injector the Guice injector to get Xtext configuration elements
-	 * @param job the synchronization job that will be scheduled/rescheduled at each 
-	 * 		modification of the editor text. It may be use to reconcile the content of 
-	 * 		the editor with something else. 
-	 * @param style the SWT style of the {@link SourceViewer} of this editor.
-	 * @param fileExtension the file extension (without the DOT) of the textual DSL to edit
-	 */
-	public EmbeddedXtextEditor(Composite control, Injector injector, int style) {
-		fControl = control;
-		fStyle = style;
-		
-		fAnnotationPreferences = (MarkerAnnotationPreferences) new AbstractDecoratedTextEditor() {
-		}.getAdapter(MarkerAnnotationPreferences.class);
-		// EditorsPlugin.getDefault().getMarkerAnnotationPreferences();
-		
-		fFoldingStructureProvider = new EmbeddedFoldingStructureProvider();
-		
-		injector.injectMembers(this);
-		
-		// CHSCH
-		fPreferenceStore = fPreferenceStoreAccess.getPreferenceStore();
+    @Inject
+    private Provider<XtextSourceViewerConfiguration> fSourceViewerConfigurationProvider;
 
-		createEditor(fControl);
-	}
-	
-	/**
-	 * Creates a new EmbeddedXtextEditor.
-	 * 
-	 * Equivalent to EmbeddedXtextEditor(control, injector, job, fileExtension, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-	 * 
-	 * @param control the parent composite that will contain the editor
-	 * @param injector the Guice injector to get Xtext configuration elements
-	 * @param job the synchronization job that will be scheduled/rescheduled at each 
-	 * 		modification of the editor text. It may be use to reconcile the content of 
-	 * 		the editor with something else. 
-	 * @param fileExtension the file extension (without the DOT) of the textual DSL to edit
-	 * @param fileExtension
-	 */
-	public EmbeddedXtextEditor(Composite control, Injector injector) {
-		this(control, injector, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-	}
+    @Inject
+    private Provider<XtextDocument> fDocumentProvider;
 
-	public Composite getControl() {
-		return fControl;
-	}
-	
-	public XtextSourceViewer getViewer() {
-		return fSourceViewer;
-	}
-	
-	public XtextResource getResource() {
-		return fResource;
-	}
-	
-	public IXtextDocument getDocument() {
-		return fDocument;
-	}
-	
-//	public IDocumentEditor getDocumentEditor() {
-//		return documentEditor;
-//	}
-	
-	/**
-	 * Should be called only once, during initialization. 
-	 * 
-	 * Then, you should call {@link #updateText(String, String, String)};
-	 * 
-	 * @param document
-	 * @param prefix
-	 * @param editablePart
-	 * @param suffix
-	 */
-	protected void setText(XtextDocument document, String editablePart) {
-		document.set(editablePart);
-		fResource = createResource(editablePart);
-		document.setInput(fResource);
-		AnnotationModel annotationModel = new AnnotationModel();
-		if (document instanceof ISynchronizable) {
-			Object lock= ((ISynchronizable)document).getLockObject();
-			if (lock == null) {
-				lock= new Object();
-				((ISynchronizable)document).setLockObject(lock);
-			}
-			((ISynchronizable) annotationModel).setLockObject(lock);
-		}
-		fSourceViewer.setDocument(document, annotationModel);
-	}
-	
-	private XtextResource createResource(String content) {
-		XtextResource result = createResource();
-		try {
-			result.load(new StringInputStream(content, result.getEncoding()), Collections.emptyMap());
-		} catch (Exception e) {
-			throw new WrappedException(e);
-		}
-		return result;
-	}
-	
-	private void createEditor(Composite parent) {
-		createViewer(parent);
-		
-		Control control = fSourceViewer.getControl();
-		GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
-		control.setLayoutData(data);
+    @Inject
+    private IResourceValidator fResourceValidator;
 
-		createActions();
-	}
-	
-	private void createViewer(Composite parent) {
-		createSourceViewer(parent);
-		installFoldingSupport(fSourceViewer);
-		setText(fDocument, "");
-		fHighlightingHelper.install(fViewerConfiguration, fSourceViewer);
-	}
-	
-	/**
-	 * Creates the vertical ruler to be used by this editor.
-	 * Subclasses may re-implement this method.
-	 *
-	 * @return the vertical ruler
-	 */
-	private IVerticalRuler createVerticalRuler() {
-		return new CompositeRuler();
-	}
-	
-	/** The editor's vertical ruler. */
-	private IVerticalRuler fVerticalRuler;
-	
-	/**
-	 * Creates the annotation ruler column. Subclasses may re-implement or extend.
-	 *
-	 * @param ruler the composite ruler that the column will be added
-	 * @return an annotation ruler column
-	 * @since 3.2
-	 */
-	protected IVerticalRulerColumn createAnnotationRulerColumn(CompositeRuler ruler) {
-		return new AnnotationRulerColumn(VERTICAL_RULER_WIDTH, getAnnotationAccess());
-	}
+    @Inject
+    private IPreferenceStoreAccess fPreferenceStoreAccess;
 
-	
-	private void createSourceViewer(Composite parent) {
-		fVerticalRuler = createVerticalRuler();
-		fSourceViewer = fSourceViewerFactory.createSourceViewer(parent, fVerticalRuler, getOverviewRuler(), true, fStyle);
-		fViewerConfiguration = fSourceViewerConfigurationProvider.get();
-		fSourceViewer.configure(fViewerConfiguration);	
-		
-		initializeViewerFont(fSourceViewer);
-		
-		fProjectionSupport = installProjectionSupport(fSourceViewer);
-		
-		// make sure the source viewer decoration support is initialized
-		getSourceViewerDecorationSupport(fSourceViewer);
-		
-		fSourceViewer.getTextWidget().addFocusListener(new SourceViewerFocusListener());
-		
-		fSourceViewerDecorationSupport.install(fPreferenceStoreAccess.getPreferenceStore());
-		parent.addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent e) {
-				fSourceViewerDecorationSupport.dispose();
-			}
-		});
-		fDocument = fDocumentProvider.get();
-		ValidationJob job = new ValidationJob(fResourceValidator, fDocument, 
-				new IValidationIssueProcessor() {
-					private AnnotationIssueProcessor annotationIssueProcessor;
-					
-					public void processIssues(List<Issue> issues, IProgressMonitor monitor) {
-						if (annotationIssueProcessor == null) {
-							annotationIssueProcessor = new AnnotationIssueProcessor(fDocument, 
-									fSourceViewer.getAnnotationModel(), 
-									new IssueResolutionProvider.NullImpl());
-						}
-						if (annotationIssueProcessor != null)
-							annotationIssueProcessor.processIssues(issues, monitor);						
-					}
-				}, CheckMode.FAST_ONLY);
-		fDocument.setValidationJob(job);
-	}
-	
-	/**
-	 * Initializes the given viewer's font.
-	 *
-	 * @param viewer the viewer
-	 * @since 2.0
-	 */
-	private void initializeViewerFont(ISourceViewer viewer) {
+    @Inject
+    private ICharacterPairMatcher characterPairMatcher;
 
-		boolean isSharedFont= true;
-		Font font= null;
+    @Inject(optional = true)
+    private AnnotationPainter.IDrawingStrategy projectionAnnotationDrawingStrategy;
 
-		if (fPreferenceStore != null) {
-			// Backward compatibility
-			if (fPreferenceStore.contains(JFaceResources.TEXT_FONT) && !fPreferenceStore.isDefault(JFaceResources.TEXT_FONT)) {
-				FontData data= PreferenceConverter.getFontData(fPreferenceStore, JFaceResources.TEXT_FONT);
+    // // CHSCH:
+    // @Inject
+    // private IDocumentEditor documentEditor;
 
-				if (data != null) {
-					isSharedFont= false;
-					font= new Font(viewer.getTextWidget().getDisplay(), data);
-				}
-			}
-		}
-		if (font == null)
-			font= JFaceResources.getTextFont();
+    private IPreferenceStore fPreferenceStore;
 
-		if (!font.equals(fSourceViewer.getTextWidget().getFont())) {
-			setFont(viewer, font);
+    /** The editor's font. */
+    private Font fFont;
+    // CHSCH end
 
-			// disposeFont();
-			{
-				if (fFont != null) {
-					fFont.dispose();
-					fFont = null;
-				}
-			}
-			
-			if (!isSharedFont)
-				fFont= font;
-		} else if (!isSharedFont) {
-			font.dispose();
-		}
-	}
+    private EmbeddedFoldingStructureProvider fFoldingStructureProvider;
 
-	/**
-	 * Sets the font for the given viewer sustaining selection and scroll position.
-	 *
-	 * @param sourceViewer the source viewer
-	 * @param font the font
-	 * @since 2.0
-	 */
-	private void setFont(ISourceViewer sourceViewer, Font font) {
-		if (sourceViewer.getDocument() != null) {
+    private IOverviewRuler fOverviewRuler;
 
-			ISelectionProvider provider= sourceViewer.getSelectionProvider();
-			ISelection selection= provider.getSelection();
-			int topIndex= sourceViewer.getTopIndex();
+    private IAnnotationAccess fAnnotationAccess;
 
-			StyledText styledText= sourceViewer.getTextWidget();
-			Control parent= styledText;
-			if (sourceViewer instanceof ITextViewerExtension) {
-				ITextViewerExtension extension= (ITextViewerExtension) sourceViewer;
-				parent= extension.getControl();
-			}
+    /**
+     * Creates a new EmbeddedXtextEditor.
+     * 
+     * @param control
+     *            the parent composite that will contain the editor
+     * @param injector
+     *            the Guice injector to get Xtext configuration elements
+     * @param job
+     *            the synchronization job that will be scheduled/rescheduled at each modification of
+     *            the editor text. It may be use to reconcile the content of the editor with
+     *            something else.
+     * @param style
+     *            the SWT style of the {@link SourceViewer} of this editor.
+     * @param fileExtension
+     *            the file extension (without the DOT) of the textual DSL to edit
+     */
+    public EmbeddedXtextEditor(Composite control, Injector injector, int style) {
+        fControl = control;
+        fStyle = style;
 
-			parent.setRedraw(false);
+        fAnnotationPreferences = (MarkerAnnotationPreferences) new AbstractDecoratedTextEditor() {
+        } .getAdapter(MarkerAnnotationPreferences.class);
+        // EditorsPlugin.getDefault().getMarkerAnnotationPreferences();
 
-			styledText.setFont(font);
+        fFoldingStructureProvider = new EmbeddedFoldingStructureProvider();
 
-			if (fVerticalRuler instanceof IVerticalRulerExtension) {
-				IVerticalRulerExtension e= (IVerticalRulerExtension) fVerticalRuler;
-				e.setFont(font);
-			}
+        injector.injectMembers(this);
 
-			provider.setSelection(selection);
-			sourceViewer.setTopIndex(topIndex);
+        // CHSCH
+        fPreferenceStore = fPreferenceStoreAccess.getPreferenceStore();
 
-			if (parent instanceof Composite) {
-				Composite composite= (Composite) parent;
-				composite.layout(true);
-			}
+        createEditor(fControl);
+    }
 
-			parent.setRedraw(true);
+    /**
+     * Creates a new EmbeddedXtextEditor.
+     * 
+     * Equivalent to EmbeddedXtextEditor(control, injector, job, fileExtension, SWT.BORDER |
+     * SWT.V_SCROLL | SWT.H_SCROLL);
+     * 
+     * @param control
+     *            the parent composite that will contain the editor
+     * @param injector
+     *            the Guice injector to get Xtext configuration elements
+     * @param job
+     *            the synchronization job that will be scheduled/rescheduled at each modification of
+     *            the editor text. It may be use to reconcile the content of the editor with
+     *            something else.
+     * @param fileExtension
+     *            the file extension (without the DOT) of the textual DSL to edit
+     * @param fileExtension
+     */
+    public EmbeddedXtextEditor(Composite control, Injector injector) {
+        this(control, injector, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+    }
 
+    public Composite getControl() {
+        return fControl;
+    }
 
-		} else {
+    public XtextSourceViewer getViewer() {
+        return fSourceViewer;
+    }
 
-			StyledText styledText= sourceViewer.getTextWidget();
-			styledText.setFont(font);
+    public XtextResource getResource() {
+        return fResource;
+    }
 
-			if (fVerticalRuler instanceof IVerticalRulerExtension) {
-				IVerticalRulerExtension e= (IVerticalRulerExtension) fVerticalRuler;
-				e.setFont(font);
-			}
-		}
-	}
+    public IXtextDocument getDocument() {
+        return fDocument;
+    }
 
-	private ProjectionSupport fProjectionSupport;
-	
-	private static final String ERROR_ANNOTATION_TYPE = "org.eclipse.xtext.ui.editor.error";
-	private static final String WARNING_ANNOTATION_TYPE = "org.eclipse.xtext.ui.editor.warning";
-	
-	private ProjectionSupport installProjectionSupport(ProjectionViewer projectionViewer) {
-		ProjectionSupport projectionSupport = new ProjectionSupport(projectionViewer, getAnnotationAccess(),
-				getSharedColors());
-		projectionSupport.addSummarizableAnnotationType(WARNING_ANNOTATION_TYPE); //$NON-NLS-1$
-		projectionSupport.addSummarizableAnnotationType(ERROR_ANNOTATION_TYPE); //$NON-NLS-1$
-		projectionSupport.setAnnotationPainterDrawingStrategy(projectionAnnotationDrawingStrategy);
-		projectionSupport.install();
-		return projectionSupport;
-	}
-	
-	/**
-	 * Helper for managing the decoration support of this editor's viewer.
-	 *
-	 * <p>This field should not be referenced by subclasses. It is <code>protected</code> for API
-	 * compatibility reasons and will be made <code>private</code> soon. Use
-	 * {@link #getSourceViewerDecorationSupport(ISourceViewer)} instead.</p>
-	 */
-	private SourceViewerDecorationSupport fSourceViewerDecorationSupport;
-	
-	private void installFoldingSupport(ProjectionViewer projectionViewer) {
-		fFoldingStructureProvider.install(this, projectionViewer);
-		projectionViewer.doOperation(ProjectionViewer.TOGGLE);
-		fFoldingStructureProvider.initialize();
-	}
-	
-	/**
-	 * Returns the source viewer decoration support.
-	 *
-	 * @param viewer the viewer for which to return a decoration support
-	 * @return the source viewer decoration support
-	 */
-	private SourceViewerDecorationSupport getSourceViewerDecorationSupport(ISourceViewer viewer) {
-		if (fSourceViewerDecorationSupport == null) {
-			fSourceViewerDecorationSupport= new SourceViewerDecorationSupport(viewer, getOverviewRuler(), getAnnotationAccess(), getSharedColors());
-			configureSourceViewerDecorationSupport(fSourceViewerDecorationSupport);
-		}
-		return fSourceViewerDecorationSupport;
-	}
-	
-	/**
-	 * Configures the decoration support for this editor's source viewer. Subclasses may override this
-	 * method, but should call their superclass' implementation at some point.
-	 *
-	 * @param support the decoration support to configure
-	 */
-	private void configureSourceViewerDecorationSupport(SourceViewerDecorationSupport support) {
+    // public IDocumentEditor getDocumentEditor() {
+    // return documentEditor;
+    // }
 
-		Iterator<AnnotationPreference> e = Iterators.filter(fAnnotationPreferences.getAnnotationPreferences().iterator(), AnnotationPreference.class);
-		while (e.hasNext())
-			support.setAnnotationPreference((AnnotationPreference) e.next());
+    /**
+     * Should be called only once, during initialization.
+     * 
+     * Then, you should call {@link #updateText(String, String, String)};
+     * 
+     * @param document
+     * @param prefix
+     * @param editablePart
+     * @param suffix
+     */
+    protected void setText(XtextDocument document, String editablePart) {
+        document.set(editablePart);
+        fResource = createResource(editablePart);
+        document.setInput(fResource);
+        AnnotationModel annotationModel = new AnnotationModel();
+        if (document instanceof ISynchronizable) {
+            Object lock = ((ISynchronizable) document).getLockObject();
+            if (lock == null) {
+                lock = new Object();
+                ((ISynchronizable) document).setLockObject(lock);
+            }
+            ((ISynchronizable) annotationModel).setLockObject(lock);
+        }
+        fSourceViewer.setDocument(document, annotationModel);
+    }
 
-		support.setCursorLinePainterPreferenceKeys(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_CURRENT_LINE, AbstractDecoratedTextEditorPreferenceConstants.EDITOR_CURRENT_LINE_COLOR);
-		support.setMarginPainterPreferenceKeys(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN, AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN_COLOR, AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN_COLUMN);
-//		support.setSymbolicFontName(getFontPropertyPreferenceKey());
-		
-		if (characterPairMatcher != null) {
-			support.setCharacterPairMatcher(characterPairMatcher);
-			support.setMatchingCharacterPainterPreferenceKeys(BracketMatchingPreferencesInitializer.IS_ACTIVE_KEY,
-					BracketMatchingPreferencesInitializer.COLOR_KEY);
-		}
-	}
-	
-	/**
-	 * Returns the overview ruler.
-	 *
-	 * @return the overview ruler
-	 */
-	private IOverviewRuler getOverviewRuler() {
-		if (fOverviewRuler == null)
-			fOverviewRuler= createOverviewRuler(getSharedColors());
-		return fOverviewRuler;
-	}
-	
-	/** The width of the vertical ruler. */
-	private static final int VERTICAL_RULER_WIDTH= 12;
-	
-	/**
-	 * Returns the annotation access.
-	 *
-	 * @return the annotation access
-	 */
-	private IAnnotationAccess getAnnotationAccess() {
-		if (fAnnotationAccess == null)
-			fAnnotationAccess= createAnnotationAccess();
-		return fAnnotationAccess;
-	}
-	
-	/**
-	 * Creates the annotation access for this editor.
-	 *
-	 * @return the created annotation access
-	 */
-	private IAnnotationAccess createAnnotationAccess() {
-		return new DefaultMarkerAnnotationAccess() {
-			@Override
-			public int getLayer(Annotation annotation) {
-				if (annotation.isMarkedDeleted()) {
-					return IAnnotationAccessExtension.DEFAULT_LAYER;
-				}
-				return super.getLayer(annotation);
-			}
-		};
-	}
-	
-	/**
-	 * The annotation preferences.
-	 */
-	private MarkerAnnotationPreferences fAnnotationPreferences;
-	
-	private IOverviewRuler createOverviewRuler(ISharedTextColors sharedColors) {
-		IOverviewRuler ruler= new OverviewRuler(getAnnotationAccess(), VERTICAL_RULER_WIDTH, sharedColors);
+    private XtextResource createResource(String content) {
+        XtextResource result = createResource();
+        try {
+            result.load(new StringInputStream(content, result.getEncoding()),
+                    Collections.emptyMap());
+        } catch (Exception e) {
+            throw new WrappedException(e);
+        }
+        return result;
+    }
 
-		Iterator<?> e= fAnnotationPreferences.getAnnotationPreferences().iterator();
-		while (e.hasNext()) {
-			AnnotationPreference preference= (AnnotationPreference) e.next();
-			if (preference.contributesToHeader())
-				ruler.addHeaderAnnotationType(preference.getAnnotationType());
-		}
-		return ruler;
-	}
-	
-	private ISharedTextColors getSharedColors() {
-		return EditorsUI.getSharedTextColors();
-	}
-	
-	/**
-	 * Updates the text of this editor with the given String
-	 * 
-	 * @param model
-	 */
-	public void update(String model) {
-		IDocument document = fSourceViewer.getDocument();
-		
-		fSourceViewer.setRedraw(false);
-		document.set(model);
-		fSourceViewer.setVisibleRegion(0, model.length());
-		fSourceViewer.setRedraw(true);
-	}
-	
-	/**
-	 * Updates the text of this editor with the given String or the 
-	 * serialized form of the EObject if the semantic model of the 
-	 * String does not contain any error and is different from the 
-	 * given EObject.
-	 * 
-	 * @param eObject
-	 * @param asString
-	 */
-	public void update(EObject eObject, String asString) {
-		if (eObject != null) {
-			EObject asStringEObject = null;
-			XtextResource asStringResource = (XtextResource) fResourceSetProvider.get(null).createResource(URI.createURI("asStringResource." + fFileExtension));
-			try {
-				asStringResource.load(new StringInputStream(asString), Collections.emptyMap());
-				if (!asStringResource.getContents().isEmpty()) {
-					asStringEObject = asStringResource.getContents().get(0);
-				}
-			} catch (IOException e) {
-				// ignore, will set the string to the serialization of the given eObject
-			}
+    private void createEditor(Composite parent) {
+        createViewer(parent);
 
-			try {
-				EcoreUtil.resolveAll(asStringResource);
-			} catch (Exception e) {
-				// ignore
-			}
-			
-//                        if (!asStringResource.getErrors().isEmpty() || (asStringResource.getParseResult() != null && !asStringResource.getParseResult().getParseErrors().isEmpty())) {
-                        if (!asStringResource.getErrors().isEmpty() || (asStringResource.getParseResult() != null && !asStringResource.getParseResult().getSyntaxErrors().iterator().hasNext())) {
-				// if there are parsing errors in the saved string, then we update with it
-				update(asString);
-			} else if (asStringEObject != null) {
-				try {
-					Resource copyResource = (XtextResource) fResourceSetProvider.get(null).createResource(URI.createURI("copyResource." + fFileExtension));
-					
-					try {
-						EObject copyEObject = EcoreUtil.copy(eObject);
-						copyResource.getContents().add(copyEObject);
-						EcoreUtil.resolveAll(copyResource);
-						if (!equals(copyEObject, asStringEObject)) {
-//							String model = getResource().getSerializer().serialize(copyEObject, SaveOptions.newBuilder().noValidation().format().getOptions());
-							update(asString); // FIXME: should update with the serialized form of the copyEObject but throw RuntimeException!!! 
-						} else {
-							// if there is no error and the content are equals, then we also update with the string
-							update(asString);
-						}
-					} catch (Exception e) {
-						update(asString);
-					}
+        Control control = fSourceViewer.getControl();
+        GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
+        control.setLayoutData(data);
 
-					copyResource.unload();
-					copyResource.getResourceSet().getResources().remove(copyResource);
-				} catch (Exception e) {
-					update(asString);
-				}
-			} else {
-				update("");
-			}
-			
-			asStringResource.unload();
-			asStringResource.getResourceSet().getResources().remove(asStringResource);
-		} else {
-			update("");
-		}
-	}
-	
-	private void createActions() {
-		{
-			TextViewerAction action = new TextViewerAction(fSourceViewer, ISourceViewer.CONTENTASSIST_PROPOSALS);
-			action.setText("Content Assist");
-			setAction(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS, action);
-		}
-		
-		if (fViewerConfiguration.getContentFormatter(fSourceViewer) != null) {
-			TextViewerAction action = new TextViewerAction(fSourceViewer, ISourceViewer.FORMAT);
-			action.setText("Format");
-			setAction(XTEXT_UI_FORMAT_ACTION, action);
-		}
+        createActions();
+    }
 
-		{
-			ToggleSLCommentAction action = new ToggleSLCommentAction(fSourceViewer); //$NON-NLS-1$
-			setAction(XTEXT_UI_TOGGLE_SL_COMMENT_ACTION, action);
-			action.configure(fSourceViewer, fViewerConfiguration);
-		}
-	}
-	
-	private void setAction(final String actionID, final IAction action) {
-		if (action.getId() == null)
-			action.setId(actionID); // make sure the action ID has been set
-		
-		fActionHandlers.add(new ActionHandler(action));
-	}
-	
-	private List<ActionHandler> fActionHandlers = Lists.newArrayList();
-	
-	/**
-	 * Source viewer focus listener that activates/deactivates action handlers on focus state change.
-	 * 
-	 * @author Mikaël Barbero
-	 *
-	 */
-	private final class SourceViewerFocusListener implements FocusListener {
-//		private static final String EMBEDEDXTEXT_EDITOR_CONTEXT = "org.eclipselabs.xtfo.embededxtextEditor.context"; //$NON-NLS-1$
-		
-		private final Expression fExpression;
-		private final List<IHandlerActivation> fHandlerActivations;
-//		private IContextActivation fContextActivation;
-		
-		public SourceViewerFocusListener() {
-			fExpression = new ActiveShellExpression(fSourceViewer.getControl().getShell());
-			fHandlerActivations = Lists.newArrayList();
-			
-			fSourceViewer.getControl().addDisposeListener(new DisposeListener() {
-				public void widgetDisposed(DisposeEvent e) {
-					IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench().getAdapter(IHandlerService.class);
-					handlerService.deactivateHandlers(fHandlerActivations);
-					fHandlerActivations.clear();
-				}
-			});
-		}
-		
-		public void focusLost(FocusEvent e) {
-//			IContextService contextService = (IContextService) PlatformUI.getWorkbench().
-//					getActiveWorkbenchWindow().
-//					getActivePage().
-//					getActiveEditor().
-//					getSite().
-//					getService(IContextService.class);
-//			contextService.deactivateContext(fContextActivation);
-			
-			IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench().getAdapter(IHandlerService.class);
-			handlerService.deactivateHandlers(fHandlerActivations);
-		}
+    private void createViewer(Composite parent) {
+        createSourceViewer(parent);
+        installFoldingSupport(fSourceViewer);
+        setText(fDocument, "");
+        fHighlightingHelper.install(fViewerConfiguration, fSourceViewer);
+    }
 
-		public void focusGained(FocusEvent e) {
-//			IContextService contextService = (IContextService) PlatformUI.getWorkbench().
-//					getActiveWorkbenchWindow().
-//					getActivePage().
-//					getActiveEditor().
-//					getSite().
-//					getService(IContextService.class);
-//			fContextActivation = contextService.activateContext(EMBEDEDXTEXT_EDITOR_CONTEXT);
-	
-			IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench().getAdapter(IHandlerService.class);
-			
-			for (ActionHandler actionHandler : fActionHandlers) {
-				fHandlerActivations.add(handlerService.activateHandler(actionHandler.getAction().getId(), actionHandler, fExpression));
-			}			
-		}
-	}
-	
-	public XtextResource createResource() {
-		ResourceSet resourceSet = fResourceSetProvider.get(null);
-		XtextResource result = (XtextResource) resourceSet.createResource(
-				URI.createURI(fGrammarAccess.getGrammar().getName() + "." + fFileExtension));
-		return result;
-	}
-		
-	private static boolean equals(EObject expected, EObject actual) {
-		Map<String, Object> options = ImmutableMap.<String, Object> builder().put(MatchOptions.OPTION_IGNORE_XMI_ID, Boolean.TRUE).build();
-	    MatchModel match = null;
-	    try {
-	        match = MatchService.doMatch(expected, actual, options);
-	        DiffModel diff = DiffService.doDiff(match, false);
-	        return diff.getDifferences().isEmpty();
-	    }
-	    catch (InterruptedException e) {
-	        throw new AssertionError(e);
-	    }
-	}
-	
-	
-	/**
-	 * @author chsch
-	 */
-	public void dispose() {
-		if (fSourceViewer.getTextWidget() != null) {
-			fSourceViewer.getTextWidget().dispose();
-		}
-		fProjectionSupport.dispose();
-		fHighlightingHelper.uninstall();
-	}
-	
-	
-	/**
-	 * @author chsch
-	 */
-	public void bringOnTop() {
-	    if (fControl.getLayout() instanceof StackLayout) {
-	        ((StackLayout) fControl.getLayout()).topControl = getViewer().getControl();
-	        getControl().layout();
-	    }
-	}
+    /**
+     * Creates the vertical ruler to be used by this editor. Subclasses may re-implement this
+     * method.
+     * 
+     * @return the vertical ruler
+     */
+    private IVerticalRuler createVerticalRuler() {
+        return new CompositeRuler();
+    }
+
+    /** The editor's vertical ruler. */
+    private IVerticalRuler fVerticalRuler;
+
+    /**
+     * Creates the annotation ruler column. Subclasses may re-implement or extend.
+     * 
+     * @param ruler
+     *            the composite ruler that the column will be added
+     * @return an annotation ruler column
+     * @since 3.2
+     */
+    protected IVerticalRulerColumn createAnnotationRulerColumn(CompositeRuler ruler) {
+        return new AnnotationRulerColumn(VERTICAL_RULER_WIDTH, getAnnotationAccess());
+    }
+
+    private void createSourceViewer(Composite parent) {
+        fVerticalRuler = createVerticalRuler();
+        fSourceViewer = fSourceViewerFactory.createSourceViewer(parent, fVerticalRuler,
+                getOverviewRuler(), true, fStyle);
+        fViewerConfiguration = fSourceViewerConfigurationProvider.get();
+        fSourceViewer.configure(fViewerConfiguration);
+
+        initializeViewerFont(fSourceViewer);
+
+        fProjectionSupport = installProjectionSupport(fSourceViewer);
+
+        // make sure the source viewer decoration support is initialized
+        getSourceViewerDecorationSupport(fSourceViewer);
+
+        fSourceViewer.getTextWidget().addFocusListener(new SourceViewerFocusListener());
+
+        fSourceViewerDecorationSupport.install(fPreferenceStoreAccess.getPreferenceStore());
+        parent.addDisposeListener(new DisposeListener() {
+            public void widgetDisposed(DisposeEvent e) {
+                fSourceViewerDecorationSupport.dispose();
+            }
+        });
+        fDocument = fDocumentProvider.get();
+        ValidationJob job = new ValidationJob(fResourceValidator, fDocument,
+                new IValidationIssueProcessor() {
+                    private AnnotationIssueProcessor annotationIssueProcessor;
+
+                    public void processIssues(List<Issue> issues, IProgressMonitor monitor) {
+                        if (annotationIssueProcessor == null) {
+                            annotationIssueProcessor = new AnnotationIssueProcessor(fDocument,
+                                    fSourceViewer.getAnnotationModel(),
+                                    new IssueResolutionProvider.NullImpl());
+                        }
+                        if (annotationIssueProcessor != null)
+                            annotationIssueProcessor.processIssues(issues, monitor);
+                    }
+                }, CheckMode.FAST_ONLY);
+        fDocument.setValidationJob(job);
+    }
+
+    /**
+     * Initializes the given viewer's font.
+     * 
+     * @param viewer
+     *            the viewer
+     * @since 2.0
+     */
+    private void initializeViewerFont(ISourceViewer viewer) {
+
+        boolean isSharedFont = true;
+        Font font = null;
+
+        if (fPreferenceStore != null) {
+            // Backward compatibility
+            if (fPreferenceStore.contains(JFaceResources.TEXT_FONT)
+                    && !fPreferenceStore.isDefault(JFaceResources.TEXT_FONT)) {
+                FontData data = PreferenceConverter.getFontData(fPreferenceStore,
+                        JFaceResources.TEXT_FONT);
+
+                if (data != null) {
+                    isSharedFont = false;
+                    font = new Font(viewer.getTextWidget().getDisplay(), data);
+                }
+            }
+        }
+        if (font == null)
+            font = JFaceResources.getTextFont();
+
+        if (!font.equals(fSourceViewer.getTextWidget().getFont())) {
+            setFont(viewer, font);
+
+            // disposeFont();
+            {
+                if (fFont != null) {
+                    fFont.dispose();
+                    fFont = null;
+                }
+            }
+
+            if (!isSharedFont)
+                fFont = font;
+        } else if (!isSharedFont) {
+            font.dispose();
+        }
+    }
+
+    /**
+     * Sets the font for the given viewer sustaining selection and scroll position.
+     * 
+     * @param sourceViewer
+     *            the source viewer
+     * @param font
+     *            the font
+     * @since 2.0
+     */
+    private void setFont(ISourceViewer sourceViewer, Font font) {
+        if (sourceViewer.getDocument() != null) {
+
+            ISelectionProvider provider = sourceViewer.getSelectionProvider();
+            ISelection selection = provider.getSelection();
+            int topIndex = sourceViewer.getTopIndex();
+
+            StyledText styledText = sourceViewer.getTextWidget();
+            Control parent = styledText;
+            if (sourceViewer instanceof ITextViewerExtension) {
+                ITextViewerExtension extension = (ITextViewerExtension) sourceViewer;
+                parent = extension.getControl();
+            }
+
+            parent.setRedraw(false);
+
+            styledText.setFont(font);
+
+            if (fVerticalRuler instanceof IVerticalRulerExtension) {
+                IVerticalRulerExtension e = (IVerticalRulerExtension) fVerticalRuler;
+                e.setFont(font);
+            }
+
+            provider.setSelection(selection);
+            sourceViewer.setTopIndex(topIndex);
+
+            if (parent instanceof Composite) {
+                Composite composite = (Composite) parent;
+                composite.layout(true);
+            }
+
+            parent.setRedraw(true);
+
+        } else {
+
+            StyledText styledText = sourceViewer.getTextWidget();
+            styledText.setFont(font);
+
+            if (fVerticalRuler instanceof IVerticalRulerExtension) {
+                IVerticalRulerExtension e = (IVerticalRulerExtension) fVerticalRuler;
+                e.setFont(font);
+            }
+        }
+    }
+
+    private ProjectionSupport fProjectionSupport;
+
+    private static final String ERROR_ANNOTATION_TYPE = "org.eclipse.xtext.ui.editor.error";
+    private static final String WARNING_ANNOTATION_TYPE = "org.eclipse.xtext.ui.editor.warning";
+
+    private ProjectionSupport installProjectionSupport(ProjectionViewer projectionViewer) {
+        ProjectionSupport projectionSupport = new ProjectionSupport(projectionViewer,
+                getAnnotationAccess(), getSharedColors());
+        projectionSupport.addSummarizableAnnotationType(WARNING_ANNOTATION_TYPE); //$NON-NLS-1$
+        projectionSupport.addSummarizableAnnotationType(ERROR_ANNOTATION_TYPE); //$NON-NLS-1$
+        projectionSupport.setAnnotationPainterDrawingStrategy(projectionAnnotationDrawingStrategy);
+        projectionSupport.install();
+        return projectionSupport;
+    }
+
+    /**
+     * Helper for managing the decoration support of this editor's viewer.
+     * 
+     * <p>
+     * This field should not be referenced by subclasses. It is <code>protected</code> for API
+     * compatibility reasons and will be made <code>private</code> soon. Use
+     * {@link #getSourceViewerDecorationSupport(ISourceViewer)} instead.
+     * </p>
+     */
+    private SourceViewerDecorationSupport fSourceViewerDecorationSupport;
+
+    private void installFoldingSupport(ProjectionViewer projectionViewer) {
+        fFoldingStructureProvider.install(this, projectionViewer);
+        projectionViewer.doOperation(ProjectionViewer.TOGGLE);
+        fFoldingStructureProvider.initialize();
+    }
+
+    /**
+     * Returns the source viewer decoration support.
+     * 
+     * @param viewer
+     *            the viewer for which to return a decoration support
+     * @return the source viewer decoration support
+     */
+    private SourceViewerDecorationSupport getSourceViewerDecorationSupport(ISourceViewer viewer) {
+        if (fSourceViewerDecorationSupport == null) {
+            fSourceViewerDecorationSupport = new SourceViewerDecorationSupport(viewer,
+                    getOverviewRuler(), getAnnotationAccess(), getSharedColors());
+            configureSourceViewerDecorationSupport(fSourceViewerDecorationSupport);
+        }
+        return fSourceViewerDecorationSupport;
+    }
+
+    /**
+     * Configures the decoration support for this editor's source viewer. Subclasses may override
+     * this method, but should call their superclass' implementation at some point.
+     * 
+     * @param support
+     *            the decoration support to configure
+     */
+    private void configureSourceViewerDecorationSupport(SourceViewerDecorationSupport support) {
+
+        Iterator<AnnotationPreference> e = Iterators.filter(fAnnotationPreferences
+                .getAnnotationPreferences().iterator(), AnnotationPreference.class);
+        while (e.hasNext())
+            support.setAnnotationPreference((AnnotationPreference) e.next());
+
+        support.setCursorLinePainterPreferenceKeys(
+                AbstractDecoratedTextEditorPreferenceConstants.EDITOR_CURRENT_LINE,
+                AbstractDecoratedTextEditorPreferenceConstants.EDITOR_CURRENT_LINE_COLOR);
+        support.setMarginPainterPreferenceKeys(
+                AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN,
+                AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN_COLOR,
+                AbstractDecoratedTextEditorPreferenceConstants.EDITOR_PRINT_MARGIN_COLUMN);
+        // support.setSymbolicFontName(getFontPropertyPreferenceKey());
+
+        if (characterPairMatcher != null) {
+            support.setCharacterPairMatcher(characterPairMatcher);
+            support.setMatchingCharacterPainterPreferenceKeys(
+                    BracketMatchingPreferencesInitializer.IS_ACTIVE_KEY,
+                    BracketMatchingPreferencesInitializer.COLOR_KEY);
+        }
+    }
+
+    /**
+     * Returns the overview ruler.
+     * 
+     * @return the overview ruler
+     */
+    private IOverviewRuler getOverviewRuler() {
+        if (fOverviewRuler == null)
+            fOverviewRuler = createOverviewRuler(getSharedColors());
+        return fOverviewRuler;
+    }
+
+    /** The width of the vertical ruler. */
+    private static final int VERTICAL_RULER_WIDTH = 12;
+
+    /**
+     * Returns the annotation access.
+     * 
+     * @return the annotation access
+     */
+    private IAnnotationAccess getAnnotationAccess() {
+        if (fAnnotationAccess == null)
+            fAnnotationAccess = createAnnotationAccess();
+        return fAnnotationAccess;
+    }
+
+    /**
+     * Creates the annotation access for this editor.
+     * 
+     * @return the created annotation access
+     */
+    private IAnnotationAccess createAnnotationAccess() {
+        return new DefaultMarkerAnnotationAccess() {
+            @Override
+            public int getLayer(Annotation annotation) {
+                if (annotation.isMarkedDeleted()) {
+                    return IAnnotationAccessExtension.DEFAULT_LAYER;
+                }
+                return super.getLayer(annotation);
+            }
+        };
+    }
+
+    /**
+     * The annotation preferences.
+     */
+    private MarkerAnnotationPreferences fAnnotationPreferences;
+
+    private IOverviewRuler createOverviewRuler(ISharedTextColors sharedColors) {
+        IOverviewRuler ruler = new OverviewRuler(getAnnotationAccess(), VERTICAL_RULER_WIDTH,
+                sharedColors);
+
+        Iterator<?> e = fAnnotationPreferences.getAnnotationPreferences().iterator();
+        while (e.hasNext()) {
+            AnnotationPreference preference = (AnnotationPreference) e.next();
+            if (preference.contributesToHeader())
+                ruler.addHeaderAnnotationType(preference.getAnnotationType());
+        }
+        return ruler;
+    }
+
+    private ISharedTextColors getSharedColors() {
+        return EditorsUI.getSharedTextColors();
+    }
+
+    /**
+     * Updates the text of this editor with the given String
+     * 
+     * @param model
+     */
+    public void update(String model) {
+        IDocument document = fSourceViewer.getDocument();
+
+        fSourceViewer.setRedraw(false);
+        document.set(model);
+        fSourceViewer.setVisibleRegion(0, model.length());
+        fSourceViewer.setRedraw(true);
+    }
+
+    /**
+     * Updates the text of this editor with the given String or the serialized form of the EObject
+     * if the semantic model of the String does not contain any error and is different from the
+     * given EObject.
+     * 
+     * @param eObject
+     * @param asString
+     */
+    public void update(EObject eObject, String asString) {
+        if (eObject != null) {
+            EObject asStringEObject = null;
+            XtextResource asStringResource = (XtextResource) fResourceSetProvider.get(null)
+                    .createResource(URI.createURI("asStringResource." + fFileExtension));
+            try {
+                asStringResource.load(new StringInputStream(asString), Collections.emptyMap());
+                if (!asStringResource.getContents().isEmpty()) {
+                    asStringEObject = asStringResource.getContents().get(0);
+                }
+            } catch (IOException e) {
+                // ignore, will set the string to the serialization of the given eObject
+            }
+
+            try {
+                EcoreUtil.resolveAll(asStringResource);
+            } catch (Exception e) {
+                // ignore
+            }
+
+            // if (!asStringResource.getErrors().isEmpty() || (asStringResource.getParseResult() !=
+            // null && !asStringResource.getParseResult().getParseErrors().isEmpty())) {
+            if (!asStringResource.getErrors().isEmpty()
+                    || (asStringResource.getParseResult() != null && !asStringResource
+                            .getParseResult().getSyntaxErrors().iterator().hasNext())) {
+                // if there are parsing errors in the saved string, then we update with it
+                update(asString);
+            } else if (asStringEObject != null) {
+                try {
+                    Resource copyResource = (XtextResource) fResourceSetProvider.get(null)
+                            .createResource(URI.createURI("copyResource." + fFileExtension));
+
+                    try {
+                        EObject copyEObject = EcoreUtil.copy(eObject);
+                        copyResource.getContents().add(copyEObject);
+                        EcoreUtil.resolveAll(copyResource);
+                        if (!equals(copyEObject, asStringEObject)) {
+                            // String model = getResource().getSerializer().serialize(copyEObject,
+                            // SaveOptions.newBuilder().noValidation().format().getOptions());
+                            update(asString); // FIXME: should update with the serialized form of
+                                              // the copyEObject but throw RuntimeException!!!
+                        } else {
+                            // if there is no error and the content are equals, then we also update
+                            // with the string
+                            update(asString);
+                        }
+                    } catch (Exception e) {
+                        update(asString);
+                    }
+
+                    copyResource.unload();
+                    copyResource.getResourceSet().getResources().remove(copyResource);
+                } catch (Exception e) {
+                    update(asString);
+                }
+            } else {
+                update("");
+            }
+
+            asStringResource.unload();
+            asStringResource.getResourceSet().getResources().remove(asStringResource);
+        } else {
+            update("");
+        }
+    }
+
+    private void createActions() {
+        {
+            TextViewerAction action = new TextViewerAction(fSourceViewer,
+                    ISourceViewer.CONTENTASSIST_PROPOSALS);
+            action.setText("Content Assist");
+            setAction(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS, action);
+        }
+
+        if (fViewerConfiguration.getContentFormatter(fSourceViewer) != null) {
+            TextViewerAction action = new TextViewerAction(fSourceViewer, ISourceViewer.FORMAT);
+            action.setText("Format");
+            setAction(XTEXT_UI_FORMAT_ACTION, action);
+        }
+
+        {
+            ToggleSLCommentAction action = new ToggleSLCommentAction(fSourceViewer); //$NON-NLS-1$
+            setAction(XTEXT_UI_TOGGLE_SL_COMMENT_ACTION, action);
+            action.configure(fSourceViewer, fViewerConfiguration);
+        }
+    }
+
+    private void setAction(final String actionID, final IAction action) {
+        if (action.getId() == null)
+            action.setId(actionID); // make sure the action ID has been set
+
+        fActionHandlers.add(new ActionHandler(action));
+    }
+
+    private List<ActionHandler> fActionHandlers = Lists.newArrayList();
+
+    /**
+     * Source viewer focus listener that activates/deactivates action handlers on focus state
+     * change.
+     * 
+     * @author Mikaël Barbero
+     * 
+     */
+    private final class SourceViewerFocusListener implements FocusListener {
+        // private static final String EMBEDEDXTEXT_EDITOR_CONTEXT = "org.eclipselabs.xtfo.embededxtextEditor.context"; //$NON-NLS-1$
+
+        private final Expression fExpression;
+        private final List<IHandlerActivation> fHandlerActivations;
+
+        // private IContextActivation fContextActivation;
+
+        public SourceViewerFocusListener() {
+            fExpression = new ActiveShellExpression(fSourceViewer.getControl().getShell());
+            fHandlerActivations = Lists.newArrayList();
+
+            fSourceViewer.getControl().addDisposeListener(new DisposeListener() {
+                public void widgetDisposed(DisposeEvent e) {
+                    IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench()
+                            .getAdapter(IHandlerService.class);
+                    handlerService.deactivateHandlers(fHandlerActivations);
+                    fHandlerActivations.clear();
+                }
+            });
+        }
+
+        public void focusLost(FocusEvent e) {
+            // IContextService contextService = (IContextService) PlatformUI.getWorkbench().
+            // getActiveWorkbenchWindow().
+            // getActivePage().
+            // getActiveEditor().
+            // getSite().
+            // getService(IContextService.class);
+            // contextService.deactivateContext(fContextActivation);
+
+            IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench()
+                    .getAdapter(IHandlerService.class);
+            handlerService.deactivateHandlers(fHandlerActivations);
+        }
+
+        public void focusGained(FocusEvent e) {
+            // IContextService contextService = (IContextService) PlatformUI.getWorkbench().
+            // getActiveWorkbenchWindow().
+            // getActivePage().
+            // getActiveEditor().
+            // getSite().
+            // getService(IContextService.class);
+            // fContextActivation = contextService.activateContext(EMBEDEDXTEXT_EDITOR_CONTEXT);
+
+            IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench()
+                    .getAdapter(IHandlerService.class);
+
+            for (ActionHandler actionHandler : fActionHandlers) {
+                fHandlerActivations.add(handlerService.activateHandler(actionHandler.getAction()
+                        .getId(), actionHandler, fExpression));
+            }
+        }
+    }
+
+    public XtextResource createResource() {
+        ResourceSet resourceSet = fResourceSetProvider.get(null);
+        XtextResource result = (XtextResource) resourceSet.createResource(URI
+                .createURI(fGrammarAccess.getGrammar().getName() + "." + fFileExtension));
+        return result;
+    }
+
+    private static boolean equals(EObject expected, EObject actual) {
+        Map<String, Object> options = ImmutableMap.<String, Object>builder()
+                .put(MatchOptions.OPTION_IGNORE_XMI_ID, Boolean.TRUE).build();
+        MatchModel match = null;
+        try {
+            match = MatchService.doMatch(expected, actual, options);
+            DiffModel diff = DiffService.doDiff(match, false);
+            return diff.getDifferences().isEmpty();
+        } catch (InterruptedException e) {
+            throw new AssertionError(e);
+        }
+    }
+
+    /**
+     * @author chsch
+     */
+    public void dispose() {
+        if (fSourceViewer.getTextWidget() != null) {
+            fSourceViewer.getTextWidget().dispose();
+        }
+        fProjectionSupport.dispose();
+        fHighlightingHelper.uninstall();
+    }
+
+    /**
+     * @author chsch
+     */
+    public void bringOnTop() {
+        if (fControl.getLayout() instanceof StackLayout) {
+            ((StackLayout) fControl.getLayout()).topControl = getViewer().getControl();
+            getControl().layout();
+        }
+    }
 }

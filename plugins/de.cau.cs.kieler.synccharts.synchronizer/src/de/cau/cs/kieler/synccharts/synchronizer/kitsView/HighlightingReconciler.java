@@ -1,3 +1,4 @@
+//CHECKSTYLEOFF PackageName|Header|Javadoc|NeedBraces|FinalParameters|LineLength|StaticVariableName|MagicNumber|VisibilityModifier|HiddenField
 /** 
  * Copyright (c) 2010 itemis AG (http://www.itemis.eu) and others.
  * 
@@ -35,251 +36,265 @@ import com.google.inject.Inject;
  * @author Sebastian Zarnekow - Initial contribution and API
  * @kieler.ignore (excluded from review process)
  */
-public class HighlightingReconciler implements ITextInputListener, IXtextModelListener, IHighlightedPositionAcceptor {
+public class HighlightingReconciler implements ITextInputListener, IXtextModelListener,
+        IHighlightedPositionAcceptor {
 
-	@Inject(optional=true)
-	private ISemanticHighlightingCalculator calculator;
-	
-	@Inject
-	private ITextAttributeProvider attributeProvider;
-	
-	/** The source viewer this highlighting reconciler is installed on */
-	private XtextSourceViewer sourceViewer;
-	/** The highlighting presenter */
-	private HighlightingPresenter presenter;
+    @Inject(optional = true)
+    private ISemanticHighlightingCalculator calculator;
 
-	/** Background job's added highlighted positions */
-	private final List<AttributedPosition> addedPositions = new ArrayList<AttributedPosition>();
-	/** Background job's removed highlighted positions */
-	private List<AttributedPosition> removedPositions = new ArrayList<AttributedPosition>();
-	/** Number of removed positions */
-	private int removedPositionCount;
+    @Inject
+    private ITextAttributeProvider attributeProvider;
 
-	/**
-	 * Reconcile operation lock.
-	 * 
-	 * @since 3.2
-	 */
-	private final Object fReconcileLock = new Object();
-	/**
-	 * <code>true</code> if any thread is executing <code>reconcile</code>, <code>false</code> otherwise.
-	 * 
-	 * @since 3.2
-	 */
-	private boolean reconciling = false;
+    /** The source viewer this highlighting reconciler is installed on */
+    private XtextSourceViewer sourceViewer;
+    /** The highlighting presenter */
+    private HighlightingPresenter presenter;
 
-	/**
-	 * Start reconciling positions.
-	 */
-	private void startReconcilingPositions() {
-		presenter.addAllPositions(removedPositions);
-		removedPositionCount = removedPositions.size();
-	}
+    /** Background job's added highlighted positions */
+    private final List<AttributedPosition> addedPositions = new ArrayList<AttributedPosition>();
+    /** Background job's removed highlighted positions */
+    private List<AttributedPosition> removedPositions = new ArrayList<AttributedPosition>();
+    /** Number of removed positions */
+    private int removedPositionCount;
 
-	/**
-	 * Reconcile positions based on the AST subtrees
-	 * 
-	 * @param subtrees
-	 *            the AST subtrees
-	 */
-	private void reconcilePositions(XtextResource resource) {
-		//		for (int i= 0, n= subtrees.length; i < n; i++)
-		//			subtrees[i].accept(fCollector);
-		MergingHighlightedPositionAcceptor acceptor = new MergingHighlightedPositionAcceptor(calculator);
-		acceptor.provideHighlightingFor(resource, this);
-//		calculator.provideHighlightingFor(resource, this);
-		List<AttributedPosition> oldPositions = removedPositions;
-		List<AttributedPosition> newPositions = new ArrayList<AttributedPosition>(removedPositionCount);
-		for (int i = 0, n = oldPositions.size(); i < n; i++) {
-			AttributedPosition current = oldPositions.get(i);
-			if (current != null)
-				newPositions.add(current);
-		}
-		removedPositions = newPositions;
-	}
-	
-	/**
-	 * Add a position with the given range and highlighting if it does not exist already.
-	 * @param offset The range offset
-	 * @param length The range length
-	 * @param highlighting The highlighting
-	 */
-	public void addPosition(int offset, int length, String... ids) {
-		TextAttribute highlighting = ids.length == 1 ? 
-				attributeProvider.getAttribute(ids[0])
-			:	attributeProvider.getMergedAttributes(ids);
-		boolean isExisting= false;
-		// TODO: use binary search
-		for (int i= 0, n= removedPositions.size(); i < n; i++) {
-			AttributedPosition position= removedPositions.get(i);
-			if (position == null)
-				continue;
-			if (position.isEqual(offset, length, highlighting)) {
-				isExisting= true;
-				removedPositions.set(i, null);
-				removedPositionCount--;
-				break;
-			}
-		}
+    /**
+     * Reconcile operation lock.
+     * 
+     * @since 3.2
+     */
+    private final Object fReconcileLock = new Object();
+    /**
+     * <code>true</code> if any thread is executing <code>reconcile</code>, <code>false</code>
+     * otherwise.
+     * 
+     * @since 3.2
+     */
+    private boolean reconciling = false;
 
-		if (!isExisting) {
-			AttributedPosition position= presenter.createHighlightedPosition(offset, length, highlighting);
-			addedPositions.add(position);
-		}
-	}
+    /**
+     * Start reconciling positions.
+     */
+    private void startReconcilingPositions() {
+        presenter.addAllPositions(removedPositions);
+        removedPositionCount = removedPositions.size();
+    }
 
-	/**
-	 * Update the presentation.
-	 * 
-	 * @param textPresentation
-	 *            the text presentation
-	 * @param addedPositions
-	 *            the added positions
-	 * @param removedPositions
-	 *            the removed positions
-	 */
-	private void updatePresentation(TextPresentation textPresentation, List<AttributedPosition> addedPositions,
-			List<AttributedPosition> removedPositions) {
-		Runnable runnable = presenter.createUpdateRunnable(textPresentation, addedPositions, removedPositions);
-		if (runnable == null)
-			return;
+    /**
+     * Reconcile positions based on the AST subtrees
+     * 
+     * @param subtrees
+     *            the AST subtrees
+     */
+    private void reconcilePositions(XtextResource resource) {
+        // for (int i= 0, n= subtrees.length; i < n; i++)
+        // subtrees[i].accept(fCollector);
+        MergingHighlightedPositionAcceptor acceptor = new MergingHighlightedPositionAcceptor(
+                calculator);
+        acceptor.provideHighlightingFor(resource, this);
+        // calculator.provideHighlightingFor(resource, this);
+        List<AttributedPosition> oldPositions = removedPositions;
+        List<AttributedPosition> newPositions = new ArrayList<AttributedPosition>(
+                removedPositionCount);
+        for (int i = 0, n = oldPositions.size(); i < n; i++) {
+            AttributedPosition current = oldPositions.get(i);
+            if (current != null)
+                newPositions.add(current);
+        }
+        removedPositions = newPositions;
+    }
 
-		Display display = getDisplay();
-		display.asyncExec(runnable);
-	}
-	
-	private Display getDisplay() {
-		return this.sourceViewer.getControl().getDisplay();
-	}
+    /**
+     * Add a position with the given range and highlighting if it does not exist already.
+     * 
+     * @param offset
+     *            The range offset
+     * @param length
+     *            The range length
+     * @param highlighting
+     *            The highlighting
+     */
+    public void addPosition(int offset, int length, String... ids) {
+        TextAttribute highlighting = ids.length == 1 ? attributeProvider.getAttribute(ids[0])
+                : attributeProvider.getMergedAttributes(ids);
+        boolean isExisting = false;
+        // TODO: use binary search
+        for (int i = 0, n = removedPositions.size(); i < n; i++) {
+            AttributedPosition position = removedPositions.get(i);
+            if (position == null)
+                continue;
+            if (position.isEqual(offset, length, highlighting)) {
+                isExisting = true;
+                removedPositions.set(i, null);
+                removedPositionCount--;
+                break;
+            }
+        }
 
-	/**
-	 * Stop reconciling positions.
-	 */
-	private void stopReconcilingPositions() {
-		removedPositions.clear();
-		removedPositionCount = 0;
-		addedPositions.clear();
-	}
+        if (!isExisting) {
+            AttributedPosition position = presenter.createHighlightedPosition(offset, length,
+                    highlighting);
+            addedPositions.add(position);
+        }
+    }
 
-	/**
-	 * Install this reconciler on the given editor and presenter.
-	 * 
-	 * @param editor
-	 *            the editor
-	 * @param sourceViewer
-	 *            the source viewer
-	 * @param presenter
-	 *            the highlighting presenter
-	 */
-	public void install(XtextSourceViewer sourceViewer, HighlightingPresenter presenter) {
-		this.presenter = presenter;
-		this.sourceViewer = sourceViewer;
-		if (calculator != null) {
-			((IXtextDocument) sourceViewer.getDocument()).addModelListener(this);
-			sourceViewer.addTextInputListener(this);
-		}
-		refresh();
-	}
+    /**
+     * Update the presentation.
+     * 
+     * @param textPresentation
+     *            the text presentation
+     * @param addedPositions
+     *            the added positions
+     * @param removedPositions
+     *            the removed positions
+     */
+    private void updatePresentation(TextPresentation textPresentation,
+            List<AttributedPosition> addedPositions, List<AttributedPosition> removedPositions) {
+        Runnable runnable = presenter.createUpdateRunnable(textPresentation, addedPositions,
+                removedPositions);
+        if (runnable == null)
+            return;
 
-	/**
-	 * Uninstall this reconciler from the editor
-	 */
-	public void uninstall() {
-		if (presenter != null)
-			presenter.setCanceled(true);
+        Display display = getDisplay();
+        display.asyncExec(runnable);
+    }
 
-		if (sourceViewer.getDocument() != null) {
-			if (calculator != null) {
-				XtextDocument document = (XtextDocument) sourceViewer.getDocument();
-				document.removeModelListener(this);
-				sourceViewer.removeTextInputListener(this);
-			}
-		}
+    private Display getDisplay() {
+        return this.sourceViewer.getControl().getDisplay();
+    }
 
-		sourceViewer = null;
-		presenter = null;
-	}
+    /**
+     * Stop reconciling positions.
+     */
+    private void stopReconcilingPositions() {
+        removedPositions.clear();
+        removedPositionCount = 0;
+        addedPositions.clear();
+    }
 
-	/*
-	 * @see org.eclipse.jface.text.ITextInputListener#inputDocumentAboutToBeChanged(org.eclipse.jface.text.IDocument, org.eclipse.jface.text.IDocument)
-	 */
-	public void inputDocumentAboutToBeChanged(IDocument oldInput, IDocument newInput) {
-		if (oldInput != null)
-			((IXtextDocument) oldInput).removeModelListener(this);
-	}
+    /**
+     * Install this reconciler on the given editor and presenter.
+     * 
+     * @param editor
+     *            the editor
+     * @param sourceViewer
+     *            the source viewer
+     * @param presenter
+     *            the highlighting presenter
+     */
+    public void install(XtextSourceViewer sourceViewer, HighlightingPresenter presenter) {
+        this.presenter = presenter;
+        this.sourceViewer = sourceViewer;
+        if (calculator != null) {
+            ((IXtextDocument) sourceViewer.getDocument()).addModelListener(this);
+            sourceViewer.addTextInputListener(this);
+        }
+        refresh();
+    }
 
-	/*
-	 * @see org.eclipse.jface.text.ITextInputListener#inputDocumentChanged(org.eclipse.jface.text.IDocument, org.eclipse.jface.text.IDocument)
-	 */
-	public void inputDocumentChanged(IDocument oldInput, IDocument newInput) {
-		if (newInput != null) {
-			refresh();
-			((IXtextDocument) newInput).addModelListener(this);
-		}
-	}
+    /**
+     * Uninstall this reconciler from the editor
+     */
+    public void uninstall() {
+        if (presenter != null)
+            presenter.setCanceled(true);
 
-	/**
-	 * Refreshes the highlighting.
-	 */
-	public void refresh() {
-		if (calculator != null) {
-			((XtextDocument) sourceViewer.getDocument()).readOnly(new IUnitOfWork.Void<XtextResource>() {
-				@Override
-				public void process(XtextResource state) throws Exception {
-					modelChanged(state);
-				}
-			});
-		} else {
-			Display display = getDisplay();
-			display.asyncExec(presenter.createSimpleUpdateRunnable());
-		}
-	}
+        if (sourceViewer.getDocument() != null) {
+            if (calculator != null) {
+                XtextDocument document = (XtextDocument) sourceViewer.getDocument();
+                document.removeModelListener(this);
+                sourceViewer.removeTextInputListener(this);
+            }
+        }
 
-	public void modelChanged(XtextResource resource) {
-		// ensure at most one thread can be reconciling at any time
-		synchronized (fReconcileLock) {
-			if (reconciling)
-				return;
-			reconciling = true;
-		}
-		final HighlightingPresenter highlightingPresenter = presenter;
-		try {
-			if (highlightingPresenter == null)
-				return;
+        sourceViewer = null;
+        presenter = null;
+    }
 
-			highlightingPresenter.setCanceled(false);
-			
-			if (highlightingPresenter.isCanceled())
-				return;
+    /*
+     * @see
+     * org.eclipse.jface.text.ITextInputListener#inputDocumentAboutToBeChanged(org.eclipse.jface
+     * .text.IDocument, org.eclipse.jface.text.IDocument)
+     */
+    public void inputDocumentAboutToBeChanged(IDocument oldInput, IDocument newInput) {
+        if (oldInput != null)
+            ((IXtextDocument) oldInput).removeModelListener(this);
+    }
 
-			startReconcilingPositions();
+    /*
+     * @see
+     * org.eclipse.jface.text.ITextInputListener#inputDocumentChanged(org.eclipse.jface.text.IDocument
+     * , org.eclipse.jface.text.IDocument)
+     */
+    public void inputDocumentChanged(IDocument oldInput, IDocument newInput) {
+        if (newInput != null) {
+            refresh();
+            ((IXtextDocument) newInput).addModelListener(this);
+        }
+    }
 
-			if (!highlightingPresenter.isCanceled()) {
-				reconcilePositions(resource);
-			}
+    /**
+     * Refreshes the highlighting.
+     */
+    public void refresh() {
+        if (calculator != null) {
+            ((XtextDocument) sourceViewer.getDocument())
+                    .readOnly(new IUnitOfWork.Void<XtextResource>() {
+                        @Override
+                        public void process(XtextResource state) throws Exception {
+                            modelChanged(state);
+                        }
+                    });
+        } else {
+            Display display = getDisplay();
+            display.asyncExec(presenter.createSimpleUpdateRunnable());
+        }
+    }
 
-			final TextPresentation[] textPresentation = new TextPresentation[1];
-			if (!highlightingPresenter.isCanceled()) {
-				textPresentation[0] = highlightingPresenter.createPresentation(addedPositions, removedPositions);
-			}
+    public void modelChanged(XtextResource resource) {
+        // ensure at most one thread can be reconciling at any time
+        synchronized (fReconcileLock) {
+            if (reconciling)
+                return;
+            reconciling = true;
+        }
+        final HighlightingPresenter highlightingPresenter = presenter;
+        try {
+            if (highlightingPresenter == null)
+                return;
 
-			if (!highlightingPresenter.isCanceled())
-				updatePresentation(textPresentation[0], addedPositions, removedPositions);
+            highlightingPresenter.setCanceled(false);
 
-			stopReconcilingPositions();
-		}
-		finally {
-			synchronized (fReconcileLock) {
-				reconciling = false;
-			}
-		}
-	}
+            if (highlightingPresenter.isCanceled())
+                return;
 
-	public void setCalculator(ISemanticHighlightingCalculator calculator) {
-		this.calculator = calculator;
-	}
+            startReconcilingPositions();
 
-	public ISemanticHighlightingCalculator getCalculator() {
-		return calculator;
-	}
+            if (!highlightingPresenter.isCanceled()) {
+                reconcilePositions(resource);
+            }
+
+            final TextPresentation[] textPresentation = new TextPresentation[1];
+            if (!highlightingPresenter.isCanceled()) {
+                textPresentation[0] = highlightingPresenter.createPresentation(addedPositions,
+                        removedPositions);
+            }
+
+            if (!highlightingPresenter.isCanceled())
+                updatePresentation(textPresentation[0], addedPositions, removedPositions);
+
+            stopReconcilingPositions();
+        } finally {
+            synchronized (fReconcileLock) {
+                reconciling = false;
+            }
+        }
+    }
+
+    public void setCalculator(ISemanticHighlightingCalculator calculator) {
+        this.calculator = calculator;
+    }
+
+    public ISemanticHighlightingCalculator getCalculator() {
+        return calculator;
+    }
 }
