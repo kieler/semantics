@@ -19,12 +19,15 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
+import org.eclipse.emf.compare.match.MatchOptions;
 import org.eclipse.emf.compare.match.metamodel.Match2Elements;
 import org.eclipse.emf.compare.match.metamodel.MatchModel;
 import org.eclipse.emf.compare.match.metamodel.MatchPackage;
 import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.util.Strings;
+
+import com.google.common.collect.ImmutableMap;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.Signal;
@@ -41,23 +44,31 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
 import de.cau.cs.kieler.synccharts.util.SyncchartsSwitch;
 
 /**
+ * Sets the cross links in a copy of a model tree according the links in the original one.
  * 
  * @author chsch
  * @kieler.ignore (excluded from review process)
  */
 public class KitsSynchronizeLinker {
 
+    private static final Map<String, Object> MATCH_OPTIONS = ImmutableMap.<String, Object>of(
+            MatchOptions.OPTION_DISTINCT_METAMODELS, false);
+    
     private DiffModel diffModel = null;
     private Map<EObject, EObject> LRmatchTable = null;
     private Map<EObject, EObject> RLmatchTable = null;
+    // SUPPRESS CHECKSTYLE PREVIOUS 2 MemberName
     
     /**
      * Convenience method to initialize the linker.
      * 
      * @param theDiffModel
-     * @return
+     *            the difference model containing the template and the actual model to be linked
+     *            according to the template model.
+     * @return the current linker instance allowing to invoke a further operation in a fluent
+     *         interface style
      */
-    public KitsSynchronizeLinker setDiffModel(DiffModel theDiffModel) {
+    public KitsSynchronizeLinker setDiffModel(final DiffModel theDiffModel) {
         this.diffModel = theDiffModel;
         if (theDiffModel != null) {
             return consultSrcAndCopy(this.diffModel.getLeftRoots().get(0), this.diffModel
@@ -69,16 +80,16 @@ public class KitsSynchronizeLinker {
     /**
      * Default method to initialize the linker.
      * 
-     * @param src
-     * @param copy
-     * @return
+     * @param src the source used as a template during the linking process.
+     * @param copy the copy to be linked according to the template given as 'source'.
+     * @return the current linker instance allowing to invoke a further operation in a fluent
+     *         interface style
      */
     @SuppressWarnings("unchecked")
-    public KitsSynchronizeLinker consultSrcAndCopy(EObject src, EObject copy) {
+    public KitsSynchronizeLinker consultSrcAndCopy(final EObject src, final EObject copy) {
         MatchModel newMatchModel = null;
         try {
-            newMatchModel = MatchService.doContentMatch(src, copy,
-                    ModelSynchronizerJob.getMatchOptions());
+            newMatchModel = MatchService.doContentMatch(src, copy, MATCH_OPTIONS);
 
             this.LRmatchTable = new HashMap<EObject, EObject>();
             this.RLmatchTable = new HashMap<EObject, EObject>();
@@ -89,8 +100,8 @@ public class KitsSynchronizeLinker {
                 eObj = it.next();
                 if (MatchPackage.eINSTANCE.getMatch2Elements().isInstance(eObj)) {
                     match = (Match2Elements) eObj;
-                    this.LRmatchTable.put(match.getLeftElement(), match.getRightElement());                    
-                    this.RLmatchTable.put(match.getRightElement(), match.getLeftElement());                    
+                    this.LRmatchTable.put(match.getLeftElement(), match.getRightElement());
+                    this.RLmatchTable.put(match.getRightElement(), match.getLeftElement());
                 }
             }
         } catch (InterruptedException e) {
@@ -104,8 +115,10 @@ public class KitsSynchronizeLinker {
      * Implements linking.
      * 
      * @param root the element whose children should be linked
+     * @return the current linker instance allowing to invoke a further operation in a fluent
+     *         interface style
      */
-    public KitsSynchronizeLinker linkElement(EObject root) {
+    public KitsSynchronizeLinker linkElement(final EObject root) {
 
         EObject element = null;
         for (Iterator<EObject> it = root.eAllContents(); it.hasNext();) {
@@ -113,7 +126,7 @@ public class KitsSynchronizeLinker {
 
             new SyncchartsSwitch<Void>() {
 
-                public Void caseTransition(Transition transition) {
+                public Void caseTransition(final Transition transition) {
                     try {
                         State target = getMatched(getMatched(transition).getTargetState());
                         transition.setTargetState(target);
@@ -123,15 +136,16 @@ public class KitsSynchronizeLinker {
                     return null;
                 }
 
-                public Void caseAssignment(Assignment assignment) {
+                public Void caseAssignment(final Assignment assignment) {
                     Assignment assignmentOri = getMatched(assignment);
                     Variable variableOri = assignmentOri.getVariable();
                     if (assignment.getVariable() != null 
                             && assignmentOri.eResource() != variableOri.eResource()) {
                         /*
-                         * FIXME this is very problematic code introduced to enable textual representations of not
-                         * completely transformed synccharts models from esterel models, which may refer to signals
-                         * of the esterel model; in this keep the potentially preset one in the assignment
+                         * FIXME this is very problematic code introduced to enable textual
+                         * representations of not completely transformed synccharts models from
+                         * esterel models, which may refer to signals of the esterel model; in this
+                         * case keep the potentially preset one in the assignment.
                          */
                         return null;
                     }
@@ -140,15 +154,16 @@ public class KitsSynchronizeLinker {
                     return null;
                 }
 
-                public Void caseEmission(Emission emission) {
+                public Void caseEmission(final Emission emission) {
                     Emission emissionOri = getMatched(emission);
                     Signal signalOri = emissionOri.getSignal();
                     if (emission.getSignal() != null
                             && emissionOri.eResource() != signalOri.eResource()) {
                         /*
-                         * FIXME this is very problematic code introduced to enable textual representations of not
-                         * completely transformed synccharts models from esterel models, which may refer to signals
-                         * of the esterel model; in this keep the potentially preset one in the emission
+                         * FIXME this is very problematic code introduced to enable textual
+                         * representations of not completely transformed synccharts models from esterel
+                         * models, which may refer to signals of the esterel model; in this case keep
+                         * the potentially preset one in the emission
                          */
                         return null;
                     }
@@ -157,16 +172,17 @@ public class KitsSynchronizeLinker {
                     return null;
                 }
 
-                public Void defaultCase(EObject object) {
+                public Void defaultCase(final EObject object) {
                     if (KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(object)) {
                         ValuedObjectReference valuedObjectRef = (ValuedObjectReference) object;
                         ValuedObjectReference valuedObjectRefOri = getMatched(valuedObjectRef);
                         ValuedObject valuedObjectOri = valuedObjectRefOri.getValuedObject();
                         if (valuedObjectRef.getValuedObject() != null 
                                 /*
-                                 * FIXME this is very problematic code introduced to enable textual representations of not
-                                 * completely transformed synccharts models from esterel models, which may refer to signals
-                                 * of the esterel model; in this keep the potentially preset one in the reference
+                                 * FIXME this is very problematic code introduced to enable textual
+                                 * representations of not completely transformed synccharts models from
+                                 * esterel models, which may refer to signals of the esterel model;
+                                 * in this case keep the potentially preset one in the reference
                                  */
                                 && valuedObjectRefOri.eResource() != valuedObjectOri.eResource()) {
                             return null;
@@ -178,7 +194,7 @@ public class KitsSynchronizeLinker {
                     return null;
                 }
 
-            }.doSwitch(element);
+            }.doSwitch(element); // SUPPRESS CHECKSTYLE Whitespace
 
         }
         
@@ -190,10 +206,11 @@ public class KitsSynchronizeLinker {
      * Links the only the transitions of 'element' and its children.
      * This is needed during editor synchronization 
      * 
-     * @param element
-     * @return
+     * @param element the root element to link the inner transition of.
+     * @return the current linker instance allowing to invoke a further operation in a fluent
+     *         interface style
      */
-    public KitsSynchronizeLinker linkTransitionsInElement(EObject element) {
+    public KitsSynchronizeLinker linkTransitionsInElement(final EObject element) {
         EObject eObj = null;
         for (Iterator<EObject> it = element.eAllContents(); it.hasNext();) {
             eObj = it.next();
@@ -201,8 +218,6 @@ public class KitsSynchronizeLinker {
                 Transition transition = (Transition) eObj;
                 try {
                     State target = getMatched(getMatched(transition).getTargetState());
-//                        (State) LRmatchTable.get(((Transition) RLmatchTable
-//                            .get(transition)).getTargetState());
                     if (target == null) {
                         target = ((Transition) RLmatchTable.get(transition)).getTargetState();
                     }
@@ -221,7 +236,7 @@ public class KitsSynchronizeLinker {
      * 
      * @param root the element whose transition labels should be serialized
      */
-    public void serializeActions(EObject root) {
+    public void serializeActions(final EObject root) {
         EObject eObj = null;
         Action action = null;
         Action counterpart = null;
@@ -248,9 +263,14 @@ public class KitsSynchronizeLinker {
         }
     }
     
-
+    /**
+     * Reveals the element related to eObj in the LR or RL match table.
+     * @param eObj the source element
+     * @return the related one
+     * @param <T> the type of eObj and the return element
+     */
     @SuppressWarnings("unchecked")
-    public <T extends EObject> T getMatched(T eObj) {
+    public <T extends EObject> T getMatched(final T eObj) {
         T match = (T) this.LRmatchTable.get(eObj);
         if (match == null) {
             match = (T) this.RLmatchTable.get(eObj);

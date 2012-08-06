@@ -71,35 +71,6 @@
          point="org.eclipse.emf.compare.match.engine">
       <matchengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            fileExtension="action"
-            label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
-            priority="highest">
-      </matchengine>
-      <matchengine
-            engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            fileExtension="kits"
-            label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
-            priority="highest">
-      </matchengine>
-      <matchengine
-            engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            fileExtension="kixs"
-            label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
-            priority="highest">
-      </matchengine>
-      <matchengine
-            engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            fileExtension="kitsem"
-            label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
-            priority="highest">
-      </matchengine>
-      <matchengine
-            engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            fileExtension="kitsState"
             label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
             namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
             priority="highest">
@@ -109,32 +80,8 @@
          point="org.eclipse.emf.compare.diff.engine">
       <diffengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            fileExtension="action"
             label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            priority="normal">
-      </diffengine>
-      <diffengine
-            engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            fileExtension="kixs"
-            label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            priority="normal">
-      </diffengine>
-      <diffengine
-            engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            fileExtension="kits"
-            label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            priority="normal">
-      </diffengine>
-      <diffengine
-            engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            fileExtension="kitsem"
-            label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            priority="normal">
-      </diffengine>
-      <diffengine
-            engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            fileExtension="kitsState"
-            label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
+            namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
             priority="normal">
       </diffengine>
    </extension>

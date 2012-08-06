@@ -25,8 +25,10 @@ import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.synccharts.custom.SyncchartsUtil;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
@@ -37,25 +39,34 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
  */
 public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
 
+    private static final String MSG_MERGING_FAILED =
+            "Problem while merging contents. Re-select a region in diagram.";
+    
     private DiagramDocumentEditor passiveEditor = null;
     private DiffModel diffModel = null;
 
-    public SynchronizeGMFEditorCommand(DiagramDocumentEditor thePassiveEditor,
-            DiffModel theDiffModel) {
+    /**
+     * Constructor.
+     * 
+     * @param thePassiveEditor the editor to merge the changes in 
+     * @param theDiffModel the {@link DiffModel} describing the changes
+     */
+    public SynchronizeGMFEditorCommand(final DiagramDocumentEditor thePassiveEditor,
+            final DiffModel theDiffModel) {
         super(thePassiveEditor.getEditingDomain(), "Merge model changes", null);
         this.passiveEditor = thePassiveEditor;
         this.diffModel = theDiffModel;
     }
 
     @Override
-    protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
-            throws ExecutionException {
+    protected CommandResult doExecuteWithResult(final IProgressMonitor monitor,
+            final IAdaptable info) throws ExecutionException {
 
         try {
             MergeService.merge(diffModel.getOwnedElements(), true);
         } catch (NullPointerException e) {
             EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID,
-                    ModelSynchronizer.MSG_MERGING_FAILED, e));
+                    MSG_MERGING_FAILED, e));
         }
 
         EObject model = ((Diagram) ((DiagramDocumentEditor) passiveEditor).getDiagramEditPart()
@@ -67,18 +78,13 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
         try {
             ActionLabelProcessorWrapper.processActionLabels(((Diagram) this.passiveEditor
                     .getDiagramEditPart().getModel()).getElement(),
-                    ActionLabelProcessorWrapper.PARSE);
-            // ActionLabelProcessorWrapper.SERIALIZE);
+                ActionLabelProcessorWrapper.PARSE);
+                // ActionLabelProcessorWrapper.SERIALIZE);
         } catch (Exception e) {
-            // EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID,
-            // SyncchartsUtil.MSG_LABEL_SERIAL_FAILED, e));
+            StatusManager.getManager().handle(
+                    new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID,
+                            SyncchartsUtil.MSG_LABEL_SERIAL_FAILED, e), StatusManager.LOG);
         }
-
-        // for (CanonicalEditPolicy p : CanonicalEditPolicy.getRegisteredEditPolicies(model)) {
-        // p.refresh();
-        // }
-        //
-        // ((DiagramDocumentEditor) passiveEditor).getDiagramGraphicalViewer().flush();
 
         return CommandResult.newOKCommandResult();
     }
