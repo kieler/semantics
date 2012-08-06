@@ -25,8 +25,10 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 import de.cau.cs.kieler.core.WrappedException;
 
+//CHECKSTYLEOFF Javadoc|FinalParameters|LineLength|StaticVariableName|MagicNumber|VisibilityModifier
+
 /**
- * 
+ * @deprecated
  * @author chsch
  * @kieler.ignore (excluded from review process)
  */

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
+   <!-- extension
          point="org.eclipse.ui.startup">
       <startup
             class="de.cau.cs.kieler.synccharts.synchronizer.ModelSynchronizer">
       </startup>
-   </extension>
+   </extension -->
    <extension
          point="de.cau.cs.kieler.synccharts.triggerListener">
       <triggerListener
@@ -73,31 +73,36 @@
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
             fileExtension="action"
             label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            priority="normal">
+            namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
+            priority="highest">
       </matchengine>
       <matchengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
             fileExtension="kits"
             label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            priority="normal">
+            namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
+            priority="highest">
       </matchengine>
       <matchengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
             fileExtension="kixs"
             label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            priority="normal">
+            namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
+            priority="highest">
       </matchengine>
       <matchengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
             fileExtension="kitsem"
             label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            priority="normal">
+            namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
+            priority="highest">
       </matchengine>
       <matchengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
             fileExtension="kitsState"
             label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
-            priority="normal">
+            namespace="http://kieler.cs.cau.de/synccharts/0.2.4"
+            priority="highest">
       </matchengine>
    </extension>
    <extension

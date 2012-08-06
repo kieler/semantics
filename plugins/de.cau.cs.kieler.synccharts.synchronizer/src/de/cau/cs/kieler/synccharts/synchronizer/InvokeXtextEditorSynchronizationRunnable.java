@@ -23,12 +23,14 @@ import de.cau.cs.kieler.core.WrappedException;
 
 /**
  * A Runnable encapsulating the activities for synchronizing a textual view.
- * 
+ * @deprecated
  * @author chsch
  * @kieler.ignore (excluded from review process)
  */
 public class InvokeXtextEditorSynchronizationRunnable implements Runnable {
 
+    // CHECKSTYLEOFF Javadoc|FinalParameters
+    
     private XtextEditor xtextEditor;
 //    private StringBuffer buffer;
     private DiffModel diffModel;

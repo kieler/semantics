@@ -16,8 +16,9 @@ package de.cau.cs.kieler.synccharts.synchronizer;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+//CHECKSTYLEOFF Javadoc|FinalParameters|LineLength|StaticVariableName|MagicNumber|VisibilityModifier
 
 /**
  * Handler for (de-)activating the graphic / text synchronization.
@@ -25,12 +26,14 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * If this class implements {@link IElementUpdater} it will be
  * directly in charge of determining the state of the toggle button.  
  * 
+ * @deprecated
  * @author chsch
  * @kieler.ignore (excluded from review process)
  */
 public class SyncroActivationHandler extends AbstractHandler {
 
     /**
+     * @deprecated
      * {@inheritDoc}
      */
     public Object execute(ExecutionEvent event) throws ExecutionException {        

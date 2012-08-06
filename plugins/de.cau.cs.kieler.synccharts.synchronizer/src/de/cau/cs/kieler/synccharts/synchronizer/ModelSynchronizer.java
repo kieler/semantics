@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2010 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.synchronizer;
 
 import java.io.IOException;
@@ -33,25 +46,28 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.synchronizer.kitsView.KitsView;
 
+//CHECKSTYLEOFF Javadoc|FinalParameters|LineLength|StaticVariableName|MagicNumber|VisibilityModifier
+
 /**
+ * @deprecated
  * @kieler.ignore (excluded from review process)
  */
 public class ModelSynchronizer implements IStartup {
 
-    public static String MSG_MATCH_FAILED = "Comparison of match model failed.";
-    public static String MSG_JOB_IS_RUNNING = "Active editor cannot be changed while synchronizer is running.";
-    public static String MSG_NO_ACTIVE_EDITOR = "A valid active editor cannot be determined.";
-    public static String MSG_XTEXT_REFRESH_FAILED = "The Xtext editor could not be refreshed successfully.";
-    public static String MSG_LABEL_SERIALIZATION_FAILED = "Transition labels could not be serialized properly.";
-    public static String MSG_MERGING_FAILED = "Problem while merging contents. Re-select a region in diagram.";
+    public static final String MSG_MATCH_FAILED = "Comparison of match model failed.";
+    public static final String MSG_JOB_IS_RUNNING = "Active editor cannot be changed while synchronizer is running.";
+    public static final String MSG_NO_ACTIVE_EDITOR = "A valid active editor cannot be determined.";
+    public static final String MSG_XTEXT_REFRESH_FAILED = "The Xtext editor could not be refreshed successfully.";
+    public static final String MSG_LABEL_SERIALIZATION_FAILED = "Transition labels could not be serialized properly.";
+    public static final String MSG_MERGING_FAILED = "Problem while merging contents. Re-select a region in diagram.";
     
-    public static int RESOLVE_TRANSITION_TARGETS = 0xABCD;
+    public static final int RESOLVE_TRANSITION_TARGETS = 0xABCD;
 
-    public static ModelSynchronizer INSTANCE = null;
+    static ModelSynchronizer INSTANCE = null;
 
-    public static Boolean DEBUGMatch = false;
-    public static Boolean DEBUGDiff = true;
-    public static Boolean DEBUGPassive = false;
+    private static Boolean DEBUGMatch = false;
+    private static Boolean DEBUGDiff = true;
+    private static Boolean DEBUGPassive = false;
 
 
     private Map<String, Object> matchOptions = null;
@@ -67,8 +83,9 @@ public class ModelSynchronizer implements IStartup {
     private KitsView kitsView = null;
     
     public ModelSynchronizer() {
-        if (INSTANCE == null)
+        if (INSTANCE == null) {
             INSTANCE = this;
+        }
         this.matchOptions = new HashMap<String, Object>();
         this.matchOptions.put(MatchOptions.OPTION_DISTINCT_METAMODELS, false);
 
@@ -201,11 +218,11 @@ public class ModelSynchronizer implements IStartup {
     // ------------------------------------------------------------------------
 
     public static void installRemoveKitsView(KitsView view) {
-    	INSTANCE.kitsView = view;
+        INSTANCE.kitsView = view;
     }
     
     public static KitsView getKitsView() {
-    	return INSTANCE.kitsView;
+        return INSTANCE.kitsView;
     }
     
     // ------------------------------------------------------------------------
@@ -238,7 +255,7 @@ public class ModelSynchronizer implements IStartup {
     }
 
     public static void dumpDiff(EObject model, OutputStream stream) {
-        if (DEBUGDiff || false) {
+        if (DEBUGDiff) {
             try {
                 ResourceSetImpl set = new ResourceSetImpl();
                 set.getResourceFactoryRegistry()
@@ -260,7 +277,7 @@ public class ModelSynchronizer implements IStartup {
     }
 
     public static void dumpPassive(EObject model, OutputStream stream) {
-        if (DEBUGPassive || false) {
+        if (DEBUGPassive) {
             try {
                 ResourceSetImpl set = new ResourceSetImpl();
                 set.getResourceFactoryRegistry()

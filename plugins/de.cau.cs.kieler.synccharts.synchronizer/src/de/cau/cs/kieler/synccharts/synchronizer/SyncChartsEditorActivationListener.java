@@ -26,10 +26,12 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import de.cau.cs.kieler.synccharts.presentation.SyncchartsEditor;
 
+//CHECKSTYLEOFF Javadoc|FinalParameters|LineLength|StaticVariableName|MagicNumber|VisibilityModifier|VariableName
+
 /**
  * Custom {@link IPartListener} installing the known modelChangeListener on the
  * current active editor's semantic model.
- * 
+ * @deprecated
  * @author chsch
  * @kieler.ignore (excluded from review process)
  */
@@ -61,7 +63,7 @@ public class SyncChartsEditorActivationListener implements IPartListener {
                     // System.out.println("Notify DE-activation (xtext)");
 
                     if (((XtextEditor) this.activeEditor).getDocument() != null) {
-                        
+
                         this.addRemoveListenerToXtextEditor((XtextEditor) this.activeEditor, false);
                     }
                     this.activeEditor = null;
@@ -69,8 +71,8 @@ public class SyncChartsEditorActivationListener implements IPartListener {
 
                 if (this.activeEditor instanceof DiagramDocumentEditor) {
                     // System.out.println("Notify DE-activation (diagram)");
-                    
-					this.activeEditor = null;
+
+                    this.activeEditor = null;
 
                     ModelChangeTriggerListener.setEnabled(false);
                 }
@@ -96,14 +98,13 @@ public class SyncChartsEditorActivationListener implements IPartListener {
             } else {
                 if (part instanceof DiagramDocumentEditor) {
                     this.activeEditor = (IEditorPart) part;
-                                        
+
                     ModelChangeTriggerListener.setEnabled(true);
                 }
             }
         }
     }
 
-    
     private void addRemoveListenerToTreeEditor(SyncchartsEditor editor, final boolean add) {
         EList<Adapter> adapters = editor.getEditingDomain().getResourceSet().eAdapters();
         if (add) {
@@ -113,8 +114,7 @@ public class SyncChartsEditorActivationListener implements IPartListener {
         } else {
             adapters.remove(this.syncChartModelChangeListener);
         }
-    }    
-    
+    }
 
     private void addRemoveListenerToXtextEditor(XtextEditor editor, final boolean add) {
 
@@ -127,8 +127,9 @@ public class SyncChartsEditorActivationListener implements IPartListener {
                 EList<Adapter> adapters = state.getResourceSet().eAdapters();
 
                 if (add) {
-                    if (!adapters.contains(modelChangeListener))
+                    if (!adapters.contains(modelChangeListener)) {
                         adapters.add(modelChangeListener);
+                    }
                 } else {
                     adapters.remove(modelChangeListener);
                 }
