@@ -16,9 +16,10 @@ package de.cau.cs.kieler.synccharts.synchronizer.diff;
 import org.eclipse.emf.compare.diff.engine.GenericDiffEngine;
 import org.eclipse.emf.compare.diff.engine.check.AttributesCheck;
 import org.eclipse.emf.compare.diff.engine.check.ReferencesCheck;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
+ * A customized {@link org.eclipse.emf.compare.diff.engine.IDiffEngine2 IDiffEngine2} that
+ * contributes customized Attribute- and ReferenceChecks.
  * 
  * @author chsch
  * @kieler.ignore (excluded from review process)
@@ -29,11 +30,12 @@ public class KitsDiffEngine extends GenericDiffEngine {
      * {@inheritDoc}
      */
     protected AttributesCheck getAttributesChecker() {
-        return new KitsAttributesCheck((EcoreUtil.CrossReferencer) this.matchCrossReferencer);
+        return new KitsAttributesCheck(this.getMatchManager());
     }
     
+    @Override
     protected ReferencesCheck getReferencesChecker() {
-        return new KitsReferencesCheck(matchCrossReferencer);
+        return new KitsReferencesCheck(this.getMatchManager());
     }
 
 
