@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Esterel Kivi CEC Simulation Visualization
+Bundle-Name: KIELER Esterel Kivi CEC Simulation Visualization
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec.sim.kivi;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.cec.sim.kivi.EsterelCECSimKiviPlugin

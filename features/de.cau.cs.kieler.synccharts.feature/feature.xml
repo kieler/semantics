@@ -3,7 +3,7 @@
       id="de.cau.cs.kieler.synccharts.feature"
       label="KIELER SyncCharts Editing/Simulation/Code Gen"
       version="0.7.0.qualifier"
-      provider-name="Christian-Albrechts-University of Kiel"
+      provider-name="Christian-Albrechts-Universität zu Kiel"
       plugin="de.cau.cs.kieler.synccharts">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
@@ -466,7 +466,6 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
 
    <plugin
          id="de.cau.cs.kieler.sj"
