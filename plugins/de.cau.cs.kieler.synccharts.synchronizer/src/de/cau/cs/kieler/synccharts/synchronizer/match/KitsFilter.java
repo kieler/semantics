@@ -22,12 +22,16 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
+ * A Kits-specific customized {@link MetamodelFilter}.
  * 
  * @author chsch
  * @kieler.ignore (excluded from review process)
  */
 public class KitsFilter extends MetamodelFilter {
     
+    /**
+     * Constructor.
+     */
     public KitsFilter() {
         super();
     }
@@ -35,7 +39,7 @@ public class KitsFilter extends MetamodelFilter {
     /**
      * {@inheritDoc}
      */
-    public List<EStructuralFeature> getFilteredFeatures(EObject eObj) {
+    public List<EStructuralFeature> getFilteredFeatures(final EObject eObj) {
         List<EStructuralFeature> result = super.getFilteredFeatures(eObj);
         if (SyncchartsPackage.eINSTANCE.getState().isInstance(eObj)) {
             result.remove(SyncchartsPackage.eINSTANCE.getState_IncomingTransitions());
