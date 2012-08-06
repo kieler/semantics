@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2010 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.synchronizer.merge;
 
 import java.util.Iterator;
@@ -21,10 +34,9 @@ import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.synccharts.Transition;
 
 /**
- * Customized merger for an {@link ModelElementChangeLeftTarget} operation.>
+ * Customized merger for an {@link ModelElementChangeLeftTarget} operation.
  * 
  * @author chsch
  * @kieler.ignore (excluded from review process)
@@ -84,14 +96,14 @@ public class MyModelElementChangeLeftTargetMerger extends DefaultMerger {
             getDiffModel().getRightRoots().get(0).eResource().getContents().add(newOne);
         } else if (origin != null) {
             origin.eResource().getContents().add(newOne);
-        } else {
+        } else { // SUPPRESS CHECKSTYLE EmptyBlock
             // FIXME throw exception : couldn't merge this
         }
         // we should now have a look for RemovedReferencesLinks needing elements to apply
         final Iterator<EObject> siblings = getDiffModel().eAllContents();
         while (siblings.hasNext()) {
             final Object op = siblings.next();
-            if (op instanceof ReferenceChangeLeftTarget) {
+            if (op instanceof ReferenceChangeLeftTarget) { // SUPPRESS CHECKSTYLE EmptyBlock
 //                final ReferenceChangeLeftTarget link = (ReferenceChangeLeftTarget) op;
                 // now if I'm in the target References I should put my copy in the origin
                 // if (link.getRightTarget().equals(element)) {
@@ -108,7 +120,8 @@ public class MyModelElementChangeLeftTargetMerger extends DefaultMerger {
         super.undoInTarget();
     }
 
-    protected void removeFromContainer(DiffElement diffElement) {
+    @Override
+    protected void removeFromContainer(final DiffElement diffElement) {
         final EObject parent = diffElement.eContainer();
         EcoreUtil.remove(diffElement);
         // removeDanglingReferences(parent);
@@ -132,7 +145,7 @@ public class MyModelElementChangeLeftTargetMerger extends DefaultMerger {
      *            The object to copy.
      * @return the copied object.
      */
-    public EObject copy(EObject eObject) {
+    public EObject copy(final EObject eObject) {
         final EMFCompareEObjectCopier copier = MergeService.getCopier(diff);
         final EObject result = copier.copy(eObject);
 //        if (result.eAdapters().contains(ModelSynchronizer.getModelChangeListener())) {

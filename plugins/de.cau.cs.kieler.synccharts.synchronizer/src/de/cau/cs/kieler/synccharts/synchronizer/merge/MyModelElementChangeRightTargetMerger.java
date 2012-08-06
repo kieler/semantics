@@ -8,6 +8,7 @@
  * Contributors:
  *     Obeo - initial API and implementation
  *******************************************************************************/
+//SUPPRESS CHECKSTYLE PREVIOUS 10 Header
 package de.cau.cs.kieler.synccharts.synchronizer.merge;
 
 import java.util.Iterator;
@@ -62,7 +63,7 @@ public class MyModelElementChangeRightTargetMerger extends DefaultMerger {
             getDiffModel().getLeftRoots().get(0).eResource().getContents().add(newOne);
         } else if (origin != null) {
             origin.eResource().getContents().add(newOne);
-        } else {
+        } else { // SUPPRESS CHECKSTYLE EmptyBlock
             // FIXME Throw exception : couldn't merge this
         }
         // we should now have a look for AddReferencesLinks needing this object

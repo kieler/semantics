@@ -27,30 +27,34 @@ import org.eclipse.emf.compare.diff.metamodel.UpdateReference;
 import org.eclipse.emf.compare.util.EMFCompareMap;
 
 /**
- * Provider of our customized mergers.
+ * Provider of our customized Kits-specific mergers.
  * 
  * @author chsch
  * @kieler.ignore (excluded from review process)
  */
 public class KitsMergerProvider implements IMergerProvider {
-    
+
     private Map<Class<? extends DiffElement>, Class<? extends IMerger>> mergerTypes;
 
+    /**
+     * {@inheritDoc}
+     */    
     public Map<Class<? extends DiffElement>, Class<? extends IMerger>> getMergers() {
-            if (mergerTypes == null) {
-                    mergerTypes = new EMFCompareMap<Class<? extends DiffElement>, Class<? extends IMerger>>();
-//                  mergerTypes.put(DiffGroup.class, DiffGroupMerger.class);
-                    mergerTypes.put(ModelElementChangeRightTarget.class, MyModelElementChangeRightTargetMerger.class);
-                    mergerTypes.put(ModelElementChangeLeftTarget.class, MyModelElementChangeLeftTargetMerger.class);
-                    mergerTypes.put(MoveModelElement.class, KitsMoveModelElementMerger.class);
-//                  mergerTypes.put(ReferenceChangeRightTarget.class, ReferenceChangeRightTargetMerger.class);
-                    mergerTypes.put(ReferenceChangeLeftTarget.class, MyReferenceChangeLeftTargetMerger.class);
-                    mergerTypes.put(UpdateReference.class, MyUpdateReferenceMerger.class);
-//                  mergerTypes.put(AttributeChangeRightTarget.class, AttributeChangeRightTargetMerger.class);
-//                  mergerTypes.put(AttributeChangeLeftTarget.class, AttributeChangeLeftTargetMerger.class);
-//                  mergerTypes.put(UpdateAttribute.class, UpdateAttributeMerger.class);
-                    mergerTypes.put(ReferenceOrderChange.class, KitsReferenceOrderChangeMerger.class);
-            }
-            return mergerTypes;
+        //SUPPRESS CHECKSTYLE NEXT 10 LineLength
+        if (mergerTypes == null) {
+            mergerTypes = new EMFCompareMap<Class<? extends DiffElement>, Class<? extends IMerger>>();
+            // mergerTypes.put(DiffGroup.class, DiffGroupMerger.class);
+            mergerTypes.put(ModelElementChangeRightTarget.class, MyModelElementChangeRightTargetMerger.class);
+            mergerTypes.put(ModelElementChangeLeftTarget.class, MyModelElementChangeLeftTargetMerger.class);
+            mergerTypes.put(MoveModelElement.class, KitsMoveModelElementMerger.class);
+            // mergerTypes.put(ReferenceChangeRightTarget.class, ReferenceChangeRightTargetMerger.class);
+            mergerTypes.put(ReferenceChangeLeftTarget.class, MyReferenceChangeLeftTargetMerger.class);
+            mergerTypes.put(UpdateReference.class, MyUpdateReferenceMerger.class);
+            // mergerTypes.put(AttributeChangeRightTarget.class, AttributeChangeRightTargetMerger.class);
+            // mergerTypes.put(AttributeChangeLeftTarget.class, AttributeChangeLeftTargetMerger.class);
+            // mergerTypes.put(UpdateAttribute.class, UpdateAttributeMerger.class);
+            mergerTypes.put(ReferenceOrderChange.class, KitsReferenceOrderChangeMerger.class);
+        }
+        return mergerTypes;
     }
 }
