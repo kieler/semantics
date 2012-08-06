@@ -47,7 +47,6 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeModel;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class JSONObjectDataComponent. Implementation for the extension point JSONObjectDataComponent
  * that implements the interface {@link IJSONObjectDataComponent}.

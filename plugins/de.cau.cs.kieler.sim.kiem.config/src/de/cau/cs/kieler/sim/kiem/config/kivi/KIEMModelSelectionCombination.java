@@ -109,16 +109,16 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
      * selection KIEMProperty of simulator components.
      */
     private void refreshKIEMActiveAndOpenedModels(final IEditorPart activeEditorPart) {
+        IEditorPart[] localEditors = getEditorList();
+        if ((localEditors == null) || (localEditors.length == 0)) {
+            return;
+        }
+
         // By default reset opened editors (also no active one)
         KiemPlugin.getOpenedModelFiles().clear();
         KiemPlugin.setCurrentModelFile(null);
         KiemPlugin.getOpenedModelEditors().clear();
         KiemPlugin.getOpenedModelRootObjects().clear();
-
-        IEditorPart[] localEditors = getEditorList();
-        if ((localEditors == null) || (localEditors.length == 0)) {
-            return;
-        }
 
         // Go thru all editors
         for (IEditorPart editorPart : localEditors) {
@@ -126,7 +126,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
 
             // this is the active editor if any
             if (editorPart == activeEditorPart) {
-                KiemPlugin.setCurrentModelFile(inputModelPath);
+                    KiemPlugin.setCurrentModelFile(inputModelPath);
             }
 
             // add to opened model files
