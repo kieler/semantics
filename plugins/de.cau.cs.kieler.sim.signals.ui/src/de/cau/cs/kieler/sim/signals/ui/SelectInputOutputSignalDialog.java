@@ -26,6 +26,7 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
@@ -35,14 +36,20 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import de.cau.cs.kieler.sim.signals.Signal;
 
 /**
- * The Class SelectInputOutputSignalDialog.
+ * The SelectInputOutputSignalDialog class allows the user to declare input signals by selecting
+ * them out of a list of input and output signals. The user may also delete signals. Input signals
+ * are preselected if the signal name starts with an "i" or "I".
+ * 
+ * SelectInputOutputSignalDialog has to be disposed in order to free resources. This is done by the
+ * open() method automatically.
  * 
  * @author cmot
- * @kieler.rating proposed 2012-08-08 yellow KI-22
+ * @kieler.rating 2012-08-08 yellow KI-22
  * 
  */
 public class SelectInputOutputSignalDialog extends Dialog {
@@ -56,11 +63,27 @@ public class SelectInputOutputSignalDialog extends Dialog {
     /** The Constant FORM_HEIGHT. */
     private static final int FORM_HEIGHT = 300;
 
-    /** The Constant COLOR_OUTPUT. */
-    private static final Color COLOR_OUTPUT = new Color(null, new RGB(0, 0, 0));
+    /** The color black. */
+    private static final RGB COLOR_BLACK = new RGB(0, 0, 0);
 
-    /** The Constant COLOR_INPUT. */
-    private static final Color COLOR_INPUT = new Color(null, new RGB(200, 0, 0));
+    /** The color red. */
+    private static final RGB COLOR_RED = new RGB(200, 0, 0);
+    
+    private static final String INPUT_SIGNAL_ICON_PNG = "icons/inputSignal.png";
+
+    private static final String OUTPUT_SIGNAL_ICON_PNG = "icons/outputSignal.png";
+
+    /** The Constant Image/ImageDescriptor INPUT_SIGNAL. */
+    private Image inputSignalIcon;
+
+    /** The Constant Image/ImageDescriptor OUTPUT_SIGNAL. */
+    private Image outputSignalIcon;    
+
+    /** The color for output signals. */
+    private static Color colorOutput;
+
+    /** The color for input signals. */
+    private static Color colorInput;
 
     /** The Constant DIALOG_TITLE. */
     private static final String DIALOG_TITLE = "Select Input Signals";
@@ -74,7 +97,7 @@ public class SelectInputOutputSignalDialog extends Dialog {
     /** The list that holds the currently selected output signals. */
     private List<Signal> outputSignalList;
 
-    /** The Constant KEYBOARD_DELETE. */
+    /** The Constant for the keyboard delete key. */
     private static final int KEYBOARD_DELETE = 127;
 
     // -------------------------------------------------------------------------
@@ -87,6 +110,36 @@ public class SelectInputOutputSignalDialog extends Dialog {
      */
     public SelectInputOutputSignalDialog(final Shell parent) {
         super(parent);
+        colorOutput = new Color(null, COLOR_BLACK);
+        colorInput = new Color(null, COLOR_RED);
+        inputSignalIcon = AbstractUIPlugin.imageDescriptorFromPlugin(
+                SignalsUIPlugin.PLUGIN_ID, INPUT_SIGNAL_ICON_PNG).createImage();
+        outputSignalIcon = AbstractUIPlugin.imageDescriptorFromPlugin(
+                SignalsUIPlugin.PLUGIN_ID, OUTPUT_SIGNAL_ICON_PNG).createImage();  
+        
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Dispose the colors.
+     */
+    public void dispose() {
+        colorOutput.dispose();
+        colorInput.dispose();
+        inputSignalIcon.dispose();
+        outputSignalIcon.dispose();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public int open() {
+        int returnValue = super.open();
+        dispose();
+        return returnValue;
     }
 
     // -------------------------------------------------------------------------
@@ -240,11 +293,12 @@ public class SelectInputOutputSignalDialog extends Dialog {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Test if the signals is already contained in the table.
-     *
-     * @param signal the signal
+     * 
+     * @param signal
+     *            the signal
      * @return true, if successful
      */
     private boolean tableContains(final Signal signal) {
@@ -269,12 +323,12 @@ public class SelectInputOutputSignalDialog extends Dialog {
             if (!tableContains(signal)) {
                 this.addToTable(signal, true);
             }
-        } 
+        }
         for (Signal signal : outputSignalList) {
             if (!tableContains(signal)) {
                 this.addToTable(signal, false);
             }
-        } 
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -382,9 +436,9 @@ public class SelectInputOutputSignalDialog extends Dialog {
             Signal signal = (Signal) table.getItem(c).getData();
             boolean isInput = inputSignalList.contains(signal);
             // select color
-            Color currentColor = COLOR_OUTPUT;
+            Color currentColor = colorOutput;
             if (isInput) {
-                currentColor = COLOR_INPUT;
+                currentColor = colorInput;
             }
             // update text colors
             TableItem tableItem = table.getItem(c);
@@ -399,9 +453,9 @@ public class SelectInputOutputSignalDialog extends Dialog {
 
             // set icon
             if (isInput) {
-                tableItem.setImage(SignalIcons.INPUT_SIGNAL);
+                tableItem.setImage(inputSignalIcon);
             } else {
-                tableItem.setImage(SignalIcons.OUTPUT_SIGNAL);
+                tableItem.setImage(outputSignalIcon);
             }
 
         }

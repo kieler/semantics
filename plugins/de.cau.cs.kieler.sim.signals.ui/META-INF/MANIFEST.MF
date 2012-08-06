@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Synchronous Signal Visualization
 Bundle-SymbolicName: de.cau.cs.kieler.sim.signals.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
@@ -13,6 +12,6 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem,
  org.eclipse.core.resources;bundle-version="3.7.101"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui.dialogs
 Export-Package: de.cau.cs.kieler.sim.signals.ui.views
+Bundle-ActivationPolicy: lazy

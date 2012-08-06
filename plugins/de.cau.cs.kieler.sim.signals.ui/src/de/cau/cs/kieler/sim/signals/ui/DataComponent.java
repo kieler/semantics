@@ -39,7 +39,7 @@ import de.cau.cs.kieler.sim.signals.ui.views.SignalsView;
  * plots all signals and their histories.
  * 
  * @author cmot
- * @kieler.rating proposed 2012-08-08 yellow KI-22
+ * @kieler.rating 2012-08-08 yellow KI-22
  */
 public class DataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
@@ -60,9 +60,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
     /** The Constant MAXIMALTICKS. */
     private static final int MAXIMALTICKS = 1000;
-    
-    /** The Constant SLEEP_TIME while bringing the View to the front. */
-    private static final int SLEEP_TIME = 10;
 
     /** The maximal ticks. */
     private int maximalTicks = MAXIMALTICKS;
@@ -258,9 +255,8 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                     }
                 }
             }
-        } catch (Exception e) {
-            // this should not happen
-            e.printStackTrace();
+        } catch (JSONException e) {
+            // ignore signals that are not synchronous
         }
 
         // handle erroneous signals
@@ -280,21 +276,18 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                 }
 
             } catch (JSONException e) {
-                KiemPlugin
-                        .getDefault()
-                        .showError(
-                                "Error signals ("
-                                        + errorSignalKey
-                                        + ") cannot be parsed and do not contain" 
-                                        + " a comma spearated list of signal names.",
-                                SignalsUIPlugin.PLUGIN_ID, e, true);
+                KiemPlugin.getDefault().showError(
+                        "Error signals (" + errorSignalKey
+                                + ") cannot be parsed and do not contain"
+                                + " a comma spearated list of signal names.",
+                        SignalsUIPlugin.PLUGIN_ID, e, true);
             }
 
         }
 
         // update signal list
         SignalsView.getInstance().setSignalList(signalList);
-        // asynchronous refresh
+        // synchronous refresh
         try {
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
@@ -302,41 +295,36 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                 }
             });
         } catch (Exception e) {
-            // a refresh is supposed to  silently fail
+            // a refresh is supposed to silently fail
         }
 
         return null;
     }
 
     // -------------------------------------------------------------------------
-    private boolean broughtToFront;
+    private boolean broughtToFront = false;
 
     /**
-     * This method brings the Table view to the front.
+     * This method brings the Signals View to the front, if this is possible. Otherwise it may
+     * silently fail to do so.
      */
     public void bringToFront() {
-        broughtToFront = false;
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                // bring TABLE view to the front (lazy loading)
-                try {
-                    IWorkbenchWindow window = SignalsUIPlugin.getDefault().getWorkbench()
-                            .getActiveWorkbenchWindow();
-                    IViewPart vP = window.getActivePage().showView(SIGNALSUIVIEWID);
-                    vP.setFocus();
-                    // set done flag
-                    broughtToFront = true;
-                } catch (Exception e) {
-                    e.printStackTrace();
+        if (!broughtToFront) {
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    // bring Synchronous Signals View to the front
+                    try {
+                        IWorkbenchWindow window = SignalsUIPlugin.getDefault().getWorkbench()
+                                .getActiveWorkbenchWindow();
+                        IViewPart vP = window.getActivePage().showView(SIGNALSUIVIEWID);
+                        vP.setFocus();
+                        // set done flag
+                        broughtToFront = true;
+                    } catch (Exception e) {
+                        // ignore if we cannot bring it to front
+                    }
                 }
-            }
-        });
-        while (!broughtToFront) {
-            try {
-                Thread.sleep(SLEEP_TIME);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            });
         }
     }
 

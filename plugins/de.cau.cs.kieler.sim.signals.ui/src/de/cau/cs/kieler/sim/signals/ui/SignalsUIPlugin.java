@@ -19,10 +19,13 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The class SignalsUIPlugin is the activator of this plug-in.
+ * The class SignalsUIPlugin is the activator of this plug-in.<BR>
+ * <BR>
+ * The activator is currently not used and not referenced from the MANIFEST.MF. The only thing
+ * currently used from this class is the PLUGIN_ID constant.
  * 
  * @author cmot
- * @kieler.rating proposed 2012-08-08 yellow KI-22
+ * @kieler.rating 2012-08-08 yellow KI-22
  */
 public class SignalsUIPlugin extends AbstractUIPlugin {
 
