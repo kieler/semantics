@@ -33,10 +33,10 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.ui.KielerModelException;
 import de.cau.cs.kieler.core.ui.Messages;
 import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
 
