@@ -45,7 +45,10 @@ import de.cau.cs.kieler.synccharts.text.actions.ActionsStandaloneSetup;
  */
 public class ActionLabelProcessorWrapper {
 
+    /** Constant denoting the 'parse' option. */
     public static final boolean PARSE = true;
+
+    /** Constant denoting the 'serialize' option. */
     public static final boolean SERIALIZE = false;
 
     private Injector injector;
@@ -123,6 +126,19 @@ public class ActionLabelProcessorWrapper {
         }
     }
 
+    /**
+     * A customized {@link Command} that is composed of several single commands, each of them being
+     * in charge of parse/serialize a single action of a SyncCharts
+     * {@link de.cau.cs.kieler.synccharts.Scope Scope} and its children.
+     * 
+     * @param changedObject
+     *            {@link ValuedObject} on which a change may occurred
+     * @param theParent
+     *            the context to start the action search
+     * @param parse
+     *            true, if parsing, false if serializing
+     * @return the {@link Command}
+     */
     public Command getProcessAffectedActionLabelCommand(
             final ValuedObject changedObject, final EObject theParent,
             final boolean parse) {
@@ -189,7 +205,7 @@ public class ActionLabelProcessorWrapper {
         TransactionalEditingDomain domain = TransactionUtil
                 .getEditingDomain(parent);
         final ActionLabelProcessorWrapper parser = new ActionLabelProcessorWrapper();
-        ActionLabelProcessCommand cmd = parser.new ActionLabelProcessCommand(
+        ActionLabelProcessCommand cmd = new ActionLabelProcessCommand(
                 parent, parse, parser);
         CommandStack stack = domain.getCommandStack();
         stack.execute(cmd);
@@ -229,6 +245,16 @@ public class ActionLabelProcessorWrapper {
         }
     }
 
+    /**
+     * A customized {@link Command} that is composed of several single commands, each of them being
+     * in charge of parse/serialize a single action of a SyncCharts {@link Scope} and its children.
+     * 
+     * @param action
+     *            the {@link Action} to be parse or/and serialized.
+     * @param parse
+     *            true, if parsing, false if serializing
+     * @return the {@link Command}
+     */
     public Command getProcessActionCommand(final Action action, final boolean parse) {
         if (parse == PARSE) {
             return new ActionLabelParseCommand(action, action
@@ -247,7 +273,7 @@ public class ActionLabelProcessorWrapper {
      * @author haf
      * 
      */
-    private class ActionLabelProcessCommand extends AbstractCommand {
+    private static class ActionLabelProcessCommand extends AbstractCommand {
 
         private ActionLabelProcessorWrapper parser;
         private EObject parent;

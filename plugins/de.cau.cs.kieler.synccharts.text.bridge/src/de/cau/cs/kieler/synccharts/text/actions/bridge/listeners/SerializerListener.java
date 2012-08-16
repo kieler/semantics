@@ -1,3 +1,17 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ * 
+ */
 package de.cau.cs.kieler.synccharts.text.actions.bridge.listeners;
 
 import org.eclipse.emf.common.command.Command;
@@ -23,6 +37,9 @@ public class SerializerListener extends FireOnceTriggerListener {
 
     private ActionLabelProcessorWrapper actionLabelProcessor = new ActionLabelProcessorWrapper();
 
+    /**
+     * Constructor.
+     */
     public SerializerListener() {
         super(NotificationFilter
                 .createFeatureFilter(SyncchartsPackage.eINSTANCE.getAction_Delay())
@@ -37,7 +54,8 @@ public class SerializerListener extends FireOnceTriggerListener {
     }
 
     @Override
-    protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
+    protected Command trigger(final TransactionalEditingDomain domain,
+            final Notification notification) {
         Action action = null;
         if (notification.getNotifier() instanceof State) {
             if (notification.getEventType() == Notification.ADD) {

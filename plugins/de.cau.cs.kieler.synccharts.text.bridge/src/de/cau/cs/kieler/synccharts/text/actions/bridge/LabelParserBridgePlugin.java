@@ -32,6 +32,7 @@ public class LabelParserBridgePlugin extends AbstractUIPlugin {
     // The shared instance
     private static LabelParserBridgePlugin plugin;
 
+    /** Name of the preference on serializing labels automatically. */
     public static final String AUTO_SERIALIZE = "LABELPARSER_AUTO_SERIALIZE";
 
     /**
@@ -50,7 +51,7 @@ public class LabelParserBridgePlugin extends AbstractUIPlugin {
         super.start(context);
         plugin = this;
 
-        boolean b = new InstanceScope().getNode(PLUGIN_ID).getBoolean(
+        boolean b = InstanceScope.INSTANCE.getNode(PLUGIN_ID).getBoolean(
                 AUTO_SERIALIZE, true);
         getPreferenceStore().setValue(AUTO_SERIALIZE, b);
     }
@@ -63,10 +64,9 @@ public class LabelParserBridgePlugin extends AbstractUIPlugin {
     @Override
     public void stop(final BundleContext context) throws Exception {
         boolean b = getPreferenceStore().getBoolean(AUTO_SERIALIZE);
-        new InstanceScope().getNode(PLUGIN_ID).putBoolean(AUTO_SERIALIZE, b);
+        InstanceScope.INSTANCE.getNode(PLUGIN_ID).putBoolean(AUTO_SERIALIZE, b);
         
-    	plugin = null;
-        
+        plugin = null;        
         
         super.stop(context);
     }
@@ -89,8 +89,7 @@ public class LabelParserBridgePlugin extends AbstractUIPlugin {
     public boolean doAutomaticSerialization() {
         Boolean result = getPreferenceStore().getBoolean(AUTO_SERIALIZE);
         if (result == null) {
-        	result = new InstanceScope().getNode(PLUGIN_ID).getBoolean(
-                    AUTO_SERIALIZE, true);
+            result = InstanceScope.INSTANCE.getNode(PLUGIN_ID).getBoolean(AUTO_SERIALIZE, true);
             getPreferenceStore().setValue(AUTO_SERIALIZE, result);
         }
         return result;

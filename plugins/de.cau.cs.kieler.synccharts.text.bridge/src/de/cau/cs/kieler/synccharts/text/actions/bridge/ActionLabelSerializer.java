@@ -32,9 +32,8 @@ import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Emission;
 
 /**
- * Simple serializer for Action objects parsed by the Xtext parser. This class
- * is a preliminary workaround because the official Xtext serializer does not
- * yet work for the given grammar.
+ * Simple serializer for Action objects parsed by the Xtext parser. This class is a preliminary
+ * workaround because the official Xtext serializer does not yet work for the given grammar.
  * 
  * @author haf
  * @kieler.ignore (excluded from review process)
@@ -105,7 +104,7 @@ public final class ActionLabelSerializer {
     private static String toString(final TextualCode hostCode) {
         StringBuffer sb = new StringBuffer();
         sb.append("'" + hostCode.getCode() + "'");
-        if (hostCode.getType() != null && hostCode.getType() != "") {
+        if (hostCode.getType() != null && !hostCode.getType().equals("")) {
             sb.append("(" + hostCode.getType() + ")");
         }
         return sb.toString();
@@ -131,9 +130,9 @@ public final class ActionLabelSerializer {
     private static String toString(final Expression expression, final boolean isSubExpression) {
         StringBuffer sb = new StringBuffer();
         if (expression instanceof ValuedObjectReference) {
-        	if (((ValuedObjectReference) expression).getValuedObject() != null) {
-        		return ((ValuedObjectReference) expression).getValuedObject().getName();
-        	}
+            if (((ValuedObjectReference) expression).getValuedObject() != null) {
+                return ((ValuedObjectReference) expression).getValuedObject().getName();
+            }
         }
         if (expression instanceof BooleanValue) {
             return ((BooleanValue) expression).getValue().toString();
@@ -160,20 +159,20 @@ public final class ActionLabelSerializer {
             // add operator
             OperatorType operator = ((OperatorExpression) expression).getOperator();
             sb.append(operator.getLiteral());
-            if(!operator.equals(OperatorType.PRE) && !operator.equals(OperatorType.VAL)){
+            if (!operator.equals(OperatorType.PRE) && !operator.equals(OperatorType.VAL)) {
                 sb.append(" ");
             }
             if (subExpressions.size() > 1) {
-                for(int i = 1; i<subExpressions.size(); i++){
+                for (int i = 1; i < subExpressions.size(); i++) {
                     sb.append(toString((Expression) subExpressions.get(i), true));
-                    if(i<subExpressions.size()-1){
+                    if (i < subExpressions.size() - 1) {
                         sb.append(" ");
                     }
                 }
                 if (isSubExpression) {
                     sb.append(")");
                 }
-            } else { // if unary operation 
+            } else { // if unary operation
                 if ((isSubExpression && (subExpressions.get(0) instanceof OperatorExpression))
                         || operator.equals(OperatorType.PRE)) {
                     sb.append("(");

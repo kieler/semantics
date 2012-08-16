@@ -20,8 +20,10 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocumentUtil;
+import org.eclipse.xtext.ui.editor.validation.MarkerCreator;
 import org.eclipse.xtext.ui.editor.validation.MarkerIssueProcessor;
 import org.eclipse.xtext.ui.editor.validation.ValidationJob;
+import org.eclipse.xtext.ui.validation.MarkerTypeProvider;
 import org.eclipse.xtext.validation.CheckMode;
 
 import com.google.inject.Injector;
@@ -37,8 +39,7 @@ import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
  * @author soh
  * @kieler.ignore (excluded from review process)
  */
-public class KitsValidationActionFactory extends
-        AbstractXtextEditorValidationActionFactory {
+public class KitsValidationActionFactory extends AbstractXtextEditorValidationActionFactory {
 
     /**
      * {@inheritDoc}
@@ -50,21 +51,21 @@ public class KitsValidationActionFactory extends
 
             @Override
             public void run() {
-                Injector injector = KitsUIPlugin.getInstance().getInjector(
+                final Injector injector = KitsUIPlugin.getInstance().getInjector(
                         "de.cau.cs.kieler.synccharts.text.kits.Kits");
+                @SuppressWarnings("deprecation")
                 IEditorPart part = EditorUtils.getLastActiveEditor();
                 if (part instanceof XtextEditor) {
                     XtextEditor xtextEditor = (XtextEditor) part;
 
                     /**
-                     * taken from: org.eclipse.xtext.ui.editor.handler.
-                     * ValidateActionHandler
+                     * taken from: org.eclipse.xtext.ui.editor.handler. ValidateActionHandler
                      */
                     MarkerIssueProcessor markerIssueProcessor = new MarkerIssueProcessor(
                             xtextEditor.getResource(),
-                            injector.getInstance(org.eclipse.xtext.ui.editor.validation.MarkerCreator.class));
-                    IXtextDocument xtextDocument = XtextDocumentUtil
-                            .get(xtextEditor);
+                            injector.getInstance(MarkerCreator.class),
+                            injector.getInstance(MarkerTypeProvider.class));
+                    IXtextDocument xtextDocument = XtextDocumentUtil.get(xtextEditor);
                     ValidationJob validationJob = new ValidationJob(
                             injector.getInstance(org.eclipse.xtext.validation.IResourceValidator.class),
                             xtextDocument, markerIssueProcessor, CheckMode.ALL);

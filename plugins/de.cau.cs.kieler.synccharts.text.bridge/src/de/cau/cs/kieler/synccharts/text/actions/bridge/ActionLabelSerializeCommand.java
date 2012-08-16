@@ -19,6 +19,11 @@ import org.eclipse.emf.common.command.AbstractCommand;
 import de.cau.cs.kieler.synccharts.Action;
 
 /**
+ * A specialized {@link org.eclipse.emf.common.command.Command Command} that serializes action
+ * labels.
+ *
+ * @author haf
+ * 
  * @kieler.ignore (excluded from review process)
  */
 public class ActionLabelSerializeCommand extends AbstractCommand {
@@ -26,6 +31,10 @@ public class ActionLabelSerializeCommand extends AbstractCommand {
     private Action action;
     private String oldLabel;
 
+    /**
+     * Constructor.
+     * @param theAction the action to be serialized.
+     */
     public ActionLabelSerializeCommand(final Action theAction) {
         this.action = theAction;
     }
@@ -35,6 +44,9 @@ public class ActionLabelSerializeCommand extends AbstractCommand {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void execute() {
         String newLabel = null;
         if (action.getTrigger() != null || !action.getEffects().isEmpty() || action.isIsImmediate()
@@ -51,6 +63,9 @@ public class ActionLabelSerializeCommand extends AbstractCommand {
         action.setLabel(newLabel);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void redo() {
         execute();
     }
