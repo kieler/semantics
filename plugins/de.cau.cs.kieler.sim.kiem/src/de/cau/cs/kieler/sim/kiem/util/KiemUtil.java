@@ -484,7 +484,7 @@ public final class KiemUtil {
             return null;
         }
         String fileStringCopy = fileString;
-        if (!fileStringCopy.startsWith("file://")) {
+        if (!fileStringCopy.startsWith("file:/")) {
             fileStringCopy = "file://" + fileStringCopy;
         }
         org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI
