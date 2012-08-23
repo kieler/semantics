@@ -21,7 +21,7 @@ import org.junit.runners.model.FrameworkMethod;
 import de.cau.cs.kieler.core.test.runners.KielerTestRunner;
 
 /**
- * This test runner is used by the KiemAutomatedJUnitTest. In the initialize() method it calls the 
+ * This test runner is used by the KiemAutomatedJUnitTest. In the initialize() method it calls the
  * kiemAutomatedJUnitTestInitialization() explicitly that will load KIEM and the execution schedule.
  * 
  * It further provides names for the tests derived from their corresponding ESO file's path names.
@@ -82,6 +82,8 @@ public class KiemTestRunner extends KielerTestRunner {
     @Override
     public String getTestName(final List<Object[]> parameterObjectList, final int parameterIndex,
             final FrameworkMethod method) {
+        // As there is a runner for every single test, we can use the runner name for the test as
+        // well.
         return getRunnerName(parameterObjectList, parameterIndex);
     }
 

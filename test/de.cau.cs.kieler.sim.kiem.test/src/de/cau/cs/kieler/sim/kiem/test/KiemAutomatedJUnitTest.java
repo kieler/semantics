@@ -271,7 +271,9 @@ public abstract class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * Initializes all ESO and model files, initializes KIEM.
+     * Initializes all ESO and model files, initializes KIEM. @BeforeClass can only be used with
+     * static methods so we use @Before and add an extra flag that guards against multiple
+     * initializations.
      */
     @Before
     public void kiemAutomatedJUnitTestInitialization() {
@@ -509,7 +511,7 @@ public abstract class KiemAutomatedJUnitTest {
                             }
                         }
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        logger.error(e.getMessage());
                     }
                     tick++;
                 } // while executing
@@ -739,7 +741,7 @@ public abstract class KiemAutomatedJUnitTest {
                 return descriptor.getId();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return "org.eclipse.ui.DefaultTextEditor";
@@ -783,7 +785,7 @@ public abstract class KiemAutomatedJUnitTest {
                         page.openEditor(input, editorId);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage());
                 }
 
             }
