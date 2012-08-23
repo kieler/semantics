@@ -14,10 +14,10 @@
 package de.cau.cs.kieler.synccharts.synchronizer.match;
 
 import org.eclipse.emf.compare.match.engine.GenericMatchEngine;
-import org.eclipse.emf.compare.match.engine.IMatchEngine;
 
 /**
- * Customized {@link IMatchEngine} registering customized filter and checker.
+ * Customized {@link org.eclipse.emf.compare.match.engine.IMatchEngine IMatchEngine} registering
+ * customized filter and checker.
  * 
  * @author chsch
  * @kieler.ignore (excluded from review process)
@@ -26,6 +26,9 @@ public class KitsMatchEngine extends GenericMatchEngine {
 
 //    private KitsSimilarityChecker checker = null;
 
+    /**
+     * Constructor.
+     */
     public KitsMatchEngine() {
         super();
         this.filter = new KitsFilter();

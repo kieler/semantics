@@ -1,3 +1,17 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ * 
+ */
 package de.cau.cs.kieler.synccharts.text.actions.bridge.listeners;
 
 import org.eclipse.core.runtime.IStatus;
@@ -27,6 +41,9 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.LabelParserBridgePlugin;
  */
 public class ChangedTriggerListener extends FireOnceTriggerListener {
 
+    /**
+     * Constructor.
+     */
     public ChangedTriggerListener() {
         super(NotificationFilter.createFeatureFilter(
                 SyncchartsPackage.eINSTANCE.getAction_Label()).or(
@@ -42,7 +59,7 @@ public class ChangedTriggerListener extends FireOnceTriggerListener {
             final Notification notification) {
         Action action = null;
         String newLabel = null;
-        String oldLabel = null;
+        // String oldLabel = null;
 
         Object feature = notification.getFeature();
         int type = notification.getEventType();
@@ -51,13 +68,13 @@ public class ChangedTriggerListener extends FireOnceTriggerListener {
                         .getAction_Label())) {
             action = (Action) notification.getNotifier();
             newLabel = notification.getNewStringValue();
-            oldLabel = notification.getOldStringValue();
+            // oldLabel = notification.getOldStringValue();
         } else if (type == Notification.ADD
                 && feature.equals(SyncchartsPackage.eINSTANCE
                         .getState_OutgoingTransitions())) {
             action = (Action) notification.getNewValue();
             newLabel = action.getLabel();
-            oldLabel = null;
+            // oldLabel = null;
         }
         CompoundCommand cc = new CompoundCommand();
         /*

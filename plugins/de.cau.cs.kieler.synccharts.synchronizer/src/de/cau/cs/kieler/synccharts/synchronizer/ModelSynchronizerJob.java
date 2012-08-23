@@ -51,8 +51,10 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.presentation.SyncchartsEditor;
 
+//CHECKSTYLEOFF Javadoc|FinalParameters|LineLength|StaticVariableName|MagicNumber|VisibilityModifier
+
 /**
- * 
+ * @deprecated
  * @author chsch
  * @kieler.ignore (excluded from review process)
  */
@@ -60,13 +62,16 @@ public class ModelSynchronizerJob extends Job {
 
     private static Map<String, Object> matchOptions = new HashMap<String, Object>();
     
+    static {
+        matchOptions.put(MatchOptions.OPTION_DISTINCT_METAMODELS, false);
+        // KitsMatchScopeProvider scopeProvider = new KitsMatchScopeProvider();
+        // this.matchOptions.put(MatchOptions.OPTION_MATCH_SCOPE_PROVIDER, scopeProvider);
+    }
+    
     private IEditorPart activeEditor = null;
 
     public ModelSynchronizerJob() {
         super("Synchronize Model Views");
-        matchOptions.put(MatchOptions.OPTION_DISTINCT_METAMODELS, false);
-        // KitsMatchScopeProvider scopeProvider = new KitsMatchScopeProvider();
-        // this.matchOptions.put(MatchOptions.OPTION_MATCH_SCOPE_PROVIDER, scopeProvider);
     }
 
     public static Map<String, Object> getMatchOptions() {
@@ -102,13 +107,14 @@ public class ModelSynchronizerJob extends Job {
         List<IEditorPart> syncChartEditors = new ArrayList<IEditorPart>();
 
         if (editorRefs != null) {
-            for (IEditorReference ref : editorRefs)
+            for (IEditorReference ref : editorRefs) {
                 if (ref.getEditor(false) != null
                         && (ref.getEditor(false) instanceof SyncchartsEditor
                                 || ref.getEditor(false) instanceof XtextEditor || ref
                                 .getEditor(false) instanceof SyncchartsDiagramEditor)) {
                     syncChartEditors.add(ref.getEditor(false));
                 }
+            }
         }
 
         if (activeEditor != null && syncChartEditors.size() > 1) {
@@ -116,11 +122,11 @@ public class ModelSynchronizerJob extends Job {
             // don't consider activeSyncChartsEditor to be synchronized
             syncChartEditors.remove(activeEditor);
 
-            Resource res_active = null;
-            EObject model_active = null;
+            Resource resActive = null;
+            EObject modelActive = null;
 
             if (activeEditor instanceof IEditingDomainProvider) {
-                res_active = ((IEditingDomainProvider) activeEditor)
+                resActive = ((IEditingDomainProvider) activeEditor)
                         .getEditingDomain()
                         .getResourceSet()
                         .getResource(
@@ -128,45 +134,46 @@ public class ModelSynchronizerJob extends Job {
                                         ((FileEditorInput) ((IEditorPart) activeEditor)
                                                 .getEditorInput()).getFile().getFullPath()
                                                 .toOSString(), true), true);
-                if (res_active != null && !res_active.getContents().isEmpty()) {
-                    model_active = res_active.getContents().get(0);
+                if (resActive != null && !resActive.getContents().isEmpty()) {
+                    modelActive = resActive.getContents().get(0);
                 }
 
             } else if (activeEditor instanceof XtextEditor) {
-                res_active = ((XtextEditor) activeEditor).getDocument().readOnly(
+                resActive = ((XtextEditor) activeEditor).getDocument().readOnly(
                         new IUnitOfWork<Resource, XtextResource>() {
 
                             public Resource exec(XtextResource state) throws Exception {
-                                if (state.getErrors().isEmpty())
+                                if (state.getErrors().isEmpty()) {
                                     return state;
+                                }
                                 return null;
                             }
                         });
-                if (res_active != null && !res_active.getContents().isEmpty()) {
-                    model_active = res_active.getContents().get(0);
+                if (resActive != null && !resActive.getContents().isEmpty()) {
+                    modelActive = resActive.getContents().get(0);
                 }
             } else if (activeEditor instanceof DiagramDocumentEditor) {
-                model_active = ((Diagram) ((DiagramDocumentEditor) activeEditor)
+                modelActive = ((Diagram) ((DiagramDocumentEditor) activeEditor)
                         .getDiagramEditPart().getModel()).getElement();
-                res_active = model_active.eResource();
+                resActive = modelActive.eResource();
             }
 
-            if (res_active != null && model_active == null) {
-                model_active = res_active.getContents().get(0);
-                if (model_active instanceof Diagram) {
-                    model_active = ((Diagram) model_active).getElement();
+            if (resActive != null && modelActive == null) {
+                modelActive = resActive.getContents().get(0);
+                if (modelActive instanceof Diagram) {
+                    modelActive = ((Diagram) modelActive).getElement();
                 }
             }
 
-            Resource res_passive = null;
-            EObject model_passive = null;
+            Resource resPassive = null;
+            EObject modelPassive = null;
 
-            while (model_active != null && !syncChartEditors.isEmpty()) {
+            while (modelActive != null && !syncChartEditors.isEmpty()) {
                 // System.out.println("Synchronizing...");
 
                 final IEditorPart passiveEditor = syncChartEditors.remove(0);
                 if (passiveEditor instanceof IEditingDomainProvider) {
-                    res_passive = ((IEditingDomainProvider) passiveEditor)
+                    resPassive = ((IEditingDomainProvider) passiveEditor)
                             .getEditingDomain()
                             .getResourceSet()
                             .getResource(
@@ -174,34 +181,35 @@ public class ModelSynchronizerJob extends Job {
                                             ((FileEditorInput) ((IEditorPart) activeEditor)
                                                     .getEditorInput()).getFile().getFullPath()
                                                     .toOSString(), true), true);
-                    if (!res_passive.getContents().isEmpty())
-                        model_passive = res_passive.getContents().get(0);
+                    if (!resPassive.getContents().isEmpty()) {
+                        modelPassive = resPassive.getContents().get(0);
+                    }
                 } else if (passiveEditor instanceof XtextEditor) {
-                    res_passive = ((XtextEditor) passiveEditor).getDocument().readOnly(
+                    resPassive = ((XtextEditor) passiveEditor).getDocument().readOnly(
                             new IUnitOfWork<Resource, XtextResource>() {
 
                                 public Resource exec(XtextResource state) throws Exception {
                                     return state;
                                 }
                             });
-                    if (!res_passive.getContents().isEmpty()) {
-                        model_passive = res_passive.getContents().get(0);
+                    if (!resPassive.getContents().isEmpty()) {
+                        modelPassive = resPassive.getContents().get(0);
                     }
                 } else if (passiveEditor instanceof DiagramDocumentEditor) {
-                    model_passive = ((Diagram) ((IDiagramWorkbenchPart) passiveEditor)
+                    modelPassive = ((Diagram) ((IDiagramWorkbenchPart) passiveEditor)
                             .getDiagramEditPart().getModel()).getElement();
-                    res_passive = model_passive.eResource();
+                    resPassive = modelPassive.eResource();
                 }
 
                 final DiffModel diffModel;
                 final EObject copy;
                 int diffs = 0;
-                if (model_passive != null) {
+                if (modelPassive != null) {
                     MatchModel matchModel = null;
 
                     try {
                         matchModel = MatchService
-                                .doMatch(model_active, model_passive, matchOptions);
+                                .doMatch(modelActive, modelPassive, matchOptions);
                     } catch (InterruptedException e) {
                         return new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
                                 ModelSynchronizer.MSG_MATCH_FAILED,
@@ -228,9 +236,9 @@ public class ModelSynchronizerJob extends Job {
                     //  a dummy diffModel is created comprising only root elements
                     //  but no diff elements
                     diffs = -1;
-                    copy = EcoreUtil.copy(model_active);
+                    copy = EcoreUtil.copy(modelActive);
                     diffModel = DiffFactory.eINSTANCE.createDiffModel();
-                    diffModel.getLeftRoots().add(model_active);
+                    diffModel.getLeftRoots().add(modelActive);
                     diffModel.getRightRoots().add(copy);
                 }
 

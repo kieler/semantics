@@ -13,27 +13,33 @@
  */
 package de.cau.cs.kieler.synccharts.synchronizer.diff;
 
+import org.eclipse.emf.compare.diff.engine.IMatchManager;
 import org.eclipse.emf.compare.diff.engine.check.ReferencesCheck;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
+ * A customized {@link AttributesCheck} that masks the 'incomingTransitions' reference of states
+ * and the 'sourceState' reference of transitions.
  * 
  * @author chsch
  * @kieler.ignore (excluded from review process)
  */
 public class KitsReferencesCheck extends ReferencesCheck {
 
-    public KitsReferencesCheck(EcoreUtil.CrossReferencer referencer) {
-        super(referencer);
+    /**
+     * Constructor.
+     * @param manager a manager
+     */
+    public KitsReferencesCheck(final IMatchManager manager) {
+        super(manager);
     }
 
     /**
      * {@inheritDoc}
      */
-    protected boolean shouldBeIgnored(EReference reference) {
+    protected boolean shouldBeIgnored(final EReference reference) {
         if (SyncchartsPackage.eINSTANCE.getTransition_SourceState().equals(reference)
                 || SyncchartsPackage.eINSTANCE.getState_IncomingTransitions().equals(reference)) {
             return true;

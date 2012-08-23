@@ -30,13 +30,22 @@ public class InvokeGMFEditorSynchronizationRunnable implements Runnable {
 
     private DiagramDocumentEditor passiveEditor = null;
     private DiffModel diffModel = null;
-
-    public InvokeGMFEditorSynchronizationRunnable(DiagramDocumentEditor thePassiveEditor,
-            DiffModel theDiffModel) {
+    
+    /**
+     * Constructor.
+     * 
+     * @param thePassiveEditor the GMF-based editor
+     * @param theDiffModel the difference model describing the merge
+     */
+    public InvokeGMFEditorSynchronizationRunnable(final DiagramDocumentEditor thePassiveEditor,
+            final DiffModel theDiffModel) {
         this.passiveEditor = thePassiveEditor;
         this.diffModel = theDiffModel;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     public void run() {
         passiveEditor
                 .getDiagramEditDomain()
@@ -50,7 +59,6 @@ public class InvokeGMFEditorSynchronizationRunnable implements Runnable {
         }
 
         ((DiagramDocumentEditor) passiveEditor).getDiagramGraphicalViewer().flush();
-
 
         DiagramLayoutEngine.INSTANCE.layout(passiveEditor, null, true, false, false, false);
     }

@@ -13,24 +13,30 @@
  */
 package de.cau.cs.kieler.synccharts.synchronizer.diff;
 
+import org.eclipse.emf.compare.diff.engine.IMatchManager;
 import org.eclipse.emf.compare.diff.engine.check.AttributesCheck;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
+ * A customized {@link AttributesCheck} that masks the 'label' of actions, e.g. for transitions.
  * 
  * @author chsch
  * @kieler.ignore (excluded from review process)
  */
 public class KitsAttributesCheck extends AttributesCheck {
 
-    public KitsAttributesCheck(EcoreUtil.CrossReferencer referencer) {
-        super(referencer);
-    }
+    /**
+     * {@inheritDoc}.
+     * @param manager a referencer
+     */
+    public KitsAttributesCheck(final IMatchManager manager) {
+        super(manager);
+}
 
-    protected boolean shouldBeIgnored(EAttribute attribute) {
+    @Override
+    protected boolean shouldBeIgnored(final EAttribute attribute) {
         if (SyncchartsPackage.eINSTANCE.getAction_Label().equals(attribute)) {
             return true;
         }

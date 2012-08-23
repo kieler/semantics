@@ -33,8 +33,8 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.ui.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider;
@@ -210,6 +210,7 @@ public class ActionLabelParseCommand extends AbstractCommand {
         // FIXME: passing the parent to the scope provider in this static way is
         // veeeeery evil, someone should really fix this....
         ActionsScopeProvider.parent = parent;
+        // chsch: this is hardly fixable since ScopeProvider is not designed to be used this way...
 
         // now do parsing
         Map<Object, Object> loadOptions = resourceSet.getLoadOptions();
@@ -246,12 +247,9 @@ public class ActionLabelParseCommand extends AbstractCommand {
 
         EObject parsedObject = resource.getContents().get(0);
         if (parsedObject == null || !(parsedObject instanceof Action)) {
-            throw new KielerModelException(
-                    "\""
-                            + newString
-                            + "\""
-                            + "Could not parse action string. Parser did not return an Action object but "
-                            + parsedObject, action);
+            throw new KielerModelException("\"" + newString + "\""
+                    + "Could not parse action string. Parser did not return an Action object but "
+                    + parsedObject, action);
         }
         Action newAction = (Action) parsedObject;
 
@@ -288,9 +286,6 @@ public class ActionLabelParseCommand extends AbstractCommand {
         // linkAllReferences(target.getTrigger());
     }
 
-    /**
-     * 
-     */
     @Override
     protected boolean prepare() {
         return true;

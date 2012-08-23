@@ -12,9 +12,9 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.synccharts.synchronizer.kitsView;
+//SUPPRESS CHECKSTYLE PREVIOUS PackageName
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +47,8 @@ import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
+import com.google.common.collect.ImmutableMap;
+
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
@@ -57,7 +59,6 @@ import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.synchronizer.InvokeGMFEditorSynchronizationRunnable;
 import de.cau.cs.kieler.synccharts.synchronizer.KitsSynchronizeLinker;
-import de.cau.cs.kieler.synccharts.synchronizer.ModelSynchronizer;
 import de.cau.cs.kieler.synccharts.synchronizer.SyncchartsSynchronizerPlugin;
 import de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider;
 import de.cau.cs.kieler.synccharts.text.kits.KitsResource;
@@ -71,8 +72,11 @@ import de.cau.cs.kieler.synccharts.text.kits.scoping.KitsEmbeddedScopeProvider;
  */
 public class SyncChartSynchronizerJob extends Job implements ISelectionListener {
 
+    private static final String MSG_MATCH_FAILED = "Comparison of match model failed.";
+
     private SyncchartsDiagramEditor passiveEditor = null;
-    private static Map<String, Object> matchOptions = new HashMap<String, Object>();
+    private static Map<String, Object> matchOptions = ImmutableMap.<String, Object>of(
+            MatchOptions.OPTION_DISTINCT_METAMODELS, false);
 
     private EmbeddedXtextEditor actionsEditor;
     private EmbeddedXtextEditor kitsEditor;
@@ -94,14 +98,20 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
     private int index;
 
-    public SyncChartSynchronizerJob(String name, EmbeddedXtextEditor theActionsEditor,
-            EmbeddedXtextEditor theKitsEditor, EmbeddedXtextEditor theKitsStateEditor) {
+    /**
+     * Constructor.
+     * 
+     * @param name the job name
+     * @param theActionsEditor the embedded actions editor
+     * @param theKitsEditor the embedded kits editor
+     * @param theKitsStateEditor the embedded kitsState editor
+     */
+    public SyncChartSynchronizerJob(final String name, final EmbeddedXtextEditor theActionsEditor,
+            final EmbeddedXtextEditor theKitsEditor, final EmbeddedXtextEditor theKitsStateEditor) {
         super(name);
         actionsEditor = theActionsEditor;
         kitsEditor = theKitsEditor;
         kitsStateEditor = theKitsStateEditor;
-
-        matchOptions.put(MatchOptions.OPTION_DISTINCT_METAMODELS, false);
 
         dummyResource = (KitsResource) kitsEditor.createResource();
 
@@ -109,7 +119,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
             @SuppressWarnings("unchecked")
             @Override
-            public void done(IJobChangeEvent event) {
+            public void done(final IJobChangeEvent event) {
                 if (event.getResult().equals(Status.CANCEL_STATUS)) {
                     return;
                 }
@@ -123,16 +133,16 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     
 
     @Override
-    protected IStatus run(IProgressMonitor monitor) {
+    protected IStatus run(final IProgressMonitor monitor) {
 
         // prepare the left element for comparing it with 
         // the current active editors document content
-        // (aka the right element in EMF compare speach) 
+        // (aka the right element in EMF compare speech) 
         Region leftRegion = lastActiveEditor.getDocument().readOnly(
                 new IUnitOfWork<Region, XtextResource>() {
 
                     @SuppressWarnings("unchecked")
-                    public synchronized Region exec(XtextResource resource) throws Exception {
+                    public synchronized Region exec(final XtextResource resource) throws Exception {
 
                         EObject copy = null;
                         Region leftElement = null;
@@ -144,6 +154,13 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                              */ 
                             copy = EcoreUtil.copy(resource.getContents().get(0));
                             
+                            // chsch: added for migration to Juno:
+                              /* put the copy in a dummy resource:
+                               * EMF Compare (used in the linker) needs it for building
+                               * fragmentURIs for example */
+//                              dummyResource.getContents().clear();
+//                              dummyResource.getContents().add(copy);
+
                             /* link the transitions of the copy as transition target
                              * haven't been set due to the bidirectional association;
                              * 
@@ -214,7 +231,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
             matchModel = MatchService.doMatch(leftRegion, rightRegion, matchOptions);
         } catch (InterruptedException e) {
             return new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
-                    ModelSynchronizer.MSG_MATCH_FAILED, e);
+                    MSG_MATCH_FAILED, e);
         }
 
         final DiffModel diffModel = DiffService.doDiff(matchModel);
@@ -234,7 +251,10 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
         return Status.OK_STATUS;
     }
 
-    public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+    /**
+     * {@inheritDoc}
+     */
+    public void selectionChanged(final IWorkbenchPart part, final ISelection selection) {
 
         EObject model = null;
         StructuredSelection sSelection = null;
@@ -276,13 +296,12 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     }
 
     private void serializeRegion(final Region region) {
-
         try {
             kitsEditor.getDocument().modify(new IUnitOfWork.Void<XtextResource>() {
 
                 @SuppressWarnings("unchecked")
                 @Override
-                public void process(XtextResource state) throws Exception {
+                public void process(final XtextResource state) throws Exception {
                     Region copy = createCopy(region);
 
                     // keep the container of the model part of interest in mind
@@ -322,13 +341,12 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     }
 
     private void serializeState(final State state) {
-
         try {
             kitsStateEditor.getDocument().modify(new IUnitOfWork.Void<XtextResource>() {
 
                 @SuppressWarnings("unchecked")
                 @Override
-                public void process(XtextResource resource) throws Exception {
+                public void process(final XtextResource resource) throws Exception {
                     State copy = createCopy(state);
 
                     // keep the container of the model part of interest in mind
@@ -380,13 +398,12 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     }
 
     private void serializeTransition(final Transition transition) {
-
         try {
             actionsEditor.getDocument().modify(new IUnitOfWork.Void<XtextResource>() {
 
                 @SuppressWarnings("unchecked")
                 @Override
-                public void process(XtextResource state) throws Exception {
+                public void process(final XtextResource state) throws Exception {
                     Transition copy = createCopy(transition);
                     transitionTarget = copy.getTargetState();
                     transitionPrio = copy.getPriority();
@@ -427,7 +444,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
         }
     }
 
-    private <T extends EObject> T createCopy(T element) {
+    private <T extends EObject> T createCopy(final T element) {
         Region rootRegion = (Region) EcoreUtil.getRootContainer(element);
 
         // create a copy of the complete model of the diagram editor
