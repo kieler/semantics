@@ -94,7 +94,7 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * maximum!
  * 
  * @author cmot
- * @kieler.rating 2012-06-07 yellow KI-13
+ * @kieler.rating 2012-06-07 yellow KI-13, KI-17
  * 
  */
 @RunWith(KiemTestRunner.class)
