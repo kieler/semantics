@@ -32,6 +32,7 @@
     <module>de.cau.cs.kieler.core.kgraph.text.ui</module>
     <module>de.cau.cs.kieler.core.kivi</module>
     <module>de.cau.cs.kieler.core.krendering</module>
+    <module>de.cau.cs.kieler.core.krendering.extensions</module>
     <module>de.cau.cs.kieler.core.model</module>
     <module>de.cau.cs.kieler.core.model.gmf</module>
     <module>de.cau.cs.kieler.core.model.graphiti</module>
