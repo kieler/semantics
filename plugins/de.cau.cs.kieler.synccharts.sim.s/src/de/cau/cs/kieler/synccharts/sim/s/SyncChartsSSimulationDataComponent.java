@@ -277,7 +277,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // Calculate output path for possible S-m2m
             // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
             String inputPathString = this.getModelFilePath().toString();
-            URI input = URI.createPlatformResourceURI(inputPathString, true);
+            URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             syncChartOutput = URI.createURI(input.toString());
 
             // If 'Full Debug Mode' is turned on then the user wants to have

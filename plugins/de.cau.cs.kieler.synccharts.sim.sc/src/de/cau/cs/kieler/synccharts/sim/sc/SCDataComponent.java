@@ -415,8 +415,9 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
             } else {
                 URI fileUri;
                 try {
-                    fileUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(
-                            this.getModelFilePath().toString()).toString());
+                    String tempString = KiemUtil.resolveBundleOrWorkspaceFile(
+                            this.getModelFilePath().toString()).toString();
+                    fileUri = KiemUtil.getFileStringAsEMFURI(tempString);
                     wf = new WorkflowGenerator(fileUri);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();

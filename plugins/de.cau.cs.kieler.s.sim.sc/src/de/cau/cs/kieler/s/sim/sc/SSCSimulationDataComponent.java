@@ -360,7 +360,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             // Calculate output path for possible S-m2m
             // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
             String inputPathString = this.getModelFilePath().toString();
-            URI input = URI.createPlatformResourceURI(inputPathString, true);
+            URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             sOutput = URI.createURI(input.toString());
 
             // If 'Full Debug Mode' is turned on then the user wants to have
@@ -422,7 +422,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                     + KIEM_PROPERTY_DIFF].getValueAsBoolean();
 
             // Generate SC code
-            IPath scOutputPath = new Path(scOutput.toPlatformString(false));
+            IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
             S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder, bufferSize,

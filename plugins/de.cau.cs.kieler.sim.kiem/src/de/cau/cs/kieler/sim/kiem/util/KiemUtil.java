@@ -347,7 +347,7 @@ public final class KiemUtil {
     public static URL resolveBundleOrWorkspaceFile(final String fileLocation, final String pluginID)
             throws MalformedURLException, URISyntaxException {
         // as \ is an escape character in a String AND a RegEx
-        String fileLocation2 = fileLocation.replaceAll("\\\\", "/");
+        String fileLocation2 = fileLocation.replaceAll("\\\\", "/").replace("%20", " ");
 
         URL fileURL = null;
         if (fileLocation2.contains("bundleentry")) {
@@ -396,7 +396,7 @@ public final class KiemUtil {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
         // as \ is an escape character in a String AND a RegEx
-        String fileLocation2 = fileLocation.replaceAll("\\\\", "/");
+        String fileLocation2 = fileLocation.replaceAll("\\\\", "/").replace("%20", " ");
 
         URL fileURL = null;
         if (fileLocation2.contains("bundleentry")) {
@@ -407,7 +407,7 @@ public final class KiemUtil {
             if (fileURL == null) {
                 IFile file = myWorkspaceRoot.getFile(new Path(fileLocation2));
                 String fileString = file.getLocation().toString();
-                fileURL = new URI("file://" + fileString).toURL();
+                fileURL = new URI("file://" + fileString.replace(" ", "%20")).toURL();
             }
         }
         return fileURL;
