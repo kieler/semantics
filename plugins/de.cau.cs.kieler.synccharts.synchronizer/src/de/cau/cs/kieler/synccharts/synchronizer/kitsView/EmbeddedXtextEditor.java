@@ -38,6 +38,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.ISynchronizable;
 import org.eclipse.jface.text.ITextViewerExtension;
 import org.eclipse.jface.text.source.Annotation;
@@ -73,11 +74,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.ActiveShellExpression;
 import org.eclipse.ui.PlatformUI;
-
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.handlers.IHandlerActivation;
 import org.eclipse.ui.handlers.IHandlerService;
-//import org.eclipse.ui.internal.editors.text.EditorsPlugin;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.AnnotationPreference;
@@ -152,7 +151,7 @@ public class EmbeddedXtextEditor {
 
     @Inject
     private Provider<XtextDocument> fDocumentProvider;
-
+    
     @Inject
     private IResourceValidator fResourceValidator;
 
@@ -169,8 +168,11 @@ public class EmbeddedXtextEditor {
     // @Inject
     // private IDocumentEditor documentEditor;
 
+    @Inject
+    private Provider<IDocumentPartitioner> documentPartitioner;
+    
     private IPreferenceStore fPreferenceStore;
-
+    
     /** The editor's font. */
     private Font fFont;
     // CHSCH end
@@ -193,7 +195,7 @@ public class EmbeddedXtextEditor {
      *            the editor text. It may be use to reconcile the content of the editor with
      *            something else.
      * @param style
-     *            the SWT style of the {@link SourceViewer} of this editor.
+     *            the SWT style of the {@link org.eclipse.jface.text.source.SourceViewer SourceViewer} of this editor.
      * @param fileExtension
      *            the file extension (without the DOT) of the textual DSL to edit
      */
@@ -359,6 +361,13 @@ public class EmbeddedXtextEditor {
             }
         });
         fDocument = fDocumentProvider.get();
+        
+        // CHSCH: this will let Xtext's IAutoEditStrategies (especially the SingleLineTerminalsStrategy)
+        //  provided by the DefaultAutoEditStrategyProvider work properly
+        IDocumentPartitioner partitioner = documentPartitioner.get();
+        partitioner.connect(fDocument);
+        fDocument.setDocumentPartitioner(partitioner);
+        
         ValidationJob job = new ValidationJob(fResourceValidator, fDocument,
                 new IValidationIssueProcessor() {
                     private AnnotationIssueProcessor annotationIssueProcessor;
