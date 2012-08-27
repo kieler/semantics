@@ -21,7 +21,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.s.s.Program;
-import de.cau.cs.kieler.s.sc.xtend.S2SC;
+import de.cau.cs.kieler.s.sc.xtend.S2SCC;
 import de.cau.cs.kieler.s.sc.xtend.S2SCALT;
 
 /**
@@ -89,8 +89,9 @@ public class S2SCPlugin extends AbstractUIPlugin {
             ccode = s2SC.transform(program, outputFolder, bufferSize).toString();
         } else {
             // by default, produce the normal/old SC syntax
-            S2SC s2SC = new S2SC();
-            ccode = s2SC.transform(program, outputFolder, bufferSize).toString();
+            // cmot/27. Aug 2012: use scc style variables instead of signals (S2SCC instead of S2SC)
+            S2SCC s2SCC = new S2SCC();
+            ccode = s2SCC.transform(program, outputFolder, bufferSize).toString();
         }
 
         // Write out c program
