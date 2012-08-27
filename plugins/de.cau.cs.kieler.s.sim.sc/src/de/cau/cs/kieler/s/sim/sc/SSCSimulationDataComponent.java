@@ -156,7 +156,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         String activeStatements = "";
         StringBuffer activeStatementsBuf = new StringBuffer();
 
-        if (!scExecution.isStarted()) {
+        if (scExecution == null || !scExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
