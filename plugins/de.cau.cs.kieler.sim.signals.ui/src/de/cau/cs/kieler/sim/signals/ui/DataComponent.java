@@ -18,8 +18,6 @@ import java.util.LinkedList;
 
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.json.JSONException;
 import org.json.JSONObject;
 
