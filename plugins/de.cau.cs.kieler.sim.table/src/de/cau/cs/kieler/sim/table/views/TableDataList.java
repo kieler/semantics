@@ -84,7 +84,11 @@ public class TableDataList {
         // asynchronously update the table
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                viewer.refresh();
+                try {
+                    viewer.refresh();
+                } catch (Exception e) {
+                    //ignore errors
+                }
             }
         });
     }
