@@ -310,7 +310,8 @@ public class SignalsPlotter {
         long minTick = signalList.getMinTick();
         int visibleWidth = outerScrolledComposite.getParent().getSize().y;
 
-        int xScroll = ((int) (currentTick - minTick) * zoomedXSpace - (visibleWidth / FACTOR_2) + signalNameSize.width);
+        int xScroll = ((int) (currentTick - minTick) * zoomedXSpace 
+                - (visibleWidth / FACTOR_2) + signalNameSize.width);
         if (drawMode > 0) {
             // Scrolling in Time Line Mode
             xScroll = ((int) (currentTick - minTick) * zoomedXSpaceTimeLine
@@ -504,6 +505,9 @@ public class SignalsPlotter {
                     }
                     labelText = SIGNALLABELSAFETYMARGINSPACE + signalValueString
                             + SIGNALLABELSAFETYMARGINSPACE;
+                    Label toolTipLabel = new Label();
+                    toolTipLabel.setText(" " + signal.getName() + " ");
+                    labelFigure.setToolTip(toolTipLabel);
                 }
                 int labelWidth = calculateLabelWidth(font, labelText);
                 labelFigure.setText(labelText);
@@ -614,16 +618,19 @@ public class SignalsPlotter {
                 nodeS.y = y + presentOffset + zoomedYOffset / FACTOR_11;
                 nodeS.data = signal;
                 Node nodeE = new Node();
-                nodeE.x = ((int) (tick - minTick) * zoomedXSpace + zoomedXSpace + FACTOR_2 + signalNameSize.width);
+                nodeE.x = ((int) (tick - minTick) * zoomedXSpace
+                        + zoomedXSpace + FACTOR_2 + signalNameSize.width);
                 nodeE.y = y + presentOffset + zoomedYOffset / FACTOR_11;
                 nodeE.data = signal;
 
                 Node node = new Node();
                 Node nodeInverse = new Node();
-                node.x = ((int) (tick - minTick) * zoomedXSpace + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
+                node.x = ((int) (tick - minTick) * zoomedXSpace 
+                        + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
                 node.y = y + presentOffset;
                 node.data = signal;
-                nodeInverse.x = ((int) (tick - minTick) * zoomedXSpace + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
+                nodeInverse.x = ((int) (tick - minTick) * zoomedXSpace
+                        + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
                 nodeInverse.y = y + presentOffsetInverse;
                 nodeInverse.data = signal;
 

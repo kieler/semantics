@@ -447,8 +447,8 @@ public class SignalsView extends ViewPart {
                 signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
-        actionToggleMode.setText("Toggle Timeline Mode");
-        actionToggleMode.setToolTipText("Toggle Timeline Mode");
+        actionToggleMode.setText("Toggle View Mode");
+        actionToggleMode.setToolTipText("Toggle View Mode");
         actionToggleMode.setImageDescriptor(SignalsUIPlugin
                 .getImageDescriptor("icons/togglemode.png"));
         return actionToggleMode;
