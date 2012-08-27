@@ -33,13 +33,13 @@ public class SyncChartsSimSPlugin extends AbstractUIPlugin {
      * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
      */
     public static final String AUXILIARY_VARIABLE_TAG_TRANSITION 
-                           = "oSYNCCHARTSoTRANSITIONoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
+                           = "oSYNCCHARTSoAUXTRANSo";
 
     /**
      * The Constant AUXILIARY_VARIABLE_TAG for a State.
      */
     public static final String AUXILIARY_VARIABLE_TAG_STATE 
-                           = "oSYNCCHARTSoSTATEoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
+                           = "oSYNCCHARTSoAUXSTATEo";
     
     // -------------------------------------------------------------------------
 

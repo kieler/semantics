@@ -62,7 +62,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
  */
 class SyncCharts2Simulation {
     
-    // General method to create the enriched S simulation code.
+    // General method to create the enriched SyncCharts simulation models.
    	def Region transform2Simulation (Region rootRegion) {
    		var AUXILIARY_VARIABLE_TAG_STATE = SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_STATE
    		var AUXILIARY_VARIABLE_TAG_TRANSITION = SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_TRANSITION
@@ -242,7 +242,8 @@ class SyncCharts2Simulation {
 			auxiliaryEmission.setSignal(auxiliarySignal);
 			auxiliarySelfLoop.effects.add(auxiliaryEmission);
 		
-			auxiliaryState.setId("state" + UID);
+			auxiliaryState.setId("selfloopstate" + UID);
+			auxiliaryState.setLabel("selfloopstate" + UID);
 			auxiliaryState.setIsInitial(true);
 			auxiliaryState.outgoingTransitions.add(auxiliarySelfLoop);
 		
