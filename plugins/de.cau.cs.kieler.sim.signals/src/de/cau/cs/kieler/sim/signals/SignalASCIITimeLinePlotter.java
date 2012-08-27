@@ -32,7 +32,6 @@ public class SignalASCIITimeLinePlotter extends SignalASCIIPlotter {
      * Plot ASCII.
      *
      * @param signalList the signal list
-     * @param showValues the show values instead of names
      * @return the string[]
      */
     public String[] plot(final SignalList signalList) {

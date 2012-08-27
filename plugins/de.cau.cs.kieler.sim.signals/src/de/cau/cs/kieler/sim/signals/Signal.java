@@ -173,9 +173,9 @@ public class Signal implements Cloneable {
 
     /**
      * Adds the present status for a new (next) tick.
-     * 
-     * @param isPresent
-     *            the is present
+     *
+     * @param isPresent the is present
+     * @param value the value of the signal
      */
     public void addPresent(final boolean isPresent, final Object value) {
         while (this.presentList.size() >= this.maximalTicks) {
@@ -192,11 +192,10 @@ public class Signal implements Cloneable {
     /**
      * Sets the present status for a specific tick that may also be in the future. If this is the
      * case all values in between will be set to absent by default.
-     * 
-     * @param tick
-     *            the tick
-     * @param isPresent
-     *            the is present
+     *
+     * @param tick the tick
+     * @param isPresent the is present
+     * @param value the value of the signal
      */
     public void setPresent(final long tick, final boolean isPresent, final Object value) {
         // if tick too early in already garbaged history then ignore it
