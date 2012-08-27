@@ -314,12 +314,16 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                 public void run() {
                     // bring Synchronous Signals View to the front
                     try {
-                        IWorkbenchWindow window = SignalsUIPlugin.getDefault().getWorkbench()
-                                .getActiveWorkbenchWindow();
-                        IViewPart vP = window.getActivePage().showView(SIGNALSUIVIEWID);
-                        vP.setFocus();
-                        // set done flag
-                        broughtToFront = true;
+                        if (SignalsUIPlugin.getDefault() != null) {
+                            if (SignalsUIPlugin.getDefault().getWorkbench() != null) {
+                                IWorkbenchWindow window = SignalsUIPlugin.getDefault().getWorkbench()
+                                        .getActiveWorkbenchWindow();
+                                IViewPart vP = window.getActivePage().showView(SIGNALSUIVIEWID);
+                                vP.setFocus();
+                                // set done flag
+                                broughtToFront = true;
+                            }
+                        }
                     } catch (Exception e) {
                         // ignore if we cannot bring it to front
                     }
