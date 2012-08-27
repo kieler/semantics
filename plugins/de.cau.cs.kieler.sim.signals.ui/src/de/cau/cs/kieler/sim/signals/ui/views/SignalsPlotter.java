@@ -230,9 +230,6 @@ public class SignalsPlotter {
      *            the default mode
      */
     public void plot(final int zoomLevel, final Colors colors, final boolean defaultMode) {
-        // initially dispose old Color and Font objects
-        dispose();
-
         // re-calculate zoomed values
         zoom(zoomLevel);
 
