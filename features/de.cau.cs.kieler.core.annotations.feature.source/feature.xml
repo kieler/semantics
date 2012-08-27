@@ -4,7 +4,7 @@
       label="KIELER Annotations"
       version="0.4.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
-      plugin="de.cau.cs.kieler.core.annotations">
+      plugin="de.cau.cs.kieler.core.annotations.source">
 
    <copyright>
       Copyright 2011 by Real-Time and Embedded Systems Group, Department

@@ -44,13 +44,15 @@ import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
  */
 public class PartTrigger extends AbstractTrigger implements IPartListener {
 
-    // The editor input can be accessed for further use, however, the editor
-    // input path is more
-    // convenient. It can be used for determining whether a current selection
-    // refers to some
+    // The editor input can be accessed for further use, however, the editor input path is more
+    // convenient. It can be used for determining whether a current selection refers to some
     // editors content (which is not explicitly given in ISelection).
+    // UPDATE: the this doesn't work for Graphiti-based editors, since they use an own
+    //  implementation of IEditorInput (called DiagramEditorInput)
+
     /** Name of the editorInputPath property. */
-    public static final String EDITOR_INPUT_ID = "de.cau.cs.kieler.core.model.triggers.PartTrigger.editorInput";
+    public static final String EDITOR_INPUT_ID =
+            "de.cau.cs.kieler.core.model.triggers.PartTrigger.editorInput";
 
     /**
      * The default property containing the editorInput path if the active is an editor.
@@ -59,7 +61,8 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
             EDITOR_INPUT_ID);
 
     /** Name of the editorInputPath property. */
-    public static final String EDITOR_INPUT_PATH_ID = "de.cau.cs.kieler.core.model.triggers.PartTrigger.editorInputPath";
+    public static final String EDITOR_INPUT_PATH_ID =
+            "de.cau.cs.kieler.core.model.triggers.PartTrigger.editorInputPath";
 
     /**
      * The default property containing the editorInput path if the active is an editor.
@@ -136,10 +139,13 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
                 IEditorPart editor = this.currentActiveEditor;
                 EditorState state2 = new EditorState(this.currentActivePart,
                         this.currentActiveEditor, type);
-
+                
                 if (editor.getEditorInput().getClass().equals(FileEditorInput.class)
                         && ((FileEditorInput) editor.getEditorInput()).getFile() != null
-                        && ((FileEditorInput) editor.getEditorInput()).getFile().getLocationURI() != null) {
+                        && ((FileEditorInput) editor.getEditorInput()).getFile().getLocationURI()
+                            != null) {
+                    // chsch: this doesn't work for Graphiti-based editors, since they use an own
+                    //  implementation of IEditorInput (called DiagramEditorInput) ...
                     IPath editorInputPath = ((FileEditorInput) editor.getEditorInput()).getPath();
 
                     state.setProperty(EDITOR_INPUT, editor.getEditorInput());
@@ -147,6 +153,10 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
 
                     state2.setProperty(EDITOR_INPUT, editor.getEditorInput());
                     state2.setProperty(EDITOR_INPUT_PATH, editorInputPath);
+                } else {
+                    // hence, ...
+                    state.setProperty(EDITOR_INPUT, editor.getEditorInput());
+                    state2.setProperty(EDITOR_INPUT, editor.getEditorInput());
                 }
 
                 this.trigger(state);
@@ -207,7 +217,8 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
 
                 if (editor.getEditorInput().getClass().equals(FileEditorInput.class)
                         && ((FileEditorInput) editor.getEditorInput()).getFile() != null
-                        && ((FileEditorInput) editor.getEditorInput()).getFile().getLocationURI() != null) {
+                        && ((FileEditorInput) editor.getEditorInput()).getFile().getLocationURI()
+                            != null) {
                     IPath editorInputPath = ((FileEditorInput) editor.getEditorInput()).getPath();
 
                     state.setProperty(EDITOR_INPUT, editor.getEditorInput());
@@ -252,7 +263,8 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
 
                 if (editor.getEditorInput().getClass().equals(FileEditorInput.class)
                         && ((FileEditorInput) editor.getEditorInput()).getFile() != null
-                        && ((FileEditorInput) editor.getEditorInput()).getFile().getLocationURI() != null) {
+                        && ((FileEditorInput) editor.getEditorInput()).getFile().getLocationURI()
+                            != null) {
                     IPath editorInputPath = ((FileEditorInput) editor.getEditorInput()).getPath();
 
                     state.setProperty(EDITOR_INPUT, editor.getEditorInput());
@@ -308,7 +320,8 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
 
                 if (editor.getEditorInput().getClass().equals(FileEditorInput.class)
                         && ((FileEditorInput) editor.getEditorInput()).getFile() != null
-                        && ((FileEditorInput) editor.getEditorInput()).getFile().getLocationURI() != null) {
+                        && ((FileEditorInput) editor.getEditorInput()).getFile().getLocationURI()
+                            != null) {
                     IPath editorInputPath = ((FileEditorInput) editor.getEditorInput()).getPath();
 
                     state.setProperty(EDITOR_INPUT, editor.getEditorInput());
