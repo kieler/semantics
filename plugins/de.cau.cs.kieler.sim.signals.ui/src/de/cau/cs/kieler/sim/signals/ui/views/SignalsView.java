@@ -106,7 +106,7 @@ public class SignalsView extends ViewPart {
 
     /** The default mode flag. The default mode has a line for each signal. */
     private int drawMode = 0;
-    
+
     /** There are at most three drawing modes. */
     private static final int MAXDRAWMODE = 3;
 
@@ -137,7 +137,7 @@ public class SignalsView extends ViewPart {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
      */
@@ -190,7 +190,7 @@ public class SignalsView extends ViewPart {
      *            the current tick
      */
     public void refresh(final long currentTick) {
-        //TODO: if View is disposed, then reopen it
+        // TODO: if View is disposed, then reopen it
         signalList.setCurrentTick(currentTick);
         this.signalList.setMaximalTicks(MAXIMALTICKS);
         this.signalsPlotter.setSignalList(signalList);
@@ -315,9 +315,13 @@ public class SignalsView extends ViewPart {
                             if (drawMode == 0) {
                                 new SignalASCIIChartPlotter().plotToTextFile(dlg.getResult(),
                                         signalList);
-                            } else {
+                            } else if (drawMode == 1) {
                                 new SignalASCIITimeLinePlotter().plotToTextFile(dlg.getResult(),
                                         signalList);
+                            } else {
+                                SignalASCIITimeLinePlotter plotter = new SignalASCIITimeLinePlotter();
+                                plotter.setPlotValues(true);
+                                plotter.plotToTextFile(dlg.getResult(), signalList);
 
                             }
                         } catch (IOException e) {
@@ -437,7 +441,7 @@ public class SignalsView extends ViewPart {
         if (actionToggleMode != null) {
             return actionToggleMode;
         }
-        actionToggleMode = new Action("") { //, IAction.AS_CHECK_BOX) {
+        actionToggleMode = new Action("") { // , IAction.AS_CHECK_BOX) {
             public void run() {
                 drawMode = (drawMode + 1) % MAXDRAWMODE;
                 signalsPlotter.plot(zoomLevel, colors, drawMode);
