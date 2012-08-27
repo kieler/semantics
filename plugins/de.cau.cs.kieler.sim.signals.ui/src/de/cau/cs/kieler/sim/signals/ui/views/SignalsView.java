@@ -105,7 +105,10 @@ public class SignalsView extends ViewPart {
     private boolean defaultColorScheme = true;
 
     /** The default mode flag. The default mode has a line for each signal. */
-    private boolean defaultMode = true;
+    private int drawMode = 0;
+    
+    /** There are at most three drawing modes. */
+    private static final int MAXDRAWMODE = 3;
 
     // -------------------------------------------------------------------------
 
@@ -191,7 +194,7 @@ public class SignalsView extends ViewPart {
         signalList.setCurrentTick(currentTick);
         this.signalList.setMaximalTicks(MAXIMALTICKS);
         this.signalsPlotter.setSignalList(signalList);
-        this.signalsPlotter.plot(zoomLevel, colors, defaultMode);
+        this.signalsPlotter.plot(zoomLevel, colors, drawMode);
     }
 
     // -------------------------------------------------------------------------
@@ -232,7 +235,7 @@ public class SignalsView extends ViewPart {
                 for (Signal signal : signalList) {
                     signal.clear(tickToResetTo);
                 }
-                signalsPlotter.plot(zoomLevel, colors, defaultMode);
+                signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
         actionDelete.setText("Clear History");
@@ -255,7 +258,7 @@ public class SignalsView extends ViewPart {
         actionZoomIn = new Action() {
             public void run() {
                 zoomLevel += ZOOM_LEVEL_DIFF;
-                signalsPlotter.plot(zoomLevel, colors, defaultMode);
+                signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
         actionZoomIn.setText("Zoom In");
@@ -280,7 +283,7 @@ public class SignalsView extends ViewPart {
                 if (zoomLevel > ZOOM_LEVEL_DIFF) {
                     zoomLevel -= ZOOM_LEVEL_DIFF;
                 }
-                signalsPlotter.plot(zoomLevel, colors, defaultMode);
+                signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
         actionZoomOut.setText("Zoom Out");
@@ -309,7 +312,7 @@ public class SignalsView extends ViewPart {
                     dlg.setOriginalName(KiemPlugin.getDefault().getActiveProjectName() + ".txt");
                     if (dlg.open() == SaveAsDialog.OK) {
                         try {
-                            if (defaultMode) {
+                            if (drawMode == 0) {
                                 new SignalASCIIChartPlotter().plotToTextFile(dlg.getResult(),
                                         signalList);
                             } else {
@@ -413,7 +416,7 @@ public class SignalsView extends ViewPart {
                     colors.setSignalColorMarker(NONDEFAULTSIGNALCOLORMARKER);
                     colors.setSignalSpareColor(NONDEFAULTSIGNALCOLOR0);
                 }
-                signalsPlotter.plot(zoomLevel, colors, defaultMode);
+                signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
         actionToggleColors.setText("Toggle Colors");
@@ -434,10 +437,10 @@ public class SignalsView extends ViewPart {
         if (actionToggleMode != null) {
             return actionToggleMode;
         }
-        actionToggleMode = new Action("", IAction.AS_CHECK_BOX) {
+        actionToggleMode = new Action("") { //, IAction.AS_CHECK_BOX) {
             public void run() {
-                defaultMode = !defaultMode;
-                signalsPlotter.plot(zoomLevel, colors, defaultMode);
+                drawMode = (drawMode + 1) % MAXDRAWMODE;
+                signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
         actionToggleMode.setText("Toggle Timeline Mode");
@@ -469,7 +472,7 @@ public class SignalsView extends ViewPart {
     public void setColors(final Colors colors) {
         this.colors = colors;
         // refresh with new colors
-        signalsPlotter.plot(zoomLevel, colors, defaultMode);
+        signalsPlotter.plot(zoomLevel, colors, drawMode);
     }
 
     // -------------------------------------------------------------------------

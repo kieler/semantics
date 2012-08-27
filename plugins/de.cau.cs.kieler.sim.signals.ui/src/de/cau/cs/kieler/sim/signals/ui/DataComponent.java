@@ -222,7 +222,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         // set all signals to absent (signals that are present explicitly will
         // be set to present afterwards
         for (Signal signal : this.signalList) {
-            signal.setPresent(tick, false);
+            signal.setPresent(tick, false, null);
         }
 
         try {
@@ -234,13 +234,15 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                     String name = fieldNames[c];
                     boolean isPresent = false; // default
                     boolean isSignal = false;
+                    Object  signalValue = null;
                     if (obj instanceof JSONObject) {
                         // can be a signal
                         isPresent = JSONSignalValues.isPresent((JSONObject) obj);
                         // extract signal value if any
                         if (JSONSignalValues.isSignalValue((JSONObject) obj)) {
                             isSignal = true;
-                            obj = JSONSignalValues.getSignalValue((JSONObject) obj);
+                            signalValue = JSONSignalValues.getSignalValue((JSONObject) obj);
+                            obj = signalValue;
                         }
                     }
 
@@ -250,8 +252,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                             signalList.add(new Signal(name, maximalTicks));
                         }
                         Signal signal = signalList.getSignal(name);
-
-                        signal.setPresent(tick, isPresent);
+                        signal.setPresent(tick, isPresent, signalValue);
                     }
                 }
             }

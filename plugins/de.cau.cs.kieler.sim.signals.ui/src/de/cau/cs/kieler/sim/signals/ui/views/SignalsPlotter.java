@@ -226,10 +226,10 @@ public class SignalsPlotter {
      *            the zoom level
      * @param colors
      *            the colors
-     * @param defaultMode
-     *            the default mode
+     * @param drawMode
+     *            the draw mode
      */
-    public void plot(final int zoomLevel, final Colors colors, final boolean defaultMode) {
+    public void plot(final int zoomLevel, final Colors colors, final int drawMode) {
         // re-calculate zoomed values
         zoom(zoomLevel);
 
@@ -284,7 +284,7 @@ public class SignalsPlotter {
         colorsForDisposalList.add(color);
         buffer.setBackgroundColor(color);
 
-        if (defaultMode) {
+        if (drawMode == 0) {
             // DRAW THE DEFAULT MODE
             drawSignals(buffer, colors);
             drawSignalNames(buffer, 0, Label.RIGHT, colors);
@@ -295,10 +295,12 @@ public class SignalsPlotter {
                         outerScrolledComposite.getMinWidth() - signalNameSize.width, Label.LEFT,
                         colors);
             }
-        } else {
+        } else if (drawMode == 1) {
             // DRAW THE TIMELINE MODE 2776
-            drawTimeLine(buffer, colors, zoomLevel);
-
+            drawTimeLine(buffer, colors, zoomLevel, false);
+        } else if (drawMode == 2) {
+            // DRAW THE TIMELINE MODE 2776
+            drawTimeLine(buffer, colors, zoomLevel, true);
         }
 
         outerCanvas.setContents(buffer);
@@ -308,9 +310,8 @@ public class SignalsPlotter {
         long minTick = signalList.getMinTick();
         int visibleWidth = outerScrolledComposite.getParent().getSize().y;
 
-        int xScroll = ((int) (currentTick - minTick) * zoomedXSpace 
-                - (visibleWidth / FACTOR_2) + signalNameSize.width);
-        if (!defaultMode) {
+        int xScroll = ((int) (currentTick - minTick) * zoomedXSpace - (visibleWidth / FACTOR_2) + signalNameSize.width);
+        if (drawMode > 0) {
             // Scrolling in Time Line Mode
             xScroll = ((int) (currentTick - minTick) * zoomedXSpaceTimeLine
                     - (visibleWidth / FACTOR_2) + signalNameSize.width);
@@ -426,8 +427,15 @@ public class SignalsPlotter {
      * 
      * @param contents
      *            the contents
+     * @param colors
+     *            the colors
+     * @param zoomLevel
+     *            the zoom level
+     * @param showValues
+     *            the show values instead of the names
      */
-    private void drawTimeLine(final IFigure contents, final Colors colors, final int zoomLevel) {
+    private void drawTimeLine(final IFigure contents, final Colors colors, final int zoomLevel,
+            final boolean showValues) {
         Font fontDefault = new Font(Display.getCurrent(), "Arial", (zoomedYOffset / FACTOR_4),
                 SWT.NORMAL);
         fontsForDisposalList.add(fontDefault);
@@ -483,8 +491,20 @@ public class SignalsPlotter {
                 int ySignal = calculateTopPositionForTimeLine(font, signal, zoomedYSpace);
 
                 Label labelFigure = new Label();
-                String labelText = SIGNALLABELSAFETYMARGINSPACE + signal.getName()
-                        + SIGNALLABELSAFETYMARGINSPACE;
+                String labelText = "";
+                // Decide if the user wants to see signal NAMES xor VALUES
+                if (!showValues) {
+                    labelText = SIGNALLABELSAFETYMARGINSPACE + signal.getName()
+                            + SIGNALLABELSAFETYMARGINSPACE;
+                } else {
+                    Object signalValue = signal.getValue(tick);
+                    String signalValueString = signalValue + "";
+                    if (signalValue == null) {
+                        signalValueString = "";
+                    }
+                    labelText = SIGNALLABELSAFETYMARGINSPACE + signalValueString
+                            + SIGNALLABELSAFETYMARGINSPACE;
+                }
                 int labelWidth = calculateLabelWidth(font, labelText);
                 labelFigure.setText(labelText);
                 labelFigure.setVisible(true);
@@ -594,19 +614,16 @@ public class SignalsPlotter {
                 nodeS.y = y + presentOffset + zoomedYOffset / FACTOR_11;
                 nodeS.data = signal;
                 Node nodeE = new Node();
-                nodeE.x = ((int) (tick - minTick) * zoomedXSpace + zoomedXSpace 
-                        + FACTOR_2 + signalNameSize.width);
+                nodeE.x = ((int) (tick - minTick) * zoomedXSpace + zoomedXSpace + FACTOR_2 + signalNameSize.width);
                 nodeE.y = y + presentOffset + zoomedYOffset / FACTOR_11;
                 nodeE.data = signal;
 
                 Node node = new Node();
                 Node nodeInverse = new Node();
-                node.x = ((int) (tick - minTick) * zoomedXSpace 
-                        + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
+                node.x = ((int) (tick - minTick) * zoomedXSpace + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
                 node.y = y + presentOffset;
                 node.data = signal;
-                nodeInverse.x = ((int) (tick - minTick) * zoomedXSpace 
-                        + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
+                nodeInverse.x = ((int) (tick - minTick) * zoomedXSpace + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
                 nodeInverse.y = y + presentOffsetInverse;
                 nodeInverse.data = signal;
 
