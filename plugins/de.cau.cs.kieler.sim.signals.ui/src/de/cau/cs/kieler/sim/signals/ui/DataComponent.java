@@ -43,9 +43,6 @@ import de.cau.cs.kieler.sim.signals.ui.views.SignalsView;
  */
 public class DataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
-    /** The id of the view for KIEM. */
-    private static final String SIGNALSUIVIEWID = "de.cau.cs.kieler.sim.signals.ui.view";
-
     /**
      * The Constant DEFAULT_ERROR_SIGNAL_KEY defines the default value for the JSON key where
      * erroneous signals can be declared.
@@ -157,18 +154,21 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        // Reset error signals
-        SignalsView.getInstance().getColors().resetSignalColor();
-        // SignalsView.getInstance().setSignalDataComponent(null);
+        if (SignalsView.getInstance() != null) {
+            // Reset error signals
+            SignalsView.getInstance().getColors().resetSignalColor();
+        }
         signalList.clear();
-        // update signal list
-        SignalsView.getInstance().setSignalList(signalList);
-        // asynchronous refresh
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                SignalsView.getInstance().refresh(getTick());
-            }
-        });
+        if (SignalsView.getInstance() != null) {
+            // update signal list
+            SignalsView.getInstance().setSignalList(signalList);
+            // asynchronous refresh
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    SignalsView.getInstance().refresh(getTick());
+                }
+            });
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -286,51 +286,37 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
         }
 
-        // update signal list
-        SignalsView.getInstance().setSignalList(signalList);
-        // synchronous refresh
-        try {
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
-                    SignalsView.getInstance().refresh(getTick());
-                }
-            });
-        } catch (Exception e) {
-            // a refresh is supposed to silently fail
+        if (SignalsView.getInstance() == null) {
+            bringToFront();
+        }
+        
+        if (SignalsView.getInstance() != null) {
+            // update signal list
+            SignalsView.getInstance().setSignalList(signalList);
+            // synchronous refresh
+            try {
+                Display.getDefault().syncExec(new Runnable() {
+                    public void run() {
+                        SignalsView.getInstance().refresh(getTick());
+                    }
+                });
+            } catch (Exception e) {
+                // a refresh is supposed to silently fail
+            }
+            
         }
 
         return null;
     }
 
     // -------------------------------------------------------------------------
-    private boolean broughtToFront = false;
 
     /**
      * This method brings the Signals View to the front, if this is possible. Otherwise it may
      * silently fail to do so.
      */
     public void bringToFront() {
-        if (!broughtToFront) {
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
-                    // bring Synchronous Signals View to the front
-                    try {
-                        if (SignalsUIPlugin.getDefault() != null) {
-                            if (SignalsUIPlugin.getDefault().getWorkbench() != null) {
-                                IWorkbenchWindow window = SignalsUIPlugin.getDefault().getWorkbench()
-                                        .getActiveWorkbenchWindow();
-                                IViewPart vP = window.getActivePage().showView(SIGNALSUIVIEWID);
-                                vP.setFocus();
-                                // set done flag
-                                broughtToFront = true;
-                            }
-                        }
-                    } catch (Exception e) {
-                        // ignore if we cannot bring it to front
-                    }
-                }
-            });
-        }
+        SignalsView.bringToFront();
     }
 
     // -------------------------------------------------------------------------

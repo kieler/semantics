@@ -29,6 +29,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -48,6 +50,9 @@ import de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin;
  * @kieler.rating 2012-07-25 yellow KI-21
  */
 public class SignalsView extends ViewPart {
+
+    /** The id of the view for KIEM. */
+    private static final String SIGNALSUIVIEWID = "de.cau.cs.kieler.sim.signals.ui.view";
 
     /** The action for deleting an entry. */
     private Action actionDelete;
@@ -190,11 +195,37 @@ public class SignalsView extends ViewPart {
      *            the current tick
      */
     public void refresh(final long currentTick) {
-        // TODO: if View is disposed, then reopen it
         signalList.setCurrentTick(currentTick);
         this.signalList.setMaximalTicks(MAXIMALTICKS);
         this.signalsPlotter.setSignalList(signalList);
-        this.signalsPlotter.plot(zoomLevel, colors, drawMode);
+        try {
+            this.signalsPlotter.plot(zoomLevel, colors, drawMode);
+        } catch (Exception e) {
+            // ignore errors due to a closed View
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * This method brings the Signals View to the front, if this is possible. Otherwise it may
+     * silently fail to do so.
+     */
+    public static void bringToFront() {
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                // bring Synchronous Signals View to the front
+                try {
+                    IWorkbenchWindow window = SignalsUIPlugin.getDefault().getWorkbench()
+                            .getActiveWorkbenchWindow();
+                    IViewPart vP = window.getActivePage().showView(SIGNALSUIVIEWID);
+                    vP.setFocus();
+                    // set done flag
+                } catch (Exception e) {
+                    // ignore if we cannot bring it to front
+                }
+            }
+        });
     }
 
     // -------------------------------------------------------------------------
