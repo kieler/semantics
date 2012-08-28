@@ -47852,8 +47852,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     static final String DFA6_specialS =
         "\1\uffff\1\0\1\1\10\uffff}>";
     static final String[] DFA6_transitionS = {
-            "\1\1\51\uffff\1\2\5\uffff\1\7\1\10\1\11\1\12\2\uffff\1\3\2\uffff"+
-            "\1\6\3\uffff\2\3",
+            "\1\1\51\uffff\1\2\5\uffff\1\7\1\10\1\11\1\12\2\uffff\1\3\2"+
+            "\uffff\1\6\3\uffff\2\3",
             "\1\uffff",
             "\1\uffff",
             "",
@@ -48748,8 +48748,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     static final String DFA47_specialS =
         "\2\uffff\1\0\1\1\13\uffff}>";
     static final String[] DFA47_transitionS = {
-            "\1\2\16\uffff\4\1\25\uffff\1\1\1\uffff\1\3\13\uffff\1\13\2\uffff"+
-            "\1\13\3\uffff\2\13\4\uffff\2\1",
+            "\1\2\16\uffff\4\1\25\uffff\1\1\1\uffff\1\3\13\uffff\1\13\2"+
+            "\uffff\1\13\3\uffff\2\13\4\uffff\2\1",
             "",
             "\1\uffff",
             "\1\uffff",
@@ -48853,8 +48853,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     static final String DFA49_specialS =
         "\1\uffff\1\0\1\1\1\2\12\uffff}>";
     static final String[] DFA49_transitionS = {
-            "\1\1\16\uffff\4\4\24\uffff\1\3\1\4\1\uffff\1\2\4\uffff\1\4\23"+
-            "\uffff\2\4",
+            "\1\1\16\uffff\4\4\24\uffff\1\3\1\4\1\uffff\1\2\4\uffff\1\4"+
+            "\23\uffff\2\4",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -48972,8 +48972,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     static final String DFA50_specialS =
         "\2\uffff\1\0\1\1\11\uffff}>";
     static final String[] DFA50_transitionS = {
-            "\1\2\16\uffff\4\6\24\uffff\1\1\1\6\1\uffff\1\3\4\uffff\1\1\23"+
-            "\uffff\2\6",
+            "\1\2\16\uffff\4\6\24\uffff\1\1\1\6\1\uffff\1\3\4\uffff\1\1"+
+            "\23\uffff\2\6",
             "",
             "\1\uffff",
             "\1\uffff",
@@ -49182,8 +49182,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     static final String DFA59_specialS =
         "\2\uffff\1\0\1\1\12\uffff}>";
     static final String[] DFA59_transitionS = {
-            "\1\2\16\uffff\4\1\25\uffff\1\1\1\uffff\1\3\13\uffff\1\12\2\uffff"+
-            "\1\12\3\uffff\2\12\4\uffff\2\1",
+            "\1\2\16\uffff\4\1\25\uffff\1\1\1\uffff\1\3\13\uffff\1\12\2"+
+            "\uffff\1\12\3\uffff\2\12\4\uffff\2\1",
             "",
             "\1\uffff",
             "\1\uffff",
@@ -49286,8 +49286,8 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     static final String DFA61_specialS =
         "\3\uffff\1\0\1\1\10\uffff}>";
     static final String[] DFA61_transitionS = {
-            "\1\3\16\uffff\4\6\24\uffff\1\1\1\6\1\uffff\1\4\4\uffff\1\1\23"+
-            "\uffff\2\6",
+            "\1\3\16\uffff\4\6\24\uffff\1\1\1\6\1\uffff\1\4\4\uffff\1\1"+
+            "\23\uffff\2\6",
             "",
             "",
             "\1\uffff",
@@ -49499,9 +49499,9 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     static final String DFA81_specialS =
         "\1\uffff\1\0\23\uffff}>";
     static final String[] DFA81_transitionS = {
-            "\1\2\1\1\2\2\1\uffff\2\2\5\uffff\1\2\2\uffff\1\2\1\uffff\1\2"+
-            "\2\uffff\1\2\4\uffff\3\2\23\uffff\2\2\12\uffff\1\2\5\uffff\1"+
-            "\2\12\uffff\1\2",
+            "\1\2\1\1\2\2\1\uffff\2\2\5\uffff\1\2\2\uffff\1\2\1\uffff\1"+
+            "\2\2\uffff\1\2\4\uffff\3\2\23\uffff\2\2\12\uffff\1\2\5\uffff"+
+            "\1\2\12\uffff\1\2",
             "\1\uffff",
             "",
             "",
@@ -49596,9 +49596,9 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     static final String DFA101_specialS =
         "\1\uffff\1\0\37\uffff}>";
     static final String[] DFA101_transitionS = {
-            "\1\2\1\1\2\2\1\uffff\2\2\5\uffff\1\2\2\uffff\1\2\1\uffff\1\2"+
-            "\2\uffff\5\2\24\uffff\2\2\1\uffff\1\2\4\uffff\5\2\1\uffff\2"+
-            "\2\2\uffff\1\2\1\uffff\1\2\1\uffff\2\2\4\uffff\2\2",
+            "\1\2\1\1\2\2\1\uffff\2\2\5\uffff\1\2\2\uffff\1\2\1\uffff\1"+
+            "\2\2\uffff\5\2\24\uffff\2\2\1\uffff\1\2\4\uffff\5\2\1\uffff"+
+            "\2\2\2\uffff\1\2\1\uffff\1\2\1\uffff\2\2\4\uffff\2\2",
             "\1\uffff",
             "",
             "",
