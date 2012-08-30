@@ -86,14 +86,16 @@ public class SCExecution {
     // -------------------------------------------------------------------------
 
     /**
-     * 
      * Compile the filePaths SC files together with the bundled SC core files within the given
      * outputPath folder. The executable will be randomly named and can later be started after a
      * successful compilation.
-     * 
-     * {@inheritDoc}
+     *
+     * @param filePaths the file paths
+     * @param debug additional debug output before the signal output
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
      */
-    public void compile(final List<String> filePaths) throws IOException, InterruptedException {
+    public void compile(final List<String> filePaths, final boolean debug) throws IOException, InterruptedException {
         // reset successful compiled flag
         setCompiled(false);
         // choose a random name for the compiled executable
@@ -147,7 +149,12 @@ public class SCExecution {
                     + bundleLocation + " " + "-o " + outputPath + getExecutableName()
                     // -m32 = 32 bit compatibility mode to prevent compiler errors on
                     // 64bit machines/architectures.
-                    + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+                    //+ " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+                    + " -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+            
+            if (!debug) {
+                compile += " -D_SC_NOTRACE ";
+            }
             
             // -D_SC_SUPPRESS_ERROR_DETECT
             // cmot: removed this option for now because of strange error
