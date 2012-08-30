@@ -32,4 +32,4 @@ Export-Package: de.cau.cs.kieler.s,
  de.cau.cs.kieler.s.validation,
  de.cau.cs.kieler.s.scoping,
  de.cau.cs.kieler.s.formatting,
- de.cau.cs.kieler.s.parseTreeConstruction
+ de.cau.cs.kieler.s.serializer

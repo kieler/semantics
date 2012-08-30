@@ -18,8 +18,6 @@ import java.util.LinkedList;
 
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,9 +40,6 @@ import de.cau.cs.kieler.sim.signals.ui.views.SignalsView;
  * @kieler.rating 2012-08-08 yellow KI-22
  */
 public class DataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {
-
-    /** The id of the view for KIEM. */
-    private static final String SIGNALSUIVIEWID = "de.cau.cs.kieler.sim.signals.ui.view";
 
     /**
      * The Constant DEFAULT_ERROR_SIGNAL_KEY defines the default value for the JSON key where
@@ -157,18 +152,21 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        // Reset error signals
-        SignalsView.getInstance().getColors().resetSignalColor();
-        // SignalsView.getInstance().setSignalDataComponent(null);
+        if (SignalsView.getInstance() != null) {
+            // Reset error signals
+            SignalsView.getInstance().getColors().resetSignalColor();
+        }
         signalList.clear();
-        // update signal list
-        SignalsView.getInstance().setSignalList(signalList);
-        // asynchronous refresh
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                SignalsView.getInstance().refresh(getTick());
-            }
-        });
+        if (SignalsView.getInstance() != null) {
+            // update signal list
+            SignalsView.getInstance().setSignalList(signalList);
+            // asynchronous refresh
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    SignalsView.getInstance().refresh(getTick());
+                }
+            });
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -222,7 +220,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         // set all signals to absent (signals that are present explicitly will
         // be set to present afterwards
         for (Signal signal : this.signalList) {
-            signal.setPresent(tick, false);
+            signal.setPresent(tick, false, null);
         }
 
         try {
@@ -234,13 +232,15 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                     String name = fieldNames[c];
                     boolean isPresent = false; // default
                     boolean isSignal = false;
+                    Object  signalValue = null;
                     if (obj instanceof JSONObject) {
                         // can be a signal
                         isPresent = JSONSignalValues.isPresent((JSONObject) obj);
                         // extract signal value if any
                         if (JSONSignalValues.isSignalValue((JSONObject) obj)) {
                             isSignal = true;
-                            obj = JSONSignalValues.getSignalValue((JSONObject) obj);
+                            signalValue = JSONSignalValues.getSignalValue((JSONObject) obj);
+                            obj = signalValue;
                         }
                     }
 
@@ -250,8 +250,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                             signalList.add(new Signal(name, maximalTicks));
                         }
                         Signal signal = signalList.getSignal(name);
-
-                        signal.setPresent(tick, isPresent);
+                        signal.setPresent(tick, isPresent, signalValue);
                     }
                 }
             }
@@ -285,51 +284,37 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
         }
 
-        // update signal list
-        SignalsView.getInstance().setSignalList(signalList);
-        // synchronous refresh
-        try {
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
-                    SignalsView.getInstance().refresh(getTick());
-                }
-            });
-        } catch (Exception e) {
-            // a refresh is supposed to silently fail
+        if (SignalsView.getInstance() == null) {
+            bringToFront();
+        }
+        
+        if (SignalsView.getInstance() != null) {
+            // update signal list
+            SignalsView.getInstance().setSignalList(signalList);
+            // synchronous refresh
+            try {
+                Display.getDefault().syncExec(new Runnable() {
+                    public void run() {
+                        SignalsView.getInstance().refresh(getTick());
+                    }
+                });
+            } catch (Exception e) {
+                // a refresh is supposed to silently fail
+            }
+            
         }
 
         return null;
     }
 
     // -------------------------------------------------------------------------
-    private boolean broughtToFront = false;
 
     /**
      * This method brings the Signals View to the front, if this is possible. Otherwise it may
      * silently fail to do so.
      */
     public void bringToFront() {
-        if (!broughtToFront) {
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
-                    // bring Synchronous Signals View to the front
-                    try {
-                        if (SignalsUIPlugin.getDefault() != null) {
-                            if (SignalsUIPlugin.getDefault().getWorkbench() != null) {
-                                IWorkbenchWindow window = SignalsUIPlugin.getDefault().getWorkbench()
-                                        .getActiveWorkbenchWindow();
-                                IViewPart vP = window.getActivePage().showView(SIGNALSUIVIEWID);
-                                vP.setFocus();
-                                // set done flag
-                                broughtToFront = true;
-                            }
-                        }
-                    } catch (Exception e) {
-                        // ignore if we cannot bring it to front
-                    }
-                }
-            });
-        }
+        SignalsView.bringToFront();
     }
 
     // -------------------------------------------------------------------------

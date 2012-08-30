@@ -35211,8 +35211,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "\1\1\126\uffff\1\2",
             "",
             "\1\3",
-            "\1\12\1\10\1\7\1\5\1\12\1\uffff\1\11\11\uffff\1\4\2\11\22\uffff"+
-            "\1\6\67\uffff\1\11",
+            "\1\12\1\10\1\7\1\5\1\12\1\uffff\1\11\11\uffff\1\4\2\11\22"+
+            "\uffff\1\6\67\uffff\1\11",
             "\1\13",
             "",
             "",
@@ -35220,8 +35220,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "",
             "",
             "",
-            "\1\12\1\10\1\7\1\5\1\12\1\uffff\1\11\11\uffff\1\4\2\11\22\uffff"+
-            "\1\6\67\uffff\1\11"
+            "\1\12\1\10\1\7\1\5\1\12\1\uffff\1\11\11\uffff\1\4\2\11\22"+
+            "\uffff\1\6\67\uffff\1\11"
     };
 
     static final short[] DFA153_eot = DFA.unpackEncodedString(DFA153_eotS);

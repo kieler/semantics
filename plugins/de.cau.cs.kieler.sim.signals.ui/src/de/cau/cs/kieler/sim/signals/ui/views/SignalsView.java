@@ -29,6 +29,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -48,6 +50,9 @@ import de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin;
  * @kieler.rating 2012-07-25 yellow KI-21
  */
 public class SignalsView extends ViewPart {
+
+    /** The id of the view for KIEM. */
+    private static final String SIGNALSUIVIEWID = "de.cau.cs.kieler.sim.signals.ui.view";
 
     /** The action for deleting an entry. */
     private Action actionDelete;
@@ -105,7 +110,10 @@ public class SignalsView extends ViewPart {
     private boolean defaultColorScheme = true;
 
     /** The default mode flag. The default mode has a line for each signal. */
-    private boolean defaultMode = true;
+    private int drawMode = 0;
+
+    /** There are at most three drawing modes. */
+    private static final int MAXDRAWMODE = 3;
 
     // -------------------------------------------------------------------------
 
@@ -134,7 +142,7 @@ public class SignalsView extends ViewPart {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
      */
@@ -187,11 +195,37 @@ public class SignalsView extends ViewPart {
      *            the current tick
      */
     public void refresh(final long currentTick) {
-        //TODO: if View is disposed, then reopen it
         signalList.setCurrentTick(currentTick);
         this.signalList.setMaximalTicks(MAXIMALTICKS);
         this.signalsPlotter.setSignalList(signalList);
-        this.signalsPlotter.plot(zoomLevel, colors, defaultMode);
+        try {
+            this.signalsPlotter.plot(zoomLevel, colors, drawMode);
+        } catch (Exception e) {
+            // ignore errors due to a closed View
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * This method brings the Signals View to the front, if this is possible. Otherwise it may
+     * silently fail to do so.
+     */
+    public static void bringToFront() {
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                // bring Synchronous Signals View to the front
+                try {
+                    IWorkbenchWindow window = SignalsUIPlugin.getDefault().getWorkbench()
+                            .getActiveWorkbenchWindow();
+                    IViewPart vP = window.getActivePage().showView(SIGNALSUIVIEWID);
+                    vP.setFocus();
+                    // set done flag
+                } catch (Exception e) {
+                    // ignore if we cannot bring it to front
+                }
+            }
+        });
     }
 
     // -------------------------------------------------------------------------
@@ -232,7 +266,7 @@ public class SignalsView extends ViewPart {
                 for (Signal signal : signalList) {
                     signal.clear(tickToResetTo);
                 }
-                signalsPlotter.plot(zoomLevel, colors, defaultMode);
+                signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
         actionDelete.setText("Clear History");
@@ -255,7 +289,7 @@ public class SignalsView extends ViewPart {
         actionZoomIn = new Action() {
             public void run() {
                 zoomLevel += ZOOM_LEVEL_DIFF;
-                signalsPlotter.plot(zoomLevel, colors, defaultMode);
+                signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
         actionZoomIn.setText("Zoom In");
@@ -280,7 +314,7 @@ public class SignalsView extends ViewPart {
                 if (zoomLevel > ZOOM_LEVEL_DIFF) {
                     zoomLevel -= ZOOM_LEVEL_DIFF;
                 }
-                signalsPlotter.plot(zoomLevel, colors, defaultMode);
+                signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
         actionZoomOut.setText("Zoom Out");
@@ -309,12 +343,16 @@ public class SignalsView extends ViewPart {
                     dlg.setOriginalName(KiemPlugin.getDefault().getActiveProjectName() + ".txt");
                     if (dlg.open() == SaveAsDialog.OK) {
                         try {
-                            if (defaultMode) {
+                            if (drawMode == 0) {
                                 new SignalASCIIChartPlotter().plotToTextFile(dlg.getResult(),
                                         signalList);
-                            } else {
+                            } else if (drawMode == 1) {
                                 new SignalASCIITimeLinePlotter().plotToTextFile(dlg.getResult(),
                                         signalList);
+                            } else {
+                                SignalASCIITimeLinePlotter plotter = new SignalASCIITimeLinePlotter();
+                                plotter.setPlotValues(true);
+                                plotter.plotToTextFile(dlg.getResult(), signalList);
 
                             }
                         } catch (IOException e) {
@@ -413,7 +451,7 @@ public class SignalsView extends ViewPart {
                     colors.setSignalColorMarker(NONDEFAULTSIGNALCOLORMARKER);
                     colors.setSignalSpareColor(NONDEFAULTSIGNALCOLOR0);
                 }
-                signalsPlotter.plot(zoomLevel, colors, defaultMode);
+                signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
         actionToggleColors.setText("Toggle Colors");
@@ -434,14 +472,14 @@ public class SignalsView extends ViewPart {
         if (actionToggleMode != null) {
             return actionToggleMode;
         }
-        actionToggleMode = new Action("", IAction.AS_CHECK_BOX) {
+        actionToggleMode = new Action("") { // , IAction.AS_CHECK_BOX) {
             public void run() {
-                defaultMode = !defaultMode;
-                signalsPlotter.plot(zoomLevel, colors, defaultMode);
+                drawMode = (drawMode + 1) % MAXDRAWMODE;
+                signalsPlotter.plot(zoomLevel, colors, drawMode);
             }
         };
-        actionToggleMode.setText("Toggle Timeline Mode");
-        actionToggleMode.setToolTipText("Toggle Timeline Mode");
+        actionToggleMode.setText("Toggle View Mode");
+        actionToggleMode.setToolTipText("Toggle View Mode");
         actionToggleMode.setImageDescriptor(SignalsUIPlugin
                 .getImageDescriptor("icons/togglemode.png"));
         return actionToggleMode;
@@ -469,7 +507,7 @@ public class SignalsView extends ViewPart {
     public void setColors(final Colors colors) {
         this.colors = colors;
         // refresh with new colors
-        signalsPlotter.plot(zoomLevel, colors, defaultMode);
+        signalsPlotter.plot(zoomLevel, colors, drawMode);
     }
 
     // -------------------------------------------------------------------------

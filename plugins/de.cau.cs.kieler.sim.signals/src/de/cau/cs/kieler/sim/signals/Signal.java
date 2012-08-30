@@ -26,6 +26,9 @@ public class Signal implements Cloneable {
 
     /** The name of the signal. */
     private String name;
+    
+    /** The value of the signal. */
+    private LinkedList<Object> valueList = new LinkedList<Object>();
 
     /** The present value list of a signal. */
     private LinkedList<Boolean> presentList = new LinkedList<Boolean>();
@@ -85,9 +88,10 @@ public class Signal implements Cloneable {
      */
     public void clear(final long currentTick) {
         // ensure that all values are absent if not set yet
-        setPresent(currentTick, false);
+        setPresent(currentTick, false, null);
         this.tickOffset += presentList.size() - 1;
         presentList.clear();
+        valueList.clear();
     }
 
     // -------------------------------------------------------------------------
@@ -151,17 +155,36 @@ public class Signal implements Cloneable {
     // -------------------------------------------------------------------------
 
     /**
-     * Adds the present status for a new (next) tick.
+     * Gets the value of a signal at a given tick. If this tick was never set yet, the
+     * default value is null.
      * 
-     * @param isPresent
-     *            the is present
+     * @param tick
+     *            the tick
+     * @return the value as an Object or null, if not defined fo the given tick
      */
-    public void addPresent(final boolean isPresent) {
+    public Object getValue(final long tick) {
+        if (!isTickDefined(tick)) {
+            return null;
+        }
+        return valueList.get((int) (tick - getTickOffset()));
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the present status for a new (next) tick.
+     *
+     * @param isPresent the is present
+     * @param value the value of the signal
+     */
+    public void addPresent(final boolean isPresent, final Object value) {
         while (this.presentList.size() >= this.maximalTicks) {
             this.presentList.remove(0);
+            this.valueList.remove(0);
             this.tickOffset++;
         }
         this.presentList.add(isPresent);
+        this.valueList.add(value);
     }
 
     // -------------------------------------------------------------------------
@@ -169,13 +192,12 @@ public class Signal implements Cloneable {
     /**
      * Sets the present status for a specific tick that may also be in the future. If this is the
      * case all values in between will be set to absent by default.
-     * 
-     * @param tick
-     *            the tick
-     * @param isPresent
-     *            the is present
+     *
+     * @param tick the tick
+     * @param isPresent the is present
+     * @param value the value of the signal
      */
-    public void setPresent(final long tick, final boolean isPresent) {
+    public void setPresent(final long tick, final boolean isPresent, final Object value) {
         // if tick too early in already garbaged history then ignore it
         if (tick <= getTickOffset()) {
             return;
@@ -183,13 +205,15 @@ public class Signal implements Cloneable {
         if (!isTickDefined(tick)) {
             // If a new value, add it to the end
             while (this.presentList.size() + getTickOffset() < tick) {
-                addPresent(false);
+                addPresent(false, value);
             }
-            addPresent(isPresent);
+            addPresent(isPresent, value);
         } else {
             // If an older one, replace it
             this.presentList.remove((int) (tick - getTickOffset()));
+            this.valueList.remove((int) (tick - getTickOffset()));
             this.presentList.add((int) (tick - getTickOffset()), isPresent);
+            this.valueList.add((int) (tick - getTickOffset()), value);
             // FIXME: This would be more efficient with a ListIterator (msp)
         }
     }
@@ -201,8 +225,10 @@ public class Signal implements Cloneable {
      */
     public Signal clone() {
         Signal returnSignal = new Signal(name, maximalTicks);
+        int i = 0;
         for (Boolean present : this.presentList) {
-            returnSignal.addPresent(present);
+            returnSignal.addPresent(present, valueList.get(i));
+            i++;
         }
         returnSignal.tickOffset = tickOffset;
         return returnSignal;
@@ -260,5 +286,4 @@ public class Signal implements Cloneable {
     }
 
     // -------------------------------------------------------------------------
-
 }

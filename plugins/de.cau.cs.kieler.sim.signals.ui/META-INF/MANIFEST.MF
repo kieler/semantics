@@ -15,3 +15,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.ui.dialogs
 Export-Package: de.cau.cs.kieler.sim.signals.ui.views
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin

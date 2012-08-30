@@ -22,12 +22,16 @@ import java.util.LinkedList;
  * @kieler.rating 2012-07-25 yellow KI-21
  */
 public class SignalASCIITimeLinePlotter extends SignalASCIIPlotter {
+    
+    /** The plot signal values instead of names. */
+    private boolean plotValues;
 
+    //-------------------------------------------------------------------------
+    
     /**
      * Plot ASCII.
-     * 
-     * @param signalList
-     *            the signal list
+     *
+     * @param signalList the signal list
      * @return the string[]
      */
     public String[] plot(final SignalList signalList) {
@@ -50,7 +54,17 @@ public class SignalASCIITimeLinePlotter extends SignalASCIIPlotter {
             StringBuffer currentLineBuf = new StringBuffer();
             for (long tick = minTick; tick <= maxTick; tick++) {
                 if (signal.isPresent(tick)) {
-                    currentLineBuf.append(createSpacedLabel(new StringBuffer(signal.getName()),
+                    String signalText = "";
+                    // decide to show values or names
+                    if (!plotValues) {
+                        signalText = signal.getName();
+                    } else {
+                        Object signalValue = signal.getValue(tick);
+                        if (signalValue != null) {
+                            signalText = signalValue + "";
+                        }
+                    }
+                    currentLineBuf.append(createSpacedLabel(new StringBuffer(signalText),
                             spaceLength, 0));
                 } else {
                     currentLineBuf.append(getSpaceCharacters(spaceLength));
@@ -75,4 +89,27 @@ public class SignalASCIITimeLinePlotter extends SignalASCIIPlotter {
         return (String[]) stringList.toArray(new String[signalList.size()]);
     }
 
+    //-------------------------------------------------------------------------
+    
+    /**
+     * Checks if is plot values.
+     *
+     * @return true, if is plot values
+     */
+    public boolean isPlotValues() {
+        return plotValues;
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Sets the plot values.
+     *
+     * @param plotValues the new plot values
+     */
+    public void setPlotValues(final boolean plotValues) {
+        this.plotValues = plotValues;
+    }
+
+    //-------------------------------------------------------------------------
 }

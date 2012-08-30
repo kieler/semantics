@@ -27,6 +27,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleManager;
+import org.eclipse.ui.console.MessageConsole;
+import org.eclipse.ui.console.MessageConsoleStream;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,38 +54,17 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
-// TODO: Auto-generated Javadoc
 /**
  * The SimulationDataComponent for simulating S code with and without visualization.
  * 
  * @author cmot
  */
-/**
- * @author delphino
- *
- */
-/**
- * @author delphino
- *
- */
-/**
- * @author delphino
- *
- */
-/**
- * @author delphino
- *
- */
-/**
- * @author delphino
- *
- */
-/**
- * @author delphino
- * 
- */
+
 public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
+
+    /** The constant name of the maude console. */
+    private static final String SCCONSOLENAME = "SC Console";
 
     /** The S program is the considered model to simulate. */
     private Program myModel = null;
@@ -103,20 +87,29 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
     /** The Constant MINIMAL_BUFFER_SIZE. */
     private static final double MINIMAL_BUFFER_SIZE = 2048;
 
+    /** A flag indicating that debug console output is generated and should be handled. */
+    private boolean debugConsole = true;
+
+    /** The computed tick reference. */
+    private long computedTick = 1;
+
     /** The KIEM_PROPERTY constants. */
     private static final String KIEM_PROPERTY_NAME_STATEMENTNAME = "Statement Name";
     private static final String KIEM_PROPERTY_NAME_CCOMPILER = "SC-Compiler";
     private static final String KIEM_PROPERTY_NAME_FULLDEBUGMODE = "Full Debug Mode";
+    private static final String KIEM_PROPERTY_NAME_SCDEBUGCONSOLE = "SC Debug Console";
     private static final String KIEM_PROPERTY_NAME_ALTERNATIVESYNTAX = "Alternative SC Syntax";
     private static final String KIEM_PROPERTY_DEFAULT_STATEMENTNAME = "statement";
     private static final String KIEM_PROPERTY_DEFAULT_CCOMPILER = "gcc";
-    private static final boolean KIEM_PROPERTY_DEFAULT_FULLDEBUGMODE = true;
+    private static final boolean KIEM_PROPERTY_DEFAULT_SCDEBUGCONSOLE = true;
     private static final boolean KIEM_PROPERTY_DEFAULT_ALTERNATIVESYNTAX = false;
+    private static final boolean KIEM_PROPERTY_DEFAULT_FULLDEBUGMODE = true;
     private static final int KIEM_PROPERTY_STATEMENTNAME = 0;
     private static final int KIEM_PROPERTY_CCOMPILER = 1;
     private static final int KIEM_PROPERTY_FULLDEBUGMODE = 2;
-    private static final int KIEM_PROPERTY_ALTERNATIVESYNTAX = 3;
-    private static final int KIEM_PROPERTY_MAX = 4;
+    private static final int KIEM_PROPERTY_SCDEBUGCONSOLE = 3;
+    private static final int KIEM_PROPERTY_ALTERNATIVESYNTAX = 4;
+    private static final int KIEM_PROPERTY_MAX = 5;
 
     // -------------------------------------------------------------------------
 
@@ -140,7 +133,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        // Do nothing
+        // do nothing
     }
 
     // -------------------------------------------------------------------------
@@ -156,7 +149,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         String activeStatements = "";
         StringBuffer activeStatementsBuf = new StringBuffer();
 
-        if (!scExecution.isStarted()) {
+        if (scExecution == null || !scExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
@@ -171,6 +164,15 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             }
 
             String receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
+
+            if (debugConsole) {
+                printConsole("==============| TICK " + computedTick++ + " |==============");
+                while (!receivedMessage.startsWith("{\"")) {
+                    printConsole(receivedMessage);
+                    receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
+                }
+                printConsole("\n");
+            }
 
             // System.out.println(receivedMessage);
 
@@ -228,8 +230,10 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                         if (jsonSignal.has("value")) {
                             Object value = jsonSignal.get("value");
                             // valued signals
-                            returnObj.accumulate(outputSignal,
-                                    JSONSignalValues.newValue(value, true));
+                            if (sSignalIsPresent) {
+                                returnObj.accumulate(outputSignal,
+                                        JSONSignalValues.newValue(value, true));
+                            }
                         } else {
                             // pure signals
                             returnObj.accumulate(outputSignal,
@@ -297,6 +301,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                 KIEM_PROPERTY_NAME_FULLDEBUGMODE, KIEM_PROPERTY_DEFAULT_FULLDEBUGMODE);
         properties[KIEM_PROPERTY_ALTERNATIVESYNTAX] = new KiemProperty(
                 KIEM_PROPERTY_NAME_ALTERNATIVESYNTAX, KIEM_PROPERTY_DEFAULT_ALTERNATIVESYNTAX);
+        properties[KIEM_PROPERTY_SCDEBUGCONSOLE] = new KiemProperty(
+                KIEM_PROPERTY_NAME_SCDEBUGCONSOLE, KIEM_PROPERTY_DEFAULT_SCDEBUGCONSOLE);
 
         return properties;
     }
@@ -307,6 +313,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
+        computedTick = 1;
+        clearConsole();
         if (scExecution != null) {
             scExecution.stopExecution();
         }
@@ -322,7 +330,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         // get active editor
         doModel2ModelTransform(monitor, (Program) this.getModelRootElement(),
                 this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
-                        .getValueAsBoolean());
+                        .getValueAsBoolean(), this.getProperties()[KIEM_PROPERTY_SCDEBUGCONSOLE
+                        + KIEM_PROPERTY_DIFF].getValueAsBoolean());
     }
 
     // -------------------------------------------------------------------------
@@ -331,7 +340,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final Program model,
-            final boolean debug) throws KiemInitializationException {
+            final boolean debug, final boolean debugConsoleParam)
+            throws KiemInitializationException {
         this.myModel = model;
         monitor.begin("S Simulation", NUMBER_OF_TASKS);
 
@@ -421,6 +431,9 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             boolean alternativeSyntax = this.getProperties()[KIEM_PROPERTY_ALTERNATIVESYNTAX
                     + KIEM_PROPERTY_DIFF].getValueAsBoolean();
 
+            // Check whether SC compilation should generate additional debug output
+            debugConsole = debugConsoleParam;
+
             // Generate SC code
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
@@ -432,7 +445,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             scExecution = new SCExecution(outputFolder);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(scOutputString);
-            scExecution.compile(generatedSCFiles);
+            scExecution.compile(generatedSCFiles, debugConsole);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
@@ -505,6 +518,53 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
     public static boolean isWindows() {
         String os = System.getProperty("os.name").toLowerCase();
         return (os.indexOf("win") >= 0);
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Clears the sc console.
+     */
+    protected void clearConsole() {
+        printConsole(null);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Prints to the sc console.
+     * 
+     * @param text
+     *            the text
+     */
+    protected void printConsole(final String text) {
+        MessageConsole scConsole = null;
+
+        boolean found = false;
+        ConsolePlugin plugin = ConsolePlugin.getDefault();
+        IConsoleManager conMan = plugin.getConsoleManager();
+        IConsole[] existing = conMan.getConsoles();
+        for (int i = 0; i < existing.length; i++) {
+            if (SSCSimulationDataComponent.SCCONSOLENAME.equals(existing[i].getName())) {
+                scConsole = (MessageConsole) existing[i];
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            // if no console found, so create a new one
+            scConsole = new MessageConsole(SSCSimulationDataComponent.SCCONSOLENAME, null);
+            conMan.addConsoles(new IConsole[] { scConsole });
+        }
+
+        // now print to the sc console or clear it
+        if (text != null) {
+            MessageConsoleStream out = scConsole.newMessageStream();
+            out.println(text);
+        } else {
+            scConsole.clearConsole();
+        }
     }
 
     // -------------------------------------------------------------------------
