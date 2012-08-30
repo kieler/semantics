@@ -101,7 +101,8 @@ class S2SCC {
 	«sSignalConstant(program)»
 	
 	// Highest thread id in use;
-	#define _SC_ID_MAX «program.priority» 
+	// Enforce the LARGEST array option for thread IDs due to problems with the intermediate LONG_BIT option 
+	#define _SC_ID_MAX «100*program.priority» 
 
 	// Highest signal id in use;
 	#define _SC_SIG_MAX «program.getSignals().size» 
