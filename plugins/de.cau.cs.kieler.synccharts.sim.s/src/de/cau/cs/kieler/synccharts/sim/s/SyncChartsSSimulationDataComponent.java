@@ -70,6 +70,10 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     private static final int NUMBER_OF_TASKS = 10;
 
     private static final int KIEM_PROPERTY_FULLDEBUGMODE = 3;
+    private static final int KIEM_PROPERTY_SCDEBUGCONSOLE = 4;
+    
+    /** A flag indicating that debug console output is generated and should be handled. */
+    private boolean debugConsole = true;
 
     private SSCSimulationDataComponent sSCSimDataComponent = new SSCSimulationDataComponent();
 
@@ -221,12 +225,13 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        final int nProperties = 3;
+        final int nProperties = 4;
         KiemProperty[] properties = new KiemProperty[nProperties];
         properties[0] = new KiemProperty("State Name", "state");
         properties[1] = new KiemProperty("Transition Name", "transition");
 
         properties[2] = new KiemProperty("Full Debug Mode", true);
+        properties[2 + 1] = new KiemProperty("SC Debug Console", true);
 
         return properties;
     }
@@ -279,6 +284,8 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             String inputPathString = this.getModelFilePath().toString();
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             syncChartOutput = URI.createURI(input.toString());
+            
+            debugConsole = this.getProperties()[KIEM_PROPERTY_SCDEBUGCONSOLE].getValueAsBoolean();
 
             // If 'Full Debug Mode' is turned on then the user wants to have
             // also states visualized.
@@ -335,7 +342,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             }
 
             // Use the SSCSimulationDataComponent
-            sSCSimDataComponent.doModel2ModelTransform(monitor, program, false);
+            sSCSimDataComponent.doModel2ModelTransform(monitor, program, false, debugConsole);
 
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
