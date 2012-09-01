@@ -35,6 +35,14 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <products>
+            <product>
+              <id>de.cau.cs.kieler.product</id>
+              <rootFolder>kieler</rootFolder>
+            </product>
+          </products>
+        </configuration>
       </plugin>
     </plugins>
   </build> 
