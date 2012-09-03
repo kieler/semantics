@@ -28,11 +28,21 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyTyp
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import java.util.ArrayList
 import java.util.List
+import de.cau.cs.kieler.synccharts.TransitionType
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
  * transition dependencies (transition priorities), hierarchy dependencies (hierarchical states) and
  * signal dependencies (emitters and triggers).
+ * 
+ * 03.09.2012
+ * Necessary optimization because of nondeterministic (sometimes WRONG) choices for priorities:
+ * > If there are NO outgoing weak-aborts, then delete the weak abort representation
+ * > Else
+ * >   If there are NO outgoing strong-aborts, then delete the strong abort representation
+ * This ensures a default-strong representation, in case there are no outgoing transitions at all
+ * AND it ensures both types of representation in case there are strong AND weak outgoing transitions.
+ *
  * 
  * @author cmot
  */
@@ -77,6 +87,43 @@ import java.util.List
 				}
 				
 				dependencies.handleSignalDependency(transition, rootState);
+			}
+		}
+		
+		// necessary optimization to remove nondeterministic choices that are ruled out by the fact
+		// that there are no transitions of type strong (weak). In this case we do not need to consider
+		// the strong (weak) representation of the node.
+		val allStates = rootState.eAllContents.toIterable().filter(typeof(State)).toList;
+		for (state : allStates) {
+			// consider normal terminations also as weak aborts
+			val outgoingWeakTransitions = state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT);
+			val outgoingStrongTransitions = state.outgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT);
+			if (outgoingWeakTransitions.size == 0) {
+				// now we can proceed and delete all dependencies to the weak representation of state
+				val nodesToDelete = dependencies.nodes.filter(e | e.id.startsWith(state.id) && e.id.endsWith("_W")).toList();
+				for (node : nodesToDelete) {
+					val dependenciesToDelete = dependencies.dependencies.filter(e | e.targetNode == node || e.sourceNode == node).toList();
+					for (dependency : dependenciesToDelete) {
+						 dependencies.dependencies.remove(dependency);
+					}
+					dependencies.nodes.remove(node);
+				}
+			}
+			else {
+				// in this case there are weak-outgoing transitions
+				// we can now check if we can get rid of the strong abort representation 
+				// BUT this only holds for macro states
+				if (outgoingStrongTransitions.size == 0) {
+					// now we can proceed and delete all dependencies to the strong representation of state
+					val nodesToDelete = dependencies.nodes.filter(e | e.id.startsWith(state.id) && e.id.endsWith("_S") && e.state.regions.size > 0).toList();
+					for (node : nodesToDelete) {
+					val dependenciesToDelete = dependencies.dependencies.filter(e | e.targetNode == node || e.sourceNode == node).toList();
+						for (dependency : dependenciesToDelete) {
+							 dependencies.dependencies.remove(dependency);
+						}
+						dependencies.nodes.remove(node);
+					}
+				}
 			}
 		}
 		

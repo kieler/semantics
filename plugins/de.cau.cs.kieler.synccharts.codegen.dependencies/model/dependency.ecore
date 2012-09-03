@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="dependency"
-    nsURI="http://kieler.cs.cau.de/dependency/0.1.0" nsPrefix="dependency">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="dependency" nsURI="http://kieler.cs.cau.de/dependency/0.1.0"
+    nsPrefix="dependency">
   <eClassifiers xsi:type="ecore:EClass" name="Dependency">
     <eStructuralFeatures xsi:type="ecore:EReference" name="targetState" eType="ecore:EClass ../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//State"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sourceNode" lowerBound="1"

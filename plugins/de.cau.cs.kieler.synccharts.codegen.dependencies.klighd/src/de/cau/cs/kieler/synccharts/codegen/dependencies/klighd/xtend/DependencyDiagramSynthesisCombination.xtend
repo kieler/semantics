@@ -72,10 +72,13 @@ class DependencyDiagramSynthesisCombination extends AbstractCombination {
 			// build dependency graph according to selection
 			var allSelectedStates = new ArrayList<State>();
 			
+			// if just one element is selected, then interpret this as a recursive selection
+			var recursive = (selection.size == 1);
+			
 			for (selectionItem : selection) {
 				if (selection != null) {
 					if (selection instanceof ArrayList || selection instanceof State || selection instanceof Region) {
-						allSelectedStates.addStatesToList(selection);
+						allSelectedStates.addStatesToList(selection, recursive);
 					}
 				}
 			}
@@ -89,34 +92,34 @@ class DependencyDiagramSynthesisCombination extends AbstractCombination {
 	// ------------------------------------------------------------------------------
 	
 	// Adds states of state to the stateList
-	def dispatch addStatesToList(List<State> stateList, State state) {
+	def dispatch addStatesToList(List<State> stateList, State state, boolean recursive) {
 		val statesToAdd = state.eAllContents.toIterable().filter(typeof(State)).toList;
 		stateList.add(state);
-		if (statesToAdd.size > 0) {
-			addStatesToList(stateList, statesToAdd);
+		if (statesToAdd.size > 0 && recursive) {
+			addStatesToList(stateList, statesToAdd, recursive);
 		}
 		stateList;
 	}
 
 	// Adds states of region to the stateList
-	def dispatch addStatesToList(List<State> stateList, Region region) {
+	def dispatch addStatesToList(List<State> stateList, Region region, boolean recursive) {
 		val statesToAdd = region.eAllContents.toIterable().filter(typeof(State)).toList;
 		if (statesToAdd.size > 0) {
-			addStatesToList(stateList, statesToAdd);
+			addStatesToList(stateList, statesToAdd, recursive);
 		}
 		stateList;
 	}
 	
 	// Adds statesToAdd to the stateList
-	def dispatch addStatesToList(List<State> stateList, List statesOrRegionsToAdd) {
+	def dispatch addStatesToList(List<State> stateList, List statesOrRegionsToAdd, boolean recursive) {
 		for (stateOrRegion : statesOrRegionsToAdd) {
-			stateList.addStatesToList(stateOrRegion);
+			stateList.addStatesToList(stateOrRegion, recursive);
 		}
 		stateList;
 	}
 
 	// Ignores objects when adding something to the stateList
-	def dispatch addStatesToList(List<State> stateList, Object object) {
+	def dispatch addStatesToList(List<State> stateList, Object object, boolean recursive) {
 		stateList;
 	}	
 	
