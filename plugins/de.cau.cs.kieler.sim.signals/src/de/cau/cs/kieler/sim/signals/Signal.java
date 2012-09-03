@@ -14,7 +14,8 @@
 
 package de.cau.cs.kieler.sim.signals;
 
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * The class Signal represents a synchronous pure signal and its history of present stati.
@@ -27,11 +28,8 @@ public class Signal implements Cloneable {
     /** The name of the signal. */
     private String name;
     
-    /** The value of the signal. */
-    private LinkedList<Object> valueList = new LinkedList<Object>();
-
-    /** The present value list of a signal. */
-    private LinkedList<Boolean> presentList = new LinkedList<Boolean>();
+    /** The present and status value of the signal. */
+    private HashMap<Long, SignalValue> signalValueHashmap = new HashMap<Long, SignalValue>();
 
     /** The tick offset. */
     private long tickOffset = 0;
@@ -89,9 +87,8 @@ public class Signal implements Cloneable {
     public void clear(final long currentTick) {
         // ensure that all values are absent if not set yet
         setPresent(currentTick, false, null);
-        this.tickOffset += presentList.size() - 1;
-        presentList.clear();
-        valueList.clear();
+        this.tickOffset += signalValueHashmap.size() - 1;
+        signalValueHashmap.clear();
     }
 
     // -------------------------------------------------------------------------
@@ -104,13 +101,7 @@ public class Signal implements Cloneable {
      * @return true, if is tick defined
      */
     public boolean isTickDefined(final long tick) {
-        if (tick < getTickOffset()) {
-            return false;
-        }
-        if (presentList.size() + getTickOffset() <= tick) {
-            return false;
-        }
-        return true;
+        return (signalValueHashmap.get(tick) != null);
     }
 
     // -------------------------------------------------------------------------
@@ -121,7 +112,7 @@ public class Signal implements Cloneable {
      * @return the max tick
      */
     public long getMaxTick() {
-        return presentList.size() - 1 + getTickOffset();
+        return signalValueHashmap.size() - 1 + tickOffset;
     }
 
     // -------------------------------------------------------------------------
@@ -132,7 +123,7 @@ public class Signal implements Cloneable {
      * @return the min tick
      */
     public long getMinTick() {
-        return getTickOffset() + 1;
+        return tickOffset + 1;
     }
 
     // -------------------------------------------------------------------------
@@ -146,10 +137,12 @@ public class Signal implements Cloneable {
      * @return true, if is present
      */
     public boolean isPresent(final long tick) {
-        if (!isTickDefined(tick)) {
+        SignalValue signalValue = signalValueHashmap.get(tick);
+        if (signalValue != null) {
+            return signalValue.isPresent();
+        } else {
             return false;
         }
-        return presentList.get((int) (tick - getTickOffset())).booleanValue();
     }
 
     // -------------------------------------------------------------------------
@@ -166,7 +159,7 @@ public class Signal implements Cloneable {
         if (!isTickDefined(tick)) {
             return null;
         }
-        return valueList.get((int) (tick - getTickOffset()));
+        return signalValueHashmap.get(tick).getValue();
     }
     
     // -------------------------------------------------------------------------
@@ -176,15 +169,14 @@ public class Signal implements Cloneable {
      *
      * @param isPresent the is present
      * @param value the value of the signal
+     * @param tick the tick
      */
-    public void addPresent(final boolean isPresent, final Object value) {
-        while (this.presentList.size() >= this.maximalTicks) {
-            this.presentList.remove(0);
-            this.valueList.remove(0);
+    public void addPresent(final boolean isPresent, final Object value, final long tick) {
+        while (this.signalValueHashmap.size() >= this.maximalTicks) {
+            this.signalValueHashmap.remove(tickOffset);
             this.tickOffset++;
         }
-        this.presentList.add(isPresent);
-        this.valueList.add(value);
+        this.signalValueHashmap.put(tick, new SignalValue(isPresent, value));
     }
 
     // -------------------------------------------------------------------------
@@ -199,22 +191,20 @@ public class Signal implements Cloneable {
      */
     public void setPresent(final long tick, final boolean isPresent, final Object value) {
         // if tick too early in already garbaged history then ignore it
-        if (tick <= getTickOffset()) {
+        if (tick < tickOffset) {
             return;
         }
         if (!isTickDefined(tick)) {
             // If a new value, add it to the end
-            while (this.presentList.size() + getTickOffset() < tick) {
-                addPresent(false, value);
+            while (this.signalValueHashmap.size() + getTickOffset() < tick) {
+                addPresent(false, value, tick);
             }
-            addPresent(isPresent, value);
+            addPresent(isPresent, value, tick);
         } else {
             // If an older one, replace it
-            this.presentList.remove((int) (tick - getTickOffset()));
-            this.valueList.remove((int) (tick - getTickOffset()));
-            this.presentList.add((int) (tick - getTickOffset()), isPresent);
-            this.valueList.add((int) (tick - getTickOffset()), value);
-            // FIXME: This would be more efficient with a ListIterator (msp)
+            SignalValue signalValue = this.signalValueHashmap.get(tick);
+            signalValue.setPresent(isPresent);
+            signalValue.setValue(value);
         }
     }
 
@@ -225,10 +215,11 @@ public class Signal implements Cloneable {
      */
     public Signal clone() {
         Signal returnSignal = new Signal(name, maximalTicks);
-        int i = 0;
-        for (Boolean present : this.presentList) {
-            returnSignal.addPresent(present, valueList.get(i));
-            i++;
+        for (Entry<Long, SignalValue> signalValueEntry : signalValueHashmap.entrySet()) {
+            long tick = signalValueEntry.getKey();
+            boolean isPresent = signalValueEntry.getValue().isPresent();
+            Object value = signalValueEntry.getValue().getValue();
+            returnSignal.addPresent(isPresent, value, tick);
         }
         returnSignal.tickOffset = tickOffset;
         return returnSignal;
@@ -278,8 +269,8 @@ public class Signal implements Cloneable {
      */
     public void setMaximalTicks(final long maximalTicks) {
         // possibly shorten list
-        while (this.presentList.size() > maximalTicks) {
-            this.presentList.remove(0);
+        while (this.signalValueHashmap.size() > maximalTicks) {
+            this.signalValueHashmap.remove(tickOffset);
             this.tickOffset++;
         }
         this.maximalTicks = maximalTicks;

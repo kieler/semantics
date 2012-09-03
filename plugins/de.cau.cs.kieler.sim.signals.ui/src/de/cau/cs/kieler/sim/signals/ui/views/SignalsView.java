@@ -189,7 +189,8 @@ public class SignalsView extends ViewPart {
     // -------------------------------------------------------------------------
 
     /**
-     * Refresh.
+     * Refresh the signals view. This has to be called asynchronously w.r.t. the Display thread. Do
+     * not call this in blocking mode.
      * 
      * @param currentTick
      *            the current tick
@@ -201,6 +202,7 @@ public class SignalsView extends ViewPart {
         try {
             this.signalsPlotter.plot(zoomLevel, colors, drawMode);
         } catch (Exception e) {
+            e.printStackTrace();
             // ignore errors due to a closed View
         }
     }

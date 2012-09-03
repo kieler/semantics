@@ -14,7 +14,11 @@
 
 package de.cau.cs.kieler.sim.signals.ui.views;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.draw2d.EllipseAnchor;
 import org.eclipse.draw2d.FigureCanvas;
@@ -105,10 +109,10 @@ public class SignalsPlotter {
     private FigureCanvas outerCanvas;
 
     /** The colors for disposal list. */
-    private LinkedList<Color> colorsForDisposalList = new LinkedList<Color>();
+    private HashMap<RGB, Color> colorsForDisposalMap = new HashMap<RGB, Color>();
 
     /** The fonts for disposal list. */
-    private LinkedList<Font> fontsForDisposalList = new LinkedList<Font>();
+    private HashMap<Integer, Font> fontsForDisposalMap = new HashMap<Integer, Font>();
 
     /**
      * The initial signal name size. This is re-calculated with the maximal label size each time
@@ -180,14 +184,19 @@ public class SignalsPlotter {
      * each call to plot.
      */
     public void dispose() {
-        for (Color color : this.colorsForDisposalList) {
-            color.dispose();
+        Iterator<Entry<RGB, Color>> iteratorColors = colorsForDisposalMap.entrySet().iterator();
+        while (iteratorColors.hasNext()) {
+            Entry<RGB, Color> entry = iteratorColors.next();
+            entry.getValue().dispose();
         }
-        colorsForDisposalList.clear();
-        for (Font font : this.fontsForDisposalList) {
-            font.dispose();
+        colorsForDisposalMap.clear();
+
+        Iterator<Entry<Integer, Font>> iteratorFonts = fontsForDisposalMap.entrySet().iterator();
+        while (iteratorFonts.hasNext()) {
+            Entry<Integer, Font> entry = iteratorFonts.next();
+            entry.getValue().dispose();
         }
-        fontsForDisposalList.clear();
+        fontsForDisposalMap.clear();
     }
 
     // -------------------------------------------------------------------------
@@ -221,21 +230,31 @@ public class SignalsPlotter {
 
     /**
      * Plot with a defined zoomLevel.
-     * 
-     * @param zoomLevel
-     *            the zoom level
-     * @param colors
-     *            the colors
-     * @param drawMode
-     *            the draw mode
+     *
+     * @param zoomLevel the zoom level
+     * @param colors the colors
+     * @param drawMode the draw mode
+     * @return true, if successful
      */
-    public void plot(final int zoomLevel, final Colors colors, final int drawMode) {
+    public boolean plot(final int zoomLevel, final Colors colors, final int drawMode) {
+        if (plotting) {
+            return false;
+        }
+        return doPlot(zoomLevel, colors, drawMode);
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    private static boolean plotting = false;
+    private synchronized boolean doPlot(final int zoomLevel, final Colors colors, final int drawMode) {
+        plotting = true;
         // re-calculate zoomed values
         zoom(zoomLevel);
 
         // if no place to plot, or no data to plot, return.
         if (parent == null || signalList == null) {
-            return;
+            plotting = false;
+            return false;
         }
 
         // if no panel exists yet, create a new one
@@ -269,7 +288,7 @@ public class SignalsPlotter {
             outerCanvas = new FigureCanvas(outerComposite1);
             outerCanvas.setContents(signalContents);
         }
-
+        
         // draw signal view content buffered
         Panel buffer = new Panel();
         // FIXME: Possible improvement comment: Is it right that all Draw2D figures are created from
@@ -280,8 +299,8 @@ public class SignalsPlotter {
         // select a tick one day. Maybe an alternative implementation w/o this functionality could
         // draw directly to GC. left a comment.
         buffer.setLayoutManager(new XYLayout());
-        Color color = new Color(Display.getCurrent(), colors.getBackgroundColor());
-        colorsForDisposalList.add(color);
+        RGB background = colors.getBackgroundColor();
+        Color color = retrieveColor(background);
         buffer.setBackgroundColor(color);
 
         if (drawMode == 0) {
@@ -310,8 +329,7 @@ public class SignalsPlotter {
         long minTick = signalList.getMinTick();
         int visibleWidth = outerScrolledComposite.getParent().getSize().y;
 
-        int xScroll = ((int) (currentTick - minTick) * zoomedXSpace 
-                - (visibleWidth / FACTOR_2) + signalNameSize.width);
+        int xScroll = ((int) (currentTick - minTick) * zoomedXSpace - (visibleWidth / FACTOR_2) + signalNameSize.width);
         if (drawMode > 0) {
             // Scrolling in Time Line Mode
             xScroll = ((int) (currentTick - minTick) * zoomedXSpaceTimeLine
@@ -321,6 +339,8 @@ public class SignalsPlotter {
         int yScroll = outerScrolledComposite.getOrigin().y;
         outerScrolledComposite.setOrigin(xScroll, yScroll);
 
+        plotting = false;
+        return true;
     }
 
     // -------------------------------------------------------------------------
@@ -424,6 +444,49 @@ public class SignalsPlotter {
     // -------------------------------------------------------------------------
 
     /**
+     * Retrieve font and ensure it is added to the disposal map. If it already exists get the one
+     * from the map, otherwise create a new Font object.
+     * 
+     * @param fontName
+     *            the font name
+     * @param height
+     *            the height
+     * @param style
+     *            the style
+     * @return the font
+     */
+    Font retrieveFont(final String fontName, final int height, final int style) {
+        int key = fontName.hashCode() + height + style;
+        if (fontsForDisposalMap.containsKey(key)) {
+            return fontsForDisposalMap.get(key);
+        }
+        Font font = new Font(Display.getCurrent(), fontName, height, style);
+        fontsForDisposalMap.put(key, font);
+        return font;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Retrieve color and ensure it is added to the disposal map. If it already exists get the one
+     * from the map, otherwise create a new Color object.
+     * 
+     * @param rgb
+     *            the rgb
+     * @return the color
+     */
+    Color retrieveColor(final RGB rgb) {
+        if (colorsForDisposalMap.containsKey(rgb)) {
+            return colorsForDisposalMap.get(rgb);
+        }
+        Color color = new Color(Display.getCurrent(), rgb);
+        colorsForDisposalMap.put(rgb, color);
+        return color;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Draw all signal present data.
      * 
      * @param contents
@@ -437,12 +500,10 @@ public class SignalsPlotter {
      */
     private void drawTimeLine(final IFigure contents, final Colors colors, final int zoomLevel,
             final boolean showValues) {
-        Font fontDefault = new Font(Display.getCurrent(), "Arial", (zoomedYOffset / FACTOR_4),
+        Font fontDefault = retrieveFont("Arial", (zoomedYOffset / FACTOR_4),
                 SWT.NORMAL);
-        fontsForDisposalList.add(fontDefault);
-        Font fontMarker = new Font(Display.getCurrent(), "Arial", (zoomedYOffset / FACTOR_4),
+        Font fontMarker = retrieveFont("Arial", (zoomedYOffset / FACTOR_4),
                 SWT.BOLD);
-        fontsForDisposalList.add(fontMarker);
 
         // update signal name width again
         signalNameSize = getMaximumTextWidth(fontDefault);
@@ -514,8 +575,7 @@ public class SignalsPlotter {
                 labelFigure.setVisible(true);
                 labelFigure.setFont(font);
                 labelFigure.setSize(labelWidth, signalNameSize.height);
-                Color labelColor = new Color(Display.getCurrent(), signalColor);
-                colorsForDisposalList.add(labelColor);
+                Color labelColor = retrieveColor(signalColor);
                 labelFigure.setForegroundColor(labelColor);
                 labelFigure.setLocation(new Point(xSignal, ySignal));
                 contents.add(labelFigure);
@@ -556,8 +616,7 @@ public class SignalsPlotter {
             labelFigure.setVisible(true);
             labelFigure.setFont(font);
             labelFigure.setSize(labelWidth, signalNameSize.height);
-            Color labelColor = new Color(Display.getCurrent(), tickColor);
-            colorsForDisposalList.add(labelColor);
+            Color labelColor = retrieveColor(tickColor);
             labelFigure.setForegroundColor(labelColor);
             labelFigure.setLocation(new Point(tickXPos - (labelWidth / 2), zoomedYSpace / 2 + y));
             contents.add(labelFigure);
@@ -571,8 +630,7 @@ public class SignalsPlotter {
                 node.x = node.x - zoomedYOffset / FACTOR_20;
                 drawNode(contents, node, colors.getSignalColorMarker(), zoomedYOffset / FACTOR_5,
                         tick, null);
-                Color labelColor2 = new Color(Display.getCurrent(), colors.getSignalColorMarker());
-                colorsForDisposalList.add(labelColor2);
+                Color labelColor2 = retrieveColor(colors.getSignalColorMarker());
                 labelFigure.setForegroundColor(labelColor2);
             }
 
@@ -618,19 +676,16 @@ public class SignalsPlotter {
                 nodeS.y = y + presentOffset + zoomedYOffset / FACTOR_11;
                 nodeS.data = signal;
                 Node nodeE = new Node();
-                nodeE.x = ((int) (tick - minTick) * zoomedXSpace
-                        + zoomedXSpace + FACTOR_2 + signalNameSize.width);
+                nodeE.x = ((int) (tick - minTick) * zoomedXSpace + zoomedXSpace + FACTOR_2 + signalNameSize.width);
                 nodeE.y = y + presentOffset + zoomedYOffset / FACTOR_11;
                 nodeE.data = signal;
 
                 Node node = new Node();
                 Node nodeInverse = new Node();
-                node.x = ((int) (tick - minTick) * zoomedXSpace 
-                        + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
+                node.x = ((int) (tick - minTick) * zoomedXSpace + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
                 node.y = y + presentOffset;
                 node.data = signal;
-                nodeInverse.x = ((int) (tick - minTick) * zoomedXSpace
-                        + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
+                nodeInverse.x = ((int) (tick - minTick) * zoomedXSpace + (zoomedXSpace / FACTOR_2) + signalNameSize.width);
                 nodeInverse.y = y + presentOffsetInverse;
                 nodeInverse.data = signal;
 
@@ -702,10 +757,8 @@ public class SignalsPlotter {
         int yPos = node.y;
         dotFigure.setVisible(true);
         dotFigure.setSize(size, size);
-        Color bgColor = new Color(Display.getCurrent(), signalColor);
-        colorsForDisposalList.add(bgColor);
-        Color fgColor = new Color(Display.getCurrent(), signalColor);
-        colorsForDisposalList.add(fgColor);
+        Color bgColor = retrieveColor(signalColor);
+        Color fgColor = retrieveColor(signalColor);
         dotFigure.setBackgroundColor(bgColor);
         dotFigure.setForegroundColor(fgColor);
         dotFigure.setLocation(new Point(xPos, yPos));
@@ -745,8 +798,7 @@ public class SignalsPlotter {
         if (signalColor == colors.getSignalColorError()) {
             wireFigure.setLineWidth(2);
         }
-        Color color = new Color(Display.getCurrent(), signalColor);
-        this.colorsForDisposalList.add(color);
+        Color color = retrieveColor(signalColor);
         wireFigure.setForegroundColor(color);
         // edge.source is the Node to the left of this edge
         EllipseAnchor sourceAnchor = new EllipseAnchor((RectangleFigure) node1.data);
@@ -802,8 +854,7 @@ public class SignalsPlotter {
 
         outerScrolledComposite.setMinSize(outerScrolledComposite.getMinWidth(), signalList.size()
                 * zoomedYSpace + (zoomedYOffset / FACTOR_2));
-        Font font = new Font(Display.getCurrent(), "Arial", (zoomedYOffset / FACTOR_4), SWT.NORMAL);
-        fontsForDisposalList.add(font);
+        Font font = retrieveFont("Arial", (zoomedYOffset / FACTOR_4), SWT.NORMAL);
 
         // update signal name width again
         signalNameSize = getMaximumTextWidth(font);
@@ -823,8 +874,7 @@ public class SignalsPlotter {
             labelFigure.setFont(font);
             labelFigure.setLabelAlignment(align);
             labelFigure.setSize(signalNameSize.width, signalNameSize.height);
-            Color color = new Color(Display.getCurrent(), signalColor);
-            this.colorsForDisposalList.add(color);
+            Color color = retrieveColor(signalColor);
             labelFigure.setForegroundColor(color);
             labelFigure.setLocation(new Point(xPos - 0, y));
             contents.add(labelFigure);

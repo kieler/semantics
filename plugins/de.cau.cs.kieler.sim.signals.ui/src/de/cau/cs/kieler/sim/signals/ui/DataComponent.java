@@ -175,6 +175,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * {@inheritDoc}
      */
     public boolean isProducer() {
+        // we must be sure not to miss any values
         return false;
     }
 
@@ -293,7 +294,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
             SignalsView.getInstance().setSignalList(signalList);
             // synchronous refresh
             try {
-                Display.getDefault().syncExec(new Runnable() {
+                Display.getDefault().asyncExec(new Runnable() {
                     public void run() {
                         SignalsView.getInstance().refresh(getTick());
                     }
