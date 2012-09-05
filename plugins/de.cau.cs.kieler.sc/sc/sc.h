@@ -49,8 +49,6 @@ typedef void          *labeltype;     //!< Computed goto - a la gcc
 // Determine storage requirements for sets of thread ids
 #if _SC_ID_MAX < WORD_BIT               // Is one unsigned int big enough?
 typedef unsigned int   idset;
-#elif _SC_ID_MAX < _setPartSize          // Is one _setPartType big enough?
-typedef _setPartType  idset;
 #else
 #define _idsetSize  ((_SC_ID_MAX / _setPartSize) + 1)
 typedef _setPartType  idset[_idsetSize];
@@ -69,8 +67,6 @@ typedef _setPartType  idset[_idsetSize];
 // Determine storage requirements for sets of thread ids
 #if _SC_SIG_MAX < WORD_BIT               // Is one unsigned int big enough?
 typedef unsigned int   sigset;
-#elif _SC_SIG_MAX < _setPartSize          // Is one _setPartType big enough?
-typedef _setPartType  sigset;
 #else
 #define _sigsetSize  ((_SC_ID_MAX / _setPartSize) + 1)
 typedef _setPartType  sigset[_sigsetSize];
@@ -250,11 +246,11 @@ const int     _tickMax       = TICKMAX;
 # endif
 #endif
 
-# if _SC_ID_MAX < WORD_BIT          // Is one _setPartType big enough?
+//# if _SC_ID_MAX < WORD_BIT          // Is one _setPartType big enough?
 unsigned int _setPart;
-# else
-_setPartType _setPart;
-# endif
+//# else
+//_setPartType _setPart;
+//# endif
 
 /* To select next thread to be used, assign '_cid' the highest set bit in 'active'.
  * NOTE: In 'active', the lowest bit, corresponding to the _TickEnd thread,
@@ -266,38 +262,38 @@ _setPartType _setPart;
  * instruction at our disposal or not.
  */
 
-#if ((defined __i386__ || defined __amd64__ || defined __x86_64__) && defined __GNUC__ && !defined _SC_NOASSEMBLER)
+//#if ((defined __i386__ || defined __amd64__ || defined __x86_64__) && defined __GNUC__ && !defined _SC_NOASSEMBLER)
 // Version 1: x86 + gcc available.
 // Use fast Bit Scan Reverse assembler instruction.
 // NOTES:
 // - This requires 'set' to be a plain integer (not, eg, an array reference such as _descs[...])
 // - If 'set' is 0, the result of 'i' is undefined!
 // - Compare also with "63 - __builtin_clzll(set)"
-# if (((_SC_ID_MAX < WORD_BIT) && (WORD_BIT == 32)) ||	\
-     ((_SC_ID_MAX < _setPartSize) && (_setPartSize == 32)))
-#  define _BitScanReverse(set, bit)		\
-  __asm volatile("bsrl %1,%0\n"			\
-		 : "=r" (bit)			\
-		 : "r" (set)			\
-		 )
-# elif   (((_SC_ID_MAX < WORD_BIT) && (WORD_BIT == 64)) ||	\
-	 (_setPartSize == 64))
-unsigned long _longBit;
-#  define _BitScanReverse(set, bit)			\
-  __asm volatile("bsrq %1,%0\n"				\
-		 : "=r" (_longBit)			\
-		 : "r" (set)				\
-		 );					\
-  bit = _longBit
-
-# endif
-#else
+//# if (((_SC_ID_MAX < WORD_BIT) && (WORD_BIT == 32)) ||	\
+//     ((_SC_ID_MAX < _setPartSize) && (_setPartSize == 32)))
+//#  define _BitScanReverse(set, bit)		\
+//  __asm volatile("bsrl %1,%0\n"			\
+//		 : "=r" (bit)			\
+//		 : "r" (set)			\
+//		 )
+//# elif   (((_SC_ID_MAX < WORD_BIT) && (WORD_BIT == 64)) ||	\
+//	 (_setPartSize == 64))
+//unsigned long _longBit;
+//#  define _BitScanReverse(set, bit)			\
+//  __asm volatile("bsrq %1,%0\n"				\
+//		 : "=r" (_longBit)			\
+//		 : "r" (set)				\
+//		 );					\
+//  bit = _longBit
+//
+//# endif
+//#else
 # define _BitScanReverse(set, bit)				      \
   bit = 0;							      \
   for (_setPart = set; _setPart > 1; _setPart >>= 1) {		      \
     bit++;							      \
   }
-#endif
+//#endif
 
 #if _SC_ID_MAX < _setPartSize          // Is one _setPartType big enough?
 # define selectCid()   _SC_ERROR_DETECT_NONE_ACTIVE \
