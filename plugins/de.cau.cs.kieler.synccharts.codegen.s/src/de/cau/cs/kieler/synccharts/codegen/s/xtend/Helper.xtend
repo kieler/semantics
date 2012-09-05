@@ -397,12 +397,20 @@ import de.cau.cs.kieler.core.kexpressions.BooleanValue
 	def Node getHighestDependencyStrongNode(State state, Transition transition) {
 		val nodes = (TraceComponent::getTraceTargets(state, "DependencyStrong") as List<Node>);
 		if (nodes.empty) {
-			return null;
+			// in case the strong representation is optimized away (because there are no outgoing strong
+			// transitions) take the weak representation instead.
+			return state.getHighestDependencyWeakNode();
 		}
-		if (transition == null) {
-			return	nodes.sort(e1, e2 | compareDependencyPriority(e2,e1)).get(0);
+		var node = nodes.sort(e1, e2 | compareDependencyPriority(e2,e1)).get(0);
+		if (transition != null) {
+			node = nodes.filter(e|e.transition == transition).toList().get(0);	
 		}
-		return nodes.filter(e|e.transition == transition).toList().get(0);
+		if (node != null) {
+			return node;
+		}
+		// in case the strong representation is optimized away (because there are no outgoing strong
+		// transitions) take the weak representation instead.
+		return state.getHighestDependencyWeakNode();
 	}
 	
 	// Get the highest priority for all strong nodes of this state in case transition is null
@@ -459,8 +467,10 @@ import de.cau.cs.kieler.core.kexpressions.BooleanValue
 
 	// Compare highest strong dependencies of two SyncChart states.
 	def int compareTraceDependencyPriority(State e1, State e2) {
-		if (e1.getHighestDependencyStrongNode(null).priority > 
-		    e2.getHighestDependencyStrongNode(null).priority) {-1} else {1}
+		var node1 = e1.getHighestDependencyStrongNode(null);
+		var node2 = e2.getHighestDependencyStrongNode(null)
+		if (node1.priority > 
+		    node2.priority) {-1} else {1}
 	}
 
 	// Compare two transitions by their prioritiy.

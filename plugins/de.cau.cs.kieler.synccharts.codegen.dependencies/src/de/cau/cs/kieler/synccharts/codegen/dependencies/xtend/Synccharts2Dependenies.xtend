@@ -104,8 +104,13 @@ import de.cau.cs.kieler.synccharts.TransitionType
 				for (node : nodesToDelete) {
 					val dependenciesToDelete = dependencies.dependencies.filter(e | e.targetNode == node || e.sourceNode == node).toList();
 					for (dependency : dependenciesToDelete) {
+						 // not only delete the nodes but also all dependencies (transitions) to an from the nodes
+						 dependency.targetNode.incomingDependencies.remove(dependency);
+						 dependency.sourceNode.outgoingDependencies.remove(dependency);
 						 dependencies.dependencies.remove(dependency);
 					}
+					// the following deletion is optional, code generation should skip/optimize
+					// PRIO statements away, iff their nodes are NULL
 					dependencies.nodes.remove(node);
 				}
 			}
@@ -119,8 +124,13 @@ import de.cau.cs.kieler.synccharts.TransitionType
 					for (node : nodesToDelete) {
 					val dependenciesToDelete = dependencies.dependencies.filter(e | e.targetNode == node || e.sourceNode == node).toList();
 						for (dependency : dependenciesToDelete) {
+							 // not only delete the nodes but also all dependencies (transitions) to an from the nodes
+							 dependency.targetNode.incomingDependencies.remove(dependency);
+							 dependency.sourceNode.outgoingDependencies.remove(dependency);
 							 dependencies.dependencies.remove(dependency);
 						}
+						// the following deletion is optional, code generation should skip/optimize
+						// PRIO statements away, iff their nodes are NULL
 						dependencies.nodes.remove(node);
 					}
 				}
@@ -452,11 +462,35 @@ import de.cau.cs.kieler.synccharts.TransitionType
 			node.setPriority(-1);
 		}
 		
-		var nodesWithoutOutgoingEdges = dependencies.nodes.filter(e | e.outgoingDependencies == null || e.outgoingDependencies.size == 0);
-		var tmpPrio = 0;
+		val nodesWithNoEdges = dependencies.nodes.filter(e | (e.outgoingDependencies == null || e.outgoingDependencies.size == 0)
+													 && (e.incomingDependencies == null || e.incomingDependencies.size == 0));
+	    // pre-visit these nodes with some max-priority,
+	    // because we can always LOWER a priority (to a possible weak abort representation) but not ENLARGE a prio within a tick.
+	    // -1 because we reserve the MAXIMAL priority for the (connected) root node, we will re-arrange the root node's prio		                                         
+		var tmpPrio = dependencies.nodes.size - nodesWithNoEdges.size - 1;
+		for (node : nodesWithNoEdges) {
+			//node.setPriority(-1);
+			tmpPrio = node.visit(tmpPrio);
+		}
+		//TODO: possible optimization: delete all unconnected strong-representations and in the S code generation, use
+		//skip the prio statement.
+		
+		// calculate priorities for all connected nodes (including the root)
+		// now start with priority 0 	                                         
+		tmpPrio = 0;
+		var nodesWithoutOutgoingEdges = dependencies.nodes.filter(e | (e.outgoingDependencies == null || e.outgoingDependencies.size == 0)
+			&& (e.incomingDependencies != null && e.incomingDependencies.size > 0));
+			
 		for (node : nodesWithoutOutgoingEdges) {
 			tmpPrio = node.visit(tmpPrio);
 		}
+		
+		// re-set the root node's priority to be the maximal priority (above all unconnected nodesWithNoEdges
+		val rootNode = dependencies.nodes.filter(e | (e.priority == dependencies.nodes.size - nodesWithNoEdges.size)
+													 && e.incomingDependencies != null && e.incomingDependencies.size > 0);
+        if (rootNode.head != null) {
+			rootNode.head.setPriority(dependencies.nodes.size);
+        }
 	}
 	
 	// Visit helper function for topological sorting the dependency nodes.

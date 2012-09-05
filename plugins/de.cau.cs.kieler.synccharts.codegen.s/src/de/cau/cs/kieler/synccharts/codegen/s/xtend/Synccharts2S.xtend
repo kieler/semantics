@@ -75,6 +75,8 @@ class Synccharts2S {
 		}
 		
 		// order SyncChart states according to their dependency priority  (strong nodes)
+		// w.r.t. this order, the root state should be the one to start with (the priority assignment has to ensure that
+		// it has the maximal priority, followed by priorities of unconnected nodes, followed by other connected nodes.
 		val dependencyPrioritySortedStates = rootRegion.getAllStates.sort(e1, e2 | compareTraceDependencyPriority(e1, e2));
 		
 		// create all states and their mapping
