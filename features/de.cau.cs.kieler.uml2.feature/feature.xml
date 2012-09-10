@@ -6,7 +6,7 @@
       provider-name="Christian-Albrechts-Universität zu Kiel"
       plugin="de.cau.cs.kieler.uml2">
 
-   <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KIML">
+   <description url="http://www.informatik.uni-kiel.de/rtsys/kieler/">
       A bridge feature to connect other KIELER features such as automatic
 layout to the UML2 tools.
    </description>

@@ -2,7 +2,7 @@
 
 author: haf
 
-This template is customized for our ticket #266 (https://rtsys.informatik.uni-kiel.de/trac/kieler/ticket/266)
+This template is customized for our ticket #266 (http://rtsys.informatik.uni-kiel.de/jira/browse/KIELER-266)
 
 It removed the semantic hints from the plugin.xml.
 When the ticket is solved (e.g. by solving the originating Eclipse bug), somebody

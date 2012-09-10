@@ -5,7 +5,7 @@
       version="0.4.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
-   <description url="https://rtsys.informatik.uni-kiel.de/trac/kieler/wiki">
+   <description url="http://www.informatik.uni-kiel.de/rtsys/kieler/">
       Dependencies of the KIELER project used for building a Rich Client Application.
    </description>
 
