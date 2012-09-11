@@ -189,6 +189,17 @@ public class SignalsView extends ViewPart {
     // -------------------------------------------------------------------------
 
     /**
+     * Gets the signal list.
+     * 
+     * @return the signal list
+     */
+    public SignalList getSignalList() {
+        return signalList;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Refresh the signals view. This has to be called asynchronously w.r.t. the Display thread. Do
      * not call this in blocking mode.
      * 

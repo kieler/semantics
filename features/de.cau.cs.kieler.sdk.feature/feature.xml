@@ -5,7 +5,7 @@
       version="0.6.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
-   <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/">
+   <description url="http://www.informatik.uni-kiel.de/rtsys/kieler/">
       Development kit providing all binaries and sources of the KIELER features.
    </description>
 
