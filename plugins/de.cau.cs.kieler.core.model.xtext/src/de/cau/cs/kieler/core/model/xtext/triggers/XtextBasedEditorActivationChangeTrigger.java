@@ -142,7 +142,7 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
                 //    new Status(IStatus.INFO, ModelXtextPlugin.PLUGIN_ID, resource.getURI()
                 //       .lastSegment() + ": " + msg));
             }
-            return true;
+            return false;
         } catch (CoreException e) {
             /* in this case something went heavily wrong */
             throw new WrappedException(e);
