@@ -97,8 +97,6 @@
     <module>de.cau.cs.kieler.klay.layered</module>
     <module>de.cau.cs.kieler.klay.planar</module>
     <module>de.cau.cs.kieler.klighd</module>
-    <module>de.cau.cs.kieler.klighd.gmf</module>
-    <!--    <module>de.cau.cs.kieler.klighd.graphiti</module> -->
     <module>de.cau.cs.kieler.klighd.piccolo</module>
     <module>de.cau.cs.kieler.klighd.xtext</module>
     <module>de.cau.cs.kieler.klots</module>
