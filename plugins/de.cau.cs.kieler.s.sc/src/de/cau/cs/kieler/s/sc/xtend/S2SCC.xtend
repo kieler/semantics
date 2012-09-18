@@ -63,6 +63,7 @@ class S2SCC {
        «sSetOutputFunction(program)»
 
 	   «sResetSignals(program)»
+	   «sTotalResetSignals(program)»
 
 	   «/* Generate the main function */»
 	   «mainFunction(program)»
@@ -119,19 +120,16 @@ class S2SCC {
 	
 	
 	#define EMIT_SCC(name)                                 \
-  	presentSigIntPre[name] = presentSigInt[name];		 \
-  	presentSigInt[name] = presentSigInt[name]||1;		\
+  	presentSigInt[name] = 1;		\
 
 	#define EMIT_VAL_SCC(name, value)                                 \
-  	presentSigIntPre[name] = presentSigInt[name];		 \
-  	presentSigInt[name] = presentSigInt[name]||1;		\
-  	valSigIntPre[name] = valSigInt[name];		 \
+  	presentSigInt[name] = 1;		\
   	valSigInt[name] = value;		\
 	
 	#define PRESENT_SCC(name)                                 \
   	(presentSigInt[name] == 1)					     \
 	
-	#define PRE_SCC(name)                                 \
+	#define PRE_PRESENT_SCC(name)                                 \
   	(presentSigIntPre[name] == 1)					     \
 
 	#define VAL_SCC(name)                                 \
@@ -180,10 +178,25 @@ class S2SCC {
    }
 
    // -------------------------------------------------------------------------
-   // Generate simple signal outputs.
+   // Intermediate tick reset function.
    def sResetSignals(Program program) {
    	'''
 	void resetSignals() {
+	«FOR signal : program.getSignals()»
+	  presentSigIntPre[sig_«signal.name»] = presentSigInt[sig_«signal.name»];
+	  presentSigInt[sig_«signal.name»] = 0;
+	  valSigIntPre[sig_«signal.name»] = valSigInt[sig_«signal.name»];
+	  valSigInt[sig_«signal.name»] = 0;
+	«ENDFOR»
+	}
+   	'''
+   }
+
+   // -------------------------------------------------------------------------
+   // Startup tick reset function
+   def sTotalResetSignals(Program program) {
+   	'''
+	void totalResetSignals() {
 	«FOR signal : program.getSignals()»
 	  presentSigInt[sig_«signal.name»] = 0;
 	  presentSigIntPre[sig_«signal.name»] = 0;
@@ -229,7 +242,7 @@ void setInputs(){
 		reset();
 		output = cJSON_CreateObject();
 		RESET();
-		resetSignals();
+		totalResetSignals();
 		setInputs();
 		tick();
 		while(1) {
@@ -439,11 +452,11 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
 	    (VAL_SCC(«expression.subExpressions.toList.head.expand»))
 	«ENDIF»
 	«IF expression.operator  == OperatorType::PRE»
-  	    «IF expression.subExpressions.toList.head instanceof OperatorExpression && (expression.subExpressions.toList.head as OperatorExpression).operator  == OperatorType::VAL »
-	        (PRE_VAL_SCC(«expression.subExpressions.toList.head.expand»))
-	    «ELSE»
-  	        (PRE_SCC(«expression.subExpressions.toList.head.expand»))
-	    «ENDIF»
+  	    «/*IF expression.subExpressions.toList.head instanceof OperatorExpression && (expression.subExpressions.toList.head as OperatorExpression).operator  == OperatorType::VAL */» 
+	        (PRE_«expression.subExpressions.toList.head.expand»)
+	    «/*ELSE*/»
+  	    //    (PRE_SCC(«expression.subExpressions.toList.head.expand»))
+	    «/*ENDIF*/»
 	«ENDIF»
 	«IF expression.operator  == OperatorType::NE»
 		(«FOR subexpression : expression.subExpressions SEPARATOR " != "»

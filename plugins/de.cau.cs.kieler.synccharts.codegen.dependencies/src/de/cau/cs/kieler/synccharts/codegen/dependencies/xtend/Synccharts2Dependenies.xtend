@@ -42,6 +42,8 @@ import de.cau.cs.kieler.synccharts.TransitionType
  * >   If there are NO outgoing strong-aborts, then delete the strong abort representation
  * This ensures a default-strong representation, in case there are no outgoing transitions at all
  * AND it ensures both types of representation in case there are strong AND weak outgoing transitions.
+ * 10.09.2012
+ * If there is NO outgoing transition at all (final state) that keep the strong abort representation.
  *
  * 
  * @author cmot
