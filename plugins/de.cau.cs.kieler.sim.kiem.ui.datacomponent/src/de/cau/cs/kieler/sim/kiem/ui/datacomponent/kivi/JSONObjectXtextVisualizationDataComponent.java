@@ -517,11 +517,13 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                         // Save the current style before
                         StyleRange backupStyleRange = localXtextEditor.getInternalSourceViewer()
                                 .getTextWidget().getStyleRangeAtOffset(offset);
-                        recoverStyleRangeMap.put(offset, backupStyleRange);
-                        Color highlightColor = new Color(Display.getCurrent(),
-                                specificBackgroundColor);
-                        styleRange = new StyleRange(offset, length, backupStyleRange.foreground,
-                                highlightColor);
+                        if (backupStyleRange != null) {
+                            recoverStyleRangeMap.put(offset, backupStyleRange);
+                            Color highlightColor = new Color(Display.getCurrent(),
+                                    specificBackgroundColor);
+                            styleRange = new StyleRange(offset, length, backupStyleRange.foreground,
+                                    highlightColor);
+                        }
                     } else {
                         // Recover the old style
                         StyleRange recoverStyleRange = recoverStyleRangeMap.get(offset);
