@@ -24,6 +24,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import org.eclipse.emf.common.util.EList
 
 /**
  * Transformation of a SyncChart to another SyncChart
@@ -61,20 +62,21 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
  * @author cmot
  */
 class SyncCharts2Simulation {
-    
+	
+	
     // General method to create the enriched SyncCharts simulation models.
    	def Region transform2Simulation (Region rootRegion) {
    		var AUXILIARY_VARIABLE_TAG_STATE = SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_STATE
    		var AUXILIARY_VARIABLE_TAG_TRANSITION = SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_TRANSITION
    		
 		// Clone the complete SyncCharts region 
-   		var target = CloningExtensions::clone(rootRegion) as Region;
+   		var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
 
 		var originalStates = rootRegion.eAllContents().toIterable().filter(typeof(State));
-		var targetStates = target.eAllContents().toIterable().filter(typeof(State)).toList();
+		var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
 		var originalTransitions = rootRegion.eAllContents().toIterable().filter(typeof(Transition));
-		var targetTransitions = target.eAllContents().toIterable().filter(typeof(Transition)).toList();
+		var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
 
 		// For every state in the SyncChart do the transformation
 		// Iterate over a copy of the list	
@@ -86,7 +88,8 @@ class SyncCharts2Simulation {
 			val originalTransitionURIFragment = originalTransition.eResource.getURIFragment(originalTransition);
 			val transitionUID = AUXILIARY_VARIABLE_TAG_TRANSITION + originalTransitionURIFragment.hashCode.toString().replace("-","M");
 			// This statement we want to modify
-			targetTransition.transformTransition(target, transitionUID);
+			targetTransition.transformTransition(targetRootRegion, transitionUID);
+			targetTransition.transformCountDelayes(targetRootRegion);
 		}
 		
 
@@ -100,10 +103,10 @@ class SyncCharts2Simulation {
 			val originalStateURIFragment = originalState.eResource.getURIFragment(originalState);
 			val stateUID = AUXILIARY_VARIABLE_TAG_STATE + originalStateURIFragment.hashCode.toString().replace("-","M");
 			// This statement we want to modify
-			targetState.transformState(target, stateUID);
+			targetState.transformState(targetRootRegion, stateUID);
 		}
 
-		target;
+		targetRootRegion;
 	}	
 	
 	// Transform a transition as described in 1.
@@ -255,6 +258,51 @@ class SyncCharts2Simulation {
 		}
 		
 	}
+	
+	//-------------------------------------------------------------------------
+	
+	// This will encode count delays in transitions and insert additional counting
+	// host code variables plus modifying the trigger of the count delayed transition
+	// to be immediate and guarded by a host code expression (with the specific
+    // number of ticks).
+	def void transformCountDelayes(Transition transition, Region targetRootRegion) {
+		if (transition.delay > 0) {
+			// auxiliary signal
+			val auxiliaryVariable = KExpressionsFactory::eINSTANCE.createVariable;
+			val auxiliaryVariableName = "countDelay" + transition.hashCode + "";
+			auxiliaryVariable.setName(auxiliaryVariableName);
+			auxiliaryVariable.setType(ValueType::INT);
+			auxiliaryVariable.setInitialValue("0");
+
+			// add auxiliaryVariable to first (and only) root region state SyncCharts main interface
+  			targetRootRegion.states.get(0).variables.add(auxiliaryVariable);
+  			
+  			// add self-loop transition, counting up the variable
+  		    val selfLoop = SyncchartsFactory::eINSTANCE.createTransition();
+  		    val state = transition.sourceState;
+			selfLoop.setTargetState(state);
+			selfLoop.setPriority(1);
+		    selfLoop.setDelay(1);
+			val selfLoopEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
+			selfLoopEffect.setCode(auxiliaryVariableName + "++");
+			selfLoop.effects.add(selfLoopEffect);
+			selfLoop.setTrigger(transition.trigger);
+			state.outgoingTransitions.add(selfLoop);
+
+			// calculate a new terminating expression, based on the auxiliary variable
+			val terminatingExpression = KExpressionsFactory::eINSTANCE.createTextExpression;
+			terminatingExpression.setCode(auxiliaryVariableName + " >= " + transition.delay);
+			transition.setTrigger(terminatingExpression);
+			
+			// disable old delay, set it to be immediate
+			transition.setDelay(1);
+			transition.setIsImmediate(true);
+			
+			//TODO: for all incoming transition reset the variable
+		}
+	}
+	
+    
 	
 
 
