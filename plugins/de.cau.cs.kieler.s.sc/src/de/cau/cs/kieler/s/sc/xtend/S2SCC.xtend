@@ -68,7 +68,7 @@ class S2SCC {
        «sSetOutputFunction(program)»
 
 	   «/* Possible global host code */»
-	   «program.hocstCodeString.extractCode»
+	   «program.globalHostCodeInstruction.extractCode»
 
 	   «/* Generate the main function */»
 	   «mainFunction(program)»
@@ -348,7 +348,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    
    // Expand HOST code.
    def dispatch expand(HostCodeInstruction hostCodeInstruction) {
-   	 hostCodeInstruction.hostCode.extractCode;
+   	 '''«hostCodeInstruction.hostCode.extractCode»;'''
    }
    // Expand Text Expression
    def dispatch expand(TextExpression expression) {

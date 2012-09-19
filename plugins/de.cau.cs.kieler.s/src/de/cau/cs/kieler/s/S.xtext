@@ -16,11 +16,11 @@ generate s "http://www.cau.de/cs/kieler/s"
 
 
 Program :
-	'Synchronous Program' name = ID '(' priority=INT ')'
+	'synchronous program' name = ID '(' priority=INT ')'
 //	((signals += Signal) (signals += Signal)*)?
 //	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
-	(hocstCodeString = HOSTCODE)*
+	(globalHostCodeInstruction = HOSTCODE)*
 	(states += State)+
 ;
 
@@ -37,7 +37,7 @@ Program :
 
 
 State:
-	'State' '(' name = ID ')' '{'
+	'state' '(' name = ID ')' '{'
 	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 	(instructions+=Instruction';')*
 	'}'
@@ -47,14 +47,14 @@ State:
 
 
 Thread:
-	'Thread' '(' name = ID ')' '{'
+	'thread' '(' name = ID ')' '{'
 	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 	(states+=State';')*
 	'}'
 ;
 
 Variable returns kexpressions::Variable:
-	'Variable'
+	'variable'
 	(name=EString)
 	(':=' initialValue=EString)?
 	(':' type=ValueType)?
@@ -63,7 +63,7 @@ Variable returns kexpressions::Variable:
 Signal returns kexpressions::Signal:
     (isInput?='input')?
 	(isOutput?='output')?
-	'Signal'
+	'signal'
 	(name=EString)
 	(':=' initialValue=EString)?
     ((':' type=ValueType)
@@ -95,63 +95,63 @@ Instruction:
 
 // Change priority
 Prio:
-	'Prio' '('priority=INT (',' continuation=[Continuation])?')'
+	'prio' '('priority=INT (',' continuation=[Continuation])?')'
 ;
 
 // Transition to anothe Thread or State   
 Trans :
-	'Trans''(' continuation=[Continuation] ')'
+	'trans''(' continuation=[Continuation] ')'
 ;
   
 // Forking new Threads
 Fork :
-	'Fork''('thread=[Continuation] ',' priority=INT (',' continuation=[Continuation])?')'
+	'fork''('thread=[Continuation] ',' priority=INT (',' continuation=[Continuation])?')'
 ;
 
 
 // Joining Threads
 Join : 
 	{Join}
-	'Join' '('continuation=[Continuation]?')'
+	'join' '('continuation=[Continuation]?')'
 ;
    
 
 // Simple instructions
 Pause :
 	{Pause} 
-	'Pause''('continuation=[Continuation]?')'
+	'pause''('continuation=[Continuation]?')'
 ;
   
 Term : 
 	{Term}
-	'Term''('continuation=[Continuation]?')'
+	'term''('continuation=[Continuation]?')'
 ;
   
 Halt : 
 	{Halt}
-	'Halt''('continuation=[Continuation]?')'
+	'halt''('continuation=[Continuation]?')'
 ;
   
 
 Emit:
-	'Emit''('signal= [kexpressions::Signal] ('(' value=SExpression ')')? (',' continuation=[Continuation])?')'
+	'emit''('signal= [kexpressions::Signal] ('(' value=SExpression ')')? (',' continuation=[Continuation])?')'
 ;
   
 Abort : 
 	{Abort}
-	'Abort''('continuation=[Continuation]?')'
+	'abort''('continuation=[Continuation]?')'
 ;
 
 // Conditioned execution of instructions  
 If : 
-	'If''('expression = SExpression (',' continuation=[Continuation])?')' '{'
+	'if''('expression = SExpression (',' continuation=[Continuation])?')' '{'
 		(instructions += Instruction';')*
 	'}'
 ;
   
 // Complex instruction
 Await:
-	'Await' '('signal= [kexpressions::Signal] (',' continuation=[Continuation])?')'
+	'await' '('signal= [kexpressions::Signal] (',' continuation=[Continuation])?')'
 ;
 
 

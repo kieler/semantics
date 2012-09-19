@@ -36,6 +36,7 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.BooleanValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 
 
 /**
@@ -168,6 +169,13 @@ import de.cau.cs.kieler.core.kexpressions.BooleanValue
 		newExpression.setValue(expression.value);
 		newExpression;
 	}	
+
+	// Apply conversion to textual host code 
+	def dispatch Expression convertToSExpression(TextExpression expression) {
+		var newExpression = KExpressionsFactory::eINSTANCE.createTextExpression
+		newExpression.setCode("'" +  expression.code + "'");
+		newExpression;
+	}	
 	
 	// Apply conversion to the default case
 	def dispatch Expression convertToSExpression(Expression expression) {
@@ -198,7 +206,9 @@ import de.cau.cs.kieler.core.kexpressions.BooleanValue
 
 	// Convert SyncChart text effects and add them to an instructions list.
 	def dispatch void convertToSEffect(TextEffect effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
-		// TODO
+		val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
+		sHostCode.setHostCode("'" + effect.code + ";'");
+		instructions.add(sHostCode);
 	}
 
 
@@ -219,6 +229,23 @@ import de.cau.cs.kieler.core.kexpressions.BooleanValue
 		signalList 
 	}		
 
+
+	// Convert SyncChart variables of a state into S textual host code.	
+	def String getStateVariables (State state){
+		var StringBuffer returnText = new StringBuffer();
+		for (variable : state.variables) {
+			returnText.append(variable.type.getName.toLowerCase);
+			returnText.append(" ");
+			returnText.append(variable.name);
+			if (variable.initialValue != null) {
+  		  	  returnText.append(" = ");
+	  		  returnText.append(variable.initialValue);
+			}
+			returnText.append(";");
+		}
+		"'" + returnText.toString + "'"; 
+	}	
+	
 	// Convert a single SyncChart signal and create a new S signal.
 	def create target : KExpressionsFactory::eINSTANCE.createSignal() transform(Signal signal) {
 		target.setCombineOperator(signal.combineOperator) 

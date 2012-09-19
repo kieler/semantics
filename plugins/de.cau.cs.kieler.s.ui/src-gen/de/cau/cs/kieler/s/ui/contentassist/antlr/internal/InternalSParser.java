@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_HOSTCODE", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_HOSTCODESTRINGTERMINAL", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'or'", "'and'", "'not'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'?'", "'='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pure'", "'boolean'", "'unsigned'", "'integer'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'", "'Synchronous Program'", "'('", "')'", "'State'", "'{'", "'}'", "';'", "'Thread'", "'Variable'", "':='", "':'", "'Signal'", "'combine'", "'with'", "'Prio'", "','", "'Trans'", "'Fork'", "'Join'", "'Pause'", "'Term'", "'Halt'", "'Emit'", "'Abort'", "'If'", "'Await'", "'input'", "'output'", "'inputoutput'", "'return'", "'var'", "'@'", "'['", "']'", "'.'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_HOSTCODE", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_HOSTCODESTRINGTERMINAL", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'or'", "'and'", "'not'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'?'", "'='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pure'", "'boolean'", "'unsigned'", "'integer'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'", "'synchronous program'", "'('", "')'", "'state'", "'{'", "'}'", "';'", "'thread'", "'variable'", "':='", "':'", "'signal'", "'combine'", "'with'", "'prio'", "','", "'trans'", "'fork'", "'join'", "'pause'", "'term'", "'halt'", "'emit'", "'abort'", "'if'", "'await'", "'input'", "'output'", "'inputoutput'", "'return'", "'var'", "'@'", "'['", "']'", "'.'"
     };
     public static final int T__68=68;
     public static final int RULE_BOOLEAN=9;
@@ -9406,17 +9406,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Program__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2832:1: rule__Program__Group__0__Impl : ( 'Synchronous Program' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2832:1: rule__Program__Group__0__Impl : ( 'synchronous program' ) ;
     public final void rule__Program__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2836:1: ( ( 'Synchronous Program' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2837:1: ( 'Synchronous Program' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2836:1: ( ( 'synchronous program' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2837:1: ( 'synchronous program' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2837:1: ( 'Synchronous Program' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2838:1: 'Synchronous Program'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2837:1: ( 'synchronous program' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2838:1: 'synchronous program'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProgramAccess().getSynchronousProgramKeyword_0()); 
@@ -9921,22 +9921,22 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Program__Group__6__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3012:1: rule__Program__Group__6__Impl : ( ( rule__Program__HocstCodeStringAssignment_6 )* ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3012:1: rule__Program__Group__6__Impl : ( ( rule__Program__GlobalHostCodeInstructionAssignment_6 )* ) ;
     public final void rule__Program__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3016:1: ( ( ( rule__Program__HocstCodeStringAssignment_6 )* ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3017:1: ( ( rule__Program__HocstCodeStringAssignment_6 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3016:1: ( ( ( rule__Program__GlobalHostCodeInstructionAssignment_6 )* ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3017:1: ( ( rule__Program__GlobalHostCodeInstructionAssignment_6 )* )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3017:1: ( ( rule__Program__HocstCodeStringAssignment_6 )* )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3018:1: ( rule__Program__HocstCodeStringAssignment_6 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3017:1: ( ( rule__Program__GlobalHostCodeInstructionAssignment_6 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3018:1: ( rule__Program__GlobalHostCodeInstructionAssignment_6 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getHocstCodeStringAssignment_6()); 
+               before(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionAssignment_6()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3019:1: ( rule__Program__HocstCodeStringAssignment_6 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3019:1: ( rule__Program__GlobalHostCodeInstructionAssignment_6 )*
             loop28:
             do {
                 int alt28=2;
@@ -9949,10 +9949,10 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
                 switch (alt28) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3019:2: rule__Program__HocstCodeStringAssignment_6
+            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3019:2: rule__Program__GlobalHostCodeInstructionAssignment_6
             	    {
-            	    pushFollow(FOLLOW_rule__Program__HocstCodeStringAssignment_6_in_rule__Program__Group__6__Impl6598);
-            	    rule__Program__HocstCodeStringAssignment_6();
+            	    pushFollow(FOLLOW_rule__Program__GlobalHostCodeInstructionAssignment_6_in_rule__Program__Group__6__Impl6598);
+            	    rule__Program__GlobalHostCodeInstructionAssignment_6();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -9966,7 +9966,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getHocstCodeStringAssignment_6()); 
+               after(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionAssignment_6()); 
             }
 
             }
@@ -10350,17 +10350,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__State__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3153:1: rule__State__Group__0__Impl : ( 'State' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3153:1: rule__State__Group__0__Impl : ( 'state' ) ;
     public final void rule__State__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3157:1: ( ( 'State' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3158:1: ( 'State' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3157:1: ( ( 'state' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3158:1: ( 'state' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3158:1: ( 'State' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3159:1: 'State'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3158:1: ( 'state' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3159:1: 'state'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getStateKeyword_0()); 
@@ -11619,17 +11619,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Thread__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3613:1: rule__Thread__Group__0__Impl : ( 'Thread' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3613:1: rule__Thread__Group__0__Impl : ( 'thread' ) ;
     public final void rule__Thread__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3617:1: ( ( 'Thread' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3618:1: ( 'Thread' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3617:1: ( ( 'thread' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3618:1: ( 'thread' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3618:1: ( 'Thread' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3619:1: 'Thread'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3618:1: ( 'thread' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3619:1: 'thread'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getThreadAccess().getThreadKeyword_0()); 
@@ -12888,17 +12888,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Variable__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4073:1: rule__Variable__Group__0__Impl : ( 'Variable' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4073:1: rule__Variable__Group__0__Impl : ( 'variable' ) ;
     public final void rule__Variable__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4077:1: ( ( 'Variable' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4078:1: ( 'Variable' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4077:1: ( ( 'variable' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4078:1: ( 'variable' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4078:1: ( 'Variable' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4079:1: 'Variable'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4078:1: ( 'variable' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4079:1: 'variable'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableAccess().getVariableKeyword_0()); 
@@ -13777,17 +13777,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__Group__2__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4382:1: rule__Signal__Group__2__Impl : ( 'Signal' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4382:1: rule__Signal__Group__2__Impl : ( 'signal' ) ;
     public final void rule__Signal__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4386:1: ( ( 'Signal' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4387:1: ( 'Signal' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4386:1: ( ( 'signal' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4387:1: ( 'signal' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4387:1: ( 'Signal' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4388:1: 'Signal'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4387:1: ( 'signal' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4388:1: 'signal'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSignalAccess().getSignalKeyword_2()); 
@@ -14955,17 +14955,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Prio__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4830:1: rule__Prio__Group__0__Impl : ( 'Prio' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4830:1: rule__Prio__Group__0__Impl : ( 'prio' ) ;
     public final void rule__Prio__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4834:1: ( ( 'Prio' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4835:1: ( 'Prio' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4834:1: ( ( 'prio' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4835:1: ( 'prio' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4835:1: ( 'Prio' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4836:1: 'Prio'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4835:1: ( 'prio' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4836:1: 'prio'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrioAccess().getPrioKeyword_0()); 
@@ -15539,17 +15539,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Trans__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5053:1: rule__Trans__Group__0__Impl : ( 'Trans' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5053:1: rule__Trans__Group__0__Impl : ( 'trans' ) ;
     public final void rule__Trans__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5057:1: ( ( 'Trans' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5058:1: ( 'Trans' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5057:1: ( ( 'trans' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5058:1: ( 'trans' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5058:1: ( 'Trans' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5059:1: 'Trans'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5058:1: ( 'trans' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5059:1: 'trans'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransAccess().getTransKeyword_0()); 
@@ -15860,17 +15860,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Fork__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5182:1: rule__Fork__Group__0__Impl : ( 'Fork' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5182:1: rule__Fork__Group__0__Impl : ( 'fork' ) ;
     public final void rule__Fork__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5186:1: ( ( 'Fork' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5187:1: ( 'Fork' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5186:1: ( ( 'fork' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5187:1: ( 'fork' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5187:1: ( 'Fork' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5188:1: 'Fork'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5187:1: ( 'fork' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5188:1: 'fork'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getForkAccess().getForkKeyword_0()); 
@@ -16691,17 +16691,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Join__Group__1__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5500:1: rule__Join__Group__1__Impl : ( 'Join' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5500:1: rule__Join__Group__1__Impl : ( 'join' ) ;
     public final void rule__Join__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5504:1: ( ( 'Join' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5505:1: ( 'Join' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5504:1: ( ( 'join' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5505:1: ( 'join' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5505:1: ( 'Join' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5506:1: 'Join'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5505:1: ( 'join' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5506:1: 'join'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJoinAccess().getJoinKeyword_1()); 
@@ -17102,17 +17102,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Pause__Group__1__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5662:1: rule__Pause__Group__1__Impl : ( 'Pause' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5662:1: rule__Pause__Group__1__Impl : ( 'pause' ) ;
     public final void rule__Pause__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5666:1: ( ( 'Pause' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5667:1: ( 'Pause' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5666:1: ( ( 'pause' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5667:1: ( 'pause' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5667:1: ( 'Pause' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5668:1: 'Pause'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5667:1: ( 'pause' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5668:1: 'pause'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPauseAccess().getPauseKeyword_1()); 
@@ -17513,17 +17513,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Term__Group__1__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5824:1: rule__Term__Group__1__Impl : ( 'Term' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5824:1: rule__Term__Group__1__Impl : ( 'term' ) ;
     public final void rule__Term__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5828:1: ( ( 'Term' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5829:1: ( 'Term' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5828:1: ( ( 'term' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5829:1: ( 'term' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5829:1: ( 'Term' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5830:1: 'Term'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5829:1: ( 'term' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5830:1: 'term'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getTermKeyword_1()); 
@@ -17924,17 +17924,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Halt__Group__1__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5986:1: rule__Halt__Group__1__Impl : ( 'Halt' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5986:1: rule__Halt__Group__1__Impl : ( 'halt' ) ;
     public final void rule__Halt__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5990:1: ( ( 'Halt' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5991:1: ( 'Halt' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5990:1: ( ( 'halt' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5991:1: ( 'halt' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5991:1: ( 'Halt' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5992:1: 'Halt'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5991:1: ( 'halt' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5992:1: 'halt'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHaltAccess().getHaltKeyword_1()); 
@@ -18256,17 +18256,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Emit__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6117:1: rule__Emit__Group__0__Impl : ( 'Emit' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6117:1: rule__Emit__Group__0__Impl : ( 'emit' ) ;
     public final void rule__Emit__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6121:1: ( ( 'Emit' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6122:1: ( 'Emit' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6121:1: ( ( 'emit' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6122:1: ( 'emit' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6122:1: ( 'Emit' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6123:1: 'Emit'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6122:1: ( 'emit' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6123:1: 'emit'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmitAccess().getEmitKeyword_0()); 
@@ -19261,17 +19261,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Abort__Group__1__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6498:1: rule__Abort__Group__1__Impl : ( 'Abort' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6498:1: rule__Abort__Group__1__Impl : ( 'abort' ) ;
     public final void rule__Abort__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6502:1: ( ( 'Abort' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6503:1: ( 'Abort' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6502:1: ( ( 'abort' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6503:1: ( 'abort' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6503:1: ( 'Abort' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6504:1: 'Abort'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6503:1: ( 'abort' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6504:1: 'abort'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAbortAccess().getAbortKeyword_1()); 
@@ -19593,17 +19593,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__If__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6629:1: rule__If__Group__0__Impl : ( 'If' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6629:1: rule__If__Group__0__Impl : ( 'if' ) ;
     public final void rule__If__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6633:1: ( ( 'If' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6634:1: ( 'If' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6633:1: ( ( 'if' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6634:1: ( 'if' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6634:1: ( 'If' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6635:1: 'If'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6634:1: ( 'if' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6635:1: 'if'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getIfKeyword_0()); 
@@ -20605,17 +20605,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Await__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7012:1: rule__Await__Group__0__Impl : ( 'Await' ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7012:1: rule__Await__Group__0__Impl : ( 'await' ) ;
     public final void rule__Await__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7016:1: ( ( 'Await' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7017:1: ( 'Await' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7016:1: ( ( 'await' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7017:1: ( 'await' )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7017:1: ( 'Await' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7018:1: 'Await'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7017:1: ( 'await' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7018:1: 'await'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAwaitAccess().getAwaitKeyword_0()); 
@@ -36033,9 +36033,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Program__SignalsAssignment_5_1_1"
 
 
-    // $ANTLR start "rule__Program__HocstCodeStringAssignment_6"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:12697:1: rule__Program__HocstCodeStringAssignment_6 : ( RULE_HOSTCODE ) ;
-    public final void rule__Program__HocstCodeStringAssignment_6() throws RecognitionException {
+    // $ANTLR start "rule__Program__GlobalHostCodeInstructionAssignment_6"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:12697:1: rule__Program__GlobalHostCodeInstructionAssignment_6 : ( RULE_HOSTCODE ) ;
+    public final void rule__Program__GlobalHostCodeInstructionAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -36047,11 +36047,11 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:12703:1: RULE_HOSTCODE
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getHocstCodeStringHOSTCODETerminalRuleCall_6_0()); 
+               before(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0()); 
             }
-            match(input,RULE_HOSTCODE,FOLLOW_RULE_HOSTCODE_in_rule__Program__HocstCodeStringAssignment_625617); if (state.failed) return ;
+            match(input,RULE_HOSTCODE,FOLLOW_RULE_HOSTCODE_in_rule__Program__GlobalHostCodeInstructionAssignment_625617); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getHocstCodeStringHOSTCODETerminalRuleCall_6_0()); 
+               after(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0()); 
             }
 
             }
@@ -36071,7 +36071,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__HocstCodeStringAssignment_6"
+    // $ANTLR end "rule__Program__GlobalHostCodeInstructionAssignment_6"
 
 
     // $ANTLR start "rule__Program__StatesAssignment_7"
@@ -42531,7 +42531,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Program__Group_5__0_in_rule__Program__Group__5__Impl6537 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Program__Group__6__Impl_in_rule__Program__Group__66568 = new BitSet(new long[]{0x0048400000000010L,0x0000000000000060L});
     public static final BitSet FOLLOW_rule__Program__Group__7_in_rule__Program__Group__66571 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Program__HocstCodeStringAssignment_6_in_rule__Program__Group__6__Impl6598 = new BitSet(new long[]{0x0000000000000012L});
+    public static final BitSet FOLLOW_rule__Program__GlobalHostCodeInstructionAssignment_6_in_rule__Program__Group__6__Impl6598 = new BitSet(new long[]{0x0000000000000012L});
     public static final BitSet FOLLOW_rule__Program__Group__7__Impl_in_rule__Program__Group__76629 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Program__StatesAssignment_7_in_rule__Program__Group__7__Impl6658 = new BitSet(new long[]{0x0048400000000012L,0x0000000000000060L});
     public static final BitSet FOLLOW_rule__Program__StatesAssignment_7_in_rule__Program__Group__7__Impl6670 = new BitSet(new long[]{0x0048400000000012L,0x0000000000000060L});
@@ -43333,7 +43333,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleSignal_in_rule__Program__SignalsAssignment_5_0_125524 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVariable_in_rule__Program__VariablesAssignment_5_1_025555 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSignal_in_rule__Program__SignalsAssignment_5_1_125586 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__Program__HocstCodeStringAssignment_625617 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__Program__GlobalHostCodeInstructionAssignment_625617 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleState_in_rule__Program__StatesAssignment_725648 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__State__NameAssignment_225679 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSignal_in_rule__State__SignalsAssignment_5_0_025710 = new BitSet(new long[]{0x0000000000000002L});

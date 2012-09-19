@@ -73,6 +73,9 @@ class Synccharts2S {
 		for (signal : rootState.getStateSignals) {
 			target.signals.add(signal);
 		}
+
+		// add interface variables to s program (as the global host code)
+		target.setGlobalHostCodeInstruction(rootState.getStateVariables);
 		
 		// order SyncChart states according to their dependency priority  (strong nodes)
 		// w.r.t. this order, the root state should be the one to start with (the priority assignment has to ensure that

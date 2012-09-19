@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getSignals <em>Signals</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getHocstCodeString <em>Hocst Code String</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getStates <em>States</em>}</li>
  * </ul>
  * </p>
@@ -106,24 +106,24 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected EList<Signal> signals;
 
   /**
-   * The default value of the '{@link #getHocstCodeString() <em>Hocst Code String</em>}' attribute.
+   * The default value of the '{@link #getGlobalHostCodeInstruction() <em>Global Host Code Instruction</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getHocstCodeString()
+   * @see #getGlobalHostCodeInstruction()
    * @generated
    * @ordered
    */
-  protected static final String HOCST_CODE_STRING_EDEFAULT = null;
+  protected static final String GLOBAL_HOST_CODE_INSTRUCTION_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getHocstCodeString() <em>Hocst Code String</em>}' attribute.
+   * The cached value of the '{@link #getGlobalHostCodeInstruction() <em>Global Host Code Instruction</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getHocstCodeString()
+   * @see #getGlobalHostCodeInstruction()
    * @generated
    * @ordered
    */
-  protected String hocstCodeString = HOCST_CODE_STRING_EDEFAULT;
+  protected String globalHostCodeInstruction = GLOBAL_HOST_CODE_INSTRUCTION_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
@@ -235,9 +235,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getHocstCodeString()
+  public String getGlobalHostCodeInstruction()
   {
-    return hocstCodeString;
+    return globalHostCodeInstruction;
   }
 
   /**
@@ -245,12 +245,12 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setHocstCodeString(String newHocstCodeString)
+  public void setGlobalHostCodeInstruction(String newGlobalHostCodeInstruction)
   {
-    String oldHocstCodeString = hocstCodeString;
-    hocstCodeString = newHocstCodeString;
+    String oldGlobalHostCodeInstruction = globalHostCodeInstruction;
+    globalHostCodeInstruction = newGlobalHostCodeInstruction;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PROGRAM__HOCST_CODE_STRING, oldHocstCodeString, hocstCodeString));
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION, oldGlobalHostCodeInstruction, globalHostCodeInstruction));
   }
 
   /**
@@ -305,8 +305,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return getVariables();
       case SPackage.PROGRAM__SIGNALS:
         return getSignals();
-      case SPackage.PROGRAM__HOCST_CODE_STRING:
-        return getHocstCodeString();
+      case SPackage.PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION:
+        return getGlobalHostCodeInstruction();
       case SPackage.PROGRAM__STATES:
         return getStates();
     }
@@ -338,8 +338,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         getSignals().clear();
         getSignals().addAll((Collection<? extends Signal>)newValue);
         return;
-      case SPackage.PROGRAM__HOCST_CODE_STRING:
-        setHocstCodeString((String)newValue);
+      case SPackage.PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION:
+        setGlobalHostCodeInstruction((String)newValue);
         return;
       case SPackage.PROGRAM__STATES:
         getStates().clear();
@@ -371,8 +371,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SPackage.PROGRAM__SIGNALS:
         getSignals().clear();
         return;
-      case SPackage.PROGRAM__HOCST_CODE_STRING:
-        setHocstCodeString(HOCST_CODE_STRING_EDEFAULT);
+      case SPackage.PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION:
+        setGlobalHostCodeInstruction(GLOBAL_HOST_CODE_INSTRUCTION_EDEFAULT);
         return;
       case SPackage.PROGRAM__STATES:
         getStates().clear();
@@ -399,8 +399,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return variables != null && !variables.isEmpty();
       case SPackage.PROGRAM__SIGNALS:
         return signals != null && !signals.isEmpty();
-      case SPackage.PROGRAM__HOCST_CODE_STRING:
-        return HOCST_CODE_STRING_EDEFAULT == null ? hocstCodeString != null : !HOCST_CODE_STRING_EDEFAULT.equals(hocstCodeString);
+      case SPackage.PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION:
+        return GLOBAL_HOST_CODE_INSTRUCTION_EDEFAULT == null ? globalHostCodeInstruction != null : !GLOBAL_HOST_CODE_INSTRUCTION_EDEFAULT.equals(globalHostCodeInstruction);
       case SPackage.PROGRAM__STATES:
         return states != null && !states.isEmpty();
     }
@@ -422,8 +422,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     result.append(name);
     result.append(", priority: ");
     result.append(priority);
-    result.append(", hocstCodeString: ");
-    result.append(hocstCodeString);
+    result.append(", globalHostCodeInstruction: ");
+    result.append(globalHostCodeInstruction);
     result.append(')');
     return result.toString();
   }

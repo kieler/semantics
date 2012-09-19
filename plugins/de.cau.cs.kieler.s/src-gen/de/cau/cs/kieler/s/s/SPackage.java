@@ -103,13 +103,13 @@ public interface SPackage extends EPackage
   int PROGRAM__SIGNALS = 3;
 
   /**
-   * The feature id for the '<em><b>Hocst Code String</b></em>' attribute.
+   * The feature id for the '<em><b>Global Host Code Instruction</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__HOCST_CODE_STRING = 4;
+  int PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION = 4;
 
   /**
    * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -768,15 +768,15 @@ public interface SPackage extends EPackage
   EReference getProgram_Signals();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Program#getHocstCodeString <em>Hocst Code String</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Hocst Code String</em>'.
-   * @see de.cau.cs.kieler.s.s.Program#getHocstCodeString()
+   * @return the meta object for the attribute '<em>Global Host Code Instruction</em>'.
+   * @see de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction()
    * @see #getProgram()
    * @generated
    */
-  EAttribute getProgram_HocstCodeString();
+  EAttribute getProgram_GlobalHostCodeInstruction();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getStates <em>States</em>}'.
@@ -1290,12 +1290,12 @@ public interface SPackage extends EPackage
     EReference PROGRAM__SIGNALS = eINSTANCE.getProgram_Signals();
 
     /**
-     * The meta object literal for the '<em><b>Hocst Code String</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Global Host Code Instruction</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute PROGRAM__HOCST_CODE_STRING = eINSTANCE.getProgram_HocstCodeString();
+    EAttribute PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION = eINSTANCE.getProgram_GlobalHostCodeInstruction();
 
     /**
      * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.

@@ -84,7 +84,7 @@ ruleProgram returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='Synchronous Program' 
+(	otherlv_0='synchronous program' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getProgramAccess().getSynchronousProgramKeyword_0());
     }
@@ -208,9 +208,9 @@ ruleProgram returns [EObject current=null]
 )
 ))*)?(
 (
-		lv_hocstCodeString_9_0=RULE_HOSTCODE
+		lv_globalHostCodeInstruction_9_0=RULE_HOSTCODE
 		{
-			newLeafNode(lv_hocstCodeString_9_0, grammarAccess.getProgramAccess().getHocstCodeStringHOSTCODETerminalRuleCall_6_0()); 
+			newLeafNode(lv_globalHostCodeInstruction_9_0, grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -218,8 +218,8 @@ ruleProgram returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"hocstCodeString",
-        		lv_hocstCodeString_9_0, 
+       			"globalHostCodeInstruction",
+        		lv_globalHostCodeInstruction_9_0, 
         		"HOSTCODE");
 	    }
 
@@ -263,7 +263,7 @@ ruleState returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='State' 
+(	otherlv_0='state' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getStateAccess().getStateKeyword_0());
     }
@@ -389,7 +389,7 @@ ruleThread returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='Thread' 
+(	otherlv_0='thread' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getThreadAccess().getThreadKeyword_0());
     }
@@ -515,7 +515,7 @@ ruleVariable returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='Variable' 
+(	otherlv_0='variable' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getVariableAccess().getVariableKeyword_0());
     }
@@ -632,7 +632,7 @@ ruleSignal returns [EObject current=null]
 	    }
 
 )
-)?	otherlv_2='Signal' 
+)?	otherlv_2='signal' 
     {
     	newLeafNode(otherlv_2, grammarAccess.getSignalAccess().getSignalKeyword_2());
     }
@@ -1008,7 +1008,7 @@ rulePrio returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='Prio' 
+(	otherlv_0='prio' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getPrioAccess().getPrioKeyword_0());
     }
@@ -1079,7 +1079,7 @@ ruleTrans returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='Trans' 
+(	otherlv_0='trans' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getTransAccess().getTransKeyword_0());
     }
@@ -1128,7 +1128,7 @@ ruleFork returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='Fork' 
+(	otherlv_0='fork' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getForkAccess().getForkKeyword_0());
     }
@@ -1228,7 +1228,7 @@ ruleJoin returns [EObject current=null]
             grammarAccess.getJoinAccess().getJoinAction_0(),
             $current);
     }
-)	otherlv_1='Join' 
+)	otherlv_1='join' 
     {
     	newLeafNode(otherlv_1, grammarAccess.getJoinAccess().getJoinKeyword_1());
     }
@@ -1286,7 +1286,7 @@ rulePause returns [EObject current=null]
             grammarAccess.getPauseAccess().getPauseAction_0(),
             $current);
     }
-)	otherlv_1='Pause' 
+)	otherlv_1='pause' 
     {
     	newLeafNode(otherlv_1, grammarAccess.getPauseAccess().getPauseKeyword_1());
     }
@@ -1344,7 +1344,7 @@ ruleTerm returns [EObject current=null]
             grammarAccess.getTermAccess().getTermAction_0(),
             $current);
     }
-)	otherlv_1='Term' 
+)	otherlv_1='term' 
     {
     	newLeafNode(otherlv_1, grammarAccess.getTermAccess().getTermKeyword_1());
     }
@@ -1402,7 +1402,7 @@ ruleHalt returns [EObject current=null]
             grammarAccess.getHaltAccess().getHaltAction_0(),
             $current);
     }
-)	otherlv_1='Halt' 
+)	otherlv_1='halt' 
     {
     	newLeafNode(otherlv_1, grammarAccess.getHaltAccess().getHaltKeyword_1());
     }
@@ -1451,7 +1451,7 @@ ruleEmit returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='Emit' 
+(	otherlv_0='emit' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getEmitAccess().getEmitKeyword_0());
     }
@@ -1555,7 +1555,7 @@ ruleAbort returns [EObject current=null]
             grammarAccess.getAbortAccess().getAbortAction_0(),
             $current);
     }
-)	otherlv_1='Abort' 
+)	otherlv_1='abort' 
     {
     	newLeafNode(otherlv_1, grammarAccess.getAbortAccess().getAbortKeyword_1());
     }
@@ -1604,7 +1604,7 @@ ruleIf returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='If' 
+(	otherlv_0='if' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getIfAccess().getIfKeyword_0());
     }
@@ -1705,7 +1705,7 @@ ruleAwait returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='Await' 
+(	otherlv_0='await' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getAwaitAccess().getAwaitKeyword_0());
     }

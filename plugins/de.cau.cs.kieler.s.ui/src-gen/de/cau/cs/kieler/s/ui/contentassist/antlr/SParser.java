@@ -166,7 +166,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProgramAccess().getSignalsAssignment_5_0_1(), "rule__Program__SignalsAssignment_5_0_1");
 					put(grammarAccess.getProgramAccess().getVariablesAssignment_5_1_0(), "rule__Program__VariablesAssignment_5_1_0");
 					put(grammarAccess.getProgramAccess().getSignalsAssignment_5_1_1(), "rule__Program__SignalsAssignment_5_1_1");
-					put(grammarAccess.getProgramAccess().getHocstCodeStringAssignment_6(), "rule__Program__HocstCodeStringAssignment_6");
+					put(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionAssignment_6(), "rule__Program__GlobalHostCodeInstructionAssignment_6");
 					put(grammarAccess.getProgramAccess().getStatesAssignment_7(), "rule__Program__StatesAssignment_7");
 					put(grammarAccess.getStateAccess().getNameAssignment_2(), "rule__State__NameAssignment_2");
 					put(grammarAccess.getStateAccess().getSignalsAssignment_5_0_0(), "rule__State__SignalsAssignment_5_0_0");

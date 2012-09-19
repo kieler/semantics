@@ -2837,7 +2837,7 @@ rule__Program__Group__0__Impl
 (
 { before(grammarAccess.getProgramAccess().getSynchronousProgramKeyword_0()); }
 
-	'Synchronous Program' 
+	'synchronous program' 
 
 { after(grammarAccess.getProgramAccess().getSynchronousProgramKeyword_0()); }
 )
@@ -3015,9 +3015,9 @@ rule__Program__Group__6__Impl
     }
 :
 (
-{ before(grammarAccess.getProgramAccess().getHocstCodeStringAssignment_6()); }
-(rule__Program__HocstCodeStringAssignment_6)*
-{ after(grammarAccess.getProgramAccess().getHocstCodeStringAssignment_6()); }
+{ before(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionAssignment_6()); }
+(rule__Program__GlobalHostCodeInstructionAssignment_6)*
+{ after(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionAssignment_6()); }
 )
 
 ;
@@ -3158,7 +3158,7 @@ rule__State__Group__0__Impl
 (
 { before(grammarAccess.getStateAccess().getStateKeyword_0()); }
 
-	'State' 
+	'state' 
 
 { after(grammarAccess.getStateAccess().getStateKeyword_0()); }
 )
@@ -3618,7 +3618,7 @@ rule__Thread__Group__0__Impl
 (
 { before(grammarAccess.getThreadAccess().getThreadKeyword_0()); }
 
-	'Thread' 
+	'thread' 
 
 { after(grammarAccess.getThreadAccess().getThreadKeyword_0()); }
 )
@@ -4078,7 +4078,7 @@ rule__Variable__Group__0__Impl
 (
 { before(grammarAccess.getVariableAccess().getVariableKeyword_0()); }
 
-	'Variable' 
+	'variable' 
 
 { after(grammarAccess.getVariableAccess().getVariableKeyword_0()); }
 )
@@ -4387,7 +4387,7 @@ rule__Signal__Group__2__Impl
 (
 { before(grammarAccess.getSignalAccess().getSignalKeyword_2()); }
 
-	'Signal' 
+	'signal' 
 
 { after(grammarAccess.getSignalAccess().getSignalKeyword_2()); }
 )
@@ -4835,7 +4835,7 @@ rule__Prio__Group__0__Impl
 (
 { before(grammarAccess.getPrioAccess().getPrioKeyword_0()); }
 
-	'Prio' 
+	'prio' 
 
 { after(grammarAccess.getPrioAccess().getPrioKeyword_0()); }
 )
@@ -5058,7 +5058,7 @@ rule__Trans__Group__0__Impl
 (
 { before(grammarAccess.getTransAccess().getTransKeyword_0()); }
 
-	'Trans' 
+	'trans' 
 
 { after(grammarAccess.getTransAccess().getTransKeyword_0()); }
 )
@@ -5187,7 +5187,7 @@ rule__Fork__Group__0__Impl
 (
 { before(grammarAccess.getForkAccess().getForkKeyword_0()); }
 
-	'Fork' 
+	'fork' 
 
 { after(grammarAccess.getForkAccess().getForkKeyword_0()); }
 )
@@ -5505,7 +5505,7 @@ rule__Join__Group__1__Impl
 (
 { before(grammarAccess.getJoinAccess().getJoinKeyword_1()); }
 
-	'Join' 
+	'join' 
 
 { after(grammarAccess.getJoinAccess().getJoinKeyword_1()); }
 )
@@ -5667,7 +5667,7 @@ rule__Pause__Group__1__Impl
 (
 { before(grammarAccess.getPauseAccess().getPauseKeyword_1()); }
 
-	'Pause' 
+	'pause' 
 
 { after(grammarAccess.getPauseAccess().getPauseKeyword_1()); }
 )
@@ -5829,7 +5829,7 @@ rule__Term__Group__1__Impl
 (
 { before(grammarAccess.getTermAccess().getTermKeyword_1()); }
 
-	'Term' 
+	'term' 
 
 { after(grammarAccess.getTermAccess().getTermKeyword_1()); }
 )
@@ -5991,7 +5991,7 @@ rule__Halt__Group__1__Impl
 (
 { before(grammarAccess.getHaltAccess().getHaltKeyword_1()); }
 
-	'Halt' 
+	'halt' 
 
 { after(grammarAccess.getHaltAccess().getHaltKeyword_1()); }
 )
@@ -6122,7 +6122,7 @@ rule__Emit__Group__0__Impl
 (
 { before(grammarAccess.getEmitAccess().getEmitKeyword_0()); }
 
-	'Emit' 
+	'emit' 
 
 { after(grammarAccess.getEmitAccess().getEmitKeyword_0()); }
 )
@@ -6503,7 +6503,7 @@ rule__Abort__Group__1__Impl
 (
 { before(grammarAccess.getAbortAccess().getAbortKeyword_1()); }
 
-	'Abort' 
+	'abort' 
 
 { after(grammarAccess.getAbortAccess().getAbortKeyword_1()); }
 )
@@ -6634,7 +6634,7 @@ rule__If__Group__0__Impl
 (
 { before(grammarAccess.getIfAccess().getIfKeyword_0()); }
 
-	'If' 
+	'if' 
 
 { after(grammarAccess.getIfAccess().getIfKeyword_0()); }
 )
@@ -7017,7 +7017,7 @@ rule__Await__Group__0__Impl
 (
 { before(grammarAccess.getAwaitAccess().getAwaitKeyword_0()); }
 
-	'Await' 
+	'await' 
 
 { after(grammarAccess.getAwaitAccess().getAwaitKeyword_0()); }
 )
@@ -12694,14 +12694,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Program__HocstCodeStringAssignment_6
+rule__Program__GlobalHostCodeInstructionAssignment_6
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getProgramAccess().getHocstCodeStringHOSTCODETerminalRuleCall_6_0()); }
-	RULE_HOSTCODE{ after(grammarAccess.getProgramAccess().getHocstCodeStringHOSTCODETerminalRuleCall_6_0()); }
+{ before(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0()); }
+	RULE_HOSTCODE{ after(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0()); }
 )
 
 ;

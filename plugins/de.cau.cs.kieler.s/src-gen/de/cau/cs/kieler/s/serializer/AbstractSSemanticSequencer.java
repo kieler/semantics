@@ -617,7 +617,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	 *         name=ID 
 	 *         priority=INT 
 	 *         ((variables+=Variable | signals+=Signal) (variables+=Variable | signals+=Signal)*)? 
-	 *         hocstCodeString=HOSTCODE* 
+	 *         globalHostCodeInstruction=HOSTCODE* 
 	 *         states+=State+
 	 *     )
 	 */

@@ -15,7 +15,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Program"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="Synchronous Program"/>
+        <elements xsi:type="xtext:Keyword" value="synchronous program"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
         </elements>
@@ -42,7 +42,7 @@
             </elements>
           </elements>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="hocstCodeString" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="globalHostCodeInstruction" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.45"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="+" feature="states" operator="+=">
@@ -55,7 +55,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//State"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="State"/>
+        <elements xsi:type="xtext:Keyword" value="state"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
@@ -90,7 +90,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Thread"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="Thread"/>
+        <elements xsi:type="xtext:Keyword" value="thread"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
@@ -125,7 +125,7 @@
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/kexpressions/0.1.2#//Variable"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="Variable"/>
+        <elements xsi:type="xtext:Keyword" value="variable"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.10"/>
         </elements>
@@ -154,7 +154,7 @@
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="isOutput" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="output"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="Signal"/>
+        <elements xsi:type="xtext:Keyword" value="signal"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.10"/>
         </elements>
@@ -258,7 +258,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Prio"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="Prio"/>
+        <elements xsi:type="xtext:Keyword" value="prio"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="priority" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.14"/>
@@ -282,7 +282,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Trans"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="Trans"/>
+        <elements xsi:type="xtext:Keyword" value="trans"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="continuation" operator="=">
           <terminal xsi:type="xtext:CrossReference">
@@ -300,7 +300,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Fork"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="Fork"/>
+        <elements xsi:type="xtext:Keyword" value="fork"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="thread" operator="=">
           <terminal xsi:type="xtext:CrossReference">
@@ -338,7 +338,7 @@
             <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Join"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="Join"/>
+        <elements xsi:type="xtext:Keyword" value="join"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="continuation" operator="=">
           <terminal xsi:type="xtext:CrossReference">
@@ -361,7 +361,7 @@
             <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Pause"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="Pause"/>
+        <elements xsi:type="xtext:Keyword" value="pause"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="continuation" operator="=">
           <terminal xsi:type="xtext:CrossReference">
@@ -384,7 +384,7 @@
             <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Term"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="Term"/>
+        <elements xsi:type="xtext:Keyword" value="term"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="continuation" operator="=">
           <terminal xsi:type="xtext:CrossReference">
@@ -407,7 +407,7 @@
             <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Halt"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="Halt"/>
+        <elements xsi:type="xtext:Keyword" value="halt"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="continuation" operator="=">
           <terminal xsi:type="xtext:CrossReference">
@@ -425,7 +425,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Emit"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="Emit"/>
+        <elements xsi:type="xtext:Keyword" value="emit"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="signal" operator="=">
           <terminal xsi:type="xtext:CrossReference">
@@ -466,7 +466,7 @@
             <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Abort"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="Abort"/>
+        <elements xsi:type="xtext:Keyword" value="abort"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="continuation" operator="=">
           <terminal xsi:type="xtext:CrossReference">
@@ -484,7 +484,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//If"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="If"/>
+        <elements xsi:type="xtext:Keyword" value="if"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="expression" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
@@ -516,7 +516,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/s#//Await"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="Await"/>
+        <elements xsi:type="xtext:Keyword" value="await"/>
         <elements xsi:type="xtext:Keyword" value="("/>
         <elements xsi:type="xtext:Assignment" feature="signal" operator="=">
           <terminal xsi:type="xtext:CrossReference">

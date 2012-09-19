@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_HOSTCODE", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_STRING", "RULE_HOSTCODESTRINGTERMINAL", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Synchronous Program'", "'('", "')'", "'State'", "'{'", "';'", "'}'", "'Thread'", "'Variable'", "':='", "':'", "'input'", "'output'", "'Signal'", "'combine'", "'with'", "'Prio'", "','", "'Trans'", "'Fork'", "'Join'", "'Pause'", "'Term'", "'Halt'", "'Emit'", "'Abort'", "'If'", "'Await'", "'inputoutput'", "'return'", "'var'", "'@'", "'['", "']'", "'.'", "'='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pre'", "'or'", "'and'", "'not'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'?'", "'pure'", "'boolean'", "'unsigned'", "'integer'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_HOSTCODE", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_STRING", "RULE_HOSTCODESTRINGTERMINAL", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'synchronous program'", "'('", "')'", "'state'", "'{'", "';'", "'}'", "'thread'", "'variable'", "':='", "':'", "'input'", "'output'", "'signal'", "'combine'", "'with'", "'prio'", "','", "'trans'", "'fork'", "'join'", "'pause'", "'term'", "'halt'", "'emit'", "'abort'", "'if'", "'await'", "'inputoutput'", "'return'", "'var'", "'@'", "'['", "']'", "'.'", "'='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pre'", "'or'", "'and'", "'not'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'?'", "'pure'", "'boolean'", "'unsigned'", "'integer'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'"
     };
     public static final int T__68=68;
     public static final int RULE_BOOLEAN=8;
@@ -185,7 +185,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleProgram"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:83:1: ruleProgram returns [EObject current=null] : (otherlv_0= 'Synchronous Program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( ( ( (lv_variables_5_0= ruleVariable ) ) | ( (lv_signals_6_0= ruleSignal ) ) ) ( ( (lv_variables_7_0= ruleVariable ) ) | ( (lv_signals_8_0= ruleSignal ) ) )* )? ( (lv_hocstCodeString_9_0= RULE_HOSTCODE ) )* ( (lv_states_10_0= ruleState ) )+ ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:83:1: ruleProgram returns [EObject current=null] : (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( ( ( (lv_variables_5_0= ruleVariable ) ) | ( (lv_signals_6_0= ruleSignal ) ) ) ( ( (lv_variables_7_0= ruleVariable ) ) | ( (lv_signals_8_0= ruleSignal ) ) )* )? ( (lv_globalHostCodeInstruction_9_0= RULE_HOSTCODE ) )* ( (lv_states_10_0= ruleState ) )+ ) ;
     public final EObject ruleProgram() throws RecognitionException {
         EObject current = null;
 
@@ -194,7 +194,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
         Token otherlv_2=null;
         Token lv_priority_3_0=null;
         Token otherlv_4=null;
-        Token lv_hocstCodeString_9_0=null;
+        Token lv_globalHostCodeInstruction_9_0=null;
         EObject lv_variables_5_0 = null;
 
         EObject lv_signals_6_0 = null;
@@ -209,11 +209,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:86:28: ( (otherlv_0= 'Synchronous Program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( ( ( (lv_variables_5_0= ruleVariable ) ) | ( (lv_signals_6_0= ruleSignal ) ) ) ( ( (lv_variables_7_0= ruleVariable ) ) | ( (lv_signals_8_0= ruleSignal ) ) )* )? ( (lv_hocstCodeString_9_0= RULE_HOSTCODE ) )* ( (lv_states_10_0= ruleState ) )+ ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:1: (otherlv_0= 'Synchronous Program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( ( ( (lv_variables_5_0= ruleVariable ) ) | ( (lv_signals_6_0= ruleSignal ) ) ) ( ( (lv_variables_7_0= ruleVariable ) ) | ( (lv_signals_8_0= ruleSignal ) ) )* )? ( (lv_hocstCodeString_9_0= RULE_HOSTCODE ) )* ( (lv_states_10_0= ruleState ) )+ )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:86:28: ( (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( ( ( (lv_variables_5_0= ruleVariable ) ) | ( (lv_signals_6_0= ruleSignal ) ) ) ( ( (lv_variables_7_0= ruleVariable ) ) | ( (lv_signals_8_0= ruleSignal ) ) )* )? ( (lv_globalHostCodeInstruction_9_0= RULE_HOSTCODE ) )* ( (lv_states_10_0= ruleState ) )+ ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:1: (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( ( ( (lv_variables_5_0= ruleVariable ) ) | ( (lv_signals_6_0= ruleSignal ) ) ) ( ( (lv_variables_7_0= ruleVariable ) ) | ( (lv_signals_8_0= ruleSignal ) ) )* )? ( (lv_globalHostCodeInstruction_9_0= RULE_HOSTCODE ) )* ( (lv_states_10_0= ruleState ) )+ )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:1: (otherlv_0= 'Synchronous Program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( ( ( (lv_variables_5_0= ruleVariable ) ) | ( (lv_signals_6_0= ruleSignal ) ) ) ( ( (lv_variables_7_0= ruleVariable ) ) | ( (lv_signals_8_0= ruleSignal ) ) )* )? ( (lv_hocstCodeString_9_0= RULE_HOSTCODE ) )* ( (lv_states_10_0= ruleState ) )+ )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:3: otherlv_0= 'Synchronous Program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( ( ( (lv_variables_5_0= ruleVariable ) ) | ( (lv_signals_6_0= ruleSignal ) ) ) ( ( (lv_variables_7_0= ruleVariable ) ) | ( (lv_signals_8_0= ruleSignal ) ) )* )? ( (lv_hocstCodeString_9_0= RULE_HOSTCODE ) )* ( (lv_states_10_0= ruleState ) )+
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:1: (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( ( ( (lv_variables_5_0= ruleVariable ) ) | ( (lv_signals_6_0= ruleSignal ) ) ) ( ( (lv_variables_7_0= ruleVariable ) ) | ( (lv_signals_8_0= ruleSignal ) ) )* )? ( (lv_globalHostCodeInstruction_9_0= RULE_HOSTCODE ) )* ( (lv_states_10_0= ruleState ) )+ )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:3: otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( ( ( (lv_variables_5_0= ruleVariable ) ) | ( (lv_signals_6_0= ruleSignal ) ) ) ( ( (lv_variables_7_0= ruleVariable ) ) | ( (lv_signals_8_0= ruleSignal ) ) )* )? ( (lv_globalHostCodeInstruction_9_0= RULE_HOSTCODE ) )* ( (lv_states_10_0= ruleState ) )+
             {
             otherlv_0=(Token)match(input,16,FOLLOW_16_in_ruleProgram128); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -516,7 +516,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:209:6: ( (lv_hocstCodeString_9_0= RULE_HOSTCODE ) )*
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:209:6: ( (lv_globalHostCodeInstruction_9_0= RULE_HOSTCODE ) )*
             loop4:
             do {
                 int alt4=2;
@@ -529,15 +529,15 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:210:1: (lv_hocstCodeString_9_0= RULE_HOSTCODE )
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:210:1: (lv_globalHostCodeInstruction_9_0= RULE_HOSTCODE )
             	    {
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:210:1: (lv_hocstCodeString_9_0= RULE_HOSTCODE )
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:211:3: lv_hocstCodeString_9_0= RULE_HOSTCODE
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:210:1: (lv_globalHostCodeInstruction_9_0= RULE_HOSTCODE )
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:211:3: lv_globalHostCodeInstruction_9_0= RULE_HOSTCODE
             	    {
-            	    lv_hocstCodeString_9_0=(Token)match(input,RULE_HOSTCODE,FOLLOW_RULE_HOSTCODE_in_ruleProgram317); if (state.failed) return current;
+            	    lv_globalHostCodeInstruction_9_0=(Token)match(input,RULE_HOSTCODE,FOLLOW_RULE_HOSTCODE_in_ruleProgram317); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      			newLeafNode(lv_hocstCodeString_9_0, grammarAccess.getProgramAccess().getHocstCodeStringHOSTCODETerminalRuleCall_6_0()); 
+            	      			newLeafNode(lv_globalHostCodeInstruction_9_0, grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0()); 
             	      		
             	    }
             	    if ( state.backtracking==0 ) {
@@ -547,8 +547,8 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		setWithLastConsumed(
             	             			current, 
-            	             			"hocstCodeString",
-            	              		lv_hocstCodeString_9_0, 
+            	             			"globalHostCodeInstruction",
+            	              		lv_globalHostCodeInstruction_9_0, 
             	              		"HOSTCODE");
             	      	    
             	    }
@@ -686,7 +686,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleState"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:262:1: ruleState returns [EObject current=null] : (otherlv_0= 'State' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_instructions_9_0= ruleInstruction ) ) otherlv_10= ';' )* otherlv_11= '}' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:262:1: ruleState returns [EObject current=null] : (otherlv_0= 'state' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_instructions_9_0= ruleInstruction ) ) otherlv_10= ';' )* otherlv_11= '}' ) ;
     public final EObject ruleState() throws RecognitionException {
         EObject current = null;
 
@@ -709,11 +709,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:265:28: ( (otherlv_0= 'State' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_instructions_9_0= ruleInstruction ) ) otherlv_10= ';' )* otherlv_11= '}' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:266:1: (otherlv_0= 'State' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_instructions_9_0= ruleInstruction ) ) otherlv_10= ';' )* otherlv_11= '}' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:265:28: ( (otherlv_0= 'state' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_instructions_9_0= ruleInstruction ) ) otherlv_10= ';' )* otherlv_11= '}' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:266:1: (otherlv_0= 'state' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_instructions_9_0= ruleInstruction ) ) otherlv_10= ';' )* otherlv_11= '}' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:266:1: (otherlv_0= 'State' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_instructions_9_0= ruleInstruction ) ) otherlv_10= ';' )* otherlv_11= '}' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:266:3: otherlv_0= 'State' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_instructions_9_0= ruleInstruction ) ) otherlv_10= ';' )* otherlv_11= '}'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:266:1: (otherlv_0= 'state' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_instructions_9_0= ruleInstruction ) ) otherlv_10= ';' )* otherlv_11= '}' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:266:3: otherlv_0= 'state' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_instructions_9_0= ruleInstruction ) ) otherlv_10= ';' )* otherlv_11= '}'
             {
             otherlv_0=(Token)match(input,19,FOLLOW_19_in_ruleState428); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -1071,7 +1071,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleThread"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:388:1: ruleThread returns [EObject current=null] : (otherlv_0= 'Thread' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_states_9_0= ruleState ) ) otherlv_10= ';' )* otherlv_11= '}' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:388:1: ruleThread returns [EObject current=null] : (otherlv_0= 'thread' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_states_9_0= ruleState ) ) otherlv_10= ';' )* otherlv_11= '}' ) ;
     public final EObject ruleThread() throws RecognitionException {
         EObject current = null;
 
@@ -1094,11 +1094,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:391:28: ( (otherlv_0= 'Thread' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_states_9_0= ruleState ) ) otherlv_10= ';' )* otherlv_11= '}' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:392:1: (otherlv_0= 'Thread' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_states_9_0= ruleState ) ) otherlv_10= ';' )* otherlv_11= '}' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:391:28: ( (otherlv_0= 'thread' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_states_9_0= ruleState ) ) otherlv_10= ';' )* otherlv_11= '}' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:392:1: (otherlv_0= 'thread' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_states_9_0= ruleState ) ) otherlv_10= ';' )* otherlv_11= '}' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:392:1: (otherlv_0= 'Thread' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_states_9_0= ruleState ) ) otherlv_10= ';' )* otherlv_11= '}' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:392:3: otherlv_0= 'Thread' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_states_9_0= ruleState ) ) otherlv_10= ';' )* otherlv_11= '}'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:392:1: (otherlv_0= 'thread' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_states_9_0= ruleState ) ) otherlv_10= ';' )* otherlv_11= '}' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:392:3: otherlv_0= 'thread' otherlv_1= '(' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ')' otherlv_4= '{' ( ( ( (lv_signals_5_0= ruleSignal ) )+ otherlv_6= ';' ) | ( ( (lv_variables_7_0= ruleVariable ) )+ otherlv_8= ';' ) )? ( ( (lv_states_9_0= ruleState ) ) otherlv_10= ';' )* otherlv_11= '}'
             {
             otherlv_0=(Token)match(input,23,FOLLOW_23_in_ruleThread698); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -1456,7 +1456,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVariable"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:514:1: ruleVariable returns [EObject current=null] : (otherlv_0= 'Variable' ( (lv_name_1_0= ruleEString ) ) (otherlv_2= ':=' ( (lv_initialValue_3_0= ruleEString ) ) )? (otherlv_4= ':' ( (lv_type_5_0= ruleValueType ) ) )? ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:514:1: ruleVariable returns [EObject current=null] : (otherlv_0= 'variable' ( (lv_name_1_0= ruleEString ) ) (otherlv_2= ':=' ( (lv_initialValue_3_0= ruleEString ) ) )? (otherlv_4= ':' ( (lv_type_5_0= ruleValueType ) ) )? ) ;
     public final EObject ruleVariable() throws RecognitionException {
         EObject current = null;
 
@@ -1473,11 +1473,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:517:28: ( (otherlv_0= 'Variable' ( (lv_name_1_0= ruleEString ) ) (otherlv_2= ':=' ( (lv_initialValue_3_0= ruleEString ) ) )? (otherlv_4= ':' ( (lv_type_5_0= ruleValueType ) ) )? ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:518:1: (otherlv_0= 'Variable' ( (lv_name_1_0= ruleEString ) ) (otherlv_2= ':=' ( (lv_initialValue_3_0= ruleEString ) ) )? (otherlv_4= ':' ( (lv_type_5_0= ruleValueType ) ) )? )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:517:28: ( (otherlv_0= 'variable' ( (lv_name_1_0= ruleEString ) ) (otherlv_2= ':=' ( (lv_initialValue_3_0= ruleEString ) ) )? (otherlv_4= ':' ( (lv_type_5_0= ruleValueType ) ) )? ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:518:1: (otherlv_0= 'variable' ( (lv_name_1_0= ruleEString ) ) (otherlv_2= ':=' ( (lv_initialValue_3_0= ruleEString ) ) )? (otherlv_4= ':' ( (lv_type_5_0= ruleValueType ) ) )? )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:518:1: (otherlv_0= 'Variable' ( (lv_name_1_0= ruleEString ) ) (otherlv_2= ':=' ( (lv_initialValue_3_0= ruleEString ) ) )? (otherlv_4= ':' ( (lv_type_5_0= ruleValueType ) ) )? )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:518:3: otherlv_0= 'Variable' ( (lv_name_1_0= ruleEString ) ) (otherlv_2= ':=' ( (lv_initialValue_3_0= ruleEString ) ) )? (otherlv_4= ':' ( (lv_type_5_0= ruleValueType ) ) )?
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:518:1: (otherlv_0= 'variable' ( (lv_name_1_0= ruleEString ) ) (otherlv_2= ':=' ( (lv_initialValue_3_0= ruleEString ) ) )? (otherlv_4= ':' ( (lv_type_5_0= ruleValueType ) ) )? )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:518:3: otherlv_0= 'variable' ( (lv_name_1_0= ruleEString ) ) (otherlv_2= ':=' ( (lv_initialValue_3_0= ruleEString ) ) )? (otherlv_4= ':' ( (lv_type_5_0= ruleValueType ) ) )?
             {
             otherlv_0=(Token)match(input,24,FOLLOW_24_in_ruleVariable968); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -1699,7 +1699,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSignal"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:601:1: ruleSignal returns [EObject current=null] : ( ( (lv_isInput_0_0= 'input' ) )? ( (lv_isOutput_1_0= 'output' ) )? otherlv_2= 'Signal' ( (lv_name_3_0= ruleEString ) ) (otherlv_4= ':=' ( (lv_initialValue_5_0= ruleEString ) ) )? ( (otherlv_6= ':' ( (lv_type_7_0= ruleValueType ) ) ) | (otherlv_8= ':' otherlv_9= 'combine' ( (lv_type_10_0= ruleValueType ) ) otherlv_11= 'with' ( ( (lv_combineOperator_12_0= ruleCombineOperator ) ) | ( (lv_hostCombineOperator_13_0= ruleEString ) ) ) ) )? otherlv_14= ';' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:601:1: ruleSignal returns [EObject current=null] : ( ( (lv_isInput_0_0= 'input' ) )? ( (lv_isOutput_1_0= 'output' ) )? otherlv_2= 'signal' ( (lv_name_3_0= ruleEString ) ) (otherlv_4= ':=' ( (lv_initialValue_5_0= ruleEString ) ) )? ( (otherlv_6= ':' ( (lv_type_7_0= ruleValueType ) ) ) | (otherlv_8= ':' otherlv_9= 'combine' ( (lv_type_10_0= ruleValueType ) ) otherlv_11= 'with' ( ( (lv_combineOperator_12_0= ruleCombineOperator ) ) | ( (lv_hostCombineOperator_13_0= ruleEString ) ) ) ) )? otherlv_14= ';' ) ;
     public final EObject ruleSignal() throws RecognitionException {
         EObject current = null;
 
@@ -1728,11 +1728,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:604:28: ( ( ( (lv_isInput_0_0= 'input' ) )? ( (lv_isOutput_1_0= 'output' ) )? otherlv_2= 'Signal' ( (lv_name_3_0= ruleEString ) ) (otherlv_4= ':=' ( (lv_initialValue_5_0= ruleEString ) ) )? ( (otherlv_6= ':' ( (lv_type_7_0= ruleValueType ) ) ) | (otherlv_8= ':' otherlv_9= 'combine' ( (lv_type_10_0= ruleValueType ) ) otherlv_11= 'with' ( ( (lv_combineOperator_12_0= ruleCombineOperator ) ) | ( (lv_hostCombineOperator_13_0= ruleEString ) ) ) ) )? otherlv_14= ';' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:605:1: ( ( (lv_isInput_0_0= 'input' ) )? ( (lv_isOutput_1_0= 'output' ) )? otherlv_2= 'Signal' ( (lv_name_3_0= ruleEString ) ) (otherlv_4= ':=' ( (lv_initialValue_5_0= ruleEString ) ) )? ( (otherlv_6= ':' ( (lv_type_7_0= ruleValueType ) ) ) | (otherlv_8= ':' otherlv_9= 'combine' ( (lv_type_10_0= ruleValueType ) ) otherlv_11= 'with' ( ( (lv_combineOperator_12_0= ruleCombineOperator ) ) | ( (lv_hostCombineOperator_13_0= ruleEString ) ) ) ) )? otherlv_14= ';' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:604:28: ( ( ( (lv_isInput_0_0= 'input' ) )? ( (lv_isOutput_1_0= 'output' ) )? otherlv_2= 'signal' ( (lv_name_3_0= ruleEString ) ) (otherlv_4= ':=' ( (lv_initialValue_5_0= ruleEString ) ) )? ( (otherlv_6= ':' ( (lv_type_7_0= ruleValueType ) ) ) | (otherlv_8= ':' otherlv_9= 'combine' ( (lv_type_10_0= ruleValueType ) ) otherlv_11= 'with' ( ( (lv_combineOperator_12_0= ruleCombineOperator ) ) | ( (lv_hostCombineOperator_13_0= ruleEString ) ) ) ) )? otherlv_14= ';' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:605:1: ( ( (lv_isInput_0_0= 'input' ) )? ( (lv_isOutput_1_0= 'output' ) )? otherlv_2= 'signal' ( (lv_name_3_0= ruleEString ) ) (otherlv_4= ':=' ( (lv_initialValue_5_0= ruleEString ) ) )? ( (otherlv_6= ':' ( (lv_type_7_0= ruleValueType ) ) ) | (otherlv_8= ':' otherlv_9= 'combine' ( (lv_type_10_0= ruleValueType ) ) otherlv_11= 'with' ( ( (lv_combineOperator_12_0= ruleCombineOperator ) ) | ( (lv_hostCombineOperator_13_0= ruleEString ) ) ) ) )? otherlv_14= ';' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:605:1: ( ( (lv_isInput_0_0= 'input' ) )? ( (lv_isOutput_1_0= 'output' ) )? otherlv_2= 'Signal' ( (lv_name_3_0= ruleEString ) ) (otherlv_4= ':=' ( (lv_initialValue_5_0= ruleEString ) ) )? ( (otherlv_6= ':' ( (lv_type_7_0= ruleValueType ) ) ) | (otherlv_8= ':' otherlv_9= 'combine' ( (lv_type_10_0= ruleValueType ) ) otherlv_11= 'with' ( ( (lv_combineOperator_12_0= ruleCombineOperator ) ) | ( (lv_hostCombineOperator_13_0= ruleEString ) ) ) ) )? otherlv_14= ';' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:605:2: ( (lv_isInput_0_0= 'input' ) )? ( (lv_isOutput_1_0= 'output' ) )? otherlv_2= 'Signal' ( (lv_name_3_0= ruleEString ) ) (otherlv_4= ':=' ( (lv_initialValue_5_0= ruleEString ) ) )? ( (otherlv_6= ':' ( (lv_type_7_0= ruleValueType ) ) ) | (otherlv_8= ':' otherlv_9= 'combine' ( (lv_type_10_0= ruleValueType ) ) otherlv_11= 'with' ( ( (lv_combineOperator_12_0= ruleCombineOperator ) ) | ( (lv_hostCombineOperator_13_0= ruleEString ) ) ) ) )? otherlv_14= ';'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:605:1: ( ( (lv_isInput_0_0= 'input' ) )? ( (lv_isOutput_1_0= 'output' ) )? otherlv_2= 'signal' ( (lv_name_3_0= ruleEString ) ) (otherlv_4= ':=' ( (lv_initialValue_5_0= ruleEString ) ) )? ( (otherlv_6= ':' ( (lv_type_7_0= ruleValueType ) ) ) | (otherlv_8= ':' otherlv_9= 'combine' ( (lv_type_10_0= ruleValueType ) ) otherlv_11= 'with' ( ( (lv_combineOperator_12_0= ruleCombineOperator ) ) | ( (lv_hostCombineOperator_13_0= ruleEString ) ) ) ) )? otherlv_14= ';' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:605:2: ( (lv_isInput_0_0= 'input' ) )? ( (lv_isOutput_1_0= 'output' ) )? otherlv_2= 'signal' ( (lv_name_3_0= ruleEString ) ) (otherlv_4= ':=' ( (lv_initialValue_5_0= ruleEString ) ) )? ( (otherlv_6= ':' ( (lv_type_7_0= ruleValueType ) ) ) | (otherlv_8= ':' otherlv_9= 'combine' ( (lv_type_10_0= ruleValueType ) ) otherlv_11= 'with' ( ( (lv_combineOperator_12_0= ruleCombineOperator ) ) | ( (lv_hostCombineOperator_13_0= ruleEString ) ) ) ) )? otherlv_14= ';'
             {
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:605:2: ( (lv_isInput_0_0= 'input' ) )?
             int alt16=2;
@@ -2811,7 +2811,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrio"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1007:1: rulePrio returns [EObject current=null] : (otherlv_0= 'Prio' otherlv_1= '(' ( (lv_priority_2_0= RULE_INT ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1007:1: rulePrio returns [EObject current=null] : (otherlv_0= 'prio' otherlv_1= '(' ( (lv_priority_2_0= RULE_INT ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' ) ;
     public final EObject rulePrio() throws RecognitionException {
         EObject current = null;
 
@@ -2825,11 +2825,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1010:28: ( (otherlv_0= 'Prio' otherlv_1= '(' ( (lv_priority_2_0= RULE_INT ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1011:1: (otherlv_0= 'Prio' otherlv_1= '(' ( (lv_priority_2_0= RULE_INT ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1010:28: ( (otherlv_0= 'prio' otherlv_1= '(' ( (lv_priority_2_0= RULE_INT ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1011:1: (otherlv_0= 'prio' otherlv_1= '(' ( (lv_priority_2_0= RULE_INT ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1011:1: (otherlv_0= 'Prio' otherlv_1= '(' ( (lv_priority_2_0= RULE_INT ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1011:3: otherlv_0= 'Prio' otherlv_1= '(' ( (lv_priority_2_0= RULE_INT ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1011:1: (otherlv_0= 'prio' otherlv_1= '(' ( (lv_priority_2_0= RULE_INT ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1011:3: otherlv_0= 'prio' otherlv_1= '(' ( (lv_priority_2_0= RULE_INT ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')'
             {
             otherlv_0=(Token)match(input,32,FOLLOW_32_in_rulePrio2031); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -2995,7 +2995,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTrans"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1078:1: ruleTrans returns [EObject current=null] : (otherlv_0= 'Trans' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ')' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1078:1: ruleTrans returns [EObject current=null] : (otherlv_0= 'trans' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ')' ) ;
     public final EObject ruleTrans() throws RecognitionException {
         EObject current = null;
 
@@ -3007,11 +3007,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1081:28: ( (otherlv_0= 'Trans' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ')' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1082:1: (otherlv_0= 'Trans' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1081:28: ( (otherlv_0= 'trans' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ')' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1082:1: (otherlv_0= 'trans' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ')' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1082:1: (otherlv_0= 'Trans' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ')' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1082:3: otherlv_0= 'Trans' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ')'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1082:1: (otherlv_0= 'trans' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1082:3: otherlv_0= 'trans' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ')'
             {
             otherlv_0=(Token)match(input,34,FOLLOW_34_in_ruleTrans2199); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -3124,7 +3124,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFork"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1127:1: ruleFork returns [EObject current=null] : (otherlv_0= 'Fork' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ',' ( (lv_priority_4_0= RULE_INT ) ) (otherlv_5= ',' ( (otherlv_6= RULE_ID ) ) )? otherlv_7= ')' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1127:1: ruleFork returns [EObject current=null] : (otherlv_0= 'fork' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ',' ( (lv_priority_4_0= RULE_INT ) ) (otherlv_5= ',' ( (otherlv_6= RULE_ID ) ) )? otherlv_7= ')' ) ;
     public final EObject ruleFork() throws RecognitionException {
         EObject current = null;
 
@@ -3140,11 +3140,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1130:28: ( (otherlv_0= 'Fork' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ',' ( (lv_priority_4_0= RULE_INT ) ) (otherlv_5= ',' ( (otherlv_6= RULE_ID ) ) )? otherlv_7= ')' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1131:1: (otherlv_0= 'Fork' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ',' ( (lv_priority_4_0= RULE_INT ) ) (otherlv_5= ',' ( (otherlv_6= RULE_ID ) ) )? otherlv_7= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1130:28: ( (otherlv_0= 'fork' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ',' ( (lv_priority_4_0= RULE_INT ) ) (otherlv_5= ',' ( (otherlv_6= RULE_ID ) ) )? otherlv_7= ')' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1131:1: (otherlv_0= 'fork' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ',' ( (lv_priority_4_0= RULE_INT ) ) (otherlv_5= ',' ( (otherlv_6= RULE_ID ) ) )? otherlv_7= ')' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1131:1: (otherlv_0= 'Fork' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ',' ( (lv_priority_4_0= RULE_INT ) ) (otherlv_5= ',' ( (otherlv_6= RULE_ID ) ) )? otherlv_7= ')' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1131:3: otherlv_0= 'Fork' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ',' ( (lv_priority_4_0= RULE_INT ) ) (otherlv_5= ',' ( (otherlv_6= RULE_ID ) ) )? otherlv_7= ')'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1131:1: (otherlv_0= 'fork' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ',' ( (lv_priority_4_0= RULE_INT ) ) (otherlv_5= ',' ( (otherlv_6= RULE_ID ) ) )? otherlv_7= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1131:3: otherlv_0= 'fork' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) otherlv_3= ',' ( (lv_priority_4_0= RULE_INT ) ) (otherlv_5= ',' ( (otherlv_6= RULE_ID ) ) )? otherlv_7= ')'
             {
             otherlv_0=(Token)match(input,35,FOLLOW_35_in_ruleFork2330); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -3346,7 +3346,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJoin"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1218:1: ruleJoin returns [EObject current=null] : ( () otherlv_1= 'Join' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1218:1: ruleJoin returns [EObject current=null] : ( () otherlv_1= 'join' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) ;
     public final EObject ruleJoin() throws RecognitionException {
         EObject current = null;
 
@@ -3358,11 +3358,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1221:28: ( ( () otherlv_1= 'Join' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1222:1: ( () otherlv_1= 'Join' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1221:28: ( ( () otherlv_1= 'join' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1222:1: ( () otherlv_1= 'join' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1222:1: ( () otherlv_1= 'Join' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1222:2: () otherlv_1= 'Join' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1222:1: ( () otherlv_1= 'join' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1222:2: () otherlv_1= 'join' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')'
             {
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1222:2: ()
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1223:2: 
@@ -3504,7 +3504,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePause"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1276:1: rulePause returns [EObject current=null] : ( () otherlv_1= 'Pause' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1276:1: rulePause returns [EObject current=null] : ( () otherlv_1= 'pause' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) ;
     public final EObject rulePause() throws RecognitionException {
         EObject current = null;
 
@@ -3516,11 +3516,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1279:28: ( ( () otherlv_1= 'Pause' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1280:1: ( () otherlv_1= 'Pause' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1279:28: ( ( () otherlv_1= 'pause' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1280:1: ( () otherlv_1= 'pause' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1280:1: ( () otherlv_1= 'Pause' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1280:2: () otherlv_1= 'Pause' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1280:1: ( () otherlv_1= 'pause' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1280:2: () otherlv_1= 'pause' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')'
             {
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1280:2: ()
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1281:2: 
@@ -3662,7 +3662,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTerm"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1334:1: ruleTerm returns [EObject current=null] : ( () otherlv_1= 'Term' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1334:1: ruleTerm returns [EObject current=null] : ( () otherlv_1= 'term' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) ;
     public final EObject ruleTerm() throws RecognitionException {
         EObject current = null;
 
@@ -3674,11 +3674,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1337:28: ( ( () otherlv_1= 'Term' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1338:1: ( () otherlv_1= 'Term' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1337:28: ( ( () otherlv_1= 'term' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1338:1: ( () otherlv_1= 'term' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1338:1: ( () otherlv_1= 'Term' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1338:2: () otherlv_1= 'Term' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1338:1: ( () otherlv_1= 'term' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1338:2: () otherlv_1= 'term' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')'
             {
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1338:2: ()
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1339:2: 
@@ -3820,7 +3820,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHalt"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1392:1: ruleHalt returns [EObject current=null] : ( () otherlv_1= 'Halt' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1392:1: ruleHalt returns [EObject current=null] : ( () otherlv_1= 'halt' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) ;
     public final EObject ruleHalt() throws RecognitionException {
         EObject current = null;
 
@@ -3832,11 +3832,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1395:28: ( ( () otherlv_1= 'Halt' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1396:1: ( () otherlv_1= 'Halt' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1395:28: ( ( () otherlv_1= 'halt' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1396:1: ( () otherlv_1= 'halt' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1396:1: ( () otherlv_1= 'Halt' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1396:2: () otherlv_1= 'Halt' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1396:1: ( () otherlv_1= 'halt' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1396:2: () otherlv_1= 'halt' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')'
             {
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1396:2: ()
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1397:2: 
@@ -3978,7 +3978,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEmit"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1450:1: ruleEmit returns [EObject current=null] : (otherlv_0= 'Emit' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= '(' ( (lv_value_4_0= ruleSExpression ) ) otherlv_5= ')' )? (otherlv_6= ',' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ')' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1450:1: ruleEmit returns [EObject current=null] : (otherlv_0= 'emit' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= '(' ( (lv_value_4_0= ruleSExpression ) ) otherlv_5= ')' )? (otherlv_6= ',' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ')' ) ;
     public final EObject ruleEmit() throws RecognitionException {
         EObject current = null;
 
@@ -3996,11 +3996,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1453:28: ( (otherlv_0= 'Emit' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= '(' ( (lv_value_4_0= ruleSExpression ) ) otherlv_5= ')' )? (otherlv_6= ',' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ')' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1454:1: (otherlv_0= 'Emit' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= '(' ( (lv_value_4_0= ruleSExpression ) ) otherlv_5= ')' )? (otherlv_6= ',' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1453:28: ( (otherlv_0= 'emit' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= '(' ( (lv_value_4_0= ruleSExpression ) ) otherlv_5= ')' )? (otherlv_6= ',' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ')' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1454:1: (otherlv_0= 'emit' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= '(' ( (lv_value_4_0= ruleSExpression ) ) otherlv_5= ')' )? (otherlv_6= ',' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ')' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1454:1: (otherlv_0= 'Emit' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= '(' ( (lv_value_4_0= ruleSExpression ) ) otherlv_5= ')' )? (otherlv_6= ',' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ')' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1454:3: otherlv_0= 'Emit' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= '(' ( (lv_value_4_0= ruleSExpression ) ) otherlv_5= ')' )? (otherlv_6= ',' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ')'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1454:1: (otherlv_0= 'emit' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= '(' ( (lv_value_4_0= ruleSExpression ) ) otherlv_5= ')' )? (otherlv_6= ',' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1454:3: otherlv_0= 'emit' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= '(' ( (lv_value_4_0= ruleSExpression ) ) otherlv_5= ')' )? (otherlv_6= ',' ( (otherlv_7= RULE_ID ) ) )? otherlv_8= ')'
             {
             otherlv_0=(Token)match(input,40,FOLLOW_40_in_ruleEmit3110); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -4230,7 +4230,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAbort"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1545:1: ruleAbort returns [EObject current=null] : ( () otherlv_1= 'Abort' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1545:1: ruleAbort returns [EObject current=null] : ( () otherlv_1= 'abort' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) ;
     public final EObject ruleAbort() throws RecognitionException {
         EObject current = null;
 
@@ -4242,11 +4242,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1548:28: ( ( () otherlv_1= 'Abort' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1549:1: ( () otherlv_1= 'Abort' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1548:28: ( ( () otherlv_1= 'abort' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1549:1: ( () otherlv_1= 'abort' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1549:1: ( () otherlv_1= 'Abort' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1549:2: () otherlv_1= 'Abort' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1549:1: ( () otherlv_1= 'abort' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1549:2: () otherlv_1= 'abort' otherlv_2= '(' ( (otherlv_3= RULE_ID ) )? otherlv_4= ')'
             {
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1549:2: ()
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1550:2: 
@@ -4388,7 +4388,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIf"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1603:1: ruleIf returns [EObject current=null] : (otherlv_0= 'If' otherlv_1= '(' ( (lv_expression_2_0= ruleSExpression ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' otherlv_6= '{' ( ( (lv_instructions_7_0= ruleInstruction ) ) otherlv_8= ';' )* otherlv_9= '}' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1603:1: ruleIf returns [EObject current=null] : (otherlv_0= 'if' otherlv_1= '(' ( (lv_expression_2_0= ruleSExpression ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' otherlv_6= '{' ( ( (lv_instructions_7_0= ruleInstruction ) ) otherlv_8= ';' )* otherlv_9= '}' ) ;
     public final EObject ruleIf() throws RecognitionException {
         EObject current = null;
 
@@ -4408,11 +4408,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1606:28: ( (otherlv_0= 'If' otherlv_1= '(' ( (lv_expression_2_0= ruleSExpression ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' otherlv_6= '{' ( ( (lv_instructions_7_0= ruleInstruction ) ) otherlv_8= ';' )* otherlv_9= '}' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1607:1: (otherlv_0= 'If' otherlv_1= '(' ( (lv_expression_2_0= ruleSExpression ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' otherlv_6= '{' ( ( (lv_instructions_7_0= ruleInstruction ) ) otherlv_8= ';' )* otherlv_9= '}' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1606:28: ( (otherlv_0= 'if' otherlv_1= '(' ( (lv_expression_2_0= ruleSExpression ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' otherlv_6= '{' ( ( (lv_instructions_7_0= ruleInstruction ) ) otherlv_8= ';' )* otherlv_9= '}' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1607:1: (otherlv_0= 'if' otherlv_1= '(' ( (lv_expression_2_0= ruleSExpression ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' otherlv_6= '{' ( ( (lv_instructions_7_0= ruleInstruction ) ) otherlv_8= ';' )* otherlv_9= '}' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1607:1: (otherlv_0= 'If' otherlv_1= '(' ( (lv_expression_2_0= ruleSExpression ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' otherlv_6= '{' ( ( (lv_instructions_7_0= ruleInstruction ) ) otherlv_8= ';' )* otherlv_9= '}' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1607:3: otherlv_0= 'If' otherlv_1= '(' ( (lv_expression_2_0= ruleSExpression ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' otherlv_6= '{' ( ( (lv_instructions_7_0= ruleInstruction ) ) otherlv_8= ';' )* otherlv_9= '}'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1607:1: (otherlv_0= 'if' otherlv_1= '(' ( (lv_expression_2_0= ruleSExpression ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' otherlv_6= '{' ( ( (lv_instructions_7_0= ruleInstruction ) ) otherlv_8= ';' )* otherlv_9= '}' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1607:3: otherlv_0= 'if' otherlv_1= '(' ( (lv_expression_2_0= ruleSExpression ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' otherlv_6= '{' ( ( (lv_instructions_7_0= ruleInstruction ) ) otherlv_8= ';' )* otherlv_9= '}'
             {
             otherlv_0=(Token)match(input,42,FOLLOW_42_in_ruleIf3472); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -4660,7 +4660,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAwait"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1704:1: ruleAwait returns [EObject current=null] : (otherlv_0= 'Await' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1704:1: ruleAwait returns [EObject current=null] : (otherlv_0= 'await' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' ) ;
     public final EObject ruleAwait() throws RecognitionException {
         EObject current = null;
 
@@ -4674,11 +4674,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1707:28: ( (otherlv_0= 'Await' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1708:1: (otherlv_0= 'Await' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1707:28: ( (otherlv_0= 'await' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1708:1: (otherlv_0= 'await' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1708:1: (otherlv_0= 'Await' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1708:3: otherlv_0= 'Await' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1708:1: (otherlv_0= 'await' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1708:3: otherlv_0= 'await' otherlv_1= '(' ( (otherlv_2= RULE_ID ) ) (otherlv_3= ',' ( (otherlv_4= RULE_ID ) ) )? otherlv_5= ')'
             {
             otherlv_0=(Token)match(input,43,FOLLOW_43_in_ruleAwait3699); if (state.failed) return current;
             if ( state.backtracking==0 ) {

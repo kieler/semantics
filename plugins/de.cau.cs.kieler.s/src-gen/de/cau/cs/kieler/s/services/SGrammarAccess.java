@@ -41,32 +41,32 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVariablesVariableParserRuleCall_5_1_0_0 = (RuleCall)cVariablesAssignment_5_1_0.eContents().get(0);
 		private final Assignment cSignalsAssignment_5_1_1 = (Assignment)cAlternatives_5_1.eContents().get(1);
 		private final RuleCall cSignalsSignalParserRuleCall_5_1_1_0 = (RuleCall)cSignalsAssignment_5_1_1.eContents().get(0);
-		private final Assignment cHocstCodeStringAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cHocstCodeStringHOSTCODETerminalRuleCall_6_0 = (RuleCall)cHocstCodeStringAssignment_6.eContents().get(0);
+		private final Assignment cGlobalHostCodeInstructionAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0 = (RuleCall)cGlobalHostCodeInstructionAssignment_6.eContents().get(0);
 		private final Assignment cStatesAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cStatesStateParserRuleCall_7_0 = (RuleCall)cStatesAssignment_7.eContents().get(0);
 		
 		//Program:
 		//
-		//	"Synchronous Program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
+		//	"synchronous program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
 		//
 		//
 		//	//	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 		// ((variables+=Variable | signals+=Signal)
 		//
-		//	(variables+=Variable | signals+=Signal)*)? hocstCodeString=HOSTCODE* states+=State+;
+		//	(variables+=Variable | signals+=Signal)*)? globalHostCodeInstruction=HOSTCODE* states+=State+;
 		public ParserRule getRule() { return rule; }
 
-		//"Synchronous Program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
+		//"synchronous program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
 		//
 		//
 		////	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 		// ((variables+=Variable | signals+=Signal)
 		//
-		//(variables+=Variable | signals+=Signal)*)? hocstCodeString=HOSTCODE* states+=State+
+		//(variables+=Variable | signals+=Signal)*)? globalHostCodeInstruction=HOSTCODE* states+=State+
 		public Group getGroup() { return cGroup; }
 
-		//"Synchronous Program"
+		//"synchronous program"
 		public Keyword getSynchronousProgramKeyword_0() { return cSynchronousProgramKeyword_0; }
 
 		//name=ID
@@ -120,11 +120,11 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//Signal
 		public RuleCall getSignalsSignalParserRuleCall_5_1_1_0() { return cSignalsSignalParserRuleCall_5_1_1_0; }
 
-		//hocstCodeString=HOSTCODE*
-		public Assignment getHocstCodeStringAssignment_6() { return cHocstCodeStringAssignment_6; }
+		//globalHostCodeInstruction=HOSTCODE*
+		public Assignment getGlobalHostCodeInstructionAssignment_6() { return cGlobalHostCodeInstructionAssignment_6; }
 
 		//HOSTCODE
-		public RuleCall getHocstCodeStringHOSTCODETerminalRuleCall_6_0() { return cHocstCodeStringHOSTCODETerminalRuleCall_6_0; }
+		public RuleCall getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0() { return cGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0; }
 
 		//states+=State+
 		public Assignment getStatesAssignment_7() { return cStatesAssignment_7; }
@@ -170,13 +170,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//// 	State | Instruction;
 		// State:
 		//
-		//	"State" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (instructions+=Instruction ";")* "}";
+		//	"state" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (instructions+=Instruction ";")* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"State" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (instructions+=Instruction ";")* "}"
+		//"state" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (instructions+=Instruction ";")* "}"
 		public Group getGroup() { return cGroup; }
 
-		//"State"
+		//"state"
 		public Keyword getStateKeyword_0() { return cStateKeyword_0; }
 
 		//"("
@@ -264,13 +264,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//// TODO: ensure signal AND variable declaration in top level....
 		// Thread:
 		//
-		//	"Thread" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (states+=State ";")* "}";
+		//	"thread" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (states+=State ";")* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"Thread" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (states+=State ";")* "}"
+		//"thread" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (states+=State ";")* "}"
 		public Group getGroup() { return cGroup; }
 
-		//"Thread"
+		//"thread"
 		public Keyword getThreadKeyword_0() { return cThreadKeyword_0; }
 
 		//"("
@@ -348,13 +348,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Variable returns kexpressions::Variable:
 		//
-		//	"Variable" name=EString (":=" initialValue=EString)? (":" type=ValueType)?;
+		//	"variable" name=EString (":=" initialValue=EString)? (":" type=ValueType)?;
 		public ParserRule getRule() { return rule; }
 
-		//"Variable" name=EString (":=" initialValue=EString)? (":" type=ValueType)?
+		//"variable" name=EString (":=" initialValue=EString)? (":" type=ValueType)?
 		public Group getGroup() { return cGroup; }
 
-		//"Variable"
+		//"variable"
 		public Keyword getVariableKeyword_0() { return cVariableKeyword_0; }
 
 		//name=EString
@@ -422,12 +422,12 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Signal returns kexpressions::Signal:
 		//
-		//	isInput?="input"? isOutput?="output"? "Signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+		//	isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
 		//
 		//	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";";
 		public ParserRule getRule() { return rule; }
 
-		//isInput?="input"? isOutput?="output"? "Signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+		//isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
 		//
 		//"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";"
 		public Group getGroup() { return cGroup; }
@@ -444,7 +444,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//"output"
 		public Keyword getIsOutputOutputKeyword_1_0() { return cIsOutputOutputKeyword_1_0; }
 
-		//"Signal"
+		//"signal"
 		public Keyword getSignalKeyword_2() { return cSignalKeyword_2; }
 
 		//name=EString
@@ -642,13 +642,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//// Change priority
 		// Prio:
 		//
-		//	"Prio" "(" priority=INT ("," continuation=[Continuation])? ")";
+		//	"prio" "(" priority=INT ("," continuation=[Continuation])? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"Prio" "(" priority=INT ("," continuation=[Continuation])? ")"
+		//"prio" "(" priority=INT ("," continuation=[Continuation])? ")"
 		public Group getGroup() { return cGroup; }
 
-		//"Prio"
+		//"prio"
 		public Keyword getPrioKeyword_0() { return cPrioKeyword_0; }
 
 		//"("
@@ -692,13 +692,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//// Transition to anothe Thread or State   
 		// Trans:
 		//
-		//	"Trans" "(" continuation=[Continuation] ")";
+		//	"trans" "(" continuation=[Continuation] ")";
 		public ParserRule getRule() { return rule; }
 
-		//"Trans" "(" continuation=[Continuation] ")"
+		//"trans" "(" continuation=[Continuation] ")"
 		public Group getGroup() { return cGroup; }
 
-		//"Trans"
+		//"trans"
 		public Keyword getTransKeyword_0() { return cTransKeyword_0; }
 
 		//"("
@@ -738,13 +738,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//// Forking new Threads
 		// Fork:
 		//
-		//	"Fork" "(" thread=[Continuation] "," priority=INT ("," continuation=[Continuation])? ")";
+		//	"fork" "(" thread=[Continuation] "," priority=INT ("," continuation=[Continuation])? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"Fork" "(" thread=[Continuation] "," priority=INT ("," continuation=[Continuation])? ")"
+		//"fork" "(" thread=[Continuation] "," priority=INT ("," continuation=[Continuation])? ")"
 		public Group getGroup() { return cGroup; }
 
-		//"Fork"
+		//"fork"
 		public Keyword getForkKeyword_0() { return cForkKeyword_0; }
 
 		//"("
@@ -801,16 +801,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//// Joining Threads
 		// Join:
 		//
-		//	{Join} "Join" "(" continuation=[Continuation]? ")";
+		//	{Join} "join" "(" continuation=[Continuation]? ")";
 		public ParserRule getRule() { return rule; }
 
-		//{Join} "Join" "(" continuation=[Continuation]? ")"
+		//{Join} "join" "(" continuation=[Continuation]? ")"
 		public Group getGroup() { return cGroup; }
 
 		//{Join}
 		public Action getJoinAction_0() { return cJoinAction_0; }
 
-		//"Join"
+		//"join"
 		public Keyword getJoinKeyword_1() { return cJoinKeyword_1; }
 
 		//"("
@@ -843,16 +843,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//// Simple instructions
 		// Pause:
 		//
-		//	{Pause} "Pause" "(" continuation=[Continuation]? ")";
+		//	{Pause} "pause" "(" continuation=[Continuation]? ")";
 		public ParserRule getRule() { return rule; }
 
-		//{Pause} "Pause" "(" continuation=[Continuation]? ")"
+		//{Pause} "pause" "(" continuation=[Continuation]? ")"
 		public Group getGroup() { return cGroup; }
 
 		//{Pause}
 		public Action getPauseAction_0() { return cPauseAction_0; }
 
-		//"Pause"
+		//"pause"
 		public Keyword getPauseKeyword_1() { return cPauseKeyword_1; }
 
 		//"("
@@ -884,16 +884,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Term:
 		//
-		//	{Term} "Term" "(" continuation=[Continuation]? ")";
+		//	{Term} "term" "(" continuation=[Continuation]? ")";
 		public ParserRule getRule() { return rule; }
 
-		//{Term} "Term" "(" continuation=[Continuation]? ")"
+		//{Term} "term" "(" continuation=[Continuation]? ")"
 		public Group getGroup() { return cGroup; }
 
 		//{Term}
 		public Action getTermAction_0() { return cTermAction_0; }
 
-		//"Term"
+		//"term"
 		public Keyword getTermKeyword_1() { return cTermKeyword_1; }
 
 		//"("
@@ -925,16 +925,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Halt:
 		//
-		//	{Halt} "Halt" "(" continuation=[Continuation]? ")";
+		//	{Halt} "halt" "(" continuation=[Continuation]? ")";
 		public ParserRule getRule() { return rule; }
 
-		//{Halt} "Halt" "(" continuation=[Continuation]? ")"
+		//{Halt} "halt" "(" continuation=[Continuation]? ")"
 		public Group getGroup() { return cGroup; }
 
 		//{Halt}
 		public Action getHaltAction_0() { return cHaltAction_0; }
 
-		//"Halt"
+		//"halt"
 		public Keyword getHaltKeyword_1() { return cHaltKeyword_1; }
 
 		//"("
@@ -975,13 +975,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Emit:
 		//
-		//	"Emit" "(" signal=[kexpressions::Signal] ("(" value=SExpression ")")? ("," continuation=[Continuation])? ")";
+		//	"emit" "(" signal=[kexpressions::Signal] ("(" value=SExpression ")")? ("," continuation=[Continuation])? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"Emit" "(" signal=[kexpressions::Signal] ("(" value=SExpression ")")? ("," continuation=[Continuation])? ")"
+		//"emit" "(" signal=[kexpressions::Signal] ("(" value=SExpression ")")? ("," continuation=[Continuation])? ")"
 		public Group getGroup() { return cGroup; }
 
-		//"Emit"
+		//"emit"
 		public Keyword getEmitKeyword_0() { return cEmitKeyword_0; }
 
 		//"("
@@ -1043,16 +1043,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Abort:
 		//
-		//	{Abort} "Abort" "(" continuation=[Continuation]? ")";
+		//	{Abort} "abort" "(" continuation=[Continuation]? ")";
 		public ParserRule getRule() { return rule; }
 
-		//{Abort} "Abort" "(" continuation=[Continuation]? ")"
+		//{Abort} "abort" "(" continuation=[Continuation]? ")"
 		public Group getGroup() { return cGroup; }
 
 		//{Abort}
 		public Action getAbortAction_0() { return cAbortAction_0; }
 
-		//"Abort"
+		//"abort"
 		public Keyword getAbortKeyword_1() { return cAbortKeyword_1; }
 
 		//"("
@@ -1094,13 +1094,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//// Conditioned execution of instructions  
 		// If:
 		//
-		//	"If" "(" expression=SExpression ("," continuation=[Continuation])? ")" "{" (instructions+=Instruction ";")* "}";
+		//	"if" "(" expression=SExpression ("," continuation=[Continuation])? ")" "{" (instructions+=Instruction ";")* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"If" "(" expression=SExpression ("," continuation=[Continuation])? ")" "{" (instructions+=Instruction ";")* "}"
+		//"if" "(" expression=SExpression ("," continuation=[Continuation])? ")" "{" (instructions+=Instruction ";")* "}"
 		public Group getGroup() { return cGroup; }
 
-		//"If"
+		//"if"
 		public Keyword getIfKeyword_0() { return cIfKeyword_0; }
 
 		//"("
@@ -1167,13 +1167,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//// Complex instruction
 		// Await:
 		//
-		//	"Await" "(" signal=[kexpressions::Signal] ("," continuation=[Continuation])? ")";
+		//	"await" "(" signal=[kexpressions::Signal] ("," continuation=[Continuation])? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"Await" "(" signal=[kexpressions::Signal] ("," continuation=[Continuation])? ")"
+		//"await" "(" signal=[kexpressions::Signal] ("," continuation=[Continuation])? ")"
 		public Group getGroup() { return cGroup; }
 
-		//"Await"
+		//"await"
 		public Keyword getAwaitKeyword_0() { return cAwaitKeyword_0; }
 
 		//"("
@@ -1291,13 +1291,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Program:
 	//
-	//	"Synchronous Program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
+	//	"synchronous program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
 	//
 	//
 	//	//	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 	// ((variables+=Variable | signals+=Signal)
 	//
-	//	(variables+=Variable | signals+=Signal)*)? hocstCodeString=HOSTCODE* states+=State+;
+	//	(variables+=Variable | signals+=Signal)*)? globalHostCodeInstruction=HOSTCODE* states+=State+;
 	public ProgramElements getProgramAccess() {
 		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
 	}
@@ -1319,7 +1319,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// 	State | Instruction;
 	// State:
 	//
-	//	"State" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (instructions+=Instruction ";")* "}";
+	//	"state" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (instructions+=Instruction ";")* "}";
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
@@ -1331,7 +1331,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// TODO: ensure signal AND variable declaration in top level....
 	// Thread:
 	//
-	//	"Thread" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (states+=State ";")* "}";
+	//	"thread" "(" name=ID ")" "{" (signals+=Signal+ ";" | variables+=Variable+ ";")? (states+=State ";")* "}";
 	public ThreadElements getThreadAccess() {
 		return (pThread != null) ? pThread : (pThread = new ThreadElements());
 	}
@@ -1342,7 +1342,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Variable returns kexpressions::Variable:
 	//
-	//	"Variable" name=EString (":=" initialValue=EString)? (":" type=ValueType)?;
+	//	"variable" name=EString (":=" initialValue=EString)? (":" type=ValueType)?;
 	public VariableElements getVariableAccess() {
 		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
 	}
@@ -1353,7 +1353,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Signal returns kexpressions::Signal:
 	//
-	//	isInput?="input"? isOutput?="output"? "Signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+	//	isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
 	//
 	//	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";";
 	public SignalElements getSignalAccess() {
@@ -1415,7 +1415,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// Change priority
 	// Prio:
 	//
-	//	"Prio" "(" priority=INT ("," continuation=[Continuation])? ")";
+	//	"prio" "(" priority=INT ("," continuation=[Continuation])? ")";
 	public PrioElements getPrioAccess() {
 		return (pPrio != null) ? pPrio : (pPrio = new PrioElements());
 	}
@@ -1427,7 +1427,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// Transition to anothe Thread or State   
 	// Trans:
 	//
-	//	"Trans" "(" continuation=[Continuation] ")";
+	//	"trans" "(" continuation=[Continuation] ")";
 	public TransElements getTransAccess() {
 		return (pTrans != null) ? pTrans : (pTrans = new TransElements());
 	}
@@ -1439,7 +1439,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// Forking new Threads
 	// Fork:
 	//
-	//	"Fork" "(" thread=[Continuation] "," priority=INT ("," continuation=[Continuation])? ")";
+	//	"fork" "(" thread=[Continuation] "," priority=INT ("," continuation=[Continuation])? ")";
 	public ForkElements getForkAccess() {
 		return (pFork != null) ? pFork : (pFork = new ForkElements());
 	}
@@ -1451,7 +1451,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// Joining Threads
 	// Join:
 	//
-	//	{Join} "Join" "(" continuation=[Continuation]? ")";
+	//	{Join} "join" "(" continuation=[Continuation]? ")";
 	public JoinElements getJoinAccess() {
 		return (pJoin != null) ? pJoin : (pJoin = new JoinElements());
 	}
@@ -1463,7 +1463,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// Simple instructions
 	// Pause:
 	//
-	//	{Pause} "Pause" "(" continuation=[Continuation]? ")";
+	//	{Pause} "pause" "(" continuation=[Continuation]? ")";
 	public PauseElements getPauseAccess() {
 		return (pPause != null) ? pPause : (pPause = new PauseElements());
 	}
@@ -1474,7 +1474,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Term:
 	//
-	//	{Term} "Term" "(" continuation=[Continuation]? ")";
+	//	{Term} "term" "(" continuation=[Continuation]? ")";
 	public TermElements getTermAccess() {
 		return (pTerm != null) ? pTerm : (pTerm = new TermElements());
 	}
@@ -1485,7 +1485,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Halt:
 	//
-	//	{Halt} "Halt" "(" continuation=[Continuation]? ")";
+	//	{Halt} "halt" "(" continuation=[Continuation]? ")";
 	public HaltElements getHaltAccess() {
 		return (pHalt != null) ? pHalt : (pHalt = new HaltElements());
 	}
@@ -1496,7 +1496,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Emit:
 	//
-	//	"Emit" "(" signal=[kexpressions::Signal] ("(" value=SExpression ")")? ("," continuation=[Continuation])? ")";
+	//	"emit" "(" signal=[kexpressions::Signal] ("(" value=SExpression ")")? ("," continuation=[Continuation])? ")";
 	public EmitElements getEmitAccess() {
 		return (pEmit != null) ? pEmit : (pEmit = new EmitElements());
 	}
@@ -1507,7 +1507,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Abort:
 	//
-	//	{Abort} "Abort" "(" continuation=[Continuation]? ")";
+	//	{Abort} "abort" "(" continuation=[Continuation]? ")";
 	public AbortElements getAbortAccess() {
 		return (pAbort != null) ? pAbort : (pAbort = new AbortElements());
 	}
@@ -1519,7 +1519,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// Conditioned execution of instructions  
 	// If:
 	//
-	//	"If" "(" expression=SExpression ("," continuation=[Continuation])? ")" "{" (instructions+=Instruction ";")* "}";
+	//	"if" "(" expression=SExpression ("," continuation=[Continuation])? ")" "{" (instructions+=Instruction ";")* "}";
 	public IfElements getIfAccess() {
 		return (pIf != null) ? pIf : (pIf = new IfElements());
 	}
@@ -1531,7 +1531,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// Complex instruction
 	// Await:
 	//
-	//	"Await" "(" signal=[kexpressions::Signal] ("," continuation=[Continuation])? ")";
+	//	"await" "(" signal=[kexpressions::Signal] ("," continuation=[Continuation])? ")";
 	public AwaitElements getAwaitAccess() {
 		return (pAwait != null) ? pAwait : (pAwait = new AwaitElements());
 	}

@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getSignals <em>Signals</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.Program#getHocstCodeString <em>Hocst Code String</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getStates <em>States</em>}</li>
  * </ul>
  * </p>
@@ -117,30 +117,30 @@ public interface Program extends EObject
   EList<Signal> getSignals();
 
   /**
-   * Returns the value of the '<em><b>Hocst Code String</b></em>' attribute.
+   * Returns the value of the '<em><b>Global Host Code Instruction</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Hocst Code String</em>' attribute isn't clear,
+   * If the meaning of the '<em>Global Host Code Instruction</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Hocst Code String</em>' attribute.
-   * @see #setHocstCodeString(String)
-   * @see de.cau.cs.kieler.s.s.SPackage#getProgram_HocstCodeString()
+   * @return the value of the '<em>Global Host Code Instruction</em>' attribute.
+   * @see #setGlobalHostCodeInstruction(String)
+   * @see de.cau.cs.kieler.s.s.SPackage#getProgram_GlobalHostCodeInstruction()
    * @model
    * @generated
    */
-  String getHocstCodeString();
+  String getGlobalHostCodeInstruction();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Program#getHocstCodeString <em>Hocst Code String</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Hocst Code String</em>' attribute.
-   * @see #getHocstCodeString()
+   * @param value the new value of the '<em>Global Host Code Instruction</em>' attribute.
+   * @see #getGlobalHostCodeInstruction()
    * @generated
    */
-  void setHocstCodeString(String value);
+  void setGlobalHostCodeInstruction(String value);
 
   /**
    * Returns the value of the '<em><b>States</b></em>' containment reference list.
