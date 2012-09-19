@@ -68,7 +68,8 @@ class S2SCC {
        «sSetOutputFunction(program)»
 
 	   «/* Possible global host code */»
-	   «program.globalHostCodeInstruction.extractCode»
+	   «if(program.globalHostCodeInstruction != null) {
+	   program.globalHostCodeInstruction.extractCode}»
 
 	   «/* Generate the main function */»
 	   «mainFunction(program)»
