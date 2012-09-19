@@ -1,101 +1,100 @@
-Synchronous Program hierarchy ( 9 )
+synchronous program hierarchy ( 8 )
 
-input signal I : pure ;
-output signal O : pure ;
-signal L1 : pure ;
-signal L2 : pure ;
-signal L3 : pure ;
+input signal I ;
+output signal O ;
+signal L1 ;
+signal L2 ;
+signal L3 ; ''
 
-State ( L_root_surface ) {
-	Fork ( L_hierarchy__H_surface , 7 ) ;
-	Fork ( L_hierarchy__D_surface , 5 ) ;
-	Fork ( L_root_depth , 9 ) ;
+state ( L_root_surface ) {
+	fork ( L_hierarchy__H_surface , 2 ) ;
+	fork ( L_hierarchy__D_surface , 5 ) ;
+	fork ( L_root_depth , 8 ) ;
 }
 
-State ( L_root_depth ) {
-	Halt ( ) ;
+state ( L_root_depth ) {
+	halt ( ) ;
 }
 
-State ( L_hierarchy__E_surface ) {
-	Prio ( 8 ) ;
-	Trans ( L_hierarchy__E_depth ) ;
+state ( L_hierarchy__E_surface ) {
+	prio ( 7 ) ;
+	trans ( L_hierarchy__E_depth ) ;
 }
 
-State ( L_hierarchy__E_depth ) {
-	Halt ( ) ;
+state ( L_hierarchy__E_depth ) {
+	halt ( ) ;
 }
 
-State ( L_hierarchy__H_surface ) {
-	Fork ( L_hierarchy__H_A_surface , 6 ) ;
-	Fork ( L_hierarchy__H_depth , 7 ) ;
+state ( L_hierarchy__H_A_surface ) {
+	prio ( 6 ) ;
+	trans ( L_hierarchy__H_A_depth ) ;
 }
 
-State ( L_hierarchy__H_depth ) {
-	Prio ( 7 ) ;
-	Pause ( ) ;
-	Prio ( 2 ) ;
-	If ( L3 ) {
-		Emit ( O ) ;
-		Abort ( ) ;
-		Trans ( L_hierarchy__E_surface ) ;
+state ( L_hierarchy__H_A_depth ) {
+	prio ( 6 ) ;
+	pause ( ) ;
+	if ( I ) {
+		emit ( L1 ) ;
+		trans ( L_hierarchy__H_B_surface ) ;
 	} ;
-	Trans ( L_hierarchy__H_depth ) ;
+	trans ( L_hierarchy__H_A_depth ) ;
 }
 
-State ( L_hierarchy__H_A_surface ) {
-	Prio ( 6 ) ;
-	Trans ( L_hierarchy__H_A_depth ) ;
+state ( L_hierarchy__D_surface ) {
+	prio ( 5 ) ;
+	trans ( L_hierarchy__D_depth ) ;
 }
 
-State ( L_hierarchy__H_A_depth ) {
-	Prio ( 6 ) ;
-	Pause ( ) ;
-	If ( I ) {
-		Emit ( L1 ) ;
-		Trans ( L_hierarchy__H_B_surface ) ;
+state ( L_hierarchy__D_depth ) {
+	prio ( 5 ) ;
+	pause ( ) ;
+	if ( L1 ) {
+		emit ( L2 ) ;
+		trans ( L_hierarchy__D_surface ) ;
 	} ;
-	Trans ( L_hierarchy__H_A_depth ) ;
+	trans ( L_hierarchy__D_depth ) ;
 }
 
-State ( L_hierarchy__D_surface ) {
-	Prio ( 5 ) ;
-	Trans ( L_hierarchy__D_depth ) ;
-}
-
-State ( L_hierarchy__D_depth ) {
-	Prio ( 5 ) ;
-	Pause ( ) ;
-	If ( L1 ) {
-		Emit ( L2 ) ;
-		Trans ( L_hierarchy__D_surface ) ;
+state ( L_hierarchy__H_B_surface ) {
+	prio ( 4 ) ;
+	if ( L2 ) {
+		emit ( L3 ) ;
+		trans ( L_hierarchy__H_C_surface ) ;
 	} ;
-	Trans ( L_hierarchy__D_depth ) ;
+	trans ( L_hierarchy__H_B_depth ) ;
 }
 
-State ( L_hierarchy__H_B_surface ) {
-	Prio ( 4 ) ;
-	If ( L2 ) {
-		Emit ( L3 ) ;
-		Trans ( L_hierarchy__H_C_surface ) ;
+state ( L_hierarchy__H_B_depth ) {
+	prio ( 4 ) ;
+	pause ( ) ;
+	if ( L2 ) {
+		emit ( L3 ) ;
+		trans ( L_hierarchy__H_C_surface ) ;
 	} ;
-	Trans ( L_hierarchy__H_B_depth ) ;
+	trans ( L_hierarchy__H_B_depth ) ;
 }
 
-State ( L_hierarchy__H_B_depth ) {
-	Prio ( 4 ) ;
-	Pause ( ) ;
-	If ( L2 ) {
-		Emit ( L3 ) ;
-		Trans ( L_hierarchy__H_C_surface ) ;
+state ( L_hierarchy__H_C_surface ) {
+	prio ( 3 ) ;
+	trans ( L_hierarchy__H_C_depth ) ;
+}
+
+state ( L_hierarchy__H_C_depth ) {
+	halt ( ) ;
+}
+
+state ( L_hierarchy__H_surface ) {
+	fork ( L_hierarchy__H_A_surface , 6 ) ;
+	fork ( L_hierarchy__H_depth , 2 ) ;
+}
+
+state ( L_hierarchy__H_depth ) {
+	prio ( 2 ) ;
+	pause ( ) ;
+	if ( L3 ) {
+		emit ( O ) ;
+		abort ( ) ;
+		trans ( L_hierarchy__E_surface ) ;
 	} ;
-	Trans ( L_hierarchy__H_B_depth ) ;
-}
-
-State ( L_hierarchy__H_C_surface ) {
-	Prio ( 3 ) ;
-	Trans ( L_hierarchy__H_C_depth ) ;
-}
-
-State ( L_hierarchy__H_C_depth ) {
-	Halt ( ) ;
+	trans ( L_hierarchy__H_depth ) ;
 }

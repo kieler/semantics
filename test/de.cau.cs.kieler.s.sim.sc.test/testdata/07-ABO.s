@@ -1,91 +1,91 @@
-Synchronous Program ABRO2 ( 9 )
+synchronous program ABRO2 ( 8 )
 
-input signal A : pure ;
-input signal B : pure ;
-output signal O : pure ;
+input signal A ;
+input signal B ;
+output signal O ; ''
 
-State ( L_root_surface ) {
-	Fork ( L_WaitAB_surface , 7 ) ;
-	Fork ( L_root_depth , 9 ) ;
+state ( L_root_surface ) {
+	fork ( L_WaitAB_surface , 2 ) ;
+	fork ( L_root_depth , 8 ) ;
 }
 
-State ( L_root_depth ) {
-	Halt ( ) ;
+state ( L_root_depth ) {
+	halt ( ) ;
 }
 
-State ( L_done_surface ) {
-	Prio ( 8 ) ;
-	Trans ( L_done_depth ) ;
+state ( L_done_surface ) {
+	prio ( 7 ) ;
+	trans ( L_done_depth ) ;
 }
 
-State ( L_done_depth ) {
-	Halt ( ) ;
+state ( L_done_depth ) {
+	halt ( ) ;
 }
 
-State ( L_WaitAB_surface ) {
-	Fork ( L_WaitAB__wA_surface , 4 ) ;
-	Fork ( L_WaitAB__wB_surface , 3 ) ;
-	Fork ( L_WaitAB_join , 7 ) ;
+state ( L_WaitAB__dB_surface ) {
+	prio ( 6 ) ;
+	trans ( L_WaitAB__dB_depth ) ;
 }
 
-State ( L_WaitAB_join ) {
-	Prio ( 2 ) ;
-	Join ( L_WaitAB_depth ) ;
-	If ( true ) {
-		Emit ( O ) ;
-		Abort ( ) ;
-		Trans ( L_done_surface ) ;
+state ( L_WaitAB__dB_depth ) {
+	term ( ) ;
+}
+
+state ( L_WaitAB__dA_surface ) {
+	prio ( 5 ) ;
+	trans ( L_WaitAB__dA_depth ) ;
+}
+
+state ( L_WaitAB__dA_depth ) {
+	term ( ) ;
+}
+
+state ( L_WaitAB__wA_surface ) {
+	prio ( 4 ) ;
+	trans ( L_WaitAB__wA_depth ) ;
+}
+
+state ( L_WaitAB__wA_depth ) {
+	prio ( 4 ) ;
+	pause ( ) ;
+	if ( A ) {
+		emit ( B ) ;
+		trans ( L_WaitAB__dA_surface ) ;
+	} ;
+	trans ( L_WaitAB__wA_depth ) ;
+}
+
+state ( L_WaitAB__wB_surface ) {
+	prio ( 3 ) ;
+	trans ( L_WaitAB__wB_depth ) ;
+}
+
+state ( L_WaitAB__wB_depth ) {
+	prio ( 3 ) ;
+	pause ( ) ;
+	if ( B ) {
+		trans ( L_WaitAB__dB_surface ) ;
+	} ;
+	trans ( L_WaitAB__wB_depth ) ;
+}
+
+state ( L_WaitAB_surface ) {
+	fork ( L_WaitAB__wA_surface , 4 ) ;
+	fork ( L_WaitAB__wB_surface , 3 ) ;
+	fork ( L_WaitAB_join , 2 ) ;
+}
+
+state ( L_WaitAB_join ) {
+	prio ( 2 ) ;
+	join ( L_WaitAB_depth ) ;
+	if ( true ) {
+		emit ( O ) ;
+		abort ( ) ;
+		trans ( L_done_surface ) ;
 	} ;
 }
 
-State ( L_WaitAB_depth ) {
-	Prio ( 2 ) ;
-	Trans ( L_WaitAB_join ) ;
-}
-
-State ( L_WaitAB__dB_surface ) {
-	Prio ( 6 ) ;
-	Trans ( L_WaitAB__dB_depth ) ;
-}
-
-State ( L_WaitAB__dB_depth ) {
-	Term ( ) ;
-}
-
-State ( L_WaitAB__dA_surface ) {
-	Prio ( 5 ) ;
-	Trans ( L_WaitAB__dA_depth ) ;
-}
-
-State ( L_WaitAB__dA_depth ) {
-	Term ( ) ;
-}
-
-State ( L_WaitAB__wA_surface ) {
-	Prio ( 4 ) ;
-	Trans ( L_WaitAB__wA_depth ) ;
-}
-
-State ( L_WaitAB__wA_depth ) {
-	Prio ( 4 ) ;
-	Pause ( ) ;
-	If ( A ) {
-		Emit ( B ) ;
-		Trans ( L_WaitAB__dA_surface ) ;
-	} ;
-	Trans ( L_WaitAB__wA_depth ) ;
-}
-
-State ( L_WaitAB__wB_surface ) {
-	Prio ( 3 ) ;
-	Trans ( L_WaitAB__wB_depth ) ;
-}
-
-State ( L_WaitAB__wB_depth ) {
-	Prio ( 3 ) ;
-	Pause ( ) ;
-	If ( B ) {
-		Trans ( L_WaitAB__dB_surface ) ;
-	} ;
-	Trans ( L_WaitAB__wB_depth ) ;
+state ( L_WaitAB_depth ) {
+	prio ( 2 ) ;
+	trans ( L_WaitAB_join ) ;
 }

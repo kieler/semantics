@@ -1,134 +1,134 @@
-Synchronous Program instcommhiearchy ( 14 )
+synchronous program instcommhiearchy ( 11 )
 
-signal L1 : pure ;
-signal L2 : pure ;
-signal L3 : pure ;
-input signal I : pure ;
-output signal O : pure ;
+signal L1 ;
+signal L2 ;
+signal L3 ;
+input signal I ;
+output signal O ; ''
 
-State ( L_root_surface ) {
-	Fork ( L_instcommhiearchy__ABC_surface , 13 ) ;
-	Fork ( L_instcommhiearchy__X_surface , 10 ) ;
-	Fork ( L_root_depth , 14 ) ;
+state ( L_root_surface ) {
+	fork ( L_instcommhiearchy__ABC_surface , 2 ) ;
+	fork ( L_instcommhiearchy__X_surface , 9 ) ;
+	fork ( L_root_depth , 11 ) ;
 }
 
-State ( L_root_depth ) {
-	Halt ( ) ;
+state ( L_root_depth ) {
+	halt ( ) ;
 }
 
-State ( L_instcommhiearchy__ABC_surface ) {
-	Fork ( L_instcommhiearchy__ABC_A_surface , 11 ) ;
-	Fork ( L_instcommhiearchy__ABC_depth , 13 ) ;
+state ( L_instcommhiearchy__ABC_A_surface ) {
+	prio ( 10 ) ;
+	trans ( L_instcommhiearchy__ABC_A_depth ) ;
 }
 
-State ( L_instcommhiearchy__ABC_depth ) {
-	Halt ( ) ;
-}
-
-State ( L_instcommhiearchy__ABC_BC_surface ) {
-	Fork ( L_instcommhiearchy__ABC_BC_B_surface , 9 ) ;
-	Fork ( L_instcommhiearchy__ABC_BC_depth , 12 ) ;
-}
-
-State ( L_instcommhiearchy__ABC_BC_depth ) {
-	Halt ( ) ;
-}
-
-State ( L_instcommhiearchy__ABC_A_surface ) {
-	Prio ( 11 ) ;
-	Trans ( L_instcommhiearchy__ABC_A_depth ) ;
-}
-
-State ( L_instcommhiearchy__ABC_A_depth ) {
-	Prio ( 11 ) ;
-	Pause ( ) ;
-	If ( I ) {
-		Emit ( L1 ) ;
-		Trans ( L_instcommhiearchy__ABC_BC_surface ) ;
+state ( L_instcommhiearchy__ABC_A_depth ) {
+	prio ( 10 ) ;
+	pause ( ) ;
+	if ( I ) {
+		emit ( L1 ) ;
+		trans ( L_instcommhiearchy__ABC_BC_surface ) ;
 	} ;
-	Trans ( L_instcommhiearchy__ABC_A_depth ) ;
+	trans ( L_instcommhiearchy__ABC_A_depth ) ;
 }
 
-State ( L_instcommhiearchy__X_surface ) {
-	Prio ( 10 ) ;
-	If ( L1 ) {
-		Emit ( L2 ) ;
-		Trans ( L_instcommhiearchy__YZ_surface ) ;
+state ( L_instcommhiearchy__X_surface ) {
+	prio ( 9 ) ;
+	if ( L1 ) {
+		emit ( L2 ) ;
+		trans ( L_instcommhiearchy__YZ_surface ) ;
 	} ;
-	Trans ( L_instcommhiearchy__X_depth ) ;
+	trans ( L_instcommhiearchy__X_depth ) ;
 }
 
-State ( L_instcommhiearchy__X_depth ) {
-	Prio ( 10 ) ;
-	Pause ( ) ;
-	If ( L1 ) {
-		Emit ( L2 ) ;
-		Trans ( L_instcommhiearchy__YZ_surface ) ;
+state ( L_instcommhiearchy__X_depth ) {
+	prio ( 9 ) ;
+	pause ( ) ;
+	if ( L1 ) {
+		emit ( L2 ) ;
+		trans ( L_instcommhiearchy__YZ_surface ) ;
 	} ;
-	Trans ( L_instcommhiearchy__X_depth ) ;
+	trans ( L_instcommhiearchy__X_depth ) ;
 }
 
-State ( L_instcommhiearchy__ABC_BC_B_surface ) {
-	Prio ( 9 ) ;
-	If ( L2 ) {
-		Emit ( L3 ) ;
-		Trans ( L_instcommhiearchy__ABC_BC_C_surface ) ;
+state ( L_instcommhiearchy__ABC_BC_B_surface ) {
+	prio ( 8 ) ;
+	if ( L2 ) {
+		emit ( L3 ) ;
+		trans ( L_instcommhiearchy__ABC_BC_C_surface ) ;
 	} ;
-	Trans ( L_instcommhiearchy__ABC_BC_B_depth ) ;
+	trans ( L_instcommhiearchy__ABC_BC_B_depth ) ;
 }
 
-State ( L_instcommhiearchy__ABC_BC_B_depth ) {
-	Prio ( 9 ) ;
-	Pause ( ) ;
-	If ( L2 ) {
-		Emit ( L3 ) ;
-		Trans ( L_instcommhiearchy__ABC_BC_C_surface ) ;
+state ( L_instcommhiearchy__ABC_BC_B_depth ) {
+	prio ( 8 ) ;
+	pause ( ) ;
+	if ( L2 ) {
+		emit ( L3 ) ;
+		trans ( L_instcommhiearchy__ABC_BC_C_surface ) ;
 	} ;
-	Trans ( L_instcommhiearchy__ABC_BC_B_depth ) ;
+	trans ( L_instcommhiearchy__ABC_BC_B_depth ) ;
 }
 
-State ( L_instcommhiearchy__ABC_BC_C_surface ) {
-	Prio ( 8 ) ;
-	Trans ( L_instcommhiearchy__ABC_BC_C_depth ) ;
-}
-
-State ( L_instcommhiearchy__ABC_BC_C_depth ) {
-	Halt ( ) ;
-}
-
-State ( L_instcommhiearchy__YZ_surface ) {
-	Fork ( L_instcommhiearchy__YZ_Y_surface , 5 ) ;
-	Fork ( L_instcommhiearchy__YZ_depth , 6 ) ;
-}
-
-State ( L_instcommhiearchy__YZ_depth ) {
-	Halt ( ) ;
-}
-
-State ( L_instcommhiearchy__YZ_Y_surface ) {
-	Prio ( 5 ) ;
-	If ( L3 ) {
-		Emit ( O ) ;
-		Trans ( L_instcommhiearchy__YZ_Z_surface ) ;
+state ( L_instcommhiearchy__YZ_Y_surface ) {
+	prio ( 7 ) ;
+	if ( L3 ) {
+		emit ( O ) ;
+		trans ( L_instcommhiearchy__YZ_Z_surface ) ;
 	} ;
-	Trans ( L_instcommhiearchy__YZ_Y_depth ) ;
+	trans ( L_instcommhiearchy__YZ_Y_depth ) ;
 }
 
-State ( L_instcommhiearchy__YZ_Y_depth ) {
-	Prio ( 5 ) ;
-	Pause ( ) ;
-	If ( L3 ) {
-		Emit ( O ) ;
-		Trans ( L_instcommhiearchy__YZ_Z_surface ) ;
+state ( L_instcommhiearchy__YZ_Y_depth ) {
+	prio ( 7 ) ;
+	pause ( ) ;
+	if ( L3 ) {
+		emit ( O ) ;
+		trans ( L_instcommhiearchy__YZ_Z_surface ) ;
 	} ;
-	Trans ( L_instcommhiearchy__YZ_Y_depth ) ;
+	trans ( L_instcommhiearchy__YZ_Y_depth ) ;
 }
 
-State ( L_instcommhiearchy__YZ_Z_surface ) {
-	Prio ( 4 ) ;
-	Trans ( L_instcommhiearchy__YZ_Z_depth ) ;
+state ( L_instcommhiearchy__YZ_Z_surface ) {
+	prio ( 6 ) ;
+	trans ( L_instcommhiearchy__YZ_Z_depth ) ;
 }
 
-State ( L_instcommhiearchy__YZ_Z_depth ) {
-	Halt ( ) ;
+state ( L_instcommhiearchy__YZ_Z_depth ) {
+	halt ( ) ;
+}
+
+state ( L_instcommhiearchy__YZ_surface ) {
+	fork ( L_instcommhiearchy__YZ_Y_surface , 7 ) ;
+	fork ( L_instcommhiearchy__YZ_depth , 5 ) ;
+}
+
+state ( L_instcommhiearchy__YZ_depth ) {
+	halt ( ) ;
+}
+
+state ( L_instcommhiearchy__ABC_BC_C_surface ) {
+	prio ( 4 ) ;
+	trans ( L_instcommhiearchy__ABC_BC_C_depth ) ;
+}
+
+state ( L_instcommhiearchy__ABC_BC_C_depth ) {
+	halt ( ) ;
+}
+
+state ( L_instcommhiearchy__ABC_BC_surface ) {
+	fork ( L_instcommhiearchy__ABC_BC_B_surface , 8 ) ;
+	fork ( L_instcommhiearchy__ABC_BC_depth , 3 ) ;
+}
+
+state ( L_instcommhiearchy__ABC_BC_depth ) {
+	halt ( ) ;
+}
+
+state ( L_instcommhiearchy__ABC_surface ) {
+	fork ( L_instcommhiearchy__ABC_A_surface , 10 ) ;
+	fork ( L_instcommhiearchy__ABC_depth , 2 ) ;
+}
+
+state ( L_instcommhiearchy__ABC_depth ) {
+	halt ( ) ;
 }

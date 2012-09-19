@@ -1,55 +1,88 @@
-Synchronous Program syncchart ( 5 )
+synchronous program syncchart ( 7 )
 
-input signal I : pure ;
-output signal O : pure ;
+input signal I ;
+output signal O ; ''
 
-State ( L_root_surface ) {
-	Fork ( L_A_surface , 2 ) ;
-	Fork ( L_root_depth , 5 ) ;
+state ( L_root_surface ) {
+	fork ( L_H_surface , 3 ) ;
+	fork ( L_root_depth , 7 ) ;
 }
 
-State ( L_root_depth ) {
-	Halt ( ) ;
+state ( L_root_depth ) {
+	halt ( ) ;
 }
 
-State ( L_B_surface ) {
-	Prio ( 4 ) ;
-	If ( true ) {
-		Emit ( O ) ;
-		Trans ( L_C_surface ) ;
+state ( L_H_B_surface ) {
+	prio ( 6 ) ;
+	if ( true ) {
+		emit ( O ) ;
+		trans ( L_H_C_surface ) ;
 	} ;
-	Trans ( L_B_depth ) ;
+	trans ( L_H_B_depth ) ;
 }
 
-State ( L_B_depth ) {
-	Prio ( 4 ) ;
-	Pause ( ) ;
-	If ( true ) {
-		Emit ( O ) ;
-		Trans ( L_C_surface ) ;
+state ( L_H_B_depth ) {
+	prio ( 6 ) ;
+	pause ( ) ;
+	if ( true ) {
+		emit ( O ) ;
+		trans ( L_H_C_surface ) ;
 	} ;
-	Trans ( L_B_depth ) ;
+	trans ( L_H_B_depth ) ;
 }
 
-State ( L_C_surface ) {
-	Prio ( 3 ) ;
-	Trans ( L_C_depth ) ;
+state ( L_H_C_surface ) {
+	prio ( 5 ) ;
+	trans ( L_H_C_depth ) ;
 }
 
-State ( L_C_depth ) {
-	Halt ( ) ;
+state ( L_H_C_depth ) {
+	halt ( ) ;
 }
 
-State ( L_A_surface ) {
-	Prio ( 2 ) ;
-	Trans ( L_A_depth ) ;
+state ( L_H_A_surface ) {
+	prio ( 4 ) ;
+	trans ( L_H_A_depth ) ;
 }
 
-State ( L_A_depth ) {
-	Prio ( 2 ) ;
-	Pause ( ) ;
-	If ( I ) {
-		Trans ( L_B_surface ) ;
+state ( L_H_A_depth ) {
+	prio ( 4 ) ;
+	pause ( ) ;
+	if ( I ) {
+		trans ( L_H_B_surface ) ;
 	} ;
-	Trans ( L_A_depth ) ;
+	trans ( L_H_A_depth ) ;
+}
+
+state ( L_H_surface ) {
+	fork ( L_H_A_surface , 4 ) ;
+	fork ( L_H_surface2 , 3 ) ;
+}
+
+state ( L_H_surface2 ) {
+	prio ( 3 ) ;
+	if ( I ) {
+		abort ( ) ;
+		trans ( L_S_surface ) ;
+	} ;
+	trans ( L_H_depth ) ;
+}
+
+state ( L_H_depth ) {
+	prio ( 3 ) ;
+	pause ( ) ;
+	if ( I ) {
+		abort ( ) ;
+		trans ( L_S_surface ) ;
+	} ;
+	trans ( L_H_depth ) ;
+}
+
+state ( L_S_surface ) {
+	prio ( 2 ) ;
+	trans ( L_S_depth ) ;
+}
+
+state ( L_S_depth ) {
+	halt ( ) ;
 }

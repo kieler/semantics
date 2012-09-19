@@ -1,63 +1,63 @@
-Synchronous Program syncchart ( 6 )
+synchronous program syncchart ( 6 )
 
-input signal I : pure ;
-output signal O : pure ;
-signal L : pure ;
+input signal I ;
+output signal O ;
+signal L ; ''
 
-State ( L_root_surface ) {
-	Fork ( _syncchart__A_surface , 3 ) ;
-	Fork ( _syncchart__C_surface , 2 ) ;
-	Fork ( L_root_depth , 6 ) ;
+state ( L_root_surface ) {
+	fork ( L_syncchart__A_surface , 3 ) ;
+	fork ( L_syncchart__C_surface , 2 ) ;
+	fork ( L_root_depth , 6 ) ;
 }
 
-State ( L_root_depth ) {
-	Halt ( ) ;
+state ( L_root_depth ) {
+	halt ( ) ;
 }
 
-State ( _syncchart__D_surface ) {
-	Prio ( 5 ) ;
-	Trans ( _syncchart__D_depth ) ;
+state ( L_syncchart__D_surface ) {
+	prio ( 5 ) ;
+	trans ( L_syncchart__D_depth ) ;
 }
 
-State ( _syncchart__D_depth ) {
-	Halt ( ) ;
+state ( L_syncchart__D_depth ) {
+	halt ( ) ;
 }
 
-State ( _syncchart__B_surface ) {
-	Prio ( 4 ) ;
-	Trans ( _syncchart__B_depth ) ;
+state ( L_syncchart__B_surface ) {
+	prio ( 4 ) ;
+	trans ( L_syncchart__B_depth ) ;
 }
 
-State ( _syncchart__B_depth ) {
-	Halt ( ) ;
+state ( L_syncchart__B_depth ) {
+	halt ( ) ;
 }
 
-State ( _syncchart__A_surface ) {
-	Prio ( 3 ) ;
-	Trans ( _syncchart__A_depth ) ;
+state ( L_syncchart__A_surface ) {
+	prio ( 3 ) ;
+	trans ( L_syncchart__A_depth ) ;
 }
 
-State ( _syncchart__A_depth ) {
-	Prio ( 3 ) ;
-	Pause ( ) ;
-	If ( I ) {
-		Emit ( L ) ;
-		Trans ( _syncchart__B_surface ) ;
+state ( L_syncchart__A_depth ) {
+	prio ( 3 ) ;
+	pause ( ) ;
+	if ( I ) {
+		emit ( L ) ;
+		trans ( L_syncchart__B_surface ) ;
 	} ;
-	Trans ( _syncchart__A_depth ) ;
+	trans ( L_syncchart__A_depth ) ;
 }
 
-State ( _syncchart__C_surface ) {
-	Prio ( 2 ) ;
-	Trans ( _syncchart__C_depth ) ;
+state ( L_syncchart__C_surface ) {
+	prio ( 2 ) ;
+	trans ( L_syncchart__C_depth ) ;
 }
 
-State ( _syncchart__C_depth ) {
-	Prio ( 2 ) ;
-	Pause ( ) ;
-	If ( not L ) {
-		Emit ( O ) ;
-		Trans ( _syncchart__D_surface ) ;
+state ( L_syncchart__C_depth ) {
+	prio ( 2 ) ;
+	pause ( ) ;
+	if ( not L ) {
+		emit ( O ) ;
+		trans ( L_syncchart__D_surface ) ;
 	} ;
-	Trans ( _syncchart__C_depth ) ;
+	trans ( L_syncchart__C_depth ) ;
 }

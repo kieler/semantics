@@ -1,60 +1,59 @@
-Synchronous Program simple ( 6 )
+synchronous program simple ( 5 )
 
-input signal I : pure ;
-output signal O : pure ;
-input signal L : pure ;
+input signal I ;
+output signal O ;
+input signal L ; ''
 
-State ( L_root_surface ) {
-	Fork ( L_R_surface , 5 ) ;
-	Fork ( L_root_depth , 6 ) ;
+state ( L_root_surface ) {
+	fork ( L_R_surface , 2 ) ;
+	fork ( L_root_depth , 5 ) ;
 }
 
-State ( L_root_depth ) {
-	Halt ( ) ;
+state ( L_root_depth ) {
+	halt ( ) ;
 }
 
-State ( L_R_surface ) {
-	Fork ( L_R_S_surface , 4 ) ;
-	Fork ( L_R_depth , 5 ) ;
+state ( L_R_S_surface ) {
+	prio ( 4 ) ;
+	trans ( L_R_S_depth ) ;
 }
 
-State ( L_R_depth ) {
-	Prio ( 5 ) ;
-	Pause ( ) ;
-	Prio ( 2 ) ;
-	If ( L ) {
-		Emit ( O ) ;
-		Abort ( ) ;
-		Trans ( L_R_surface ) ;
+state ( L_R_S_depth ) {
+	prio ( 4 ) ;
+	pause ( ) ;
+	if ( I ) {
+		emit ( L ) ;
+		trans ( L_R_E_surface ) ;
 	} ;
-	Trans ( L_R_depth ) ;
+	trans ( L_R_S_depth ) ;
 }
 
-State ( L_R_S_surface ) {
-	Prio ( 4 ) ;
-	Trans ( L_R_S_depth ) ;
+state ( L_R_E_surface ) {
+	prio ( 3 ) ;
+	trans ( L_R_E_depth ) ;
 }
 
-State ( L_R_S_depth ) {
-	Prio ( 4 ) ;
-	Pause ( ) ;
-	If ( I ) {
-		Emit ( L ) ;
-		Trans ( L_R_E_surface ) ;
+state ( L_R_E_depth ) {
+	prio ( 3 ) ;
+	pause ( ) ;
+	if ( L ) {
+		trans ( L_R_E_surface ) ;
 	} ;
-	Trans ( L_R_S_depth ) ;
+	trans ( L_R_E_depth ) ;
 }
 
-State ( L_R_E_surface ) {
-	Prio ( 3 ) ;
-	Trans ( L_R_E_depth ) ;
+state ( L_R_surface ) {
+	fork ( L_R_S_surface , 4 ) ;
+	fork ( L_R_depth , 2 ) ;
 }
 
-State ( L_R_E_depth ) {
-	Prio ( 3 ) ;
-	Pause ( ) ;
-	If ( L ) {
-		Trans ( L_R_E_surface ) ;
+state ( L_R_depth ) {
+	prio ( 2 ) ;
+	pause ( ) ;
+	if ( L ) {
+		emit ( O ) ;
+		abort ( ) ;
+		trans ( L_R_surface ) ;
 	} ;
-	Trans ( L_R_E_depth ) ;
+	trans ( L_R_depth ) ;
 }
