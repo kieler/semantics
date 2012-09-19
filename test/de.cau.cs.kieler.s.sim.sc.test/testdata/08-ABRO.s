@@ -3,7 +3,7 @@ synchronous program ABRO ( 9 )
 input signal A ;
 input signal B ;
 input signal R ;
-output signal O ; ''
+output signal O ; 
 
 state ( L_root_surface ) {
 	fork ( L_ABO_surface , 8 ) ;

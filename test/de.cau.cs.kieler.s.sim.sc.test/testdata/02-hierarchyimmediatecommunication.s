@@ -4,7 +4,7 @@ input signal I ;
 output signal O ;
 signal L1 ;
 signal L2 ;
-signal L3 ; ''
+signal L3 ; 
 
 state ( L_root_surface ) {
 	fork ( L_hierarchy__H_surface , 2 ) ;

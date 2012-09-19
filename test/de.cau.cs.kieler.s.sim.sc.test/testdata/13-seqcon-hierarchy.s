@@ -5,7 +5,7 @@ signal L2 ;
 input signal I ;
 input signal E ;
 output signal O1 ;
-output signal O2 ; ''
+output signal O2 ; 
 
 state ( L_root_surface ) {
 	fork ( L_sequential_concurrent_hierarchy__G2_surface , 7 ) ;

@@ -2,7 +2,7 @@ synchronous program simple ( 5 )
 
 input signal I ;
 output signal O ;
-input signal L ; ''
+input signal L ; 
 
 state ( L_root_surface ) {
 	fork ( L_R_surface , 2 ) ;

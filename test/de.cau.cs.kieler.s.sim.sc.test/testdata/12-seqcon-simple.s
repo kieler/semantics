@@ -1,6 +1,6 @@
 synchronous program sequential_concurrent_simple ( 10 )
 
-output signal S ; ''
+output signal S ; 
 
 state ( L_root_surface ) {
 	fork ( L_sequential_concurrent_simple__A_surface , 7 ) ;

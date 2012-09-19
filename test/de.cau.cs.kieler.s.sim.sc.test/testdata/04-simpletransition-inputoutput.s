@@ -1,7 +1,7 @@
 synchronous program _04_simpletransition ( 4 )
 
 input signal I ;
-output signal O ; ''
+output signal O ; 
 
 state ( L_root_surface ) {
 	fork ( L_S_surface , 2 ) ;

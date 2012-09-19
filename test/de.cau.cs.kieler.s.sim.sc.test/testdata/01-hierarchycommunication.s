@@ -3,7 +3,7 @@ synchronous program hierarchy ( 7 )
 input signal I ;
 output signal O ;
 signal L1 ;
-signal L2 ; ''
+signal L2 ;
 
 state ( L_root_surface ) {
 	fork ( L_hierarchy__H_surface , 2 ) ;

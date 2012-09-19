@@ -2,7 +2,7 @@ synchronous program ABRO2 ( 8 )
 
 input signal A ;
 input signal B ;
-output signal O ; ''
+output signal O ; 
 
 state ( L_root_surface ) {
 	fork ( L_WaitAB_surface , 2 ) ;

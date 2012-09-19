@@ -1,7 +1,7 @@
 synchronous program syncchart ( 7 )
 
 input signal I ;
-output signal O ; ''
+output signal O ; 
 
 state ( L_root_surface ) {
 	fork ( L_H_surface , 3 ) ;
