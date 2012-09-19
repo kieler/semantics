@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 
 import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl#getSignals <em>Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl#getVariables <em>Variables</em>}</li>
  * </ul>
  * </p>
  *
@@ -68,6 +70,16 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
    * @ordered
    */
   protected EList<Signal> signals;
+
+  /**
+   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVariables()
+   * @generated
+   * @ordered
+   */
+  protected EList<Variable> variables;
 
   /**
    * <!-- begin-user-doc -->
@@ -132,6 +144,20 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Variable> getVariables()
+  {
+    if (variables == null)
+    {
+      variables = new EObjectContainmentEList<Variable>(Variable.class, this, SPackage.CONTINUATION__VARIABLES);
+    }
+    return variables;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -139,6 +165,8 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
     {
       case SPackage.CONTINUATION__SIGNALS:
         return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
+      case SPackage.CONTINUATION__VARIABLES:
+        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -157,6 +185,8 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
         return getName();
       case SPackage.CONTINUATION__SIGNALS:
         return getSignals();
+      case SPackage.CONTINUATION__VARIABLES:
+        return getVariables();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -179,6 +209,10 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
         getSignals().clear();
         getSignals().addAll((Collection<? extends Signal>)newValue);
         return;
+      case SPackage.CONTINUATION__VARIABLES:
+        getVariables().clear();
+        getVariables().addAll((Collection<? extends Variable>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -199,6 +233,9 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
       case SPackage.CONTINUATION__SIGNALS:
         getSignals().clear();
         return;
+      case SPackage.CONTINUATION__VARIABLES:
+        getVariables().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -217,6 +254,8 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SPackage.CONTINUATION__SIGNALS:
         return signals != null && !signals.isEmpty();
+      case SPackage.CONTINUATION__VARIABLES:
+        return variables != null && !variables.isEmpty();
     }
     return super.eIsSet(featureID);
   }

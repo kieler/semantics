@@ -5,6 +5,7 @@ package de.cau.cs.kieler.s.s.impl;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 
 import de.cau.cs.kieler.s.s.Await;
+import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.SPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -22,6 +23,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AwaitImpl#getSignal <em>Signal</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.AwaitImpl#getContinuation <em>Continuation</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,6 +40,16 @@ public class AwaitImpl extends InstructionImpl implements Await
    * @ordered
    */
   protected Signal signal;
+
+  /**
+   * The cached value of the '{@link #getContinuation() <em>Continuation</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getContinuation()
+   * @generated
+   * @ordered
+   */
+  protected Continuation continuation;
 
   /**
    * <!-- begin-user-doc -->
@@ -108,6 +120,49 @@ public class AwaitImpl extends InstructionImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
+  public Continuation getContinuation()
+  {
+    if (continuation != null && continuation.eIsProxy())
+    {
+      InternalEObject oldContinuation = (InternalEObject)continuation;
+      continuation = (Continuation)eResolveProxy(oldContinuation);
+      if (continuation != oldContinuation)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.AWAIT__CONTINUATION, oldContinuation, continuation));
+      }
+    }
+    return continuation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Continuation basicGetContinuation()
+  {
+    return continuation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setContinuation(Continuation newContinuation)
+  {
+    Continuation oldContinuation = continuation;
+    continuation = newContinuation;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.AWAIT__CONTINUATION, oldContinuation, continuation));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -116,6 +171,9 @@ public class AwaitImpl extends InstructionImpl implements Await
       case SPackage.AWAIT__SIGNAL:
         if (resolve) return getSignal();
         return basicGetSignal();
+      case SPackage.AWAIT__CONTINUATION:
+        if (resolve) return getContinuation();
+        return basicGetContinuation();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -132,6 +190,9 @@ public class AwaitImpl extends InstructionImpl implements Await
     {
       case SPackage.AWAIT__SIGNAL:
         setSignal((Signal)newValue);
+        return;
+      case SPackage.AWAIT__CONTINUATION:
+        setContinuation((Continuation)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -150,6 +211,9 @@ public class AwaitImpl extends InstructionImpl implements Await
       case SPackage.AWAIT__SIGNAL:
         setSignal((Signal)null);
         return;
+      case SPackage.AWAIT__CONTINUATION:
+        setContinuation((Continuation)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -166,6 +230,8 @@ public class AwaitImpl extends InstructionImpl implements Await
     {
       case SPackage.AWAIT__SIGNAL:
         return signal != null;
+      case SPackage.AWAIT__CONTINUATION:
+        return continuation != null;
     }
     return super.eIsSet(featureID);
   }

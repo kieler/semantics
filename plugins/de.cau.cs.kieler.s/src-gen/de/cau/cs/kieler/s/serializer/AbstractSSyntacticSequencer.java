@@ -48,9 +48,20 @@ public abstract class AbstractSSyntacticSequencer extends AbstractSyntacticSeque
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if(ruleCall.getRule() == grammarAccess.getHOSTCODERule())
+			return getHOSTCODEToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
+	/**
+	 * terminal HOSTCODE returns ecore::EString: 
+	 * 	"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
+	 */
+	protected String getHOSTCODEToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "\'\'";
+	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {

@@ -30,6 +30,7 @@ import de.cau.cs.kieler.s.s.SFactory
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
+import de.cau.cs.kieler.s.s.HostCodeInstruction
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 
 import de.cau.cs.kieler.s.sim.sc.SSimSCPlugin
@@ -92,6 +93,7 @@ class S2Simulation {
 		   ||(instruction instanceof Abort)
 		   ||(instruction instanceof If)
 		   ||(instruction instanceof Await)
+		   ||(instruction instanceof HostCodeInstruction)
 		)) {
 			
 		// auxiliary signal

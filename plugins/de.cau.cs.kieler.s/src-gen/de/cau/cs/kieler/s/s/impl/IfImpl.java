@@ -4,6 +4,7 @@ package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 
+import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.IfImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.IfImpl#getContinuation <em>Continuation</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.IfImpl#getInstructions <em>Instructions</em>}</li>
  * </ul>
  * </p>
@@ -48,6 +50,16 @@ public class IfImpl extends InstructionImpl implements If
    * @ordered
    */
   protected Expression expression;
+
+  /**
+   * The cached value of the '{@link #getContinuation() <em>Continuation</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getContinuation()
+   * @generated
+   * @ordered
+   */
+  protected Continuation continuation;
 
   /**
    * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
@@ -133,6 +145,49 @@ public class IfImpl extends InstructionImpl implements If
    * <!-- end-user-doc -->
    * @generated
    */
+  public Continuation getContinuation()
+  {
+    if (continuation != null && continuation.eIsProxy())
+    {
+      InternalEObject oldContinuation = (InternalEObject)continuation;
+      continuation = (Continuation)eResolveProxy(oldContinuation);
+      if (continuation != oldContinuation)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.IF__CONTINUATION, oldContinuation, continuation));
+      }
+    }
+    return continuation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Continuation basicGetContinuation()
+  {
+    return continuation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setContinuation(Continuation newContinuation)
+  {
+    Continuation oldContinuation = continuation;
+    continuation = newContinuation;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.IF__CONTINUATION, oldContinuation, continuation));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Instruction> getInstructions()
   {
     if (instructions == null)
@@ -172,6 +227,9 @@ public class IfImpl extends InstructionImpl implements If
     {
       case SPackage.IF__EXPRESSION:
         return getExpression();
+      case SPackage.IF__CONTINUATION:
+        if (resolve) return getContinuation();
+        return basicGetContinuation();
       case SPackage.IF__INSTRUCTIONS:
         return getInstructions();
     }
@@ -191,6 +249,9 @@ public class IfImpl extends InstructionImpl implements If
     {
       case SPackage.IF__EXPRESSION:
         setExpression((Expression)newValue);
+        return;
+      case SPackage.IF__CONTINUATION:
+        setContinuation((Continuation)newValue);
         return;
       case SPackage.IF__INSTRUCTIONS:
         getInstructions().clear();
@@ -213,6 +274,9 @@ public class IfImpl extends InstructionImpl implements If
       case SPackage.IF__EXPRESSION:
         setExpression((Expression)null);
         return;
+      case SPackage.IF__CONTINUATION:
+        setContinuation((Continuation)null);
+        return;
       case SPackage.IF__INSTRUCTIONS:
         getInstructions().clear();
         return;
@@ -232,6 +296,8 @@ public class IfImpl extends InstructionImpl implements If
     {
       case SPackage.IF__EXPRESSION:
         return expression != null;
+      case SPackage.IF__CONTINUATION:
+        return continuation != null;
       case SPackage.IF__INSTRUCTIONS:
         return instructions != null && !instructions.isEmpty();
     }

@@ -8,6 +8,7 @@ import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.Fork;
 import de.cau.cs.kieler.s.s.Halt;
+import de.cau.cs.kieler.s.s.HostCodeInstruction;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.Join;
@@ -103,6 +104,11 @@ public class SAdapterFactory extends AdapterFactoryImpl
       public Adapter caseThread(de.cau.cs.kieler.s.s.Thread object)
       {
         return createThreadAdapter();
+      }
+      @Override
+      public Adapter caseHostCodeInstruction(HostCodeInstruction object)
+      {
+        return createHostCodeInstructionAdapter();
       }
       @Override
       public Adapter caseContinuation(Continuation object)
@@ -232,6 +238,21 @@ public class SAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createThreadAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.HostCodeInstruction <em>Host Code Instruction</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.s.s.HostCodeInstruction
+   * @generated
+   */
+  public Adapter createHostCodeInstructionAdapter()
   {
     return null;
   }

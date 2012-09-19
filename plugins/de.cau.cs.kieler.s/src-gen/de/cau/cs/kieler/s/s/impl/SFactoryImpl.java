@@ -8,6 +8,7 @@ import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.Fork;
 import de.cau.cs.kieler.s.s.Halt;
+import de.cau.cs.kieler.s.s.HostCodeInstruction;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.Join;
@@ -83,6 +84,7 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
       case SPackage.PROGRAM: return createProgram();
       case SPackage.STATE: return createState();
       case SPackage.THREAD: return createThread();
+      case SPackage.HOST_CODE_INSTRUCTION: return createHostCodeInstruction();
       case SPackage.CONTINUATION: return createContinuation();
       case SPackage.INSTRUCTION: return createInstruction();
       case SPackage.PRIO: return createPrio();
@@ -132,6 +134,17 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
   {
     ThreadImpl thread = new ThreadImpl();
     return thread;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public HostCodeInstruction createHostCodeInstruction()
+  {
+    HostCodeInstructionImpl hostCodeInstruction = new HostCodeInstructionImpl();
+    return hostCodeInstruction;
   }
 
   /**

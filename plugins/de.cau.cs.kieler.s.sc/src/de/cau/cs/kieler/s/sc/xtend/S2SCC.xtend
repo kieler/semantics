@@ -34,8 +34,11 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
+import de.cau.cs.kieler.s.s.HostCodeInstruction
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -51,6 +54,8 @@ class S2SCC {
        «scHeader(outputFolder, program)»
 
 	   «/* Signal Reset, Output */»
+	   «sResetSignals(program)»
+	   «sTotalResetSignals(program)»
 	   «sReset(program)»
 
        «sOutputs(program)»
@@ -62,8 +67,8 @@ class S2SCC {
 	   «/* Generate output functions and reset functions for each S signal */» 
        «sSetOutputFunction(program)»
 
-	   «sResetSignals(program)»
-	   «sTotalResetSignals(program)»
+	   «/* Possible global host code */»
+	   «program.hocstCodeString.extractCode»
 
 	   «/* Generate the main function */»
 	   «mainFunction(program)»
@@ -124,13 +129,13 @@ class S2SCC {
 
 	#define EMIT_VAL_SCC(name, value)                                 \
   	presentSigInt[name] = 1;		\
-  	valSigInt[name] = value;		\
+  	valSigInt[name] = (int)value;		\
 	
 	#define PRESENT_SCC(name)                                 \
-  	(presentSigInt[name] == 1)					     \
+  	((presentSigInt[name]) == 1)					     \
 	
 	#define PRE_PRESENT_SCC(name)                                 \
-  	(presentSigIntPre[name] == 1)					     \
+  	((presentSigIntPre[name]) == 1)					     \
 
 	#define VAL_SCC(name)                                 \
   	(valSigInt[name])					     \
@@ -320,11 +325,11 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    
    // Expand a state traversing all instructions of that state.
    def dispatch expand(State state) {
-   		'''«state.name»: 
+   		'''«state.name»: { 
    		«FOR instruction : state.instructions»
    		«instruction.expand»
    		«ENDFOR»
-   		'''
+   		}'''
    }
    
    // Expand an IF instruction traversing all instructions of that IF instruction.
@@ -336,6 +341,20 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
          }'''
    }   
    
+   
+   def extractCode(String hostCodeString) {
+   	 hostCodeString.substring(1, hostCodeString.length-1);
+   }
+   
+   // Expand HOST code.
+   def dispatch expand(HostCodeInstruction hostCodeInstruction) {
+   	 hostCodeInstruction.hostCode.extractCode;
+   }
+   // Expand Text Expression
+   def dispatch expand(TextExpression expression) {
+   	 '''(«expression.code.extractCode»)'''
+   }
+      
    // Expand a PAUSE instruction.
    def dispatch expand(Pause pauseInstruction) {
    	'''PAUSE;'''
@@ -500,6 +519,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
 	«ENDIF»
 	   	 '''
    }
+
 	
    // Expand a signal.
    def dispatch expand(Signal signal) {

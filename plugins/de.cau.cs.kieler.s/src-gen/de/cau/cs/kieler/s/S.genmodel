@@ -10,7 +10,9 @@
     <genClasses ecoreClass="S.ecore#//Program">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/priority"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/variables"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/signals"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/hocstCodeString"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/states"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//State">
@@ -19,36 +21,55 @@
     <genClasses ecoreClass="S.ecore#//Thread">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Thread/states"/>
     </genClasses>
+    <genClasses ecoreClass="S.ecore#//HostCodeInstruction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//HostCodeInstruction/hostCode"/>
+    </genClasses>
     <genClasses ecoreClass="S.ecore#//Continuation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Continuation/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Continuation/signals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Continuation/variables"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Instruction">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Instruction/continuation"/>
-    </genClasses>
+    <genClasses ecoreClass="S.ecore#//Instruction"/>
     <genClasses ecoreClass="S.ecore#//Prio">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Prio/priority"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Prio/continuation"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Trans"/>
+    <genClasses ecoreClass="S.ecore#//Trans">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Trans/continuation"/>
+    </genClasses>
     <genClasses ecoreClass="S.ecore#//Fork">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Fork/thread"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Fork/priority"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Fork/continuation"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Join"/>
-    <genClasses ecoreClass="S.ecore#//Pause"/>
-    <genClasses ecoreClass="S.ecore#//Term"/>
-    <genClasses ecoreClass="S.ecore#//Halt"/>
+    <genClasses ecoreClass="S.ecore#//Join">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Join/continuation"/>
+    </genClasses>
+    <genClasses ecoreClass="S.ecore#//Pause">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Pause/continuation"/>
+    </genClasses>
+    <genClasses ecoreClass="S.ecore#//Term">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Term/continuation"/>
+    </genClasses>
+    <genClasses ecoreClass="S.ecore#//Halt">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Halt/continuation"/>
+    </genClasses>
     <genClasses ecoreClass="S.ecore#//Emit">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Emit/signal"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Emit/value"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Emit/continuation"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Abort"/>
+    <genClasses ecoreClass="S.ecore#//Abort">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Abort/continuation"/>
+    </genClasses>
     <genClasses ecoreClass="S.ecore#//If">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//If/expression"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//If/continuation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//If/instructions"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//Await">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Await/signal"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Await/continuation"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

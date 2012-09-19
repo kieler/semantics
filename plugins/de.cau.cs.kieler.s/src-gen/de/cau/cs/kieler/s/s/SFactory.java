@@ -50,6 +50,15 @@ public interface SFactory extends EFactory
   Thread createThread();
 
   /**
+   * Returns a new object of class '<em>Host Code Instruction</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Host Code Instruction</em>'.
+   * @generated
+   */
+  HostCodeInstruction createHostCodeInstruction();
+
+  /**
    * Returns a new object of class '<em>Continuation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

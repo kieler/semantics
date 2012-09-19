@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.s.s;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -18,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.Continuation#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Continuation#getSignals <em>Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.Continuation#getVariables <em>Variables</em>}</li>
  * </ul>
  * </p>
  *
@@ -68,5 +70,21 @@ public interface Continuation extends EObject
    * @generated
    */
   EList<Signal> getSignals();
+
+  /**
+   * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Variable}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Variables</em>' containment reference list.
+   * @see de.cau.cs.kieler.s.s.SPackage#getContinuation_Variables()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Variable> getVariables();
 
 } // Continuation

@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.If#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.If#getContinuation <em>Continuation</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.If#getInstructions <em>Instructions</em>}</li>
  * </ul>
  * </p>
@@ -50,6 +51,32 @@ public interface If extends Instruction
    * @generated
    */
   void setExpression(Expression value);
+
+  /**
+   * Returns the value of the '<em><b>Continuation</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Continuation</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Continuation</em>' reference.
+   * @see #setContinuation(Continuation)
+   * @see de.cau.cs.kieler.s.s.SPackage#getIf_Continuation()
+   * @model
+   * @generated
+   */
+  Continuation getContinuation();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.s.s.If#getContinuation <em>Continuation</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Continuation</em>' reference.
+   * @see #getContinuation()
+   * @generated
+   */
+  void setContinuation(Continuation value);
 
   /**
    * Returns the value of the '<em><b>Instructions</b></em>' containment reference list.

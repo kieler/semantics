@@ -2,12 +2,14 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
+import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.SPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -19,6 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.PrioImpl#getPriority <em>Priority</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.PrioImpl#getContinuation <em>Continuation</em>}</li>
  * </ul>
  * </p>
  *
@@ -45,6 +48,16 @@ public class PrioImpl extends InstructionImpl implements Prio
    * @ordered
    */
   protected int priority = PRIORITY_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getContinuation() <em>Continuation</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getContinuation()
+   * @generated
+   * @ordered
+   */
+  protected Continuation continuation;
 
   /**
    * <!-- begin-user-doc -->
@@ -95,6 +108,49 @@ public class PrioImpl extends InstructionImpl implements Prio
    * <!-- end-user-doc -->
    * @generated
    */
+  public Continuation getContinuation()
+  {
+    if (continuation != null && continuation.eIsProxy())
+    {
+      InternalEObject oldContinuation = (InternalEObject)continuation;
+      continuation = (Continuation)eResolveProxy(oldContinuation);
+      if (continuation != oldContinuation)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.PRIO__CONTINUATION, oldContinuation, continuation));
+      }
+    }
+    return continuation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Continuation basicGetContinuation()
+  {
+    return continuation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setContinuation(Continuation newContinuation)
+  {
+    Continuation oldContinuation = continuation;
+    continuation = newContinuation;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PRIO__CONTINUATION, oldContinuation, continuation));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -102,6 +158,9 @@ public class PrioImpl extends InstructionImpl implements Prio
     {
       case SPackage.PRIO__PRIORITY:
         return getPriority();
+      case SPackage.PRIO__CONTINUATION:
+        if (resolve) return getContinuation();
+        return basicGetContinuation();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -118,6 +177,9 @@ public class PrioImpl extends InstructionImpl implements Prio
     {
       case SPackage.PRIO__PRIORITY:
         setPriority((Integer)newValue);
+        return;
+      case SPackage.PRIO__CONTINUATION:
+        setContinuation((Continuation)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -136,6 +198,9 @@ public class PrioImpl extends InstructionImpl implements Prio
       case SPackage.PRIO__PRIORITY:
         setPriority(PRIORITY_EDEFAULT);
         return;
+      case SPackage.PRIO__CONTINUATION:
+        setContinuation((Continuation)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -152,6 +217,8 @@ public class PrioImpl extends InstructionImpl implements Prio
     {
       case SPackage.PRIO__PRIORITY:
         return priority != PRIORITY_EDEFAULT;
+      case SPackage.PRIO__CONTINUATION:
+        return continuation != null;
     }
     return super.eIsSet(featureID);
   }

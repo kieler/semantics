@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ForkImpl#getThread <em>Thread</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ForkImpl#getPriority <em>Priority</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ForkImpl#getContinuation <em>Continuation</em>}</li>
  * </ul>
  * </p>
  *
@@ -58,6 +59,16 @@ public class ForkImpl extends InstructionImpl implements Fork
    * @ordered
    */
   protected int priority = PRIORITY_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getContinuation() <em>Continuation</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getContinuation()
+   * @generated
+   * @ordered
+   */
+  protected Continuation continuation;
 
   /**
    * <!-- begin-user-doc -->
@@ -151,6 +162,49 @@ public class ForkImpl extends InstructionImpl implements Fork
    * <!-- end-user-doc -->
    * @generated
    */
+  public Continuation getContinuation()
+  {
+    if (continuation != null && continuation.eIsProxy())
+    {
+      InternalEObject oldContinuation = (InternalEObject)continuation;
+      continuation = (Continuation)eResolveProxy(oldContinuation);
+      if (continuation != oldContinuation)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.FORK__CONTINUATION, oldContinuation, continuation));
+      }
+    }
+    return continuation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Continuation basicGetContinuation()
+  {
+    return continuation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setContinuation(Continuation newContinuation)
+  {
+    Continuation oldContinuation = continuation;
+    continuation = newContinuation;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.FORK__CONTINUATION, oldContinuation, continuation));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -161,6 +215,9 @@ public class ForkImpl extends InstructionImpl implements Fork
         return basicGetThread();
       case SPackage.FORK__PRIORITY:
         return getPriority();
+      case SPackage.FORK__CONTINUATION:
+        if (resolve) return getContinuation();
+        return basicGetContinuation();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -180,6 +237,9 @@ public class ForkImpl extends InstructionImpl implements Fork
         return;
       case SPackage.FORK__PRIORITY:
         setPriority((Integer)newValue);
+        return;
+      case SPackage.FORK__CONTINUATION:
+        setContinuation((Continuation)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -201,6 +261,9 @@ public class ForkImpl extends InstructionImpl implements Fork
       case SPackage.FORK__PRIORITY:
         setPriority(PRIORITY_EDEFAULT);
         return;
+      case SPackage.FORK__CONTINUATION:
+        setContinuation((Continuation)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -219,6 +282,8 @@ public class ForkImpl extends InstructionImpl implements Fork
         return thread != null;
       case SPackage.FORK__PRIORITY:
         return priority != PRIORITY_EDEFAULT;
+      case SPackage.FORK__CONTINUATION:
+        return continuation != null;
     }
     return super.eIsSet(featureID);
   }

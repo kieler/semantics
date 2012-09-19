@@ -5,6 +5,7 @@ package de.cau.cs.kieler.s.s.impl;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 
+import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.SPackage;
 
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.EmitImpl#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.EmitImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.EmitImpl#getContinuation <em>Continuation</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,6 +53,16 @@ public class EmitImpl extends InstructionImpl implements Emit
    * @ordered
    */
   protected Expression value;
+
+  /**
+   * The cached value of the '{@link #getContinuation() <em>Continuation</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getContinuation()
+   * @generated
+   * @ordered
+   */
+  protected Continuation continuation;
 
   /**
    * <!-- begin-user-doc -->
@@ -169,6 +181,49 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
+  public Continuation getContinuation()
+  {
+    if (continuation != null && continuation.eIsProxy())
+    {
+      InternalEObject oldContinuation = (InternalEObject)continuation;
+      continuation = (Continuation)eResolveProxy(oldContinuation);
+      if (continuation != oldContinuation)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.EMIT__CONTINUATION, oldContinuation, continuation));
+      }
+    }
+    return continuation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Continuation basicGetContinuation()
+  {
+    return continuation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setContinuation(Continuation newContinuation)
+  {
+    Continuation oldContinuation = continuation;
+    continuation = newContinuation;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.EMIT__CONTINUATION, oldContinuation, continuation));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -195,6 +250,9 @@ public class EmitImpl extends InstructionImpl implements Emit
         return basicGetSignal();
       case SPackage.EMIT__VALUE:
         return getValue();
+      case SPackage.EMIT__CONTINUATION:
+        if (resolve) return getContinuation();
+        return basicGetContinuation();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -214,6 +272,9 @@ public class EmitImpl extends InstructionImpl implements Emit
         return;
       case SPackage.EMIT__VALUE:
         setValue((Expression)newValue);
+        return;
+      case SPackage.EMIT__CONTINUATION:
+        setContinuation((Continuation)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -235,6 +296,9 @@ public class EmitImpl extends InstructionImpl implements Emit
       case SPackage.EMIT__VALUE:
         setValue((Expression)null);
         return;
+      case SPackage.EMIT__CONTINUATION:
+        setContinuation((Continuation)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -253,6 +317,8 @@ public class EmitImpl extends InstructionImpl implements Emit
         return signal != null;
       case SPackage.EMIT__VALUE:
         return value != null;
+      case SPackage.EMIT__CONTINUATION:
+        return continuation != null;
     }
     return super.eIsSet(featureID);
   }

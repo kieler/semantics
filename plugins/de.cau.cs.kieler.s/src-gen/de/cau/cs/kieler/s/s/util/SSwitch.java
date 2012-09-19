@@ -8,6 +8,7 @@ import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.Fork;
 import de.cau.cs.kieler.s.s.Halt;
+import de.cau.cs.kieler.s.s.HostCodeInstruction;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.Join;
@@ -107,6 +108,14 @@ public class SSwitch<T> extends Switch<T>
         de.cau.cs.kieler.s.s.Thread thread = (de.cau.cs.kieler.s.s.Thread)theEObject;
         T result = caseThread(thread);
         if (result == null) result = caseContinuation(thread);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SPackage.HOST_CODE_INSTRUCTION:
+      {
+        HostCodeInstruction hostCodeInstruction = (HostCodeInstruction)theEObject;
+        T result = caseHostCodeInstruction(hostCodeInstruction);
+        if (result == null) result = caseInstruction(hostCodeInstruction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -260,6 +269,22 @@ public class SSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseThread(de.cau.cs.kieler.s.s.Thread object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Host Code Instruction</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Host Code Instruction</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseHostCodeInstruction(HostCodeInstruction object)
   {
     return null;
   }

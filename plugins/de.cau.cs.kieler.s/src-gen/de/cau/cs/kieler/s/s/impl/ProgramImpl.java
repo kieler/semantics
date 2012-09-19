@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -33,7 +34,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getPriority <em>Priority</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getSignals <em>Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getHocstCodeString <em>Hocst Code String</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getStates <em>States</em>}</li>
  * </ul>
  * </p>
@@ -83,6 +86,16 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected int priority = PRIORITY_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVariables()
+   * @generated
+   * @ordered
+   */
+  protected EList<Variable> variables;
+
+  /**
    * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -91,6 +104,26 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * @ordered
    */
   protected EList<Signal> signals;
+
+  /**
+   * The default value of the '{@link #getHocstCodeString() <em>Hocst Code String</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getHocstCodeString()
+   * @generated
+   * @ordered
+   */
+  protected static final String HOCST_CODE_STRING_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getHocstCodeString() <em>Hocst Code String</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getHocstCodeString()
+   * @generated
+   * @ordered
+   */
+  protected String hocstCodeString = HOCST_CODE_STRING_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
@@ -174,6 +207,20 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Variable> getVariables()
+  {
+    if (variables == null)
+    {
+      variables = new EObjectContainmentEList<Variable>(Variable.class, this, SPackage.PROGRAM__VARIABLES);
+    }
+    return variables;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Signal> getSignals()
   {
     if (signals == null)
@@ -181,6 +228,29 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       signals = new EObjectContainmentEList<Signal>(Signal.class, this, SPackage.PROGRAM__SIGNALS);
     }
     return signals;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getHocstCodeString()
+  {
+    return hocstCodeString;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setHocstCodeString(String newHocstCodeString)
+  {
+    String oldHocstCodeString = hocstCodeString;
+    hocstCodeString = newHocstCodeString;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PROGRAM__HOCST_CODE_STRING, oldHocstCodeString, hocstCodeString));
   }
 
   /**
@@ -207,6 +277,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
+      case SPackage.PROGRAM__VARIABLES:
+        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
       case SPackage.PROGRAM__SIGNALS:
         return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
       case SPackage.PROGRAM__STATES:
@@ -229,8 +301,12 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return getName();
       case SPackage.PROGRAM__PRIORITY:
         return getPriority();
+      case SPackage.PROGRAM__VARIABLES:
+        return getVariables();
       case SPackage.PROGRAM__SIGNALS:
         return getSignals();
+      case SPackage.PROGRAM__HOCST_CODE_STRING:
+        return getHocstCodeString();
       case SPackage.PROGRAM__STATES:
         return getStates();
     }
@@ -254,9 +330,16 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SPackage.PROGRAM__PRIORITY:
         setPriority((Integer)newValue);
         return;
+      case SPackage.PROGRAM__VARIABLES:
+        getVariables().clear();
+        getVariables().addAll((Collection<? extends Variable>)newValue);
+        return;
       case SPackage.PROGRAM__SIGNALS:
         getSignals().clear();
         getSignals().addAll((Collection<? extends Signal>)newValue);
+        return;
+      case SPackage.PROGRAM__HOCST_CODE_STRING:
+        setHocstCodeString((String)newValue);
         return;
       case SPackage.PROGRAM__STATES:
         getStates().clear();
@@ -282,8 +365,14 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SPackage.PROGRAM__PRIORITY:
         setPriority(PRIORITY_EDEFAULT);
         return;
+      case SPackage.PROGRAM__VARIABLES:
+        getVariables().clear();
+        return;
       case SPackage.PROGRAM__SIGNALS:
         getSignals().clear();
+        return;
+      case SPackage.PROGRAM__HOCST_CODE_STRING:
+        setHocstCodeString(HOCST_CODE_STRING_EDEFAULT);
         return;
       case SPackage.PROGRAM__STATES:
         getStates().clear();
@@ -306,8 +395,12 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SPackage.PROGRAM__PRIORITY:
         return priority != PRIORITY_EDEFAULT;
+      case SPackage.PROGRAM__VARIABLES:
+        return variables != null && !variables.isEmpty();
       case SPackage.PROGRAM__SIGNALS:
         return signals != null && !signals.isEmpty();
+      case SPackage.PROGRAM__HOCST_CODE_STRING:
+        return HOCST_CODE_STRING_EDEFAULT == null ? hocstCodeString != null : !HOCST_CODE_STRING_EDEFAULT.equals(hocstCodeString);
       case SPackage.PROGRAM__STATES:
         return states != null && !states.isEmpty();
     }
@@ -329,6 +422,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     result.append(name);
     result.append(", priority: ");
     result.append(priority);
+    result.append(", hocstCodeString: ");
+    result.append(hocstCodeString);
     result.append(')');
     return result.toString();
   }

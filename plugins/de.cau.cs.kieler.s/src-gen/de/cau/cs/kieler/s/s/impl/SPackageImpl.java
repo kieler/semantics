@@ -10,6 +10,7 @@ import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.Fork;
 import de.cau.cs.kieler.s.s.Halt;
+import de.cau.cs.kieler.s.s.HostCodeInstruction;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.Join;
@@ -57,6 +58,13 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * @generated
    */
   private EClass threadEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass hostCodeInstructionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -250,7 +258,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProgram_Signals()
+  public EReference getProgram_Variables()
   {
     return (EReference)programEClass.getEStructuralFeatures().get(2);
   }
@@ -260,9 +268,29 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProgram_States()
+  public EReference getProgram_Signals()
   {
     return (EReference)programEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getProgram_HocstCodeString()
+  {
+    return (EAttribute)programEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getProgram_States()
+  {
+    return (EReference)programEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -310,6 +338,26 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getHostCodeInstruction()
+  {
+    return hostCodeInstructionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getHostCodeInstruction_HostCode()
+  {
+    return (EAttribute)hostCodeInstructionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getContinuation()
   {
     return continuationEClass;
@@ -340,9 +388,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getInstruction()
+  public EReference getContinuation_Variables()
   {
-    return instructionEClass;
+    return (EReference)continuationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -350,9 +398,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getInstruction_Continuation()
+  public EClass getInstruction()
   {
-    return (EReference)instructionEClass.getEStructuralFeatures().get(0);
+    return instructionEClass;
   }
 
   /**
@@ -380,9 +428,29 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getPrio_Continuation()
+  {
+    return (EReference)prioEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getTrans()
   {
     return transEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTrans_Continuation()
+  {
+    return (EReference)transEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -420,9 +488,29 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getFork_Continuation()
+  {
+    return (EReference)forkEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getJoin()
   {
     return joinEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getJoin_Continuation()
+  {
+    return (EReference)joinEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -440,6 +528,16 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getPause_Continuation()
+  {
+    return (EReference)pauseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getTerm()
   {
     return termEClass;
@@ -450,9 +548,29 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getTerm_Continuation()
+  {
+    return (EReference)termEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getHalt()
   {
     return haltEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getHalt_Continuation()
+  {
+    return (EReference)haltEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -490,9 +608,29 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getEmit_Continuation()
+  {
+    return (EReference)emitEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getAbort()
   {
     return abortEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAbort_Continuation()
+  {
+    return (EReference)abortEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -520,9 +658,19 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getIf_Instructions()
+  public EReference getIf_Continuation()
   {
     return (EReference)ifEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIf_Instructions()
+  {
+    return (EReference)ifEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -543,6 +691,16 @@ public class SPackageImpl extends EPackageImpl implements SPackage
   public EReference getAwait_Signal()
   {
     return (EReference)awaitEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAwait_Continuation()
+  {
+    return (EReference)awaitEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -578,7 +736,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     programEClass = createEClass(PROGRAM);
     createEAttribute(programEClass, PROGRAM__NAME);
     createEAttribute(programEClass, PROGRAM__PRIORITY);
+    createEReference(programEClass, PROGRAM__VARIABLES);
     createEReference(programEClass, PROGRAM__SIGNALS);
+    createEAttribute(programEClass, PROGRAM__HOCST_CODE_STRING);
     createEReference(programEClass, PROGRAM__STATES);
 
     stateEClass = createEClass(STATE);
@@ -587,42 +747,56 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     threadEClass = createEClass(THREAD);
     createEReference(threadEClass, THREAD__STATES);
 
+    hostCodeInstructionEClass = createEClass(HOST_CODE_INSTRUCTION);
+    createEAttribute(hostCodeInstructionEClass, HOST_CODE_INSTRUCTION__HOST_CODE);
+
     continuationEClass = createEClass(CONTINUATION);
     createEAttribute(continuationEClass, CONTINUATION__NAME);
     createEReference(continuationEClass, CONTINUATION__SIGNALS);
+    createEReference(continuationEClass, CONTINUATION__VARIABLES);
 
     instructionEClass = createEClass(INSTRUCTION);
-    createEReference(instructionEClass, INSTRUCTION__CONTINUATION);
 
     prioEClass = createEClass(PRIO);
     createEAttribute(prioEClass, PRIO__PRIORITY);
+    createEReference(prioEClass, PRIO__CONTINUATION);
 
     transEClass = createEClass(TRANS);
+    createEReference(transEClass, TRANS__CONTINUATION);
 
     forkEClass = createEClass(FORK);
     createEReference(forkEClass, FORK__THREAD);
     createEAttribute(forkEClass, FORK__PRIORITY);
+    createEReference(forkEClass, FORK__CONTINUATION);
 
     joinEClass = createEClass(JOIN);
+    createEReference(joinEClass, JOIN__CONTINUATION);
 
     pauseEClass = createEClass(PAUSE);
+    createEReference(pauseEClass, PAUSE__CONTINUATION);
 
     termEClass = createEClass(TERM);
+    createEReference(termEClass, TERM__CONTINUATION);
 
     haltEClass = createEClass(HALT);
+    createEReference(haltEClass, HALT__CONTINUATION);
 
     emitEClass = createEClass(EMIT);
     createEReference(emitEClass, EMIT__SIGNAL);
     createEReference(emitEClass, EMIT__VALUE);
+    createEReference(emitEClass, EMIT__CONTINUATION);
 
     abortEClass = createEClass(ABORT);
+    createEReference(abortEClass, ABORT__CONTINUATION);
 
     ifEClass = createEClass(IF);
     createEReference(ifEClass, IF__EXPRESSION);
+    createEReference(ifEClass, IF__CONTINUATION);
     createEReference(ifEClass, IF__INSTRUCTIONS);
 
     awaitEClass = createEClass(AWAIT);
     createEReference(awaitEClass, AWAIT__SIGNAL);
+    createEReference(awaitEClass, AWAIT__CONTINUATION);
   }
 
   /**
@@ -659,6 +833,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     // Add supertypes to classes
     stateEClass.getESuperTypes().add(this.getContinuation());
     threadEClass.getESuperTypes().add(this.getContinuation());
+    hostCodeInstructionEClass.getESuperTypes().add(this.getInstruction());
     prioEClass.getESuperTypes().add(this.getInstruction());
     transEClass.getESuperTypes().add(this.getInstruction());
     forkEClass.getESuperTypes().add(this.getInstruction());
@@ -675,7 +850,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getProgram_Name(), ecorePackage.getEString(), "name", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProgram_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProgram_Variables(), theKExpressionsPackage.getVariable(), null, "variables", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProgram_Signals(), theKExpressionsPackage.getSignal(), null, "signals", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getProgram_HocstCodeString(), ecorePackage.getEString(), "hocstCodeString", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProgram_States(), this.getState(), null, "states", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -684,42 +861,56 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     initEClass(threadEClass, de.cau.cs.kieler.s.s.Thread.class, "Thread", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getThread_States(), this.getState(), null, "states", null, 0, -1, de.cau.cs.kieler.s.s.Thread.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(hostCodeInstructionEClass, HostCodeInstruction.class, "HostCodeInstruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHostCodeInstruction_HostCode(), ecorePackage.getEString(), "hostCode", null, 0, 1, HostCodeInstruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(continuationEClass, Continuation.class, "Continuation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getContinuation_Name(), ecorePackage.getEString(), "name", null, 0, 1, Continuation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getContinuation_Signals(), theKExpressionsPackage.getSignal(), null, "signals", null, 0, -1, Continuation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getContinuation_Variables(), theKExpressionsPackage.getVariable(), null, "variables", null, 0, -1, Continuation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInstruction_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Instruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(prioEClass, Prio.class, "Prio", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPrio_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Prio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrio_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Prio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(transEClass, Trans.class, "Trans", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTrans_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Trans.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(forkEClass, Fork.class, "Fork", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getFork_Thread(), this.getContinuation(), null, "thread", null, 0, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getFork_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFork_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(joinEClass, Join.class, "Join", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getJoin_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Join.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPause_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Pause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(termEClass, Term.class, "Term", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTerm_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Term.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(haltEClass, Halt.class, "Halt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getHalt_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Halt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(emitEClass, Emit.class, "Emit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEmit_Signal(), theKExpressionsPackage.getSignal(), null, "signal", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEmit_Value(), theKExpressionsPackage.getExpression(), null, "value", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEmit_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(abortEClass, Abort.class, "Abort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAbort_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Abort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(ifEClass, If.class, "If", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getIf_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, If.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIf_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, If.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIf_Instructions(), this.getInstruction(), null, "instructions", null, 0, -1, If.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(awaitEClass, Await.class, "Await", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAwait_Signal(), theKExpressionsPackage.getSignal(), null, "signal", null, 0, 1, Await.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAwait_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Await.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);
