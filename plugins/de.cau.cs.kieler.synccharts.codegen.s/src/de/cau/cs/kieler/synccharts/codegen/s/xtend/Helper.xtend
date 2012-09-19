@@ -230,7 +230,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 	}		
 
 
-	// Convert SyncChart variables of a state into S textual host code.	
+	// Convert SyncChart variables of a state into S textual host code. Return null if there are no variables.	
 	def String getStateVariables (State state){
 		var StringBuffer returnText = new StringBuffer();
 		for (variable : state.variables) {
@@ -243,7 +243,11 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 			}
 			returnText.append(";");
 		}
-		"'" + returnText.toString + "'"; 
+		if (returnText.length > 0) {
+			"'" + returnText.toString + "'";
+		} else {
+			null;
+		}
 	}	
 	
 	// Convert a single SyncChart signal and create a new S signal.
