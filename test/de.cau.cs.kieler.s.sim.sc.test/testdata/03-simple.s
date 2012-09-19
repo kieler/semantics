@@ -1,22 +1,22 @@
-Synchronous Program mySimpleSProgram ( 1 )
+synchronous program mySimpleSProgram ( 1 )
 
 input signal I : pure ;
 output signal O : pure ;
 
-State ( start ) {
-	Pause ( ) ;
-	If ( I ) {
-		Trans ( middle ) ;
+state ( start ) {
+	pause ( ) ;
+	if ( I ) {
+		trans ( middle ) ;
 	} ;
-	Trans ( start ) ;
+	trans ( start ) ;
 }
 
-State ( middle ) { 
-	//Pause();
-	Emit ( O ) ;
-	Trans ( end ) ;
+state ( middle ) { 
+	pause();
+	emit ( O ) ;
+	trans ( end ) ;
 }
 
-State ( end ) {
-	Halt ( ) ;
+state ( end ) {
+	halt ( ) ;
 }
