@@ -28,7 +28,7 @@ state ( L_S_surface ) {
 
 state ( L_S_depth ) {
 	prio ( 2 ) ;
-	pause ( ) ;
+    pause ( ) ;
 	if ( I ) {
 		emit ( O ) ;
 		trans ( L_F_surface ) ;
