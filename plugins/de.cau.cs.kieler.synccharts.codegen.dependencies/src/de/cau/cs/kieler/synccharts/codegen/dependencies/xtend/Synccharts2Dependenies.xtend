@@ -102,7 +102,7 @@ import de.cau.cs.kieler.synccharts.TransitionType
 			val outgoingStrongTransitions = state.outgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT);
 			// ".. && outgoingStrongTransitions != 0" for (macro) states without any outgoing transition, leave the
 			// weak representation in!
-			if (outgoingWeakTransitions.size == 0 && outgoingStrongTransitions.size >  0) {
+			if (outgoingWeakTransitions.size == 0 && outgoingStrongTransitions.size > 0) {
 				// now we can proceed and delete all dependencies to the weak representation of state
 				val nodesToDelete = dependencies.nodes.filter(e | e.id.startsWith(state.id) && e.id.endsWith("_W")).toList();
 				for (node : nodesToDelete) {
