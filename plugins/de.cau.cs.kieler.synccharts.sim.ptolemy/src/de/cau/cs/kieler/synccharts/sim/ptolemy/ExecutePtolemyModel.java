@@ -15,8 +15,11 @@ package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
 import java.io.File;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.json.JSONException;
@@ -35,6 +38,7 @@ import ptolemy.domains.modal.kernel.State;
 import ptolemy.domains.modal.kernel.Transition;
 import ptolemy.domains.modal.modal.ModalController;
 import ptolemy.domains.modal.modal.ModalModel;
+import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.InstantiableNamedObj;
 import ptolemy.kernel.util.Attribute;
 import ptolemy.kernel.util.KernelException;
@@ -57,18 +61,20 @@ public class ExecutePtolemyModel {
      * The Class ModelOutput.
      */
     public static class ModelOutput {
-        
+
         /** The signal name. */
         private String signalName;
-        
+
         /** The present. */
         private boolean present;
-        
+
         /**
          * Instantiates a new model output.
-         *
-         * @param signalName the signal name
-         * @param actor the actor
+         * 
+         * @param signalName
+         *            the signal name
+         * @param actor
+         *            the actor
          */
         public ModelOutput(final String signalName, final Const actor) {
             this.signalName = signalName;
@@ -79,7 +85,7 @@ public class ExecutePtolemyModel {
 
     /** The kieler io list. */
     private List<KielerIO> kielerIOList;
-    
+
     /** The model output list. */
     private List<ModelOutput> modelOutputList;
 
@@ -129,8 +135,9 @@ public class ExecutePtolemyModel {
 
     /**
      * Sets the data.
-     *
-     * @param jSONObject the new data
+     * 
+     * @param jSONObject
+     *            the new data
      */
     public void setData(final JSONObject jSONObject) {
         this.inputData = jSONObject;
@@ -140,8 +147,9 @@ public class ExecutePtolemyModel {
 
     /**
      * Checks if is signal present.
-     *
-     * @param signalName the signal name
+     * 
+     * @param signalName
+     *            the signal name
      * @return true, if is signal present
      */
     public boolean isSignalPresent(final String signalName) {
@@ -160,7 +168,7 @@ public class ExecutePtolemyModel {
 
     /**
      * Gets the interface signals.
-     *
+     * 
      * @return the interface signals
      */
     public synchronized String[] getInterfaceSignals() {
@@ -189,7 +197,7 @@ public class ExecutePtolemyModel {
 
     /**
      * Gets the model output present signals.
-     *
+     * 
      * @return the model output present signals
      */
     public String[] getModelOutputPresentSignals() {
@@ -213,7 +221,7 @@ public class ExecutePtolemyModel {
 
     /**
      * Gets the model output absent signals.
-     *
+     * 
      * @return the model output absent signals
      */
     public String[] getModelOutputAbsentSignals() {
@@ -323,7 +331,7 @@ public class ExecutePtolemyModel {
 
     /**
      * Extracted.
-     *
+     * 
      * @return the list
      */
     @SuppressWarnings("unchecked")
@@ -334,25 +342,25 @@ public class ExecutePtolemyModel {
     // -------------------------------------------------------------------------
 
     /**
-     * The listener interface for receiving presentToken events.
-     * The class that is interested in processing a presentToken
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addPresentTokenListener<code> method. When
+     * The listener interface for receiving presentToken events. The class that is interested in
+     * processing a presentToken event implements this interface, and the object created with that
+     * class is registered with a component using the component's
+     * <code>addPresentTokenListener<code> method. When
      * the presentToken event occurs, that object's appropriate
      * method is invoked.
-     *
+     * 
      * @see PresentTokenEvent
      */
     static class PresentTokenListener implements IOPortEventListener {
-        
+
         /** The model output. */
         private ModelOutput modelOutput;
 
         /**
          * Instantiates a new present token listener.
-         *
-         * @param modelOutput the model output
+         * 
+         * @param modelOutput
+         *            the model output
          */
         public PresentTokenListener(final ModelOutput modelOutput) {
             SyncchartsSimPtolemyPlugin.debug("+++++++++++++++PresentTokenListener");
@@ -373,9 +381,11 @@ public class ExecutePtolemyModel {
 
     /**
      * Fills the Combine list by recursively going thru the models elements.
-     *
-     * @param modelOutputListParam the model output list
-     * @param children the children to walk thru
+     * 
+     * @param modelOutputListParam
+     *            the model output list
+     * @param children
+     *            the children to walk thru
      */
     @SuppressWarnings("unchecked")
     private void fillModelOutputList(final List<ModelOutput> modelOutputListParam,
@@ -463,9 +473,11 @@ public class ExecutePtolemyModel {
 
     /**
      * Fills the modalModelList by recursively going thru the models elements.
-     *
-     * @param children the children to walk thru
-     * @param activeStateName the active state name
+     * 
+     * @param children
+     *            the children to walk thru
+     * @param activeStateName
+     *            the active state name
      */
     @SuppressWarnings("unchecked")
     private void searchForActiveStatesAndTransitions(final List<InstantiableNamedObj> children,
@@ -527,8 +539,7 @@ public class ExecutePtolemyModel {
                 if (activeStateName == null) {
                     SyncchartsSimPtolemyPlugin.debug("---> CALL INNER STATES (null)");
                     // for active states only search deeper!
-                    searchForActiveStatesAndTransitions(compositeActor.entityList(),
-                            null);
+                    searchForActiveStatesAndTransitions(compositeActor.entityList(), null);
                 } else if (compositeActorName.equals(activeStateName)) {
                     SyncchartsSimPtolemyPlugin.debug("---> CALL INNER STATES (name active)");
                     // for active states only search deeper!
@@ -550,21 +561,29 @@ public class ExecutePtolemyModel {
                 ModalController ctrl = modalController;
                 // TODO: Fix here for a chain of transitions not only a single one
                 // FIXME: as soon as the Ptolemy.jar is update, call getLastChosenTransition()
-                List<Transition> transitionList = ctrl.getLastTakenTransitions();
-                if (transitionList != null && transitionList.size() > 0) {
-                    for (Transition activeTransition : transitionList) {
-                        // add state name
-                        Attribute attribute = activeTransition.getAttribute("elementURIFragment");
-                        if (attribute instanceof StringAttribute) {
-                            if (!activeTransitions.equals("")) {
-                                activeTransitions += ", ";
+                // List<Transition> transitionList = ctrl.getLastChosenTransitions(); //
+                // getLastTakenTransitions();
+                Map<State, Transition> transitionMap = ctrl.getLastChosenTransitions(); // getLastTakenTransitions();
+                Set<State> keys = transitionMap.keySet();
+                for (State state : keys) {
+                    if (transitionMap.containsKey(state)) {
+                        Object object = transitionMap.get(state);
+                        if (object != null && object instanceof Transition) {
+                            Transition activeTransition = (Transition) object;
+                            // add state name
+                            Attribute attribute = activeTransition
+                                    .getAttribute("elementURIFragment");
+                            if (attribute instanceof StringAttribute) {
+                                if (!activeTransitions.equals("")) {
+                                    activeTransitions += ", ";
+                                }
+                                activeTransitions += ((StringAttribute) (activeTransition
+                                        .getAttribute("elementURIFragment"))).getValueAsString();
                             }
-                            activeTransitions += ((StringAttribute) (activeTransition
-                                    .getAttribute("elementURIFragment"))).getValueAsString();
                         }
                     }
-
-                } else {
+                }
+                if (keys.size() == 0) {
                     SyncchartsSimPtolemyPlugin.debug("LAST CHOSEN TRANSITION == NULL");
                 }
 
@@ -589,7 +608,7 @@ public class ExecutePtolemyModel {
             manager.stop();
             manager.wrapup();
         } catch (Exception e) {
-            //ignore
+            // ignore
         }
     }
 
