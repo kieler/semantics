@@ -6,11 +6,10 @@
          <meta.schema plugin="de.cau.cs.kieler.sim.kiem" id="de.cau.cs.kieler.sim.kiem.json.datacomponent" name="de.cau.cs.kieler.sim.kiem.json.datacomponent"/>
       </appInfo>
       <documentation>
-         &lt;CENTER&gt;&lt;IMG SRC=&quot;http://rtsys.informatik.uni-kiel.de/trac/kieler/browser/trunk/doc/images/kiem-logo.jpg?format=raw&quot;&gt; &lt;/CENTER&gt;
-&lt;BR&gt;&lt;BR&gt;
+         &lt;BR&gt;&lt;BR&gt;
 &lt;B&gt;
 FOR AN UPDATED VERSION OF THIS DESCRIPTION AND ADDITIONAL INFORMATION PLEASE SEE:
-&lt;a href=&quot;http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KIEM&quot;&gt;http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KIEM&lt;/a&gt;
+&lt;a href=&quot;http://www.informatik.uni-kiel.de/rtsys/kieler/&quot;&gt;http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;/a&gt;
 &lt;/B&gt;
 &lt;BR&gt;&lt;BR&gt;
 This extension point allowes the contribution of a simulation or execution engine or any visualization facility to the KIELER project.
@@ -34,14 +33,14 @@ The method step() is called during the execution. The data that is passed as a p
 
 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; &lt;tt&gt;provideFilterKeys()&lt;/tt&gt;      &lt;/td&gt;&lt;td&gt; &lt;tt&gt;null&lt;/tt&gt;            &lt;/td&gt;&lt;td&gt; A String[] array of keys that the &lt;tt&gt;DataComponent&lt;/tt&gt; wants to listen to should be returned. &lt;br /&gt; If &lt;tt&gt;null&lt;/tt&gt; is returned then the &lt;tt&gt;DataComponent&lt;/tt&gt; will always get all unfiltered data.
 
-&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; &lt;tt&gt;isDeltaObserver()&lt;/tt&gt;    &lt;/td&gt;&lt;td&gt; &lt;tt&gt;false&lt;/tt&gt;           &lt;/td&gt;&lt;td&gt; If &lt;tt&gt;true&lt;/tt&gt; is returned, the &lt;tt&gt;DataComponent&lt;/tt&gt; will get only the new or updated data since the last step it was scheduled (and &lt;strong&gt;not&lt;/strong&gt; skipped, see &lt;i&gt;pure&lt;/i&gt; data observers in &lt;a href=&quot;http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KIEM#Scheduling&quot;&gt;scheduling section&lt;/a&gt;). &lt;br /&gt;If &lt;tt&gt;false&lt;/tt&gt; is returned, the &lt;tt&gt;DataComponent&lt;/tt&gt; will always get the complete (updated) data since the first execution step 
+&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; &lt;tt&gt;isDeltaObserver()&lt;/tt&gt;    &lt;/td&gt;&lt;td&gt; &lt;tt&gt;false&lt;/tt&gt;           &lt;/td&gt;&lt;td&gt; If &lt;tt&gt;true&lt;/tt&gt; is returned, the &lt;tt&gt;DataComponent&lt;/tt&gt; will get only the new or updated data since the last step it was scheduled (and &lt;strong&gt;not&lt;/strong&gt; skipped, see &lt;i&gt;pure&lt;/i&gt; data observers in scheduling section). &lt;br /&gt;If &lt;tt&gt;false&lt;/tt&gt; is returned, the &lt;tt&gt;DataComponent&lt;/tt&gt; will always get the complete (updated) data since the first execution step 
 
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;BR&gt;
 The methods isProducer() and isObserver() must be implemented and should return a boolean value indicating whether the DataComponent wants to receive any data (s.a.) or produces data or even both. There is a possibility of so called Initialization DataComponents that neither receive nor produce any data but only are used during the initialization and wrap-up phase when their initialize() and wrapup() method is called.
 &lt;BR&gt;
 &lt;BR&gt;
-Take in mind that if your DataComponent is not both, an observer and a producer of data, it&apos;s step() method will not be called in a blocking scheme during the scheduled execution (for details please see &lt;a href=&quot;http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KIEM&quot;&gt;here&lt;/a&gt;). If this is required, then you need to set the according return values to both being true. 
+Take in mind that if your DataComponent is not both, an observer and a producer of data, it&apos;s step() method will not be called in a blocking scheme during the scheduled execution. If this is required, then you need to set the according return values to both being true. 
 &lt;BR&gt;&lt;BR&gt;
 Your DataComponent may want to define properties that can be saved together with the scheduling by the KIELER Execution Manager. For further information about properties and their usage please see the &lt;a href=&quot;&lt;BR&gt;
 &quot;&gt;official KIELER Wiki pages.&lt;/a&gt;
