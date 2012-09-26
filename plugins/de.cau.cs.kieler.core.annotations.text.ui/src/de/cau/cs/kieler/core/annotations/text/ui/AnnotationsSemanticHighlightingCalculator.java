@@ -39,14 +39,22 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
      */
     public void provideHighlightingFor(final XtextResource resource,
             final IHighlightedPositionAcceptor acceptor) {
-        Iterable<INode> allNodes = resource.getParseResult().getRootNode().getAsTreeIterable();
-        for (INode node : allNodes) {
-            provideHighlightingFor(node, acceptor);
-        }
+    	if (resource != null)
+    		if (resource.getParseResult() != null)
+    			if (resource.getParseResult().getRootNode() != null) {
+    				Iterable<INode> allNodes = resource.getParseResult().getRootNode().getAsTreeIterable();
+    				for (INode node : allNodes) {
+    					provideHighlightingFor(node, acceptor);
+    				}
+    			}
     }
 
     /**
-     * {@inheritDoc}
+     * A custom method to be specialized by clients that is called for each node.
+     * It has been introduced in order to reduce avoidable iterations on the {@link INode} tree.
+
+     * @param node the concrete syntax node to be examined for some special highlighting.
+     * @param acceptor used to announce the mapping from text-range to the style's id. The acceptor will never be <code>null</code>.
      */
     public void provideHighlightingFor(final INode node, final IHighlightedPositionAcceptor acceptor) {
         EObject grammarElement = node.getGrammarElement();
