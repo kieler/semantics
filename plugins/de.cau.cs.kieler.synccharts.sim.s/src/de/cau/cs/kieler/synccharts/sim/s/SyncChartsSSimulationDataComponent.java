@@ -15,13 +15,8 @@ package de.cau.cs.kieler.synccharts.sim.s;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.Map;
 
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -32,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sim.sc.SSCSimulationDataComponent;
@@ -40,17 +34,11 @@ import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
-
-import de.cau.cs.kieler.s.sim.sc.SSCSimulationDataComponent;
-
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
 import de.cau.cs.kieler.synccharts.sim.s.xtend.SyncCharts2Simulation;
-
-import de.cau.cs.kieler.synccharts.Region;
 
 /**
  * The SimulationDataComponent for simulating S code with and without visualization.
@@ -62,9 +50,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
 
     /** The SyncChart is the considered model to simulate. */
     private Region myModel = null;
-
-    /** The list of output signals including the ones used for the visualization. */
-    private LinkedList<String> outputSignalList = null;
 
     /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
     private static final int NUMBER_OF_TASKS = 10;
@@ -276,9 +261,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
 
             URI syncChartOutput = URI.createURI("");
             URI sOutput = URI.createURI("");
-            // By default there is no additional transformation necessary
+            // By default there is not always an additional transformation necessary
             Region transformedModel = myModel;
-
+            
             // Calculate output path for possible S-m2m
             // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
             String inputPathString = this.getModelFilePath().toString();
@@ -319,6 +304,12 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                             true, null);
                 }
             }
+            
+            // We support count delays now for the SC (host code) simulation.
+            // This is done AFTER the visualization transformation because the first
+            // transformation MUST operate on the resource file (for URI gathering reasons).
+            transformedModel = (new SyncCharts2Simulation()).transformCountDelayes(transformedModel);
+            
 
             // Transform SyncChart into S code
             Program program = new Synccharts2S().transform(transformedModel);

@@ -59,6 +59,12 @@ import org.eclipse.emf.common.util.EList
  * there must be a mapping that keeps track which signal (name) belongs to
  * which original S statement.
  * 
+ * ********************
+ *
+ *  Additionally transforming count delayes into auxiliary variable counters
+ *  with an additional counting transition and a modified immediate abort transition.
+ * 
+ * 
  * @author cmot
  */
 class SyncCharts2Simulation {
@@ -89,7 +95,6 @@ class SyncCharts2Simulation {
 			val transitionUID = AUXILIARY_VARIABLE_TAG_TRANSITION + originalTransitionURIFragment.hashCode.toString().replace("-","M");
 			// This statement we want to modify
 			targetTransition.transformTransition(targetRootRegion, transitionUID);
-			targetTransition.transformCountDelayes(targetRootRegion);
 		}
 		
 
@@ -261,12 +266,30 @@ class SyncCharts2Simulation {
 	
 	//-------------------------------------------------------------------------
 	
+	
+    // Transforming Count Delays entry function.
+    def Region transformCountDelayes (Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+
+        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+
+        // For every state in the SyncChart do the transformation
+        // Iterate over a copy of the list  
+        for(targetTransition : targetTransitions) {
+            // This statement we want to modify
+            targetTransition.transformCountDelayes(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+    	
 	// This will encode count delays in transitions and insert additional counting
 	// host code variables plus modifying the trigger of the count delayed transition
 	// to be immediate and guarded by a host code expression (with the specific
     // number of ticks).
 	def void transformCountDelayes(Transition transition, Region targetRootRegion) {
-		if (transition.delay > 0) {
+		if (transition.delay > 1) {
 			// auxiliary signal
 			val auxiliaryVariable = KExpressionsFactory::eINSTANCE.createVariable;
 			val auxiliaryVariableName = "countDelay" + transition.hashCode + "";
