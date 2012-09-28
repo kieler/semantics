@@ -13,18 +13,16 @@
  */
 package de.cau.cs.kieler.synccharts.sim.s.xtend
 
-import org.eclipse.xtend.util.stdlib.CloningExtensions
-
-import de.cau.cs.kieler.synccharts.sim.s.SyncChartsSimSPlugin
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.synccharts.Region
 import de.cau.cs.kieler.synccharts.State
+import de.cau.cs.kieler.synccharts.SyncchartsFactory
 import de.cau.cs.kieler.synccharts.Transition
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.synccharts.SyncchartsFactory;
-import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.synccharts.TransitionType
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.synccharts.sim.s.SyncChartsSimSPlugin
+import org.eclipse.xtend.util.stdlib.CloningExtensions
 
 /**
  * Transformation of a SyncChart to another SyncChart
