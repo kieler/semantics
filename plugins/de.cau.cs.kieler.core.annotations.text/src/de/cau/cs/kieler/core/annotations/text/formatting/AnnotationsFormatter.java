@@ -29,6 +29,16 @@ import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
  */
 public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
     /**
+     * Name of the annotations language. Need it to distinguish the formatting for 
+     * parentheses in the annotations language and further languages like KExpressions.
+     * 
+     * Injecting this value does not work, doing so reveals e.g. the name of the KITS language.
+     * 
+     * @author chsch
+     */
+    public static final String LANGUAGE_NAME = "de.cau.cs.kieler.core.annotations.Annotations";
+    
+    /**
      * The interface method called by the runtime, delegating to
      * {@link AnnotationsFormatter#customConfigureFormatting(FormattingConfig, AnnotationsGrammarAccess)}
      * .
@@ -40,16 +50,6 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
     protected void configureFormatting(final FormattingConfig c) {
         customConfigureFormatting(c, (AnnotationsGrammarAccess) getGrammarAccess());
     }
-
-    /**
-     * Name of the annotations language. Need it to distinguish the formatting for 
-     * parantheses in the annotations language and further languages like KExpressions.
-     * 
-     * Injecting this value does not work, doing so reveals e.g. the name of the KITS language.
-     * 
-     * @author chsch
-     */
-    public static final String LANGUAGE_NAME = "de.cau.cs.kieler.core.annotations.Annotations";
 
     /**
      * Method contains actual formatting instructions while GrammarAccess class maybe parameterized
