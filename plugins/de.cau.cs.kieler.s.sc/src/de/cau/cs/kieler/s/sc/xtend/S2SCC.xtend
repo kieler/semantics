@@ -39,6 +39,7 @@ import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -128,9 +129,28 @@ class S2SCC {
 	#define EMIT_SCC(name)                                 \
   	presentSigInt[name] = 1;		\
 
-	#define EMIT_VAL_SCC(name, value)                                 \
+	#define EMIT_VAL_SCC(name, value, combine)                                 \
   	presentSigInt[name] = 1;		\
-  	valSigInt[name] = (int)value;		\
+  	valSigInt[name] = combine(valSigInt[name],  (int)value);		\
+  	
+  	#define COMBINE_ADD(val1, val2) \
+  	(val1 + val2) \
+  	
+    #define COMBINE_MULT(val1, val2) \
+    (val1 * val2) \
+    
+    #define COMBINE_AND(val1, val2) \
+    (val1 & val2) \
+    
+    #define COMBINE_OR(val1, val2) \
+    (val1 || val2) \
+    
+    #define COMBINE_MIN(val1, val2) \
+    ((val1<val2)?val1:val2) \
+    
+    #define COMBINE_MAX(val1, val2) \
+    ((val1>val2)?val1:val2) \
+  	
 	
 	#define PRESENT_SCC(name)                                 \
   	((presentSigInt[name]) == 1)					     \
@@ -192,7 +212,9 @@ class S2SCC {
 	  presentSigIntPre[sig_«signal.name»] = presentSigInt[sig_«signal.name»];
 	  presentSigInt[sig_«signal.name»] = 0;
 	  valSigIntPre[sig_«signal.name»] = valSigInt[sig_«signal.name»];
-	  valSigInt[sig_«signal.name»] = 0;
+	  «/*Do not reset valSigInt here. The value needs to stay until it
+	   * it changed by another emission!
+	   */»
 	«ENDFOR»
 	}
    	'''
@@ -206,8 +228,8 @@ class S2SCC {
 	«FOR signal : program.getSignals()»
 	  presentSigInt[sig_«signal.name»] = 0;
 	  presentSigIntPre[sig_«signal.name»] = 0;
-	  valSigInt[sig_«signal.name»] = 0;
-	  valSigIntPre[sig_«signal.name»] = 0;
+	  valSigInt[sig_«signal.name»] = «signal.combineOperator.initialValue»;
+	  valSigIntPre[sig_«signal.name»] = «signal.combineOperator.initialValue»;
 	«ENDFOR»
 	}
    	'''
@@ -313,7 +335,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
 			present = cJSON_GetObjectItem(child, "present");
 			value = cJSON_GetObjectItem(child, "value");
 			if (present != NULL && present->type) {
-				EMIT_VAL_SCC(sig_«signal.name», value);
+				EMIT_VAL_SCC(sig_«signal.name», value, +);
 				
 			}
 		}   
@@ -422,7 +444,8 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    // Expand an EMIT instruction.
    def dispatch expand(Emit emitInstruction) {
    	if (emitInstruction.value != null) {
-	   	'''EMIT_VAL_SCC(sig_«emitInstruction.signal.name», «emitInstruction.value.expand»);'''
+	   	'''EMIT_VAL_SCC(sig_«emitInstruction.signal.name», «emitInstruction.value.expand»,
+	   	    «emitInstruction.signal.combineOperator.expand»);'''
    		
    	}
    	else {
@@ -435,6 +458,55 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    }   
    
    // -------------------------------------------------------------------------   
+   // -------------------------------------------------------------------------
+   // Combine operator
+   def expand(CombineOperator combineOperator) {
+       if (combineOperator.equals(CombineOperator::ADD)) {
+          return '''COMBINE_ADD'''
+       }
+       if (combineOperator.equals(CombineOperator::MULT)) {
+          return '''COMBINE_MULT'''
+       }
+       if (combineOperator.equals(CombineOperator::MAX)) {
+          return '''COMBINE_MAX'''
+       }
+       if (combineOperator.equals(CombineOperator::MIN)) {
+          return '''COMBINE_MIN'''
+       }
+       if (combineOperator.equals(CombineOperator::OR)) {
+          return '''COMBINE_OR'''
+       }
+       if (combineOperator.equals(CombineOperator::AND)) {
+          return '''COMBINE_AND'''
+       }
+       // default case combine with +
+       return '''COMBINE_ADD''';
+   }
+
+   def initialValue(CombineOperator combineOperator) {
+       if (combineOperator.equals(CombineOperator::ADD)) {
+          return '''0'''
+       }
+       if (combineOperator.equals(CombineOperator::MULT)) {
+          return '''1'''
+       }
+       if (combineOperator.equals(CombineOperator::MAX)) {
+          return '''-999999'''
+       }
+       if (combineOperator.equals(CombineOperator::MIN)) {
+          return '''999999'''
+       }
+       if (combineOperator.equals(CombineOperator::OR)) {
+          return '''0'''
+       }
+       if (combineOperator.equals(CombineOperator::AND)) {
+          return '''1'''
+       }
+       // default case combine with +
+       return '''0''';
+   }
+
+
    // -------------------------------------------------------------------------
    
    //Expand a complex expression.
