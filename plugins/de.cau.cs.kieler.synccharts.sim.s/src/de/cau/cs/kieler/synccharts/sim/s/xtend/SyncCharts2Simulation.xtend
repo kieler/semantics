@@ -71,7 +71,7 @@ class SyncCharts2Simulation {
 	
     // General method to create the enriched SyncCharts simulation models.
    	def Region transform2Simulation (Region rootRegion) {
-   		var AUXILIARY_VARIABLE_TAG_STATE = SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_STATE
+   		var AUXILIARY_VARIABLE_TAG_STATE =  SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_STATE
    		var AUXILIARY_VARIABLE_TAG_TRANSITION = SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_TRANSITION
    		
 		// Clone the complete SyncCharts region 
