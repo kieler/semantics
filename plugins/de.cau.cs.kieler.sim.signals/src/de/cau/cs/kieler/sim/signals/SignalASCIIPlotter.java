@@ -255,11 +255,15 @@ public class SignalASCIIPlotter {
 
     /**
      * Export to ASCII text file.
-     *
-     * @param path the path
-     * @param signalList the signal list
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws CoreException the core exception
+     * 
+     * @param path
+     *            the path
+     * @param signalList
+     *            the signal list
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     * @throws CoreException
+     *             the core exception
      */
     public void plotToTextFile(final IPath path, final SignalList signalList) throws IOException,
             CoreException {
@@ -288,30 +292,25 @@ public class SignalASCIIPlotter {
 
     /**
      * Export to ESO ASCII text file appending a new execution run if the file already exists.
-     * 
-     * @param path
-     *            the path
-     * @param signalList
-     *            the signal list
-     * @param inputSignalList
-     *            the input signal list
-     * @param outputSignalList
-     *            the output signal list
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     * @throws CoreException
-     *             the core exception
+     *
+     * @param path the path
+     * @param signalList the signal list
+     * @param inputSignalList the input signal list
+     * @param outputSignalList the output signal list
+     * @param append append to a given file if existing
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws CoreException the core exception
      */
     public void plotToEsoFile(final IPath path, final SignalList signalList,
-            final List<Signal> inputSignalList, final List<Signal> outputSignalList)
-            throws IOException, CoreException {
+            final List<Signal> inputSignalList, final List<Signal> outputSignalList,
+            final boolean append) throws IOException, CoreException {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
         IFile file = root.getFile(path);
         boolean newFile = false;
         LinkedList<String> oldFileContent = new LinkedList<String>();
 
-        if (!file.exists()) {
+        if (!file.exists() || !append) {
             file.create(null, IResource.NONE, null);
             newFile = true;
         }
@@ -352,7 +351,13 @@ public class SignalASCIIPlotter {
             out.print("% Output: ");
             for (Signal outputSignal : outputSignalList) {
                 if (outputSignal.isPresent(tick)) {
-                    out.print(outputSignal.getName() + " ");
+                    out.print(outputSignal.getName());
+                    // if the signal has a value then manifest it here
+                    Object value = outputSignal.getValue(tick);
+                    if (value != null) {
+                        out.print("(" + value + ")");
+                    }
+                    out.print(" ");
                 }
             }
             out.println("");
