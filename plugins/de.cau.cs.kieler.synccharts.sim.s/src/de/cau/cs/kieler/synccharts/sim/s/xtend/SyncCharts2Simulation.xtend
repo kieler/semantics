@@ -61,6 +61,7 @@ import org.eclipse.xtend.util.stdlib.CloningExtensions
  *
  *  Additionally transforming count delayes into auxiliary variable counters
  *  with an additional counting transition and a modified immediate abort transition.
+ *  All transitions entering the state need to reset the counter.
  * 
  * 
  * @author cmot
@@ -264,7 +265,6 @@ class SyncCharts2Simulation {
 	
 	//-------------------------------------------------------------------------
 	
-	
     // Transforming Count Delays entry function.
     def Region transformCountDelayes (Region rootRegion) {
         // Clone the complete SyncCharts region 
@@ -319,7 +319,14 @@ class SyncCharts2Simulation {
 			transition.setDelay(1);
 			transition.setIsImmediate(true);
 			
-			//TODO: for all incoming transition reset the variable
+            // reset the variable for all incoming transition
+            val resetEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
+            resetEffect.setCode(auxiliaryVariableName + "= 0");
+            for (incomingTransition : state.incomingTransitions) {
+                // Add reset text effect of incoming transition
+                transition.effects.add(resetEffect);
+            }
+			
 		}
 	}
 	
