@@ -15,7 +15,6 @@
 package de.cau.cs.kieler.sim.signals.ui.views;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -25,7 +24,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.window.Window;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
