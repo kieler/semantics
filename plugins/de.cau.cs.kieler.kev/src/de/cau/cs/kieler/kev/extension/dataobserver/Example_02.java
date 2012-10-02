@@ -24,7 +24,7 @@ import org.json.JSONObject;
  * A simple Example for changing the color of the Trafficlight.svg.
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
- * 
+ * @kieler.ignore deprecated project
  */
 public class Example_02 extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 

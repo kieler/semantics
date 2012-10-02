@@ -29,6 +29,7 @@ import org.apache.batik.bridge.UserAgent;
  * plug in different XML parsers than just crimson.
  *
  * @author sschwieb
+ * @kieler.ignore deprecated project
  */
 public class EclipseDocumentLoader extends DocumentLoader {
 

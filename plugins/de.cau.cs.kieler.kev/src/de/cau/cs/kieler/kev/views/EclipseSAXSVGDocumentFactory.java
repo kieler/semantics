@@ -31,6 +31,7 @@ import org.xml.sax.SAXException;
  * for loading the parser.
  * 
  * @author sschwieb
+ * @kieler.ignore deprecated project
  * 
  */
 public class EclipseSAXSVGDocumentFactory extends SAXSVGDocumentFactory {
@@ -48,7 +49,7 @@ public class EclipseSAXSVGDocumentFactory extends SAXSVGDocumentFactory {
     protected Document createDocument(final InputSource is) throws IOException {
         try {
             Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
-            // Das Systemproperty muss gelöscht werden, sonst kann nicht auf das Ressourceset
+            // Das Systemproperty muss gelï¿½scht werden, sonst kann nicht auf das Ressourceset
             // zugegriffen werden
             // System.setProperty("javax.xml.parsers.SAXParserFactory",
             // SAXParserFactoryImpl.class.getName()); //Different Parser then the XMI-Parser (hat

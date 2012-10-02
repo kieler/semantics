@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kev.mapping.Animation;
 /**
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
  * @kieler.rating 2010-02-17 proposed yellow
+ * @kieler.ignore deprecated project
  */
 public class RunnableAnimation implements Runnable {
 

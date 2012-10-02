@@ -20,6 +20,7 @@ import org.eclipse.osgi.util.NLS;
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
  * @kieler.rating 2010-02-17 proposed yellow 
+ * @kieler.ignore deprecated project
  */
 public final class Messages extends NLS {
     

@@ -32,6 +32,7 @@ import org.json.JSONObject;
 /**
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
  * @kieler.rating 2010-02-17 proposed yellow
+ * @kieler.ignore deprecated project
  */
 public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 

@@ -31,6 +31,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  * directly.
  * 
  * @author ctr
+ * @kieler.ignore deprecated project
  * 
  */
 public class Elevator extends JSONObjectDataComponent implements IJSONObjectDataComponent {

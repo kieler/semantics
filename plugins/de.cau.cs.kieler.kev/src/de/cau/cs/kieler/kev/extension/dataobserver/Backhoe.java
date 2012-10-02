@@ -13,68 +13,147 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 //import de.cau.cs.kieler.kev.mapping.animations.SVGLoadingStatusListener;
 
+/**
+ * The Class Backhoe.
+@kieler.ignore deprecated project
+ */
 public class Backhoe extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {
 
+	/** The reset signals. */
 	private boolean resetSignals = true;
 
+	/** The extend legs. */
 	private boolean extendLegs = false;
+	
+	/** The retract legs. */
 	private boolean retractLegs = false;
 
+	/** The alarm. */
 	private boolean alarm = false;
+	
+	/** The done. */
 	private boolean done = false;
+	
+	/** The cancelled. */
 	private boolean cancelled = false;
 
+	/** The legs. */
 	private int legs = 0;
+	
+	/** The boom. */
 	private int boom = 0;
+	
+	/** The stick. */
 	private int stick = 0;
+	
+	/** The bucket. */
 	private int bucket = 0;
 
+	/** The Constant legsMAX. */
 	private static final int legsMAX = 50;
+	
+	/** The Constant legsMIN. */
 	private static final int legsMIN = 0;
+	
+	/** The Constant legsDEF. */
 	private static final int legsDEF = 0;
 
+	/** The Constant boomMAX. */
 	private static final int boomMAX = 100;
+	
+	/** The Constant boomMIN. */
 	private static final int boomMIN = 0;
+	
+	/** The Constant boomDEF. */
 	private static final int boomDEF = 100;
 
+	/** The Constant stickMAX. */
 	private static final int stickMAX = 100;
+	
+	/** The Constant stickMIN. */
 	private static final int stickMIN = 0;
+	
+	/** The Constant stickDEF. */
 	private static final int stickDEF = 100;
 
+	/** The Constant bucketMAX. */
 	private static final int bucketMAX = 100;
+	
+	/** The Constant bucketMIN. */
 	private static final int bucketMIN = 0;
+	
+	/** The Constant bucketDEF. */
 	private static final int bucketDEF = 100;
 
+	/** The Constant boomWIDTH. */
 	private static final double boomWIDTH = 177.37;
+	
+	/** The Constant boomHEIGHT. */
 	private static final double boomHEIGHT = 62.48;
+	
+	/** The Constant stickWIDTH. */
 	private static final double stickWIDTH = 135.16;
+	
+	/** The Constant stickHEIGHT. */
 	private static final double stickHEIGHT = 26.63;
+	
+	/** The Constant bucketWIDTH. */
 	private static final double bucketWIDTH = 69.09;
+	
+	/** The Constant bucketHEIGHT. */
 	private static final double bucketHEIGHT = 39.57;
 
+	/** The map animation. */
 	private MapAnimations mapAnimation;
 
+	/**
+	 * Instantiates a new backhoe.
+	 */
 	public Backhoe() {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Deg2bog.
+	 *
+	 * @param width the width
+	 * @param angle the angle
+	 * @return the double
+	 */
 	public double deg2bog(double width, double angle) {
 		return (angle * Math.PI) / 180;
 	}
 
+	/**
+	 * Diff x.
+	 *
+	 * @param width the width
+	 * @param angle the angle
+	 * @return the int
+	 */
 	public int diffX(double width, int angle) {
 		double rad = width / 2;
 		double val = (int) (rad * Math.cos(deg2bog(width, angle)));
 		return (int) (width - val);
 	}
 
+	/**
+	 * Diff y.
+	 *
+	 * @param width the width
+	 * @param angle the angle
+	 * @return the int
+	 */
 	public int diffY(double width, int angle) {
 		double rad = width / 2;
 		int val = (int) (rad * Math.sin(deg2bog(width, angle)));
 		return val;
 	}
 
+	/**
+	 * Repaint.
+	 */
 	public void repaint() {
 		try {
 			JSONObject jSONObject = new JSONObject();
@@ -158,6 +237,11 @@ public class Backhoe extends JSONObjectDataComponent implements
 		}
 	}
 
+	/**
+	 * Enforce valid values.
+	 *
+	 * @return the jSON object
+	 */
 	public JSONObject enforceValidValues() {
 		JSONObject returnObj = new JSONObject();
 		if (legs >= Backhoe.legsMAX) {
@@ -278,6 +362,9 @@ public class Backhoe extends JSONObjectDataComponent implements
 		return returnObj;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
 		JSONObject returnObj = enforceValidValues();
 
@@ -449,6 +536,9 @@ public class Backhoe extends JSONObjectDataComponent implements
 		return returnObj;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void initialize() throws KiemInitializationException {
 		resetSignals = this.getProperties()[0].getValue().equals("true");
 		legs = Backhoe.legsDEF;
@@ -464,14 +554,23 @@ public class Backhoe extends JSONObjectDataComponent implements
 		repaint();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean isObserver() {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean isProducer() {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public JSONObject provideInitialVariables() {
 		JSONObject returnObj = new JSONObject();
@@ -511,6 +610,9 @@ public class Backhoe extends JSONObjectDataComponent implements
 		return returnObj;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public KiemProperty[] provideProperties() {
 		// CHECKSTYLEOFF MagicNumber
@@ -521,6 +623,9 @@ public class Backhoe extends JSONObjectDataComponent implements
 		return properties;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void wrapup() throws KiemInitializationException {
 		legs = Backhoe.legsDEF;
 		boom = Backhoe.boomDEF;

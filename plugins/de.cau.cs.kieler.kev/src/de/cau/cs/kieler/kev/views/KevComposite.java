@@ -94,6 +94,7 @@ import de.cau.cs.kieler.kev.mapping.animations.SVGLoadingStatusListener;
  * The adapted KEV-Composite class.
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de, Hauke Fuhrmann (haf)
+ * @kieler.ignore deprecated project
  */
 
 public class KevComposite extends Composite implements ISelectionListener {

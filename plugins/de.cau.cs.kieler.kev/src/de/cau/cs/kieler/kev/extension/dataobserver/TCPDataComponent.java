@@ -7,6 +7,10 @@ import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
+/**
+ * The Class TCPDataComponent.
+ * @kieler.ignore deprecated project
+ */
 public class TCPDataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
     public TCPDataComponent() {

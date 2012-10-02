@@ -58,6 +58,7 @@ import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
  * 
  * 
  * @author Stephan Knauer (skn) - skn[at]informatik.uni-kiel.de
+ * @kieler.ignore deprecated project
  */
 public class OpenWizard extends Wizard {
 

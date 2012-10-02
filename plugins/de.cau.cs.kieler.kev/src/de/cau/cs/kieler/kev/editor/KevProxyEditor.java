@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kev.views.KevView;
  * Proxy editor for opening mapping files by double clicking.
  * 
  * @author soh
+ * @kieler.ignore deprecated project
  */
 public class KevProxyEditor extends MultiPageEditorPart {
 
