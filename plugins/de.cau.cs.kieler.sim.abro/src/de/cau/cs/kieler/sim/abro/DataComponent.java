@@ -35,6 +35,7 @@ import org.json.JSONObject;
  * {@link #step(JSONObject)} implements this behavior.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.ignore excluded from review process - just a demo class
  */
 public class DataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 

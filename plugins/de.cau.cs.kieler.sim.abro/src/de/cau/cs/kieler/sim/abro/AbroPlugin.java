@@ -27,6 +27,7 @@ import org.osgi.framework.BundleContext;
  * transition indicates that whenever R is present, in the same tick no O will be produced.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.ignore excluded from review process - just a demo class
  */
 public class AbroPlugin extends AbstractUIPlugin {
 
