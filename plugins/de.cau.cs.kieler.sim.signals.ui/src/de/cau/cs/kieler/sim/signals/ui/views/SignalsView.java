@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.sim.signals.ui.views;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -24,6 +25,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -413,14 +415,16 @@ public class SignalsView extends ViewPart {
                             dlg.setBlockOnOpen(true);
                             dlg.setOriginalName(KiemPlugin.getDefault().getActiveProjectName()
                                     + ".eso");
-                            if (dlg.open() == SaveAsDialog.OK) {
+                            int answer = dlg.open();
+                            if (answer != SaveAsDialog.CANCEL) {
+                                boolean append = true; // this is the default
                                 try {
                                     new SignalASCIIChartPlotter().plotToEsoFile(dlg.getResult(),
-                                            signalList, inputSignalList, outputSignalList);
+                                            signalList, inputSignalList, outputSignalList, append);
                                 } catch (IOException e) {
                                     IStatus status = new Status(IStatus.ERROR,
-                                            SignalsUIPlugin.PLUGIN_ID,
-                                            "Cannot write to output file.", e);
+                                            SignalsUIPlugin.PLUGIN_ID, "Cannot write to output file.",
+                                            e);
                                     StatusManager.getManager().handle(status);
                                 } catch (CoreException e) {
                                     StatusManager.getManager().handle(e, SignalsUIPlugin.PLUGIN_ID);
