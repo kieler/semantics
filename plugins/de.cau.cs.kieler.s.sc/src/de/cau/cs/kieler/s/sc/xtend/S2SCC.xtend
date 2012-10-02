@@ -14,9 +14,13 @@
  package de.cau.cs.kieler.s.sc.xtend
 
 import de.cau.cs.kieler.core.kexpressions.BooleanValue
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.Signal
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
@@ -25,6 +29,7 @@ import de.cau.cs.kieler.s.s.Await
 import de.cau.cs.kieler.s.s.Emit
 import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Halt
+import de.cau.cs.kieler.s.s.HostCodeInstruction
 import de.cau.cs.kieler.s.s.If
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Join
@@ -34,12 +39,6 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
-import de.cau.cs.kieler.s.s.HostCodeInstruction
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -49,7 +48,7 @@ import de.cau.cs.kieler.core.kexpressions.CombineOperator
 class S2SCC { 
     
     // General method to create the c simulation interface.
-	def transform (Program program, String outputFolder, String bufferSize) {
+    def transform (Program program, String outputFolder, String bufferSize) {
        '''
 	   «/* Generate the C header */»
        «scHeader(outputFolder, program)»
@@ -127,42 +126,41 @@ class S2SCC {
 	
 	
 	#define EMIT_SCC(name)                                 \
-  	presentSigInt[name] = 1;		\
+	presentSigInt[name] = 1;		\
 
 	#define EMIT_VAL_SCC(name, value, combine)                                 \
-  	presentSigInt[name] = 1;		\
-  	valSigInt[name] = combine(valSigInt[name],  (int)value);		\
-  	
-  	#define COMBINE_ADD(val1, val2) \
-  	(val1 + val2) \
-  	
-    #define COMBINE_MULT(val1, val2) \
-    (val1 * val2) \
-    
-    #define COMBINE_AND(val1, val2) \
-    (val1 & val2) \
-    
-    #define COMBINE_OR(val1, val2) \
-    (val1 || val2) \
-    
-    #define COMBINE_MIN(val1, val2) \
-    ((val1<val2)?val1:val2) \
-    
-    #define COMBINE_MAX(val1, val2) \
-    ((val1>val2)?val1:val2) \
-  	
+	presentSigInt[name] = 1;		\
+	valSigInt[name] = combine(valSigInt[name],  (int)value);		\
+	
+	#define COMBINE_ADD(val1, val2) \
+	(val1 + val2) \
+	
+	#define COMBINE_MULT(val1, val2) \
+	val1 * val2) \
+	#define COMBINE_AND(val1, val2) \
+	(val1 & val2) \
+	
+	#define COMBINE_OR(val1, val2) \
+	val1 || val2) \
+	
+	#define COMBINE_MIN(val1, val2) \
+	((val1<val2)?val1:val2) \
+	
+	#define COMBINE_MAX(val1, val2) \
+	((val1>val2)?val1:val2) \
+	
 	
 	#define PRESENT_SCC(name)                                 \
-  	((presentSigInt[name]) == 1)					     \
+	((presentSigInt[name]) == 1)					     \
 	
 	#define PRE_PRESENT_SCC(name)                                 \
-  	((presentSigIntPre[name]) == 1)					     \
+	((presentSigIntPre[name]) == 1)					     \
 
 	#define VAL_SCC(name)                                 \
-  	(valSigInt[name])					     \
+	(valSigInt[name])					     \
 
 	#define PRE_VAL_SCC(name)                                 \
-  	(valSigIntPre[name])					     \
+	(valSigIntPre[name])					     \
 
 	''' 
    }
@@ -364,12 +362,14 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
          }'''
    }   
    
-   
+   // -------------------------------------------------------------------------   
+
+   // Host code without "..."
    def extractCode(String hostCodeString) {
    	 hostCodeString.substring(1, hostCodeString.length-1);
    }
    
-   // Expand HOST code.
+   // Expand Host code.
    def dispatch expand(HostCodeInstruction hostCodeInstruction) {
    	 '''«hostCodeInstruction.hostCode.extractCode»;'''
    }
@@ -377,6 +377,8 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    def dispatch expand(TextExpression expression) {
    	 '''(«expression.code.extractCode»)'''
    }
+
+   // -------------------------------------------------------------------------   
       
    // Expand a PAUSE instruction.
    def dispatch expand(Pause pauseInstruction) {
@@ -445,8 +447,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    def dispatch expand(Emit emitInstruction) {
    	if (emitInstruction.value != null) {
 	   	'''EMIT_VAL_SCC(sig_«emitInstruction.signal.name», «emitInstruction.value.expand»,
-	   	    «emitInstruction.signal.combineOperator.expand»);'''
-   		
+	   	    «emitInstruction.signal.combineOperator.macro»);'''
    	}
    	else {
    		'''EMIT_SCC(sig_«emitInstruction.signal.name»);'''
@@ -458,9 +459,9 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    }   
    
    // -------------------------------------------------------------------------   
-   // -------------------------------------------------------------------------
+   
    // Combine operator
-   def expand(CombineOperator combineOperator) {
+   def macro(CombineOperator combineOperator) {
        if (combineOperator.equals(CombineOperator::ADD)) {
           return '''COMBINE_ADD'''
        }
@@ -506,7 +507,6 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
        return '''0''';
    }
 
-
    // -------------------------------------------------------------------------
    
    //Expand a complex expression.
@@ -544,11 +544,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
 	    (VAL_SCC(«expression.subExpressions.toList.head.expand»))
 	«ENDIF»
 	«IF expression.operator  == OperatorType::PRE»
-  	    «/*IF expression.subExpressions.toList.head instanceof OperatorExpression && (expression.subExpressions.toList.head as OperatorExpression).operator  == OperatorType::VAL */» 
-	        (PRE_«expression.subExpressions.toList.head.expand»)
-	    «/*ELSE*/»
-  	    //    (PRE_SCC(«expression.subExpressions.toList.head.expand»))
-	    «/*ENDIF*/»
+	(PRE_«expression.subExpressions.toList.head.expand»)
 	«ENDIF»
 	«IF expression.operator  == OperatorType::NE»
 		(«FOR subexpression : expression.subExpressions SEPARATOR " != "»
@@ -593,6 +589,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
 	   	 '''
    }
 
+   // -------------------------------------------------------------------------
 	
    // Expand a signal.
    def dispatch expand(Signal signal) {
