@@ -92,7 +92,6 @@
     <module>de.cau.cs.kieler.kiml.smart</module>
     <module>de.cau.cs.kieler.kiml.service</module>
     <module>de.cau.cs.kieler.kiml.ui</module>
-    <module>de.cau.cs.kieler.kiml.zest</module>
     <module>de.cau.cs.kieler.klay.force</module>
     <module>de.cau.cs.kieler.klay.layered</module>
     <module>de.cau.cs.kieler.klay.planar</module>
