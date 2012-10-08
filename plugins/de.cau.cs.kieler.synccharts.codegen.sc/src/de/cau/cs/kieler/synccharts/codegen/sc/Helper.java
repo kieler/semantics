@@ -39,6 +39,7 @@ import de.cau.cs.kieler.synccharts.TransitionType;
  * The Helper class provides some helping functions for the generation of code.
  * 
  * @author tam
+ * @kieler.ignore (excluded from review process)
  */
 public final class Helper {
 

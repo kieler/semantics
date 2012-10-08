@@ -24,6 +24,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  * for encoding the set of edges.
  * 
  * @author tam
+ * @kieler.ignore (excluded from review process)
  */
 public class Graph {
 

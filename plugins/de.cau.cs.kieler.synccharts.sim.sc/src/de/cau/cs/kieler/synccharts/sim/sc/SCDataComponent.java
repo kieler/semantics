@@ -57,7 +57,7 @@ import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 /**
  * This is the data component to handle the communication between KIEM and the external SC-Program.
  * 
- * @kieler.rating 2010-06-14 proposed yellow
+ * @kieler.ignore (excluded from review process)
  * 
  * @author tam, cmot
  * 

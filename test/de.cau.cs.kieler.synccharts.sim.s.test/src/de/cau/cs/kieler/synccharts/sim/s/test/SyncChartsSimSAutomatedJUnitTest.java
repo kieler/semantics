@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
  * The test plugin for regression testing the SyncCharts-s-simulator.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class SyncChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 

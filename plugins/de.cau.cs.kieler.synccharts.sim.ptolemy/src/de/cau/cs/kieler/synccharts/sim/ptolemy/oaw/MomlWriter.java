@@ -40,6 +40,7 @@ import org.ptolemy.moml.util.MomlResourceFactoryImpl;
  * be loaded by the Vergil GUI of Ptolemy.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class MomlWriter extends AbstractEMFWorkflowComponent {
 

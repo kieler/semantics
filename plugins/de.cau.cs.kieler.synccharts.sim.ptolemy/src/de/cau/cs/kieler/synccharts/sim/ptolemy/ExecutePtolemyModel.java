@@ -53,7 +53,8 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * The class ExecutePtolemyModel implements the PtolemyExecutor. This is the component that enables
  * loading and executing (generated) Ptolemy models.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class ExecutePtolemyModel {
 

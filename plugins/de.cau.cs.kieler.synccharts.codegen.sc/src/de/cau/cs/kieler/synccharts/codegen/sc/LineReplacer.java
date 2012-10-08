@@ -27,6 +27,7 @@ import java.util.ArrayList;
  * A class to replace lines by rules in text files.
  * 
  * @author tam
+ * @kieler.ignore (excluded from review process)
  */
 public class LineReplacer {
 

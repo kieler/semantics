@@ -39,6 +39,7 @@ import de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin;
  * transformation.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public final class XtendJava {
 

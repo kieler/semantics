@@ -59,7 +59,8 @@ import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava;
  * KiemExecutionError be thrown that was initially the consequence of the last (async) call to the
  * step method of the PtolemyExecutor.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 @SuppressWarnings("restriction")
 public class SyncchartsSimDataComponent extends JSONObjectSimulationDataComponent {

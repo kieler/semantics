@@ -19,6 +19,7 @@ import org.eclipse.uml2.uml.NamedElement;
  * Utility class for structure-based editing of the UML metamodel.
  * 
  * @author msp
+ * @kieler.ignore (excluded from review process)
  */
 public final class EditingUtil {
 

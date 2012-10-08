@@ -7,6 +7,7 @@ import org.eclipse.ui.IStartup;
  * contributions about not finding the Package of the UML metamodel.
  * FIXME: This should be handled by KSBASE in some generic way.
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class MetamodelRegistrator implements IStartup {
 
