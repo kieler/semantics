@@ -25,7 +25,13 @@ import org.eclipse.ui.dialogs.FileSystemElement;
  * "Visited" in this context means that someone has already added all subdirectories
  * and subfolders to it. This class is used by {@link FileSystemResourcesPage}.
  * 
- * TODO Document the input element stuff.
+ * <p>An instance of this class can be flagged as being the input element to a viewer.
+ * This doesn't influence the behaviour of the instance, but can be used to change how
+ * a viewer gets populated. When using an instance of this class as the input element
+ * to a tree viewer, the tree's top elements would probably be the children of the viewer's
+ * input element. This might not always be desirable, though. With the input element marked
+ * as such, the behaviour can be changed to have the top level element be the input element.
+ * An example of this can be found in the {@link FileSystemResourcesPage} class.</p>
  * 
  * @author cds
  * @kieler.rating yellow 2010-03-14
