@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sj.util.LinkedList;
  * 
  * @param <StateLabel>
  *            The enum type the labels in the switch case statement are from.
+ * @kieler.ignore (excluded from review process)
  */
 class SJThread<StateLabel extends Enum<?>> implements Comparable<SJThread<StateLabel>> {
 

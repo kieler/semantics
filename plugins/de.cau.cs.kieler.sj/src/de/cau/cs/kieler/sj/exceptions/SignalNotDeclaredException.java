@@ -20,6 +20,7 @@ package de.cau.cs.kieler.sj.exceptions;
  * @see de.cau.cs.kieler.sj.Signal
  * @see de.cau.cs.kieler.sj.EmbeddedSJProgram#addSignals(de.cau.cs.kieler.sj.Signal...)
  * @see de.cau.cs.kieler.sj.SJProgram#initSignals()
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class SignalNotDeclaredException extends RuntimeException {

@@ -24,7 +24,7 @@ import de.cau.cs.kieler.core.util.Pair;
  * 
  * @see DefaultValidationEngine
  * @author ssc
- * @kieler.rating 2012-01-24 red
+ * @kieler.rating 2012-02-23 yellow
  * 
  */
 public interface IValidationEngine {

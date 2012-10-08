@@ -23,6 +23,7 @@ import java.lang.reflect.Field;
  * 
  * @param <StateLabel>
  *            The state labels which exits for this program.
+ * @kieler.ignore (excluded from review process)
  */
 public abstract class SJProgram<StateLabel extends Enum<?>> extends EmbeddedSJProgram<StateLabel> {
 

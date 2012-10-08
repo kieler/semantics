@@ -24,6 +24,7 @@ import static de.cau.cs.kieler.sj.examples.SurfDepth.StateLabel.*;
  * href="http://www.informatik.uni-kiel.de/rtsys/sc" target="_parent">SC homepage</a>.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class SurfDepth extends SJProgram<StateLabel> {

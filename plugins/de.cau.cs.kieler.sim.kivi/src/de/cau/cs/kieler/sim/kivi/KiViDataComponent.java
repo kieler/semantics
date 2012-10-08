@@ -39,6 +39,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * SyncCharts during simulation.
  * 
  * @author mmu, cmot
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public abstract class KiViDataComponent extends JSONObjectDataComponent implements

@@ -17,20 +17,55 @@ import de.cau.cs.kieler.sj.SJProgram;
 import de.cau.cs.kieler.sj.examples.SimplePCO.StateLabel;
 import static de.cau.cs.kieler.sj.examples.SimplePCO.StateLabel.*;
 
+/**
+  * The Class SimplePCO.
+  * 
+  * @kieler.ignore (excluded from review process)
+  */
 public class SimplePCO extends SJProgram<StateLabel> {
 
+    /**
+     * The Enum StateLabel.
+     */
     enum StateLabel {
-        INIT, PCO, Producer, Consumer, Parent, Done, L1, L2
+        
+        /** The init. */
+        INIT, 
+ /** The pco. */
+ PCO, 
+ /** The Producer. */
+ Producer, 
+ /** The Consumer. */
+ Consumer, 
+ /** The Parent. */
+ Parent, 
+ /** The Done. */
+ Done, 
+ /** The L1. */
+ L1, 
+ /** The L2. */
+ L2
     }
 
+    /** The Constant ARRAY_SIZE. */
     private static final int ARRAY_SIZE = 8;
+    
+    /** The tmp. */
     private int buf, i, j = 0, tmp;
+    
+    /** The arr. */
     private int[] arr = new int[ARRAY_SIZE];
 
+    /**
+     * Instantiates a new simple pco.
+     */
     public SimplePCO() {
         super(PCO, 1);
     }
 
+    /**
+     * Tick.
+     */
     @Override
     public void tick() {
         while (!isTickDone()) {
@@ -68,6 +103,11 @@ public class SimplePCO extends SJProgram<StateLabel> {
         }
     }
 
+    /**
+     * Main.
+     *
+     * @param numberOfTicks the number of ticks
+     */
     public static void main(int numberOfTicks) {
     	SimplePCO pco = new SimplePCO();
         for (int tick = 0; tick < numberOfTicks; tick++) {

@@ -23,7 +23,8 @@ import org.eclipse.swt.widgets.Display;
  * The class TableDataList implements a list of TableData elements that are the input of the
  * DataTableViewer. This list is modified by the producer and observer DataComponent.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class TableDataList {
 

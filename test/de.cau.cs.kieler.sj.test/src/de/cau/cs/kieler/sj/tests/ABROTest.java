@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sj.examples.ABRO;
  * making sure that ABRO works.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class ABROTest extends TestCase {

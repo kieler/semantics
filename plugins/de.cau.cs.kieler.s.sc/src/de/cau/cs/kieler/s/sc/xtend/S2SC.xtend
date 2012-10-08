@@ -41,6 +41,7 @@ import de.cau.cs.kieler.core.kexpressions.FloatValue
  * Transformation of S code into SS code that can be executed using the GCC.
  * 
  * @author cmot
+ * @kieler.ignore (excluded from review process, outdated)
  */
 class S2SC { 
     

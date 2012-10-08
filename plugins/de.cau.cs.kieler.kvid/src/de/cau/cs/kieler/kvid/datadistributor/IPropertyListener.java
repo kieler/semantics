@@ -19,6 +19,7 @@ package de.cau.cs.kieler.kvid.datadistributor;
  * have changed.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public interface IPropertyListener {

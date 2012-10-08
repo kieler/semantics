@@ -21,6 +21,7 @@ package de.cau.cs.kieler.kvid.data;
  * 
  * @deprecated the detection of the data type has to be done by clients now 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public enum DataType {

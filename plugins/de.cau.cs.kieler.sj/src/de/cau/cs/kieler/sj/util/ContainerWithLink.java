@@ -17,6 +17,7 @@ package de.cau.cs.kieler.sj.util;
  * A container with a single link. This class is needed to build some data structures.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  * @param <T>
  */

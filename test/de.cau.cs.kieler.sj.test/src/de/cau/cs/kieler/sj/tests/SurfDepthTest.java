@@ -17,9 +17,10 @@ import junit.framework.TestCase;
 import de.cau.cs.kieler.sj.examples.SurfDepth;
 
 /**
- * Test cases to test the program {@link sj.examples.SurfDepth}.
+ * Test cases to test the program.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class SurfDepthTest extends TestCase {

@@ -36,6 +36,7 @@ import de.cau.cs.kieler.kiml.kivi.LayoutEffect;
 
 /**
  * @author uru
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class InitialTransformationAction implements IActionDelegate {

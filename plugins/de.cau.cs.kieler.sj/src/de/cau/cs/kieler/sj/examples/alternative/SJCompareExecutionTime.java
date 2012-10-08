@@ -17,6 +17,7 @@ package de.cau.cs.kieler.sj.examples.alternative;
  * The Class SJCompareExecutionTime.
  * 
  * @author cmot
+ * @kieler.ignore (excluded from review process)
  */
 public final class SJCompareExecutionTime {
 

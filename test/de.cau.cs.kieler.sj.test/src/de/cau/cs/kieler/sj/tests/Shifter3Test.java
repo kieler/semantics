@@ -17,9 +17,10 @@ import junit.framework.TestCase;
 import de.cau.cs.kieler.sj.examples.Shifter3;
 
 /**
- * Test case for the SJ example {@link sj.examples.Shifter3}.
+ * Test case for the SJ example.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class Shifter3Test extends TestCase {

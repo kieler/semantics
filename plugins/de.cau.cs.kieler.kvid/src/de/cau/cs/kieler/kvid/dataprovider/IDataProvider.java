@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
  * @deprecated Since KIEM is the only Interface to the environment, there is no
  *             need for more than one provider
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public interface IDataProvider {

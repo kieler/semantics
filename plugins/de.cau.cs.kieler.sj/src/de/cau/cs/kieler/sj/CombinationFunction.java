@@ -18,6 +18,7 @@ package de.cau.cs.kieler.sj;
  * parameters. This is the standard java closure hack.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public interface CombinationFunction {

@@ -17,6 +17,7 @@ package de.cau.cs.kieler.sj.exceptions;
  * Exception thrown if someone tries to interact with a terminates SJ program.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class ProgramAlreadyTerminatedException extends RuntimeException {

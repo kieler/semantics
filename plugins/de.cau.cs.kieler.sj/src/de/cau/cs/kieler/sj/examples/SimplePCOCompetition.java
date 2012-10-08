@@ -22,6 +22,7 @@ import static de.cau.cs.kieler.sj.examples.SimplePCO.StateLabel.*;
  * Based on the file <code>PCO.c</code> from the SC  examples.
  * 
  * @author cmot
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class SimplePCOCompetition extends SJProgram<StateLabel> {

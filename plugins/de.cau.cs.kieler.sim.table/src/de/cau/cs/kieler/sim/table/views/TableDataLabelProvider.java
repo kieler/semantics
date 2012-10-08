@@ -23,7 +23,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * The class TableDataLabelProvider provides the labels and images for the content of an TableData
  * entry within the table ViewPart.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class TableDataLabelProvider implements ITableLabelProvider {
 

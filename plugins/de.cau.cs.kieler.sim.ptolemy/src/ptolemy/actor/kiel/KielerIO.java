@@ -29,6 +29,7 @@ import ptolemy.kernel.util.NameDuplicationException;
  * 
  * @author Christian Motika
  * @Pt.AcceptedRating Red (cmot)
+ * @kieler.ignore (excluded from review process)
  */
 public class KielerIO extends TypedAtomicActor {
 

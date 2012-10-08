@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sj.examples.EmbeddedABRO;
  * framework by making sure that EmbeddedABRO works.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class EmbeddedABROTest extends TestCase {

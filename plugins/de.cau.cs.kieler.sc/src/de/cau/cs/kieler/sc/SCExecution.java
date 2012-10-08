@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * This class is intended to compile and execute SC code.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class SCExecution {
 

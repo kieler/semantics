@@ -19,6 +19,7 @@ package de.cau.cs.kieler.sj.exceptions;
  * {@link de.cau.cs.kieler.sj.SJProgram#gotoB(Enum)} is called.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class CurTickAlreadyDoneException extends RuntimeException {

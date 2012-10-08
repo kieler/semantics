@@ -20,6 +20,7 @@ import org.eclipse.swt.graphics.Image;
  * Figure who uses an image for visualization.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class GmfImageFigure extends ImageFigure {

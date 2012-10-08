@@ -17,7 +17,7 @@ package de.cau.cs.kieler.sim.kart;
  * Interface for an extension point to allow KART to easily display message dialogs.
  * 
  * @author ssc
- * @kieler.rating 2012-02-23 red
+ * @kieler.rating 2012-02-23 yellow
  */
 public interface IMessageDialog {
     

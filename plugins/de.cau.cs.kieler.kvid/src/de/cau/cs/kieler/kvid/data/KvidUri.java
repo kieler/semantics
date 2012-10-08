@@ -18,6 +18,7 @@ package de.cau.cs.kieler.kvid.data;
  * referred to for visualization purposes.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class KvidUri {

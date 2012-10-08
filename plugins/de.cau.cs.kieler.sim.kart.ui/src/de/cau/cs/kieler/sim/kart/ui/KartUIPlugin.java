@@ -20,6 +20,7 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle.
  * 
  * @author ssc, cmot
+ * @kieler.rating 2012-02-23 yellow
  */
 public class KartUIPlugin extends AbstractUIPlugin {
 

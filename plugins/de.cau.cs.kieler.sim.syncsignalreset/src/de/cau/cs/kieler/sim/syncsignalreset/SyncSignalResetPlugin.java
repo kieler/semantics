@@ -23,7 +23,8 @@ import org.osgi.framework.BundleContext;
  * scheduled to be the first or the last DataComponent. It then resets all signals that are present
  * to be absent again. When there are no present signals, this DataComponent does simply nothing.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class SyncSignalResetPlugin extends Plugin {
 

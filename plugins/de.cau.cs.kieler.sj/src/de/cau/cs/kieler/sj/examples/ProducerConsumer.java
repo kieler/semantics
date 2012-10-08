@@ -22,6 +22,7 @@ import static de.cau.cs.kieler.sj.examples.ProducerConsumer.StateLabel.*;
  * examples.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class ProducerConsumer extends SJProgram<StateLabel> {

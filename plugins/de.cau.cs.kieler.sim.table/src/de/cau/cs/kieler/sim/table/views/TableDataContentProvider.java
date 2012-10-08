@@ -20,7 +20,8 @@ import org.eclipse.jface.viewers.Viewer;
 /**
  * The Class TableDataContentProvider.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class TableDataContentProvider implements ITreeContentProvider {
 

@@ -20,6 +20,7 @@ import org.eclipse.gmf.runtime.notation.View;
  * Factory for creating registered DataDisplayEditParts.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public abstract class AbstractDisplayFactory {

@@ -24,6 +24,7 @@ import org.eclipse.draw2d.geometry.Point;
  * Class for storing all important data for KViD to visualize.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class DataObject {

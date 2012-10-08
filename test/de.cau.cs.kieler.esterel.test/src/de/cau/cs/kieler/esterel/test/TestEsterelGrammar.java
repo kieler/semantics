@@ -52,6 +52,7 @@ import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
  * with the same name.
  * 
  * @author uru
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class TestEsterelGrammar { // CHSCH: extends AbstractXtextTests {

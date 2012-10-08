@@ -54,6 +54,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * Abstract implementation of a TransformationDataComponent.
  * 
  * @author uru
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public abstract class AbstractTransformationDataComponent extends JSONObjectDataComponent {

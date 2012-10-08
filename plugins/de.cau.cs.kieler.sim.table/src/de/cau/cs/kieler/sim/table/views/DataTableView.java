@@ -51,7 +51,8 @@ import de.cau.cs.kieler.sim.table.TablePlugin;
  * additional check box (for signals) lets the user set a signal explicitly to a present or absent
  * status.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class DataTableView extends ViewPart {
 

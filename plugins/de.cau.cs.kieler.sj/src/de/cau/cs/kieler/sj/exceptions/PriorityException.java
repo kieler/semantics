@@ -20,6 +20,7 @@ package de.cau.cs.kieler.sj.exceptions;
  * The SC name for this exception is <code>SC_ERROR_PRIORITY</code>. 
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class PriorityException extends RuntimeException {

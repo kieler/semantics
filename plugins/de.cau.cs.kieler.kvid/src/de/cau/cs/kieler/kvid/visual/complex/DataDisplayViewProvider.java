@@ -29,6 +29,7 @@ import org.eclipse.gmf.runtime.notation.View;
 
 /**
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class DataDisplayViewProvider implements IViewProvider {

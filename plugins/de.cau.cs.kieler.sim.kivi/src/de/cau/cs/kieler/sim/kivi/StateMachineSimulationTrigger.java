@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.kivi.ITrigger;
  * during simulation.
  * 
  * @author haf, cmot
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class StateMachineSimulationTrigger extends AbstractTrigger {

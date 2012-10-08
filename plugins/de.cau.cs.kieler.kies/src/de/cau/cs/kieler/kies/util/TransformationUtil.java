@@ -105,6 +105,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
  * pure synccharts optimization.
  * 
  * @author uru
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public final class TransformationUtil {

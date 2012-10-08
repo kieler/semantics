@@ -36,6 +36,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
  * DataComponent for transforming an esterel program step-wise into a SyncCharts.
  * 
  * @author uru
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class EsterelToSyncChartDataComponent extends AbstractTransformationDataComponent {

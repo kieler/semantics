@@ -20,6 +20,7 @@ package de.cau.cs.kieler.sj.exceptions;
  * @author mhei
  * @see de.cau.cs.kieler.sj.SJProgram#activateCausalityCheck()
  * @see de.cau.cs.kieler.sj.SJProgram#isCausalityCheckActive()
+ * @kieler.ignore (excluded from review process)
  */
 public class CausalityException extends RuntimeException {
 

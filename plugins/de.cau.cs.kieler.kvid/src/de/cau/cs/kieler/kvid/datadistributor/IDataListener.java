@@ -20,6 +20,7 @@ package de.cau.cs.kieler.kvid.datadistributor;
  * new data to the listeners.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public interface IDataListener {

@@ -23,6 +23,7 @@ import static de.cau.cs.kieler.sj.examples.ABSync.StateLabel.*;
  * The program ABSync program from Charles Andres Paper.
  * 
  * @author cmot
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class ABSync extends SJProgram<StateLabel> {

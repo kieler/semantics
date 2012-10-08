@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
  * This activator class controls the lifecycle of the KartPlugin.
  * 
  * @author ssc, cmot
- * @kieler.rating 2012-01-24 red
+ * @kieler.rating 2012-02-23 yellow
  * 
  */
 public class KartPlugin implements BundleActivator {

@@ -50,6 +50,7 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
  * Utility class for the KViD-Plugin. Holds commonly used methods statically.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  */
 public final class KvidUtil {
 

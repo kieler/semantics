@@ -30,7 +30,8 @@ import org.osgi.framework.BundleContext;
  * producer DataComponents that producer variables that should be displayed by the table (that means
  * somewhere at the bottom of the scheduling list).
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class TablePlugin extends AbstractUIPlugin {
 

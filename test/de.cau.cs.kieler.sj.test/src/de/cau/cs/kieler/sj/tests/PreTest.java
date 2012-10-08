@@ -23,6 +23,7 @@ import static de.cau.cs.kieler.sj.tests.PreTest.StateLabel.*;
  * Program and test case to test the SJ method <code>pre</code>.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class PreTest extends TestCase {

@@ -18,9 +18,10 @@ import static  de.cau.cs.kieler.sj.Signal.*;
 import  de.cau.cs.kieler.sj.examples.PrimeFactor;
 
 /**
- * JUnit test cases for the Program {@link sj.examples.PrimeFactor}.
+ * JUnit test cases for the Program.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class PrimeFactorTest extends TestCase {

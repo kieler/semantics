@@ -20,6 +20,7 @@ import java.util.List;
  * currently selected value.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class Property {

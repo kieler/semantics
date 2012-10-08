@@ -18,10 +18,11 @@ import de.cau.cs.kieler.sj.exceptions.PriorityException;
 import junit.framework.TestCase;
 
 /**
- * JUnit test to test if a {@link sj.exceptions.PriorityException} is thrown in
+ * JUnit test to test if a PriorityException is thrown in
  * situations it should.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class PriorityExceptionTest extends TestCase {

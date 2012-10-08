@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * Autoload triggered on startup, if the editor change or if KIEM execution stops.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  * 
  */
 public class KIEMExecutionAutoloadCombination extends AbstractCombination implements IKiemEventListener {

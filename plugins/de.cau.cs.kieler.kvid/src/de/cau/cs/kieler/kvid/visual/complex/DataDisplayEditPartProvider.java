@@ -30,6 +30,7 @@ import org.eclipse.gmf.runtime.notation.View;
  * {@link IEditPartProvider} for node classes provided by KViD.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 @SuppressWarnings("restriction")

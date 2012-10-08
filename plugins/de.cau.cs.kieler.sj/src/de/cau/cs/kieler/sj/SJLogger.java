@@ -18,6 +18,7 @@ package de.cau.cs.kieler.sj;
  * embedded api's do not have the package java.util.logging which is typically used for this.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public interface SJLogger {

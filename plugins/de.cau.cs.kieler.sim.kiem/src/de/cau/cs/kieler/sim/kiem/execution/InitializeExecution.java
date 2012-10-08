@@ -32,6 +32,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * cancellation.
  * 
  * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class InitializeExecution implements Runnable {

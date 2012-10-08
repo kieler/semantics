@@ -19,6 +19,7 @@ package de.cau.cs.kieler.sj.exceptions;
  * not all threads of the current tick are terminated.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class CurTickNotDoneException extends RuntimeException {

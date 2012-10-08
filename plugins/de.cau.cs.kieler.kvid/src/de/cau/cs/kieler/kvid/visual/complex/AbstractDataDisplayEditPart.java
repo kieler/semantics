@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kvid.datadistributor.IDataListener;
  * GMF Editor.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public abstract class AbstractDataDisplayEditPart extends ShapeNodeEditPart

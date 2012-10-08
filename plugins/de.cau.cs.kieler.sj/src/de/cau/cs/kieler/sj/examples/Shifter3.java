@@ -24,6 +24,7 @@ import static de.cau.cs.kieler.sj.examples.Shifter3.StateLabel.*;
  * 
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class Shifter3 extends SJProgram<StateLabel> {

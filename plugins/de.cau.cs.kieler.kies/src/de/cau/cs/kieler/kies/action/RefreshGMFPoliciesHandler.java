@@ -26,6 +26,7 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
  * An abstract handler for testing purposes only.
  * 
  * @author uru
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class RefreshGMFPoliciesHandler extends AbstractHandler {

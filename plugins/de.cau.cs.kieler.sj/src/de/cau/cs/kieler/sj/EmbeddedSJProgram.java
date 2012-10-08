@@ -40,6 +40,7 @@ import de.cau.cs.kieler.sj.util.PriorityQueue;
  *            with is existing in the enumeration of labels in the sub class.
  * 
  * @see de.cau.cs.kieler.sj.examples.EmbeddedABRO
+ * @kieler.ignore (excluded from review process)
  */
 public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
 

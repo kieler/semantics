@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sj.exceptions.SignalNotDeclaredException;
  * Utility class to convert different signal representations.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public final class SignalConverter {

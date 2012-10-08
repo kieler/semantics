@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sj.exceptions.SignalNotDeclaredException;
  * By modifying this class you can use it for other examples too.  
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 final class ABROMain {

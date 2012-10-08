@@ -18,6 +18,7 @@ package de.cau.cs.kieler.sj.exceptions;
  * if a signal history is too small or a previous tick does not exists.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class NoPreSignalException extends RuntimeException {

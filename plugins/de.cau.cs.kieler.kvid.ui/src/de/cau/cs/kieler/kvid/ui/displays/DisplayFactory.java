@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kvid.visual.complex.AbstractDisplayFactory;
 
 /**
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class DisplayFactory extends AbstractDisplayFactory {

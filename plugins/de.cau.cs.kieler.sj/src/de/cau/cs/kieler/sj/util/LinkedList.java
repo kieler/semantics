@@ -17,7 +17,8 @@ package de.cau.cs.kieler.sj.util;
  * A subset of a classical LinkedList. Should be fast and use less resources.
  * 
  * @author mhei
- * 
+ * @kieler.ignore (excluded from review process)
+ *
  * @param <T>
  *            The type of the elements insert into the list.
  */

@@ -37,7 +37,8 @@ import de.cau.cs.kieler.sim.table.views.TableDataList;
  * producer DataComponents. It updates the table's ViewPart according to the variables and signals
  * it gets in its {@link #step(String)} method from the execution manager.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class DataObserver extends JSONStringDataComponent implements IJSONStringDataComponent {
 

@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * simulation.
  * 
  * @author mmu, cmot
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public abstract class StateMachineKiViDataComponent extends JSONObjectDataComponent implements

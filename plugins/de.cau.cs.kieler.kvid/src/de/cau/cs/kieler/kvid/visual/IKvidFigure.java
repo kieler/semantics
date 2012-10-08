@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kvid.data.DataObject;
  * Interface for figures, which will process and draw the data themselves.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public interface IKvidFigure extends IFigure {

@@ -21,6 +21,7 @@ import junit.framework.TestCase;
  * JUnit test for the SJ example FilteredSR.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class FilteredSRTest extends TestCase {

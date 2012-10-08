@@ -35,6 +35,7 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
  * Class handling the animation of data figures in GMF.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public final class GmfAnimator {

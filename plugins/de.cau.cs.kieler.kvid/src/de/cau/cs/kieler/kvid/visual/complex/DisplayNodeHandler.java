@@ -47,6 +47,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * Handler class for a display node adding command.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class DisplayNodeHandler extends AbstractHandler {

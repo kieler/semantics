@@ -25,6 +25,7 @@ import static de.cau.cs.kieler.sj.examples.ABRO.StateLabel.*;
  * href="http://www.informatik.uni-kiel.de/rtsys/sc" target="_parent">SC homepage</a>.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class ABRO extends SJProgram<StateLabel> {

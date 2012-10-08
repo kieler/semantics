@@ -22,6 +22,7 @@ import junit.framework.TestCase;
  * case is also used to test if SJ is working correct for this program.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class GRCbal3Test extends TestCase {

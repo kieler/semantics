@@ -21,6 +21,7 @@ import junit.framework.TestCase;
  * JUnit test class for the Count2Suspend example.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class Count2SuspendTest extends TestCase {

@@ -22,7 +22,8 @@ import org.eclipse.jface.viewers.ViewerSorter;
 /**
  * The Class TableViewerSorter is responsible to sort the data table.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class TableViewerSorter extends ViewerSorter {
 

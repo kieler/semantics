@@ -30,6 +30,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  * simulation data.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class KiemDataProvider extends JSONObjectDataComponent implements

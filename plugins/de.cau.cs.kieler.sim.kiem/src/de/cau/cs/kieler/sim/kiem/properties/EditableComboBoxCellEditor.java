@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Composite;
  * 
  * @author cmot
  * @kieler.design 2009-12-08
+ * @kieler.rating 2012-10-08 proposed yellow
 */
 public class EditableComboBoxCellEditor extends ComboBoxCellEditor {
 

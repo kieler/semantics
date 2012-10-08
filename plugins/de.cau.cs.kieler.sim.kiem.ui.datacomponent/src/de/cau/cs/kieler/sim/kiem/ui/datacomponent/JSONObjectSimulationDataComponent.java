@@ -51,7 +51,8 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * The Class JSONObjectDataComponent. Implementation for the extension point JSONObjectDataComponent
  * that implements the interface {@link IJSONObjectDataComponent}.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.design 2009-12-08
  * @kieler.rating 2010-08-15 yellow
  * 
  */

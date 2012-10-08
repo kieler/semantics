@@ -52,6 +52,7 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
  * Eclipse view for editing KViD properties by hand.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class PropertiesView extends ViewPart implements IPropertyListener, ISelectionChangedListener {

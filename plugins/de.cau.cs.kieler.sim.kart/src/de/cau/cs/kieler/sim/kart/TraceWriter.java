@@ -35,7 +35,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  * reset statement is added and the current trace is appended.
  * 
  * @author ssc, cmot
- * @kieler.rating 2011-11-29 red
+ * @kieler.rating 2012-02-23 yellow
  * 
  */
 public class TraceWriter {

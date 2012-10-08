@@ -19,10 +19,11 @@ import de.cau.cs.kieler.sj.exceptions.CausalityException;
 import junit.framework.TestCase;
 
 /**
- * JUnit test case to test if a {@link sj.exceptions.CausalityException} is
+ * JUnit test case to test if a CausalityException is
  * thrown if it should.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class CausalityExceptionTest extends TestCase {

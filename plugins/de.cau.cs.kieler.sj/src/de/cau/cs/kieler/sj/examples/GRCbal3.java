@@ -26,6 +26,7 @@ import static de.cau.cs.kieler.sj.examples.GRCbal3.StateLabel.*;
  * grc := graph code bal := bytecode assembly language
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class GRCbal3 extends SJProgram<StateLabel> {

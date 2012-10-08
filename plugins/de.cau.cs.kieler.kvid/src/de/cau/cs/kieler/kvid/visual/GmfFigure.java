@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
  * The figure which is used to display plain data.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class GmfFigure extends RoundedRectangle implements IKvidFigure {

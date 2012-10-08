@@ -44,6 +44,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * as images.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class ScopeEditPart extends AbstractDataDisplayEditPart {

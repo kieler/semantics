@@ -58,6 +58,7 @@ import ptolemy.kernel.util.NameDuplicationException;
  * @version $Id: ModelRailwayIO.java 44783 2009-06-07 16:41:17Z $
  * @since Ptolemy II 0.2
  * @Pt.AcceptedRating Red (cmot)
+ * @kieler.ignore (excluded from review process)
  */
 public class ModelRailwayIO extends TypedAtomicActor {
 

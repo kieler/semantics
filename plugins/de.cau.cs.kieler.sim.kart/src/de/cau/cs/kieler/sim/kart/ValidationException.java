@@ -18,7 +18,7 @@ package de.cau.cs.kieler.sim.kart;
  * It contains extended information pertaining to the validation error.
  *
  * @author ssc
- * @kieler.rating 2012-01-24 red
+ * @kieler.rating 2012-02-23 yellow
  */
 public class ValidationException extends Exception {
     

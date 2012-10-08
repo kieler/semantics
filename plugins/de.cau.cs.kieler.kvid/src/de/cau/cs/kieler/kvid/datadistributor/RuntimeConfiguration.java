@@ -25,6 +25,7 @@ import java.util.Map;
  * Will be lost if program is closed.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public final class RuntimeConfiguration {

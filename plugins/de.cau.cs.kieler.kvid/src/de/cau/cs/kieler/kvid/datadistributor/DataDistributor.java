@@ -56,6 +56,7 @@ import de.cau.cs.kieler.kvid.visual.GmfDrawer;
  * it. This class is implemented as a singleton.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public final class DataDistributor implements IProviderListener, ResourceSetListener {

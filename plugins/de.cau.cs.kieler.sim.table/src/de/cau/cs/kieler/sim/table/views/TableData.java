@@ -19,7 +19,8 @@ package de.cau.cs.kieler.sim.table.views;
  * the data table. If it is a signal, then it can be present or absent. An entry always contains of
  * a key and a value String expression.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class TableData {
 

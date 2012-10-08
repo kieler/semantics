@@ -66,6 +66,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * transformation is executed by using a {@link TransformationEffect}.
  * 
  * @author uru
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class E2STransformationCombination extends AbstractCombination {

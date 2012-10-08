@@ -26,6 +26,7 @@ import de.cau.cs.kieler.sj.exceptions.ThreadException;
  * 
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class Signal {

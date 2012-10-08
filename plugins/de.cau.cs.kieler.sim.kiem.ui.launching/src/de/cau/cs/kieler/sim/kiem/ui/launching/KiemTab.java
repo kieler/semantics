@@ -47,7 +47,7 @@ import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
  * The class KiemTab implements the basic launch tab in the launch configuration page. The user is
  * able to select from all available execution files.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */

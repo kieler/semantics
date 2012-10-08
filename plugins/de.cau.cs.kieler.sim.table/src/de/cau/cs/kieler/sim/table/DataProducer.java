@@ -26,7 +26,8 @@ import de.cau.cs.kieler.sim.table.views.TableDataList;
  * observer DataComponents. In its {@link #step(String)} method it produces data according to the
  * variables and signals that where modified by the user in the table's ViewPart.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class DataProducer extends JSONStringDataComponent implements IJSONStringDataComponent {
 

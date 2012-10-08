@@ -22,6 +22,7 @@ package de.cau.cs.kieler.sj.exceptions;
  * 
  * @author mhei
  * @see de.cau.cs.kieler.sj.SJThread
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class ThreadException extends RuntimeException {

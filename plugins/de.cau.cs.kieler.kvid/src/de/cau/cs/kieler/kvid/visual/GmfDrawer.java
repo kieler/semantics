@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * Drawer class implementation for GMF.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public final class GmfDrawer implements IDrawer, IDataListener {

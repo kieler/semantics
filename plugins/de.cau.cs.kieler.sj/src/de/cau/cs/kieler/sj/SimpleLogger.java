@@ -18,6 +18,7 @@ package de.cau.cs.kieler.sj;
  * program will printed via <code>System.out.println()</code>
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class SimpleLogger implements SJLogger {

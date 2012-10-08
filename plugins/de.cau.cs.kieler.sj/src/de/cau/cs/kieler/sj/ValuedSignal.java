@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sj.exceptions.SignalNotDeclaredException;
  * SJ realization of a valued signal.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  */
 public class ValuedSignal extends Signal {
 

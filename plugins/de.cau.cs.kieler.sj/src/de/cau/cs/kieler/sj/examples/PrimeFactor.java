@@ -28,6 +28,7 @@ import static de.cau.cs.kieler.sj.examples.PrimeFactor.StateLabel.*;
  * homepage</a>.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class PrimeFactor extends SJProgram<StateLabel> {

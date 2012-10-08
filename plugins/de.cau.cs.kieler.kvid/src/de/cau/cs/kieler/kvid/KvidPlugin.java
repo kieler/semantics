@@ -21,6 +21,7 @@ import org.osgi.framework.BundleContext;
  * Activator class for the KViD-Plugin. Controls the plugin's lifecycle.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class KvidPlugin extends AbstractUIPlugin implements BundleActivator {

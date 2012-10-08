@@ -20,6 +20,7 @@ package de.cau.cs.kieler.sj.util;
  * 
  * @param <T>
  *            The type of the element inserts into the list.
+ * @kieler.ignore (excluded from review process)
  */
 public class PriorityQueue<T extends Comparable<T>> extends AbstractCollection<T> {
 

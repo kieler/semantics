@@ -45,6 +45,7 @@ import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
  * in simulators.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  * 
  */
 public class KIEMModelSelectionCombination extends AbstractCombination implements IKiemEventListener {

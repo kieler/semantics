@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kvid.data.KvidUri;
  * Implement this to support a different UI than eclipse with GMF.
  * 
  * @author jjc
+ * @kieler.ignore (excluded from review process)
  *
  */
 public interface IDrawer {

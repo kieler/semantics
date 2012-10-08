@@ -27,6 +27,7 @@ import static de.cau.cs.kieler.sj.examples.EmbeddedABRO.StateLabel.*;
  * 
  * @author mhei
  * @see ABRO
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class EmbeddedABRO extends EmbeddedSJProgram<StateLabel> {

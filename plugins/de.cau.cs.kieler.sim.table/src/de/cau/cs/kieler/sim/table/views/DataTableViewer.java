@@ -22,7 +22,8 @@ import org.eclipse.swt.widgets.Table;
  * The Class DataTableViewer. This is just a TreeViewer, where it is possible to add extensions or
  * modifications in the future within this class declaration.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class DataTableViewer extends TreeViewer {
 

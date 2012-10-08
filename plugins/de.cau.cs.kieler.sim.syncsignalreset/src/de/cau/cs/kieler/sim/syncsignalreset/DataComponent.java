@@ -27,7 +27,8 @@ import org.json.JSONObject;
  * looks out for present signals and resets the to be absent again, because signals within the
  * KIELER Execution Manager are explicitly made present or absent.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class DataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 

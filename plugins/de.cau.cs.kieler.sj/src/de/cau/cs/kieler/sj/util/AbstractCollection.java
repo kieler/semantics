@@ -19,6 +19,7 @@ import java.util.Iterator;
  * A AbstactCollection as a basic implementation for lists, queues and more.
  * 
  * @author mhei
+ * @kieler.ignore (excluded from review process)
  * 
  * @param <T>
  */

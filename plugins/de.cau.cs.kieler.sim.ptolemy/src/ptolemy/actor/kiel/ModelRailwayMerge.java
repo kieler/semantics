@@ -38,6 +38,7 @@ import ptolemy.kernel.util.NameDuplicationException;
  * @version $Id: ModelRailwayMerge.java 44783 2009-07-01 16:41:17Z $
  * @since Ptolemy II 0.2
  * @Pt.AcceptedRating Red (cmot)
+ * @kieler.ignore (excluded from review process)
  */
 public class ModelRailwayMerge extends TypedAtomicActor {
 

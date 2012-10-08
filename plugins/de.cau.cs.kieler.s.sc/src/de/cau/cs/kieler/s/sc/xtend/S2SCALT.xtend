@@ -43,6 +43,7 @@ import java.util.HashMap
  * Transformation of S code into SS code that can be executed using the GCC.
  * 
  * @author cmot
+ * @kieler.ignore (excluded from review process, outdated)
  */
 class S2SCALT { 
 	

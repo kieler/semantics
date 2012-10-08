@@ -17,6 +17,7 @@ package de.cau.cs.kieler.sj.examples.alternative;
  * The Class SimplePCO.
  * 
  * @author cmot
+ * @kieler.ignore (excluded from review process)
  */
 public class SimplePCO {
 

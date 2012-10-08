@@ -34,7 +34,7 @@ import org.json.JSONObject;
  * DataComponents. The behavior is described in {@link AbroPlugin} and the method
  * {@link #step(JSONObject)} implements this behavior.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  * @kieler.ignore excluded from review process - just a demo class
  */
 public class DataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {

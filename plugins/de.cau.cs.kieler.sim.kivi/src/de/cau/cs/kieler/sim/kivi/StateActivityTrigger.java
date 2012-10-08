@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.kivi.ITrigger;
  * A trigger notifying the view management about the active states during simulation.
  * 
  * @author mmu, cmot
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class StateActivityTrigger extends AbstractTrigger {

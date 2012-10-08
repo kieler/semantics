@@ -52,7 +52,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * ESO files in conjunction with the {@link DataValidationComponent}.
  * 
  * @author ssc, cmot
- * @kieler.rating 2011-11-24 red
+ * @kieler.rating 2012-02-23 yellow
  */
 public class DataReplayComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent, IKiemEventListener {

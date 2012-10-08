@@ -28,7 +28,8 @@ import org.eclipse.swt.SWT;
  * It also sets a flag that the table is currently edited to prevent disturbing updates during an
  * ongoing editing action. Therefore it needs access to the DataTableViewer.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class TableDataEditing extends EditingSupport {
 

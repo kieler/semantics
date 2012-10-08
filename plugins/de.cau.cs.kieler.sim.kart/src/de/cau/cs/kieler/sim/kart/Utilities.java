@@ -38,7 +38,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * Provides utility methods used by the validation component and the validation engine.
  * 
  * @author ssc, cmot
- * @kieler.rating 2012-01-24 red
+ * @kieler.rating 2012-02-23 yellow
  */
 public final class Utilities {
 

@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kies.Activator;
  * to the user in case any exceptions occurrs.
  * 
  * @author uru
+ * @kieler.ignore (excluded from review process)
  */
 public class KiesTransformationContext extends XtendTransformationContext {
 

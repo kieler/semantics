@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kvid.data.DataObject;
  * 
  * @author jjc
  * @deprecated Use {@link GmfImageFigure} instead
+ * @kieler.ignore (excluded from review process)
  *
  */
 public class GmfGraphicsFigure extends ScalableImageFigure implements IKvidFigure {

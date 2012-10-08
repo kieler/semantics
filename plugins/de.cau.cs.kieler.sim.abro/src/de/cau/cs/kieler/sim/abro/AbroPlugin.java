@@ -26,7 +26,7 @@ import org.osgi.framework.BundleContext;
  * R, i.e. it becomes ready and again waits for signals A and B. The strong abortion of the reset
  * transition indicates that whenever R is present, in the same tick no O will be produced.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  * @kieler.ignore excluded from review process - just a demo class
  */
 public class AbroPlugin extends AbstractUIPlugin {

@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.JSONObjectXtextVisualizat
  * The DataComponent for visualizing Esterel simulation.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 public class DataComponent extends JSONObjectXtextVisualizationDataComponent {
 

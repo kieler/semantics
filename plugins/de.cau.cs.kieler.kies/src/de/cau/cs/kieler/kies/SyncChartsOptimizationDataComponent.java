@@ -44,6 +44,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
  * DataComponent optimizing an existing SyncCharts.
  * 
  * @author uru
+ * @kieler.ignore (excluded from review process)
  * 
  */
 public class SyncChartsOptimizationDataComponent extends AbstractTransformationDataComponent {
