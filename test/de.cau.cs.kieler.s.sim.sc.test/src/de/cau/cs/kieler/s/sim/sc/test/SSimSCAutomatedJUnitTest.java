@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
  * The test plugin for regression testing the s-sc-simulator.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 yellow KI-28
  */
 public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 

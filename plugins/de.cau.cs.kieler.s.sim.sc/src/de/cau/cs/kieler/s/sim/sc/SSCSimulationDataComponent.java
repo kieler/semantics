@@ -58,12 +58,12 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * The SimulationDataComponent for simulating S code with and without visualization.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 yellow KI-28
  */
-
 public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
 
-    /** The constant name of the maude console. */
+    /** The constant name of the SC console. */
     private static final String SCCONSOLENAME = "SC Console";
 
     /** The S program is the considered model to simulate. */
@@ -75,25 +75,25 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
     /** The list of output signals including the ones used for the visualization. */
     private LinkedList<String> outputSignalList = null;
 
-    /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
-    private static final int NUMBER_OF_TASKS = 10;
-
-    /** The estimated maximum size used for a pure signal. */
-    private static final int PURE_SIGNAL_BUFFER_CONSTANT = 21;
-
-    /** The estimated maximum size used for a valued signal. */
-    private static final int VALUED_SIGNAL_BUFFER_CONSTANT = 100;
-
-    /** The Constant MINIMAL_BUFFER_SIZE. */
-    private static final double MINIMAL_BUFFER_SIZE = 2048;
-
     /** A flag indicating that debug console output is generated and should be handled. */
     private boolean debugConsole = true;
 
-    /** The computed tick reference. */
+    /** A separate tick counter that is computed for the SC debug console as a reference. */
     private long computedTick = 1;
 
-    /** The KIEM_PROPERTY constants. */
+    /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
+    private static final int NUMBER_OF_TASKS = 10;
+
+    /** The estimated maximum buffer size (string length) used for a pure signal. */
+    private static final int PURE_SIGNAL_BUFFER_CONSTANT = 21;
+
+    /** The estimated maximum buffer size (string length)used for a valued signal. */
+    private static final int VALUED_SIGNAL_BUFFER_CONSTANT = 100;
+
+    /** The minimal buffer size for the communicating buffer of the running SC program. */
+    private static final double MINIMAL_BUFFER_SIZE = 2048;
+
+    // The KIEM_PROPERTY constants
     private static final String KIEM_PROPERTY_NAME_STATEMENTNAME = "Statement Name";
     private static final String KIEM_PROPERTY_NAME_CCOMPILER = "SC-Compiler";
     private static final String KIEM_PROPERTY_NAME_FULLDEBUGMODE = "Full Debug Mode";
@@ -153,8 +153,6 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
-            // System.out.println(jSONObject.toString());
-
             String out = jSONObject.toString();
             scExecution.getExecutionInterfaceToSC().write(out + "\n");
             scExecution.getExecutionInterfaceToSC().flush();
@@ -174,8 +172,6 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                 printConsole("\n");
             }
 
-            // System.out.println(receivedMessage);
-
             if (receivedMessage != null) {
                 JSONObject sSignalOutput = new JSONObject(receivedMessage);
                 JSONArray sSignalOutputArray = sSignalOutput.names();
@@ -186,9 +182,6 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                         String sSignalOutputName = sSignalOutputArray.getString(i);
                         boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput
                                 .getJSONObject(sSignalOutputName));
-
-                        // returnObj.accumulate(sSignalOutputName, sSignalOutput
-                        // .getJSONObject(sSignalOutputName));
 
                         // Test if the output variable is an auxiliary signal
                         // that is only there to mark the current S statement
@@ -227,8 +220,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                         JSONObject jsonSignal = sSignalOutput.getJSONObject(outputSignal);
                         boolean sSignalIsPresent = JSONSignalValues.isPresent(jsonSignal);
 
-                        if (jsonSignal.has("value")) {
-                            Object value = jsonSignal.get("value");
+                        if (JSONSignalValues.isSignalValue(jsonSignal)) {
+                            Object value = JSONSignalValues.getSignalValue(jsonSignal);
                             // valued signals
                             if (sSignalIsPresent) {
                                 returnObj.accumulate(outputSignal,
@@ -361,20 +354,18 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
             // Make a copy of the S program in case it was from
             // an active Editor
-
             URI sOutput = URI.createURI("");
             URI scOutput = URI.createURI("");
             // By default there is no additional transformation necessary
             Program transformedProgram = myModel;
 
             // Calculate output path for possible S-m2m
-            // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
             String inputPathString = this.getModelFilePath().toString();
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             sOutput = URI.createURI(input.toString());
 
-            // If 'Full Debug Mode' is turned on then the user wants to have
-            // also states visualized.
+            // If 'Full Debug Mode' is turned on then the user also wants to have
+            // states visualized.
             // Hence some pre-processing is needed and done by the
             // Esterl2Simulation Xtend2 model transformation
             if (debug) {

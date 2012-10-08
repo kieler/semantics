@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.JSONObjectXtextVisualizat
  * The DataComponent for visualizing S statements during simulation.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 yellow KI-28
  */
 public class DataComponent extends JSONObjectXtextVisualizationDataComponent {
 

@@ -28,6 +28,7 @@ import de.cau.cs.kieler.s.sc.xtend.S2SCALT;
  * The activator class controls the plug-in life cycle.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 yellow KI-28
  */
 public class S2SCPlugin extends AbstractUIPlugin {
 
@@ -69,11 +70,12 @@ public class S2SCPlugin extends AbstractUIPlugin {
 
     /**
      * Generate SC code for a given S program and write it into the outputFile in the output Folder.
-     * The output folder is necessary because header paths are also generated.
+     * The output folder is necessary because header paths are also generated. All paths need to
+     * be platform specific and resolved.
      *
      * @param program the program
-     * @param outputFile the output file
-     * @param outputFolder the output folder
+     * @param outputFile the output file (platform specific, resolved paths)
+     * @param outputFolder the output folder (platform specific, resolved paths)
      * @param bufferSize the buffer size, estimated for input to the running SC program
      * @param alternativeSyntax the alternative SC syntax should be produced
      * @throws IOException Signals that an I/O exception has occurred.
@@ -81,7 +83,7 @@ public class S2SCPlugin extends AbstractUIPlugin {
     public static void generateSCCode(final Program program, final String outputFile,
             final String outputFolder, final String bufferSize, final boolean alternativeSyntax)
             throws IOException {
-        
+
         String ccode;
         if (alternativeSyntax) {
             // produce alternative SC syntax on request

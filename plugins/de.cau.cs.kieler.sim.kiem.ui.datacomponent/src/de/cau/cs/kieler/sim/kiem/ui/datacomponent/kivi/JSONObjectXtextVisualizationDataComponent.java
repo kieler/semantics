@@ -45,6 +45,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  * language defined with the Xtext framework.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 yellow KI-28
  */
 public abstract class JSONObjectXtextVisualizationDataComponent extends
         JSONObjectSimulationDataComponent {
@@ -64,7 +65,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     /** The error statements, needed to undo. */
     private LinkedList<EObject> errorStatements = new LinkedList<EObject>();
 
-    /** The recover style range map to recover original style. */
+    /** The recover text style range map to recover original style. */
     private Hashtable<Integer, StyleRange> recoverStyleRangeMap = new Hashtable<Integer, StyleRange>();
 
     /** The Constant COLOR_HIGH. */
@@ -81,13 +82,19 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     private static final RGB DEFAULT_ERROR_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
             COLOR_HIGH); // light magenta
 
-    /** The Constant SLEEP_TIME. */
+    /** The Constant SLEEP_TIME for the thread to sleep. */
     private static final int SLEEP_TIME = 1;
 
     /**
-     * The highlight background color is used internally and set NULL for original.
+     * The highlight background color is used internally for setting a specific background color and
+     * set NULL for original.
      */
     private RGB specificBackgroundColor = null;
+
+    // KIEM property constants
+    private static final int KIEM_PROPERTY_NUMMAX = 2;
+    private static final int KIEM_PROPRTY_STATEMENTNAME = 0;
+    private static final int KIEM_PROPRTY_ERRORSTATEMENTNAME = 1;
 
     // -----------------------------------------------------------------------------
 
@@ -141,18 +148,18 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     protected abstract String getLanguageName();
 
     // -----------------------------------------------------------------------------
-    
+
     /**
-     * Gets the encoded id to compare objects to the ones produced by the simulation
-     * of the corresponding Xtext editor. The names of the statements and
-     * error statements produced by the simulator must match these IDs.
+     * Gets the encoded id to compare objects to the ones produced by the simulation of the
+     * corresponding Xtext editor. The names of the statements and error statements produced by the
+     * simulator must match these IDs.
      * 
      * @param eObject
      *            the EObject
      * @return the encoded EObject ID
      */
     protected abstract String getEncodedEObjectId(final EObject eObject);
-    
+
     // -----------------------------------------------------------------------------
 
     /**
@@ -223,6 +230,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
 
     // -----------------------------------------------------------------------------
 
+    /** A map to cache EObject and eObjectID (String) mappings. */
     private HashMap<String, EObject> eObjectMap = new HashMap<String, EObject>();
 
     /**
@@ -279,9 +287,6 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
             while (treeIterator.hasNext()) {
                 EObject treeIteratorObject = treeIterator.next();
                 refreshEObjectMap(treeIteratorObject);
-                // for (EObject treeIteratorObjectChild :
-                // treeIteratorObject.eContents()) {
-                // }
             }
         }
 
@@ -290,7 +295,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     // -----------------------------------------------------------------------------
 
     /**
-     * Gets the S statements.
+     * Gets the active S statements.
      * 
      * @param jSONObject
      *            the j son object
@@ -300,7 +305,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      * @throws KiemExecutionException
      *             the kiem execution exception
      */
-    protected final LinkedList<EObject> getStatements(final JSONObject jSONObject,
+    protected final LinkedList<EObject> getActiveStatements(final JSONObject jSONObject,
             final String signalName) throws KiemExecutionException {
 
         LinkedList<EObject> newActiveStatements = new LinkedList<EObject>();
@@ -336,11 +341,13 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      */
     @Override
     public final JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
-        String statementName = this.getProperties()[1].getValue();
-        String errorStatementName = this.getProperties()[2].getValue();
+        String statementName = this.getProperties()[KIEM_PROPRTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
+                .getValue();
+        String errorStatementName = this.getProperties()[KIEM_PROPRTY_ERRORSTATEMENTNAME
+                + KIEM_PROPERTY_DIFF].getValue();
 
-        LinkedList<EObject> newActiveStatements = getStatements(jSONObject, statementName);
-        LinkedList<EObject> newErrorStatements = getStatements(jSONObject, errorStatementName);
+        LinkedList<EObject> newActiveStatements = getActiveStatements(jSONObject, statementName);
+        LinkedList<EObject> newErrorStatements = getActiveStatements(jSONObject, errorStatementName);
         LinkedList<EObject> newActiveErrorStatements = new LinkedList<EObject>();
         newActiveErrorStatements.addAll(newActiveStatements);
         newActiveErrorStatements.addAll(newErrorStatements);
@@ -352,8 +359,8 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                 return doStep(jSONObject);
             }
         } catch (KiemInitializationException e) {
-            throw new KiemExecutionException("Fail silent recovery from user editor change failed.",
-                    false, e);
+            throw new KiemExecutionException(
+                    "Fail silent recovery from user editor change failed.", false, e);
         }
 
         // Undo Highlighting
@@ -383,10 +390,10 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
         for (EObject statement : newActiveErrorStatements) {
             // highlight only if not highlighted before
             if (!oldActiveErrorStatements.contains(statement)
-                    || oldActiveStatements.contains(statement)
-                    && newErrorStatements.contains(statement)
-                    || oldErrorStatements.contains(statement)
-                    && newActiveStatements.contains(statement)) {
+                    || (oldActiveStatements.contains(statement)
+                    && newErrorStatements.contains(statement))
+                    || (oldErrorStatements.contains(statement)
+                    && newActiveStatements.contains(statement))) {
                 try {
                     // give preference to error coloring
                     if (errorStatements.contains(statement)) {
@@ -506,7 +513,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                         // Editor might be closed
                         return;
                     }
-                    
+
                     localXtextEditor.getInternalSourceViewer().setRangeIndication(offset, length,
                             true);
                     localXtextEditor.getInternalSourceViewer().revealRange(offset, length);
@@ -521,8 +528,8 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                             recoverStyleRangeMap.put(offset, backupStyleRange);
                             Color highlightColor = new Color(Display.getCurrent(),
                                     specificBackgroundColor);
-                            styleRange = new StyleRange(offset, length, backupStyleRange.foreground,
-                                    highlightColor);
+                            styleRange = new StyleRange(offset, length,
+                                    backupStyleRange.foreground, highlightColor);
                         }
                     } else {
                         // Recover the old style
@@ -595,10 +602,10 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        final int nProperties = 2;
-        KiemProperty[] properties = new KiemProperty[nProperties];
-        properties[0] = new KiemProperty("Statement Name", "statement");
-        properties[1] = new KiemProperty("Error Statement Name", "errorStatement");
+        KiemProperty[] properties = new KiemProperty[KIEM_PROPERTY_NUMMAX];
+        properties[KIEM_PROPRTY_STATEMENTNAME] = new KiemProperty("Statement Name", "statement");
+        properties[KIEM_PROPRTY_ERRORSTATEMENTNAME] = new KiemProperty("Error Statement Name",
+                "errorStatement");
 
         return properties;
     }
