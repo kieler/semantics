@@ -37,6 +37,7 @@ import java.util.List
  * KiVi Combination triggering a KlightEffect for a selected SyncChart 
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
 class DependencyDiagramSynthesisCombination extends AbstractCombination {
 	

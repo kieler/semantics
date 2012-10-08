@@ -43,6 +43,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
  * Helper class with utility functions for conversion of a SyncChart into an S program.
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
  class Helper {
  	

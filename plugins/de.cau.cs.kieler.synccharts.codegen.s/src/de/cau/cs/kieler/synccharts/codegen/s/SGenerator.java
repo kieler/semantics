@@ -50,7 +50,6 @@ import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
 
-// TODO: Auto-generated Javadoc
 /**
  * Generate S Code from a SyncChart using new Xtend language.
  * 
@@ -58,6 +57,7 @@ import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
  *             generation
  * 
  * @author cmot
+ * @kieler.ignore (excluded from review process)
  */
 @SuppressWarnings("restriction")
 public class SGenerator implements IHandler {

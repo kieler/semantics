@@ -47,6 +47,7 @@ import de.cau.cs.kieler.synccharts.TransitionType
  *
  * 
  * @author cmot
+ * @kieler.rating 2012-10-08 proposed yellow
  */
  class Synccharts2Dependenies {
 	 

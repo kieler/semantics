@@ -46,6 +46,7 @@ import de.cau.cs.kieler.synccharts.codegen.esterel.xtend.Synccharts2Esterel;
  * project.
  * 
  * @author cmot
+ * @kieler.ignore (excluded from review process)
  * 
  */
 @SuppressWarnings("restriction")
