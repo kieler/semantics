@@ -55,6 +55,8 @@ import de.cau.cs.kieler.esterel.esterel.TypeDecl;
  * Supplies some convenient methods for scoping of the esterel grammar.
  * 
  * @author uru
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
 public final class EsterelScopeProviderUtil {

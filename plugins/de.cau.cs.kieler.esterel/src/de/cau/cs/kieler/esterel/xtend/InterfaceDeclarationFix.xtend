@@ -25,7 +25,11 @@ import static extension org.eclipse.xtext.xbase.lib.IteratorExtensions.*
 // Transformation of Esterel code into Esterel code that fixes inconsistencies
 // of signal declarations due to additional channel desciptions.
 
-class InterfaceDeclarationFix {
+/*
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
+ */
+class InterfaceDeclarationFix { 
     
     // General method to create the enriched Esterel simulation code
    	def Program fix (Program program) {

@@ -23,6 +23,7 @@ import java.io.OutputStream;
  * Utility class to execute external programs.
  * 
  * @author ctr
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public final class KonsoleExec {

@@ -8,6 +8,8 @@ import de.cau.cs.kieler.esterel.ui.contentassist.AbstractEsterelProposalProvider
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to
  * customize content assistant
+ * 
+ * @kieler.ignore (excluded from review process)
  */
 public class EsterelProposalProvider extends AbstractEsterelProposalProvider {
 

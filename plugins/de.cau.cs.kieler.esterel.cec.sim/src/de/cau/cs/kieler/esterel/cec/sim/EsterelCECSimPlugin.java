@@ -20,6 +20,7 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle.
  * 
  * @author ctr, cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-05-31 yellow KI-7
  */
 public class EsterelCECSimPlugin extends Plugin {

@@ -84,6 +84,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * <br>
  * 
  * @author cmot, ctr
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-05-31 yellow KI-7
  * 
  */

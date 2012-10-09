@@ -19,6 +19,9 @@ import de.cau.cs.kieler.core.kexpressions.formatting.KExpressionsValueConverter;
  * Reuse functionality introduced by the KExpressionsValueConverter here.
  * 
  * @author uru
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
+ * 
  */
 public class EsterelValueConverter extends KExpressionsValueConverter {
 

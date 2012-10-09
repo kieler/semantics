@@ -54,6 +54,8 @@ import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
  * functionality of those methods can be derived by their name.
  * 
  * @author uru
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class EsterelScopeProvider extends AbstractDeclarativeScopeProvider {
 

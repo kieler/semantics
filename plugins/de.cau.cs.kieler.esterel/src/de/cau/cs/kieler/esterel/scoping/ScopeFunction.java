@@ -22,6 +22,8 @@ import org.eclipse.xtext.resource.IEObjectDescription;
  * information is extracted and added to the list of scope elements.
  * 
  * @author uru
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  * @param <T>
  */

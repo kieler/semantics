@@ -9,6 +9,9 @@ import de.cau.cs.kieler.esterel.formatting.EsterelValueConverter;
 
 /**
  * Use this class to register components to be used within the IDE.
+ * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class EsterelRuntimeModule extends de.cau.cs.kieler.esterel.AbstractEsterelRuntimeModule {
 
@@ -25,22 +28,5 @@ public class EsterelRuntimeModule extends de.cau.cs.kieler.esterel.AbstractEster
         binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class).to(
                 org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions.class);
     }
-
-    // contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
-//    public void configureIResourceDescriptionsBuilderScope(com.google.inject.Binder binder) {
-//        binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class)
-//                .annotatedWith(
-//                        com.google.inject.name.Names
-//                                .named(org.eclipse.xtext.scoping.impl.AbstractGlobalScopeProvider.NAMED_BUILDER_SCOPE))
-//                .to(org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions.class);
-//    }
-
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public Class<? extends IFormatter> bindIFormatter() {
-//        return EsterelFormatter.class;
-//    }
-
+    
 }

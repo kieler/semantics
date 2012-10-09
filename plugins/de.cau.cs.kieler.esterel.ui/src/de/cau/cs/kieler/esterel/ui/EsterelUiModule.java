@@ -7,6 +7,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Use this class to register components to be used within the IDE.
+ *
+ * @kieler.ignore (excluded from review process)
  */
 public class EsterelUiModule extends de.cau.cs.kieler.esterel.ui.AbstractEsterelUiModule {
 	public EsterelUiModule(AbstractUIPlugin plugin) {

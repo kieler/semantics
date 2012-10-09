@@ -18,6 +18,8 @@ package de.cau.cs.kieler.esterel.validation;
  * The Class EsterelJavaValidator.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class EsterelJavaValidator extends AbstractEsterelJavaValidator {
 

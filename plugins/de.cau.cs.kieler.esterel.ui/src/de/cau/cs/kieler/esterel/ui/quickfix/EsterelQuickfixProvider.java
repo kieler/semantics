@@ -3,6 +3,11 @@ package de.cau.cs.kieler.esterel.ui.quickfix;
 
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
 
+/**
+ * The Class EsterelQuickfixProvider.
+ * 
+ * @kieler.ignore (excluded from review process)
+ */
 public class EsterelQuickfixProvider extends DefaultQuickfixProvider {
 
 //	@Fix(MyJavaValidator.INVALID_NAME)
