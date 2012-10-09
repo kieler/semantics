@@ -8,6 +8,7 @@ import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
 /**
  * customization of the default outline structure
  * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	

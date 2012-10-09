@@ -44,6 +44,7 @@ import de.cau.cs.kieler.s.s.Trans
  * Transformation of S code into SS code that can be executed using the GCC.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 yellow KI-28
  */
 class S2SCC { 

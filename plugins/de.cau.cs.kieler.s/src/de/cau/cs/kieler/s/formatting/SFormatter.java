@@ -26,7 +26,8 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 proposed yellow
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
 public class SFormatter extends AbstractDeclarativeFormatter {

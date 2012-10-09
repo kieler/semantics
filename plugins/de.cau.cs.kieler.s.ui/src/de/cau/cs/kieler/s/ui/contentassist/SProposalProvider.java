@@ -6,6 +6,8 @@ package de.cau.cs.kieler.s.ui.contentassist;
 import de.cau.cs.kieler.s.ui.contentassist.AbstractSProposalProvider;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
+ * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SProposalProvider extends AbstractSProposalProvider {
 

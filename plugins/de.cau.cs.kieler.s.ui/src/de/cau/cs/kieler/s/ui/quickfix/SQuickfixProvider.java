@@ -6,6 +6,11 @@ import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
 //import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
 //import org.eclipse.xtext.validation.Issue;
 
+/**
+ * The Class SQuickfixProvider.
+ * 
+ * @kieler.ignore (excluded from review process)
+ */
 public class SQuickfixProvider extends DefaultQuickfixProvider {
 
 //	@Fix(MyJavaValidator.INVALID_TYPE_NAME)

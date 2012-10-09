@@ -6,6 +6,12 @@ import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
+/**
+ * The Class STransientService.
+ * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
+ */
 public class STransientService extends DefaultTransientValueService {
 
     public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {

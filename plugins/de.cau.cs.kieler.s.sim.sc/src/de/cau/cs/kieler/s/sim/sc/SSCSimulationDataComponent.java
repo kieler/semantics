@@ -58,6 +58,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * The SimulationDataComponent for simulating S code with and without visualization.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 yellow KI-28
  */
 public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponent implements

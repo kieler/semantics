@@ -8,6 +8,9 @@ import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension
  * registry.
+ * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class SRuntimeModule extends de.cau.cs.kieler.s.AbstractSRuntimeModule {
     public Class<? extends ITransientValueService> bindITransientValueService() {

@@ -20,6 +20,7 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 yellow KI-28
  */
 public class SSimSCPlugin extends AbstractUIPlugin {

@@ -27,6 +27,7 @@ import de.cau.cs.kieler.maude.internal.MaudeSession;
  * thread.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2010-08-15 yellow
  * 
  */

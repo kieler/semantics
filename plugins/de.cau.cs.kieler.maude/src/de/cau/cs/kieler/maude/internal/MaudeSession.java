@@ -24,6 +24,7 @@ import java.io.PrintWriter;
  * A MaudeSession used internally by the MaudInterfacePlugin to handle calls to Maude.
  * 
  * @author cmot, jes
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2010-08-15 yellow
  */
 public class MaudeSession {

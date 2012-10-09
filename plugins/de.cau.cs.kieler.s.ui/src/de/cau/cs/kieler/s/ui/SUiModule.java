@@ -7,6 +7,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Use this class to register components to be used within the IDE.
+ * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SUiModule extends de.cau.cs.kieler.s.ui.AbstractSUiModule {
 	public SUiModule(AbstractUIPlugin plugin) {

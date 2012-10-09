@@ -1,6 +1,12 @@
 package de.cau.cs.kieler.s.validation;
  
 
+/**
+ * The Class SJavaValidator.
+ * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
+ */
 public class SJavaValidator extends AbstractSJavaValidator {
 
 //	@Check
