@@ -18,9 +18,9 @@ import java.util.Map;
 
 
 /**
- * @author ctr
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
- * @kieler.rating 2011-11-30 red
+ * @author ctr, ssc
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
 public interface ITick {

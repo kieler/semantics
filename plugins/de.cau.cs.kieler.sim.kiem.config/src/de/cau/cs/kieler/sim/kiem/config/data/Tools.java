@@ -36,7 +36,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * Also contains a number of Strings needed in more than one class.
  * 
  * @author soh
- * @kieler.rating 2010-01-27 proposed yellow
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public final class Tools {
 

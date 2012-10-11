@@ -15,6 +15,9 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
  * use it
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
+ * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class EsoFormatter extends AbstractDeclarativeFormatter {
 

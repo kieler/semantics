@@ -34,7 +34,8 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * Listens to all events from the main KIEM Plugin and handles file related events.
  * 
  * @author soh
- * @kieler.rating 2010-01-27 proposed yellow
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public final class KiemEventListener implements IKiemEventListener {
 

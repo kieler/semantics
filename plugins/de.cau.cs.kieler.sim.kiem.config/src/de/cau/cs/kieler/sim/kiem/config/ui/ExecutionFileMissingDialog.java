@@ -30,7 +30,8 @@ import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
  * The dialog for showing that the execution file is missing and dealing with it.
  * 
  * @author soh
- * @kieler.rating 2010-01-27 proposed yellow
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 @SuppressWarnings("restriction")
 public class ExecutionFileMissingDialog {

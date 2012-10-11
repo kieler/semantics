@@ -18,7 +18,8 @@ package de.cau.cs.kieler.sim.kart;
  * needed because the Project explorer else would not show newly recorded trace files.
  * 
  * @author ssc
- * @kieler.rating 2012-02-23 yellow
+ * @kieler.design 2012-02-23 cmot
+ * @kieler.rating 2012-02-23 yellow cmot
  */
 public interface IRefresh {
 

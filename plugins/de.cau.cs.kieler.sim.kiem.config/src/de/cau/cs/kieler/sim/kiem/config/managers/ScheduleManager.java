@@ -61,7 +61,8 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * Manages all data for the scheduling preferences.
  * 
  * @author soh
- * @kieler.rating 2010-01-27 proposed yellow
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public final class ScheduleManager extends AbstractManager implements IRefactoringHistoryListener {
 

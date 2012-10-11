@@ -11,6 +11,9 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
  * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping
  * on how and when to use it 
  *
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
+ *
  */
 public class EsoScopeProvider extends AbstractDeclarativeScopeProvider {
 

@@ -17,7 +17,8 @@ package de.cau.cs.kieler.sim.kart;
  * Interface for an extension point to allow kart.ui to auto-suggest names for ESO trace files.
  * 
  * @author ssc
- * @kieler.rating 2012-02-23 yellow
+ * @kieler.design 2012-02-23 cmot
+ * @kieler.rating 2012-02-23 yellow cmot
  */
 public interface INamingSuggestion {
     

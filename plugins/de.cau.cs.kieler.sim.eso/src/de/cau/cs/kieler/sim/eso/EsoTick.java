@@ -23,9 +23,9 @@ import de.cau.cs.kieler.sim.eso.eso.signal;
 import de.cau.cs.kieler.sim.eso.eso.tick;
 
 /**
- * @author ctr
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
- * @kieler.rating 2011-12-07 red
+ * @author ctr, ssc
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
 public class EsoTick implements ITick {

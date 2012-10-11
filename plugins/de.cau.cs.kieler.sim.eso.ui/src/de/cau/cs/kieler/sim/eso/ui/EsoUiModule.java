@@ -7,6 +7,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Use this class to register components to be used within the IDE.
+ * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class EsoUiModule extends de.cau.cs.kieler.sim.eso.ui.AbstractEsoUiModule {
 	public EsoUiModule(AbstractUIPlugin plugin) {

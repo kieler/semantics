@@ -26,7 +26,8 @@ import de.cau.cs.kieler.sim.kart.IRefresh;
  * Used after writing a new ESO file in order to force the file explorer to display it.
  * 
  * @author ssc
- * @kieler.rating 2012-02-23 yellow
+ * @kieler.design 2012-02-23 cmot
+ * @kieler.rating 2012-02-23 yellow cmot
  */
 public class Refresh implements IRefresh {
 

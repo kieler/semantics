@@ -20,6 +20,8 @@ import java.util.Set;
  * Generic interface for traces, ie, a list of ticks.
  * 
  * @author ctr
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
 public interface ITrace extends Iterator<ITick>{

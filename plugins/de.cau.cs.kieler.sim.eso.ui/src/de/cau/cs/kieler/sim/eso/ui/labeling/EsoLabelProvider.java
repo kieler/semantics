@@ -12,6 +12,9 @@ import com.google.inject.Inject;
  * Provides labels for a EObjects.
  * 
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
+ * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class EsoLabelProvider extends DefaultEObjectLabelProvider {
 

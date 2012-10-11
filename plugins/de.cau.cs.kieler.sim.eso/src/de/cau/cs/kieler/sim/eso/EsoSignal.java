@@ -19,6 +19,8 @@ package de.cau.cs.kieler.sim.eso;
  * have a status: a signal that exists is present.
  * 
  * @author ctr
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
 public class EsoSignal implements ISignal {

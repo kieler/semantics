@@ -18,7 +18,8 @@ package de.cau.cs.kieler.sim.kiem.config.exception;
  * Eclipse Preference Store.
  * 
  * @author soh
- * @kieler.rating 2010-01-27 proposed yellow
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class KiemParserException extends AbstractKiemException {
 

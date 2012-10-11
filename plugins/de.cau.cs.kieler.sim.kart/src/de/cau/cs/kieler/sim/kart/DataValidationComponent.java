@@ -53,7 +53,8 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * information, refer to {@link DataRecordingComponent} and {@link DataReplayComponent}
  * 
  * @author ssc, cmot
- * @kieler.rating 2012-02-23 yellow
+ * @kieler.design 2012-02-23 cmot
+ * @kieler.rating 2012-02-23 yellow cmot
  * 
  */
 public class DataValidationComponent extends JSONObjectDataComponent implements

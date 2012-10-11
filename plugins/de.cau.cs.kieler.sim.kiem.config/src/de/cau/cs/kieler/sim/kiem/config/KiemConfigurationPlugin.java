@@ -30,8 +30,9 @@ import de.cau.cs.kieler.sim.kiem.config.managers.AbstractManager;
  * The activator class controls the plug-in life cycle.
  * 
  * @author soh, cmot
- * @kieler.rating 2010-01-27 proposed yellow
- * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
+ *  
  */
 @SuppressWarnings("restriction")
 public class KiemConfigurationPlugin extends AbstractUIPlugin {

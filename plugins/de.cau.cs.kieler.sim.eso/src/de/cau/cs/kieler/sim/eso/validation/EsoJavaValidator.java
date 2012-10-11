@@ -3,6 +3,12 @@ package de.cau.cs.kieler.sim.eso.validation;
 import de.cau.cs.kieler.sim.eso.validation.AbstractEsoJavaValidator;
  
 
+/**
+ * The Class EsoJavaValidator.
+ * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
+ */
 public class EsoJavaValidator extends AbstractEsoJavaValidator {
 
 //	@Check

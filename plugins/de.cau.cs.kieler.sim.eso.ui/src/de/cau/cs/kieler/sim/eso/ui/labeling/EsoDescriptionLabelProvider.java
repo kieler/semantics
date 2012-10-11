@@ -9,6 +9,9 @@ import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
  * Provides labels for a IEObjectDescriptions and IResourceDescriptions.
  * 
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
+ * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class EsoDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
 

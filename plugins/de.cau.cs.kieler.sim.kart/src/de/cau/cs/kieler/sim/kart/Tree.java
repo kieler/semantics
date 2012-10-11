@@ -23,7 +23,8 @@ import org.eclipse.emf.ecore.EObject;
  * presentation of the scopes contained in it.
  * 
  * @author ssc, cmot
- * @kieler.rating 2012-02-23 yellow
+ * @kieler.design 2012-02-23 cmot
+ * @kieler.rating 2012-02-23 yellow cmot
  */
 public class Tree {
 

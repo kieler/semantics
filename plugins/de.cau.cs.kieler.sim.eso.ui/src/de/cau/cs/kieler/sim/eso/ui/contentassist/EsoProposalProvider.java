@@ -6,6 +6,9 @@ package de.cau.cs.kieler.sim.eso.ui.contentassist;
 import de.cau.cs.kieler.sim.eso.ui.contentassist.AbstractEsoProposalProvider;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
+ * 
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class EsoProposalProvider extends AbstractEsoProposalProvider {
 

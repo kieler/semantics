@@ -17,7 +17,8 @@ package de.cau.cs.kieler.sim.kart;
  * Contains nearly all Strings KART uses internally for configuration or to interact with the user.
  * 
  * @author ssc, cmot
- * @kieler.rating 2012-02-23 yellow
+ * @kieler.design 2012-02-23 cmot
+ * @kieler.rating 2012-02-23 yellow cmot
  */
 public final class KartConstants {
 

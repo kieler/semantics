@@ -37,7 +37,8 @@ import java.util.RandomAccess;
  * </p>
  * 
  * @author soh
- * @kieler.rating 2010-01-27 proposed yellow
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  * @param <T>
  *            The type of the items contained in the list.

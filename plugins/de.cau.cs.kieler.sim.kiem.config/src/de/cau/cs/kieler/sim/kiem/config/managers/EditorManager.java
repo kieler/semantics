@@ -29,7 +29,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * Manages the editors including editor names and editor ids.
  * 
  * @author soh
- * @kieler.rating 2010-01-27 proposed yellow
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public final class EditorManager extends AbstractManager {
 

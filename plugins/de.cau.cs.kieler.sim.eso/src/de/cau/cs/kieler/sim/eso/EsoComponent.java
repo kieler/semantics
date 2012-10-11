@@ -33,6 +33,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeString;
  * Data-component to read traces in esi format.
  * 
  * @author ctr
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
  */
 public class EsoComponent extends JSONObjectDataComponent {
 

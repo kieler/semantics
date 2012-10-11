@@ -24,7 +24,8 @@ import de.cau.cs.kieler.sim.kart.IMessageDialog;
  * Provide an easy to use interface to KART to display message dialogs using an extension point.
  * 
  * @author ssc
- * @kieler.rating 2012-02-23 yellow
+ * @kieler.design 2012-02-23 cmot
+ * @kieler.rating 2012-02-23 yellow cmot
  */
 public class MessageDialog implements IMessageDialog {
 

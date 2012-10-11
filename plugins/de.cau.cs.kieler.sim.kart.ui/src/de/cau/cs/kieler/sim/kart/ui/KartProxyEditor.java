@@ -46,7 +46,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * schedule.
  * 
  * @author ssc, cmot
- * @kieler.rating 2012-02-23 yellow
+ * @kieler.design 2012-02-23 cmot
+ * @kieler.rating 2012-02-23 yellow cmot
  */
 public class KartProxyEditor extends MultiPageEditorPart {
 
