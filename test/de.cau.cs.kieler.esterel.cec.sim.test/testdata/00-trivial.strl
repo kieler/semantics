@@ -1,0 +1,7 @@
+module TRIVIAL:
+output O;
+
+pause;
+emit O;
+
+end module
