@@ -1,4 +1,4 @@
-module FunctionTest:
+module ABRO:
 input A, B, R;
 output O;
 

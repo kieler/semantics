@@ -8,4 +8,6 @@ Require-Bundle: de.cau.cs.kieler.esterel;bundle-version="0.2.0",
  de.cau.cs.kieler.esterel.cec.sim;bundle-version="0.1.1",
  de.cau.cs.kieler.sim.kiem;bundle-version="0.5.1",
  de.cau.cs.kieler.sim.kiem.test;bundle-version="0.1.0",
+ de.cau.cs.kieler.sim.syncsignalreset;bundle-version="0.1.0",
+ de.cau.cs.kieler.sim.kart;bundle-version="0.1.0",
  de.cau.cs.kieler.sim.syncsignalreset;bundle-version="0.1.0"
