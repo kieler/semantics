@@ -40,11 +40,13 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.xtend.util.stdlib.CloningExtensions;
@@ -713,8 +715,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         System.out.println("M2M 2");
 
         try {
-
             myModel = (Program) this.getModelRootElement();
+            
+            // Enforce the complete model to be loaded. Otherwise references to objects (signals)
+            // might not be resolvable resulting in nasty error messages.
+            EcoreUtil.resolveAll(myModel);
 
             System.out.println("M2M 3");
             if (myModel == null) {
