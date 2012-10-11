@@ -45,6 +45,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  * language defined with the Xtext framework.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 yellow KI-28
  */
 public abstract class JSONObjectXtextVisualizationDataComponent extends
