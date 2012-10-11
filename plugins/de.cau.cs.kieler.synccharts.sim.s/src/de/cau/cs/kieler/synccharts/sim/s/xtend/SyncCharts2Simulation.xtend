@@ -391,11 +391,12 @@ class SyncCharts2Simulation {
         
         returnExpression
     }    
-        
-    // This will encode count delays in transitions and insert additional counting
-    // host code variables plus modifying the trigger of the count delayed transition
-    // to be immediate and guarded by a host code expression (with the specific
-    // number of ticks).
+
+    // Encode suspensions by traversing all states and get their
+    // hierarchical suspension trigger (if any).
+    // In case there is such a trigger, add a self-loop transition
+    // with this trigger that has TOP priority (shift the priorities
+    // of other transitions accordingly).    
     def void transformSuspend(State state, Region targetRootRegion) {
         val hierarchicalSuspendTrigger = state.hierarchicalSuspendTrigger;
         
@@ -409,7 +410,7 @@ class SyncCharts2Simulation {
             selfLoop.setDelay(1);
             selfLoop.setTrigger(hierarchicalSuspendTrigger);
             
-            // Add one the the priority off all other outgoing transitions
+            // Add one to the priority off all other outgoing transitions
             for (outgoingTransition : state.outgoingTransitions) {
                 outgoingTransition.setPriority(outgoingTransition.priority + 1);
             }
