@@ -94,6 +94,7 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * maximum!
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-06-07 yellow KI-13, KI-17
  * 
  */
