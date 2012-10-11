@@ -23,6 +23,9 @@ import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.synccharts.sim.s.SyncChartsSimSPlugin
 import org.eclipse.xtend.util.stdlib.CloningExtensions
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.BooleanValue
 
 /**
  * Transformation of a SyncChart to another SyncChart
@@ -274,7 +277,7 @@ class SyncCharts2Simulation {
 
         var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
 
-        // For every state in the SyncChart do the transformation
+        // For every transition in the SyncChart do the transformation
         // Iterate over a copy of the list  
         for(targetTransition : targetTransitions) {
             // This statement we want to modify
@@ -332,6 +335,89 @@ class SyncCharts2Simulation {
 		}
 	}
 	
+    
+    //-------------------------------------------------------------------------
+    
+    // Transforming Suspends.
+    def Region transformSuspend(Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+
+        // For every state in the SyncChart do the transformation
+        // Iterate over a copy of the list  
+        for(targetState : targetStates) {
+            // This statement we want to modify
+            targetState.transformSuspend(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+        
+        
+    // Gather the trigger of all hierarchically higher suspensions in an OR-fashion. Do this
+    // recursively until reaching the top level region (with no further parent state).
+    def Expression getHierarchicalSuspendTrigger(State state) {
+        val parentState = state.parentRegion.parentState;
+        var returnExpression = KExpressionsFactory::eINSTANCE.createExpression;
+        var complexExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+            complexExpression.setOperator(OperatorType::OR);
+        
+        if (parentState != null) {
+            if (parentState.suspensionTrigger != null && parentState.suspensionTrigger.trigger != null) {
+              complexExpression.subExpressions.add(parentState.suspensionTrigger.trigger)
+              returnExpression = complexExpression;
+            }
+            // Do the same recursively for the parent (until reaching the top region)
+            var parentHierarchicalSuspendTrigger = getHierarchicalSuspendTrigger(parentState);
+            if (parentHierarchicalSuspendTrigger != null) {
+                complexExpression.subExpressions.add(parentHierarchicalSuspendTrigger);
+                returnExpression = complexExpression;
+            }
+            
+            // if there are no subExpressions, return null
+            if (complexExpression.subExpressions.size < 1) {
+               returnExpression = null; 
+            }
+            else if (complexExpression.subExpressions.size < 2) {
+               returnExpression = complexExpression.subExpressions.get(0);
+            }
+        }
+        else {
+           // Reached top region, end of recursion
+           returnExpression = null; 
+        }       
+        
+        returnExpression
+    }    
+        
+    // This will encode count delays in transitions and insert additional counting
+    // host code variables plus modifying the trigger of the count delayed transition
+    // to be immediate and guarded by a host code expression (with the specific
+    // number of ticks).
+    def void transformSuspend(State state, Region targetRootRegion) {
+        val hierarchicalSuspendTrigger = state.hierarchicalSuspendTrigger;
+        
+        if (hierarchicalSuspendTrigger != null) {
+            // There is a suspension trigger for this state. Insert a self loop
+            // with a higher priority than all other outgoing transitions
+            // and with this suspension trigger and no effects.
+            val selfLoop = SyncchartsFactory::eINSTANCE.createTransition();
+            selfLoop.setTargetState(state);
+            selfLoop.setPriority(1);
+            selfLoop.setDelay(1);
+            selfLoop.setTrigger(hierarchicalSuspendTrigger);
+            
+            // Add one the the priority off all other outgoing transitions
+            for (outgoingTransition : state.outgoingTransitions) {
+                outgoingTransition.setPriority(outgoingTransition.priority + 1);
+            }
+            
+            // Now add the self loop (after modifying the other transitions)
+            state.outgoingTransitions.add(selfLoop);
+        }
+    }
     
 	
 

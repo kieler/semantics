@@ -312,6 +312,10 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // transformation MUST operate on the resource file (for URI gathering reasons).
             transformedModel = (new SyncCharts2Simulation()).transformCountDelayes(transformedModel);
             
+            // We support (non-immediate and non-delayed) suspends now.
+            // This is done AFTER the visualization transformation because the first
+            // transformation MUST operate on the resource file (for URI gathering reasons).
+            transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
 
             // Transform SyncChart into S code
             Program program = new Synccharts2S().transform(transformedModel);
