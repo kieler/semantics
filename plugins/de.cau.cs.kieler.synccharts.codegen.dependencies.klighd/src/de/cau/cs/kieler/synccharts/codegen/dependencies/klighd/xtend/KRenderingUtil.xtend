@@ -29,6 +29,9 @@ import de.cau.cs.kieler.core.kgraph.KEdge
  * KRendering Utility class for KLighD visualization.
  * 
  * @author chsch
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
+ * 
  */
 class KRenderingUtil {
 	

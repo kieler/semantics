@@ -44,6 +44,7 @@ import de.cau.cs.kieler.synccharts.sim.s.xtend.SyncCharts2Simulation;
  * The SimulationDataComponent for simulating S code with and without visualization.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
 public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationDataComponent implements

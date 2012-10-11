@@ -38,7 +38,9 @@ import de.cau.cs.kieler.core.krendering.KForegroundColor
  * Visualization of a dependency graph for a SyncChart.
  * 
  * @author cmot
- * @kieler.rating 2012-10-08 proposed yellow
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 proposed yellow cmot
+ * 
  */
 class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KNode> {
 	

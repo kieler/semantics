@@ -60,6 +60,7 @@ import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava;
  * step method of the PtolemyExecutor.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
 @SuppressWarnings("restriction")

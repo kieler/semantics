@@ -22,6 +22,7 @@ import java.io.IOException;
  * The Class MOMLBuilder.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
 public class MOMLBuilder {

@@ -6,9 +6,12 @@ import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 //import de.cau.cs.kieler.core.kexpressions.*
 //import java.util.*
 
-
-class Synccharts2Esterel {
-
+/*
+ * @author cmot
+ * @kieler.ignore (excluded from review process)
+ */
+class Synccharts2Esterel { 
+    
 	def create target : EsterelFactory::eINSTANCE.createProgram() transform (Region root) {
 		var module = EsterelFactory::eINSTANCE.createModule()
 		var body = EsterelFactory::eINSTANCE.createModuleBody()

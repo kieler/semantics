@@ -31,6 +31,7 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
  * Converts a SyncChart into an S program.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
 class Synccharts2S {
