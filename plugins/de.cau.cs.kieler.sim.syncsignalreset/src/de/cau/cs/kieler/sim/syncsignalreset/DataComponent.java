@@ -28,6 +28,7 @@ import org.json.JSONObject;
  * KIELER Execution Manager are explicitly made present or absent.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
 public class DataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {

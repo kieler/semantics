@@ -24,6 +24,7 @@ import org.osgi.framework.BundleContext;
  * to be absent again. When there are no present signals, this DataComponent does simply nothing.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
 public class SyncSignalResetPlugin extends Plugin {

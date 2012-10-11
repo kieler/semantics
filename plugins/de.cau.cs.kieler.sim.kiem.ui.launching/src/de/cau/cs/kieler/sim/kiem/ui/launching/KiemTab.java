@@ -48,6 +48,7 @@ import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
  * able to select from all available execution files.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */

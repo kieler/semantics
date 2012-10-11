@@ -31,6 +31,7 @@ import org.osgi.framework.BundleContext;
  * somewhere at the bottom of the scheduling list).
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
 public class TablePlugin extends AbstractUIPlugin {

@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sim.table.views.TableDataList;
  * variables and signals that where modified by the user in the table's ViewPart.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
 public class DataProducer extends JSONStringDataComponent implements IJSONStringDataComponent {

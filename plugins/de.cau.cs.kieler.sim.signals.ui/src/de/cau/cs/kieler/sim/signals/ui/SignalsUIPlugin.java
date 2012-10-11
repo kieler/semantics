@@ -25,6 +25,7 @@ import org.osgi.framework.BundleContext;
  * currently used from this class is the PLUGIN_ID constant.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-08-08 yellow KI-22
  */
 public class SignalsUIPlugin extends AbstractUIPlugin {

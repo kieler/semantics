@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
  * launch wizard or via the shortcuts.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */

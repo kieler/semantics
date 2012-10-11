@@ -22,6 +22,7 @@ import org.eclipse.ui.IEditorPart;
  * The class KIEMLaunchShortcut is needed for extension point org.eclipse.debug.ui.launchShortcuts.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */

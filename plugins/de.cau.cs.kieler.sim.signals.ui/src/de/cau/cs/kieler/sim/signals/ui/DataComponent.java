@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sim.signals.ui.views.SignalsView;
  * plots all signals and their histories.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-08-08 yellow KI-22
  */
 public class DataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {

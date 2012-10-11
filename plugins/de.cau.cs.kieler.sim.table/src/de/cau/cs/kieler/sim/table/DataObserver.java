@@ -38,6 +38,7 @@ import de.cau.cs.kieler.sim.table.views.TableDataList;
  * it gets in its {@link #step(String)} method from the execution manager.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
 public class DataObserver extends JSONStringDataComponent implements IJSONStringDataComponent {

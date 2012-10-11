@@ -18,6 +18,7 @@ package de.cau.cs.kieler.sim.signals;
  * The class Signal value represents a synchronous pure and valued signal's status and value.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-07-25 proposed yellow 
  */
 public class SignalValue {

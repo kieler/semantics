@@ -23,6 +23,7 @@ import org.eclipse.debug.ui.ILaunchConfigurationTab;
  * convention a CommonTab is required to be created.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */

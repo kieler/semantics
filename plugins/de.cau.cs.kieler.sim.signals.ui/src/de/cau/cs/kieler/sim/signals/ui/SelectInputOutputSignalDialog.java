@@ -49,6 +49,7 @@ import de.cau.cs.kieler.sim.signals.Signal;
  * open() method automatically.
  * 
  * @author cmot
+ * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-08-08 yellow KI-22
  * 
  */
