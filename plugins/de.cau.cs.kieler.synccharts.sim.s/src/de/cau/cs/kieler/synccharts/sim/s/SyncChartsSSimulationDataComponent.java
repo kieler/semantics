@@ -291,6 +291,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFragment();
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
+                
 
                 try {
                     // Write out copy/transformation of syncchart program
@@ -312,10 +313,16 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // transformation MUST operate on the resource file (for URI gathering reasons).
             transformedModel = (new SyncCharts2Simulation()).transformCountDelayes(transformedModel);
             
+            
+            // We support history transitions now transforming them with the help of
+            // a suspend and auxiliary state/region
+            transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
+
             // We support (non-immediate and non-delayed) suspends now.
             // This is done AFTER the visualization transformation because the first
             // transformation MUST operate on the resource file (for URI gathering reasons).
             transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
+            
 
             // Transform SyncChart into S code
             Program program = new Synccharts2S().transform(transformedModel);
