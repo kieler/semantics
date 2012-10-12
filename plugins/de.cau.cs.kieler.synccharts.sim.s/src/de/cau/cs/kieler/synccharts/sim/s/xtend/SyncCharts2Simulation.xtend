@@ -101,7 +101,7 @@ class SyncCharts2Simulation {
 			val originalTransitionURIFragment = originalTransition.eResource.getURIFragment(originalTransition);
 			val transitionUID = AUXILIARY_VARIABLE_TAG_TRANSITION + originalTransitionURIFragment.hashCode.toString().replace("-","M");
 			// This statement we want to modify
-			//targetTransition.transformTransition(targetRootRegion, transitionUID);
+			targetTransition.transformTransition(targetRootRegion, transitionUID);
 		}
 		
 
@@ -115,7 +115,7 @@ class SyncCharts2Simulation {
 			val originalStateURIFragment = originalState.eResource.getURIFragment(originalState);
 			val stateUID = AUXILIARY_VARIABLE_TAG_STATE + originalStateURIFragment.hashCode.toString().replace("-","M");
 			// This statement we want to modify
-			//targetState.transformState(targetRootRegion, stateUID);
+			targetState.transformState(targetRootRegion, stateUID);
 		}
 
 		targetRootRegion;
