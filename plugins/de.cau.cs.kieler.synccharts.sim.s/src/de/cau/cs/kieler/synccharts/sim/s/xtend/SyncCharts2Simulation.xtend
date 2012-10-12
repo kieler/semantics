@@ -447,7 +447,8 @@ class SyncCharts2Simulation {
     // Traverse all states and transform macro states that have connecting
     // (incoming) history transitions.    
     def void transformHistory(State state, Region targetRootRegion) {
-        val historyTransitions = state.incomingTransitions.filter(e | e.isHistory);
+        val historyTransitions = ImmutableList::copyOf(state.incomingTransitions.filter(e | e.isHistory));
+        val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter(e | !e.isHistory));
         
         if (historyTransitions != null && historyTransitions.size > 0 
             && state.regions != null && state.regions.size > 0) {
@@ -456,6 +457,7 @@ class SyncCharts2Simulation {
             val auxiliaryRegion = SyncchartsFactory::eINSTANCE.createRegion()
             val auxiliaryState  = SyncchartsFactory::eINSTANCE.createState();
             auxiliaryState.setId(state.id + "History");
+            auxiliaryState.setLabel(state.id + "History");
             auxiliaryState.setIsInitial(true);
             
             // Move all regions to new auxiliary State
@@ -464,23 +466,22 @@ class SyncCharts2Simulation {
             }
             state.regions.removeAll(auxiliaryState.regions);
             
-            // Auxiliary state gets supsended by NOT auxiliary signal
-            val auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
-            val UID = state.id + "Suspend";
-            // Setup the auxiliarySignal as an OUTPUT to the module
-            auxiliarySignal.setName(UID);
-            auxiliarySignal.setIsInput(false);
-            auxiliarySignal.setIsOutput(false);
-            auxiliarySignal.setType(ValueType::PURE);
+            // Auxiliary state gets suspended by NOT auxiliary signal
+            val auxiliarySuspendSignal = KExpressionsFactory::eINSTANCE.createSignal();
+            val auxiliarySuspendSignalUID = state.id + "Suspend";
+            auxiliarySuspendSignal.setName(auxiliarySuspendSignalUID);
+            auxiliarySuspendSignal.setIsInput(false);
+            auxiliarySuspendSignal.setIsOutput(false);
+            auxiliarySuspendSignal.setType(ValueType::PURE);
 
             // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
-            targetRootRegion.states.get(0).signals.add(auxiliarySignal);
+            targetRootRegion.states.get(0).signals.add(auxiliarySuspendSignal);
             
             var Expression suspensionTrigger;
                 val notAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                     notAuxiliaryTrigger.setOperator(OperatorType::NOT);
                 val auxiliarySignalRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                    auxiliarySignalRef.setValuedObject(auxiliarySignal);
+                    auxiliarySignalRef.setValuedObject(auxiliarySuspendSignal);
                     notAuxiliaryTrigger.subExpressions.add(auxiliarySignalRef);
             if (state.suspensionTrigger != null) {
                 // If there already is a suspension trigger than combine it with OR
@@ -505,7 +506,7 @@ class SyncCharts2Simulation {
             state.parentRegion.parentState.regions.add(auxiliaryRegion);
             
             // For all history transitions now erase the history marker
-            for (historyTransition : ImmutableList::copyOf(historyTransitions)) {
+            for (historyTransition : historyTransitions) {
                 historyTransition.setIsHistory(false);
             }
             
@@ -516,10 +517,50 @@ class SyncCharts2Simulation {
             selfLoop.setPriority(state.outgoingTransitions.size + 1);
             selfLoop.setDelay(1);
             val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                auxiliaryEmission.setSignal(auxiliarySignal);
+                auxiliaryEmission.setSignal(auxiliarySuspendSignal);
             selfLoop.effects.add(auxiliaryEmission);
             state.outgoingTransitions.add(selfLoop);
             
+            // Add auxiliary signal forcing internals NOT to suspend to all
+            // outgoing WEAK abort transitions (consider NORMAL termination as weak aborts)
+            val weakAbortTransitions = ImmutableList::copyOf(state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT));
+            for (weakAbortTransition : weakAbortTransitions) {
+                val auxiliaryEmission2 = SyncchartsFactory::eINSTANCE.createEmission();
+                    auxiliaryEmission2.setSignal(auxiliarySuspendSignal);
+                weakAbortTransition.effects.add(auxiliaryEmission2);
+            }
+
+            //---
+            
+            // For resetting the inner states when entering by a normal transition
+            // add a reset signal and emit it when entering
+            val auxiliaryResetSignal = KExpressionsFactory::eINSTANCE.createSignal();
+            val auxiliaryResetSignalUID = state.id + "Reset";
+            auxiliaryResetSignal.setName(auxiliaryResetSignalUID);
+            auxiliaryResetSignal.setIsInput(false);
+            auxiliaryResetSignal.setIsOutput(false);
+            auxiliaryResetSignal.setType(ValueType::PURE);
+
+            // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
+            targetRootRegion.states.get(0).signals.add(auxiliaryResetSignal);
+            
+            // Add a self loop to the NEW state that resets it if auxiliary reset signal is present
+            val resetSelfLoop = SyncchartsFactory::eINSTANCE.createTransition();
+            resetSelfLoop.setTargetState(auxiliaryState);
+            resetSelfLoop.setPriority(1);
+            resetSelfLoop.setDelay(1);
+            resetSelfLoop.setType(TransitionType::STRONGABORT);
+                val auxiliaryResetSignalRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    auxiliaryResetSignalRef.setValuedObject(auxiliaryResetSignal);
+            resetSelfLoop.setTrigger(auxiliaryResetSignalRef);
+            auxiliaryState.outgoingTransitions.add(resetSelfLoop);
+            
+            // For all non-history transitions now add a resetSignal emission
+            for (nonHistoryTransition : nonHistoryTransitions) {
+                val auxiliaryResetEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                    auxiliaryResetEmission.setSignal(auxiliaryResetSignal);
+                nonHistoryTransition.effects.add(auxiliaryResetEmission);
+            }
             
         }
     }
