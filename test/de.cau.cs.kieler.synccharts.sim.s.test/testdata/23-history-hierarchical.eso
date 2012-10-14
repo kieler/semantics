@@ -3,28 +3,13 @@
 % Output: 
 ;
 
-% Output: 
-;
-
-% Output: 
-;
-
 % Output: O1 
 ;
 
 % Output: O2 
-;
-
-% Output: O3 
-;
-
-% Output: O1 
 ;
 HI 
-% Output: O2 
-;
-
-% Output: 
+% Output: O3 
 ;
 
 % Output: 
@@ -36,9 +21,6 @@ HI
 % Output: 
 ;
 HO 
-% Output: 
-;
-
 % Output: 
 ;
 
@@ -54,21 +36,6 @@ RO
 % Output: 
 ;
 
-% Output: 
-;
-
-% Output: 
-;
-
-% Output: O1 
-;
-
-% Output: O2 
-;
-
-% Output: O3 
-;
-
 % Output: O1 
 ;
 HO 
@@ -83,11 +50,44 @@ HO
 
 % Output: 
 ;
-HO 
+
 % Output: 
+;
+HO 
+% Output: O3 
+;
+
+% Output: O1 
+;
+
+% Output: O2 
 ;
 
 % Output: O3 
+;
+HO 
+% Output: O1 
+;
+
+% Output: 
+;
+RI HO 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+RO 
+% Output: 
+;
+
+% Output: 
+;
+RO 
+% Output: 
 ;
 
 % Output: O1 
