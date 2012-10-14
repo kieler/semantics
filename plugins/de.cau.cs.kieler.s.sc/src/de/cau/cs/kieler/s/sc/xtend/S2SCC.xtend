@@ -130,7 +130,10 @@ class S2SCC {
     #define EMIT_SCC(name) \
     presentSigInt[name] = 1; \
 
-    #define EMIT_VAL_SCC(name, value, combine) \
+    #define EMIT_VAL_SCC(name, value, combine, initial) \
+    if (presentSigInt[name] != 1) { \
+        valSigInt[name] = initial; \
+    } \
     presentSigInt[name] = 1; \
     valSigInt[name] = combine(valSigInt[name],  (int)value); \
     
@@ -164,7 +167,7 @@ class S2SCC {
 
     #define PRE_VAL_SCC(name) \
     (valSigIntPre[name]) \
-
+    
     ''' 
    }
    
@@ -222,6 +225,7 @@ class S2SCC {
    }
 
    // -------------------------------------------------------------------------
+   
    // Startup tick reset function
    def sTotalResetSignals(Program program) {
        '''
@@ -336,7 +340,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
             present = cJSON_GetObjectItem(child, "present");
             value = cJSON_GetObjectItem(child, "value");
             if (present != NULL && present->type) {
-                EMIT_VAL_SCC(sig_«signal.name», value, +);
+                EMIT_VAL_SCC(sig_«signal.name», value, +,  «signal.combineOperator.initialValue»);
                 
             }
         }   
@@ -450,7 +454,8 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    def dispatch expand(Emit emitInstruction) {
        if (emitInstruction.value != null) {
            '''EMIT_VAL_SCC(sig_«emitInstruction.signal.name», «emitInstruction.value.expand»,
-               «emitInstruction.signal.combineOperator.macro»);'''
+               «emitInstruction.signal.combineOperator.macro», 
+               «emitInstruction.signal.combineOperator.initialValue»);'''
        }
        else {
            '''EMIT_SCC(sig_«emitInstruction.signal.name»);'''
