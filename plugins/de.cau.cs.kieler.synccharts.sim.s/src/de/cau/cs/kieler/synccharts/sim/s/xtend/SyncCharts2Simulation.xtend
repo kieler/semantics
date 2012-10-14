@@ -392,31 +392,40 @@ class SyncCharts2Simulation {
         returnExpression
     }    
 
+
+   // Tells whether a state is a macro state
+   def boolean isHierarchical(State state) {
+       (state.regions != null && state.regions.size > 0);
+   }
+
     // Encode suspensions by traversing all states and get their
     // hierarchical suspension trigger (if any).
-    // In case there is such a trigger, add a self-loop transition
-    // with this trigger that has TOP priority (shift the priorities
-    // of other transitions accordingly).    
+    // In case there is such a trigger, to all outgoing transitions, add 
+    // an "(<condition>) && !trigger" to disable ALL these transitions
+    // if the suspension trigger is enabled.
     def void transformSuspend(State state, Region targetRootRegion) {
         val hierarchicalSuspendTrigger = state.hierarchicalSuspendTrigger;
         
         if (hierarchicalSuspendTrigger != null) {
-            // There is a suspension trigger for this state. Insert a self loop
-            // with a higher priority than all other outgoing transitions
-            // and with this suspension trigger and no effects.
-            val selfLoop = SyncchartsFactory::eINSTANCE.createTransition();
-            selfLoop.setTargetState(state);
-            selfLoop.setPriority(1);
-            selfLoop.setDelay(1);
-            selfLoop.setTrigger(hierarchicalSuspendTrigger);
-            
             // Add one to the priority off all other outgoing transitions
-            for (outgoingTransition : state.outgoingTransitions) {
-                outgoingTransition.setPriority(outgoingTransition.priority + 1);
+            for (outgoingTransition : ImmutableList::copyOf(state.outgoingTransitions)) {
+                val andAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                    andAuxiliaryTrigger.setOperator(OperatorType::AND);
+                val notAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                    notAuxiliaryTrigger.setOperator(OperatorType::NOT);
+                    // Add a copy because we want this trigger to be used in possibly several
+                    // outgoing transitions
+                    notAuxiliaryTrigger.subExpressions.add(hierarchicalSuspendTrigger.copy);
+                    if (outgoingTransition.trigger != null) {
+                      // There is an outgoing transition trigger  
+                       andAuxiliaryTrigger.subExpressions.add(outgoingTransition.trigger);
+                       andAuxiliaryTrigger.subExpressions.add(notAuxiliaryTrigger);
+                       outgoingTransition.setTrigger(andAuxiliaryTrigger);
+                    } else {
+                      // The simple case, there is NO outgoing transition trigger yet   
+                       outgoingTransition.setTrigger(notAuxiliaryTrigger);
+                    }
             }
-            
-            // Now add the self loop (after modifying the other transitions)
-            state.outgoingTransitions.add(selfLoop);
         }
     }
     
