@@ -458,6 +458,7 @@ class SyncCharts2Simulation {
     def void transformHistory(State state, Region targetRootRegion) {
         val historyTransitions = ImmutableList::copyOf(state.incomingTransitions.filter(e | e.isHistory));
         val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter(e | !e.isHistory));
+        val allTransitions = ImmutableList::copyOf(state.incomingTransitions);
         
         if (historyTransitions != null && historyTransitions.size > 0 
             && state.regions != null && state.regions.size > 0) {
@@ -537,6 +538,13 @@ class SyncCharts2Simulation {
                 val auxiliaryEmission2 = SyncchartsFactory::eINSTANCE.createEmission();
                     auxiliaryEmission2.setSignal(auxiliarySuspendSignal);
                 weakAbortTransition.effects.add(auxiliaryEmission2);
+            }
+
+            // For all incoming transitions now add a suspendSignal emission (to immediately enable the execution of the body)
+            for (incomingTansition : allTransitions) {
+                val auxiliarySuspendEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                    auxiliarySuspendEmission.setSignal(auxiliarySuspendSignal);
+                incomingTansition.effects.add(auxiliarySuspendEmission);
             }
 
             //---
