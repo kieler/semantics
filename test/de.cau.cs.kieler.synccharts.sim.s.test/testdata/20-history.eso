@@ -23,14 +23,11 @@ I
 
 % Output: 
 ;
+
+% Output: 
+;
 I 
-% Output: O1 
-;
-
-% Output: O2 
-;
-
-% Output: O3 
+% Output: 
 ;
 
 % Output: O1 
@@ -50,12 +47,9 @@ I
 
 % Output: 
 ;
-
+I 
 % Output: 
 ;
-I 
-% Output: O3 
-;
 
-% Output: O1 
+% Output: O3 
 ;
