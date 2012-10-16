@@ -138,8 +138,9 @@ class SyncCharts2Simulation {
           // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
           targetRootRegion.states.get(0).signals.add(auxiliarySignal);
      }
-     
-     // Transform a state as described in 2.
+
+    
+     // New visualization of active states with immediate during actions
      def void transformState(State state, Region targetRootRegion, String UID) {
           if (state.isFinal) {
                state.setIsFinal(false);
@@ -200,7 +201,7 @@ class SyncCharts2Simulation {
                     else if (triggerExpression.subExpressions.size > 1) {
                          normalTerminationTransition.setTrigger(triggerExpression);
                     }
-               }
+               } // end if normal termination present
 
                
                // auxiliary signal
@@ -211,62 +212,152 @@ class SyncCharts2Simulation {
                auxiliarySignal.setIsInput(false);
                auxiliarySignal.setIsOutput(true);
                auxiliarySignal.setType(ValueType::PURE);
-          
-               // 1. Add emission of auxiliary Signal to every incoming transition
-               for (transition : state.incomingTransitions) {
-                    // Set the auxliiarySignal for emission 
-                    val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                       auxiliaryEmission.setSignal(auxiliarySignal);
-                       // Add emission to effect of incoming transition
-                    transition.effects.add(auxiliaryEmission);
-               }
 
-               // If the state is an initial state, then we need an NEW initial state
-               // connected with an immediate transition that outputs the auxiliary signal.               
-               if (state.isInitial) {
-                    val initialState  = SyncchartsFactory::eINSTANCE.createState();
-                    val initialTransition =  SyncchartsFactory::eINSTANCE.createTransition();
-                    val initialEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                    initialState.setId("init" + state.hashCode);
-                    initialTransition.setTargetState(state);
-                    initialTransition.setPriority(1);
-                    initialTransition.setDelay(0);
-                    initialTransition.setIsImmediate(true);
-                    initialState.setIsInitial(true);
-                    state.setIsInitial(false);
-                    initialState.outgoingTransitions.add(initialTransition);
-                       initialEmission.setSignal(auxiliarySignal);
-                    initialTransition.effects.add(initialEmission);
-                    state.parentRegion.states.add(initialState);
-               }
-          
-               // 2. Create auxiliary region and an inner state with a self-loop
-               // emitting the signal
-               val auxiliaryRegion = SyncchartsFactory::eINSTANCE.createRegion()
-               val auxiliaryState  = SyncchartsFactory::eINSTANCE.createState();
-               val auxiliarySelfLoop =  SyncchartsFactory::eINSTANCE.createTransition();
-          
-               auxiliarySelfLoop.setTargetState(auxiliaryState);
-               auxiliarySelfLoop.setPriority(1);
-               auxiliarySelfLoop.setDelay(1);
-               // Set the auxliiarySignal for emission 
+               // Add emission of auxiliary Signal as an immediate during action for this state
+               val immediateDuringAction = SyncchartsFactory::eINSTANCE.createAction();
+               immediateDuringAction.setDelay(0);
+               immediateDuringAction.setIsImmediate(true);
                val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
-               auxiliaryEmission.setSignal(auxiliarySignal);
-               auxiliarySelfLoop.effects.add(auxiliaryEmission);
-          
-               auxiliaryState.setId("selfloopstate" + UID);
-               auxiliaryState.setLabel("selfloopstate" + UID);
-               auxiliaryState.setIsInitial(true);
-               auxiliaryState.outgoingTransitions.add(auxiliarySelfLoop);
-          
-               auxiliaryRegion.states.add(auxiliaryState);
-               state.regions.add(auxiliaryRegion);
-          
+                   auxiliaryEmission.setSignal(auxiliarySignal);
+               immediateDuringAction.effects.add(auxiliaryEmission);
+               
+               // Add during action to state
+               state.innerActions.add(immediateDuringAction);
+
                // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
-                 targetRootRegion.states.get(0).signals.add(auxiliarySignal);
+               targetRootRegion.states.get(0).signals.add(auxiliarySignal);
           }
           
-     }
+     }     
+
+//     // Transform a state as described in 2.
+//     def void transformStateOld(State state, Region targetRootRegion, String UID) {
+//          if (state.isFinal) {
+//               state.setIsFinal(false);
+//               // Final states will be transformed if there is a normal termination with a self loop
+//               // so we do not want to add a superfluous self loop and return here.
+////               return;
+//          }
+//
+//          // Do the following only for NON-final states
+//          // Do the following only for NON-top-most-states
+//          if (!state.isFinal && state.parentRegion != targetRootRegion) {
+//               
+//               // this is the special case where we must taken care of a normal termination
+//               // this is transformed into a weak abort
+//               if (state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0) {
+//                    val normalTerminationTransition = state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).head;
+//                    normalTerminationTransition.setType(TransitionType::WEAKABORT);
+//                    val triggerExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+//                         triggerExpression.setOperator(OperatorType::AND);
+//                         triggerExpression.subExpressions
+//               
+//                    for (region : state.regions) {
+//                         // Setup the auxiliarySignal as an OUTPUT to the module
+//                         val termSignal = KExpressionsFactory::eINSTANCE.createSignal();
+//                         termSignal.setName("terminated" + region.hashCode);
+//                         termSignal.setIsInput(false);
+//                         termSignal.setIsOutput(false);
+//                         termSignal.setType(ValueType::PURE);
+//                    
+//                         val finalStates = region.states.filter(e | e.isFinal == true);
+//                         for (finalState : finalStates) {
+//                              val termSelfLoop =  SyncchartsFactory::eINSTANCE.createTransition();
+//                              termSelfLoop.setTargetState(finalState);
+//                              termSelfLoop.setPriority(1);
+//                              termSelfLoop.setDelay(1);
+//                              finalState.outgoingTransitions.add(termSelfLoop);
+//                              //finalState.setIsFinal(false);
+//                              
+//                              // add termSignal to all incoming transitions
+//                              // (this includes the just created selfloop)
+//                              for ( incomingTransition : finalState.incomingTransitions) {
+//                                   val termEmission = SyncchartsFactory::eINSTANCE.createEmission();
+//                                   termEmission.setSignal(termSignal);
+//                                   incomingTransition.effects.add(termEmission);
+//                              }
+//                         }
+//                    
+//                           targetRootRegion.states.get(0).signals.add(termSignal);
+//                         val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+//                         valuedObjectReference.setValuedObject(termSignal);
+//                         triggerExpression.subExpressions.add(valuedObjectReference);
+//                    }
+//               
+//                    if (triggerExpression.subExpressions.size == 1) {
+//                         // if there is just one signal, we do not need an AND!
+//                         normalTerminationTransition.setTrigger(triggerExpression.subExpressions.get(0));
+//                    }
+//                    else if (triggerExpression.subExpressions.size > 1) {
+//                         normalTerminationTransition.setTrigger(triggerExpression);
+//                    }
+//               } // end if normal termination present
+//
+//               
+//               // auxiliary signal
+//               val auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
+//          
+//               // Setup the auxiliarySignal as an OUTPUT to the module
+//               auxiliarySignal.setName(UID);
+//               auxiliarySignal.setIsInput(false);
+//               auxiliarySignal.setIsOutput(true);
+//               auxiliarySignal.setType(ValueType::PURE);
+//          
+//               // 1. Add emission of auxiliary Signal to every incoming transition
+//               for (transition : state.incomingTransitions) {
+//                    // Set the auxliiarySignal for emission 
+//                    val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
+//                       auxiliaryEmission.setSignal(auxiliarySignal);
+//                       // Add emission to effect of incoming transition
+//                    transition.effects.add(auxiliaryEmission);
+//               }
+//
+//               // If the state is an initial state, then we need an NEW initial state
+//               // connected with an immediate transition that outputs the auxiliary signal.               
+//               if (state.isInitial) {
+//                    val initialState  = SyncchartsFactory::eINSTANCE.createState();
+//                    val initialTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+//                    val initialEmission = SyncchartsFactory::eINSTANCE.createEmission();
+//                    initialState.setId("init" + state.hashCode);
+//                    initialTransition.setTargetState(state);
+//                    initialTransition.setPriority(1);
+//                    initialTransition.setDelay(0);
+//                    initialTransition.setIsImmediate(true);
+//                    initialState.setIsInitial(true);
+//                    state.setIsInitial(false);
+//                    initialState.outgoingTransitions.add(initialTransition);
+//                       initialEmission.setSignal(auxiliarySignal);
+//                    initialTransition.effects.add(initialEmission);
+//                    state.parentRegion.states.add(initialState);
+//               }
+//          
+//               // 2. Create auxiliary region and an inner state with a self-loop
+//               // emitting the signal
+//               val auxiliaryRegion = SyncchartsFactory::eINSTANCE.createRegion()
+//               val auxiliaryState  = SyncchartsFactory::eINSTANCE.createState();
+//               val auxiliarySelfLoop =  SyncchartsFactory::eINSTANCE.createTransition();
+//          
+//               auxiliarySelfLoop.setTargetState(auxiliaryState);
+//               auxiliarySelfLoop.setPriority(1);
+//               auxiliarySelfLoop.setDelay(1);
+//               // Set the auxliiarySignal for emission 
+//               val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
+//               auxiliaryEmission.setSignal(auxiliarySignal);
+//               auxiliarySelfLoop.effects.add(auxiliaryEmission);
+//          
+//               auxiliaryState.setId("selfloopstate" + UID);
+//               auxiliaryState.setLabel("selfloopstate" + UID);
+//               auxiliaryState.setIsInitial(true);
+//               auxiliaryState.outgoingTransitions.add(auxiliarySelfLoop);
+//          
+//               auxiliaryRegion.states.add(auxiliaryState);
+//               state.regions.add(auxiliaryRegion);
+//          
+//               // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
+//                 targetRootRegion.states.get(0).signals.add(auxiliarySignal);
+//          }
+//          
+//     }
 
      
     //-------------------------------------------------------------------------
@@ -676,6 +767,24 @@ class SyncCharts2Simulation {
         // macro state and connect it to the original target. Put the action into an
         // transition within the macro state.
         if (state.entryActions != null && state.entryActions.size > 0) {
+               // If the state is an initial state, then we need an NEW initial state
+               // connected with an immediate transition (the transition is considered
+               // later as part of the incomingTransitions)               
+               if (state.isInitial) {
+                    val initialState  = SyncchartsFactory::eINSTANCE.createState();
+                    val initialTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    initialState.setId("init" + state.hashCode);
+                    initialState.setLabel("init " + state.label);
+                    initialTransition.setTargetState(state);
+                    initialTransition.setPriority(1);
+                    initialTransition.setDelay(0);
+                    initialTransition.setIsImmediate(true);
+                    initialState.setIsInitial(true);
+                    state.setIsInitial(false);
+                    initialState.outgoingTransitions.add(initialTransition);
+                    state.parentRegion.states.add(initialState);
+               }
+            
                // Add a macro state for every transition
                for (transition : state.incomingTransitions) {
                    // Create a dummy state and connect it accordingly 
@@ -697,10 +806,10 @@ class SyncCharts2Simulation {
                    for (entryAction : state.entryActions) {
                      val dummyInternalState1 = SyncchartsFactory::eINSTANCE.createState();
                      val dummyInternalState2 = SyncchartsFactory::eINSTANCE.createState();
-                     dummyInternalState1.setId("Entry1Dummy" + state.hashCode);
+                     dummyInternalState1.setId("Entry1Internal" + state.hashCode);
                      dummyInternalState1.setLabel("i");
                      dummyInternalState1.setIsInitial(true);
-                     dummyInternalState2.setId("Entry2Dummy" + state.hashCode);
+                     dummyInternalState2.setId("Entry2Internal" + state.hashCode);
                      dummyInternalState2.setLabel("f");
                      val dummyInternalTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                      dummyInternalTransition.setTargetState(dummyInternalState2);
@@ -710,16 +819,118 @@ class SyncCharts2Simulation {
                      dummyInternalTransition.setTrigger(entryAction.trigger);
                      dummyInternalTransition.effects.addAll(entryAction.effects);
                      dummyInternalState1.outgoingTransitions.add(dummyInternalTransition);
-                     val dummyRegion = SyncchartsFactory::eINSTANCE.createRegion();
-                     dummyRegion.setId("EntryDummyRegion" + entryAction.hashCode);
-                     dummyRegion.states.add(dummyInternalState1);
-                     dummyRegion.states.add(dummyInternalState2);
-                     dummyState.regions.add(dummyRegion);
+                     val dummyInternalRegion = SyncchartsFactory::eINSTANCE.createRegion();
+                     dummyInternalRegion.setId("EntryInternalRegion" + entryAction.hashCode);
+                     dummyInternalRegion.states.add(dummyInternalState1);
+                     dummyInternalRegion.states.add(dummyInternalState2);
+                     dummyState.regions.add(dummyInternalRegion);
                    }
                 }
                 // After transforming entry actions, erase them
                 state.entryActions.clear();
        }
+       
+       
+        // DURING ACTIONS : 
+        // For each action create a separate region in the state. 
+        // Put the action into an transition within the macro state.
+        // Add a loop back to the initial state of the added region.
+        // In case the during action is immediate, the looping transition is non-immediate.
+        // In case the during action is non-immediate, the looping transition is immediate.
+        if (state.innerActions != null && state.innerActions.size > 0) {
+               // Create the body of the dummy state - containing the during action
+               // For every during action: Create a region
+               for (innerAction : state.innerActions) {
+                     val dummyInternalState1 = SyncchartsFactory::eINSTANCE.createState();
+                     val dummyInternalState2 = SyncchartsFactory::eINSTANCE.createState();
+                     dummyInternalState1.setId("During1Internal" + state.hashCode);
+                     dummyInternalState1.setLabel("i");
+                     dummyInternalState1.setIsInitial(true);
+                     dummyInternalState2.setId("During2Internal" + state.hashCode);
+                     dummyInternalState2.setLabel("f");
+                     // Add action dummyTransition
+                     val dummyInternalTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                     dummyInternalTransition.setTargetState(dummyInternalState2);
+                     dummyInternalTransition.setPriority(1);
+                     dummyInternalTransition.setDelay(innerAction.delay);
+                     dummyInternalTransition.setIsImmediate(innerAction.isImmediate);
+                     dummyInternalTransition.setTrigger(innerAction.trigger);
+                     dummyInternalTransition.effects.addAll(innerAction.effects);
+                     dummyInternalState1.outgoingTransitions.add(dummyInternalTransition);
+                     // Add self loop
+                     val dummyInternalLoopTransition = SyncchartsFactory::eINSTANCE.createTransition();
+                     dummyInternalLoopTransition.setTargetState(dummyInternalState1);
+                     dummyInternalLoopTransition.setPriority(1);
+                     dummyInternalLoopTransition.setIsImmediate(!innerAction.isImmediate);
+                     if (!innerAction.isImmediate) {
+                         dummyInternalLoopTransition.setLabel("#");
+                         dummyInternalLoopTransition.setDelay(0);    
+                     }
+                     dummyInternalLoopTransition.setType(TransitionType::WEAKABORT);
+                     dummyInternalState2.outgoingTransitions.add(dummyInternalLoopTransition);
+                     // Add the region to the state
+                     val dummyInternalRegion = SyncchartsFactory::eINSTANCE.createRegion();
+                     dummyInternalRegion.setId("DuringDummyRegion" + innerAction.hashCode);
+                     dummyInternalRegion.states.add(dummyInternalState1);
+                     dummyInternalRegion.states.add(dummyInternalState2);
+                     state.regions.add(dummyInternalRegion);
+               }
+         
+               // After transforming during actions, erase them
+               state.innerActions.clear();
+       }
+       
+       
+        // EXIT ACTIONS : Create a macro state for all outgoing non-preempting(!) transitions. 
+        // Weak abort the macro state and connect it to the original target. Put the action into an
+        // transition within the macro state.
+        if (state.exitActions != null && state.exitActions.size > 0) {
+               // Add a macro state for every transition
+               val consideredTransitions = state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT);
+               for (transition : consideredTransitions) {
+                   // Create a dummy state and connect it accordingly 
+                   val dummyState = SyncchartsFactory::eINSTANCE.createState();
+                   dummyState.setId("Exit" + state.hashCode);
+                   dummyState.setLabel("Exit " + state.label);
+                   state.parentRegion.states.add(dummyState);
+                   val dummyTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                   dummyTransition.setLabel("#");
+                   dummyTransition.setTargetState(transition.targetState);
+                   dummyTransition.setPriority(1);
+                   dummyTransition.setDelay(0);
+                   dummyTransition.setIsImmediate(true);
+                   dummyState.outgoingTransitions.add(dummyTransition);
+                   transition.setTargetState(dummyState);
+                   
+                   // Create the body of the dummy state - containing the exit action
+                   // For every exit action: Create a region
+                   for (exitAction : state.exitActions) {
+                     val dummyInternalState1 = SyncchartsFactory::eINSTANCE.createState();
+                     val dummyInternalState2 = SyncchartsFactory::eINSTANCE.createState();
+                     dummyInternalState1.setId("Exit1Internal" + state.hashCode);
+                     dummyInternalState1.setLabel("i");
+                     dummyInternalState1.setIsInitial(true);
+                     dummyInternalState2.setId("Exit2Internal" + state.hashCode);
+                     dummyInternalState2.setLabel("f");
+                     val dummyInternalTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                     dummyInternalTransition.setTargetState(dummyInternalState2);
+                     dummyInternalTransition.setPriority(1);
+                     dummyInternalTransition.setDelay(0);
+                     dummyInternalTransition.setIsImmediate(true);
+                     dummyInternalTransition.setTrigger(exitAction.trigger);
+                     dummyInternalTransition.effects.addAll(exitAction.effects);
+                     dummyInternalState1.outgoingTransitions.add(dummyInternalTransition);
+                     val dummyInternalRegion = SyncchartsFactory::eINSTANCE.createRegion();
+                     dummyInternalRegion.setId("ExitInternalRegion" + exitAction.hashCode);
+                     dummyInternalRegion.states.add(dummyInternalState1);
+                     dummyInternalRegion.states.add(dummyInternalState2);
+                     dummyState.regions.add(dummyInternalRegion);
+                   }
+                }
+                // After transforming exit actions, erase them
+                state.exitActions.clear();
+       }
+       
     }
 
 }
