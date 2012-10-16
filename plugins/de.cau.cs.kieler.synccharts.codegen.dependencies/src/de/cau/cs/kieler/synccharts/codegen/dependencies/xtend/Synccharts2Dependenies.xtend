@@ -127,9 +127,9 @@ import de.cau.cs.kieler.synccharts.TransitionType
 				// BUT this only holds for macro states
 				if (state.isHierarchical) {
 					// now we can proceed and delete all dependencies to the strong representation of state
-					val nodesToDelete = dependencies.nodes.filter(e | e.id.startsWith(state.id) && e.id.endsWith("_S") && e.state.regions.size > 0).toList();
+					val nodesToDelete = dependencies.nodes.filter(e | e.id.startsWith(state.id + "_") && e.id.endsWith("_S") && e.state.regions.size > 0).toList();
 					for (node : nodesToDelete) {
-					val dependenciesToDelete = dependencies.dependencies.filter(e | e.targetNode == node || e.sourceNode == node).toList();
+  					    val dependenciesToDelete = dependencies.dependencies.filter(e | e.targetNode == node || e.sourceNode == node).toList();
 						for (dependency : dependenciesToDelete) {
 							 // not only delete the nodes but also all dependencies (transitions) to an from the nodes
 							 dependency.targetNode.incomingDependencies.remove(dependency);
@@ -400,7 +400,7 @@ import de.cau.cs.kieler.synccharts.TransitionType
 		newNode.setState(state);
 		var stateId = state.id;
 		if (transition != null) {
-			stateId = stateId + transition.priority;
+			stateId = stateId + "_" + transition.priority;
 		}
 		if (type == DependencyType::WEAK) {
 			newNode.setId(stateId + "_W");
