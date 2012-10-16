@@ -292,6 +292,21 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
 
+
+                // We support history transitions now transforming them with the help of
+                // a suspend and auxiliary state/region
+                transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
+
+                // We support (non-immediate and non-delayed) suspends now.
+                // This is done AFTER the visualization transformation because the first
+                // transformation MUST operate on the resource file (for URI gathering reasons).
+                transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
+                
+                // We now support Entry, During, and Exit actions
+                // replacing entry actions by a macro state put in between in every incoming transition
+                transformedModel = (new SyncCharts2Simulation()).
+                                                     transformEntryDuringExitActions(transformedModel);
+                
                 try {
                     // Write out copy/transformation of syncchart program
                     Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
@@ -312,16 +327,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // transformation MUST operate on the resource file (for URI gathering reasons).
             transformedModel = (new SyncCharts2Simulation()).transformCountDelayes(transformedModel);
            
-
-            // We support history transitions now transforming them with the help of
-            // a suspend and auxiliary state/region
-            transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
-
-            // We support (non-immediate and non-delayed) suspends now.
-            // This is done AFTER the visualization transformation because the first
-            // transformation MUST operate on the resource file (for URI gathering reasons).
-            transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
-            
             
             // Transform SyncChart into S code
             Program program = new Synccharts2S().transform(transformedModel);
