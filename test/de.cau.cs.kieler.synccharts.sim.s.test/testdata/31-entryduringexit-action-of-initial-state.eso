@@ -1,0 +1,37 @@
+! reset;
+
+% Output: 
+;
+
+% Output: O4 O O2 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+W 
+% Output: O6 O5 O4 O3 
+;
+
+% Output: 
+;
+R 
+% Output: O4 O O2 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+S 
+% Output: 
+;
+
+% Output: 
+;
