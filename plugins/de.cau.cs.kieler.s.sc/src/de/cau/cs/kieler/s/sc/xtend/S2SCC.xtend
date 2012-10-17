@@ -550,10 +550,10 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
         (!(«expression.subExpressions.toList.head.expand»))
     «ENDIF»
     «IF expression.operator  == OperatorType::VAL»
-        (VAL_SCC(«expression.subExpressions.toList.head.expand_val»))
+        VAL_SCC(«expression.subExpressions.toList.head.expand_val»)
     «ENDIF»
     «IF expression.operator  == OperatorType::PRE»
-    (PRE_«expression.subExpressions.toList.head.expand»)
+    (PRE_«expression.subExpressions.toList.head.expand_val»)
     «ENDIF»
     «IF expression.operator  == OperatorType::NE»
         («FOR subexpression : expression.subExpressions SEPARATOR " != "»
