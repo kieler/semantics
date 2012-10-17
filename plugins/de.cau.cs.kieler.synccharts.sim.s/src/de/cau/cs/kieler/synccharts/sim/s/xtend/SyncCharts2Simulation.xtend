@@ -27,8 +27,6 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import com.google.common.collect.ImmutableList
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import org.eclipse.emf.common.util.EList
-import java.util.LinkedList
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
@@ -858,7 +856,6 @@ class SyncCharts2Simulation {
                
   
                for (transition : consideredTransitions) {
-                   System::out.println(transition.sourceState.id + "=>" + transition.targetState.id);
                    // Create a dummy state and connect it accordingly 
                    val dummyState = SyncchartsFactory::eINSTANCE.createState();
                    dummyState.setId("Exit" + transition.hashCode + state.hashCode);
@@ -898,7 +895,6 @@ class SyncCharts2Simulation {
                        doneSignalCompare.setOperator(OperatorType::EQ);
                        doneSignalCompare.subExpressions.add(preExpression);
                        doneSignalCompare.subExpressions.add(intValue3);
-                   System::out.println(":::" + doneSignalCompare.toString);
                    val suspensionAction = SyncchartsFactory::eINSTANCE.createAction();
                    suspensionAction.setTrigger(doneSignalCompare);
                    suspensionAction.setDelay(0);
