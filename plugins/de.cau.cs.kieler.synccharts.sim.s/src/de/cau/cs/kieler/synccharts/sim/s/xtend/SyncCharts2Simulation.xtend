@@ -30,6 +30,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import org.eclipse.emf.common.util.EList
 import java.util.LinkedList
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * Transformation of a SyncChart to another SyncChart
@@ -233,134 +234,6 @@ class SyncCharts2Simulation {
           
      }     
 
-//     // Transform a state as described in 2.
-//     def void transformStateOld(State state, Region targetRootRegion, String UID) {
-//          if (state.isFinal) {
-//               state.setIsFinal(false);
-//               // Final states will be transformed if there is a normal termination with a self loop
-//               // so we do not want to add a superfluous self loop and return here.
-////               return;
-//          }
-//
-//          // Do the following only for NON-final states
-//          // Do the following only for NON-top-most-states
-//          if (!state.isFinal && state.parentRegion != targetRootRegion) {
-//               
-//               // this is the special case where we must taken care of a normal termination
-//               // this is transformed into a weak abort
-//               if (state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0) {
-//                    val normalTerminationTransition = state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).head;
-//                    normalTerminationTransition.setType(TransitionType::WEAKABORT);
-//                    val triggerExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
-//                         triggerExpression.setOperator(OperatorType::AND);
-//                         triggerExpression.subExpressions
-//               
-//                    for (region : state.regions) {
-//                         // Setup the auxiliarySignal as an OUTPUT to the module
-//                         val termSignal = KExpressionsFactory::eINSTANCE.createSignal();
-//                         termSignal.setName("terminated" + region.hashCode);
-//                         termSignal.setIsInput(false);
-//                         termSignal.setIsOutput(false);
-//                         termSignal.setType(ValueType::PURE);
-//                    
-//                         val finalStates = region.states.filter(e | e.isFinal == true);
-//                         for (finalState : finalStates) {
-//                              val termSelfLoop =  SyncchartsFactory::eINSTANCE.createTransition();
-//                              termSelfLoop.setTargetState(finalState);
-//                              termSelfLoop.setPriority(1);
-//                              termSelfLoop.setDelay(1);
-//                              finalState.outgoingTransitions.add(termSelfLoop);
-//                              //finalState.setIsFinal(false);
-//                              
-//                              // add termSignal to all incoming transitions
-//                              // (this includes the just created selfloop)
-//                              for ( incomingTransition : finalState.incomingTransitions) {
-//                                   val termEmission = SyncchartsFactory::eINSTANCE.createEmission();
-//                                   termEmission.setSignal(termSignal);
-//                                   incomingTransition.effects.add(termEmission);
-//                              }
-//                         }
-//                    
-//                           targetRootRegion.states.get(0).signals.add(termSignal);
-//                         val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-//                         valuedObjectReference.setValuedObject(termSignal);
-//                         triggerExpression.subExpressions.add(valuedObjectReference);
-//                    }
-//               
-//                    if (triggerExpression.subExpressions.size == 1) {
-//                         // if there is just one signal, we do not need an AND!
-//                         normalTerminationTransition.setTrigger(triggerExpression.subExpressions.get(0));
-//                    }
-//                    else if (triggerExpression.subExpressions.size > 1) {
-//                         normalTerminationTransition.setTrigger(triggerExpression);
-//                    }
-//               } // end if normal termination present
-//
-//               
-//               // auxiliary signal
-//               val auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
-//          
-//               // Setup the auxiliarySignal as an OUTPUT to the module
-//               auxiliarySignal.setName(UID);
-//               auxiliarySignal.setIsInput(false);
-//               auxiliarySignal.setIsOutput(true);
-//               auxiliarySignal.setType(ValueType::PURE);
-//          
-//               // 1. Add emission of auxiliary Signal to every incoming transition
-//               for (transition : state.incomingTransitions) {
-//                    // Set the auxliiarySignal for emission 
-//                    val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
-//                       auxiliaryEmission.setSignal(auxiliarySignal);
-//                       // Add emission to effect of incoming transition
-//                    transition.effects.add(auxiliaryEmission);
-//               }
-//
-//               // If the state is an initial state, then we need an NEW initial state
-//               // connected with an immediate transition that outputs the auxiliary signal.               
-//               if (state.isInitial) {
-//                    val initialState  = SyncchartsFactory::eINSTANCE.createState();
-//                    val initialTransition =  SyncchartsFactory::eINSTANCE.createTransition();
-//                    val initialEmission = SyncchartsFactory::eINSTANCE.createEmission();
-//                    initialState.setId("init" + state.hashCode);
-//                    initialTransition.setTargetState(state);
-//                    initialTransition.setPriority(1);
-//                    initialTransition.setDelay(0);
-//                    initialTransition.setIsImmediate(true);
-//                    initialState.setIsInitial(true);
-//                    state.setIsInitial(false);
-//                    initialState.outgoingTransitions.add(initialTransition);
-//                       initialEmission.setSignal(auxiliarySignal);
-//                    initialTransition.effects.add(initialEmission);
-//                    state.parentRegion.states.add(initialState);
-//               }
-//          
-//               // 2. Create auxiliary region and an inner state with a self-loop
-//               // emitting the signal
-//               val auxiliaryRegion = SyncchartsFactory::eINSTANCE.createRegion()
-//               val auxiliaryState  = SyncchartsFactory::eINSTANCE.createState();
-//               val auxiliarySelfLoop =  SyncchartsFactory::eINSTANCE.createTransition();
-//          
-//               auxiliarySelfLoop.setTargetState(auxiliaryState);
-//               auxiliarySelfLoop.setPriority(1);
-//               auxiliarySelfLoop.setDelay(1);
-//               // Set the auxliiarySignal for emission 
-//               val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
-//               auxiliaryEmission.setSignal(auxiliarySignal);
-//               auxiliarySelfLoop.effects.add(auxiliaryEmission);
-//          
-//               auxiliaryState.setId("selfloopstate" + UID);
-//               auxiliaryState.setLabel("selfloopstate" + UID);
-//               auxiliaryState.setIsInitial(true);
-//               auxiliaryState.outgoingTransitions.add(auxiliarySelfLoop);
-//          
-//               auxiliaryRegion.states.add(auxiliaryState);
-//               state.regions.add(auxiliaryRegion);
-//          
-//               // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
-//                 targetRootRegion.states.get(0).signals.add(auxiliarySignal);
-//          }
-//          
-//     }
 
      
     //-------------------------------------------------------------------------
@@ -451,9 +324,15 @@ class SyncCharts2Simulation {
             targetState.transformSuspend(targetRootRegion);
         }
         
+        // Now delete all suspends
+        for(targetState :  ImmutableList::copyOf(targetStates.filter(e | e.suspensionTrigger != null))) {
+            targetState.setSuspensionTrigger(null);
+        }
+        
         targetRootRegion;
     }
-        
+    
+    
         
     // Gather the trigger of all hierarchically higher suspensions in an OR-fashion. Do this
     // recursively until reaching the top level region (with no further parent state).
@@ -741,9 +620,9 @@ class SyncCharts2Simulation {
         }
     }
     
-     
+         
     //-------------------------------------------------------------------------
-    //--      E N T R Y  /  D U R I N G  /  E X I T     A C T I O N S        --
+    //--             E N T R Y  /  D U R I N G       A C T I O N S           --
     //-------------------------------------------------------------------------
     
     // Helper function to gather all hierarchically higher outgoing transitions
@@ -767,25 +646,23 @@ class SyncCharts2Simulation {
     }
     
 
-    // Transforming History. This is using the concept of suspend so it must
-    // be followed by resolving suspension
-    def Region transformEntryDuringExitActions(Region rootRegion) {
+    // Transforming Entry and During Actions.
+    def Region transformEntryDuringActions(Region rootRegion) {
         // Clone the complete SyncCharts region 
         val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
-        for(targetState :  ImmutableList::copyOf(targetStates)) {
+        for(targetState : ImmutableList::copyOf(targetStates)) {
             // This statement we want to modify
-            targetState.transformEntryDuringExitActions(targetRootRegion);
+            targetState.transformEntryDuringActions(targetRootRegion);
         }
         
         targetRootRegion;
     }
         
         
-    // Traverse all states and transform macro states that have connecting
-    // (incoming) history transitions.    
-    def void transformEntryDuringExitActions(State state, Region targetRootRegion) {
+    // Traverse all states and transform macro states that have actions to transform
+    def void transformEntryDuringActions(State state, Region targetRootRegion) {
         
         // ENTRY ACTIONS : Create a macro state for all incoming transitions. Weak abort the
         // macro state and connect it to the original target. Put the action into an
@@ -810,7 +687,7 @@ class SyncCharts2Simulation {
                }
             
                // Add a macro state for every transition
-               for (transition : state.incomingTransitions) {
+               for (transition : ImmutableList::copyOf(state.incomingTransitions)) {
                    // Create a dummy state and connect it accordingly 
                    val dummyState = SyncchartsFactory::eINSTANCE.createState();
                    dummyState.setId("Entry" + transition.hashCode);
@@ -907,11 +784,32 @@ class SyncCharts2Simulation {
                // After transforming during actions, erase them
                state.innerActions.clear();
        }
-       
-       
-       
-       
-       
+    }
+
+
+    //-------------------------------------------------------------------------
+    //--                      E X I T       A C T I O N S                    --
+    //-------------------------------------------------------------------------
+    // Helper function to gather all hierarchically higher outgoing transitions
+    // for an inner state.
+
+    // Transforming Exit Actions. 
+    def Region transformExitActions(Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+
+        for(targetState :  ImmutableList::copyOf(targetStates)) {
+            // This statement we want to modify
+            targetState.transformExitActions(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+           
+           
+    // Traverse all states and transform macro states that have actions to transform
+    def void transformExitActions(State state, Region targetRootRegion) {
         // EXIT ACTIONS : Create a macro state for all outgoing non-preempting(!) transitions. 
         // Weak abort the macro state and connect it to the original target. Put the action into an
         // transition within the macro state.
@@ -929,24 +827,23 @@ class SyncCharts2Simulation {
         // 
         if (state.exitActions != null && state.exitActions.size > 0) {
                // Add a macro state for every transition               
-//               var List<Transition> consideredTransitions = <Transition> newLinkedList;
-//               val outgoingTransitions = state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT);
-//               for (transition : outgoingTransitions) {
-//                   consideredTransitions.add(transition.copy);
-//               }  
-//               // This is not enough we need also to consider ALL hierarchically higher strong preempting transitions
-//               val additionalTransitions = state.hierarchicallyHigherOutgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT);
-//               for (transition : additionalTransitions) {
-//                   consideredTransitions.add(transition.copy);
-//               }
-               val consideredTransitions = state.hierarchicallyHigherOutgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT);
+               var List<Transition> consideredTransitions = <Transition> newLinkedList;
+               val outgoingTransitions = state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT);
+               consideredTransitions.addAll(outgoingTransitions);
+               val hiearchicallyHigherTransitions = state.hierarchicallyHigherOutgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT);
+               consideredTransitions.addAll(hiearchicallyHigherTransitions);
                
                // Add reset of done signal flag as entry action
                val doneSignal = KExpressionsFactory::eINSTANCE.createSignal();
                doneSignal.setName("ExitDone" + state.id);
                doneSignal.setIsInput(false);
-               doneSignal.setIsOutput(true);
+               doneSignal.setIsOutput(false);
                doneSignal.setType(ValueType::INT);
+               // ATTENTION: This is very relevant for correct behavior of exit actions!
+               // In order to reset (0) the done signal in the SAME tick when it was set (1)
+               // we take the combination of the MIN function which resolves to 0! So the
+               // signal is reset for the next tick - reset wins over set. 
+               doneSignal.setCombineOperator(CombineOperator::MIN);
                val entryAction = SyncchartsFactory::eINSTANCE.createAction();
                entryAction.setDelay(0);
                entryAction.setIsImmediate(true);
@@ -994,9 +891,12 @@ class SyncCharts2Simulation {
                        val doneSignalValue = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                        doneSignalValue.setOperator(OperatorType::VAL);
                        doneSignalValue.subExpressions.add(doneSignalRef);
+                       val preExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                       preExpression.setOperator(OperatorType::PRE);
+                       preExpression.subExpressions.add(doneSignalValue);
                        val doneSignalCompare = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                        doneSignalCompare.setOperator(OperatorType::EQ);
-                       doneSignalCompare.subExpressions.add(doneSignalValue);
+                       doneSignalCompare.subExpressions.add(preExpression);
                        doneSignalCompare.subExpressions.add(intValue3);
                    System::out.println(":::" + doneSignalCompare.toString);
                    val suspensionAction = SyncchartsFactory::eINSTANCE.createAction();
@@ -1037,6 +937,7 @@ class SyncCharts2Simulation {
        }
        
     }
+           
 
 }
 
