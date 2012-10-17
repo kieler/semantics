@@ -8,28 +8,13 @@
 
 % Output: 
 ;
-I 
+
 % Output: 
 ;
-I 
+
 % Output: 
 ;
-I W 
-% Output: O 
-;
-I 
-% Output: 
-;
-I 
-% Output: 
-;
-I R 
-% Output: 
-;
-I 
-% Output: 
-;
-I2 I 
+
 % Output: 
 ;
 I2 I 
@@ -47,17 +32,17 @@ I2 I
 I2 I 
 % Output: 
 ;
-I2 I 
-% Output: 
-;
 I2 I R 
 % Output: 
 ;
 I2 I 
 % Output: 
 ;
-I2 I S 
+I2 I 
 % Output: 
+;
+I2 I S 
+% Output: O O2 
 ;
 I2 I 
 % Output: 
