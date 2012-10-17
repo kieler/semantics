@@ -3,7 +3,10 @@
 % Output: a(5) 
 ;
 
-% Output: b(5) 
+% Output: b(5) a(4) 
+;
+
+% Output: b(4) a(3) 
 ;
 
 % Output: 
