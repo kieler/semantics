@@ -1,0 +1,19 @@
+! reset;
+
+% Output: 
+;
+b 
+% Output: Y1 X2 Y2 X11 
+;
+R 
+% Output: X0 Y0 Z 
+;
+a 
+% Output: Y1 Y2 X10 
+;
+R 
+% Output: X0 Y0 Z 
+;
+
+% Output: 
+;
