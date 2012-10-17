@@ -39,6 +39,7 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
+import de.cau.cs.kieler.core.kexpressions.Expression
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -549,7 +550,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
         (!(«expression.subExpressions.toList.head.expand»))
     «ENDIF»
     «IF expression.operator  == OperatorType::VAL»
-        (VAL_SCC(«expression.subExpressions.toList.head.expand»))
+        (VAL_SCC(«expression.subExpressions.toList.head.expand_val»))
     «ENDIF»
     «IF expression.operator  == OperatorType::PRE»
     (PRE_«expression.subExpressions.toList.head.expand»)
@@ -603,7 +604,17 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    def dispatch expand(Signal signal) {
         '''PRESENT_SCC(sig_«signal.name»)'''
    }
-
+   // Expand a signal within a value reference
+   def dispatch expand_val(Signal signal) {
+        '''sig_«signal.name»'''
+   }
+   def dispatch expand_val(ValuedObjectReference valuedObjectReference) {
+        '''«valuedObjectReference.valuedObject.expand_val»'''
+   }   
+   def dispatch expand_val(Expression other) {
+        other.expand;
+   }
+   
    // Expand a int expression value.
    def dispatch expand(IntValue expression) {
         '''«expression.value.toString»'''
