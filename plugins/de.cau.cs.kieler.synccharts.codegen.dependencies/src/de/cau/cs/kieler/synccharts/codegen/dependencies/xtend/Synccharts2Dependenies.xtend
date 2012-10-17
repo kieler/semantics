@@ -29,6 +29,8 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.synccharts.TransitionType
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
@@ -289,11 +291,13 @@ import de.cau.cs.kieler.synccharts.TransitionType
 				for (effect : transition.eAllContents().toIterable().filter(typeof(Emission))) {
 					
 					// get other states that test for this signal in out going transition triggers
-					// (the scope of the signal should be respected because we a
+					// (the scope of the signal should be respected because we are
 					// not searching for the NAME but for the object to appear in transition
-					// triggers
+					// triggers)
 					//
 					// (effect as Emission).signal; == emitted signal
+					//
+					// Addition: rule out referenced within a PRE operator (done by triggerContainingSignal)
 					//
 					var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition)).toList;
 					var triggeredTransitions =  allTransitions.filter (e |
@@ -429,6 +433,20 @@ import de.cau.cs.kieler.synccharts.TransitionType
 		return false;
 	}
 	
+    // Returns true iff the operator expression is referencing the signal and it is NOT a
+    // PRE operator type.
+    def dispatch Boolean triggerContainingSignal(OperatorExpression trigger, Signal signal) {
+        var returnValue = false;
+        if (trigger.operator == OperatorType::PRE) {
+            // Early return if subexpression are within a PRE => not considering the current tick
+            return false;
+        }
+        for (expression : trigger.subExpressions) {
+            returnValue = returnValue || expression.triggerContainingSignal(signal);
+        }
+        return returnValue;
+    }
+
 	// Returns true iff the complex expression is referencing the signal.
 	def dispatch Boolean triggerContainingSignal(ComplexExpression trigger, Signal signal) {
 		var returnValue = false;
@@ -438,7 +456,8 @@ import de.cau.cs.kieler.synccharts.TransitionType
 		return returnValue;
 	}
 	
-	// Returns true iff the object reference is referencing the signal.
+	// Returns true iff the object reference is referencing the signal. Rule out references
+	// witin a PRE operator. 
 	def dispatch Boolean triggerContainingSignal(ValuedObjectReference trigger, Signal signal) {
 		var returnValue = trigger.valuedObject == signal;
 		for (expression : trigger.subExpressions) {
