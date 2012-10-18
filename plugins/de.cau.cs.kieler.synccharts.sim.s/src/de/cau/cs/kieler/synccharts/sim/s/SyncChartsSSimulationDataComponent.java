@@ -292,8 +292,14 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
 
+                // We now support Entry actions (@requires: during actions)
+                transformedModel = (new SyncCharts2Simulation()).
+                                                     transformEntryActions(transformedModel);
 
-
+                // We now support During actions
+                transformedModel = (new SyncCharts2Simulation()).
+                                                     transformDuringActions(transformedModel);
+                
                 try {
                     // Write out copy/transformation of syncchart program
                     Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
@@ -308,28 +314,32 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                             true, null);
                 }
             }
-            
-            // We support count delays now for the SC (host code) simulation.
-            // This is done AFTER the visualization transformation because the first
+
+            // The following transformations operate on the SyncChart to be simulated
+            // and which already may contain visualization auxiliary signals.
+            // These are done AFTER the visualization transformation because the visualization
             // transformation MUST operate on the resource file (for URI gathering reasons).
+
+            // We support count delays now for the SC (host code) simulation.
             transformedModel = (new SyncCharts2Simulation()).transformCountDelayes(transformedModel);
            
-            // We now support Exit actions
+            // We now support Exit actions (@requires: entry actions, during actions, suspend)
             transformedModel = (new SyncCharts2Simulation()).
                                                  transformExitActions(transformedModel);
             
-            // We support history transitions now transforming them with the help of
-            // a suspend and auxiliary state/region
+            // We support history transitions. (@requires: suspend)
             transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
 
             // We support (non-immediate and non-delayed) suspends now.
-            // This is done AFTER the visualization transformation because the first
-            // transformation MUST operate on the resource file (for URI gathering reasons).
             transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
-            
-            // We now support Entry and During actions
+
+            // We now support Entry actions (@requires: during actions)
             transformedModel = (new SyncCharts2Simulation()).
-                                                 transformEntryDuringActions(transformedModel);
+                                                 transformEntryActions(transformedModel);
+            
+            // We now support During actions
+            transformedModel = (new SyncCharts2Simulation()).
+                                                 transformDuringActions(transformedModel);
             
             // Transform SyncChart into S code
             Program program = new Synccharts2S().transform(transformedModel);

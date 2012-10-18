@@ -237,6 +237,7 @@ class SyncCharts2Simulation {
     //-------------------------------------------------------------------------
     //--                   C O U N T   D E L A Y S                           --
     //-------------------------------------------------------------------------
+    // @requires: auxiliary (host) variables
      
     // Transforming Count Delays entry function.
     def Region transformCountDelayes (Region rootRegion) {
@@ -431,6 +432,7 @@ class SyncCharts2Simulation {
     //-------------------------------------------------------------------------
     //--                        H I S T O R Y                                --
     //-------------------------------------------------------------------------
+    // @requires: suspend
     
     // Transforming History. This is using the concept of suspend so it must
     // be followed by resolving suspension
@@ -620,118 +622,25 @@ class SyncCharts2Simulation {
     
          
     //-------------------------------------------------------------------------
-    //--             E N T R Y  /  D U R I N G       A C T I O N S           --
+    //--                     D U R I N G       A C T I O N S                 --
     //-------------------------------------------------------------------------
     
-    // Helper function to gather all hierarchically higher outgoing transitions
-    // for an inner state.
-    def List<Transition> hierarchicallyHigherOutgoingTransitions(State state) {
-        val List<Transition> returnTransitions = <Transition> newLinkedList;
-        
-        for (transition : state.outgoingTransitions) {
-           returnTransitions.add(transition);
-        }
-        
-        if (state.parentRegion != null) {
-            if (state.parentRegion.parentState != null) {
-                 val transitionListFromAbove 
-                          = state.parentRegion.parentState.hierarchicallyHigherOutgoingTransitions;  
-                 returnTransitions.addAll(transitionListFromAbove);
-            }
-        }
-        
-        return returnTransitions;     
-    }
-    
-
-    // Transforming Entry and During Actions.
-    def Region transformEntryDuringActions(Region rootRegion) {
+    // Transforming During Actions.
+    def Region transformDuringActions(Region rootRegion) {
         // Clone the complete SyncCharts region 
         val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
             // This statement we want to modify
-            targetState.transformEntryDuringActions(targetRootRegion);
+            targetState.transformDuringActions(targetRootRegion);
         }
         
         targetRootRegion;
     }
-        
-        
+    
     // Traverse all states and transform macro states that have actions to transform
-    def void transformEntryDuringActions(State state, Region targetRootRegion) {
-        
-        // ENTRY ACTIONS : Create a macro state for all incoming transitions. Weak abort the
-        // macro state and connect it to the original target. Put the action into an
-        // transition within the macro state.
-        if (state.entryActions != null && state.entryActions.size > 0) {
-               // If the state is an initial state, then we need an NEW initial state
-               // connected with an immediate transition (the transition is considered
-               // later as part of the incomingTransitions)               
-               if (state.isInitial) {
-                    val initialState  = SyncchartsFactory::eINSTANCE.createState();
-                    val initialTransition =  SyncchartsFactory::eINSTANCE.createTransition();
-                    initialState.setId("init" + state.hashCode);
-                    initialState.setLabel("init " + state.label);
-                    initialTransition.setTargetState(state);
-                    initialTransition.setPriority(1);
-                    initialTransition.setDelay(0);
-                    initialTransition.setIsImmediate(true);
-                    initialState.setIsInitial(true);
-                    state.setIsInitial(false);
-                    initialState.outgoingTransitions.add(initialTransition);
-                    state.parentRegion.states.add(initialState);
-               }
-            
-               // Add a macro state for every transition
-               for (transition : ImmutableList::copyOf(state.incomingTransitions)) {
-                   // Create a dummy state and connect it accordingly 
-                   val dummyState = SyncchartsFactory::eINSTANCE.createState();
-                   dummyState.setId("Entry" + transition.hashCode);
-                   dummyState.setLabel("Entry " + state.label);
-                   state.parentRegion.states.add(dummyState);
-                   val dummyTransition =  SyncchartsFactory::eINSTANCE.createTransition();
-                   dummyTransition.setLabel("#");
-                   dummyTransition.setTargetState(state);
-                   dummyTransition.setPriority(1);
-                   dummyTransition.setDelay(0);
-                   dummyTransition.setIsImmediate(true);
-                   dummyState.outgoingTransitions.add(dummyTransition);
-                   transition.setTargetState(dummyState);
-                   
-                   // Create the body of the dummy state - containing the entry action
-                   // For every entry action: Create a region
-                   for (entryAction : state.entryActions) {
-                     val dummyInternalState1 = SyncchartsFactory::eINSTANCE.createState();
-                     val dummyInternalState2 = SyncchartsFactory::eINSTANCE.createState();
-                     dummyInternalState1.setId("Entry1Internal" + transition.hashCode);
-                     dummyInternalState1.setLabel("i");
-                     dummyInternalState1.setIsInitial(true);
-                     dummyInternalState2.setId("Entry2Internal" + state.hashCode);
-                     dummyInternalState2.setLabel("f");
-                     val dummyInternalTransition =  SyncchartsFactory::eINSTANCE.createTransition();
-                     dummyInternalTransition.setTargetState(dummyInternalState2);
-                     dummyInternalTransition.setPriority(1);
-                     dummyInternalTransition.setDelay(0);
-                     dummyInternalTransition.setIsImmediate(true);
-                     dummyInternalTransition.setTrigger(entryAction.trigger.copy);
-                     for (action : entryAction.effects) {
-                         dummyInternalTransition.effects.add(action.copy);
-                     }
-                     dummyInternalState1.outgoingTransitions.add(dummyInternalTransition);
-                     val dummyInternalRegion = SyncchartsFactory::eINSTANCE.createRegion();
-                     dummyInternalRegion.setId("EntryInternalRegion" + entryAction.hashCode);
-                     dummyInternalRegion.states.add(dummyInternalState1);
-                     dummyInternalRegion.states.add(dummyInternalState2);
-                     dummyState.regions.add(dummyInternalRegion);
-                   }
-                }
-                // After transforming entry actions, erase them
-                state.entryActions.clear();
-       }
-       
-       
+    def void transformDuringActions(State state, Region targetRootRegion) {
         // DURING ACTIONS : 
         // For each action create a separate region in the state. 
         // Put the action into an transition within the macro state.
@@ -784,13 +693,122 @@ class SyncCharts2Simulation {
        }
     }
 
+    
+    //-------------------------------------------------------------------------
+    //--                     E N T R Y         A C T I O N S                 --
+    //-------------------------------------------------------------------------
+    // @requires: during actions
+
+    // Transforming Entry and During Actions.
+    def Region transformEntryActions(Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+
+        for(targetState : ImmutableList::copyOf(targetStates)) {
+            // This statement we want to modify
+            targetState.transformEntryActions(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+        
+    // Traverse all states and transform macro states that have actions to transform
+    def void transformEntryActions(State state, Region targetRootRegion) {
+        // ENTRY ACTIONS :
+        // First Idea: Create a macro state for all incoming transitions. Weak abort the
+        // macro state and connect it to the original target. Put the action into an
+        // transition within the macro state.
+        //
+        // Charles Andre: "Immediate abortions may cause instantaneous abortion of the state.
+        // In this case the status stays IDLE, the transition is taken, DONE is returned: the
+        // state is by-passed. If there is not an immediate strong abortion, then the state is 
+        // effectively entered, and the entry actions are performed."
+        //
+        // This means that entry actions must be immediately-strong-abortable by the original outgoing
+        // transitions.
+        //
+        // We create a new macro state EntrySurround around the original state, and connect the incoming and
+        // outgoing transitions to it. Within the new macro state, we then create an initial state
+        // with the entry actions as during actions. Then we connect this initial state to the
+        // original state with an immediate (true triggered) transition.
+        if (state.entryActions != null && state.entryActions.size > 0) {
+                val surroundState = SyncchartsFactory::eINSTANCE.createState();
+                surroundState.setId("EntrySurround" + state.hashCode);
+                surroundState.setLabel("EntrySurround " + state.label);
+                state.parentRegion.states.add(surroundState);
+                // Move transitions to the new state
+                for (transition : ImmutableList::copyOf(state.incomingTransitions)) {
+                    surroundState.incomingTransitions.add(transition);
+                }
+                for (transition : ImmutableList::copyOf(state.outgoingTransitions)) {
+                    surroundState.outgoingTransitions.add(transition);
+                }
+                state.incomingTransitions.clear();
+                state.outgoingTransitions.clear();
+                // Move original state into new state
+                val surroundRegion = SyncchartsFactory::eINSTANCE.createRegion();
+                surroundRegion.setId("EntrySurroundRegion" + state.hashCode);
+                surroundState.regions.add(surroundRegion);
+                surroundRegion.states.add(state);
+                
+                // Create initial state add it to the surround state
+                val initialState  = SyncchartsFactory::eINSTANCE.createState();
+                val initialTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                initialState.setId("init" + state.hashCode);
+                initialState.setLabel("init " + state.label);
+                initialTransition.setTargetState(state);
+                initialTransition.setPriority(1);
+                initialTransition.setDelay(0);
+                initialTransition.setIsImmediate(true);
+                initialState.setIsInitial(true);
+                state.setIsInitial(false);
+                initialState.outgoingTransitions.add(initialTransition);
+                surroundRegion.states.add(initialState);
+                
+                // Create the body of the dummy state - containing the entry action
+                // For every entry action: Create a region
+                for (entryAction : state.entryActions) {
+                    val entryActionCopy = entryAction.copy;
+                    entryActionCopy.setIsImmediate(true);
+                    // Create during actions for the initial state
+                    initialState.innerActions.add(entryActionCopy);
+                }
+
+                // After transforming entry actions, erase them
+                state.entryActions.clear();
+       }
+    }
+
 
     //-------------------------------------------------------------------------
     //--                      E X I T       A C T I O N S                    --
     //-------------------------------------------------------------------------
+    // @requires: entry actions
+    // @requires: during actions
+    // @requires: suspend
+    // @requires: valued signals
+
     // Helper function to gather all hierarchically higher outgoing transitions
     // for an inner state.
-
+    def List<Transition> hierarchicallyHigherOutgoingTransitions(State state) {
+        val List<Transition> returnTransitions = <Transition> newLinkedList;
+        
+        for (transition : state.outgoingTransitions) {
+           returnTransitions.add(transition);
+        }
+        
+        if (state.parentRegion != null) {
+            if (state.parentRegion.parentState != null) {
+                 val transitionListFromAbove 
+                          = state.parentRegion.parentState.hierarchicallyHigherOutgoingTransitions;  
+                 returnTransitions.addAll(transitionListFromAbove);
+            }
+        }
+        
+        return returnTransitions;     
+    }
+    
     // Transforming Exit Actions. 
     def Region transformExitActions(Region rootRegion) {
         // Clone the complete SyncCharts region 
