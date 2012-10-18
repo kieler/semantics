@@ -431,7 +431,7 @@
       <option
             class="de.cau.cs.kieler.synccharts.State"
             option="de.cau.cs.kieler.sizeConstraint"
-            value="MIN_OPTION">
+            value="[MINIMUM_SIZE, DEFAULT_MINIMUM_SIZE]">
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
