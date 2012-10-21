@@ -28,7 +28,6 @@ import com.google.common.collect.ImmutableList
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import java.util.List
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * Transformation of a SyncChart to another SyncChart
