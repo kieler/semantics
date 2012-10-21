@@ -31,6 +31,7 @@ import java.util.List
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import java.util.Set
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
@@ -285,6 +286,59 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
             }
     }
     
+    
+    def List<State> getOuterInitialStates(State state) {
+        var List<State> states = <State> newLinkedList;
+        var outerState = state.parentRegion.parentState;
+        if (outerState.isInitial) {
+            states.add(outerState);
+            var listFromOutSide = outerState.getOuterInitialStates;
+            states.addAll(listFromOutSide);
+        }
+        return states;
+    }
+    
+    
+    // For the state in question try to find a possible sequence of immediate transitions from
+    // the initial state of the same region. If there is such a route, return TRUE. Return FALSE
+    // otherwise.
+    def boolean isImmediatelyReachableFromInitialState(State state) {
+        // The following MUST exist if there is an initial state defined in each region!
+        var initialState = state.parentRegion.states.filter(e | e.isInitial).head as State;
+        return initialState.isImmediatelyReachableFromInitialState(state); 
+    }
+    // The following helper function tries to follow immediate transitions from the current
+    // state until it reached the target state. If it does it will return TRUE, otherwise
+    // it will return FALSE with OR-combined return values for all outgoing immediate
+    // transitions.
+    def boolean isImmediatelyReachableFromInitialState(State currentState, State finalTargetState) {
+        var immediateTransitions = currentState.outgoingTransitions.filter(e | e.isImmediate);
+        
+        var hasReachedFinalTargetState = false;
+        for (immediateTransition : immediateTransitions) {
+            val nextState = immediateTransition.targetState;
+            if (nextState == currentState) {
+                // Do not follow self loops
+                hasReachedFinalTargetState = hasReachedFinalTargetState || false;
+            }
+            else if (nextState == finalTargetState) {
+                // Declare success, because the target state is reachable over a
+                // possible sequence of immediate transitions.
+                hasReachedFinalTargetState =  hasReachedFinalTargetState || true;
+            }
+            else {
+                hasReachedFinalTargetState =  hasReachedFinalTargetState || 
+                                nextState.isImmediatelyReachableFromInitialState(finalTargetState);
+            }
+            return hasReachedFinalTargetState;
+        }
+        
+        
+        
+        return true;
+    }
+
+
     // Create signal dependencies for states emitting signals and other states testing for these signals in triggers of
     // their outgoing transitions.
     def handleSignalDependency(Dependencies dependencies, Transition transition, State rootState) {
@@ -298,6 +352,9 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
                     // (effect as Emission).signal; == emitted signal
                     //
                     // Addition: rule out referenced within a PRE operator (done by triggerContainingSignal)
+                    // Addition: immediate emissions of signals hiearchically inside our state must be
+                    //           considered. (innerImmediateEmitterStates)
+                    //           Example: 43-initial-states-signal-dependencies.kixs, dep Set->init!
                     //
                     var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition)).toList;
                     var triggeredTransitions =  allTransitions.filter (e |
@@ -305,30 +362,64 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
                             e.trigger.triggerContainingSignal((effect as Emission).signal)); 
                         
                     for (triggeredTransition : triggeredTransitions) {
-                        var emitterState = transition.sourceState;
                         var triggerState = (triggeredTransition as Transition).sourceState;
-                        
-                        var emitterNode = dependencies.getNode(emitterState, transition, DependencyType::STRONG);
-                        var triggerNode = dependencies.getNode(triggerState, triggeredTransition, DependencyType::STRONG);
-                        dependencies.getSignalDependency(emitterNode, triggerNode);
-                        //TODO: all the following necessary/correct???
-                        if (emitterState.hierarchical) {
-                            var emitterNodeW = dependencies.getNode(emitterState, transition, DependencyType::WEAK);
-                            dependencies.getSignalDependency(emitterNodeW, triggerNode);
+                        val emitterState = transition.sourceState;
+                        dependencies.handleSignalDependencyHelper(emitterState, triggerState, triggeredTransition, transition, rootState);
+
+                        // Test case 44-initial-states-with-hierarchy.kixs                        
+                        var List<State> immediateEmitterStates = <State> newLinkedList;
+                        // From a higher hierarchy we may also find this emitter (as immediate deep inside)
+                        if (transition.sourceState.isImmediatelyReachableFromInitialState) {
+                            val additionalStates = transition.sourceState.getOuterInitialStates;
+                            for (additionalState : additionalStates) {
+                                // If not already in the list
+                                if (!immediateEmitterStates.contains(additionalState)) {
+                                    immediateEmitterStates.add(additionalState);
+                                }
+                            }
                         }
-                        if (triggerState.hierarchical) {
-                            var triggerNodeW = dependencies.getNode(triggerState, triggeredTransition, DependencyType::WEAK);
-                            dependencies.getSignalDependency(emitterNode, triggerNodeW);
-                        }
-                        if (emitterState.hierarchical && triggerState.hierarchical) {
-                            var emitterNodeW = dependencies.getNode(emitterState, transition, DependencyType::WEAK);
-                            var triggerNodeW = dependencies.getNode(triggerState, triggeredTransition, DependencyType::WEAK);
-                            dependencies.getSignalDependency(emitterNodeW, triggerNodeW);
+                        for (immediateEmitterState : immediateEmitterStates) {
+                               if (immediateEmitterState.outgoingTransitions.size == 0) {
+                                   // States that do not have any outgoing transitions, are represented
+                                   // by a NULL transition for the dependency node
+                                   dependencies.handleSignalDependencyHelper(immediateEmitterState, 
+                                                                             triggerState, 
+                                                                             triggeredTransition, 
+                                                                             null, rootState);
+                               } else {
+                                   // For all others take their first transition (ordered by priority, most prio first)
+                                   var orderedTransitions = immediateEmitterState.outgoingTransitions.filter(e|true).sort(e1, e2 | if (e1.priority > e2.priority) {-1} else {1});
+                                   dependencies.handleSignalDependencyHelper(immediateEmitterState, 
+                                                                             triggerState, 
+                                                                             triggeredTransition, 
+                                                                             orderedTransitions.head, 
+                                                                             rootState);                               
+                               }    
                         }
                     }                                        
                 }
     }
-
+                           
+    def handleSignalDependencyHelper(Dependencies dependencies, State emitterState, State triggerState, Transition triggeredTransition,
+                                     Transition transition, State rootState) {
+                           val emitterNode = dependencies.getNode(emitterState, transition, DependencyType::STRONG);
+                           val triggerNode = dependencies.getNode(triggerState, triggeredTransition, DependencyType::STRONG);
+                           dependencies.getSignalDependency(emitterNode, triggerNode);
+                           //TODO: all the following necessary/correct???
+                           if (emitterState.hierarchical) {
+                               var emitterNodeW = dependencies.getNode(emitterState, transition, DependencyType::WEAK);
+                               dependencies.getSignalDependency(emitterNodeW, triggerNode);
+                           }
+                           if (triggerState.hierarchical) {
+                               var triggerNodeW = dependencies.getNode(triggerState, triggeredTransition, DependencyType::WEAK);
+                                dependencies.getSignalDependency(emitterNode, triggerNodeW);
+                           }
+                           if (emitterState.hierarchical && triggerState.hierarchical) {
+                               var emitterNodeW = dependencies.getNode(emitterState, transition, DependencyType::WEAK);
+                               var triggerNodeW = dependencies.getNode(triggerState, triggeredTransition, DependencyType::WEAK);
+                               dependencies.getSignalDependency(emitterNodeW, triggerNodeW);
+                           }
+    }
 
     // ======================================================================================================
     // ==                      R E T R I E V E    C R E A T E D    D E P E N D E N C Y                     ==
