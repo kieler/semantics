@@ -31,7 +31,6 @@ import java.util.List
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import java.util.Set
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
