@@ -293,21 +293,21 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         "simulation.kixs");
                 
                 
-                // We support (non-immediate and non-delayed) suspends now.
-                transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
-
-
-                // We now support Exit actions (@requires: entry actions, during actions)
-                transformedModel = (new SyncCharts2Simulation()).
-                                                     transformExitActions(transformedModel);
-                
-                // We now support Entry actions (@requires: during actions)
-                transformedModel = (new SyncCharts2Simulation()).
-                                                     transformEntryActions(transformedModel);
-                
-                // We now support During actions
-                transformedModel = (new SyncCharts2Simulation()).
-                                                     transformDuringActions(transformedModel);
+//                // We support (non-immediate and non-delayed) suspends now.
+//                transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
+//
+//
+//                // We now support Exit actions (@requires: entry actions, during actions)
+//                transformedModel = (new SyncCharts2Simulation()).
+//                                                     transformExitActions(transformedModel);
+//                
+//                // We now support Entry actions (@requires: during actions)
+//                transformedModel = (new SyncCharts2Simulation()).
+//                                                     transformEntryActions(transformedModel);
+//                
+//                // We now support During actions
+//                transformedModel = (new SyncCharts2Simulation()).
+//                                                     transformDuringActions(transformedModel);
 
                 try {
                     // Write out copy/transformation of syncchart program
