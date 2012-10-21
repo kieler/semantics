@@ -894,6 +894,38 @@ class SyncCharts2Simulation {
     }
            
            
+   // For a state, have a look at all outgoing transition weak abort triggers and collect them
+   // OR them together and do this hierarchically to the outside.        
+   def Expression getDisjunctionOfAllHierachicallyOutgoingWeakAborts(State state) {
+       val returnExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+       val expressionList = state.getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper;
+       returnExpression.setOperator(OperatorType::OR);
+       if (expressionList.size == 0) {
+           return null;
+       }
+       else if (expressionList.size == 1) {
+           return expressionList.head;
+       }
+       else {
+          for (expression : expressionList) {
+             returnExpression.subExpressions.add(expression);
+          }
+          return returnExpression;
+       }
+   }
+   def List<Expression> getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper(State state) {
+       var List<Expression> expressionList = <Expression> newLinkedList;
+       val outgoingTransitions = state.outgoingTransitions.filter(e|e.type != TransitionType::STRONGABORT);
+       for (outgoingTransition : outgoingTransitions) {
+          expressionList.add(outgoingTransition.trigger.copy);
+       }
+       // collect from higher hierarchy level
+       if (state.parentRegion != null && state.parentRegion.parentState != null) {
+           expressionList.addAll(state.parentRegion.parentState.getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper);
+       }
+       expressionList;
+   }           
+           
     // Traverse all states and transform macro states that have actions to transform
     def void transformExitActions(State state, Region targetRootRegion) {
         // EXIT ACTIONS : For every state with exit actions create a new top-level region and
@@ -903,7 +935,12 @@ class SyncCharts2Simulation {
         // with RESET. A self-arc from reset labeled with SET and RESET.
         // Every transition considered to be outgoing in any way emits the SET signal.
         // The entry action emits the RESET signal.
-        // 
+        // The state in question must have an immediate during action, resetting (emit RESET), BUT
+        // important is that this is triggered and the trigger is excluded hierarchically by ALL
+        // possibly outgoing transitions to the outside that are weak (in this case we do not want
+        // to reset because we know we leave the state and want to remember the exiting 
+        // (and NOT reset!!!) 
+        //
         // DEPRECATED IDEA (has drawbacks, see below)
         // Create a macro state for all outgoing non-preempting(!) transitions. 
         // Weak abort the macro state and connect it to the original target. Put the action into an
@@ -1001,15 +1038,20 @@ class SyncCharts2Simulation {
                targetRootRegion.states.get(0).regions.add(exitActionRegion);
                
 
-               // Add an entry action that resets the exit action
-               val entryAction = SyncchartsFactory::eINSTANCE.createAction();
-               entryAction.setDelay(0);
-               entryAction.setIsImmediate(true);
+               // Add a during action that resets the exit action
+               val duringAction = SyncchartsFactory::eINSTANCE.createAction();
+               duringAction.setDelay(0);
+               duringAction.setIsImmediate(true);
                val resetEmission = SyncchartsFactory::eINSTANCE.createEmission();
                    resetEmission.setSignal(resetSignal);
-               entryAction.effects.add(resetEmission);
-               state.entryActions.add(entryAction);
-               
+               duringAction.effects.add(resetEmission);
+               val trigger = state.getDisjunctionOfAllHierachicallyOutgoingWeakAborts;
+               val notTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                   notTrigger.setOperator(OperatorType::NOT);
+                   notTrigger.subExpressions.add(trigger);
+               duringAction.setTrigger(notTrigger);
+               state.innerActions.add(duringAction);
+
   
                for (transition : consideredTransitions) {
                    // For every considered transition add an emission of the set signal
