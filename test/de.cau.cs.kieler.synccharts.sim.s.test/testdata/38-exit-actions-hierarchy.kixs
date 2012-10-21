@@ -6,30 +6,38 @@
     <signals name="O2" isOutput="true"/>
     <signals name="I2" isInput="true"/>
     <signals name="I3" isInput="true"/>
+    <signals name="R" isInput="true"/>
     <regions id="">
-      <states id="A" label="A" isInitial="true">
-        <exitActions label="/ O2">
-          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
-        </exitActions>
+      <states id="Reset" label="Reset" isInitial="true" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
         <regions id="">
-          <states id="B" label="B" isInitial="true">
-            <exitActions label="/ O">
-              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+          <states id="A" label="A" isInitial="true">
+            <exitActions label="/ O2">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
             </exitActions>
-            <outgoingTransitions label="I3" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
-              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.4"/>
+            <regions id="">
+              <states id="B3" label="B" isInitial="true">
+                <exitActions label="/ O">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+                </exitActions>
+                <outgoingTransitions label="I3" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.1">
+                  <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.4"/>
+                </outgoingTransitions>
+              </states>
+              <states id="C2" label="C" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+            </regions>
+            <outgoingTransitions label="I" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+            </outgoingTransitions>
+            <outgoingTransitions label="I2" priority="2" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.3"/>
             </outgoingTransitions>
           </states>
-          <states id="_" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+          <states id="D" label="D" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0 //@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.1"/>
         </regions>
-        <outgoingTransitions label="I" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1">
-          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
-        </outgoingTransitions>
-        <outgoingTransitions label="I2" priority="2" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1">
-          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.3"/>
+        <outgoingTransitions label="R" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.0">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.5"/>
         </outgoingTransitions>
       </states>
-      <states id="C" label="C" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0 //@states.0/@regions.0/@states.0/@outgoingTransitions.1"/>
     </regions>
   </states>
 </synccharts:Region>

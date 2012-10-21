@@ -5,6 +5,30 @@
 
 % Output: 
 ;
+
+% Output: 
+;
+
+% Output: 
+;
+I 
+% Output: O O2 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
 I3 
 % Output: O 
 ;
@@ -23,9 +47,20 @@ I
 
 % Output: 
 ;
-! reset;
 
 % Output: 
+;
+R 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+I3 
+% Output: O 
 ;
 
 % Output: 
@@ -34,7 +69,7 @@ I
 % Output: 
 ;
 I2 
-% Output: O O2 
+% Output: O2 
 ;
 
 % Output: 
