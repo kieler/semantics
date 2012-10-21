@@ -291,6 +291,11 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFragment();
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
+                
+                
+                // We support (non-immediate and non-delayed) suspends now.
+                transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
+
 
                 // We now support Exit actions (@requires: entry actions, during actions)
                 transformedModel = (new SyncCharts2Simulation()).

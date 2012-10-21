@@ -308,6 +308,19 @@ class SyncCharts2Simulation {
     //--                          S U S P E N D                              --
     //-------------------------------------------------------------------------
     
+    //@requires: during
+    //@run-before: entry (because these are considered here)
+    
+    // For a suspend statement of state S create a new top-level region
+    // with two states (NotSuspended (initial) and Suspended). Connect them
+    // with the suspension trigger.
+    // If the trigger is immediate, then connect them immediately and have
+    // the transition back be non-immediate. If it is non immediate then
+    // have the transition back be immediate.
+    // Create an immediate during action of the Suspended state that emits
+    // an auxiliaryDisableSignal that is added to all outgoing transitions
+    // (within the disabledExpression) 
+    
     // Transforming Suspends.
     def Region transformSuspend(Region rootRegion) {
         // Clone the complete SyncCharts region 
@@ -331,44 +344,6 @@ class SyncCharts2Simulation {
     }
     
     
-        
-    // Gather the trigger of all hierarchically higher suspensions in an OR-fashion. Do this
-    // recursively until reaching the top level region (with no further parent state).
-    def Expression getHierarchicalSuspendTrigger(State state) {
-        val parentState = state.parentRegion.parentState;
-        var returnExpression = KExpressionsFactory::eINSTANCE.createExpression;
-        var complexExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-            complexExpression.setOperator(OperatorType::OR);
-        
-        if (parentState != null) {
-            if (parentState.suspensionTrigger != null && parentState.suspensionTrigger.trigger != null) {
-              // Copy: from org.eclipse.emf.ecore.util.EcoreUtil
-              complexExpression.subExpressions.add(parentState.suspensionTrigger.copy.trigger)
-              returnExpression = complexExpression;
-            }
-            // Do the same recursively for the parent (until reaching the top region)
-            var parentHierarchicalSuspendTrigger = getHierarchicalSuspendTrigger(parentState);
-            if (parentHierarchicalSuspendTrigger != null) {
-                complexExpression.subExpressions.add(parentHierarchicalSuspendTrigger);
-                returnExpression = complexExpression;
-            }
-            
-            // if there are no subExpressions, return null
-            if (complexExpression.subExpressions.size < 1) {
-               returnExpression = null; 
-            }
-            else if (complexExpression.subExpressions.size < 2) {
-               returnExpression = complexExpression.subExpressions.get(0);
-            }
-        }
-        else {
-           // Reached top region, end of recursion
-           returnExpression = null; 
-        }       
-        
-        returnExpression
-    }    
-
 
    // Tells whether a state is a macro state
    def boolean isHierarchical(State state) {
@@ -379,7 +354,7 @@ class SyncCharts2Simulation {
    // Build a new expression that disables the inExpression if the disabledWhenExpression
    // is enabled. It optimizes not(not(x)) = x.
    def Expression buildDisabledExpression(Expression inExpression, 
-                                                  Expression disabledWhenExpression) {
+                                          Expression disabledWhenExpression) {
                 val andAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                     andAuxiliaryTrigger.setOperator(OperatorType::AND);
                 val notAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
@@ -415,16 +390,108 @@ class SyncCharts2Simulation {
     // an "(<condition>) && !trigger" to disable ALL these transitions
     // if the suspension trigger is enabled.
     def void transformSuspend(State state, Region targetRootRegion) {
-        val hierarchicalSuspendTrigger = state.hierarchicalSuspendTrigger;
-        
-        if (hierarchicalSuspendTrigger != null) {
-            for (outgoingTransition : ImmutableList::copyOf(state.outgoingTransitions)) {
-                
-                val disabledExpression = buildDisabledExpression(outgoingTransition.trigger, 
-                                                                 hierarchicalSuspendTrigger);
-                outgoingTransition.setTrigger(disabledExpression);
+
+        if (state.suspensionTrigger != null) {
+             val suspendTrigger = state.suspensionTrigger.trigger;
+             val immediateSuspension = state.suspensionTrigger.isImmediate;
+             val notSuspendTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                 notSuspendTrigger.setOperator(OperatorType::NOT);
+                 notSuspendTrigger.subExpressions.add(suspendTrigger.copy);
+            
+               // Add SET and RESET signal signal flag 
+               val disabledSignal = KExpressionsFactory::eINSTANCE.createSignal();
+               disabledSignal.setName("disabled" + state.id);
+               disabledSignal.setIsInput(false);
+               disabledSignal.setIsOutput(false);
+               disabledSignal.setType(ValueType::PURE);
+               targetRootRegion.states.get(0).signals.add(disabledSignal);
+               
+               // Add a NonSuspended and Suspended state
+               val runningState = SyncchartsFactory::eINSTANCE.createState();
+               runningState.setId("NonSuspended" + state.hashCode);
+               runningState.setLabel(state.id + " running");
+               runningState.setIsInitial(true);
+               val disabledState = SyncchartsFactory::eINSTANCE.createState();
+               disabledState.setId("Suspended" + state.hashCode);
+               disabledState.setLabel(state.id + "disabled");
+               
+               // Add during action that emits the disable signal 
+               val immediateDuringAction = SyncchartsFactory::eINSTANCE.createAction();
+               immediateDuringAction.setDelay(0);
+               immediateDuringAction.setIsImmediate(true);
+               val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                   auxiliaryEmission.setSignal(disabledSignal);
+               immediateDuringAction.effects.add(auxiliaryEmission);
+               disabledState.innerActions.add(immediateDuringAction);
+               
+               // Create the body of the intermediate state - containing the entry actions
+               // as during actions.
+               val actionState = SyncchartsFactory::eINSTANCE.createState();
+               actionState.setId("Awake" + state.hashCode);
+               actionState.setLabel("Awake " + state.label);
+               // For every entry action: Create a region
+               for (entryAction : state.entryActions) {
+                     val entryActionCopy = entryAction.copy;
+                     entryActionCopy.setIsImmediate(true);
+                     actionState.innerActions.add(entryActionCopy); 
+               }               
+               
+               // Connect Suspended and NonSuspended States with transitions (s.a. for a more detailed explanation)
+               val disabled2actionTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                   disabled2actionTransition.setTargetState(actionState);
+                   disabled2actionTransition.setTrigger(notSuspendTrigger.copy);
+                   disabled2actionTransition.setIsImmediate(!immediateSuspension);
+                   if (!immediateSuspension) {
+                      disabled2actionTransition.setDelay(0);
+                   }
+                   disabledState.outgoingTransitions.add(disabled2actionTransition);
+                   // Do not emit the disableSignal when the suspend trigger is not true any more!
+                   disabled2actionTransition.setType(TransitionType::STRONGABORT);
+               val action2runningTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                   action2runningTransition.setTargetState(runningState);
+                   action2runningTransition.setLabel("#");
+                   action2runningTransition.setIsImmediate(true);
+                   action2runningTransition.setDelay(0);
+                   actionState.outgoingTransitions.add(action2runningTransition);
+               val running2disabledTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                   running2disabledTransition.setTargetState(disabledState);
+                   running2disabledTransition.setIsImmediate(immediateSuspension);
+                   if (immediateSuspension) {
+                      running2disabledTransition.setDelay(0);
+                   }
+                   running2disabledTransition.setTrigger(suspendTrigger.copy);
+                   runningState.outgoingTransitions.add(running2disabledTransition);
+               
+               // Create a region with two states running and disabled and the intermediate entry-action-macro-state
+               val suspendActionRegion = SyncchartsFactory::eINSTANCE.createRegion();
+               suspendActionRegion.setId("SuspendActionRegion" + state.hashCode);
+               suspendActionRegion.states.add(actionState);
+               suspendActionRegion.states.add(runningState);
+               suspendActionRegion.states.add(disabledState);
+               targetRootRegion.states.get(0).regions.add(suspendActionRegion);
+               
+
+            // Add disabled signal  to ALL hierarchically lower (immediate) transitions
+            // that appear INSIDE the considered state (in its regions)
+            var List<Transition> consideredTransitions = <Transition> newLinkedList;
+            for (region : state.regions) {
+               if (immediateSuspension) {
+                   // consider ALL transitions (also immediate ones)
+                   consideredTransitions.addAll(region.eAllContents().filter(typeof(Transition)).toList());
+               } else {
+                   // consider only NON-immediate transitions
+                   consideredTransitions.addAll(region.eAllContents().filter(typeof(Transition)).filter(e | !e.isImmediate).toList());
+               }
+            } 
+            
+            for (consideredTransition : ImmutableList::copyOf(consideredTransitions)) {
+                val disabledSignalRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    disabledSignalRef.setValuedObject(disabledSignal);
+                val disabledExpression = buildDisabledExpression(consideredTransition.trigger, 
+                                                                 disabledSignalRef);
+                consideredTransition.setTrigger(disabledExpression);
             }
-        }
+        } // if any suspension there
     }
     
 
@@ -864,7 +931,6 @@ class SyncCharts2Simulation {
         // will result in calling the exit action AGAIN if the state is left outside.
         // 
         if (state.exitActions != null && state.exitActions.size > 0) {
-               // Add a macro state for every transition               
                var List<Transition> consideredTransitions = <Transition> newLinkedList;
                consideredTransitions.addAll(state.hierarchicallyHigherOutgoingTransitions);
                
@@ -872,14 +938,14 @@ class SyncCharts2Simulation {
                val setSignal = KExpressionsFactory::eINSTANCE.createSignal();
                setSignal.setName("ExitSet" + state.id);
                setSignal.setIsInput(false);
-               setSignal.setIsOutput(true);
+               setSignal.setIsOutput(false);
                setSignal.setType(ValueType::PURE);
                targetRootRegion.states.get(0).signals.add(setSignal);
                
                val resetSignal = KExpressionsFactory::eINSTANCE.createSignal();
                resetSignal.setName("ExitReset" + state.id);
                resetSignal.setIsInput(false);
-               resetSignal.setIsOutput(true);
+               resetSignal.setIsOutput(false);
                resetSignal.setType(ValueType::PURE);
                targetRootRegion.states.get(0).signals.add(resetSignal);
                
@@ -905,12 +971,12 @@ class SyncCharts2Simulation {
                }               
                
                // Connect Set and Reset States with transitions (s.a. for a more detailed explanation)
-               val reset2intermediateTransition =  SyncchartsFactory::eINSTANCE.createTransition();
-                   reset2intermediateTransition.setTargetState(actionState);
+               val reset2actionTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                   reset2actionTransition.setTargetState(actionState);
                    val setSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
                        setSignalReference.setValuedObject(setSignal);
-                   reset2intermediateTransition.setTrigger(setSignalReference);
-                   resetState.outgoingTransitions.add(reset2intermediateTransition);
+                   reset2actionTransition.setTrigger(setSignalReference);
+                   resetState.outgoingTransitions.add(reset2actionTransition);
                val action2setTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                    action2setTransition.setTargetState(setState);
                    action2setTransition.setLabel("#");

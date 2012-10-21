@@ -286,13 +286,23 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
     }
     
     
-    def List<State> getOuterInitialStates(State state) {
+    // For a state get all outer states until reaching a non-initial state that contains it
+    // Attention: Take into account ALSO all incoming transitions to the last state,
+    // because when taking such a transition, this may result in following the initial
+    // immediate chain (like in test 50-initial-states-signal-dependencies3).
+    def List<State> getOuterStatesUntilNonInitial(State state) {
         var List<State> states = <State> newLinkedList;
         var outerState = state.parentRegion.parentState;
+        states.add(outerState);
         if (outerState.isInitial) {
-            states.add(outerState);
-            var listFromOutSide = outerState.getOuterInitialStates;
-            states.addAll(listFromOutSide);
+           var listFromOutSide = outerState.getOuterStatesUntilNonInitial;
+           states.addAll(listFromOutSide);
+        }
+        else {
+            // because of 50-initial-states-signal-dependencies3
+            for (transition : outerState.incomingTransitions) {
+               states.add(transition.sourceState);
+            }
         }
         return states;
     }
@@ -365,11 +375,13 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
                         val emitterState = transition.sourceState;
                         dependencies.handleSignalDependencyHelper(emitterState, triggerState, triggeredTransition, transition, rootState);
 
-                        // Test case 44-initial-states-with-hierarchy.kixs                        
+                        // Test case 43-initial-states-signal-dependencies.kixs
+                        // Test case 44-initial-states-with-hierarchy.kixs
+                        // Test case 49-initial-states-signal-dependencies2.kixs                        
                         var List<State> immediateEmitterStates = <State> newLinkedList;
                         // From a higher hierarchy we may also find this emitter (as immediate deep inside)
                         if (transition.sourceState.isImmediatelyReachableFromInitialState) {
-                            val additionalStates = transition.sourceState.getOuterInitialStates;
+                            val additionalStates = transition.sourceState.getOuterStatesUntilNonInitial;
                             for (additionalState : additionalStates) {
                                 // If not already in the list
                                 if (!immediateEmitterStates.contains(additionalState)) {
