@@ -122,7 +122,7 @@
         <repository>
           <id>p2.papyrus</id>
           <layout>p2</layout>
-          <url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/</url>
+          <url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/maintenance/juno</url>
         </repository>
       </repositories>
     </profile>
