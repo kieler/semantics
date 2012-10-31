@@ -110,7 +110,7 @@
 
       <repositories>
         <repository>
-          <id>p2.juno38</id>
+          <id>p2.juno42</id>
           <layout>p2</layout>
           <url>file:/home/java/repository/juno422/</url>
         </repository>
@@ -118,6 +118,11 @@
           <id>p2.eclipse.juno</id>
           <layout>p2</layout>
           <url>http://download.eclipse.org/releases/juno</url>
+        </repository>
+        <repository>
+          <id>p2.papyrus</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/maintenance/juno</url>
         </repository>
       </repositories>
     </profile>

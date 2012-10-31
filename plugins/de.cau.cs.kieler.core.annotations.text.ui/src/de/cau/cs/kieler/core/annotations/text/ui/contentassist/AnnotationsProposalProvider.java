@@ -93,7 +93,7 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
             final ICompletionProposalAcceptor acceptor) {
 
         if (kielerLayoutAvailable()) {
-            /* check if the prefix is an kieler annotation */
+            /* check if the prefix is a KIELER annotation */
             if (context.getCurrentModel() instanceof Annotation
                     && context.getCurrentModel().getClass().equals(AnnotationImpl.class)) {
 
@@ -112,7 +112,9 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
                     // show the available choices for boolean and enumeration/
                     case BOOLEAN:
                     case REMOTE_ENUM:
+                    case REMOTE_ENUMSET:
                     case ENUM:
+                    case ENUMSET:
                         for (int j = 0; j < optionData.getChoices().length; j++) {
                             proposal = optionData.getChoices()[j];
                             acceptor.accept(createCompletionProposal(proposal, context));

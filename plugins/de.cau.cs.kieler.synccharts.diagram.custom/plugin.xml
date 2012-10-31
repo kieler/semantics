@@ -322,34 +322,34 @@
 	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart">
 	             </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionEditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartmentEditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryAction2EditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartment2EditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionEditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartmentEditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitAction2EditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartment2EditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInsideActionEditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartmentEditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInsideAction2EditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartment2EditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalEditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignal2EditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspendEditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartmentEditPart">
               </instanceof>
               <instanceof
-                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspend2EditPart">
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart">
               </instanceof>
 	          </or>
 	       </iterate>
@@ -431,7 +431,7 @@
       <option
             class="de.cau.cs.kieler.synccharts.State"
             option="de.cau.cs.kieler.sizeConstraint"
-            value="MIN_OPTION">
+            value="[MINIMUM_SIZE, DEFAULT_MINIMUM_SIZE]">
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
@@ -447,6 +447,11 @@
             class="de.cau.cs.kieler.synccharts.Region"
             option="de.cau.cs.kieler.borderSpacing"
             value="1.0">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.Region"
+            option="de.cau.cs.kieler.direction"
+            value="RIGHT">
       </option>
       <semanticOption
             class="de.cau.cs.kieler.synccharts.Scope"
