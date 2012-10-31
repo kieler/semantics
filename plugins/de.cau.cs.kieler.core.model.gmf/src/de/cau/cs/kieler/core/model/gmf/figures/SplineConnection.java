@@ -94,30 +94,30 @@ public class SplineConnection extends PolylineConnectionEx {
     public static final String PREF_SPLINE_MODE = "Connectors.splineMode"; //$NON-NLS-1$
 
     /**
-     *	The edit part this connection belongs to. 
+     * The edit part this connection belongs to. 
      */
     private ConnectionNodeEditPart part;
     
     /**
-	 * @return the part
-	 */
-	public ConnectionNodeEditPart getPart() {
-		return part;
-	}
+     * @return the part
+     */
+    public ConnectionNodeEditPart getPart() {
+        return part;
+    }
 
-	/**
-	 * @param part the part to set
-	 */
-	public void setPart(final ConnectionNodeEditPart part) {
-		this.part = part;
-	}
+    /**
+     * @param part the part to set
+     */
+    public void setPart(final ConnectionNodeEditPart part) {
+        this.part = part;
+    }
 
-	/**
+    /**
      * All the join points currently drawn by this connection.
      */
     private List<IFigure> joinPoints = new LinkedList<IFigure>(); 
 
-	/*
+    /*
      * (non-Javadoc)
      * 
      * @see org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx#containsPoint (int, int)
@@ -318,9 +318,9 @@ public class SplineConnection extends PolylineConnectionEx {
      */
     @Override
     public void outlineShape(final Graphics g) {
-    	if (part != null) {
-    		this.drawJoinPointDecoration(part);
-    	}
+        if (part != null) {
+            this.drawJoinPointDecoration(part);
+        }
         if (getSplineMode() == SPLINE_CUBIC) {
             try {
                 PointList points = getPoints();
@@ -542,13 +542,13 @@ public class SplineConnection extends PolylineConnectionEx {
      */
     public void setJoinPointDecoration(final IJoinPointFactory dec) {
         if (joinPointFactory != null) {
-        	for (IFigure joinPointDecoration: joinPoints) {
-	            if (this.getChildren().contains(joinPointDecoration)) {
-	                this.remove(joinPointDecoration);
-	            }
-	            joinPointFactory = null;
-        	}
-        	joinPoints.clear();
+            for (IFigure joinPointDecoration: joinPoints) {
+                if (this.getChildren().contains(joinPointDecoration)) {
+                    this.remove(joinPointDecoration);
+                }
+                joinPointFactory = null;
+            }
+            joinPoints.clear();
         }
         joinPointFactory = dec;
     }
@@ -558,12 +558,12 @@ public class SplineConnection extends PolylineConnectionEx {
      */
     //can't check generics within reasonable efficiency.
     @SuppressWarnings("unchecked")
-	public void drawJoinPointDecoration(final ConnectionNodeEditPart part) {
+    public void drawJoinPointDecoration(final ConnectionNodeEditPart part) {
         if (joinPointFactory != null) {
         for (IFigure ojp : this.joinPoints) {
-	        if (this.getChildren().contains(ojp)) {
-	            this.remove(ojp);
-	        }
+            if (this.getChildren().contains(ojp)) {
+                this.remove(ojp);
+            }
         }
         this.joinPoints.clear();
         //for each connected port p
@@ -575,7 +575,7 @@ public class SplineConnection extends PolylineConnectionEx {
             connectedItems.add((GraphicalEditPart) part.getTarget());
         }
         for (GraphicalEditPart p : connectedItems) {
-        	//let allConnectedEdges be the set of edges connected to p without part
+            //let allConnectedEdges be the set of edges connected to p without part
             List<ConnectionNodeEditPart> allConnectedEdges = new LinkedList<ConnectionNodeEditPart>();
             allConnectedEdges.addAll(p.getSourceConnections());
             allConnectedEdges.addAll(p.getTargetConnections());
@@ -595,30 +595,31 @@ public class SplineConnection extends PolylineConnectionEx {
                     for (int i = 1; i < bendpointspart.size(); i++) {
                         p2 = bendpointspart.getPoint(i);
                         Iterator<ConnectionNodeEditPart> iter = allConnectedEdges.iterator();
-                        while(iter.hasNext()) {
+                        while (iter.hasNext()) {
                             ConnectionNodeEditPart edge = iter.next();
                             PointList bendpointsedge = ((SplineConnection) edge.getFigure()).getPoints();
                             if (p.getTargetConnections().contains(part)) {
-                            	bendpointsedge = bendpointsedge.getCopy();
+                                bendpointsedge = bendpointsedge.getCopy();
                                 bendpointsedge.reverse();
                             } 
-                            if (bendpointsedge.size() <= i ) {
+                            if (bendpointsedge.size() <= i) {
                                 iter.remove();
                             } else {
                                 p3 = bendpointsedge.getPoint(i);
                                 if (p2.x != p3.x || p2.y != p3.y) {
-                                    Integer dx2,dy2,dx3,dy3;
+                                    Integer dx2, dy2, dx3, dy3;
                                     dx2 = p2.x - p1.x;
                                     dy2 = p2.y - p1.y;
                                     dx3 = p3.x - p1.x;
                                     dy3 = p3.y - p1.y;
                                     if ((dx3 * dy2) == (dy3 * dx2) && Integer.signum(dx2) == Integer.signum(dx3) && Integer.signum(dy2) == Integer.signum(dy3)) {
                                     //if (true) {    
-                                        if (Math.abs(dx2) < Math.abs(dx3) || Math.abs(dy2) < Math.abs(dy3)) {
+                                        if (Math.abs(dx2) < Math.abs(dx3)
+                                                || Math.abs(dy2) < Math.abs(dy3)) {
                                             //int yOffset = joinPointDecoration.getBounds().height / 2;
                                             //int xOffset = joinPointDecoration.getBounds().width / 2;
                                             //joinPointDecoration.getBounds().setLocation(
-                                            //        new PrecisionPoint(p2.x - xOffset, p2.y - yOffset));
+                                            //       new PrecisionPoint(p2.x - xOffset, p2.y - yOffset));
                                             //this.add(joinPointDecoration);
                                             IFigure joinp = joinPointFactory.getNewJoinPointDecorator();
                                             int yOffset = joinp.getBounds().height / 2;
@@ -629,7 +630,7 @@ public class SplineConnection extends PolylineConnectionEx {
                                             this.joinPoints.add(joinp);
                                         } 
                                     } else if (i > 1) {
-                                    	
+                                        
                                             //int yOffset = joinPointDecoration.getBounds().height / 2;
                                             //int xOffset = joinPointDecoration.getBounds().width / 2;
                                             //joinPointDecoration.getBounds().setLocation(
@@ -652,7 +653,7 @@ public class SplineConnection extends PolylineConnectionEx {
                     }
             }
             }
-        	//if (this.getChildren().contains(joinPointDecoration)) {
+            //if (this.getChildren().contains(joinPointDecoration)) {
             //    this.remove(joinPointDecoration);
             //}
         }
