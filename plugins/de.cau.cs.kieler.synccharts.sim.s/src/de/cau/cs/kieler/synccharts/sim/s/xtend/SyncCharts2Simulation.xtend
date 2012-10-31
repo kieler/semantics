@@ -908,14 +908,16 @@ class SyncCharts2Simulation {
        }
        else {
           for (expression : expressionList) {
-             returnExpression.subExpressions.add(expression);
+             if (expression != null) {
+                returnExpression.subExpressions.add(expression);
+             }
           }
           return returnExpression;
        }
    }
    def List<Expression> getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper(State state) {
        var List<Expression> expressionList = <Expression> newLinkedList;
-       val outgoingTransitions = state.outgoingTransitions.filter(e|e.type != TransitionType::STRONGABORT);
+       val outgoingTransitions = state.outgoingTransitions.filter(e|e.type == TransitionType::WEAKABORT);
        for (outgoingTransition : outgoingTransitions) {
           expressionList.add(outgoingTransition.trigger.copy);
        }
@@ -940,7 +942,7 @@ class SyncCharts2Simulation {
         // possibly outgoing transitions to the outside that are weak (in this case we do not want
         // to reset because we know we leave the state and want to remember the exiting 
         // (and NOT reset!!!) 
-        //
+         //
         // DEPRECATED IDEA (has drawbacks, see below)
         // Create a macro state for all outgoing non-preempting(!) transitions. 
         // Weak abort the macro state and connect it to the original target. Put the action into an
@@ -990,9 +992,9 @@ class SyncCharts2Simulation {
                val resetState = SyncchartsFactory::eINSTANCE.createState();
                resetState.setId("ExitReset" + state.hashCode);
                resetState.setLabel("r");
-               resetState.setIsInitial(true);
                val setState = SyncchartsFactory::eINSTANCE.createState();
                setState.setId("ExitSet" + state.hashCode);
+               setState.setIsInitial(true);
                setState.setLabel("s");
                
                // Create the body of the intermediate exit-action-macro-state - containing the exit actions
@@ -1013,12 +1015,11 @@ class SyncCharts2Simulation {
                    val setSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
                        setSignalReference.setValuedObject(setSignal);
                    reset2actionTransition.setTrigger(setSignalReference);
+                   reset2actionTransition.setIsImmediate(true);
+                   reset2actionTransition.setDelay(0);
                    resetState.outgoingTransitions.add(reset2actionTransition);
                val action2setTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                    action2setTransition.setTargetState(setState);
-                   action2setTransition.setLabel("#");
-                   action2setTransition.setIsImmediate(true);
-                   action2setTransition.setDelay(0);
                    actionState.outgoingTransitions.add(action2setTransition);
                val set2resetTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                    set2resetTransition.setTargetState(resetState);
@@ -1045,11 +1046,11 @@ class SyncCharts2Simulation {
                val resetEmission = SyncchartsFactory::eINSTANCE.createEmission();
                    resetEmission.setSignal(resetSignal);
                duringAction.effects.add(resetEmission);
-               val trigger = state.getDisjunctionOfAllHierachicallyOutgoingWeakAborts;
-               val notTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-                   notTrigger.setOperator(OperatorType::NOT);
-                   notTrigger.subExpressions.add(trigger);
-               duringAction.setTrigger(notTrigger);
+//               val trigger = state.getDisjunctionOfAllHierachicallyOutgoingWeakAborts;
+//               val notTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//                   notTrigger.setOperator(OperatorType::NOT);
+//                   notTrigger.subExpressions.add(trigger);
+//               duringAction.setTrigger(notTrigger);
                state.innerActions.add(duringAction);
 
   

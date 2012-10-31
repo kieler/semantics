@@ -292,22 +292,20 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
                 
+                // We now support Exit actions (@requires: entry actions, during actions, history)
+                transformedModel = (new SyncCharts2Simulation()).
+                                                     transformExitActions(transformedModel);
+
+                // We support history transitions. (@requires: suspend)
+                transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
                 
-//                // We support (non-immediate and non-delayed) suspends now.
-//                transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
-//
-//
-//                // We now support Exit actions (@requires: entry actions, during actions)
-//                transformedModel = (new SyncCharts2Simulation()).
-//                                                     transformExitActions(transformedModel);
-//                
-//                // We now support Entry actions (@requires: during actions)
-//                transformedModel = (new SyncCharts2Simulation()).
-//                                                     transformEntryActions(transformedModel);
-//                
-//                // We now support During actions
-//                transformedModel = (new SyncCharts2Simulation()).
-//                                                     transformDuringActions(transformedModel);
+                // We support (non-immediate and non-delayed) suspends now. (@requires: during)
+                transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
+
+                // We now support During actions
+                transformedModel = (new SyncCharts2Simulation()).
+                                                     transformDuringActions(transformedModel);
+                
 
                 try {
                     // Write out copy/transformation of syncchart program
@@ -332,11 +330,17 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // We support count delays now for the SC (host code) simulation.
             transformedModel = (new SyncCharts2Simulation()).transformCountDelayes(transformedModel);
            
+            // We now support Exit actions (@requires: entry actions, during actions, history)
+            transformedModel = (new SyncCharts2Simulation()).
+                                                 transformExitActions(transformedModel);
+
             // We support history transitions. (@requires: suspend)
             transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
 
-            // We support (non-immediate and non-delayed) suspends now.
+
+            // We support (non-immediate and non-delayed) suspends now. (@requires: during)
             transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
+
 
             // We now support Entry actions (@requires: during actions)
             transformedModel = (new SyncCharts2Simulation()).
