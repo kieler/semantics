@@ -1,0 +1,46 @@
+! reset;
+b 
+% Output: X2 Y2 
+;
+
+% Output: Y2 
+;
+
+% Output: 
+;
+W 
+% Output: Y2 
+;
+
+% Output: Y2 
+;
+b 
+% Output: X2 Y2 
+;
+
+% Output: Y2 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+W b 
+% Output: X2 Y2 
+;
+
+% Output: Y2 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+b S 
+% Output: X2 Y2 
+;
+
+% Output: Y2 
+;

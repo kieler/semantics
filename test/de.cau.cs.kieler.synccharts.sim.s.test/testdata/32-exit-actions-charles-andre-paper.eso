@@ -5,14 +5,35 @@
 b 
 % Output: Y1 X2 Y2 X11 
 ;
+
+% Output: 
+;
+
+% Output: 
+;
 R 
-% Output: X0 Y0 Z 
+% Output: Y0 Z X0 
+;
+
+% Output: 
+;
+
+% Output: 
 ;
 a 
 % Output: Y1 Y2 X10 
 ;
 R 
-% Output: X0 Y0 Z 
+% Output: Y0 Z X0 
+;
+
+% Output: 
+;
+R 
+% Output: Y1 Y2 Y0 Z X0 
+;
+
+% Output: 
 ;
 
 % Output: 

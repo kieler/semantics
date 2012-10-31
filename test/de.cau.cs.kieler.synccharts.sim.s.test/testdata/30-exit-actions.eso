@@ -11,20 +11,44 @@
 
 % Output: 
 ;
-
+I W 
+% Output: O 
+;
+I 
 % Output: 
 ;
-
+I 
 % Output: 
 ;
-I2 I 
+I W R 
+% Output: O 
+;
+I 
 % Output: 
 ;
-I2 I 
+I 
 % Output: 
 ;
-I2 I W 
+I R 
+% Output: O 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I2 I S 
 % Output: O O2 
+;
+I2 I 
+% Output: 
+;
+I2 I 
+% Output: 
+;
+I2 I 
+% Output: 
 ;
 I2 I 
 % Output: 
@@ -33,16 +57,10 @@ I2 I
 % Output: 
 ;
 I2 I R 
-% Output: 
-;
-I2 I 
-% Output: 
-;
-I2 I 
-% Output: 
-;
-I2 I S 
 % Output: O O2 
+;
+I2 I 
+% Output: 
 ;
 I2 I 
 % Output: 
