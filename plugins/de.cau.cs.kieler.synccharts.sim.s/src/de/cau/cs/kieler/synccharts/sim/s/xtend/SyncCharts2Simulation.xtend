@@ -1040,6 +1040,12 @@ class SyncCharts2Simulation {
            
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
     def void transformNormalTermination(State state, Region targetRootRegion) {
+        // NORMAL TERMINATION : For every state with normal termination transitions transform these into
+        // weak abort transitions. Create a trigger for these new transitions that contains a conjunction
+        // of a new termSignal, one for every contained region.
+        // For every region add an immediate during action to all final state emitting this termSignal
+        // (belonging to the region).
+        
                // This is the special case where we must taken care of a normal termination 
                if (state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0) {
                     val normalTerminationTransition = state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).head;
