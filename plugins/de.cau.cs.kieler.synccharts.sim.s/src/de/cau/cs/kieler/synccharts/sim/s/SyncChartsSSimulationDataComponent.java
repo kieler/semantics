@@ -292,10 +292,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
                 
-                // We now support Normal Termination transitions (@requires: during actions)
-                transformedModel = (new SyncCharts2Simulation()).
-                                                     transformNormalTermination(transformedModel);
-                
                 // We now support Exit actions (@requires: entry actions, during actions, history)
                 transformedModel = (new SyncCharts2Simulation()).
                                                      transformExitAction(transformedModel);
@@ -306,9 +302,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 // We support (non-immediate and non-delayed) Suspends now. (@requires: during)
                 transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
 
-                // We now support During actions
-                transformedModel = (new SyncCharts2Simulation()).
-                                                     transformDuringAction(transformedModel);
                 
 
                 try {

@@ -1000,86 +1000,171 @@ class SyncCharts2Simulation {
                var List<Transition> consideredTransitions = <Transition> newLinkedList;
                consideredTransitions.addAll(state.hierarchicallyHigherOutgoingTransitions);
                
-               // Add SET and RESET signal signal flag 
+               // Add SET and SETI and RESETI and RESETN signal signal flag 
                val setSignal = KExpressionsFactory::eINSTANCE.createSignal();
-               setSignal.setName("ExitSet" + state.id);
+               setSignal.setName("Set" + state.id);
                setSignal.setIsInput(false);
                setSignal.setIsOutput(false);
                setSignal.setType(ValueType::PURE);
                targetRootRegion.states.get(0).signals.add(setSignal);
+
+               // This signal is produced by ALL immediate outputs (also hierarchically higher)
+               // it is able to trigger an immediate transition back from reset to set (when entering reset)
+               // set ---> reset -#-> set
+               val setISignal = KExpressionsFactory::eINSTANCE.createSignal();
+               setISignal.setName("SetI" + state.id);
+               setISignal.setIsInput(false);
+               setISignal.setIsOutput(false);
+               setISignal.setType(ValueType::PURE);
+               targetRootRegion.states.get(0).signals.add(setISignal);
                
-               val resetSignal = KExpressionsFactory::eINSTANCE.createSignal();
-               resetSignal.setName("ExitReset" + state.id);
-               resetSignal.setIsInput(false);
-               resetSignal.setIsOutput(false);
-               resetSignal.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).signals.add(resetSignal);
+               val resetISignal = KExpressionsFactory::eINSTANCE.createSignal();
+               resetISignal.setName("ResetI" + state.id);
+               resetISignal.setIsInput(false);
+               resetISignal.setIsOutput(false);
+               resetISignal.setType(ValueType::PURE);
+               targetRootRegion.states.get(0).signals.add(resetISignal);
+
+               val resetNSignal = KExpressionsFactory::eINSTANCE.createSignal();
+               resetNSignal.setName("ResetN" + state.id);
+               resetNSignal.setIsInput(false);
+               resetNSignal.setIsOutput(false);
+               resetNSignal.setType(ValueType::PURE);
+               targetRootRegion.states.get(0).signals.add(resetNSignal);
                
-               // Add a Set and Reset State
+               // Add a Set and Reset state
                val resetState = SyncchartsFactory::eINSTANCE.createState();
                resetState.setId("ExitReset" + state.hashCode);
                resetState.setLabel("r");
                val setState = SyncchartsFactory::eINSTANCE.createState();
                setState.setId("ExitSet" + state.hashCode);
+               // The Set state has to be the initial state
                setState.setIsInitial(true);
                setState.setLabel("s");
                
-               // Create the body of the intermediate exit-action-macro-state - containing the exit actions
-               // as during actions.
-               val actionState = SyncchartsFactory::eINSTANCE.createState();
-               actionState.setId("Exit" + state.hashCode);
-               actionState.setLabel("Exit " + state.label);
-               // For every exit action: Create a region
-               for (exitAction : state.exitActions) {
-                     val exitActionCopy = exitAction.copy;
-                     exitActionCopy.setIsImmediate(true);
-                     actionState.innerActions.add(exitActionCopy); 
-               }               
-               
+
                // Connect Set and Reset States with transitions (s.a. for a more detailed explanation)
-               val reset2actionTransition =  SyncchartsFactory::eINSTANCE.createTransition();
-                   reset2actionTransition.setTargetState(actionState);
-                   val setSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                       setSignalReference.setValuedObject(setSignal);
-                   reset2actionTransition.setTrigger(setSignalReference);
-                   reset2actionTransition.setIsImmediate(true);
-                   reset2actionTransition.setDelay(0);
-                   resetState.outgoingTransitions.add(reset2actionTransition);
-               val action2setTransition =  SyncchartsFactory::eINSTANCE.createTransition();
-                   action2setTransition.setTargetState(setState);
-                   actionState.outgoingTransitions.add(action2setTransition);
+               val reset2setTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                   reset2setTransition.setTargetState(setState);
+                   resetState.outgoingTransitions.add(reset2setTransition);
+               val reset2setITransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                   reset2setITransition.setTargetState(setState);
+                   resetState.outgoingTransitions.add(reset2setITransition);
                val set2resetTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                    set2resetTransition.setTargetState(resetState);
-                   set2resetTransition.setIsImmediate(true);
-                   set2resetTransition.setDelay(0);
-                   val resetSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                       resetSignalReference.setValuedObject(resetSignal);
-                   set2resetTransition.setTrigger(resetSignalReference);
                    setState.outgoingTransitions.add(set2resetTransition);
+               val set2setTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                   set2setTransition.setTargetState(setState);
+                   setState.outgoingTransitions.add(set2setTransition);
+
+               // Build triggers for transitions 
+               // (A) set -- ResetI --> reset
+               // (B) set -- Set and ResetI and ResetN --> set (means started in C, ending in C by outputting O)
+               // (C) reset -- Set --> set (means starting NOT in C, ending in C by outputting O)
+               // (D) reset -- #SetI --> set (possibly a chain coming from inside set and ending in inside set over transient reset)
+               val setSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                   setSignalReference.setValuedObject(setSignal);
+               val setISignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                   setISignalReference.setValuedObject(setISignal);
+               val resetISignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                   resetISignalReference.setValuedObject(resetISignal);
+               val resetNSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                   resetNSignalReference.setValuedObject(resetNSignal);
+               val andExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                   andExpression.setOperator(OperatorType::AND);
                
-               // Create a region with two states set and reset and the intermediate exit-action-macro-state
+               // (A)
+               set2resetTransition.setTrigger(resetISignalReference.copy);
+               set2resetTransition.setPriority(2); // Set a LOWER prio than set to set (B)
+               
+               // (B)
+               val set2setTrigger = andExpression.copy;
+                   val set2setTrigger2 = andExpression.copy;
+                       set2setTrigger2.subExpressions.add(setSignalReference.copy);
+                       set2setTrigger2.subExpressions.add(resetISignalReference.copy);
+                   set2setTrigger.subExpressions.add(set2setTrigger2);
+                   set2setTrigger.subExpressions.add(resetNSignalReference.copy);
+               set2setTransition.setTrigger(set2setTrigger);
+               set2setTransition.setPriority(1); // Set a HIGHER prio than set to reset (A)
+               
+               // (C)
+               reset2setTransition.setTrigger(setSignalReference.copy);
+               
+               // (D)
+               reset2setITransition.setTrigger(setISignalReference.copy);
+               reset2setITransition.setIsImmediate(true);
+               reset2setITransition.setDelay(0);
+               
+               // Create a region with two states set and reset 
                val exitActionRegion = SyncchartsFactory::eINSTANCE.createRegion();
                exitActionRegion.setId("ExitActionRegion" + state.hashCode);
-               exitActionRegion.states.add(actionState);
                exitActionRegion.states.add(resetState);
                exitActionRegion.states.add(setState);
                targetRootRegion.states.get(0).regions.add(exitActionRegion);
                
+               // Create conditioned sustain and actions for Set state containing the exit actions
+               // For every exit action: Create a during and entry action for Set state
+               // the entry action is triggered by Set
+               // the during action is triggered by Set and ResetI and ResetN
+               for (exitAction : state.exitActions) {
+                     val entryAction  = exitAction.copy;
+                     entryAction.setIsImmediate(true);
+                     val entryActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                         entryActionTrigger.setOperator(OperatorType::AND);
+                         entryActionTrigger.subExpressions.add(setSignalReference.copy); // (C)
+                         entryActionTrigger.subExpressions.add(entryAction.trigger);
+                     entryAction.setTrigger(entryActionTrigger);
+                     setState.entryActions.add(entryAction);
 
+                     val duringAction = exitAction.copy;
+                     duringAction.setIsImmediate(true);
+                     val duringActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                         duringActionTrigger.setOperator(OperatorType::AND);
+                         duringActionTrigger.subExpressions.add(set2setTrigger.copy); // (B)
+                         duringActionTrigger.subExpressions.add(duringAction.trigger);
+                     duringAction.setTrigger(duringActionTrigger);
+                     setState.innerActions.add(duringAction);
+               }               
+
+               
                // Add a during action that resets the exit action
-               val duringAction = SyncchartsFactory::eINSTANCE.createAction();
-               duringAction.setDelay(0);
-               duringAction.setIsImmediate(true);
-               val resetEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                   resetEmission.setSignal(resetSignal);
-               duringAction.effects.add(resetEmission);
-//               val trigger = state.getDisjunctionOfAllHierachicallyOutgoingWeakAborts;
-//               val notTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-//                   notTrigger.setOperator(OperatorType::NOT);
-//                   notTrigger.subExpressions.add(trigger);
-//               duringAction.setTrigger(notTrigger);
-               state.innerActions.add(duringAction);
-
+               // more specifically add an immediate during action for resetI
+               //                   and a  normal during action for resetN
+               val duringIAction = SyncchartsFactory::eINSTANCE.createAction();
+               duringIAction.setDelay(0);
+               duringIAction.setIsImmediate(true);
+               val resetIEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                   resetIEmission.setSignal(resetISignal);
+               duringIAction.effects.add(resetIEmission);
+               val duringNAction = SyncchartsFactory::eINSTANCE.createAction();
+               val resetNEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                   resetNEmission.setSignal(resetNSignal);
+               duringNAction.effects.add(resetNEmission);
+               state.innerActions.add(duringIAction);
+               state.innerActions.add(duringNAction);
+               
+               
+               // For every incoming transitions add a ResetI emission
+               // (if the state is an initial state, then add another initial state before and
+               // connect both with an immediate true triggered transition)
+               if (state.isInitial) {
+                   val newInitialState = SyncchartsFactory::eINSTANCE.createState();
+                   newInitialState.setId("initial" + state.hashCode);
+                   newInitialState.setLabel("i");
+                   newInitialState.setIsInitial(true);
+                   state.setIsInitial(false);
+                   state.parentRegion.states.add(newInitialState);
+                   val immediateTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                   immediateTransition.setIsImmediate(true);
+                   immediateTransition.setLabel("#");
+                   immediateTransition.setDelay(0);
+                   immediateTransition.setTargetState(state);
+                   newInitialState.outgoingTransitions.add(immediateTransition);
+               }
+               for (incomingTransition : ImmutableList::copyOf(state.incomingTransitions)) {
+                   incomingTransition.effects.add(resetIEmission.copy);
+               }
+               
   
                for (transition : consideredTransitions) {
                    // For every considered transition add an emission of the set signal
@@ -1089,6 +1174,14 @@ class SyncCharts2Simulation {
                        setEmission.setSignal(setSignal);
                    transition.effects.add(setEmission);
                 }
+                
+               for (transition : consideredTransitions.filter(e | e.isImmediate)) {
+                   // For every considered immediate transition add an emission of the setI signal
+                   val setIEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                       setIEmission.setSignal(setISignal);
+                   transition.effects.add(setIEmission);
+                }
+                
                 
                 // After transforming exit actions, erase them
                 state.exitActions.clear();

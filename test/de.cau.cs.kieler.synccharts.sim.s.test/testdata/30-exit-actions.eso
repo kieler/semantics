@@ -11,7 +11,52 @@
 
 % Output: 
 ;
-I W 
+
+% Output: 
+;
+
+% Output: 
+;
+S 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I S 
 % Output: O 
 ;
 I 
@@ -20,8 +65,14 @@ I
 I 
 % Output: 
 ;
-I W R 
-% Output: O 
+I 
+% Output: 
+;
+I R 
+% Output: 
+;
+I 
+% Output: 
 ;
 I 
 % Output: 
@@ -38,33 +89,120 @@ I
 I 
 % Output: 
 ;
-I2 I S 
-% Output: O O2 
-;
-I2 I 
+I 
 % Output: 
 ;
-I2 I 
+I R 
+% Output: O 
+;
+I R 
+% Output: O 
+;
+I R 
+% Output: O 
+;
+I R 
+% Output: O 
+;
+I R 
+% Output: O 
+;
+I S 
 % Output: 
 ;
-I2 I 
+I 
 % Output: 
 ;
-I2 I 
+I 
 % Output: 
 ;
-I2 I 
+I 
 % Output: 
 ;
-I2 I R 
-% Output: O O2 
+I R WI 
+% Output: O 
 ;
-I2 I 
+I 
 % Output: 
 ;
-I2 I 
+I 
 % Output: 
 ;
-I2 I 
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I SI R 
+% Output: O 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I R 
+% Output: 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I SI R 
+% Output: O 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I R 
+% Output: 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I R WI 
+% Output: O 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I R 
+% Output: 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;
+I S R WI 
+% Output: O 
+;
+I 
+% Output: 
+;
+I 
 % Output: 
 ;
