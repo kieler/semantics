@@ -292,19 +292,23 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
                 
+                // We now support Normal Termination transitions (@requires: during actions)
+                transformedModel = (new SyncCharts2Simulation()).
+                                                     transformNormalTermination(transformedModel);
+                
                 // We now support Exit actions (@requires: entry actions, during actions, history)
                 transformedModel = (new SyncCharts2Simulation()).
-                                                     transformExitActions(transformedModel);
+                                                     transformExitAction(transformedModel);
 
-                // We support history transitions. (@requires: suspend)
+                // We support History transitions. (@requires: suspend)
                 transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
                 
-                // We support (non-immediate and non-delayed) suspends now. (@requires: during)
+                // We support (non-immediate and non-delayed) Suspends now. (@requires: during)
                 transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
 
                 // We now support During actions
                 transformedModel = (new SyncCharts2Simulation()).
-                                                     transformDuringActions(transformedModel);
+                                                     transformDuringAction(transformedModel);
                 
 
                 try {
@@ -327,28 +331,32 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // These are done AFTER the visualization transformation because the visualization
             // transformation MUST operate on the resource file (for URI gathering reasons).
 
-            // We support count delays now for the SC (host code) simulation.
-            transformedModel = (new SyncCharts2Simulation()).transformCountDelayes(transformedModel);
+            // We now support Normal Termination transitions (@requires: during actions)
+            transformedModel = (new SyncCharts2Simulation()).
+                                                 transformNormalTermination(transformedModel);
+            
+            // We support Count Delays now for the SC (host code) simulation.
+            transformedModel = (new SyncCharts2Simulation()).transformCountDelay(transformedModel);
            
             // We now support Exit actions (@requires: entry actions, during actions, history)
             transformedModel = (new SyncCharts2Simulation()).
-                                                 transformExitActions(transformedModel);
+                                                 transformExitAction(transformedModel);
 
-            // We support history transitions. (@requires: suspend)
+            // We support History transitions. (@requires: suspend)
             transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
 
 
-            // We support (non-immediate and non-delayed) suspends now. (@requires: during)
+            // We support (non-immediate and non-delayed) Suspends now. (@requires: during)
             transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
 
 
             // We now support Entry actions (@requires: during actions)
             transformedModel = (new SyncCharts2Simulation()).
-                                                 transformEntryActions(transformedModel);
+                                                 transformEntryAction(transformedModel);
             
             // We now support During actions
             transformedModel = (new SyncCharts2Simulation()).
-                                                 transformDuringActions(transformedModel);
+                                                 transformDuringAction(transformedModel);
             
             // Transform SyncChart into S code
             Program program = new Synccharts2S().transform(transformedModel);
