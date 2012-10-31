@@ -1109,20 +1109,28 @@ class SyncCharts2Simulation {
                for (exitAction : state.exitActions) {
                      val entryAction  = exitAction.copy;
                      entryAction.setIsImmediate(true);
-                     val entryActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                     var entryActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                          entryActionTrigger.setOperator(OperatorType::AND);
                          entryActionTrigger.subExpressions.add(setSignalReference.copy); // (C)
-                         entryActionTrigger.subExpressions.add(entryAction.trigger);
-                     entryAction.setTrigger(entryActionTrigger);
+                         if (entryAction.trigger != null) {
+                             entryActionTrigger.subExpressions.add(entryAction.trigger);
+                             entryAction.setTrigger(entryActionTrigger);
+                         } else {
+                             entryAction.setTrigger(setSignalReference.copy);
+                         }
                      setState.entryActions.add(entryAction);
 
                      val duringAction = exitAction.copy;
                      duringAction.setIsImmediate(true);
-                     val duringActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                     var duringActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                          duringActionTrigger.setOperator(OperatorType::AND);
                          duringActionTrigger.subExpressions.add(set2setTrigger.copy); // (B)
-                         duringActionTrigger.subExpressions.add(duringAction.trigger);
-                     duringAction.setTrigger(duringActionTrigger);
+                         if (duringAction.trigger != null) {
+                             duringActionTrigger.subExpressions.add(duringAction.trigger);
+                             duringAction.setTrigger(duringActionTrigger);
+                         } else {
+                             duringAction.setTrigger(set2setTrigger.copy);
+                         }
                      setState.innerActions.add(duringAction);
                }               
 

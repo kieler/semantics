@@ -1,9 +1,9 @@
 ! reset;
-b 
-% Output: X2 Y2 
+
+% Output: 
 ;
 
-% Output: Y2 
+% Output: 
 ;
 
 % Output: 
@@ -12,13 +12,52 @@ W
 % Output: Y2 
 ;
 
+% Output: 
+;
+
+% Output: 
+;
+S 
 % Output: Y2 
+;
+
+% Output: 
+;
+
+% Output: 
 ;
 b 
 % Output: X2 Y2 
 ;
 
-% Output: Y2 
+% Output: 
+;
+
+% Output: 
+;
+W 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+b 
+% Output: X2 Y2 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+S 
+% Output: 
+;
+
+% Output: 
 ;
 
 % Output: 
@@ -30,7 +69,19 @@ W b
 % Output: X2 Y2 
 ;
 
-% Output: Y2 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+W b 
+% Output: X2 Y2 
+;
+
+% Output: 
 ;
 
 % Output: 
@@ -42,5 +93,8 @@ b S
 % Output: X2 Y2 
 ;
 
-% Output: Y2 
+% Output: 
+;
+
+% Output: 
 ;

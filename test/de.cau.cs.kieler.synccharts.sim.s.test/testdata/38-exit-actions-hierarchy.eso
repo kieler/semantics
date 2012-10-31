@@ -11,21 +11,6 @@
 
 % Output: 
 ;
-I 
-% Output: O O2 
-;
-
-% Output: 
-;
-
-% Output: 
-;
-R 
-% Output: 
-;
-
-% Output: 
-;
 
 % Output: 
 ;
@@ -38,19 +23,13 @@ I3
 
 % Output: 
 ;
-I 
-% Output: O2 
-;
-
-% Output: 
-;
-
-% Output: 
-;
 
 % Output: 
 ;
 R 
+% Output: O2 
+;
+
 % Output: 
 ;
 
@@ -70,6 +49,57 @@ I3
 ;
 I2 
 % Output: O2 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+I3 I2 
+% Output: O O2 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+I3 I 
+% Output: O O2 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+I3 I2 I R 
+% Output: 
+;
+
+% Output: 
+;
+I3 I2 I R 
+% Output: O O2 
 ;
 
 % Output: 
