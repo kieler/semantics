@@ -13,8 +13,9 @@
     <module>../../plugins</module>
     <module>../../features</module>
     <module>../de.cau.cs.kieler.repository</module>
-    <!--    <module>../de.cau.cs.kieler.target</module> -->
+    <!-- <module>../de.cau.cs.kieler.target</module> -->
     <module>../de.cau.cs.kieler.kwebs.repository</module>
+    <module>../de.cau.cs.kieler.papyrus.repository</module>
   </modules>
 
   <profiles>

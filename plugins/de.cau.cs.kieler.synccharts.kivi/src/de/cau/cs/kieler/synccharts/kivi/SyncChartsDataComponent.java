@@ -52,7 +52,7 @@ public class SyncChartsDataComponent extends KiViDataComponent {
     }
 
     @Override
-    protected String getEncodedEObjectId(EObject eObject) {
+    protected String getEncodedEObjectId(final EObject eObject) {
         if (eObject.eResource() != null) {
             String uri = eObject.eResource().getURIFragment(eObject);
             uri = (uri.hashCode() + "").replace("-", "M");
