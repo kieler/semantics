@@ -178,7 +178,86 @@ class SyncCharts2Simulation {
           }
           
      }     
+     
+     
 
+    //-------------------------------------------------------------------------
+    //--              N O R M A L   T E R M I N A T I O N                    --
+    //-------------------------------------------------------------------------
+    // @requires: during actions
+
+    
+    // Transforming Normal Termination. 
+    def Region transformNormalTermination(Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+
+        for(targetState :  ImmutableList::copyOf(targetStates)) {
+            // This statement we want to modify
+            targetState.transformNormalTermination(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+           
+    // Traverse all states and transform outgoing normal termination transitions into weak aborts
+    def void transformNormalTermination(State state, Region targetRootRegion) {
+        // NORMAL TERMINATION : For every state with normal termination transitions transform these into
+        // weak abort transitions. Create a trigger for these new transitions that contains a conjunction
+        // of a new termSignal, one for every contained region.
+        // For every region add an immediate during action to all final state emitting this termSignal
+        // (belonging to the region).
+        
+               // This is the special case where we must taken care of a normal termination 
+               if (state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0) {
+                    val normalTerminationTransition = state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).head;
+                    normalTerminationTransition.setType(TransitionType::WEAKABORT);
+                    val triggerExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+                         triggerExpression.setOperator(OperatorType::AND);
+                         triggerExpression.subExpressions
+               
+                    // Walk thru all regions that must terminate and create one termination signal per
+                    // region. For the weak abort create a conjunction of these signals as the trigger.
+                    for (region : state.regions) {
+                         // Setup the auxiliarySignal as an OUTPUT to the module
+                         val termSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                         termSignal.setName("term" + region.hashCode);
+                         termSignal.setIsInput(false);
+                         termSignal.setIsOutput(false);
+                         termSignal.setType(ValueType::PURE);
+                    
+                         val finalStates = region.states.filter(e | e.isFinal == true);
+                         // For all final states add a during action that emits the termination signal
+                         for (finalState : finalStates) {
+                              val termEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                              termEmission.setSignal(termSignal);
+                              val termDuringAction =  SyncchartsFactory::eINSTANCE.createAction
+                              termDuringAction.setDelay(0);
+                              termDuringAction.setIsImmediate(true);
+                              termDuringAction.effects.add(termEmission);
+                              finalState.innerActions.add(termDuringAction);
+                              // Set the final state flag to false
+                              finalState.setIsFinal(false);
+                         }
+                    
+                         targetRootRegion.states.get(0).signals.add(termSignal);
+                         val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                         valuedObjectReference.setValuedObject(termSignal);
+                         triggerExpression.subExpressions.add(valuedObjectReference);
+                    }
+               
+                    if (triggerExpression.subExpressions.size == 1) {
+                         // if there is just one signal, we do not need an AND!
+                         normalTerminationTransition.setTrigger(triggerExpression.subExpressions.get(0));
+                    }
+                    else if (triggerExpression.subExpressions.size > 1) {
+                         normalTerminationTransition.setTrigger(triggerExpression);
+                    }
+               } // end if normal termination present
+
+    }
+           
 
      
     //-------------------------------------------------------------------------
@@ -1015,84 +1094,6 @@ class SyncCharts2Simulation {
                 state.exitActions.clear();
        }
        
-    }
-           
-           
-    //-------------------------------------------------------------------------
-    //--              N O R M A L   T E R M I N A T I O N                    --
-    //-------------------------------------------------------------------------
-    // @requires: during actions
-
-    
-    // Transforming Normal Termination. 
-    def Region transformNormalTermination(Region rootRegion) {
-        // Clone the complete SyncCharts region 
-        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
-
-        for(targetState :  ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
-            targetState.transformNormalTermination(targetRootRegion);
-        }
-        
-        targetRootRegion;
-    }
-           
-    // Traverse all states and transform outgoing normal termination transitions into weak aborts
-    def void transformNormalTermination(State state, Region targetRootRegion) {
-        // NORMAL TERMINATION : For every state with normal termination transitions transform these into
-        // weak abort transitions. Create a trigger for these new transitions that contains a conjunction
-        // of a new termSignal, one for every contained region.
-        // For every region add an immediate during action to all final state emitting this termSignal
-        // (belonging to the region).
-        
-               // This is the special case where we must taken care of a normal termination 
-               if (state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0) {
-                    val normalTerminationTransition = state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).head;
-                    normalTerminationTransition.setType(TransitionType::WEAKABORT);
-                    val triggerExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
-                         triggerExpression.setOperator(OperatorType::AND);
-                         triggerExpression.subExpressions
-               
-                    // Walk thru all regions that must terminate and create one termination signal per
-                    // region. For the weak abort create a conjunction of these signals as the trigger.
-                    for (region : state.regions) {
-                         // Setup the auxiliarySignal as an OUTPUT to the module
-                         val termSignal = KExpressionsFactory::eINSTANCE.createSignal();
-                         termSignal.setName("term" + region.hashCode);
-                         termSignal.setIsInput(false);
-                         termSignal.setIsOutput(false);
-                         termSignal.setType(ValueType::PURE);
-                    
-                         val finalStates = region.states.filter(e | e.isFinal == true);
-                         // For all final states add a during action that emits the termination signal
-                         for (finalState : finalStates) {
-                              val termEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                              termEmission.setSignal(termSignal);
-                              val termDuringAction =  SyncchartsFactory::eINSTANCE.createAction
-                              termDuringAction.setDelay(0);
-                              termDuringAction.setIsImmediate(true);
-                              termDuringAction.effects.add(termEmission);
-                              finalState.innerActions.add(termDuringAction);
-                              // Set the final state flag to false
-                              finalState.setIsFinal(false);
-                         }
-                    
-                         targetRootRegion.states.get(0).signals.add(termSignal);
-                         val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                         valuedObjectReference.setValuedObject(termSignal);
-                         triggerExpression.subExpressions.add(valuedObjectReference);
-                    }
-               
-                    if (triggerExpression.subExpressions.size == 1) {
-                         // if there is just one signal, we do not need an AND!
-                         normalTerminationTransition.setTrigger(triggerExpression.subExpressions.get(0));
-                    }
-                    else if (triggerExpression.subExpressions.size > 1) {
-                         normalTerminationTransition.setTrigger(triggerExpression);
-                    }
-               } // end if normal termination present
-
     }
            
            
