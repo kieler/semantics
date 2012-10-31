@@ -44,7 +44,7 @@
     <module>de.cau.cs.kieler.kwebs.client.jeti.feature</module>
     <module>de.cau.cs.kieler.kwebs.client.jeti.feature.source</module>
     <module>de.cau.cs.kieler.kwebs.server.feature</module>-->
-    <module>de.cau.cs.kieler.papyrus.feature</module>
+    <module>de.cau.cs.kieler.papyrus.layout.feature</module>
     <!--<module>de.cau.cs.kieler.sdk.feature</module>
     <module>de.cau.cs.kieler.synccharts.feature</module>
     <module>de.cau.cs.kieler.synccharts.feature.source</module>-->
