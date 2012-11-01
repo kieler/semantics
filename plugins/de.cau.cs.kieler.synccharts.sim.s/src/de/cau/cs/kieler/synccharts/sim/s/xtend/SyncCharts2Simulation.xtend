@@ -1152,26 +1152,28 @@ class SyncCharts2Simulation {
                state.innerActions.add(duringNAction);
                
                
-               // For every incoming transitions add a ResetI emission
-               // (if the state is an initial state, then add another initial state before and
-               // connect both with an immediate true triggered transition)
-               if (state.isInitial) {
-                   val newInitialState = SyncchartsFactory::eINSTANCE.createState();
-                   newInitialState.setId("initial" + state.hashCode);
-                   newInitialState.setLabel("i");
-                   newInitialState.setIsInitial(true);
-                   state.setIsInitial(false);
-                   state.parentRegion.states.add(newInitialState);
-                   val immediateTransition =  SyncchartsFactory::eINSTANCE.createTransition();
-                   immediateTransition.setIsImmediate(true);
-                   immediateTransition.setLabel("#");
-                   immediateTransition.setDelay(0);
-                   immediateTransition.setTargetState(state);
-                   newInitialState.outgoingTransitions.add(immediateTransition);
-               }
-               for (incomingTransition : ImmutableList::copyOf(state.incomingTransitions)) {
-                   incomingTransition.effects.add(resetIEmission.copy);
-               }
+// André says: Do not execute exitActions if the state is bypassed (by an enabled immediate strong abort)
+// Hence, the following is incorrect.                
+//               // For every incoming transitions add a ResetI emission
+//               // (if the state is an initial state, then add another initial state before and
+//               // connect both with an immediate true triggered transition)
+//               if (state.isInitial) {
+//                   val newInitialState = SyncchartsFactory::eINSTANCE.createState();
+//                   newInitialState.setId("initial" + state.hashCode);
+//                   newInitialState.setLabel("i");
+//                   newInitialState.setIsInitial(true);
+//                   state.setIsInitial(false);
+//                   state.parentRegion.states.add(newInitialState);
+//                   val immediateTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+//                   immediateTransition.setIsImmediate(true);
+//                   immediateTransition.setLabel("#");
+//                   immediateTransition.setDelay(0);
+//                   immediateTransition.setTargetState(state);
+//                   newInitialState.outgoingTransitions.add(immediateTransition);
+//               }
+//               for (incomingTransition : ImmutableList::copyOf(state.incomingTransitions)) {
+//                   incomingTransition.effects.add(resetIEmission.copy);
+//               }
                
   
                for (transition : consideredTransitions) {
