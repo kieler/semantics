@@ -22,6 +22,7 @@ import de.cau.cs.kieler.core.ui.Messages;
 /**
  * Field editor for input of double values.
  * 
+ * @kieler.design proposed 2012-11-02 cds
  * @kieler.rating 2009-12-11 proposed yellow msp
  * @author ???
  */

@@ -34,6 +34,8 @@ import org.eclipse.ui.dialogs.FileSystemElement;
  * An example of this can be found in the {@link FileSystemResourcesPage} class.</p>
  * 
  * @author cds
+ * @kieler.design 2010-03-14
+ *      reviewed by haf, msp, pkl
  * @kieler.rating yellow 2010-03-14
  *      reviewed by haf, msp, pkl
  */

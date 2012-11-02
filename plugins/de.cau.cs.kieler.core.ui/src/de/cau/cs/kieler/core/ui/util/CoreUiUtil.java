@@ -28,7 +28,6 @@ import org.eclipse.swt.graphics.RGB;
  * Utility class for the User Interface.
  * 
  * @author jjc
- *
  */
 public final class CoreUiUtil {
     

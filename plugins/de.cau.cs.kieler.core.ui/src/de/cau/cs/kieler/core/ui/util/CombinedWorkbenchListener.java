@@ -50,6 +50,8 @@ import de.cau.cs.kieler.core.ui.CoreUIPlugin;
  * 
  * FIXME this class makes heavy use of static hash sets without thinking about synchronization!
  * 
+ * FIXME those hash sets also lack documentation...
+ * 
  * @author soh
  */
 public class CombinedWorkbenchListener implements IStartup, IWindowListener,

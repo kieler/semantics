@@ -51,6 +51,8 @@ import de.cau.cs.kieler.core.ui.util.ComboHistoryHandler;
  * loaded.</p>
  * 
  * @author cds
+ * @kieler.design 2010-03-14
+ *      reviewed by haf, msp, pkl
  * @kieler.rating yellow 2010-03-14
  *      reviewed by haf, msp, pkl
  */
