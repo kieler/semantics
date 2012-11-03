@@ -33,6 +33,7 @@ import de.cau.cs.kieler.core.util.Maybe;
  * tracking compared to the usual synchronous tracking of the workbench progress service.
  * Just implement {@link #execute(IProgressMonitor)} and call {@link #runMonitored()}.
  *
+ * @kieler.design proposed 2012-11-02 cds
  * @kieler.rating 2010-01-14 proposed yellow msp
  * @author msp
  */

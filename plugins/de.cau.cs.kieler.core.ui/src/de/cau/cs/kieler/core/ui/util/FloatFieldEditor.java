@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * Field editor for input of float values.
  * 
+ * @kieler.design proposed 2012-11-02 cds
  * @kieler.rating 2009-12-11 proposed yellow msp
  * @author msp
  */

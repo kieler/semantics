@@ -35,6 +35,8 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
  * this on its own.</p>
  * 
  * @author cds
+ * @kieler.design 2010-03-14
+ *      reviewed by haf, msp, pkl
  * @kieler.rating yellow 2010-03-14
  *      reviewed by haf, msp, pkl
  */

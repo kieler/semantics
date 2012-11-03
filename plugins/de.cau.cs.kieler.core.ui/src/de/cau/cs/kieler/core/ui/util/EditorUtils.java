@@ -29,12 +29,16 @@ import de.cau.cs.kieler.core.util.Maybe;
  * Static utility class for working with editors.
  * 
  * @author haf, chsch
- * 
+ * @deprecated Using such a static method is a cheap way to get around the problem of finding
+ *             the right context for an operation. This may fail in some situations. Therefore,
+ *             a more generic and reliable solution for managing the context of things that
+ *             happen in view management must be found.<br>
+ *             <br>
+ *             Be careful cause this method blocks waiting for the UI thread, this could cause a
+ *             deadlock if other depending code also waits for the UI thread.
+ * @kieler.ignore Ignored since the class is deprecated anyway.
  */
 public final class EditorUtils {
-
-    private EditorUtils() {
-    }
 
     /** The done flag for finding the last active editor. */
     private static boolean doneGetLastActiveEditor = true;
@@ -46,6 +50,12 @@ public final class EditorUtils {
     private static Maybe<IEditorPart> editor = Maybe.create();
 
     /**
+     * Private constructor to prevent instantiation.
+     */
+    private EditorUtils() {
+    }
+
+    /**
      * Return the last active editor. Returns the active editor of the current page if it is not
      * null. This might happen when you maximize a view and minimize it again. Returns the first
      * editor of any open editors if the active editor is null.
@@ -53,13 +63,7 @@ public final class EditorUtils {
      * @author haf
      * 
      * @return the last open active editor, which may be {@code null} if there is no open editor
-     * @deprecated Using such a static method is a cheap way to get around the problem of finding
-     *             the right context for an operation. This may fail in some situations. Therefore,
-     *             a more generic and reliable solution for managing the context of things that
-     *             happen in view management must be found.<br>
-     * <br>
-     *             Be careful cause this method blocks waiting for the UI thread, this could cause a
-     *             deadlock if other depending code also waits for the UI thread.
+     * @deprecated 
      */
     public static IEditorPart getLastActiveEditor() {
         if (!doneGetLastActiveEditor) {

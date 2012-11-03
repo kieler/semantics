@@ -31,13 +31,13 @@ import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 
 /**
  * Provides a splash screen handler that shows a progress bar, a message line and a version
- * number. Currently, the version number is hard-coded. In the next release, however, the
- * version number is to be dynamic.
+ * number.
  * 
- * todo: Make version number dynamic.
- * chsch: Done so far as possible: Version property must be maintained in the product extension
- *   in de.cau.cs.kieler.core.ui's plugin.xml by hand since the version won't be transferred from the
- *   product file automatically. Furthermore, the product file is not part of the RCA installation.
+ * <p>The version number is read from the {@code version} property in the product extension
+ * defined in {@code de.cau.cs.kieler.core.product}. It must be maintained by hand over there
+ * since the {@code kieler.product} file, which also contains the version number, is not
+ * accessible later since it's not part of the RCA installation. Furthermore, the version number
+ * in the product file is sadly not automatically transferred to the product extension.</p>
  * 
  * @author cds
  */
