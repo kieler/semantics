@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="Module_ReactorControl" label="Module_ReactorControl">
+    <signals name="PullOutRods" isOutput="true"/>
+    <signals name="PushInRods" isOutput="true"/>
+    <signals name="Start" isInput="true"/>
+    <signals name="OverHeated" isInput="true"/>
+    <signals name="CooledDown" isInput="true"/>
+    <signals name="unsafe"/>
+    <regions id="main" label="main">
+      <states id="init0" label="I" isInitial="true">
+        <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.1"/>
+      </states>
+      <states id="ParallelStatementList40state" label="ParallelStatementList40state" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+        <regions id="R0" label="R0">
+          <states id="init1" label="I" isInitial="true">
+            <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1"/>
+          </states>
+          <states id="Await43state" label="Await43state" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0 //@states.0/@regions.0/@states.1/@regions.0/@states.1/@outgoingTransitions.0">
+            <regions id="R0" label="R0">
+              <states id="init2" label="I" isInitial="true">
+                <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1"/>
+              </states>
+              <states id="18" label="18" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0">
+                <outgoingTransitions label="Start / PullOutRods" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.2">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+                  <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.2"/>
+                </outgoingTransitions>
+              </states>
+              <states id="23" label="23" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1/@outgoingTransitions.0"/>
+            </regions>
+            <outgoingTransitions label="unsafe" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1">
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.5"/>
+            </outgoingTransitions>
+          </states>
+        </regions>
+        <regions id="R1" label="R1">
+          <states id="init3" label="I" isInitial="true">
+            <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.1/@regions.1/@states.1"/>
+          </states>
+          <states id="94" label="94" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0 //@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0">
+            <outgoingTransitions isImmediate="true" label="# unsafe / PushInRods" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.1/@states.2">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.5"/>
+            </outgoingTransitions>
+          </states>
+          <states id="134" label="134" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.1/@states.1/@outgoingTransitions.0">
+            <outgoingTransitions label="not unsafe" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.1/@states.1">
+              <trigger xsi:type="kexpressions:OperatorExpression" operator="not">
+                <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.5"/>
+              </trigger>
+            </outgoingTransitions>
+          </states>
+        </regions>
+        <regions id="R2" label="R2">
+          <states id="init4" label="I" isInitial="true">
+            <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.1/@regions.2/@states.1"/>
+          </states>
+          <states id="193" label="193" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.2/@states.2/@outgoingTransitions.0 //@states.0/@regions.0/@states.1/@regions.2/@states.0/@outgoingTransitions.0">
+            <outgoingTransitions isImmediate="true" label="# OverHeated" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.2/@states.2">
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.3"/>
+            </outgoingTransitions>
+          </states>
+          <states id="Sustain68state" label="Sustain68state" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.2/@states.1/@outgoingTransitions.0">
+            <regions id="R0" label="R0">
+              <states id="init5" label="I" isInitial="true">
+                <outgoingTransitions isImmediate="true" label="#  / unsafe" targetState="//@states.0/@regions.0/@states.1/@regions.2/@states.2/@regions.0/@states.1">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.5"/>
+                </outgoingTransitions>
+              </states>
+              <states id="227" label="227" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.2/@states.2/@regions.0/@states.1/@outgoingTransitions.0 //@states.0/@regions.0/@states.1/@regions.2/@states.2/@regions.0/@states.0/@outgoingTransitions.0">
+                <outgoingTransitions label="/ unsafe" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.2/@states.2/@regions.0/@states.1">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.5"/>
+                </outgoingTransitions>
+              </states>
+            </regions>
+            <outgoingTransitions label="CooledDown" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.2/@states.1">
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.4"/>
+            </outgoingTransitions>
+          </states>
+        </regions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>
