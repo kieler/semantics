@@ -28,6 +28,7 @@ import com.google.common.collect.ImmutableList
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.Signal
 
 /**
  * Transformation of a SyncChart to another SyncChart
@@ -179,7 +180,112 @@ class SyncCharts2Simulation {
           
      }     
      
-     
+    //-------------------------------------------------------------------------
+    //--             R A I S E    L O C A L   S I G N A L S                  --
+    //-------------------------------------------------------------------------
+
+    // Transforming Local Signals.
+    def Region transformRaiseLocalSignal(Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+
+        for(targetState : targetStates) {
+            // This statement we want to modify
+            targetState.transformRaiseLocalSignal(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+    
+    // For C variables it is necessary to remove special characters, this may lead
+    // to name clashes in unlikely cases. 
+    def String removeSpecialCharacters(String string) {
+        return string.replace("-","").replace("_","").replace(" ","").replace("+","")
+               .replace("#","").replace("$","").replace("?","")
+               .replace("!","").replace("%","").replace("&","")
+               .replace("[","").replace("]","").replace("<","")
+               .replace(">","").replace(".","").replace(",","")
+               .replace(":","").replace(";","").replace("=","");
+    }
+    
+    // This helper method returns the hierarchical name of a state considering all hierarchical
+    // higher states. A string is formed by the traversed state IDs.
+    def String getHierarchicalName(State state) {
+        if (state.parentRegion != null) {
+            if (state.parentRegion.parentState != null) {
+                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName;
+                if (!higherHierarchyReturnedName.nullOrEmpty) {
+                    higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
+                }
+                if (state.parentRegion.parentState.regions.size > 1) {
+                    return higherHierarchyReturnedName 
+                           + state.parentRegion.id.removeSpecialCharacters  + "_" +  state.id.removeSpecialCharacters;
+                }
+                else {
+                    // this is the simplified case, where there is just one region and we can
+                    // omit the region id
+                    return higherHierarchyReturnedName  
+                           + state.id.removeSpecialCharacters;
+                }
+            }
+        }
+        return "";
+    }
+           
+    // Traverse all states and transform possible local signals
+    def void transformRaiseLocalSignal(State state, Region targetRootRegion) {
+        // LOCAL SIGNAL: Raise all local signals to the upper most level and rename them
+        // according to the hierarchy. 
+               
+               // Exclude the top level state
+               if (state.parentRegion == targetRootRegion) {
+                   return;
+               }
+        
+               // There are local signals, raise them
+               if (state.signals != null && state.signals.size > 0) {
+                    val hierarchicalStateName = state.getHierarchicalName;
+                    
+                    for (Signal stateSignal : ImmutableList::copyOf(state.signals)) {
+                        val newSignalName = hierarchicalStateName + "_" + stateSignal.name;
+                        // rename signal
+                        stateSignal.setName(newSignalName);
+                        // raise signal
+                        targetRootRegion.states.get(0).signals.add(stateSignal);
+                        // remove signal from current state
+                        state.signals.remove(stateSignal);
+                    }
+               } // end if local signals present
+
+    }
+    
+    
+
+    //-------------------------------------------------------------------------
+    //--             E X P O S E   L O C A L   S I G N A L S                 --
+    //-------------------------------------------------------------------------
+    // @requires: raiselocalsignals
+
+    // Transforming Local Signals.
+    def Region transformExposeLocalSignal(Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+
+        val mainSyncChartState = targetRootRegion.states.head;
+       
+        if (mainSyncChartState != null) {
+            for (Signal stateSignal : ImmutableList::copyOf(mainSyncChartState.signals)) {
+                if (!stateSignal.isInput) {
+                    stateSignal.setIsOutput(true);
+                }
+            }
+        }
+        
+        targetRootRegion;
+    }
+    
+
 
     //-------------------------------------------------------------------------
     //--              N O R M A L   T E R M I N A T I O N                    --

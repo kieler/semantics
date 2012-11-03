@@ -56,9 +56,19 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
     private static final int NUMBER_OF_TASKS = 10;
 
-    private static final int KIEM_PROPERTY_FULLDEBUGMODE = 3;
-    private static final int KIEM_PROPERTY_SCDEBUGCONSOLE = 4;
-    
+    private static final int KIEM_PROPERTY_MAX = 5;
+    private static final int KIEM_PROPERTY_STATENAME = 0;
+    private static final int KIEM_PROPERTY_TRANSITIONNAME = 1;
+    private static final int KIEM_PROPERTY_FULLDEBUGMODE = 2;
+    private static final int KIEM_PROPERTY_SCDEBUGCONSOLE = 3;
+    private static final int KIEM_PROPERTY_EXPOSELOCALSIGNALS = 4;
+
+    private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
+    private static final String KIEM_PROPERTY_NAME_TRANSITIONNAME = "Transition Name";
+    private static final String KIEM_PROPERTY_NAME_FULLDEBUGMODE = "Full Debug Mode";
+    private static final String KIEM_PROPERTY_NAME_SCDEBUGCONSOLE = "SC Debug Console";
+    private static final String KIEM_PROPERTY_NAME_EXPOSELOCALSIGNALS = "Expose Local Signals";
+
     /** A flag indicating that debug console output is generated and should be handled. */
     private boolean debugConsole = true;
 
@@ -169,13 +179,15 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
 
                 // Finally accumulate all active Statements (activeStatements)
                 // under the statementName
-                String statementName = this.getProperties()[1].getValue();
+                String stateName = this.getProperties()[KIEM_PROPERTY_STATENAME
+                        + KIEM_PROPERTY_DIFF].getValue();
                 try {
-                    returnObj.accumulate(statementName, activeStates);
+                    returnObj.accumulate(stateName, activeStates);
                 } catch (JSONException e) {
                     // ignore error
                 }
-                String transitionName = this.getProperties()[2].getValue();
+                String transitionName = this.getProperties()[KIEM_PROPERTY_TRANSITIONNAME
+                        + KIEM_PROPERTY_DIFF].getValue();
                 try {
                     returnObj.accumulate(transitionName, activeTransitions);
                 } catch (JSONException e) {
@@ -212,13 +224,19 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        final int nProperties = 4;
+        final int nProperties = KIEM_PROPERTY_MAX;
         KiemProperty[] properties = new KiemProperty[nProperties];
-        properties[0] = new KiemProperty("State Name", "state");
-        properties[1] = new KiemProperty("Transition Name", "transition");
+        properties[KIEM_PROPERTY_STATENAME] = new KiemProperty(KIEM_PROPERTY_NAME_STATENAME,
+                "state");
+        properties[KIEM_PROPERTY_TRANSITIONNAME] = new KiemProperty(
+                KIEM_PROPERTY_NAME_TRANSITIONNAME, "transition");
 
-        properties[2] = new KiemProperty("Full Debug Mode", true);
-        properties[2 + 1] = new KiemProperty("SC Debug Console", true);
+        properties[KIEM_PROPERTY_FULLDEBUGMODE] = new KiemProperty(
+                KIEM_PROPERTY_NAME_FULLDEBUGMODE, true);
+        properties[KIEM_PROPERTY_SCDEBUGCONSOLE] = new KiemProperty(
+                KIEM_PROPERTY_NAME_SCDEBUGCONSOLE, true);
+        properties[KIEM_PROPERTY_EXPOSELOCALSIGNALS] = new KiemProperty(
+                KIEM_PROPERTY_NAME_EXPOSELOCALSIGNALS, false);
 
         return properties;
     }
@@ -265,20 +283,22 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             URI sOutput = URI.createURI("");
             // By default there is not always an additional transformation necessary
             Region transformedModel = myModel;
-            
+
             // Calculate output path for possible S-m2m
             // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
             String inputPathString = this.getModelFilePath().toString();
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             syncChartOutput = URI.createURI(input.toString());
-            
-            debugConsole = this.getProperties()[KIEM_PROPERTY_SCDEBUGCONSOLE].getValueAsBoolean();
+
+            debugConsole = this.getProperties()[KIEM_PROPERTY_SCDEBUGCONSOLE + KIEM_PROPERTY_DIFF]
+                    .getValueAsBoolean();
 
             // If 'Full Debug Mode' is turned on then the user wants to have
             // also states visualized.
             // Hence some pre-processing is needed and done by the
             // Esterl2Simulation Xtend2 model transformation
-            if (this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE].getValueAsBoolean()) {
+            if (this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
+                    .getValueAsBoolean()) {
                 // Try to load SyncCharts model
                 // 'Full Debug Mode' is turned ON
                 // SyncCharts2Simulation transform =
@@ -291,18 +311,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFragment();
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
-                
-                // We now support Exit actions (@requires: entry actions, during actions, history)
-                transformedModel = (new SyncCharts2Simulation()).
-                                                     transformExitAction(transformedModel);
-
-                // We support History transitions. (@requires: suspend)
-                transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
-                
-                // We support (non-immediate and non-delayed) Suspends now. (@requires: during)
-                transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
-
-                
 
                 try {
                     // Write out copy/transformation of syncchart program
@@ -324,33 +332,40 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // These are done AFTER the visualization transformation because the visualization
             // transformation MUST operate on the resource file (for URI gathering reasons).
 
-            // We now support Normal Termination transitions (@requires: during actions)
-            transformedModel = (new SyncCharts2Simulation()).
-                                                 transformNormalTermination(transformedModel);
+            // We now support Local Signals (@requires: none)
+            transformedModel = (new SyncCharts2Simulation()).transformRaiseLocalSignal(transformedModel);
             
+            if (this.getProperties()[KIEM_PROPERTY_EXPOSELOCALSIGNALS + KIEM_PROPERTY_DIFF]
+                    .getValueAsBoolean()) {
+                // We now support Local Signals (@requires: raiselocalsignals)
+                transformedModel = (new SyncCharts2Simulation())
+                                          .transformExposeLocalSignal(transformedModel);
+            }
+            
+
+            // We now support Normal Termination transitions (@requires: during actions)
+            transformedModel = (new SyncCharts2Simulation())
+                    .transformNormalTermination(transformedModel);
+
             // We support Count Delays now for the SC (host code) simulation.
             transformedModel = (new SyncCharts2Simulation()).transformCountDelay(transformedModel);
-           
+
             // We now support Exit actions (@requires: entry actions, during actions, history)
-            transformedModel = (new SyncCharts2Simulation()).
-                                                 transformExitAction(transformedModel);
+            transformedModel = (new SyncCharts2Simulation()).transformExitAction(transformedModel);
 
             // We support History transitions. (@requires: suspend)
             transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
 
-
             // We support (non-immediate and non-delayed) Suspends now. (@requires: during)
             transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
 
-
             // We now support Entry actions (@requires: during actions)
-            transformedModel = (new SyncCharts2Simulation()).
-                                                 transformEntryAction(transformedModel);
-            
-            // We now support During actions
-            transformedModel = (new SyncCharts2Simulation()).
-                                                 transformDuringAction(transformedModel);
-            
+            transformedModel = (new SyncCharts2Simulation()).transformEntryAction(transformedModel);
+
+            // We now support During actions (@requires: none)
+            transformedModel = (new SyncCharts2Simulation())
+                    .transformDuringAction(transformedModel);
+
             // Transform SyncChart into S code
             Program program = new Synccharts2S().transform(transformedModel);
 
@@ -408,8 +423,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                        .startsWith(
-                                           SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             returnObj.accumulate(signalName, signalValue);
                         }
                     } catch (JSONException e) {
