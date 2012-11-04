@@ -684,7 +684,7 @@ public class InternalEsoParser extends AbstractInternalAntlrParser {
             {
             lv_name_0_0=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulesignal544); 
 
-            			newLeafNode(lv_name_0_0, grammarAccess.getSignalAccess().getNameAlphaNumSpecialTerminalRuleCall_0_0()); 
+            			newLeafNode(lv_name_0_0, grammarAccess.getSignalAccess().getNameALPHANUMSPECIALTerminalRuleCall_0_0()); 
             		
 
             	        if (current==null) {
@@ -694,7 +694,7 @@ public class InternalEsoParser extends AbstractInternalAntlrParser {
                    			current, 
                    			"name",
                     		lv_name_0_0, 
-                    		"AlphaNumSpecial");
+                    		"ALPHANUMSPECIAL");
             	    
 
             }
@@ -1009,7 +1009,7 @@ public class InternalEsoParser extends AbstractInternalAntlrParser {
             {
             lv_key_2_0=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair788); 
 
-            			newLeafNode(lv_key_2_0, grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_2_0()); 
+            			newLeafNode(lv_key_2_0, grammarAccess.getKvpairAccess().getKeyALPHANUMSPECIALTerminalRuleCall_2_0()); 
             		
 
             	        if (current==null) {
@@ -1019,7 +1019,7 @@ public class InternalEsoParser extends AbstractInternalAntlrParser {
                    			current, 
                    			"key",
                     		lv_key_2_0, 
-                    		"AlphaNumSpecial");
+                    		"ALPHANUMSPECIAL");
             	    
 
             }
@@ -1652,7 +1652,7 @@ public class InternalEsoParser extends AbstractInternalAntlrParser {
             {
             lv_value_0_0=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_ruleEsoJson1358); 
 
-            			newLeafNode(lv_value_0_0, grammarAccess.getEsoJsonAccess().getValueAlphaNumSpecialTerminalRuleCall_0()); 
+            			newLeafNode(lv_value_0_0, grammarAccess.getEsoJsonAccess().getValueALPHANUMSPECIALTerminalRuleCall_0()); 
             		
 
             	        if (current==null) {
@@ -1662,7 +1662,7 @@ public class InternalEsoParser extends AbstractInternalAntlrParser {
                    			current, 
                    			"value",
                     		lv_value_0_0, 
-                    		"AlphaNumSpecial");
+                    		"ALPHANUMSPECIAL");
             	    
 
             }

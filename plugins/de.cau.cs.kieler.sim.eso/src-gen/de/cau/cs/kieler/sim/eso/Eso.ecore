@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="eso"
-    nsURI="http://www.cau.de/cs/kieler/sim/eso/Eso" nsPrefix="eso">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="eso" nsURI="http://www.cau.de/cs/kieler/sim/eso/Eso" nsPrefix="eso">
   <eClassifiers xsi:type="ecore:EClass" name="tracelist">
     <eStructuralFeatures xsi:type="ecore:EReference" name="traces" upperBound="-1"
         eType="#//trace" containment="true"/>

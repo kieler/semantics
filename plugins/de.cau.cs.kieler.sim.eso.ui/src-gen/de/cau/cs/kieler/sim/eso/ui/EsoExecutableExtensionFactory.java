@@ -8,6 +8,8 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.sim.eso.ui.internal.EsoActivator;
+
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
@@ -16,12 +18,12 @@ public class EsoExecutableExtensionFactory extends AbstractGuiceAwareExecutableE
 
 	@Override
 	protected Bundle getBundle() {
-		return de.cau.cs.kieler.sim.eso.ui.internal.EsoActivator.getInstance().getBundle();
+		return EsoActivator.getInstance().getBundle();
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return de.cau.cs.kieler.sim.eso.ui.internal.EsoActivator.getInstance().getInjector("de.cau.cs.kieler.sim.eso.Eso");
+		return EsoActivator.getInstance().getInjector(EsoActivator.DE_CAU_CS_KIELER_SIM_ESO_ESO);
 	}
 	
 }

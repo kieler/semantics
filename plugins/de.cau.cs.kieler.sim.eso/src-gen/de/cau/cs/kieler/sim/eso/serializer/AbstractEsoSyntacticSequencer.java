@@ -14,8 +14,8 @@ import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISyn
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
 import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 
-@SuppressWarnings("restriction")
-public class AbstractEsoSyntacticSequencer extends AbstractSyntacticSequencer {
+@SuppressWarnings("all")
+public abstract class AbstractEsoSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected EsoGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_tick___PercentSignKeyword_2_0_OutputKeyword_2_1_ColonKeyword_2_2__q;

@@ -59,7 +59,7 @@ EsoJson:
 ;
 
 terminal SPECIAL:
-    ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-';
+    ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-' | '_';
     
 terminal BOOL returns ecore::EBoolean:
     ('true' | 'false');

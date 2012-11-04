@@ -151,6 +151,28 @@
     </extension>
 
 
+    <!-- marker definitions for de.cau.cs.kieler.sim.eso.Eso -->
+    <extension
+            id="eso.check.fast"
+            name="Eso Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="eso.check.normal"
+            name="Eso Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.normal"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="eso.check.expensive"
+            name="Eso Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.expensive"/>
+        <persistent value="true"/>
+    </extension>
 
 	<!-- Quick Outline -->
 	<extension

@@ -1240,8 +1240,8 @@ rule__Signal__NameAssignment_0
     }
 :
 (
-{ before(grammarAccess.getSignalAccess().getNameAlphaNumSpecialTerminalRuleCall_0_0()); }
-	RULE_ALPHANUMSPECIAL{ after(grammarAccess.getSignalAccess().getNameAlphaNumSpecialTerminalRuleCall_0_0()); }
+{ before(grammarAccess.getSignalAccess().getNameALPHANUMSPECIALTerminalRuleCall_0_0()); }
+	RULE_ALPHANUMSPECIAL{ after(grammarAccess.getSignalAccess().getNameALPHANUMSPECIALTerminalRuleCall_0_0()); }
 )
 
 ;
@@ -1294,8 +1294,8 @@ rule__Kvpair__KeyAssignment_2
     }
 :
 (
-{ before(grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_2_0()); }
-	RULE_ALPHANUMSPECIAL{ after(grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_2_0()); }
+{ before(grammarAccess.getKvpairAccess().getKeyALPHANUMSPECIALTerminalRuleCall_2_0()); }
+	RULE_ALPHANUMSPECIAL{ after(grammarAccess.getKvpairAccess().getKeyALPHANUMSPECIALTerminalRuleCall_2_0()); }
 )
 
 ;
@@ -1385,8 +1385,8 @@ rule__EsoJson__ValueAssignment
     }
 :
 (
-{ before(grammarAccess.getEsoJsonAccess().getValueAlphaNumSpecialTerminalRuleCall_0()); }
-	RULE_ALPHANUMSPECIAL{ after(grammarAccess.getEsoJsonAccess().getValueAlphaNumSpecialTerminalRuleCall_0()); }
+{ before(grammarAccess.getEsoJsonAccess().getValueALPHANUMSPECIALTerminalRuleCall_0()); }
+	RULE_ALPHANUMSPECIAL{ after(grammarAccess.getEsoJsonAccess().getValueALPHANUMSPECIALTerminalRuleCall_0()); }
 )
 
 ;
@@ -1395,7 +1395,7 @@ finally {
 }
 
 
-RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'&'|'*'|'='|'+'|'-');
+RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'&'|'*'|'='|'+'|'-'|'_');
 
 RULE_BOOL : ('true'|'false');
 

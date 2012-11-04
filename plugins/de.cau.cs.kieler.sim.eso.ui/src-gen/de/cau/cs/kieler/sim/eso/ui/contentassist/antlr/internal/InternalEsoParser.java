@@ -3331,9 +3331,9 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1242:1: ( RULE_ALPHANUMSPECIAL )
             // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1243:1: RULE_ALPHANUMSPECIAL
             {
-             before(grammarAccess.getSignalAccess().getNameAlphaNumSpecialTerminalRuleCall_0_0()); 
+             before(grammarAccess.getSignalAccess().getNameALPHANUMSPECIALTerminalRuleCall_0_0()); 
             match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Signal__NameAssignment_02481); 
-             after(grammarAccess.getSignalAccess().getNameAlphaNumSpecialTerminalRuleCall_0_0()); 
+             after(grammarAccess.getSignalAccess().getNameALPHANUMSPECIALTerminalRuleCall_0_0()); 
 
             }
 
@@ -3460,9 +3460,9 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1296:1: ( RULE_ALPHANUMSPECIAL )
             // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1297:1: RULE_ALPHANUMSPECIAL
             {
-             before(grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_2_0()); 
+             before(grammarAccess.getKvpairAccess().getKeyALPHANUMSPECIALTerminalRuleCall_2_0()); 
             match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__KeyAssignment_22589); 
-             after(grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_2_0()); 
+             after(grammarAccess.getKvpairAccess().getKeyALPHANUMSPECIALTerminalRuleCall_2_0()); 
 
             }
 
@@ -3692,9 +3692,9 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1387:1: ( RULE_ALPHANUMSPECIAL )
             // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1388:1: RULE_ALPHANUMSPECIAL
             {
-             before(grammarAccess.getEsoJsonAccess().getValueAlphaNumSpecialTerminalRuleCall_0()); 
+             before(grammarAccess.getEsoJsonAccess().getValueALPHANUMSPECIALTerminalRuleCall_0()); 
             match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__EsoJson__ValueAssignment2777); 
-             after(grammarAccess.getEsoJsonAccess().getValueAlphaNumSpecialTerminalRuleCall_0()); 
+             after(grammarAccess.getEsoJsonAccess().getValueALPHANUMSPECIALTerminalRuleCall_0()); 
 
             }
 

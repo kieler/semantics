@@ -231,10 +231,10 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = RULE_SPECIAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:706:14: ( ( ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-' ) )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:706:16: ( ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-' )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:706:14: ( ( ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-' | '_' ) )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:706:16: ( ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-' | '_' )
             {
-            if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='/')||input.LA(1)=='='||input.LA(1)=='@' ) {
+            if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='/')||input.LA(1)=='='||input.LA(1)=='@'||input.LA(1)=='_' ) {
                 input.consume();
 
             }
@@ -497,7 +497,7 @@ public class InternalEsoLexer extends Lexer {
                 }
             } while (true);
 
-            if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='/')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='/')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
 
             }
@@ -512,7 +512,7 @@ public class InternalEsoLexer extends Lexer {
                 int alt7=2;
                 int LA7_0 = input.LA(1);
 
-                if ( ((LA7_0>='#' && LA7_0<='$')||LA7_0=='&'||(LA7_0>='*' && LA7_0<='9')||LA7_0=='='||(LA7_0>='@' && LA7_0<='Z')||(LA7_0>='a' && LA7_0<='z')) ) {
+                if ( ((LA7_0>='#' && LA7_0<='$')||LA7_0=='&'||(LA7_0>='*' && LA7_0<='9')||LA7_0=='='||(LA7_0>='@' && LA7_0<='Z')||LA7_0=='_'||(LA7_0>='a' && LA7_0<='z')) ) {
                     alt7=1;
                 }
 
@@ -521,7 +521,7 @@ public class InternalEsoLexer extends Lexer {
             	case 1 :
             	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:
             	    {
-            	    if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='9')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            	    if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='9')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
 
             	    }
@@ -915,8 +915,8 @@ public class InternalEsoLexer extends Lexer {
     static final String[] DFA12_transitionS = {
             "\2\20\2\uffff\1\20\22\uffff\1\20\1\1\1\17\2\14\1\4\1\14\1\17"+
             "\1\7\1\10\1\14\1\11\1\14\1\11\2\14\12\15\1\6\1\3\1\uffff\1\14"+
-            "\2\uffff\1\14\16\16\1\5\13\16\6\uffff\5\16\1\13\13\16\1\2\1"+
-            "\16\1\12\6\16",
+            "\2\uffff\1\14\16\16\1\5\13\16\4\uffff\1\14\1\uffff\5\16\1\13"+
+            "\13\16\1\2\1\16\1\12\6\16",
             "",
             "\1\21",
             "",
@@ -926,13 +926,13 @@ public class InternalEsoLexer extends Lexer {
             "",
             "",
             "\2\16\1\uffff\1\16\3\uffff\6\16\12\25\3\uffff\1\16\2\uffff"+
-            "\33\16\6\uffff\32\16",
+            "\33\16\4\uffff\1\16\1\uffff\32\16",
             "\1\27",
             "\1\30",
             "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
-            "\6\uffff\32\16",
+            "\4\uffff\1\16\1\uffff\32\16",
             "\2\16\1\uffff\1\16\3\uffff\4\16\1\32\1\16\12\15\3\uffff\1"+
-            "\16\2\uffff\33\16\6\uffff\32\16",
+            "\16\2\uffff\33\16\4\uffff\1\16\1\uffff\32\16",
             "",
             "",
             "",
@@ -952,22 +952,22 @@ public class InternalEsoLexer extends Lexer {
             "\1\43",
             "\1\44",
             "\2\16\1\uffff\1\16\3\uffff\6\16\12\40\3\uffff\1\16\2\uffff"+
-            "\33\16\6\uffff\32\16",
+            "\33\16\4\uffff\1\16\1\uffff\32\16",
             "\1\46",
             "\1\47",
             "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
-            "\6\uffff\32\16",
+            "\4\uffff\1\16\1\uffff\32\16",
             "\1\51",
             "",
             "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
-            "\6\uffff\32\16",
+            "\4\uffff\1\16\1\uffff\32\16",
             "\1\53",
             "",
             "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
-            "\6\uffff\32\16",
+            "\4\uffff\1\16\1\uffff\32\16",
             "",
             "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
-            "\6\uffff\32\16",
+            "\4\uffff\1\16\1\uffff\32\16",
             ""
     };
 

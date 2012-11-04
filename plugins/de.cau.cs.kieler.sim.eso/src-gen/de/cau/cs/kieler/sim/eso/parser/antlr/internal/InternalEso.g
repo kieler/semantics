@@ -268,7 +268,7 @@ rulesignal returns [EObject current=null]
 (
 		lv_name_0_0=RULE_ALPHANUMSPECIAL
 		{
-			newLeafNode(lv_name_0_0, grammarAccess.getSignalAccess().getNameAlphaNumSpecialTerminalRuleCall_0_0()); 
+			newLeafNode(lv_name_0_0, grammarAccess.getSignalAccess().getNameALPHANUMSPECIALTerminalRuleCall_0_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -278,7 +278,7 @@ rulesignal returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"AlphaNumSpecial");
+        		"ALPHANUMSPECIAL");
 	    }
 
 )
@@ -402,7 +402,7 @@ rulekvpair returns [EObject current=null]
 (
 		lv_key_2_0=RULE_ALPHANUMSPECIAL
 		{
-			newLeafNode(lv_key_2_0, grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_2_0()); 
+			newLeafNode(lv_key_2_0, grammarAccess.getKvpairAccess().getKeyALPHANUMSPECIALTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -412,7 +412,7 @@ rulekvpair returns [EObject current=null]
        			$current, 
        			"key",
         		lv_key_2_0, 
-        		"AlphaNumSpecial");
+        		"ALPHANUMSPECIAL");
 	    }
 
 )
@@ -682,7 +682,7 @@ ruleEsoJson returns [EObject current=null]
 (
 		lv_value_0_0=RULE_ALPHANUMSPECIAL
 		{
-			newLeafNode(lv_value_0_0, grammarAccess.getEsoJsonAccess().getValueAlphaNumSpecialTerminalRuleCall_0()); 
+			newLeafNode(lv_value_0_0, grammarAccess.getEsoJsonAccess().getValueALPHANUMSPECIALTerminalRuleCall_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -692,7 +692,7 @@ ruleEsoJson returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"AlphaNumSpecial");
+        		"ALPHANUMSPECIAL");
 	    }
 
 )
@@ -703,7 +703,7 @@ ruleEsoJson returns [EObject current=null]
 
 
 
-RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'&'|'*'|'='|'+'|'-');
+RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'&'|'*'|'='|'+'|'-'|'_');
 
 RULE_BOOL : ('true'|'false');
 

@@ -19,38 +19,18 @@ import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
 import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
-import org.eclipse.xtext.serializer.sequencer.AbstractSemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
-@SuppressWarnings("restriction")
-public class AbstractEsoSemanticSequencer extends AbstractSemanticSequencer {
+@SuppressWarnings("all")
+public abstract class AbstractEsoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 
 	@Inject
-	protected EsoGrammarAccess grammarAccess;
-	
-	@Inject
-	protected ISemanticSequencerDiagnosticProvider diagnosticProvider;
-	
-	@Inject
-	protected ITransientValueService transientValues;
-	
-	@Inject
-	@GenericSequencer
-	protected Provider<ISemanticSequencer> genericSequencerProvider;
-	
-	protected ISemanticSequencer genericSequencer;
-	
-	
-	@Override
-	public void init(ISemanticSequencer sequencer, ISemanticSequenceAcceptor sequenceAcceptor, Acceptor errorAcceptor) {
-		super.init(sequencer, sequenceAcceptor, errorAcceptor);
-		this.genericSequencer = genericSequencerProvider.get();
-		this.genericSequencer.init(sequencer, sequenceAcceptor, errorAcceptor);
-	}
+	private EsoGrammarAccess grammarAccess;
 	
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == EsoPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
@@ -168,7 +148,7 @@ public class AbstractEsoSemanticSequencer extends AbstractSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     value=AlphaNumSpecial
+	 *     value=ALPHANUMSPECIAL
 	 */
 	protected void sequence_EsoJson(EObject context, EsoJson semanticObject) {
 		if(errorAcceptor != null) {
@@ -177,7 +157,7 @@ public class AbstractEsoSemanticSequencer extends AbstractSemanticSequencer {
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getEsoJsonAccess().getValueAlphaNumSpecialTerminalRuleCall_0(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getEsoJsonAccess().getValueALPHANUMSPECIALTerminalRuleCall_0(), semanticObject.getValue());
 		feeder.finish();
 	}
 	
@@ -200,7 +180,7 @@ public class AbstractEsoSemanticSequencer extends AbstractSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (key=AlphaNumSpecial (value=EsoJson | value=EsoString | value=EsoFloat | value=EsoBool | value=EsoInt))
+	 *     (key=ALPHANUMSPECIAL (value=EsoJson | value=EsoString | value=EsoFloat | value=EsoBool | value=EsoInt))
 	 */
 	protected void sequence_kvpair(EObject context, kvpair semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -209,7 +189,7 @@ public class AbstractEsoSemanticSequencer extends AbstractSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (name=AlphaNumSpecial valued?='('? (val=EsoInt | val=EsoFloat | val=EsoBool | val=EsoString)?)
+	 *     (name=ALPHANUMSPECIAL valued?='('? (val=EsoInt | val=EsoFloat | val=EsoBool | val=EsoString)?)
 	 */
 	protected void sequence_signal(EObject context, signal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

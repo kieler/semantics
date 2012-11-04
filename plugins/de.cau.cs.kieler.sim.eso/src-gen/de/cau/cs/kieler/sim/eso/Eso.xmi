@@ -144,7 +144,7 @@
       <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
     </alternatives>
   </rules>
-  <rules xsi:type="xtext:TerminalRule" name="Special">
+  <rules xsi:type="xtext:TerminalRule" name="SPECIAL">
     <type metamodel="//@metamodelDeclarations.0">
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
@@ -160,6 +160,7 @@
       <elements xsi:type="xtext:Keyword" value="="/>
       <elements xsi:type="xtext:Keyword" value="+"/>
       <elements xsi:type="xtext:Keyword" value="-"/>
+      <elements xsi:type="xtext:Keyword" value="_"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="BOOL">
@@ -200,7 +201,7 @@
       <right value="9"/>
     </alternatives>
   </rules>
-  <rules xsi:type="xtext:TerminalRule" name="AlphaNumSpecial">
+  <rules xsi:type="xtext:TerminalRule" name="ALPHANUMSPECIAL">
     <type metamodel="//@metamodelDeclarations.0">
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
