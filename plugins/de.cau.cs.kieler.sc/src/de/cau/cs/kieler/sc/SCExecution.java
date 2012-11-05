@@ -277,7 +277,7 @@ public class SCExecution {
     /**
      * Stop execution and destroy the execution process.
      */
-    public void stopExecution() {
+    public void stopExecution(boolean tryToDelete) {
         // reset successful started flag
         setStarted(false);
 
@@ -297,10 +297,12 @@ public class SCExecution {
         // destroy process
         executionProcess.destroy();
 
-        // (try to) delete temp folder
-        File folder = new File(outputPath);
-        if (folder.getAbsolutePath().contains(System.getProperty("java.io.tmpdir"))) {
-            KiemUtil.deleteFolder(folder);
+        if (tryToDelete) {
+            // (try to) delete temp folder
+            File folder = new File(outputPath);
+            if (folder.getAbsolutePath().contains(System.getProperty("java.io.tmpdir"))) {
+                KiemUtil.deleteFolder(folder);
+            }
         }
     }
 
