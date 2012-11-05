@@ -89,7 +89,11 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     private boolean simulatingOldModelVersion;
 
     /**
-     * The dirty flag indicates iff a new model transformation is required to be done. 
+     * The dirty flag indicates iff a new model transformation is required to be done. The default 
+     * implementation just returns that the simulator is ALWAYS dirty. This means we never skip
+     * the model transformation the default case. A smarter implementation might be to hash 
+     * and cache the contents of the whole model and just return true if the old and current hash
+     * is different.
      *
      * @return true, if is dirty
      */
