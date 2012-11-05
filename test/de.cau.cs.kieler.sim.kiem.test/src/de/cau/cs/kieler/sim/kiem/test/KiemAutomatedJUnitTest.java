@@ -453,8 +453,14 @@ public abstract class KiemAutomatedJUnitTest {
                     logger.info("Tick " + tick);
 
                     if (tick > MAX_NUMBER_OF_TICKS_UNTIL_ERROR) {
-                        throw new RuntimeException("Maximum number of ticks ("
-                                + MAX_NUMBER_OF_TICKS_UNTIL_ERROR + ") reached.");
+                        // Assume this to be a good sign (stopping execution)
+                        // !!! LIKE EOT DETECTED !!! //
+                        execution.stopExecutionSync();
+                        execution.cancel();
+                        while (kiemPlugin.getExecution() != null) {
+                            pause();
+                        }
+                        break;
                     }
 
                     // Remember the pool counter number
