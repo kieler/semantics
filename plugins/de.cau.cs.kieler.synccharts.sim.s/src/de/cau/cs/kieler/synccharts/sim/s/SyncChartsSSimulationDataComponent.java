@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -72,6 +73,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     /** A flag indicating that debug console output is generated and should be handled. */
     private boolean debugConsole = true;
 
+    /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
+    private int dirtyIndicator = 0;
+
     private SSCSimulationDataComponent sSCSimDataComponent = new SSCSimulationDataComponent();
 
     // -------------------------------------------------------------------------
@@ -89,6 +93,27 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
         }
 
         return true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isDirty() {
+        // Calculate a dirty indicator from ALL model elements and their textual representation's
+        // hash code.
+        int newDirtyIndicator = 0;
+        TreeIterator<?> treeIterator = super.getModelRootElement().eAllContents();
+        while (treeIterator.hasNext()) {
+            Object obj = treeIterator.next();
+            newDirtyIndicator += obj.toString().hashCode();
+        }
+        if (newDirtyIndicator != dirtyIndicator) {
+            dirtyIndicator = newDirtyIndicator;
+            return true;
+        }
+        return false;
     }
 
     // -------------------------------------------------------------------------
@@ -166,7 +191,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         } else if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             // add/pass-through normal signals directly
                             returnObj.accumulate(signalName, signalValue);
                         }
@@ -332,16 +357,16 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // These are done AFTER the visualization transformation because the visualization
             // transformation MUST operate on the resource file (for URI gathering reasons).
 
-            // We now support Local Signals (@requires: none)
-            transformedModel = (new SyncCharts2Simulation()).transformRaiseLocalSignal(transformedModel);
-            
+            // We now support raising Local Signals (@requires: none)
+            transformedModel = (new SyncCharts2Simulation())
+                    .transformRaiseLocalSignal(transformedModel);
+
             if (this.getProperties()[KIEM_PROPERTY_EXPOSELOCALSIGNALS + KIEM_PROPERTY_DIFF]
                     .getValueAsBoolean()) {
-                // We now support Local Signals (@requires: raiselocalsignals)
+                // We now support exposing Local Signals (should run AFTER raising local signals)
                 transformedModel = (new SyncCharts2Simulation())
-                                          .transformExposeLocalSignal(transformedModel);
+                        .transformExposeLocalSignal(transformedModel);
             }
-            
 
             // We now support Normal Termination transitions (@requires: during actions)
             transformedModel = (new SyncCharts2Simulation())
@@ -423,7 +448,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             returnObj.accumulate(signalName, signalValue);
                         }
                     } catch (JSONException e) {

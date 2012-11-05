@@ -432,9 +432,9 @@ public abstract class KiemAutomatedJUnitTest {
         for (int traceNumber = 0; traceNumber < numberOfTraces; traceNumber++) {
             logger.info("Trace Number " + traceNumber);
 
-            // set the current trace number
+            // Set the current trace number
             traceProperty.setValue(traceNumber + "");
-            // now run the execution stepwise until it has stopped
+            // Now run the execution stepwise until it has stopped
 
             pause();
             if (kiemPlugin.initExecution()) {
@@ -447,7 +447,7 @@ public abstract class KiemAutomatedJUnitTest {
                 }
                 pause();
 
-                // at this point we know that the execution is not null
+                // At this point we know that the execution is not null
                 int tick = 0;
                 while (execution.isStarted() && !errorFlag) {
                     logger.info("Tick " + tick);
@@ -457,14 +457,14 @@ public abstract class KiemAutomatedJUnitTest {
                                 + MAX_NUMBER_OF_TICKS_UNTIL_ERROR + ") reached.");
                     }
 
-                    // remember the pool counter number
+                    // Remember the pool counter number
                     long poolCounter = execution.getDataPool().getPoolCounter();
                     execution.stepExecutionSync();
-                    // wait until step is done
+                    // Wait until step is done
                     while (!execution.isPaused() && execution.isStarted()) {
                         pause();
                     }
-                    // now inspect the data pool
+                    // Now inspect the data pool
                     try {
                         JSONObject jSONData = execution.getDataPool().getData(null, poolCounter);
                         logger.debug(jSONData.toString());

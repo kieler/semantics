@@ -82,12 +82,21 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     /** The model time stamp. */
     private long modelTimeStamp;
-
+    
     /**
      * A flag that becomes true if the user was warned about unsaved changes during the simulation.
      */
     private boolean simulatingOldModelVersion;
 
+    /**
+     * The dirty flag indicates iff a new model transformation is required to be done. 
+     *
+     * @return true, if is dirty
+     */
+    public boolean isDirty() {
+        return true;
+    }
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -286,7 +295,10 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             throws KiemInitializationException {
         monitor.begin("Model2Model transformation", TOTAL_WORK);
         try {
-            doModel2ModelTransform(monitor);
+            // skip the model transformation in case the execution is still valid and NOT dirty
+            if (isDirty()) {
+                doModel2ModelTransform(monitor);
+            }
         } catch (Exception e) {
             monitor.done();
             exception = e;
