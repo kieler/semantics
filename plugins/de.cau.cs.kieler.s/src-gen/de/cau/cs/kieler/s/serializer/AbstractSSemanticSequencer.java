@@ -38,6 +38,7 @@ import de.cau.cs.kieler.s.s.Halt;
 import de.cau.cs.kieler.s.s.HostCodeInstruction;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Join;
+import de.cau.cs.kieler.s.s.LocalSignal;
 import de.cau.cs.kieler.s.s.Pause;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.Program;
@@ -462,6 +463,13 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 					return; 
 				}
 				else break;
+			case SPackage.LOCAL_SIGNAL:
+				if(context == grammarAccess.getInstructionRule() ||
+				   context == grammarAccess.getLocalSignalRule()) {
+					sequence_LocalSignal(context, (LocalSignal) semanticObject); 
+					return; 
+				}
+				else break;
 			case SPackage.PAUSE:
 				if(context == grammarAccess.getInstructionRule() ||
 				   context == grammarAccess.getPauseRule()) {
@@ -590,6 +598,22 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	 */
 	protected void sequence_Join(EObject context, Join semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     signal=[Signal|ID]
+	 */
+	protected void sequence_LocalSignal(EObject context, LocalSignal semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SPackage.Literals.LOCAL_SIGNAL__SIGNAL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SPackage.Literals.LOCAL_SIGNAL__SIGNAL));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getLocalSignalAccess().getSignalSignalIDTerminalRuleCall_2_0_1(), semanticObject.getSignal());
+		feeder.finish();
 	}
 	
 	

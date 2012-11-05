@@ -941,11 +941,11 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getEmitParserRuleCall_8()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getLocalSignalParserRuleCall_8()); 
     }
-    this_Emit_8=ruleEmit
+    this_LocalSignal_8=ruleLocalSignal
     { 
-        $current = $this_Emit_8.current; 
+        $current = $this_LocalSignal_8.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -954,11 +954,11 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getAwaitParserRuleCall_9()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getEmitParserRuleCall_9()); 
     }
-    this_Await_9=ruleAwait
+    this_Emit_9=ruleEmit
     { 
-        $current = $this_Await_9.current; 
+        $current = $this_Emit_9.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -967,11 +967,11 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getPrioParserRuleCall_10()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getAwaitParserRuleCall_10()); 
     }
-    this_Prio_10=rulePrio
+    this_Await_10=ruleAwait
     { 
-        $current = $this_Prio_10.current; 
+        $current = $this_Await_10.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -980,11 +980,24 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getHostCodeInstructionParserRuleCall_11()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getPrioParserRuleCall_11()); 
     }
-    this_HostCodeInstruction_11=ruleHostCodeInstruction
+    this_Prio_11=rulePrio
     { 
-        $current = $this_HostCodeInstruction_11.current; 
+        $current = $this_Prio_11.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getInstructionAccess().getHostCodeInstructionParserRuleCall_12()); 
+    }
+    this_HostCodeInstruction_12=ruleHostCodeInstruction
+    { 
+        $current = $this_HostCodeInstruction_12.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -1429,6 +1442,55 @@ ruleHalt returns [EObject current=null]
 )?	otherlv_4=')' 
     {
     	newLeafNode(otherlv_4, grammarAccess.getHaltAccess().getRightParenthesisKeyword_4());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleLocalSignal
+entryRuleLocalSignal returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getLocalSignalRule()); }
+	 iv_ruleLocalSignal=ruleLocalSignal 
+	 { $current=$iv_ruleLocalSignal.current; } 
+	 EOF 
+;
+
+// Rule LocalSignal
+ruleLocalSignal returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='signal' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getLocalSignalAccess().getSignalKeyword_0());
+    }
+	otherlv_1='(' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getLocalSignalAccess().getLeftParenthesisKeyword_1());
+    }
+(
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getLocalSignalRule());
+	        }
+        }
+	otherlv_2=RULE_ID
+	{
+		newLeafNode(otherlv_2, grammarAccess.getLocalSignalAccess().getSignalSignalCrossReference_2_0()); 
+	}
+
+)
+)	otherlv_3=')' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getLocalSignalAccess().getRightParenthesisKeyword_3());
     }
 )
 ;

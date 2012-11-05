@@ -110,8 +110,8 @@ T__77=77
 'output'=70
 'pure'=32
 'inputoutput'=71
-'='=26
 'halt'=64
+'='=26
 'trans'=59
 '@'=74
 'unsigned'=34

@@ -12,6 +12,7 @@ import de.cau.cs.kieler.s.s.HostCodeInstruction;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.Join;
+import de.cau.cs.kieler.s.s.LocalSignal;
 import de.cau.cs.kieler.s.s.Pause;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.Program;
@@ -154,6 +155,11 @@ public class SAdapterFactory extends AdapterFactoryImpl
       public Adapter caseHalt(Halt object)
       {
         return createHaltAdapter();
+      }
+      @Override
+      public Adapter caseLocalSignal(LocalSignal object)
+      {
+        return createLocalSignalAdapter();
       }
       @Override
       public Adapter caseEmit(Emit object)
@@ -388,6 +394,21 @@ public class SAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createHaltAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.LocalSignal <em>Local Signal</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.s.s.LocalSignal
+   * @generated
+   */
+  public Adapter createLocalSignalAdapter()
   {
     return null;
   }

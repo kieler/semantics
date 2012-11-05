@@ -34,7 +34,7 @@ import de.cau.cs.kieler.s.s.HostCodeInstruction
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 
 import de.cau.cs.kieler.s.sim.sc.SSimSCPlugin
-import de.cau.cs.kieler.s.sim.sc.SSCSimulationDataComponent
+import de.cau.cs.kieler.s.s.LocalSignal
 
 /**
  * Transformation of S code into S code that is
@@ -92,6 +92,7 @@ class S2Simulation {
                ||(instruction instanceof Pause)
                ||(instruction instanceof Term)
                ||(instruction instanceof Halt)
+               ||(instruction instanceof LocalSignal)
                ||(instruction instanceof Emit)
                ||(instruction instanceof Abort)
                ||(instruction instanceof If)

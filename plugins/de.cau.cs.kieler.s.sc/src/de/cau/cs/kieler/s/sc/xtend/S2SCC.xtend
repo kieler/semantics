@@ -40,6 +40,7 @@ import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.s.s.LocalSignal
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -450,6 +451,12 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    def dispatch expand(Prio prioInstruction) {
        '''PRIO(«prioInstruction.priority»);'''
    }   
+   
+   // Expand SIGNAL instruction. This takes care of reincarnation
+   // by resetting local signals when the state is re-entered.
+   def dispatch expand(LocalSignal signalInstruction) {
+       '''presentSigInt[sig_«signalInstruction.signal.name»] = 0;'''
+   }
    
    // Expand an EMIT instruction.
    def dispatch expand(Emit emitInstruction) {

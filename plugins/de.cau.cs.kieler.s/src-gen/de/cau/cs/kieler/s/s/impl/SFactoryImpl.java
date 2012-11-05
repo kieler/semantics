@@ -12,6 +12,7 @@ import de.cau.cs.kieler.s.s.HostCodeInstruction;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.Join;
+import de.cau.cs.kieler.s.s.LocalSignal;
 import de.cau.cs.kieler.s.s.Pause;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.Program;
@@ -94,6 +95,7 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
       case SPackage.PAUSE: return createPause();
       case SPackage.TERM: return createTerm();
       case SPackage.HALT: return createHalt();
+      case SPackage.LOCAL_SIGNAL: return createLocalSignal();
       case SPackage.EMIT: return createEmit();
       case SPackage.ABORT: return createAbort();
       case SPackage.IF: return createIf();
@@ -244,6 +246,17 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
   {
     HaltImpl halt = new HaltImpl();
     return halt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LocalSignal createLocalSignal()
+  {
+    LocalSignalImpl localSignal = new LocalSignalImpl();
+    return localSignal;
   }
 
   /**

@@ -140,6 +140,15 @@ public interface SFactory extends EFactory
   Halt createHalt();
 
   /**
+   * Returns a new object of class '<em>Local Signal</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Local Signal</em>'.
+   * @generated
+   */
+  LocalSignal createLocalSignal();
+
+  /**
    * Returns a new object of class '<em>Emit</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -12,6 +12,7 @@ import de.cau.cs.kieler.s.s.HostCodeInstruction;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.Join;
+import de.cau.cs.kieler.s.s.LocalSignal;
 import de.cau.cs.kieler.s.s.Pause;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.Program;
@@ -186,6 +187,14 @@ public class SSwitch<T> extends Switch<T>
         Halt halt = (Halt)theEObject;
         T result = caseHalt(halt);
         if (result == null) result = caseInstruction(halt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SPackage.LOCAL_SIGNAL:
+      {
+        LocalSignal localSignal = (LocalSignal)theEObject;
+        T result = caseLocalSignal(localSignal);
+        if (result == null) result = caseInstruction(localSignal);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -429,6 +438,22 @@ public class SSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseHalt(Halt object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Local Signal</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Local Signal</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLocalSignal(LocalSignal object)
   {
     return null;
   }

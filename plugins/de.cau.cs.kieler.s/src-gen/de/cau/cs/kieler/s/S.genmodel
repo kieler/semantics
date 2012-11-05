@@ -54,6 +54,9 @@
     <genClasses ecoreClass="S.ecore#//Halt">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Halt/continuation"/>
     </genClasses>
+    <genClasses ecoreClass="S.ecore#//LocalSignal">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//LocalSignal/signal"/>
+    </genClasses>
     <genClasses ecoreClass="S.ecore#//Emit">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Emit/signal"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Emit/value"/>
