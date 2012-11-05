@@ -250,10 +250,10 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            scExecution.stopExecution();
+            scExecution.stopExecution(false);
         } catch (JSONException e) {
             e.printStackTrace();
-            scExecution.stopExecution();
+            scExecution.stopExecution(false);
         }
 
         return returnObj;
@@ -310,7 +310,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         computedTick = 1;
         clearConsole();
         if (scExecution != null) {
-            scExecution.stopExecution();
+            // Do not delete the executable, maybe it can be used again
+            scExecution.stopExecution(false);
         }
     }
 
