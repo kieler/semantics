@@ -321,7 +321,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
                 }
             }
         }
-        return "";
+        return "S_";
     }
 
 

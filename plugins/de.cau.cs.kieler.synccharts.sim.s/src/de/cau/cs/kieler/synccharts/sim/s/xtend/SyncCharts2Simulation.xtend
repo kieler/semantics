@@ -240,7 +240,7 @@ class SyncCharts2Simulation {
                 }
             }
         }
-        return "";
+        return "S_";
     }
            
     // Traverse all states and transform possible local signals
