@@ -30,6 +30,7 @@ import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler;
 /**
  * The activator class controls the plug-in life cycle.
  * 
+ * @kieler.ignore Standard UI plug-in activator.
  * @author mim
  */
 @SuppressWarnings("restriction")

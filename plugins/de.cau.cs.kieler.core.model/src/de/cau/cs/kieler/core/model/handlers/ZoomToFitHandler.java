@@ -32,7 +32,8 @@ import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 /**
  * A handler used to zoom the diagram to fit.
  * 
- * @author <a href="haf@informatik.uni-kiel.de">Hauke Fuhrmann</a>
+ * @author haf
+ * @kieler.ignore We'd like to get rid of this.
  */
 public class ZoomToFitHandler extends AbstractHandler {
 

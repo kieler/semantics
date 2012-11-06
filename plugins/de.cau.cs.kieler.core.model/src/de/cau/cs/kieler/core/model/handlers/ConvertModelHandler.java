@@ -46,6 +46,8 @@ import de.cau.cs.kieler.core.model.CoreModelPlugin;
  * A command handler that can be used to convert a model from one format into another.
  * 
  * @author msp
+ * @kieler.rating proposed yellow 2012-11-06 cds msp
+ * @kieler.design proposed 2012-11-06 cds msp
  */
 public class ConvertModelHandler extends AbstractHandler {
 

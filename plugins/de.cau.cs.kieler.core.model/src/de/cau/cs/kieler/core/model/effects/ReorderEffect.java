@@ -28,6 +28,8 @@ import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 /**
  * An effect for reordering elements in a feature list.
  *
+ * @kieler.rating proposed yellow 2012-11-06 cds msp
+ * @kieler.design proposed 2012-11-06 cds msp
  * @author msp
  */
 public class ReorderEffect extends AbstractEffect {

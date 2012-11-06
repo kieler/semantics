@@ -23,6 +23,7 @@ import de.cau.cs.kieler.core.model.validation.ValidationManager;
  * Handler for triggering the validate action in the checkfile manager.
  * 
  * @author soh
+ * @kieler.ignore We'd like to get rid of this.
  */
 public class ValidateActionHandler extends AbstractHandler {
 

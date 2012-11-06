@@ -36,8 +36,9 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
 /**
  * Listens for selection and deselection of graphical elements.
  * 
- * @author mmu
+ * TODO: Take a look at this code.
  * 
+ * @author mmu
  */
 public class SelectionTrigger extends AbstractTrigger implements ISelectionListener {
 
@@ -47,12 +48,14 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
      */
     private List<?> oldSelection;
 
+    
     /**
      * Create a new SelectionTrigger.
      */
     public SelectionTrigger() {
 
     }
+    
 
     /**
      * {@inheritDoc}

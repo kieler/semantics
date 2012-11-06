@@ -40,6 +40,8 @@ import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 /**
  * A part trigger that fires trigger states if the active part has been switched.
  * 
+ * TODO: Take a look at this code.
+ * 
  * @author chsch
  */
 public class PartTrigger extends AbstractTrigger implements IPartListener {

@@ -17,7 +17,10 @@ package de.cau.cs.kieler.core.model.m2m;
  * A TransformationDescriptor holds information about the name of a transformation method and the
  * parameters that should be passed to this method.
  * 
+ * TODO: Move this to another plug-in?
+ * 
  * @author uru
+ * @kieler.design proposed 2012-11-06 cds msp
  * @kieler.rating 2011-02-14 yellow
  *      review by msp, haf
  */

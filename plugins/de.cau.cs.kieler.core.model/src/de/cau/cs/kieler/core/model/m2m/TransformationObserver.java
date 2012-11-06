@@ -19,7 +19,11 @@ import java.util.List;
 /**
  * Register yourself to this class to get notified about recently executed transformations.
  * 
+ * TODO: Move this to another plug-in?
+ * 
  * @author ckru
+ * @kieler.design proposed 2012-11-06 cds msp
+ * @kieler.rating proposed yellow 2012-11-06 cds msp
  */
 public final class TransformationObserver {
 

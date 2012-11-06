@@ -26,6 +26,8 @@ import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 /**
  * KiviEffect that hides or reveals an element by modifying the visibility of its figure.
  * 
+ * @kieler.rating proposed yellow 2012-11-06 cds msp
+ * @kieler.design proposed 2012-11-06 cds msp
  * @author ckru
  * @author msp
  */

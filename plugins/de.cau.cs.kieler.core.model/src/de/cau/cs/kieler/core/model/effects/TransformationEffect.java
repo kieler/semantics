@@ -29,21 +29,37 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
  * A KiVi effect that executes a specific transformation.
  * 
  * @author uru
+ * @kieler.design proposed 2012-11-06 cds msp
  * @kieler.rating 2011-02-14 yellow
  *      review by msp, haf
  */
 public class TransformationEffect extends AbstractEffect {
 
+    /**
+     * The transformation context containing all necessary information in order to execute the
+     * transformation.
+     */
     private ITransformationContext context;
+    
+    /**
+     * Transformation descriptor holding information about the name of a transformation method
+     * and the parameters that should be passed to this method.
+     */
     private TransformationDescriptor descriptor;
+    
+    /**
+     * Whether the transformation should be processed as a monitored operation.
+     */
     private boolean monitored = false;
 
+    
     /**
      * default constructor.
      */
     public TransformationEffect() {
     }
 
+    
     /**
      * @param context
      *            {@link ITransformationContext} containing all necessary information in order to

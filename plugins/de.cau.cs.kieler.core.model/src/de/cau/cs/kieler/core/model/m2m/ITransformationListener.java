@@ -17,7 +17,11 @@ package de.cau.cs.kieler.core.model.m2m;
  * Implement this class and add it to the TransformationObserver to get notified 
  * immediately after a transformation was executed.
  * 
+ * TODO: Move this to another plug-in?
+ * 
  * @author ckru
+ * @kieler.design proposed 2012-11-06 cds msp
+ * @kieler.rating proposed yellow 2012-11-06 cds msp
  */
 public interface ITransformationListener {
 

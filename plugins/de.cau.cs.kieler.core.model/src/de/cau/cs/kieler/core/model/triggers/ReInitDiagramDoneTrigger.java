@@ -25,6 +25,8 @@ import de.cau.cs.kieler.core.kivi.ITriggerState;
  * This trigger is used for notifying that a diagram reinitialization has
  * finished.
  * 
+ * TODO: Take a look at this code.
+ * 
  * @author soh
  */
 public class ReInitDiagramDoneTrigger extends AbstractTrigger {

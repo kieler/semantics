@@ -17,7 +17,10 @@ package de.cau.cs.kieler.core.model.m2m;
  * A TransformationContext is supposed to hold all information that is necessary to execute a
  * transformation.
  * 
+ * TODO: Move this to another plug-in?
+ * 
  * @author uru
+ * @kieler.design proposed 2012-11-06 cds msp
  * @kieler.rating 2011-02-14 yellow
  *      review by msp, haf
  */

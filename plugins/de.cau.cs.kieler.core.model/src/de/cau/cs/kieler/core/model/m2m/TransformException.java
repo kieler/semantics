@@ -15,8 +15,12 @@ package de.cau.cs.kieler.core.model.m2m;
 
 /**
  * Thrown when a model transformation fails.
+ * 
+ * TODO: Move this to another plug-in?
  *
  * @author msp
+ * @kieler.design proposed 2012-11-06 cds msp
+ * @kieler.rating proposed yellow 2012-11-06 cds msp
  */
 public class TransformException extends Exception {
 

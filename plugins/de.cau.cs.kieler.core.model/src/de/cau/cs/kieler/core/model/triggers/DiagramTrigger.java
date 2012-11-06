@@ -36,6 +36,8 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
  * Eclipse Editor or View has been activated that contains a diagram for which a compatible
  * IGraphicalFrameworkBridge is available.
  * 
+ * TODO: Take a look at this code.
+ * 
  * @author haf
  */
 public class DiagramTrigger extends AbstractTrigger implements IPartListener {
