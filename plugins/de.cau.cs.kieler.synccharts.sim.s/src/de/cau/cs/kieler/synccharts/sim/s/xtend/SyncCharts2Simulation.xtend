@@ -230,13 +230,13 @@ class SyncCharts2Simulation {
                 }
                 if (state.parentRegion.parentState.regions.size > 1) {
                     return higherHierarchyReturnedName 
-                           + regionId  + "_" +  state.id.removeSpecialCharacters;
+                           + regionId  + "_" +  stateId;
                 }
                 else {
                     // this is the simplified case, where there is just one region and we can
-                    // omit the regionll id
+                    // omit the region id
                     return higherHierarchyReturnedName  
-                           + state.id.removeSpecialCharacters;
+                           + stateId;
                 }
             }
         }
