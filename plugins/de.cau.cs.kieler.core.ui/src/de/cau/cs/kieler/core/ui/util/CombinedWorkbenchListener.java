@@ -53,6 +53,9 @@ import de.cau.cs.kieler.core.ui.CoreUIPlugin;
  * FIXME those hash sets also lack documentation...
  * 
  * @author soh
+ * @deprecated This class is beyond saving. The mere idea of registering a universal
+ *             proxy listener that other listeners can register with is... well, let's
+ *             just say that this class should be gotten rid of as soon as possible...
  */
 public class CombinedWorkbenchListener implements IStartup, IWindowListener,
         IWorkbenchListener, IPageListener, IPerspectiveListener, IPartListener,
