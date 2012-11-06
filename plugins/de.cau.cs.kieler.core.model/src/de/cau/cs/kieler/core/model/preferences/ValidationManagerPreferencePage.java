@@ -32,6 +32,7 @@ import de.cau.cs.kieler.core.model.validation.ValidationManager;
  * validate the different diagrams.
  * 
  * @author soh
+ * @kieler.ignore We'd like to get rid of this.
  */
 public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
         implements IWorkbenchPreferencePage {

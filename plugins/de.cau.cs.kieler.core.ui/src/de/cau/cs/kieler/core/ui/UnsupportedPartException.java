@@ -20,32 +20,21 @@ package de.cau.cs.kieler.core.ui;
  * in the context of the operation. The message will be built from these elements, which
  * may be null.
  * 
+ * @kieler.design 2012-11-06 proposed cds
+ * @kieler.rating 2012-11-06 proposed yellow cds
  * @author haf
  */
 public class UnsupportedPartException extends RuntimeException {
 
     /** the serial version UID. */
     private static final long serialVersionUID = -3050609849973311868L;
+    /** the object that is not supported by the operation, if any. */
     private Object myNotSupportedObject = null;
+    /** the operation that is not supported. */
     private String myOperation = null;
+    /** the reason why the operation is not supported. */
     private String myReason = null;
-
-    private static String transformMessage(final String message, final String operation,
-            final String reason, final Object notSupportedObject, final boolean nullConsideredEvil) {
-        String temp = "Not supported: " + message;
-        if (operation != null) {
-            temp += " " + operation;
-        }
-        if (reason != null) {
-            temp += " " + reason;
-        }
-        if (notSupportedObject != null) {
-            temp += " " + notSupportedObject;
-        } else {
-            temp += " The passed object is null!";
-        }
-        return temp;
-    }
+    
 
     /**
      * Constructs a KIELER exception with given message.
@@ -69,7 +58,8 @@ public class UnsupportedPartException extends RuntimeException {
      */
     public UnsupportedPartException(final String operation, final String reason,
             final Object notSupportedObject) {
-        super(transformMessage("", operation, reason, notSupportedObject, false));
+        
+        super(buildMessage("", operation, reason, notSupportedObject, false));
         this.myReason = reason;
         this.myOperation = operation;
         this.myNotSupportedObject = notSupportedObject;
@@ -91,7 +81,8 @@ public class UnsupportedPartException extends RuntimeException {
      */
     public UnsupportedPartException(final String operation, final String reason,
             final Object notSupportedObject, final boolean nullConsideredEvil) {
-        super(transformMessage("", operation, reason, notSupportedObject, nullConsideredEvil));
+        
+        super(buildMessage("", operation, reason, notSupportedObject, nullConsideredEvil));
         this.myReason = reason;
         this.myOperation = operation;
         this.myNotSupportedObject = notSupportedObject;
@@ -108,6 +99,7 @@ public class UnsupportedPartException extends RuntimeException {
     public UnsupportedPartException(final String message, final Throwable cause) {
         super(message, cause);
     }
+    
 
     /**
      * @return object which in the context of the operation is not supported, e.g. a wrong parameter
@@ -128,6 +120,40 @@ public class UnsupportedPartException extends RuntimeException {
      */
     public String getReason() {
         return myReason;
+    }
+    
+    
+    /**
+     * Builds the error message string from the given information.
+     * 
+     * @param message a custom message.
+     * @param operation the operation that is not supported. May be {@code null}.
+     * @param reason the reason why it is not supported. May be {@code null}.
+     * @param notSupportedObject the object that is not supported. May be {@code null}.
+     * @param nullConsideredEvil currently not used.
+     * @return the error message.
+     */
+    private static String buildMessage(final String message, final String operation,
+            final String reason, final Object notSupportedObject, final boolean nullConsideredEvil) {
+        
+        StringBuilder temp = new StringBuilder("Not supported:");
+        temp.append(message);
+        
+        if (operation != null) {
+            temp.append(" ").append(operation);
+        }
+        
+        if (reason != null) {
+            temp.append(" ").append(reason);
+        }
+        
+        if (notSupportedObject != null) {
+            temp.append(" ").append(notSupportedObject);
+        } else {
+            temp.append(" The passed object is null!");
+        }
+        
+        return temp.toString();
     }
 
 }

@@ -19,6 +19,7 @@ package de.cau.cs.kieler.core.ui;
  * a reference to an arbitrary object that is supposed to be the causing model part.
  * 
  * @author haf
+ * @kieler.design 2012-11-06 proposed cds
  * @kieler.rating 2010-01-19 proposed yellow proposed by haf
  */
 public class KielerModelException extends Exception {
@@ -29,6 +30,8 @@ public class KielerModelException extends Exception {
     private Object causingModelObject;
     
     /**
+     * Creates a new exception instance.
+     * 
      * @param message exception message
      * @param thecausingModelObject the model object that has caused the exception.
      *        Likely an EObject, if the metamodel is EMF.
@@ -39,6 +42,8 @@ public class KielerModelException extends Exception {
     }
 
     /**
+     * Creates a new exception instance.
+     * 
      * @param message exception message
      * @param thecausingModelObject the model object that has caused the exception.
      *        Likely an EObject, if the metamodel is EMF.
@@ -51,8 +56,10 @@ public class KielerModelException extends Exception {
     }
     
     /**
-     * @return the model object that has caused this Exception. Likely to be an
-     *         EMF EObject if the used metamodeling framework is EMF.
+     * Returns the model object that has caused this Exception. Likely to be an EMF EObject if
+     * the used metamodeling framework is EMF.
+     * 
+     * @return the model object that caused the exception.
      */
     public Object getModelObject() {
         return causingModelObject;

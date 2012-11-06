@@ -22,17 +22,19 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
 /**
- * Command to sort an EList using a given Comparator.
+ * Command to sort an {@link EList} using a given {@link Comparator}.
  * 
  * @param <T>
  *            Type to sort.
  * @author haf
- * 
  */
 public class SortCommand<T> extends AbstractCommand {
 
+    /** the list to sort. */
     private EList<T> list;
+    /** the comparator used to compare elements. */
     private Comparator<T> comparator;
+    /** map mapping indices of elements in the old list to indices in the sorted list. */
     private Map<T, Integer> oldIndices = new HashMap<T, Integer>();
 
     /**

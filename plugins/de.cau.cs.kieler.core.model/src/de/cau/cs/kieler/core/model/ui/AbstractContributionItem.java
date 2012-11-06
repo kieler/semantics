@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.ToolBar;
  * This class contains an abstract menu item with a selection listener.
  * 
  * @author soh
+ * @kieler.ignore We'd like to get rid of this.
  */
 public abstract class AbstractContributionItem implements SelectionListener,
         IContributionItem {

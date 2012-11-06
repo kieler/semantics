@@ -33,6 +33,7 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
  * file/diagram.
  * 
  * @author haf
+ * @kieler.ignore We desparately want to get rid of this.
  */
 public class RemoveMarkerHandler extends AbstractHandler {
 

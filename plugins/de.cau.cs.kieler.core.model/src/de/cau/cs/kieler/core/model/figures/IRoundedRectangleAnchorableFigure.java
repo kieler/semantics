@@ -23,7 +23,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
  * provide a connection anchor.
  * 
  * @author mri
- * @kieler.ignore (excluded from review process)
+ * @kieler.ignore We don't care for GMF anymore.
  */
 public interface IRoundedRectangleAnchorableFigure extends IFigure {
 

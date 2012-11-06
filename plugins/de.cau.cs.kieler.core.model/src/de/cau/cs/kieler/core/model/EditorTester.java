@@ -17,11 +17,11 @@ import org.eclipse.core.expressions.PropertyTester;
 
 /**
  * A property tester that checks whether the given element is supported using the
- * GraphicalFrameworkService.
+ * {@link GraphicalFrameworkService}.
  * 
+ * @kieler.ignore We'd like to get rid of this.
  * @author cmot
  */
-
 public class EditorTester extends PropertyTester {
 
     /**

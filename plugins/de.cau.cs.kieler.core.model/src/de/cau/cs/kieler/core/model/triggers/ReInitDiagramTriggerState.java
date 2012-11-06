@@ -21,6 +21,8 @@ import de.cau.cs.kieler.core.kivi.ITrigger;
 /**
  * The state for triggers on the diagram reinitialization.
  * 
+ * TODO: Take a look at this code.
+ * 
  * @author soh
  */
 public class ReInitDiagramTriggerState extends AbstractTriggerState {

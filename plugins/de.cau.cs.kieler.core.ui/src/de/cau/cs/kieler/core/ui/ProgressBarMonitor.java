@@ -19,7 +19,9 @@ import de.cau.cs.kieler.core.alg.BasicProgressMonitor;
 
 /**
  * Progress monitor that reports progress to a progress bar.
- *
+ * 
+ * @kieler.design 2012-11-06 proposed cds
+ * @kieler.rating 2012-11-06 proposed yellow cds
  * @author msp
  */
 public class ProgressBarMonitor extends BasicProgressMonitor {

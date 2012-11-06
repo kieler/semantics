@@ -39,6 +39,7 @@ import de.cau.cs.kieler.core.model.validation.ValidationManager;
  * validate action on the toolbar. Each action corresponds to a check file.
  * 
  * @author soh
+ * @kieler.ignore We'd like to get rid of this.
  */
 public class ValidationMenuContributionFactory extends
         ExtensionContributionFactory {

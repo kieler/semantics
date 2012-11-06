@@ -23,7 +23,7 @@ import de.cau.cs.kieler.core.ui.listeners.RefactoringListener;
 /**
  * Activator class for the KIELER core UI plugin.
  * 
- * @kieler.rating 2009-12-11 proposed yellow msp
+ * @kieler.ignore Simple activator class without gimmicks.
  * @author msp
  */
 public class CoreUIPlugin extends AbstractUIPlugin {

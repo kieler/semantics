@@ -19,6 +19,7 @@ import org.eclipse.osgi.util.NLS;
  * Messages class for internationalization.
  *
  * @author msp
+ * @kieler.ignore Generated internationalization class.
  */
 public final class Messages extends NLS {
     

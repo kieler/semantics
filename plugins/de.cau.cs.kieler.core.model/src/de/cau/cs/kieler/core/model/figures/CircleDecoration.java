@@ -23,7 +23,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
  * A decoration that depicts a circle.
  * 
  * @author schm
- * @kieler.ignore (excluded from review process)
+ * @kieler.ignore We don't care for GMF anymore.
  */
 public class CircleDecoration extends PolygonDecoration {
 

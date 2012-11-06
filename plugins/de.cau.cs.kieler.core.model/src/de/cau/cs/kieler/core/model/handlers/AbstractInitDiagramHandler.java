@@ -70,6 +70,7 @@ import de.cau.cs.kieler.core.util.Maybe;
  * 
  * @author soh
  * @author msp
+ * @kieler.ignore Get rid of GMF!
  */
 public abstract class AbstractInitDiagramHandler extends AbstractHandler {
 

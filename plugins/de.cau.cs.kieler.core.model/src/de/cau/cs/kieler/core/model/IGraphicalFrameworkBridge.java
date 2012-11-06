@@ -24,6 +24,7 @@ import org.eclipse.ui.IWorkbenchPart;
  * Interface for bridges to graphical editing frameworks. This can be used to connect code that
  * is independent of specific editor frameworks to frameworks such as GMF.
  *
+ * @kieler.ignore We'd like to get rid of this.
  * @author msp
  */
 public interface IGraphicalFrameworkBridge {
