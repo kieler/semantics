@@ -169,6 +169,14 @@ class Synccharts2S {
     def fillSStateSurface (State state, de.cau.cs.kieler.s.s.State sState) {
         val regardedTransitionListStrong = state.strongTransitionsOrdered.filter(e|e.isImmediate);
         val regardedTransitionListWeak = state.weakTransitionsOrdered.filter(e|e.isImmediate);
+        
+        // first reset possible defined local (output) signals here
+        for (signal : state.signals.filter(e | !e.isInput)) {
+            val ssignal = SFactory::eINSTANCE.createLocalSignal();
+            val sSignal = TraceComponent::getSingleTraceTarget(signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal;
+            ssignal.setSignal(sSignal);
+            sState.instructions.add(ssignal);
+        }
 
         // first handle all strong preemptions
         for (transition : regardedTransitionListStrong) {
@@ -412,7 +420,7 @@ class Synccharts2S {
 
     def de.cau.cs.kieler.s.s.State createSStateJoin (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getStatePathAsName;
+        target.name = state.getHierarchicalName;
         if (root) {
             target.name = "L_root";
         }
@@ -426,7 +434,7 @@ class Synccharts2S {
     
     def de.cau.cs.kieler.s.s.State createSStateSurface (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getStatePathAsName;
+        target.name = state.getHierarchicalName;
         if (root) {
             target.name = "L_root";
         }
@@ -441,7 +449,7 @@ class Synccharts2S {
     
     def de.cau.cs.kieler.s.s.State createSStateExtraSurface (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getStatePathAsName;
+        target.name = state.getHierarchicalName;
         if (root) {
             target.name = "L_root";
         }
@@ -456,7 +464,7 @@ class Synccharts2S {
 
     def de.cau.cs.kieler.s.s.State createSStateDepth (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getStatePathAsName;
+        target.name = state.getHierarchicalName;
         if (root) {
             target.name = "L_root";
         }

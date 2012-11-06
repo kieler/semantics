@@ -215,16 +215,26 @@ class SyncCharts2Simulation {
         if (state.parentRegion != null) {
             if (state.parentRegion.parentState != null) {
                 var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName;
+                var regionId = state.parentRegion.id.removeSpecialCharacters;
+                var stateId = state.id.removeSpecialCharacters;
+                // Region IDs can be empty, state IDs normally aren't but the code generation handles 
+                // also this case. 
+                if (stateId.nullOrEmpty) {
+                    stateId = state.hashCode + "";
+                }
+                if (regionId.nullOrEmpty) {
+                    regionId = state.parentRegion.hashCode + "";
+                }
                 if (!higherHierarchyReturnedName.nullOrEmpty) {
                     higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
                 }
                 if (state.parentRegion.parentState.regions.size > 1) {
                     return higherHierarchyReturnedName 
-                           + state.parentRegion.id.removeSpecialCharacters  + "_" +  state.id.removeSpecialCharacters;
+                           + regionId  + "_" +  state.id.removeSpecialCharacters;
                 }
                 else {
                     // this is the simplified case, where there is just one region and we can
-                    // omit the region id
+                    // omit the regionll id
                     return higherHierarchyReturnedName  
                            + state.id.removeSpecialCharacters;
                 }
@@ -254,7 +264,11 @@ class SyncCharts2Simulation {
                         // raise signal
                         targetRootRegion.states.get(0).signals.add(stateSignal);
                         // remove signal from current state
-                        state.signals.remove(stateSignal);
+                        //state.signals.remove(stateSignal);
+                        // DO NOT REMOVE THE SIGNAL FROM THE CURRENT STATE
+                        // FOR HANDLING REINCARNATION THIS INFORMATION IS NEEDED
+                        // WHEN ENTERING A STATE ALL ITS LOCAL AND OUTPUT SIGNALS ARE
+                        // RESET USING THE SIGNAL S-INSTRUCTION
                     }
                } // end if local signals present
 

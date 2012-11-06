@@ -292,15 +292,20 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
     // immediate chain (like in test 50-initial-states-signal-dependencies3).
     // The stopAtParent state ensures that we stop at the common parent state, e.g.
     // test case 07-ABO.
-    def List<State> getOuterStatesUntilNonInitial(State state, State stopAtCommonParent) {
+    // Test 74-concurrent-and-hierarchical-write-dependency-weak-aborted reveals that
+    // the stopAtCommonParent should NOT be added itself to the list if it is the rootState!
+    def List<State> getOuterStatesUntilNonInitial(State state, State stopAtCommonParent, State rootState) {
         var List<State> states = <State> newLinkedList;
         if (state.parentRegion != null && state.parentRegion.parentState != null &&
             state.parentRegion.parentState != stopAtCommonParent) {
 
             var outerState = state.parentRegion.parentState;
-            states.add(outerState);
+            if (outerState != rootState) {
+                    // tested by 74-concurrent-and-hierarchical-write-dependency-weak-aborted
+                    states.add(outerState);
+            }
             if (outerState.isInitial) {
-               var listFromOutSide = outerState.getOuterStatesUntilNonInitial(stopAtCommonParent);
+               var listFromOutSide = outerState.getOuterStatesUntilNonInitial(stopAtCommonParent, rootState);
                states.addAll(listFromOutSide);
             }
             else {
@@ -379,6 +384,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
                     for (triggeredTransition : triggeredTransitions) {
                         var triggerState = (triggeredTransition as Transition).sourceState;
                         val emitterState = transition.sourceState;
+                        // The normal case
                         dependencies.handleSignalDependencyHelper(emitterState, triggerState, triggeredTransition, transition, rootState);
 
                         // Test case 43-initial-states-signal-dependencies.kixs
@@ -388,7 +394,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
                         // From a higher hierarchy we may also find this emitter (as immediate deep inside)
                         if (transition.sourceState.isImmediatelyReachableFromInitialState) {
                             val commonParentStateToStop = triggerState.parentRegion.parentState;
-                            val additionalStates = transition.sourceState.getOuterStatesUntilNonInitial(commonParentStateToStop);
+                            val additionalStates = transition.sourceState.getOuterStatesUntilNonInitial(commonParentStateToStop, rootState);
                             for (additionalState : additionalStates) {
                                 // If not already in the list
                                 if (!immediateEmitterStates.contains(additionalState)) {
