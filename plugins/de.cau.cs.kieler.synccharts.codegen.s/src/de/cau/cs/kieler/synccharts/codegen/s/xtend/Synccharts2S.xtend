@@ -185,12 +185,14 @@ class Synccharts2S {
         val regardedTransitionListStrong = state.strongTransitionsOrdered.filter(e|e.isImmediate);
         val regardedTransitionListWeak = state.weakTransitionsOrdered.filter(e|e.isImmediate);
         
-        // first reset possible defined local (output) signals here
-        for (signal : state.signals.filter(e | !e.isInput)) {
-            val ssignal = SFactory::eINSTANCE.createLocalSignal();
-            val sSignal = TraceComponent::getSingleTraceTarget(signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal;
-            ssignal.setSignal(sSignal);
-            sState.instructions.add(ssignal);
+        if (!state.rootState) {
+          // first reset possible defined local (output) signals here
+          for (signal : state.signals.filter(e | !e.isInput)) {
+              val ssignal = SFactory::eINSTANCE.createLocalSignal();
+              val sSignal = TraceComponent::getSingleTraceTarget(signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal;
+              ssignal.setSignal(sSignal);
+              sState.instructions.add(ssignal);
+          }
         }
 
         // first handle all strong preemptions
@@ -326,17 +328,22 @@ class Synccharts2S {
                 
         // if not a final state then process normally otherwise add halt or term 
         if (!state.finalState) {
-            
-                // before the pause statement possibly raise priority
-                if (state.highestDependencyWeakNode != null) {
-                // optimization: do this only if the priority might be lowered (weak prio exist)
-                sState.addHighestStrongPrio(state);
-              } 
-        
-              // create a pause instruction only iff no HALT or TERM instruction
-              // halt == no outgoing transition
-                // term == final state
+
+// The following is NOT correct, see test 82. The priority must be ensured to be strong (hight)
+// to be enable to take preemptive outgoing transitions after awaking from pause            
+//              // before the pause statement possibly raise priority
+//              if (state.highestDependencyWeakNode != null) {
+//                // optimization: do this only if the priority might be lowered (weak prio exist)
+//                sState.addHighestStrongPrio(state);
+//              } 
+
+            // create a pause instruction only iff no HALT or TERM instruction
+            // halt == no outgoing transition
+            // term == final state
             if (!state.finalState && !joinInstruction) {
+                // Before pausing, ensure the correct priority for possible preemption after wake up
+                sState.addHighestStrongPrio(state);
+                // Now insert the Pause
                 sState.instructions.add(SFactory::eINSTANCE.createPause());
             }
 
