@@ -20,6 +20,7 @@ import org.eclipse.ui.IEditorPart;
  * The Interface IModelDiagramInterface.
  * 
  * @author soh
+ * @kieler.ignore We'd like to get rid of this.
  */
 public interface IModelDiagramInterface {
 

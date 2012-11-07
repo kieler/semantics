@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EPackage;
  * Interface for validation registry classes.
  *
  * @author msp
+ * @kieler.ignore We'd like to get rid of this.
  */
 public interface IValidationRegistry {
     

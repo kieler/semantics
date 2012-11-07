@@ -27,7 +27,11 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 /**
  * Utility class with static methods to handle EMF models and GEF EditParts.
  * 
+ * <p>In a design review, we should talk about whether to extract the URI related methods into
+ * their own class.</p>
+ * 
  * @author haf
+ * @kieler.design proposed 2012-11-07 cds msp
  */
 public final class ModelingUtil {
 
@@ -41,12 +45,12 @@ public final class ModelingUtil {
      * Get all objects that are direct or indirect children of the given root EObject if they are of
      * the specified type.
      * 
-     * @author haf
      * @param eObjectClass
      *            The type of object
      * @param rootObject
      *            The root object
      * @return Collection of found EObject matching the type
+     * @deprecated This is very inefficient.
      */
     public static Collection<EObject> getAllByType(final EClassifier eObjectClass,
             final EObject rootObject) {
@@ -60,12 +64,12 @@ public final class ModelingUtil {
      * Get all objects that are direct or indirect parents of the given root EObject if they are of
      * the given type.
      * 
-     * @author haf
      * @param eObjectClass
      *            The type of object
      * @param rootObject
      *            The root object to start the search
      * @return Collection of found EObject matching the type
+     * @deprecated This is very inefficient.
      */
     public static Collection<EObject> getAllAncestorsByType(final EClassifier eObjectClass,
             final EObject rootObject) {
@@ -84,12 +88,12 @@ public final class ModelingUtil {
      * other method takes a Collection as input to iterate over that collection. However, it has
      * linear runtime and many such transformations should be avoided.
      * 
-     * @author haf
      * @param <T>
      *            the base type
      * @param iter
      *            The input Iterator
      * @return A Collection containing all elements of the Iterator.
+     * @deprecated Guava probably has a better alternative to this implementation.
      */
     public static <T> Collection<T> iterator2Collection(final Iterator<T> iter) {
         ArrayList<T> list = new ArrayList<T>();

@@ -22,6 +22,7 @@ import de.cau.cs.kieler.core.util.ICondition;
 /**
  * A condition that evaluates a feature of an EOject.
  * 
+ * @kieler.design 2012-11-07 proposed cds msp Think about moving this to KARMA.
  * @kieler.rating 2010-01-26 proposed yellow msp
  * @author schm
  * @author msp

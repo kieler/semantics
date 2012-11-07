@@ -19,6 +19,7 @@ package de.cau.cs.kieler.core.model.validation;
  * to make sure that those are not kicked out by the Validation Manager.
  * 
  * @author soh
+ * @kieler.ignore We'd like to get rid of this.
  */
 public interface CustomEValidator {
 

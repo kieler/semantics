@@ -26,6 +26,7 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
  * information and produces a validate action for the currently active editor.
  * 
  * @author soh
+ * @kieler.ignore We'd like to get rid of this.
  */
 public abstract class AbstractValidationActionFactory implements
         IValidationActionFactory {
