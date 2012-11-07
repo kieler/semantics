@@ -30,7 +30,6 @@ import de.cau.cs.kieler.synccharts.TextEffect
 import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
-import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.util.stdlib.TraceComponent
 import de.cau.cs.kieler.core.kexpressions.IntValue
@@ -218,20 +217,6 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     // ==        C O N V E R T   S Y N C C H A R T   S I G N A L S   I N T O   S   S I G N A L S           ==
     // ======================================================================================================
 
-    // Convert SyncChart signals of a state into S signals and create traces between them.    
-    def List<Signal> getStateSignals (State state){
-        var List<Signal> signalList = new ArrayList()
-        for (signal : state.signals) {
-            var ssignal = signal.transform;
-                signalList.add(ssignal)
-                //     create traces for all created signals
-                TraceComponent::createTrace(signal, ssignal, "Signal" );
-                TraceComponent::createTrace(ssignal, signal, "SignalBack" );
-        }
-        signalList 
-    }        
-
-
     // Convert SyncChart variables of a state into S textual host code. Return null if there are no variables.    
     def String getStateVariables (State state){
         var StringBuffer returnText = new StringBuffer();
@@ -261,6 +246,10 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
         target.setIsInput(signal.isInput) 
         target.setIsOutput(signal.isOutput) 
         target.setType(signal.type)
+        
+        // Create traces for created signal
+        TraceComponent::createTrace(signal, target, "Signal" );
+        TraceComponent::createTrace(target, signal, "SignalBack" );
     }
 
 
@@ -282,6 +271,9 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     // For C variables it is necessary to remove special characters, this may lead
     // to name clashes in unlikely cases. 
     def String removeSpecialCharacters(String string) {
+        if (string == null) {
+            return null;
+        }
         return string.replace("-","").replace("_","").replace(" ","").replace("+","")
                .replace("#","").replace("$","").replace("?","")
                .replace("!","").replace("%","").replace("&","")
@@ -292,10 +284,10 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     
     // This helper method returns the hierarchical name of a state considering all hierarchical
     // higher states. A string is formed by the traversed state IDs.
-    def String getHierarchicalName(State state) {
+    def String getHierarchicalName(State state, String StartSymbol) {
         if (state.parentRegion != null) {
             if (state.parentRegion.parentState != null) {
-                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName;
+                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName(StartSymbol);
                 var regionId = state.parentRegion.id.removeSpecialCharacters;
                 var stateId = state.id.removeSpecialCharacters;
                 // Region IDs can be empty, state IDs normally aren't but the code generation handles 
@@ -321,7 +313,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
                 }
             }
         }
-        return "S_";
+        return StartSymbol + "_";
     }
 
 

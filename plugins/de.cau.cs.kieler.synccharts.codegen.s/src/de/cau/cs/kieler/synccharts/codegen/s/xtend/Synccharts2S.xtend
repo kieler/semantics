@@ -26,6 +26,7 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Depende
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.util.stdlib.TraceComponent
+import de.cau.cs.kieler.core.kexpressions.Signal
 
 /**
  * Converts a SyncChart into an S program.
@@ -40,6 +41,9 @@ class Synccharts2S {
          Guice::createInjector().getInstance(typeof(Helper))
     extension de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies Synccharts2Dependenies = 
          Guice::createInjector().getInstance(typeof(Synccharts2Dependenies))
+         
+    static String LabelSymbol = "L"
+    static String LocalSignalSymbol = "S"
 
     // ======================================================================================================
     // ==                                        M A I N   T R A N S F O R M A T I O N                     ==
@@ -72,8 +76,19 @@ class Synccharts2S {
         target.setName(rootState.id)
 
         // add interface signals to s program (as the root state's signals)
-        for (signal : rootState.getStateSignals) {
-            target.signals.add(signal);
+        for (ssignal : rootState.signals) {
+            target.signals.add(ssignal.transform);
+        }
+        
+        // add all local signals also to s program (as the root state's signals)
+        for (region : rootState.regions) {
+            val localSignals = region.eAllContents().toIterable().filter(typeof(Signal)).toList();
+            for (localSignal : localSignals) {
+                val ssignal = localSignal.transform;
+                val ssignalName = (localSignal.eContainer as State).getHierarchicalName(LocalSignalSymbol) + "_" + localSignal.name;
+                ssignal.setName(ssignalName);
+                target.signals.add(ssignal);
+            }
         }
 
         // add interface variables to s program (as the global host code)
@@ -420,60 +435,44 @@ class Synccharts2S {
 
     def de.cau.cs.kieler.s.s.State createSStateJoin (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getHierarchicalName;
+        target.name = state.getHierarchicalName(LabelSymbol);
         if (root) {
-            target.name = "L_root";
+            target.name = LabelSymbol + "_root";
         }
         target.name = target.name + "_join";
-        if (!root) {
-            // add root state signals to program only (not to the state itself)
-            target.signals.addAll(state.getStateSignals)
-        }
         target;
     }    
     
     def de.cau.cs.kieler.s.s.State createSStateSurface (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getHierarchicalName;
+        target.name = state.getHierarchicalName(LabelSymbol);
         if (root) {
-            target.name = "L_root";
+            target.name = LabelSymbol + "_root";
         }
         target.name = target.name + "_surface";
 
-        if (!root) {
-            // add root state signals to program only (not to the state itself)
-            target.signals.addAll(state.getStateSignals)
-        }
         target;
     }    
     
     def de.cau.cs.kieler.s.s.State createSStateExtraSurface (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getHierarchicalName;
+        target.name = state.getHierarchicalName(LabelSymbol);
         if (root) {
-            target.name = "L_root";
+            target.name = LabelSymbol + "_root";
         }
         target.name = target.name + "_surface2";
 
-        if (!root) {
-            // add root state signals to program only (not to the state itself)
-            target.signals.addAll(state.getStateSignals)
-        }
         target;
     }    
 
     def de.cau.cs.kieler.s.s.State createSStateDepth (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getHierarchicalName;
+        target.name = state.getHierarchicalName(LabelSymbol);
         if (root) {
-            target.name = "L_root";
+            target.name = LabelSymbol + "_root";
         }
         target.name = target.name + "_depth";
         
-        if (!root) {
-            // add root state signals to program only (not to the state itself)
-            target.signals.addAll(state.getStateSignals)
-        }
 
         target;
     }

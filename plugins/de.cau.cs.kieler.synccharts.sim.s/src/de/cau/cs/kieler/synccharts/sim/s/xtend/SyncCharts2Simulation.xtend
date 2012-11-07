@@ -29,6 +29,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.Signal
+import de.cau.cs.kieler.synccharts.Action
+import de.cau.cs.kieler.synccharts.Emission
 
 /**
  * Transformation of a SyncChart to another SyncChart
@@ -165,7 +167,6 @@ class SyncCharts2Simulation {
 
                // Add emission of auxiliary Signal as an immediate during action for this state
                val immediateDuringAction = SyncchartsFactory::eINSTANCE.createAction();
-               immediateDuringAction.setDelay(0);
                immediateDuringAction.setIsImmediate(true);
                val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
                    auxiliaryEmission.setSignal(auxiliarySignal);
@@ -181,18 +182,19 @@ class SyncCharts2Simulation {
      }     
      
     //-------------------------------------------------------------------------
-    //--             R A I S E    L O C A L   S I G N A L S                  --
+    //--             E X P O S E   L O C A L   S I G N A L S                 --
     //-------------------------------------------------------------------------
+    // @requires: none
 
     // Transforming Local Signals.
-    def Region transformRaiseLocalSignal(Region rootRegion) {
+    def Region transformExposeLocalSignal(Region rootRegion) {
         // Clone the complete SyncCharts region 
         val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
         for(targetState : targetStates) {
             // This statement we want to modify
-            targetState.transformRaiseLocalSignal(targetRootRegion);
+            targetState.transformExposeLocalSignal(targetRootRegion);
         }
         
         targetRootRegion;
@@ -201,6 +203,9 @@ class SyncCharts2Simulation {
     // For C variables it is necessary to remove special characters, this may lead
     // to name clashes in unlikely cases. 
     def String removeSpecialCharacters(String string) {
+        if (string == null) {
+            return null;
+        }
         return string.replace("-","").replace("_","").replace(" ","").replace("+","")
                .replace("#","").replace("$","").replace("?","")
                .replace("!","").replace("%","").replace("&","")
@@ -211,10 +216,10 @@ class SyncCharts2Simulation {
     
     // This helper method returns the hierarchical name of a state considering all hierarchical
     // higher states. A string is formed by the traversed state IDs.
-    def String getHierarchicalName(State state) {
+    def String getHierarchicalName(State state, String StartSymbol) {
         if (state.parentRegion != null) {
             if (state.parentRegion.parentState != null) {
-                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName;
+                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName(StartSymbol);
                 var regionId = state.parentRegion.id.removeSpecialCharacters;
                 var stateId = state.id.removeSpecialCharacters;
                 // Region IDs can be empty, state IDs normally aren't but the code generation handles 
@@ -240,13 +245,15 @@ class SyncCharts2Simulation {
                 }
             }
         }
-        return "S_";
+        return StartSymbol + "_";
     }
            
     // Traverse all states and transform possible local signals
-    def void transformRaiseLocalSignal(State state, Region targetRootRegion) {
-        // LOCAL SIGNAL: Raise all local signals to the upper most level and rename them
-        // according to the hierarchy. 
+    def void transformExposeLocalSignal(State state, Region targetRootRegion) {
+        // EXPOSE LOCAL SIGNALS: For every local signal create a global signal
+        // and wherever the local signal is emitted, also emit the new global 
+        // signal.
+        // Name the new global signals according to the local signal's hierarchy. 
                
                // Exclude the top level state
                if (state.parentRegion == targetRootRegion) {
@@ -255,52 +262,36 @@ class SyncCharts2Simulation {
         
                // There are local signals, raise them
                if (state.signals != null && state.signals.size > 0) {
-                    val hierarchicalStateName = state.getHierarchicalName;
+                    val hierarchicalStateName = state.getHierarchicalName("LOCAL");
                     
                     for (Signal stateSignal : ImmutableList::copyOf(state.signals)) {
-                        val newSignalName = hierarchicalStateName + "_" + stateSignal.name;
-                        // rename signal
-                        stateSignal.setName(newSignalName);
-                        // raise signal
-                        targetRootRegion.states.get(0).signals.add(stateSignal);
-                        // remove signal from current state
-                        //state.signals.remove(stateSignal);
-                        // DO NOT REMOVE THE SIGNAL FROM THE CURRENT STATE
-                        // FOR HANDLING REINCARNATION THIS INFORMATION IS NEEDED
-                        // WHEN ENTERING A STATE ALL ITS LOCAL AND OUTPUT SIGNALS ARE
-                        // RESET USING THE SIGNAL S-INSTRUCTION
+                        
+                       val newSignalName = hierarchicalStateName + "_" + stateSignal.name;
+                       val globalSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                       globalSignal.setName(newSignalName);
+                       globalSignal.setIsInput(false);
+                       globalSignal.setIsOutput(true);
+                       globalSignal.setType(ValueType::PURE);
+                       targetRootRegion.states.get(0).signals.add(globalSignal);
+                       
+                       // for every emission of the local signal add an emission of the new
+                       // global signal
+                       val allActions = state.eAllContents().toIterable().filter(typeof(Action)).toList();
+                       val localSignalActions = allActions.filter(e | (e.eAllContents().toIterable().
+                           filter(typeof(Emission)).toList().filter(ee | ee.signal == stateSignal)).size > 0);
+
+                       for (localSignalAction : ImmutableList::copyOf(localSignalActions)) {
+                           val emission = SyncchartsFactory::eINSTANCE.createEmission();
+                           emission.setSignal(globalSignal);
+                           localSignalAction.effects.add(emission);
+                       }
                     }
                } // end if local signals present
 
     }
     
+
     
-
-    //-------------------------------------------------------------------------
-    //--             E X P O S E   L O C A L   S I G N A L S                 --
-    //-------------------------------------------------------------------------
-    // @requires: raiselocalsignals
-
-    // Transforming Local Signals.
-    def Region transformExposeLocalSignal(Region rootRegion) {
-        // Clone the complete SyncCharts region 
-        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
-
-        val mainSyncChartState = targetRootRegion.states.head;
-       
-        if (mainSyncChartState != null) {
-            for (Signal stateSignal : ImmutableList::copyOf(mainSyncChartState.signals)) {
-                if (!stateSignal.isInput) {
-                    stateSignal.setIsOutput(true);
-                }
-            }
-        }
-        
-        targetRootRegion;
-    }
-    
-
-
     //-------------------------------------------------------------------------
     //--              N O R M A L   T E R M I N A T I O N                    --
     //-------------------------------------------------------------------------
@@ -353,7 +344,6 @@ class SyncCharts2Simulation {
                               val termEmission = SyncchartsFactory::eINSTANCE.createEmission();
                               termEmission.setSignal(termSignal);
                               val termDuringAction =  SyncchartsFactory::eINSTANCE.createAction
-                              termDuringAction.setDelay(0);
                               termDuringAction.setIsImmediate(true);
                               termDuringAction.effects.add(termEmission);
                               finalState.innerActions.add(termDuringAction);
@@ -423,7 +413,6 @@ class SyncCharts2Simulation {
                val state = transition.sourceState;
                selfLoop.setTargetState(state);
                selfLoop.setPriority(1);
-               selfLoop.setDelay(1);
                val selfLoopEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
                selfLoopEffect.setCode(auxiliaryVariableName + "++");
                selfLoop.effects.add(selfLoopEffect);
@@ -564,7 +553,6 @@ class SyncCharts2Simulation {
                
                // Add during action that emits the disable signal 
                val immediateDuringAction = SyncchartsFactory::eINSTANCE.createAction();
-               immediateDuringAction.setDelay(0);
                immediateDuringAction.setIsImmediate(true);
                val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
                    auxiliaryEmission.setSignal(disabledSignal);
@@ -588,9 +576,6 @@ class SyncCharts2Simulation {
                    disabled2actionTransition.setTargetState(actionState);
                    disabled2actionTransition.setTrigger(notSuspendTrigger.copy);
                    disabled2actionTransition.setIsImmediate(!immediateSuspension);
-                   if (!immediateSuspension) {
-                      disabled2actionTransition.setDelay(0);
-                   }
                    disabledState.outgoingTransitions.add(disabled2actionTransition);
                    // Do not emit the disableSignal when the suspend trigger is not true any more!
                    disabled2actionTransition.setType(TransitionType::STRONGABORT);
@@ -598,14 +583,10 @@ class SyncCharts2Simulation {
                    action2runningTransition.setTargetState(runningState);
                    action2runningTransition.setLabel("#");
                    action2runningTransition.setIsImmediate(true);
-                   action2runningTransition.setDelay(0);
                    actionState.outgoingTransitions.add(action2runningTransition);
                val running2disabledTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                    running2disabledTransition.setTargetState(disabledState);
                    running2disabledTransition.setIsImmediate(immediateSuspension);
-                   if (immediateSuspension) {
-                      running2disabledTransition.setDelay(0);
-                   }
                    running2disabledTransition.setTrigger(suspendTrigger.copy);
                    runningState.outgoingTransitions.add(running2disabledTransition);
                
@@ -741,7 +722,6 @@ class SyncCharts2Simulation {
             val selfLoop = SyncchartsFactory::eINSTANCE.createTransition();
             selfLoop.setTargetState(state);
             selfLoop.setPriority(state.outgoingTransitions.size + 1);
-            selfLoop.setDelay(1);
             val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
                 auxiliaryEmission.setSignal(auxiliarySuspendSignal);
             //selfLoop.effects.add(auxiliaryEmission);
@@ -816,7 +796,6 @@ class SyncCharts2Simulation {
             val resetSelfLoop = SyncchartsFactory::eINSTANCE.createTransition();
             resetSelfLoop.setTargetState(auxiliaryState);
             resetSelfLoop.setPriority(1);
-            resetSelfLoop.setDelay(1);
             resetSelfLoop.setType(TransitionType::STRONGABORT);
                 val auxiliaryResetSignalRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
                     auxiliaryResetSignalRef.setValuedObject(auxiliaryResetSignal);
@@ -889,7 +868,6 @@ class SyncCharts2Simulation {
                      dummyInternalLoopTransition.setIsImmediate(!innerAction.isImmediate);
                      if (!innerAction.isImmediate) {
                          dummyInternalLoopTransition.setLabel("#");
-                         dummyInternalLoopTransition.setDelay(0);    
                      }
                      dummyInternalLoopTransition.setType(TransitionType::WEAKABORT);
                      dummyInternalState2.outgoingTransitions.add(dummyInternalLoopTransition);
@@ -976,7 +954,6 @@ class SyncCharts2Simulation {
                 initialTransition.setLabel("#");
                 initialTransition.setTargetState(state);
                 initialTransition.setPriority(1);
-                initialTransition.setDelay(0);
                 initialTransition.setIsImmediate(true);
                 initialState.setIsInitial(true);
                 state.setIsInitial(false);
@@ -1073,7 +1050,20 @@ class SyncCharts2Simulation {
            expressionList.addAll(state.parentRegion.parentState.getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper);
        }
        expressionList;
-   }           
+   }       
+   
+   // Tries to follow immediate chains of transitions in order to exclude possible self loops
+   def boolean isPossibleSelfLoop(Transition transition) {
+       return isPossibleSelfLoop(transition, transition.sourceState);
+   }    
+   def boolean isPossibleSelfLoop(Transition transition, State startState) {
+       var boolean isLoop = false;
+       for (Transition nextTransition : transition.targetState.outgoingTransitions.filter(e | e.isImmediate)) {
+           isLoop = isLoop || nextTransition.isPossibleSelfLoop(startState);
+       }
+       isLoop = isLoop || (transition.targetState == startState);
+       return isLoop;
+   }    
            
     // Traverse all states and transform macro states that have actions to transform
     def void transformExitAction(State state, Region targetRootRegion) {
@@ -1209,11 +1199,12 @@ class SyncCharts2Simulation {
                
                // (C)
                reset2setTransition.setTrigger(setSignalReference.copy);
+               reset2setTransition.setPriority(2);
                
                // (D)
                reset2setITransition.setTrigger(setISignalReference.copy);
                reset2setITransition.setIsImmediate(true);
-               reset2setITransition.setDelay(0);
+               reset2setITransition.setPriority(1);
                
                // Create a region with two states set and reset 
                val exitActionRegion = SyncchartsFactory::eINSTANCE.createRegion();
@@ -1254,12 +1245,63 @@ class SyncCharts2Simulation {
                      setState.innerActions.add(duringAction);
                }               
 
+
+               // CORNER CASE: 78 & 79 (also 80)
+               // Execute ExitAction if permanent PREEMPTIVE reset is present.
+               // DO NOT execute when was left before.
+               val strongAbortSelfLoopPresent = consideredTransitions.filter(e | e.type == TransitionType::STRONGABORT && e.isPossibleSelfLoop);
+               val cornerCaseTransition = consideredTransitions.filter(e | !e.isPossibleSelfLoop);
+               if (strongAbortSelfLoopPresent.size > 0) {
+                 // Create SetInner signal only for outgoing transitions that are no self loops
+                 // this includes also possible chains of immediate transitions
+                 // Optimization: only consider strong aborts, because for weak aborts 78 is not a problem!
+                 val setSignalInner = KExpressionsFactory::eINSTANCE.createSignal();
+                 setSignalInner.setName("SetInner" + state.id);
+                 setSignalInner.setIsInput(false);
+                  setSignalInner.setIsOutput(false);
+                  setSignalInner.setType(ValueType::PURE);
+                  targetRootRegion.states.get(0).signals.add(setSignalInner);
+                  val setSignalInnerReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                     setSignalInnerReference.setValuedObject(setSignalInner);
+                 //Create In state and Out state
+                 val inState = SyncchartsFactory::eINSTANCE.createState();
+                 inState.setId("ExitIn" + state.hashCode);
+                 inState.setIsInitial(true);
+                 inState.setLabel("in");
+                 val outState = SyncchartsFactory::eINSTANCE.createState();
+                 outState.setId("ExitOut" + state.hashCode);
+                 outState.setLabel("out");
+                 // Connect In and Out states with transitions triggered #SetCC
+                 val in2outTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                     in2outTransition.setTargetState(outState);
+                     in2outTransition.setIsImmediate(true);
+                     inState.outgoingTransitions.add(in2outTransition);
+                     in2outTransition.setTrigger(setSignalInnerReference.copy);
+                 // Create InOut region    
+                 val setInOutRegion = SyncchartsFactory::eINSTANCE.createRegion();
+                 setInOutRegion.setId("ExitInOutRegion" + state.hashCode);
+                 setInOutRegion.states.add(inState);
+                 setInOutRegion.states.add(outState);
+                 setState.regions.add(setInOutRegion);
+                 // Add emission to corner case transitions 
+                 for (transition : cornerCaseTransition) {
+                     val setEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                          setEmission.setSignal(setSignalInner);
+                     transition.effects.add(setEmission);
+                  }
+                 // Add during action for inState
+                 val duringIActionResetSignalN = SyncchartsFactory::eINSTANCE.createAction();
+                 val resetNEmission2 = SyncchartsFactory::eINSTANCE.createEmission();
+                 resetNEmission2.setSignal(resetNSignal);
+                 duringIActionResetSignalN.effects.add(resetNEmission2);
+                 inState.innerActions.add(duringIActionResetSignalN);
+               } // End corner case
+
                
                // Add a during action that resets the exit action
                // more specifically add an immediate during action for resetI
                //                   and a  normal during action for resetN
                val duringIAction = SyncchartsFactory::eINSTANCE.createAction();
-               duringIAction.setDelay(0);
                duringIAction.setIsImmediate(true);
                val resetIEmission = SyncchartsFactory::eINSTANCE.createEmission();
                    resetIEmission.setSignal(resetISignal);
@@ -1287,7 +1329,6 @@ class SyncCharts2Simulation {
 //                   val immediateTransition =  SyncchartsFactory::eINSTANCE.createTransition();
 //                   immediateTransition.setIsImmediate(true);
 //                   immediateTransition.setLabel("#");
-//                   immediateTransition.setDelay(0);
 //                   immediateTransition.setTargetState(state);
 //                   newInitialState.outgoingTransitions.add(immediateTransition);
 //               }
