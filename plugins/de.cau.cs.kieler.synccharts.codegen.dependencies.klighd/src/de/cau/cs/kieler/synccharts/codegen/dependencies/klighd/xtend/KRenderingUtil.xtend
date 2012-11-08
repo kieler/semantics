@@ -92,8 +92,14 @@ class KRenderingUtil {
 	
 	def KEdge createPolyLineEdge(Object o) {
 		val edge = o.edge;
-		edge.data.add(factory.createKPolyline);
+		edge.data.add(factory.createKRoundedBendsPolyline => [
+		    it.setBendRadius(5);
+		]);
 		return edge;
 	}
-	
+    def KEdge createSplineEdge(Object o) {
+        val edge = o.edge;
+        edge.data.add(factory.createKSpline);
+        return edge;
+    }	
 }
