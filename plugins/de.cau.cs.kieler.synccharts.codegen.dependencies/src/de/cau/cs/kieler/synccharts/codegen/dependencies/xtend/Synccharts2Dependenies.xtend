@@ -517,7 +517,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
         // not yet found newNode => add it
         var newNode = DependencyFactory::eINSTANCE.createNode();
         newNode.setState(state);
-        var stateId = state.id;
+        var stateId = state.getHierarchicalName("L");
         if (transition != null) {
             stateId = stateId + "_" + transition.priority;
         }
@@ -580,6 +580,54 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
         }
         return returnValue;
     }
+    
+    // For C variables it is necessary to remove special characters, this may lead
+    // to name clashes in unlikely cases. 
+    def String removeSpecialCharacters(String string) {
+        if (string == null) {
+            return null;
+        }
+        return string.replace("-","").replace("_","").replace(" ","").replace("+","")
+               .replace("#","").replace("$","").replace("?","")
+               .replace("!","").replace("%","").replace("&","")
+               .replace("[","").replace("]","").replace("<","")
+               .replace(">","").replace(".","").replace(",","")
+               .replace(":","").replace(";","").replace("=","");
+    }
+    
+    // This helper method returns the hierarchical name of a state considering all hierarchical
+    // higher states. A string is formed by the traversed state IDs.
+    def String getHierarchicalName(State state, String StartSymbol) {
+        if (state.parentRegion != null) {
+            if (state.parentRegion.parentState != null) {
+                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName(StartSymbol);
+                var regionId = state.parentRegion.id.removeSpecialCharacters;
+                var stateId = state.id.removeSpecialCharacters;
+                // Region IDs can be empty, state IDs normally aren't but the code generation handles 
+                // also this case. 
+                if (stateId.nullOrEmpty) {
+                    stateId = state.hashCode + "";
+                }
+                if (regionId.nullOrEmpty) {
+                    regionId = state.parentRegion.hashCode + "";
+                }
+                if (!higherHierarchyReturnedName.nullOrEmpty) {
+                    higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
+                }
+                if (state.parentRegion.parentState.regions.size > 1) {
+                    return higherHierarchyReturnedName 
+                           + regionId  + "_" +  state.id.removeSpecialCharacters;
+                }
+                else {
+                    // this is the simplified case, where there is just one region and we can
+                    // omit the region id
+                    return higherHierarchyReturnedName  
+                           + state.id.removeSpecialCharacters;
+                }
+            }
+        }
+        return StartSymbol + "_";
+    }    
     
     // ======================================================================================================
     // ==                                   T O P O L O G I C A L    S O R T                               ==

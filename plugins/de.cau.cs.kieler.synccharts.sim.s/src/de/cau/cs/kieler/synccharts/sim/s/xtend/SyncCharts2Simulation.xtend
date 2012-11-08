@@ -33,53 +33,61 @@ import de.cau.cs.kieler.synccharts.Action
 import de.cau.cs.kieler.synccharts.Emission
 
 /**
- * Transformation of a SyncChart to another SyncChart
- * enriched with additional signals for each state and
- * each transition.
- * 
- * These signals are HS for auxiliary state signals
- * and HT for auxiliary transition signals.
- * 
- * Signals HS are generated in the following fashion for a 
- * state S:
- * 
- * 1. For every incoming transition, add an output-emit action for HS
- * 2. Create an auxiliary region that has one state and a self-loop 
- *    emitting HS.
- * 3. Initial states need new initial states connected with an
- *    immediate transition that emits the signal HS.
- * 
- * ATTENTION: Iff the state is a final state, then do not emit the
- * in-state-auxiliary signal inside (2.) because the thread in this case
- * cannot terminate! (This would change the semantics)
- * 
- * ATTENTION: Iff the state has an outgoing normal termination then
- * we cannot do (2.) because this would also corrupt the semantics
- * The normal termination is transformed into a weak abort - this is the
- * best approximation 
- * 
- * Signal HT are generated in the following fashion for a
- * transition T:
- * 
- * As names for the signals are randomly generated and must be unique
- * there must be a mapping that keeps track which signal (name) belongs to
- * which original S statement.
- * 
- * ********************
- *
- *  Additionally transforming count delayes into auxiliary variable counters
- *  with an additional counting transition and a modified immediate abort transition.
- *  All transitions entering the state need to reset the counter.
- * 
+ * This class handles the<BR>
+ *   - Simulation visualization<BR>
+ *   - Local signals exposition<BR>
+ *   - SyncCharts pre-processing, replacing the following advanced constructs<BR>
+ *     by core constructs:<BR>
+ *     - Normal termination<BR>
+ *     - Count delay<BR>
+ *     - Suspend<BR>
+ *     - History transitions<BR>
+ *     - Entry actions<BR>
+ *     - During actions<BR>
+ *     - Exit actions<BR>
  * 
  * @author cmot
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
 class SyncCharts2Simulation {
-    
-    // General method to create the enriched SyncCharts simulation models.
+     
+    //-------------------------------------------------------------------------
+    //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --
+    //-------------------------------------------------------------------------
     def Region transform2Simulation (Region rootRegion) {
+          // Transformation of a SyncChart to another SyncChart
+          // enriched with additional signals for each state and
+          // each transition.
+          // 
+          // These signals are HS for auxiliary state signals
+          // and HT for auxiliary transition signals.
+          // 
+          // Signals HS are generated in the following fashion for a 
+          // state S:
+          // 
+          // 1. For every incoming transition, add an output-emit action for HS
+          // 2. Create an auxiliary region that has one state and a self-loop 
+          //    emitting HS.
+          // 3. Initial states need new initial states connected with an
+          //    immediate transition that emits the signal HS.
+          // 
+          // ATTENTION: Iff the state is a final state, then do not emit the
+          // in-state-auxiliary signal inside (2.) because the thread in this case
+          // cannot terminate! (This would change the semantics)
+          // 
+          // ATTENTION: Iff the state has an outgoing normal termination then
+          // we cannot do (2.) because this would also corrupt the semantics
+          // The normal termination is transformed into a weak abort - this is the
+          // best approximation 
+          // 
+          // Signal HT are generated in the following fashion for a
+          // transition T:
+          // 
+          // As names for the signals are randomly generated and must be unique
+          // there must be a mapping that keeps track which signal (name) belongs to
+          // which original S statement.
+          // General method to create the enriched SyncCharts simulation models.
           var AUXILIARY_VARIABLE_TAG_STATE =  SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_STATE
           var AUXILIARY_VARIABLE_TAG_TRANSITION = SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_TRANSITION
 
