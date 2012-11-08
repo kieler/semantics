@@ -24,9 +24,10 @@ import org.eclipse.emf.common.util.EList;
 /**
  * Command to sort an {@link EList} using a given {@link Comparator}.
  * 
- * @param <T>
- *            Type to sort.
+ * @param <T> Type to sort.
  * @author haf
+ * @kieler.design proposed 2012-11-07 cds msp We should think about moving this to the SyncCharts
+ *                code as it only seems to be used there.
  */
 public class SortCommand<T> extends AbstractCommand {
 

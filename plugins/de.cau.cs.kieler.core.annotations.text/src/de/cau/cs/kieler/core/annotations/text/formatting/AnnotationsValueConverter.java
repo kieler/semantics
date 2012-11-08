@@ -21,11 +21,11 @@ import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.nodemodel.INode;
 
 /**
- * TODO: Document.
- * 
- * <p><em>Note:</em> FindBugs complains about method names beginning with capital letters in this
- * class. This seems to be necessary, however, since the method names have to match the names of
- * the actual annotations whose value they extract.
+ * Custom
+ * {@link org.eclipse.xtext.conversion.impl.AbstractDeclarativeValueConverterService
+ * AbstractDeclarativeValueConverterService} that contributes value converters
+ * dedicated to the COMMENT_ANNOTATION terminal and the EString data type,
+ * defined in the Annotations grammar.
  * 
  * @author chsch
  */
@@ -53,30 +53,6 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
             }
         };
     }
-    
-//    /**
-//     * Provides comment annotation converter dropping/attaching the leading/trailing characters.
-//     * 
-//     * @return dedicated value converter
-//     */
-//    // CHSCH: registration disabled since TypeId is now realized by means of a data type rule 
-//    //  @ValueConverter(rule = "TypeId")
-//    public IValueConverter<String> TypeId() {
-//        return new IValueConverter<String>() {
-//
-//            public String toValue(String string, INode node) {
-//                return string.substring(1, string.length() - 1).trim();
-//            }
-//
-//            public String toString(String value) {
-//                if (Strings.isEmpty(value)) {
-//                    return "[]";
-//                } else {
-//                    return "[" + value + "]";
-//                }
-//            }
-//        };
-//    }
     
     /**
      * Provides EString converter dropping/attaching the leading/trailing character.

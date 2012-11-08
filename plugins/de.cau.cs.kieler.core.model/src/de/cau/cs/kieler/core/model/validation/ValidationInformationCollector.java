@@ -39,6 +39,7 @@ import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
  * extension point.
  * 
  * @author soh
+ * @kieler.ignore We'd like to get rid of this.
  */
 public class ValidationInformationCollector implements IStartup, IPartListener {
 

@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Text;
  * trace.
  * 
  * @author Sebastian Davids
+ * @kieler.ignore We don't review copied code.
  */
 public class InternalErrorDialog extends MessageDialog {
 

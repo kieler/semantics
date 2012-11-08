@@ -35,6 +35,7 @@ import de.cau.cs.kieler.core.model.CoreModelPlugin;
  * Handler for managing check files and validate actions.
  * 
  * @author soh
+ * @kieler.ignore We'd like to get rid of this.
  */
 public final class ValidationManager {
 

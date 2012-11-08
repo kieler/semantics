@@ -20,6 +20,7 @@ import org.eclipse.ui.IEditorPart;
  * Factory for creating the validate actions used in the validation.
  * 
  * @author soh
+ * @kieler.ignore We'd like to get rid of this.
  */
 public interface IValidationActionFactory {
 

@@ -48,6 +48,8 @@ import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
  * 
  * @author haf
  * @author soh
+ * @kieler.ignore This is a workaround; a better alternative should be to have the graphics
+ *                framework manage this, says msp.
  */
 public class ModelErrorHandler implements StatusListener, IStartup {
 

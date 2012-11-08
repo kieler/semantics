@@ -22,9 +22,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * Set an integer feature of the element to its index in a list.
  * 
  * @author haf
- * 
- * @param <T>
- *            Type to sort.
+ * @param <T> Type to sort.
+ * @kieler.design proposed 2012-11-07 cds msp We should think about moving this to the SyncCharts
+ *                code as it only seems to be used there.
  */
 public class SetIndexCommand<T extends EObject> extends AbstractCommand {
 

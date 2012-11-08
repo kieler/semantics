@@ -22,6 +22,7 @@ import org.eclipse.emf.common.command.CompoundCommand;
  * is marked as executable. Can be used to create an empty executable command.
  * 
  * @author haf
+ * @kieler.ignore This seems a bit strange... let's get rid of it.
  */
 public class PossiblyEmptyCompoundCommand extends CompoundCommand {
 
