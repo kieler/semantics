@@ -79,5 +79,16 @@
          </editor>
       </executionFile>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/synccharts_s_kart.execution">
+         <editor
+               id="de.cau.cs.kieler.s.S"
+               name="S Editor"
+               priority="5">
+         </editor>
+      </executionFile>
+   </extension>
 
 </plugin>
