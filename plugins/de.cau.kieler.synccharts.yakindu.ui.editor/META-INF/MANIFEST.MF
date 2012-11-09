@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Editor
+Bundle-SymbolicName: de.cau.kieler.synccharts.yakindu.ui.editor;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.yakindu.sct.ui.editor,
+ de.cau.kieler.synccharts.yakindu.model.reqtext.ui;bundle-version="1.0.0",
+ de.cau.kieler.synccharts.yakindu.ui.integration.reqtext;bundle-version="1.0.0"

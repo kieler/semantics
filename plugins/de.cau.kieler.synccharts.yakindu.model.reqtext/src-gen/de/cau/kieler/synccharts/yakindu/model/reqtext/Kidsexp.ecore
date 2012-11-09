@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="kidsexp" nsURI="http://www.cau.de/kieler/synccharts/yakindu/model/reqtext/Kidsexp"
+    nsPrefix="kidsexp">
+  <eClassifiers xsi:type="ecore:EClass" name="Root" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Root"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DefRoot" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//DefRoot"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StatechartRoot" eSuperTypes="#//DefRoot ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//StatechartRoot"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StateRoot" eSuperTypes="#//DefRoot ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//StateRoot"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TransitionRoot" eSuperTypes="#//DefRoot ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//TransitionRoot"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TransitionSpecification" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//TransitionSpecification"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StatechartSpecification" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//StatechartSpecification"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StateSpecification" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//StateSpecification"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TransitionReaction" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//TransitionReaction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReactionTrigger" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReactionEffect" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"/>
+</ecore:EPackage>

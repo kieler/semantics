@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature id="de.cau.kieler.synccharts.yakindu.model.reqtext.sdk"
+	label="Kidsexp SDK Feature "
+	version="1.0.0.qualifier">
+	<plugin
+			id="de.cau.kieler.synccharts.yakindu.model.reqtext"
+			download-size="0"
+			install-size="0"
+			version="0.0.0"
+			unpack="false"/>
+	<plugin
+			id="de.cau.kieler.synccharts.yakindu.model.reqtext.ui"
+			download-size="0"
+			install-size="0"
+			version="0.0.0"
+			unpack="false"/>
+</feature>

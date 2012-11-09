@@ -1,0 +1,46 @@
+grammar de.cau.kieler.synccharts.yakindu.model.reqtext.Kidsexp with org.yakindu.sct.model.stext.SText
+
+generate kidsexp "http://www.cau.de/kieler/synccharts/yakindu/model/reqtext/Kidsexp"
+import "http://www.yakindu.org/sct/statechart/SText" as stext
+import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
+
+/* ---- root rules ----
+These root rules are not relevant for the grammar integration in the statechart. They
+just integrate the different start rules consistently
+into a single grammar.
+*/
+Root:
+	(roots+=DefRoot)*;
+
+DefRoot:
+	StatechartRoot | StateRoot | TransitionRoot;
+
+StatechartRoot:
+	'@@statechart@@' def=StatechartSpecification;
+
+StateRoot:
+	'@@state@@' def=StateSpecification;
+
+TransitionRoot:
+	'@@transition@@' def=TransitionSpecification;
+
+TransitionSpecification:
+	reaction=TransitionReaction;
+	
+StatechartSpecification:
+	{StatechartSpecification} 'statechart';
+	
+	
+StateSpecification:
+	{StateSpecification} 'state';
+	
+/* Overriding transition grammar */
+TransitionReaction:
+	{TransitionReaction} (trigger=MyTrigger)? ('/' effect=ReactionEffect)?;
+
+MyTrigger returns sgraph::Trigger:
+	{ReactionTrigger} 'trigger';
+
+ReactionEffect returns sgraph::Effect:
+	{ReactionEffect} 'effect';
+

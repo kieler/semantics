@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+<!-- Editor -->
+	<extension point="org.eclipse.ui.editors">
+		<editor class="de.cau.kieler.synccharts.yakindu.ui.editor.editor.RequirementsDiagramEditor"
+				contributorClass="de.cau.kieler.synccharts.yakindu.ui.editor.editor.RequirementsDiagramActionBarContributor"
+				default="true"
+				extensions="kids"
+				icon="icons/obj16/SyncchartsDiagramFile.png"
+				id="de.cau.kieler.synccharts.yakindu.ui.editor.editor.RequirementsDiagramEditor"
+				matchingStrategy="org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditorMatchingStrategy"
+				name="Synccharts Diagram (Yakindu Editor)">
+		</editor>
+	</extension>
+	
+	<extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor" id="prop-contrib">
+		<propertyContributor contributorId="de.cau.kieler.synccharts.yakindu.ui.editor.editor.RequirementsDiagramEditor"
+							 labelProvider="org.yakindu.sct.ui.editor.propertysheets.SheetLabelProvider">
+			<propertyCategory category="domain"/>
+			<propertyCategory category="visual"/>
+			<propertyCategory category="extra"/>
+		</propertyContributor>
+	</extension>
+	
+	<extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="proptabs">
+		<propertyTabs contributorId="de.cau.kieler.synccharts.yakindu.ui.editor.editor.RequirementsDiagramEditor">
+		<propertyTab category="domain"
+					 id="property.tab.domain"
+					 label="Model"/>
+			<propertyTab category="visual" id="property.tab.AppearancePropertySection" label="Appearance"/>
+			<propertyTab category="visual" id="property.tab.DiagramPropertySection" label="Diagram"/>
+			</propertyTabs>
+	</extension>
+	
+	<extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="propsections">
+		<propertySections contributorId="de.cau.kieler.synccharts.yakindu.ui.editor.editor.RequirementsDiagramEditor">
+		<!-- State model section -->
+			<propertySection id="property.section.domain.state"
+							 tab="property.tab.domain"
+							 class="org.yakindu.sct.ui.editor.propertysheets.StatePropertySection">
+				<input type="org.yakindu.sct.ui.editor.editparts.StateEditPart"/>
+				<input type="org.yakindu.sct.ui.editor.editparts.StateNameEditPart"/>
+				<input type="org.yakindu.sct.ui.editor.editparts.StateTextCompartmentEditPart"/>
+				<input type="org.yakindu.sct.ui.editor.editparts.StateTextCompartmentExpressionEditPart"/>
+			</propertySection>
+			<!-- Statechart model section -->
+			<propertySection id="property.section.domain.statechart"
+							 tab="property.tab.domain"
+							 class="org.yakindu.sct.ui.editor.propertysheets.StatechartPropertySection">
+				<input type="org.yakindu.sct.ui.editor.editparts.StatechartNameEditPart"/>
+				<input type="org.yakindu.sct.ui.editor.editparts.StatechartTextEditPart"/>
+				<input type="org.yakindu.sct.ui.editor.editparts.StatechartTextExpressionEditPart"/>
+			</propertySection>
+			<!-- Transition model section -->
+			<propertySection id="property.section.domain.transition" tab="property.tab.domain" class="org.yakindu.sct.ui.editor.propertysheets.TransitionPropertySection">
+				<input type="org.yakindu.sct.ui.editor.editparts.TransitionEditPart"/>
+				<input type="org.yakindu.sct.ui.editor.editparts.TransitionExpressionEditPart"/>
+			</propertySection>
+			<!-- Entry model section -->
+			<propertySection id="property.section.domain.entry" tab="property.tab.domain" class="org.yakindu.sct.ui.editor.propertysheets.EntryPropertySection">
+				<input type="org.yakindu.sct.ui.editor.editparts.EntryEditPart"/>
+			</propertySection>
+			<!-- Exit model section -->
+			<propertySection id="property.section.domain.exit" tab="property.tab.domain" class="org.yakindu.sct.ui.editor.propertysheets.ExitPropertySection">
+				<input type="org.yakindu.sct.ui.editor.editparts.ExitEditPart"/>
+			</propertySection>
+			<!-- Region model section -->
+			<propertySection id="property.section.domain.region" tab="property.tab.domain" class="org.yakindu.sct.ui.editor.propertysheets.RegionPropertySection">
+				<input type="org.yakindu.sct.ui.editor.editparts.RegionEditPart"/>
+			</propertySection>
+			<!-- Choice model section -->
+			<propertySection id="property.section.domain.choice" tab="property.tab.domain" class="org.yakindu.sct.ui.editor.propertysheets.ChoicePropertySection">
+				<input type="org.yakindu.sct.ui.editor.editparts.ChoiceEditPart"/>
+			</propertySection>
+		</propertySections>
+	</extension>
+	
+	
+	<!-- New Diagram Wizard -->
+	<extension point="org.eclipse.ui.newWizards">
+		<wizard	category="KIELER" 
+				class="de.cau.kieler.synccharts.yakindu.ui.editor.wizards.RequirementsCreationWizard"
+				icon="icons/obj16/SyncchartsDiagramFile.png"
+				id="de.cau.kieler.synccharts.yakindu.ui.editor.wizards.RequirementsCreationWizard"
+				name="Synccharts Diagram (Yakindu Editor)"
+				project="false">
+		</wizard>
+	</extension>
+	
+	<extension point="org.eclipse.emf.ecore.extension_parser">
+		<parser class="de.cau.kieler.synccharts.yakindu.model.reqtext.ui.KidsexpExecutableExtensionFactory:org.yakindu.sct.model.stext.resource.factory.InjectMembersResourceFactory" 
+				type="kids">
+		</parser>
+	</extension>
+	
+	<extension point="org.yakindu.sct.ui.editor.expressions">
+		<ExpressionLanguageProvider
+			class="de.cau.kieler.synccharts.yakindu.ui.integration.reqtext.modules.TransitionExpressionProvider"
+			resourceExtension="kids"
+			semanticTarget="TransitionSpecification">
+		</ExpressionLanguageProvider>
+		<ExpressionLanguageProvider
+			class="de.cau.kieler.synccharts.yakindu.ui.integration.reqtext.modules.StatechartExpressionProvider"
+			resourceExtension="kids"
+			semanticTarget="StatechartSpecification">
+		</ExpressionLanguageProvider>
+	 	<ExpressionLanguageProvider
+			class="de.cau.kieler.synccharts.yakindu.ui.integration.reqtext.modules.StateExpressionProvider"
+			resourceExtension="kids"
+			semanticTarget="StateSpecification">
+			</ExpressionLanguageProvider>
+	</extension>
+	
+</plugin>
