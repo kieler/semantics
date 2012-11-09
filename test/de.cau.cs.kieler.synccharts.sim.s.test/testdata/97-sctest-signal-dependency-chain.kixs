@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="SyncChart" label="SyncChart" interfaceDeclaration="signal a, b, c, d, e, f, g;&#xA;output O;">
+    <signals name="O" isOutput="true"/>
+    <signals name="a"/>
+    <signals name="b"/>
+    <signals name="c"/>
+    <signals name="d"/>
+    <signals name="e"/>
+    <signals name="f"/>
+    <signals name="g"/>
+    <regions id="R2">
+      <states id="T20" label="T20" isInitial="true">
+        <outgoingTransitions label="/ a" priority="1" targetState="//@states.0/@regions.0/@states.1">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+        </outgoingTransitions>
+      </states>
+      <states id="T21" label="T21" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+        <outgoingTransitions isImmediate="true" label="# b / c" priority="1" targetState="//@states.0/@regions.0/@states.2">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.3"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.2"/>
+        </outgoingTransitions>
+      </states>
+      <states id="T22" label="T22" incomingTransitions="//@states.0/@regions.0/@states.1/@outgoingTransitions.0">
+        <outgoingTransitions isImmediate="true" label="# d / e" priority="1" targetState="//@states.0/@regions.0/@states.3">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.5"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.4"/>
+        </outgoingTransitions>
+      </states>
+      <states id="T23" label="T23" incomingTransitions="//@states.0/@regions.0/@states.2/@outgoingTransitions.0">
+        <outgoingTransitions isImmediate="true" label="# f / g" priority="1" targetState="//@states.0/@regions.0/@states.4">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.7"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.6"/>
+        </outgoingTransitions>
+      </states>
+      <states id="F1" label="F1" incomingTransitions="//@states.0/@regions.0/@states.3/@outgoingTransitions.0"/>
+    </regions>
+    <regions id="R1">
+      <states id="T10" label="T10" isInitial="true">
+        <outgoingTransitions isImmediate="true" label="# a / b" priority="1" targetState="//@states.0/@regions.1/@states.1">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+        </outgoingTransitions>
+      </states>
+      <states id="T11" label="T11" incomingTransitions="//@states.0/@regions.1/@states.0/@outgoingTransitions.0">
+        <outgoingTransitions isImmediate="true" label="# c / d" priority="1" targetState="//@states.0/@regions.1/@states.2">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.4"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.3"/>
+        </outgoingTransitions>
+      </states>
+      <states id="T12" label="T12" incomingTransitions="//@states.0/@regions.1/@states.1/@outgoingTransitions.0">
+        <outgoingTransitions isImmediate="true" label="# e / f" priority="1" targetState="//@states.0/@regions.1/@states.3">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.6"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.5"/>
+        </outgoingTransitions>
+      </states>
+      <states id="T13" label="T13" incomingTransitions="//@states.0/@regions.1/@states.2/@outgoingTransitions.0">
+        <outgoingTransitions isImmediate="true" label="# g / O" priority="1" targetState="//@states.0/@regions.1/@states.4">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.7"/>
+        </outgoingTransitions>
+      </states>
+      <states id="F1" label="F1" incomingTransitions="//@states.0/@regions.1/@states.3/@outgoingTransitions.0"/>
+    </regions>
+  </states>
+</synccharts:Region>
