@@ -103,7 +103,7 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
             }
         }
 
-        // create dependencies between nodes
+        // Create dependencies between nodes
         //
         // Test 100 reveals that if state S has outgoing immediate transitions then all states An from 
         // which S can be entered, S needs to have a control flow dependency to. 
@@ -281,9 +281,9 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
         val PS = dependencies.getStrongNode(state, stateTransition);
         // Parent state is hierarchical and has weak aborting transitions (otherwise this will be the strong representation automatically)
         var PW = dependencies.getWeakNode(state, stateTransition);
-        // if state has no outgoing transitions, do with dummy self-transition
+        // If state has no outgoing transitions, do with dummy self-transition
         if (!childState.hasOutgoingTransitions) { 
-            if (state.needsStrongRepresentation) {
+            if (state.needsStrongRepresentation) { 
                 dependencies.handleHierarchyDependencyHelperPS(childState, PS, null);
             }
             if (state.needsWeakRepresentation) {
