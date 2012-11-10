@@ -21,7 +21,7 @@ import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.NodeType
 import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies
 import java.util.ArrayList
 import java.util.List
@@ -64,7 +64,7 @@ class Synccharts2S {
         
         // create mapping from SyncChart states to dependency nodes
         for (node : dependencies.nodes) {
-            if (node.type == DependencyType::WEAK) {
+            if (node.type == NodeType::WEAK) {
                 TraceComponent::createTrace(node.state, node, "DependencyWeak");
             }
             else {
