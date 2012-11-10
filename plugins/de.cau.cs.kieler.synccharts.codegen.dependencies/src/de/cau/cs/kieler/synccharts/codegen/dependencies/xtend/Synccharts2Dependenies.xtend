@@ -24,13 +24,17 @@ import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.NodeType
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.NodeType
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.TransitionDependency
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDependency
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDependency
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
@@ -67,84 +71,145 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
     // Main transform method for a given dependencies object.
     def Dependencies transform( Dependencies dependencies, Region root) {
         var rootState = root.states.head();
-        //System::out.println("Hierarchical8 "+ state.id + ", ");
 
-        // create nodes for all states 
-        for (state : root.allStatesOfRegion) {
-            if (state.outgoingTransitions.size == 0) {
-                dependencies.createSimpleOrStrongAndWeakNoedes(state, null);
-            }
-            for (transition : state.outgoingTransitions) {
-                dependencies.createSimpleOrStrongAndWeakNoedes(state, transition);
+        var allStates = rootState.eAllContents.toIterable().filter(typeof(State)).toList;
+
+        // Create nodes for all states 
+        for (state : allStates) {
+            if (!state.needsNoRepresentation) {
+               if (!state.hasOutgoingTransitions) {
+                  // Dummy dependency node for a NULL transition
+                  // this representation is for hierarchical states that have no outgoing transition.
+                  // Note that simple states w/o outgoing transitions need no dependency representation
+                  // at all.
+                  // For a simple state only create a strong dependency node.
+                  // For a hierarchical state create an additional weak dependency node only iff it has outgoing
+                  // weak abort transitions; getWeakNode() takes care of creating this representation only
+                  // if it is needed.                 
+                  dependencies.getStrongNode(state);
+                  dependencies.getWeakNode(state);
+               } else {
+                  // For states with outgoing transitions, create dependency nodes for
+                  // every outgoing transition
+                  // For a simple state only create a strong dependency node.
+                  // For a hierarchical state create an additional weak dependency node only iff it has outgoing
+                  // weak abort transitions; getWeakNode() takes care of creating this representation only
+                  // if it is needed.                 
+                  for (transition : state.outgoingTransitions) {
+                        dependencies.getStrongNode(state, transition);
+                        dependencies.getWeakNode(state, transition);
+                  }
+               }
             }
         }
 
         // create dependencies between nodes
+        //
+        // Test 100 reveals that if state S has outgoing immediate transitions then all states An from 
+        // which S can be entered, S needs to have a control flow dependency to. 
+        //
+        // Test 102 reveals internal actions of S that may possibly be executed immediately
+        // after S is entered by an immediate action. Therefore if S is hierarchical and
+        // S has incoming immediate transitions from An then S has to depend on these
+        // An states too.
         for (state : root.getAllStatesAndHandleHiearchyDependency(dependencies)) {
             dependencies.handleTransitionDependency(state);
             
-            for (transition : state.outgoingTransitions) {
-                var firstNode  = dependencies.getNode(transition.sourceState, transition, DependencyType::STRONG);
-                
-                if (transition.targetState.outgoingTransitions.size == 0) {
-                    dependencies.handleControlFlowDependency(firstNode, state, transition, null);
-                }
-                for (targetTransition: transition.targetState.outgoingTransitions) {
-                    dependencies.handleControlFlowDependency(firstNode, state, transition, targetTransition);
-                }
-                
-                dependencies.handleSignalDependency(transition, rootState);
-            }
-        }
-        
-        // necessary optimization to remove nondeterministic choices that are ruled out by the fact
-        // that there are no transitions of type strong (weak). In this case we do not need to consider
-        // the strong (weak) representation of the node.
-        val allStates = rootState.eAllContents.toIterable().filter(typeof(State)).toList;
-        for (state : allStates) {
-            // consider normal terminations also as weak aborts
-            val outgoingWeakTransitions = state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT);
-            val outgoingStrongTransitions = state.outgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT);
-            // ".. && outgoingStrongTransitions != 0" for (macro) states without any outgoing transition, leave the
-            // weak representation in!
-            if (outgoingWeakTransitions.size == 0 && outgoingStrongTransitions.size > 0) {
-                // now we can proceed and delete all dependencies to the weak representation of state
-                val nodesToDelete = dependencies.nodes.filter(e | e.id.startsWith(state.id) && e.id.endsWith("_W")).toList();
-                for (node : nodesToDelete) {
-                    val dependenciesToDelete = dependencies.dependencies.filter(e | e.targetNode == node || e.sourceNode == node).toList();
-                    for (dependency : dependenciesToDelete) {
-                           // not only delete the nodes but also all dependencies (transitions) to an from the nodes
-                         dependency.targetNode.incomingDependencies.remove(dependency);
-                         dependency.sourceNode.outgoingDependencies.remove(dependency);
-                         dependencies.dependencies.remove(dependency);
+            var immediateOutgoingTransitions = state.outgoingTransitions.filter(e|e.isImmediate);
+            var immediateIncomingTransitions = state.incomingTransitions.filter(e|e.isImmediate);
+            // If there are any outgoing immediate transitions of this state S
+            for (immediateTransition : immediateOutgoingTransitions) {
+                // Then add a control flow dependency for every incoming normal transition
+                for (transition : state.incomingTransitions) {
+                    var dependencyTargetNode  = dependencies.getStrongNode(transition.sourceState, transition);
+                    if (transition.sourceState.hierarchical) {
+                        dependencyTargetNode  = dependencies.getWeakNode(transition.sourceState, transition);
                     }
-                    // the following deletion is optional, code generation should skip/optimize
-                    // PRIO statements away, iff their nodes are NULL
-                    dependencies.nodes.remove(node);
-                }
-            }
-            else if (outgoingWeakTransitions.size > 0 && outgoingStrongTransitions.size == 0) {
-                // in this case there are weak-outgoing transitions
-                // we can now check if we can get rid of the strong abort representation 
-                // BUT this only holds for macro states
-                if (state.isHierarchical) {
-                    // now we can proceed and delete all dependencies to the strong representation of state
-                    val nodesToDelete = dependencies.nodes.filter(e | e.id.startsWith(state.id + "_") && e.id.endsWith("_S") && e.state.regions.size > 0).toList();
-                    for (node : nodesToDelete) {
-                          val dependenciesToDelete = dependencies.dependencies.filter(e | e.targetNode == node || e.sourceNode == node).toList();
-                        for (dependency : dependenciesToDelete) {
-                             // not only delete the nodes but also all dependencies (transitions) to an from the nodes
-                             dependency.targetNode.incomingDependencies.remove(dependency);
-                             dependency.sourceNode.outgoingDependencies.remove(dependency);
-                             dependencies.dependencies.remove(dependency);
-                        }
-                        // the following deletion is optional, code generation should skip/optimize
-                        // PRIO statements away, iff their nodes are NULL
-                        dependencies.nodes.remove(node);
+                 
+                    if (transition.targetState.outgoingTransitions.size == 0) {
+                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, immediateTransition, null);
+                    }
+                    for (targetTransition: state.outgoingTransitions) {
+                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, immediateTransition, targetTransition);
                     }
                 }
             }
+            
+            // If S is hierarchical
+                for (transition :  immediateIncomingTransitions) {
+                    var dependencyTargetNode  = dependencies.getStrongNode(transition.sourceState, transition);
+                    if (transition.sourceState.hierarchical) {
+                        dependencyTargetNode  = dependencies.getWeakNode(transition.sourceState, transition);
+                    }
+                 
+                    if (transition.targetState.outgoingTransitions.size == 0) {
+                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, transition, null);
+                    }
+                    for (targetTransition: state.outgoingTransitions) {
+                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, transition, targetTransition);
+                    }
+                }
+                        
         }
+
+        // Signal dependencies
+        var allTransitions = rootState.eAllContents.toIterable().filter(typeof(Transition)).toList;
+        for (transition : allTransitions) {
+              dependencies.handleSignalDependency(transition, rootState);
+        }
+
+// 10.11.2012
+// The following optimization is not necessary any more because
+// getWeakNode and getStrongNode already consider the cases when such (weak or strong) representation is not needed
+// and in this case return the other (strong or weak) representation.
+//        
+//        // necessary optimization to remove nondeterministic choices that are ruled out by the fact
+//        // that there are no transitions of type strong (weak). In this case we do not need to consider
+//        // the strong (weak) representation of the node.
+//        for (state : allStates) {
+//            // consider normal terminations also as weak aborts
+//            val outgoingWeakTransitions = state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT);
+//            val outgoingStrongTransitions = state.outgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT);
+//            // ".. && outgoingStrongTransitions != 0" for (macro) states without any outgoing transition, leave the
+//            // weak representation in!
+//            if (outgoingWeakTransitions.size == 0 && outgoingStrongTransitions.size > 0) {
+//                // now we can proceed and delete all dependencies to the weak representation of state
+//                val nodesToDelete = dependencies.nodes.filter(e | e.id.startsWith(state.id) && e.id.endsWith("_W")).toList();
+//                for (node : nodesToDelete) {
+//                    val dependenciesToDelete = dependencies.dependencies.filter(e | e.targetNode == node || e.sourceNode == node).toList();
+//                    for (dependency : dependenciesToDelete) {
+//                         // not only delete the nodes but also all dependencies (transitions) to an from the nodes
+//                         dependency.targetNode.incomingDependencies.remove(dependency);
+//                         dependency.sourceNode.outgoingDependencies.remove(dependency);
+//                         dependencies.dependencies.remove(dependency);
+//                    }
+//                    // the following deletion is optional, code generation should skip/optimize
+//                    // PRIO statements away, iff their nodes are NULL
+//                    dependencies.nodes.remove(node);
+//                }
+//            }
+//            else if (outgoingWeakTransitions.size > 0 && outgoingStrongTransitions.size == 0) {
+//                // in this case there are weak-outgoing transitions
+//                // we can now check if we can get rid of the strong abort representation 
+//                // BUT this only holds for macro states
+//                if (state.isHierarchical) {
+//                    // now we can proceed and delete all dependencies to the strong representation of state
+//                    val nodesToDelete = dependencies.nodes.filter(e | e.id.startsWith(state.id + "_") && e.id.endsWith("_S") && e.state.regions.size > 0).toList();
+//                    for (node : nodesToDelete) {
+//                          val dependenciesToDelete = dependencies.dependencies.filter(e | e.targetNode == node || e.sourceNode == node).toList();
+//                        for (dependency : dependenciesToDelete) {
+//                             // not only delete the nodes but also all dependencies (transitions) to an from the nodes
+//                             dependency.targetNode.incomingDependencies.remove(dependency);
+//                             dependency.sourceNode.outgoingDependencies.remove(dependency);
+//                             dependencies.dependencies.remove(dependency);
+//                        }
+//                        // the following deletion is optional, code generation should skip/optimize
+//                        // PRIO statements away, iff their nodes are NULL
+//                        dependencies.nodes.remove(node);
+//                    }
+//                }
+//            }
+//        }
         
         // topological sort
         dependencies.topologicalSort();
@@ -185,37 +250,54 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
     // ======================================================================================================
     // ==                                 H A N D L E    D E P E N D E N C Y                               ==
     // ======================================================================================================
+    
+    // HIERARCHY DEPENDNECY //
 
     // Helper function for creating hierarchy dependencies.
-    def handleHierarchyDependencyHelper(Dependencies dependencies, State childState, Node PW, Node PS, Transition childStateTransition) {
-            val CS = dependencies.getNode(childState, childStateTransition, DependencyType::STRONG);
-            dependencies.getHierarchyDependency(PW, CS);
-            dependencies.getHierarchyDependency(CS, PS);
-            if (childState.hierarchical) {
-                val CW = dependencies.getNode(childState, childStateTransition, DependencyType::WEAK);
-                dependencies.getHierarchyDependency(PW, CW);
-                dependencies.getHierarchyDependency(CW, PS);
+    def handleHierarchyDependencyHelperPS(Dependencies dependencies, State childState, Node parent, Transition childStateTransition) {
+            if (childState.needsStrongRepresentation) {
+               val CS = dependencies.getStrongNode(childState, childStateTransition);
+               dependencies.getHierarchyDependency(CS, parent);
+            }
+            if (childState.needsWeakRepresentation) {
+               val CW = dependencies.getWeakNode(childState, childStateTransition);
+               dependencies.getHierarchyDependency(CW, parent);
+            }
+    }
+    // Helper function for creating hierarchy dependencies.
+    def handleHierarchyDependencyHelperPW(Dependencies dependencies, State childState, Node parent, Transition childStateTransition) {
+            if (childState.needsStrongRepresentation) {
+               val CS = dependencies.getStrongNode(childState, childStateTransition);
+               dependencies.getHierarchyDependency(parent, CS);
+            }
+            if (childState.needsWeakRepresentation) {
+               val CW = dependencies.getWeakNode(childState, childStateTransition);
+               dependencies.getHierarchyDependency(parent, CW);
             }
     }
     
     // Helper function for creating hierarchy dependencies.
     def handleHierarchyDependencyHelper(Dependencies dependencies, State childState, State state, Transition stateTransition) {
-        val PS = dependencies.getNode(state, stateTransition, DependencyType::STRONG);
-        var PW = PS;
-        if (state.hierarchical) {
-            PW = dependencies.getNode(state, stateTransition, DependencyType::WEAK);
-        }
-        else {
-            PW = null;
-        }
+        val PS = dependencies.getStrongNode(state, stateTransition);
+        // Parent state is hierarchical and has weak aborting transitions (otherwise this will be the strong representation automatically)
+        var PW = dependencies.getWeakNode(state, stateTransition);
         // if state has no outgoing transitions, do with dummy self-transition
-        val childStateTransitions = childState.outgoingTransitions.toList(); 
-        if (childStateTransitions.empty) { 
-            dependencies.handleHierarchyDependencyHelper(childState, PW, PS, null);
+        if (!childState.hasOutgoingTransitions) { 
+            if (state.needsStrongRepresentation) {
+                dependencies.handleHierarchyDependencyHelperPS(childState, PS, null);
+            }
+            if (state.needsWeakRepresentation) {
+                dependencies.handleHierarchyDependencyHelperPW(childState, PW, null);
+            }
         }
         else {
-            for (childStateTransition : childStateTransitions) {
-                 dependencies.handleHierarchyDependencyHelper(childState, PW, PS, childStateTransition);
+            for (childStateTransition : childState.outgoingTransitions) {
+                if (state.needsStrongRepresentation) {
+                    dependencies.handleHierarchyDependencyHelperPS(childState, PS, childStateTransition);
+                }
+                if (state.needsWeakRepresentation) {
+                    dependencies.handleHierarchyDependencyHelperPW(childState, PW, childStateTransition);
+                }
             }
         }
     }
@@ -224,36 +306,40 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
     // parent weak -> child strong -> parent strong
     // parent weak -> child weak   -> parent strong (if child is hierarchical)
     def handleHierarchyDependency(Dependencies dependencies, State childState, State state) {
-        var stateTransitions = state.outgoingTransitions.toList();
-        if (stateTransitions.empty) {
+        if (!state.hasOutgoingTransitions) {
             // if state has no outgoing transitions, do with dummy self-transition
             dependencies.handleHierarchyDependencyHelper(childState, state, null);
         }
         else {
-            for (stateTransition : stateTransitions) {
+            for (stateTransition : state.outgoingTransitions) {
                 dependencies.handleHierarchyDependencyHelper(childState, state, stateTransition);
             }
         }
         
     }
+ 
     
+    // TRANSITION DEPENDENCY //
+
     // Create transition dependencies for prioritized transitions in the order of their priority.
     def handleTransitionDependency(Dependencies dependencies, State state) {
-        var orderedTransitions = state.outgoingTransitions.filter(e|true).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
+        var orderedTransitions = state.outgoingTransitions.filter(e|true).sort(e1, e2 | compareTransitionPriority(e1, e2));
         var i = 1;
         for (transition : orderedTransitions) {
              if (i < orderedTransitions.size) {
                 var nextTransition = orderedTransitions.get(i);
                 if (nextTransition != null) {
-                    var sourceNode = dependencies.getNode(state, transition, DependencyType::STRONG);
-                    var targetNode = dependencies.getNode(state, nextTransition, DependencyType::STRONG);
-                    dependencies.getTransitionDependency(sourceNode, targetNode);
-                    if (state.hierarchical) {
-                        var sourceNodeW = dependencies.getNode(state, transition, DependencyType::WEAK);
-                        var targetNodeW = dependencies.getNode(state, nextTransition, DependencyType::WEAK);
-                        dependencies.getTransitionDependency(sourceNodeW, targetNodeW);
-                        //dependencies.getTransitionDependency(sourceNodeW, targetNode)  //TODO: necessary or correct???
-                        //dependencies.getTransitionDependency(sourceNode, targetNodeW)  //TODO: necessary or correct???
+                    if (state.needsStrongRepresentation) {
+                       var sourceNode = dependencies.getStrongNode(state, transition);
+                       var targetNode = dependencies.getStrongNode(state, nextTransition);
+                       dependencies.getTransitionDependency(sourceNode, targetNode);
+                    }
+                    if (state.needsWeakRepresentation) {
+                       var sourceNodeW = dependencies.getWeakNode(state, transition);
+                       var targetNodeW = dependencies.getWeakNode(state, nextTransition);
+                       dependencies.getTransitionDependency(sourceNodeW, targetNodeW);
+                       //dependencies.getTransitionDependency(sourceNodeW, targetNode)  //TODO: necessary or correct???
+                       //dependencies.getTransitionDependency(sourceNode, targetNodeW)  //TODO: necessary or correct???
                     }
                 }
                 i=i+1;
@@ -261,28 +347,35 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
         }
     }
     
+    
+    // CONTROLFLOW DEPENDENCY //
+    
     // Create control flow dependencies for immediate transitions only.
-    def handleControlFlowDependency(Dependencies dependencies, Node firstNode, State state, Transition transition, Transition targetTransition) {
-            var secondNode = dependencies.getNode(transition.targetState, targetTransition, DependencyType::STRONG);
-            if (firstNode != secondNode) {
-                     if (transition.isImmediate) {
-                        dependencies.getControlFlowDependency(firstNode, secondNode, transition.isImmediate)
-                     }
-                
-                    if (transition.sourceState.hierarchical) {
-                        var firstNodeW  = dependencies.getNode(transition.sourceState, transition, DependencyType::WEAK);
-                        if (transition.isImmediate) {
-                            dependencies.getControlFlowDependency(firstNodeW, secondNode, transition.isImmediate)  //TODO: necessary or correct???
+    def handleControlFlowDependency(Dependencies dependencies, Node dependencyTargetNode, State state, Transition transition, Transition targetTransition) {
+            // transition == incoming transition from A to S responsible for the depdendency
+            // targetTransition 
+            
+               var dependendNodeS = dependencies.getStrongNode(state, transition);
+               if (state.hierarchical) {
+                  var dependendNodeW  = dependencies.getWeakNode(state, transition);
+                  dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeW, transition.isImmediate)
+               }
+               dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeS, transition.isImmediate)
 
-                            if (transition.targetState.hierarchical) {
-                                var secondNodeW = dependencies.getNode(transition.targetState, targetTransition, DependencyType::WEAK);
-                                dependencies.getControlFlowDependency(firstNodeW, secondNodeW, transition.isImmediate)
-                                dependencies.getControlFlowDependency(firstNode, secondNodeW, transition.isImmediate)  //TODO: necessary or correct???
-                            }
-                        }
-                        
-                    }
-            }
+// FIXME: Do we need that?!                
+//                    if (transition.sourceState.hierarchical) {
+//                        var firstNodeW  = dependencies.getNode(transition.sourceState, transition, NodeType::WEAK);
+//                        if (transition.isImmediate) {
+//                            dependencies.getControlFlowDependency(firstNodeW, secondNode, transition.isImmediate)  //TODO: necessary or correct???
+//
+//                            if (transition.targetState.hierarchical) {
+//                                var secondNodeW = dependencies.getNode(transition.targetState, targetTransition, NodeType::WEAK);
+//                                dependencies.getControlFlowDependency(firstNodeW, secondNodeW, transition.isImmediate)
+//                                dependencies.getControlFlowDependency(firstNode, secondNodeW, transition.isImmediate)  //TODO: necessary or correct???
+//                            }
+//                        }
+//                        
+//                    }
     }
     
     
@@ -359,6 +452,8 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
     }
 
 
+    // SIGNAL DEPENDENCY //
+    
     // Create signal dependencies for states emitting signals and other states testing for these signals in triggers of
     // their outgoing transitions.
     def handleSignalDependency(Dependencies dependencies, Transition transition, State rootState) {
@@ -398,7 +493,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
                             for (additionalState : additionalStates) {
                                 // If not already in the list
                                 if (!immediateEmitterStates.contains(additionalState)) {
-                                    immediateEmitterStates.add(additionalState);
+//                                    immediateEmitterStates.add(additionalState);
                                 }
                             }
                         }
@@ -426,24 +521,26 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
                            
     def handleSignalDependencyHelper(Dependencies dependencies, State emitterState, State triggerState, Transition triggeredTransition,
                                      Transition transition, State rootState) {
-                           val emitterNode = dependencies.getNode(emitterState, transition, DependencyType::STRONG);
-                           val triggerNode = dependencies.getNode(triggerState, triggeredTransition, DependencyType::STRONG);
+                           val emitterNode = dependencies.getStrongNode(emitterState, transition);
+                           val triggerNode = dependencies.getStrongNode(triggerState, triggeredTransition);
                            dependencies.getSignalDependency(emitterNode, triggerNode);
                            //TODO: all the following necessary/correct???
                            if (emitterState.hierarchical) {
-                               var emitterNodeW = dependencies.getNode(emitterState, transition, DependencyType::WEAK);
+                               var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
                                dependencies.getSignalDependency(emitterNodeW, triggerNode);
                            }
                            if (triggerState.hierarchical) {
-                               var triggerNodeW = dependencies.getNode(triggerState, triggeredTransition, DependencyType::WEAK);
+                               var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
                                 dependencies.getSignalDependency(emitterNode, triggerNodeW);
                            }
                            if (emitterState.hierarchical && triggerState.hierarchical) {
-                               var emitterNodeW = dependencies.getNode(emitterState, transition, DependencyType::WEAK);
-                               var triggerNodeW = dependencies.getNode(triggerState, triggeredTransition, DependencyType::WEAK);
+                               var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
+                               var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
                                dependencies.getSignalDependency(emitterNodeW, triggerNodeW);
                            }
     }
+    
+   
 
     // ======================================================================================================
     // ==                      R E T R I E V E    C R E A T E D    D E P E N D E N C Y                     ==
@@ -462,10 +559,10 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
         dependencies.getDependency(secondNode, firstNode, newDependency);
     }
 
-    // Create a new hiearchy dependency.
-    def Dependency getHierarchyDependency(Dependencies dependencies, Node sourceNode, Node targetNode) {
+    // Create a new hierarchy dependency.
+    def Dependency getHierarchyDependency(Dependencies dependencies, Node parentNode, Node childNode) {
         var newDependency = DependencyFactory::eINSTANCE.createHierarchyDependency();
-        dependencies.getDependency(sourceNode, targetNode, newDependency);
+        dependencies.getDependency(parentNode, childNode, newDependency);
     }
 
     // Create a new transition dependency.
@@ -476,7 +573,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
     
     
     // ======================================================================================================
-    // ==                                         C R E A T I O N                                          ==
+    // ==                                  N O D E   C R E A T I O N                                       ==
     // ======================================================================================================
 
     // Create a new dependency transition only if this does not exist yet and add it to dependencies.
@@ -489,6 +586,17 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
         if (dependency.size > 0) {
             return dependency.head;
         }
+        
+        // Debuggung possibility
+        var dependencyType = "H";
+        if (newDependency instanceof TransitionDependency) {
+            dependencyType = "T";
+        } else if (newDependency instanceof ControlflowDependency) {
+            dependencyType = "C";
+        } else if (newDependency instanceof SignalDependency) {
+            dependencyType = "S";
+        }
+        System::out.println(sourceNode.id + " --[" + dependencyType + "]--> " + targetNode.id);
         // not yet found newDependency => add it
         newDependency.setSourceNode(sourceNode);
         newDependency.setTargetNode(targetNode);
@@ -496,21 +604,73 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
         return newDependency;
     }
     
-    // Create dependency nodes according to a node type.
-    def void createSimpleOrStrongAndWeakNoedes(Dependencies dependencies, State state, Transition transition) {
-        if (state.hierarchical) {
-                dependencies.getNode(state, transition, DependencyType::STRONG);
-                dependencies.getNode(state, transition, DependencyType::WEAK);
+    
+    
+    // ======================================================================================================
+    // ==                          D E P E N D E N C Y    C R E A T I O N                                  ==
+    // ======================================================================================================
+
+    // Return the strong representation for a state.
+    // For states without any outgoing transitions this returns the dummy dependency.
+    // For states with outgoing transitions it returns the one with the highest priroity.
+    def Node getStrongNode(Dependencies dependencies, State state) {
+        if (!state.hasOutgoingTransitions) {
+            dependencies.getStrongNode(state, null);
         }
         else {
-                dependencies.getNode(state, transition, DependencyType::STRONG);
+            val highestPrioTransition = state.outgoingTransitions.sort(e1, e2 | compareTransitionPriority(e1, e2)).head;
+            dependencies.getStrongNode(state, highestPrioTransition);
         }
     }
 
-    // Retrieve a dependency node according to the dependency tupe (weak or strong), if this node cannot
+    // Return the weak representation for a state.
+    // In case there is a weak representation needed for the state return it, otherwise
+    // return the strong one.
+    // For states without any outgoing transitions this returns the dummy dependency.
+    // For states with outgoing transitions it returns the one with the lowest priority.
+    def Node getWeakNode(Dependencies dependencies, State state) {
+        if (!state.hasOutgoingTransitions) {
+            dependencies.getWeakNode(state, null);
+        }
+        else {
+            val lowestPrioTransition = state.outgoingTransitions.sort(e1, e2 | compareTransitionPriority(e2, e1)).head;
+            dependencies.getWeakNode(state, lowestPrioTransition);
+        }
+    }
+    
+    // Return the strong representation needed for all simple states with outgoing transitions
+    // and all hierarchical states with strong abort transitions or without weak outgoing transitions 
+    // (maybe without any outgoing transtions = fallback).
+    // In case there is a strong representation needed for the state return it, otherwise
+    // return the weak one. This implicitly optimizes the dependency graph (see 03.09.2012 comment).
+    def Node getStrongNode(Dependencies dependencies, State state, Transition transition) {
+        if (!state.needsStrongRepresentation) {
+            dependencies.getWeakNode(state, transition);
+        } else {
+            dependencies.getNodeXXX(state, transition, NodeType::STRONG)
+        }
+    }
+    
+    // Return the weak representation needed for all hierarchical states with weak abort transitions.
+    // In case there is a weak representation needed for the state return it, otherwise
+    // return the strong one. This implicitly optimizes the dependency graph (see 03.09.2012 comment).
+    def Node getWeakNode(Dependencies dependencies, State state, Transition transition) {
+        if (!state.needsWeakRepresentation) {
+            dependencies.getStrongNode(state, transition);
+        } else {
+            dependencies.getNodeXXX(state, transition, NodeType::WEAK);
+        }
+    }
+
+    // Retrieve a dependency node according to the dependency tupel (weak or strong), if this node cannot
     // be found than create it and add it.
-    def Node getNode(Dependencies dependencies, State state, Transition transition, DependencyType type) {
-        var node = dependencies.nodes.filter(e|(e.type == type) && (e.state == state) && (e.transition == transition));
+    // This method should not be used directly. Use getNodeWeak, getNodeStrong instead!
+    def Node getNodeXXX(Dependencies dependencies, State state, Transition transition, NodeType type) {
+        // transition == null case for control flow dependencies
+        var node = dependencies.nodes.filter(e|(e.type == type) && (e.state == state));
+        if (transition != null) {
+            node = dependencies.nodes.filter(e|(e.type == type) && (e.state == state) && (e.transition == transition));
+        }
         if (node.size > 0) {
             return node.head;
         }
@@ -518,10 +678,11 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
         var newNode = DependencyFactory::eINSTANCE.createNode();
         newNode.setState(state);
         var stateId = state.getHierarchicalName("L");
+        System::out.println(stateId);
         if (transition != null) {
             stateId = stateId + "_" + transition.priority;
         }
-        if (type == DependencyType::WEAK) {
+        if (type == NodeType::WEAK) {
             newNode.setId(stateId + "_W");
         }
         else {
@@ -534,15 +695,61 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
     }
 
 
+
     // ======================================================================================================
     // ==                                          H E L P E R                                             ==
     // ======================================================================================================
-    
+
+    // Returns true iff the state is the one and only root state of the SyncChart having no parent state.
+    def Boolean isRootState(State state) {
+        state.parentRegion.parentState == null;
+    }
+        
     // Returns true iff the state contains regions.
     def boolean isHierarchical(State state) {
         state.regions.size > 0;
     }
+    
+    // Returns true iff the state has at least one outgoing transition
+    def boolean hasOutgoingTransitions(State state) {
+        !state.outgoingTransitions.nullOrEmpty;
+    }
+    
+    // Returns true iff the state has an outgoing strong abort transitions 
+    def boolean hasStrongAborts(State state) {
+        !state.outgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT).nullOrEmpty;
+    }
+    
+    // Returns true iff the state has an outgoing weak abort transitions 
+    def boolean hasWeakAborts(State state) {
+        !state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT).nullOrEmpty;
+    }
+    
+    // Returns true iff the state is hierarchical and has outgoing weak abort transitions.
+    // Note that the root state cannot be aborted but always gets a weak representation.
+    def boolean needsWeakRepresentation(State state) {
+        state.rootState || (state.hierarchical && state.hasWeakAborts);
+    }
+    
+    // Returns true iff 
+    // - the state is simple or 
+    // - it has outgoing strong aborts or 
+    // - it has no outgoing weak aborts (maybe without any outgoing transitions = fallback)
+    // Note that the root state cannot be aborted but always gets a strong representation.
+    def boolean needsStrongRepresentation(State state) {
+        state.rootState || (!state.hierarchical || state.hasStrongAborts || !state.hasWeakAborts);
+    }    
+    
+    // Returns true iff the state is simple and has no further outgoing transitions
+    def boolean needsNoRepresentation(State state) {
+        !state.hierarchical && !state.hasOutgoingTransitions
+    }
 
+    // Compare two transitions by their priority.
+    def int compareTransitionPriority(Transition e1, Transition e2) {
+        if (e1.priority < e2.priority) {-1} else {1}    
+    }
+    
     // Returns true iff the expression is referencing the signal.
     def dispatch Boolean triggerContainingSignal(Expression trigger, Signal signal) {
         return false;
@@ -628,6 +835,8 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
         }
         return StartSymbol + "_";
     }    
+    
+    
     
     // ======================================================================================================
     // ==                                   T O P O L O G I C A L    S O R T                               ==

@@ -22,22 +22,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class SignalDependencyImpl extends DependencyImpl implements SignalDependency {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected SignalDependencyImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return DependencyPackage.Literals.SIGNAL_DEPENDENCY;
-	}
+        return DependencyPackage.Literals.SIGNAL_DEPENDENCY;
+    }
 
 } //SignalDependencyImpl

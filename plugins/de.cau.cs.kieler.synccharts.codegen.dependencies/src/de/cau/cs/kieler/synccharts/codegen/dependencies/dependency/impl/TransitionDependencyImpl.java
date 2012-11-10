@@ -22,22 +22,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class TransitionDependencyImpl extends DependencyImpl implements TransitionDependency {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected TransitionDependencyImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return DependencyPackage.Literals.TRANSITION_DEPENDENCY;
-	}
+        return DependencyPackage.Literals.TRANSITION_DEPENDENCY;
+    }
 
 } //TransitionDependencyImpl
