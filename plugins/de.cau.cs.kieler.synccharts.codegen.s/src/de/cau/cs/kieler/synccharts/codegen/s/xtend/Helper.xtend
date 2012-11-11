@@ -61,6 +61,17 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     def Boolean isHierarchical(State state) {
         state.regions.size > 0;
     }
+    
+    // Returns true iff the state has at least one outgoing transition
+    def boolean hasOutgoingTransitions(State state) {
+        !state.outgoingTransitions.nullOrEmpty;
+    }
+        
+    // Returns true if the state is hierarchical or has outgoing transitions.
+    // Thus rules out states that are simple and have no further outgoing transitions.
+    def boolean needsDependencyRepresentation(State state) {
+        state.hierarchical || state.hasOutgoingTransitions
+    }    
 
     // Returns true iff the state is hierarchical and has a weak immediate transition (so it needs an extra surface state).
     def Boolean needsExtraSurfaceSState(State state) {
@@ -424,7 +435,11 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     }
     
     // Get the DependenyNode with the highest priority from all weak nodes for a SyncChart state.
+    // For simple state that do not have any representation this function returns  null.
     def Node getHighestDependencyWeakNode(State state) {
+        if (!state.needsDependencyRepresentation) {
+            return null;
+        }
         if (!state.hierarchical) {
             // for simple states, weak priorities are the same as strong priorities
             return getHighestDependencyStrongNode(state, null);
@@ -449,6 +464,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 
     // Get the highest priority for all strong nodes of this state in case transition is null
     // or the strong dependency node linked to this transition.
+    // For simple state that do not have any representation this function returns null.
     def Node getHighestDependencyStrongNode(State state, Transition transition) {
         val nodes = (TraceComponent::getTraceTargets(state, "DependencyStrong") as List<Node>);
         if (nodes.empty) {
@@ -522,10 +538,22 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 
     // Compare highest strong dependencies of two SyncChart states.
     def int compareTraceDependencyPriority(State e1, State e2) {
-        var node1 = e1.getHighestDependencyStrongNode(null);
-        var node2 = e2.getHighestDependencyStrongNode(null)
-        if (node1.priority > 
-            node2.priority) {-1} else {1}
+//        System::out.println("----");
+//        System::out.println(e1 + " : "+ e1.id);
+//        System::out.println(e2 + " : "+ e2.id);
+//        System::out.println("-");
+        val node1 = e1.getHighestDependencyStrongNode(null);
+        val node2 = e2.getHighestDependencyStrongNode(null)
+        var node1Priority = 0;
+        var node2Priority = 0;
+        if (node1 != null) {
+            node1Priority = node1.priority;
+        }
+        if (node2 != null) {
+            node2Priority = node2.priority;
+        }
+        if (node1Priority > 
+            node2Priority) {-1} else {1}
     }
 
     // Compare two transitions by their prioritiy.
