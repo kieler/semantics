@@ -1,0 +1,106 @@
+! reset;
+
+% Output: 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
+up 
+% Output: doorOpen isDown 
+;
+
+% Output: doorClosed 
+;
+
+% Output: doorOpen isUp 
+;
+
+% Output: doorOpen isUp 
+;
+
+% Output: doorOpen isUp 
+;
+
+% Output: doorOpen isUp 
+;
+
+% Output: doorOpen isUp 
+;
+error 
+% Output: doorOpen isUp 
+;
+alarm 
+% Output: doorOpen isUp 
+;
+alarm 
+% Output: doorOpen isUp 
+;
+alarm 
+% Output: doorOpen isUp 
+;
+alarm 
+% Output: doorOpen isUp 
+;
+alarm error 
+% Output: doorOpen isUp 
+;
+
+% Output: doorOpen isUp 
+;
+
+% Output: doorOpen isUp 
+;
+
+% Output: doorOpen isUp 
+;
+up 
+% Output: doorOpen isUp 
+;
+
+% Output: doorOpen isUp 
+;
+
+% Output: doorOpen isUp 
+;
+down 
+% Output: doorOpen isUp 
+;
+
+% Output: doorClosed 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
+
+% Output: doorOpen isDown 
+;
