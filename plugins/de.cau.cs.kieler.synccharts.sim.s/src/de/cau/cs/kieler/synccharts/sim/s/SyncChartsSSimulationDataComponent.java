@@ -103,17 +103,17 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     public boolean isDirty() {
         // Calculate a dirty indicator from ALL model elements and their textual representation's
         // hash code.
-//        int newDirtyIndicator = 0;
-//        TreeIterator<?> treeIterator = super.getModelRootElement().eAllContents();
-//        while (treeIterator.hasNext()) {
-//            Object obj = treeIterator.next();
-//            newDirtyIndicator += obj.toString().hashCode();
-//        }
-//        if (newDirtyIndicator != dirtyIndicator) {
-//            dirtyIndicator = newDirtyIndicator;
+        int newDirtyIndicator = 0;
+        TreeIterator<?> treeIterator = super.getModelRootElement().eAllContents();
+        while (treeIterator.hasNext()) {
+            Object obj = treeIterator.next();
+            newDirtyIndicator += obj.toString().hashCode();
+        }
+        if (newDirtyIndicator != dirtyIndicator) {
+            dirtyIndicator = newDirtyIndicator;
             return true;
-//        }
-//        return false;
+        }
+        return false;
     }
 
     // -------------------------------------------------------------------------

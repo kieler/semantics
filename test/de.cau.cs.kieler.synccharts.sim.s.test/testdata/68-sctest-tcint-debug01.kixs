@@ -2,7 +2,7 @@
 <synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
   <states id="Module_tcint_debug01" label="Module_tcint_debug01">
     <signals name="R" isOutput="true"/>
-    <signals name="T" isOutput="true"/>
+    <signals name="T"/>
     <signals name="haltTrap46" isInput="true"/>
     <regions>
       <states id="10" label="10" incomingTransitions="//@states.0/@regions.0/@states.2/@outgoingTransitions.0"/>

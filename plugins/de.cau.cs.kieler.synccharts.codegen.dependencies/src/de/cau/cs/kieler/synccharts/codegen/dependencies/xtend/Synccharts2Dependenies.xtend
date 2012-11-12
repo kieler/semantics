@@ -145,15 +145,14 @@ import com.google.common.collect.ImmutableList
             for (outgoingTransition : outgoingTransitions) {
                 
                 val targetState = outgoingTransition.targetState;
-                val dependencyNode  = dependencies.getStrongNode(state, outgoingTransition);
                 
                 if (targetState.hierarchical) {
-                    dependencies.handleControlFlowDependency(dependencyNode, targetState, outgoingTransition);
-                    // if S is hierarchical, then we might need also a dependency to the weak form (example 110, weak representation of A)
+                    var dependencyNode  = dependencies.getStrongNode(state, outgoingTransition);
+                    // if S is hierarchical, then we might need ONLY a dependency to the weak form (example 110, weak representation of A)
                     if (state.needsWeakRepresentation) {
-                        val dependencyNodeW  = dependencies.getWeakNode(state, outgoingTransition);
-                        dependencies.handleControlFlowDependency(dependencyNodeW, targetState, outgoingTransition);
+                        dependencyNode = dependencies.getWeakNode(state, outgoingTransition);
                     }
+                    dependencies.handleControlFlowDependency(dependencyNode, targetState, outgoingTransition);
                 } 
             }
             
@@ -383,13 +382,13 @@ import com.google.common.collect.ImmutableList
                var dependendNodeS = dependencies.getStrongNode(state);
                if (state.needsWeakRepresentation) {
                   var dependendNodeW  = dependencies.getWeakNode(state);
-                  // No dependency self loops
-                  if (dependencyTargetNode != dependendNodeW) {
+                  // No dependency self loops AND no dependencies from strong to weak representation of same state
+                  if (dependencyTargetNode.state != dependendNodeW.state) {
                       dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeW, transition.isImmediate)
                   }
                }
-               // No dependency self loops
-               if (dependencyTargetNode != dependendNodeS) {
+               // No dependency self loops AND no dependencies from strong to weak representation of same state
+               if (dependencyTargetNode.state != dependendNodeS.state) {
                    dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeS, transition.isImmediate)
                }
            }
@@ -513,39 +512,39 @@ import com.google.common.collect.ImmutableList
                         // The normal case
                         dependencies.handleSignalDependencyHelper(emitterState, triggerState, triggeredTransition, transition, rootState);
 
-                        // Test case 43-initial-states-signal-dependencies.kixs
-                        // Test case 44-initial-states-with-hierarchy.kixs
-                        // Test case 49-initial-states-signal-dependencies2.kixs                        
-                        var List<State> immediateEmitterStates = <State> newLinkedList;
-                        // From a higher hierarchy we may also find this emitter (as immediate deep inside)
-                        if (transition.sourceState.isImmediatelyReachableFromInitialState) {
-                            val commonParentStateToStop = triggerState.parentRegion.parentState;
-                            val additionalStates = transition.sourceState.getOuterStatesUntilNonInitial(commonParentStateToStop, rootState);
-                            for (additionalState : additionalStates) {
-                                // If not already in the list
-                                if (!immediateEmitterStates.contains(additionalState)) {
-//                                    immediateEmitterStates.add(additionalState);
-                                }
-                            }
-                        }
-                        for (immediateEmitterState : immediateEmitterStates) {
-                               if (immediateEmitterState.outgoingTransitions.size == 0) {
-                                   // States that do not have any outgoing transitions, are represented
-                                   // by a NULL transition for the dependency node
-                                   dependencies.handleSignalDependencyHelper(immediateEmitterState, 
-                                                                             triggerState, 
-                                                                             triggeredTransition, 
-                                                                             null, rootState);
-                               } else {
-                                   // For all others take their first transition (ordered by priority, most prio first)
-                                   var orderedTransitions = immediateEmitterState.outgoingTransitions.filter(e|true).sort(e1, e2 | if (e1.priority > e2.priority) {-1} else {1});
-                                   dependencies.handleSignalDependencyHelper(immediateEmitterState, 
-                                                                             triggerState, 
-                                                                             triggeredTransition, 
-                                                                             orderedTransitions.head, 
-                                                                             rootState);                               
-                               }    
-                        }
+//                        // Test case 43-initial-states-signal-dependencies.kixs
+//                        // Test case 44-initial-states-with-hierarchy.kixs
+//                        // Test case 49-initial-states-signal-dependencies2.kixs                        
+//                        var List<State> immediateEmitterStates = <State> newLinkedList;
+//                        // From a higher hierarchy we may also find this emitter (as immediate deep inside)
+//                        if (transition.sourceState.isImmediatelyReachableFromInitialState) {
+//                            val commonParentStateToStop = triggerState.parentRegion.parentState;
+//                            val additionalStates = transition.sourceState.getOuterStatesUntilNonInitial(commonParentStateToStop, rootState);
+//                            for (additionalState : additionalStates) {
+//                                // If not already in the list
+//                                if (!immediateEmitterStates.contains(additionalState)) {
+////                                    immediateEmitterStates.add(additionalState);
+//                                }
+//                            }
+//                        }
+//                        for (immediateEmitterState : immediateEmitterStates) {
+//                               if (immediateEmitterState.outgoingTransitions.size == 0) {
+//                                   // States that do not have any outgoing transitions, are represented
+//                                   // by a NULL transition for the dependency node
+//                                   dependencies.handleSignalDependencyHelper(immediateEmitterState, 
+//                                                                             triggerState, 
+//                                                                             triggeredTransition, 
+//                                                                             null, rootState);
+//                               } else {
+//                                   // For all others take their first transition (ordered by priority, most prio first)
+//                                   var orderedTransitions = immediateEmitterState.outgoingTransitions.filter(e|true).sort(e1, e2 | if (e1.priority > e2.priority) {-1} else {1});
+//                                   dependencies.handleSignalDependencyHelper(immediateEmitterState, 
+//                                                                             triggerState, 
+//                                                                             triggeredTransition, 
+//                                                                             orderedTransitions.head, 
+//                                                                             rootState);                               
+//                               }    
+//                        }
                     }                                        
                 }
     }
@@ -554,20 +553,31 @@ import com.google.common.collect.ImmutableList
                                      Transition transition, State rootState) {
                            val emitterNode = dependencies.getStrongNode(emitterState, transition);
                            val triggerNode = dependencies.getStrongNode(triggerState, triggeredTransition);
-                           dependencies.getSignalDependency(emitterNode, triggerNode);
+                           if (emitterState.needsStrongRepresentation() && triggerState.needsStrongRepresentation) {
+                               // Do not allow iff emitter is child of trigger (test 111)
+                               if (!emitterState.isChildOf(triggerState)) {
+                                   dependencies.getSignalDependency(emitterNode, triggerNode);
+                               }
+                           }
                            //TODO: all the following necessary/correct???
-                           if (emitterState.hierarchical) {
-                               var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
-                               dependencies.getSignalDependency(emitterNodeW, triggerNode);
+                           if (emitterState.needsWeakRepresentation && triggerState.needsStrongRepresentation) {
+                               // Do not allow iff emitter is child of trigger (test 111)
+                               // Dependency from E2-weak (abort) to C-strong is WRONG
+                               // because the weak abort can only happen if C's last wish is executed
+                               // there should ONLY be a dependency from E2-weak to C-weak!
+                               if (!emitterState.isChildOf(triggerState)) {
+                                   var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
+                                   dependencies.getSignalDependency(emitterNodeW, triggerNode);
+                               }
                            }
-                           if (triggerState.hierarchical) {
-                               var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
-                                dependencies.getSignalDependency(emitterNode, triggerNodeW);
+                           if (triggerState.needsWeakRepresentation && emitterState.needsStrongRepresentation()) {
+                                   var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
+                                   dependencies.getSignalDependency(emitterNode, triggerNodeW);
                            }
-                           if (emitterState.hierarchical && triggerState.hierarchical) {
-                               var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
-                               var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
-                               dependencies.getSignalDependency(emitterNodeW, triggerNodeW);
+                           if (emitterState.needsWeakRepresentation && triggerState.needsWeakRepresentation) {
+                                var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
+                                var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
+                                dependencies.getSignalDependency(emitterNodeW, triggerNodeW);
                            }
     }
     
@@ -754,6 +764,16 @@ import com.google.common.collect.ImmutableList
     // Returns true iff the state has an outgoing weak abort transitions 
     def boolean hasWeakAborts(State state) {
         !state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT).nullOrEmpty;
+    }
+
+    // Returns true iff state is the parent of the child    
+    def boolean isParentOf(State state, State child) {
+        return (!state.eAllContents.filter(e | e == child).nullOrEmpty);
+    }
+
+    // Returns true iff state is the child of the parent    
+    def boolean isChildOf(State state, State parent) {
+        return (parent.isParentOf(state));
     }
     
     // Returns true iff state needs a dependency representation at all AND
