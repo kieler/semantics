@@ -338,7 +338,17 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFragment();
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
-                
+
+//                // History transitions. (@requires: suspend)
+//                transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
+//
+//                // Suspends (non-immediate and non-delayed) (@requires: during)
+//                transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
+//                
+//                // During actions (@requires: none)
+//                transformedModel = (new SyncCharts2Simulation())
+//                        .transformDuringAction(transformedModel);
+
                 try {
                     // Write out copy/transformation of syncchart program
                     Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
