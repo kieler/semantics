@@ -208,7 +208,7 @@ class Synccharts2S {
                 val initialState = region.initialState;
                 val sfork = SFactory::eINSTANCE.createFork();
                 sfork.setThread(initialState.surfaceSState)
-                sfork.setPriority(initialState.highestDependencyStrongNode.priority);
+                sfork.setPriority(initialState.getHighestDependencyStrong);
                 sState.instructions.add(sfork);
             }
             // if there is no immediate weak transition, we do not need an extra surface!
@@ -221,14 +221,14 @@ class Synccharts2S {
                 else {
                     sfork.setThread(state.depthSState)
                 }
-                sfork.setPriority(state.highestDependencyStrongNode.priority);
+                sfork.setPriority(state.highestDependencyStrong);
                 sState.instructions.add(sfork);
             }
             else {
                 // fork extra surface thread (instead of join/depth thread!) with same priority as current thread
                 val sfork = SFactory::eINSTANCE.createFork();
                 sfork.setThread(state.extraSurfaceSState);
-                sfork.setPriority(state.highestDependencyStrongNode.priority);
+                sfork.setPriority(state.highestDependencyStrong);
                 sState.instructions.add(sfork);
             }
         }

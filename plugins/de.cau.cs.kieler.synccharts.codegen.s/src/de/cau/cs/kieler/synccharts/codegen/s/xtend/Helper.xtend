@@ -429,6 +429,16 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     // ==                    D E P E N D E N C Y   N O D E S   H E L P E R S                               ==
     // ======================================================================================================
 
+    // Get the highest priority from all strong nodes for a SyncChart state or 0 if no dependency node exists.
+    def int getHighestDependencyStrong(State state) {
+          val priorityNode = state.highestDependencyStrongNode;
+          if (priorityNode != null) {
+               return priorityNode.priority;
+          } else {
+               return 1; // example 109
+          }
+    }
+
     // Get the DependenyNode with the highest priority from all strong nodes for a SyncChart state.
     def Node getHighestDependencyStrongNode(State state) {
         return  getHighestDependencyStrongNode(state, null);    
@@ -544,15 +554,15 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 //        System::out.println("-");
         val node1 = e1.getHighestDependencyStrongNode(null);
         val node2 = e2.getHighestDependencyStrongNode(null)
-        var node1Priority = 0;
-        var node2Priority = 0;
+        var node1Priority = 1;
+        var node2Priority = 1;
         if (node1 != null) {
             node1Priority = node1.priority;
         }
         if (node2 != null) {
             node2Priority = node2.priority;
         }
-        if (node1Priority > 
+        if (node1Priority >= 
             node2Priority) {-1} else {1}
     }
 

@@ -114,8 +114,9 @@ import com.google.common.collect.ImmutableList
         // after S is entered by an immediate action. Therefore if S is hierarchical and
         // S has incoming transitions from An then S has to depend on these
         // An states too.
-        // Threrefore we introduce control flow dependencies for outgoing transitions
-        // to hierarchical states.
+        // Therefore we introduce control flow dependencies for outgoing transitions
+        // to hierarchical states. If S is hierarchical then there might be a dependency necessary
+        // for the strong AND the weak representation of S.
         for (state : root.getAllStatesAndHandleHiearchyDependency(dependencies)) {
             dependencies.handleTransitionDependency(state);
             
@@ -143,11 +144,16 @@ import com.google.common.collect.ImmutableList
 
             for (outgoingTransition : outgoingTransitions) {
                 
-                var targetState = outgoingTransition.targetState;
-                var dependencyNode  = dependencies.getStrongNode(state, outgoingTransition);
+                val targetState = outgoingTransition.targetState;
+                val dependencyNode  = dependencies.getStrongNode(state, outgoingTransition);
                 
                 if (targetState.hierarchical) {
                     dependencies.handleControlFlowDependency(dependencyNode, targetState, outgoingTransition);
+                    // if S is hierarchical, then we might need also a dependency to the weak form (example 110, weak representation of A)
+                    if (state.needsWeakRepresentation) {
+                        val dependencyNodeW  = dependencies.getWeakNode(state, outgoingTransition);
+                        dependencies.handleControlFlowDependency(dependencyNodeW, targetState, outgoingTransition);
+                    }
                 } 
             }
             
@@ -377,9 +383,15 @@ import com.google.common.collect.ImmutableList
                var dependendNodeS = dependencies.getStrongNode(state);
                if (state.needsWeakRepresentation) {
                   var dependendNodeW  = dependencies.getWeakNode(state);
-                  dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeW, transition.isImmediate)
+                  // No dependency self loops
+                  if (dependencyTargetNode != dependendNodeW) {
+                      dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeW, transition.isImmediate)
+                  }
                }
-               dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeS, transition.isImmediate)
+               // No dependency self loops
+               if (dependencyTargetNode != dependendNodeS) {
+                   dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeS, transition.isImmediate)
+               }
            }
 
 // FIXME: Do we need that?!                
