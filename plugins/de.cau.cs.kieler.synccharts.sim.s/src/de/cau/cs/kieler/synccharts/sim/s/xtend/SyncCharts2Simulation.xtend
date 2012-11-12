@@ -553,11 +553,11 @@ class SyncCharts2Simulation {
                // Add a NonSuspended and Suspended state
                val runningState = SyncchartsFactory::eINSTANCE.createState();
                runningState.setId("NonSuspended" + state.hashCode);
-               runningState.setLabel(state.id + " running");
+               runningState.setLabel(state.id + "Running");
                runningState.setIsInitial(true);
                val disabledState = SyncchartsFactory::eINSTANCE.createState();
                disabledState.setId("Suspended" + state.hashCode);
-               disabledState.setLabel(state.id + "disabled");
+               disabledState.setLabel(state.id + "Disabled");
                
                // Add during action that emits the disable signal 
                val immediateDuringAction = SyncchartsFactory::eINSTANCE.createAction();
@@ -584,6 +584,7 @@ class SyncCharts2Simulation {
                    disabled2actionTransition.setTargetState(actionState);
                    disabled2actionTransition.setTrigger(notSuspendTrigger.copy);
                    disabled2actionTransition.setIsImmediate(!immediateSuspension);
+                   disabled2actionTransition.setPriority(1);
                    disabledState.outgoingTransitions.add(disabled2actionTransition);
                    // Do not emit the disableSignal when the suspend trigger is not true any more!
                    disabled2actionTransition.setType(TransitionType::STRONGABORT);
@@ -591,11 +592,13 @@ class SyncCharts2Simulation {
                    action2runningTransition.setTargetState(runningState);
                    action2runningTransition.setLabel("#");
                    action2runningTransition.setIsImmediate(true);
+                   action2runningTransition.setPriority(1);
                    actionState.outgoingTransitions.add(action2runningTransition);
                val running2disabledTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                    running2disabledTransition.setTargetState(disabledState);
                    running2disabledTransition.setIsImmediate(immediateSuspension);
                    running2disabledTransition.setTrigger(suspendTrigger.copy);
+                   running2disabledTransition.setPriority(1);
                    runningState.outgoingTransitions.add(running2disabledTransition);
                
                // Create a region with two states running and disabled and the intermediate entry-action-macro-state
