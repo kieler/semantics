@@ -35,6 +35,8 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.NodeType
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.TransitionDependency
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDependency
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDependency
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import com.google.common.collect.ImmutableList
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
@@ -76,7 +78,7 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
 
         // Create nodes for all states 
         for (state : allStates) {
-            if (!state.needsNoRepresentation) {
+            if (state.needsDependencyRepresentation) {
                if (!state.hasOutgoingTransitions) {
                   // Dummy dependency node for a NULL transition
                   // this representation is for hierarchical states that have no outgoing transition.
@@ -110,45 +112,61 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
         //
         // Test 102 reveals internal actions of S that may possibly be executed immediately
         // after S is entered by an immediate action. Therefore if S is hierarchical and
-        // S has incoming immediate transitions from An then S has to depend on these
+        // S has incoming transitions from An then S has to depend on these
         // An states too.
+        // Threrefore we introduce control flow dependencies for outgoing transitions
+        // to hierarchical states.
         for (state : root.getAllStatesAndHandleHiearchyDependency(dependencies)) {
             dependencies.handleTransitionDependency(state);
             
             var immediateOutgoingTransitions = state.outgoingTransitions.filter(e|e.isImmediate);
-            var immediateIncomingTransitions = state.incomingTransitions.filter(e|e.isImmediate);
+            var outgoingTransitions = state.outgoingTransitions;
+            
             // If there are any outgoing immediate transitions of this state S
             for (immediateTransition : immediateOutgoingTransitions) {
                 // Then add a control flow dependency for every incoming normal transition
                 for (transition : state.incomingTransitions) {
                     var dependencyTargetNode  = dependencies.getStrongNode(transition.sourceState, transition);
                     if (transition.sourceState.hierarchical) {
-                        dependencyTargetNode  = dependencies.getWeakNode(transition.sourceState, transition);
+                          dependencyTargetNode  = dependencies.getWeakNode(transition.sourceState, transition);
                     }
                  
-                    if (transition.targetState.outgoingTransitions.size == 0) {
-                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, immediateTransition, null);
-                    }
-                    for (targetTransition: state.outgoingTransitions) {
-                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, immediateTransition, targetTransition);
-                    }
+                    dependencies.handleControlFlowDependency(dependencyTargetNode, state, immediateTransition);
+//                    if (transition.targetState.outgoingTransitions.size == 0) {
+//                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, immediateTransition, null);
+//                    }
+//                    for (targetTransition: state.outgoingTransitions) {
+//                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, immediateTransition, targetTransition);
+//                    }
                 }
             }
+
+            for (outgoingTransition : outgoingTransitions) {
+                
+                var targetState = outgoingTransition.targetState;
+                var dependencyNode  = dependencies.getStrongNode(state, outgoingTransition);
+                
+                if (targetState.hierarchical) {
+                    dependencies.handleControlFlowDependency(dependencyNode, targetState, outgoingTransition);
+                } 
+            }
             
-            // If S is hierarchical
-                for (transition :  immediateIncomingTransitions) {
-                    var dependencyTargetNode  = dependencies.getStrongNode(transition.sourceState, transition);
-                    if (transition.sourceState.hierarchical) {
-                        dependencyTargetNode  = dependencies.getWeakNode(transition.sourceState, transition);
-                    }
-                 
-                    if (transition.targetState.outgoingTransitions.size == 0) {
-                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, transition, null);
-                    }
-                    for (targetTransition: state.outgoingTransitions) {
-                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, transition, targetTransition);
-                    }
-                }
+            // If S in an initial state
+            
+//            // If S is hierarchical
+//                for (transition :  immediateIncomingTransitions) {
+//                    var dependencyTargetNode  = dependencies.getStrongNode(transition.sourceState, transition);
+//                    if (transition.sourceState.hierarchical) {
+//                        dependencyTargetNode  = dependencies.getWeakNode(transition.sourceState, transition);
+//                    }
+//                 
+//                    if (transition.targetState.outgoingTransitions.size == 0) {
+//                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, transition, null);
+//                    }
+//                    for (targetTransition: state.outgoingTransitions) {
+//                        dependencies.handleControlFlowDependency(dependencyTargetNode, state, transition, targetTransition);
+//                    }
+//                }
                         
         }
 
@@ -251,7 +269,7 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
     // ==                                 H A N D L E    D E P E N D E N C Y                               ==
     // ======================================================================================================
     
-    // HIERARCHY DEPENDNECY //
+    // HIERARCHY DEPENDENCY //
 
     // Helper function for creating hierarchy dependencies.
     def handleHierarchyDependencyHelperPS(Dependencies dependencies, State childState, Node parent, Transition childStateTransition) {
@@ -323,44 +341,46 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
 
     // Create transition dependencies for prioritized transitions in the order of their priority.
     def handleTransitionDependency(Dependencies dependencies, State state) {
-        var orderedTransitions = state.outgoingTransitions.filter(e|true).sort(e1, e2 | compareTransitionPriority(e1, e2));
-        var i = 1;
-        for (transition : orderedTransitions) {
-             if (i < orderedTransitions.size) {
-                var nextTransition = orderedTransitions.get(i);
-                if (nextTransition != null) {
-                    if (state.needsStrongRepresentation) {
-                       var sourceNode = dependencies.getStrongNode(state, transition);
-                       var targetNode = dependencies.getStrongNode(state, nextTransition);
-                       dependencies.getTransitionDependency(sourceNode, targetNode);
+       if (state.needsDependencyRepresentation) {
+         var orderedTransitions = state.outgoingTransitions.filter(e|true).sort(e1, e2 | compareTransitionPriority(e1, e2));
+         var i = 1;
+         for (transition : orderedTransitions) {
+                 if (i < orderedTransitions.size) {
+                    var nextTransition = orderedTransitions.get(i);
+                    if (nextTransition != null) {
+                        if (state.needsStrongRepresentation) {
+                           var sourceNode = dependencies.getStrongNode(state, transition);
+                           var targetNode = dependencies.getStrongNode(state, nextTransition);
+                           dependencies.getTransitionDependency(sourceNode, targetNode);
+                        }
+                        if (state.needsWeakRepresentation) {
+                           var sourceNodeW = dependencies.getWeakNode(state, transition);
+                           var targetNodeW = dependencies.getWeakNode(state, nextTransition);
+                           dependencies.getTransitionDependency(sourceNodeW, targetNodeW);
+                        }
                     }
-                    if (state.needsWeakRepresentation) {
-                       var sourceNodeW = dependencies.getWeakNode(state, transition);
-                       var targetNodeW = dependencies.getWeakNode(state, nextTransition);
-                       dependencies.getTransitionDependency(sourceNodeW, targetNodeW);
-                       //dependencies.getTransitionDependency(sourceNodeW, targetNode)  //TODO: necessary or correct???
-                       //dependencies.getTransitionDependency(sourceNode, targetNodeW)  //TODO: necessary or correct???
-                    }
+                    i=i+1;
                 }
-                i=i+1;
-            }
-        }
+          } // next transition
+       }
     }
     
     
     // CONTROLFLOW DEPENDENCY //
     
     // Create control flow dependencies for immediate transitions only.
-    def handleControlFlowDependency(Dependencies dependencies, Node dependencyTargetNode, State state, Transition transition, Transition targetTransition) {
-            // transition == incoming transition from A to S responsible for the depdendency
+    def handleControlFlowDependency(Dependencies dependencies, Node dependencyTargetNode, State state, Transition transition) {
+            // transition == incoming transition from A to S responsible for the dependency
             // targetTransition 
             
-               var dependendNodeS = dependencies.getStrongNode(state, transition);
-               if (state.hierarchical) {
-                  var dependendNodeW  = dependencies.getWeakNode(state, transition);
+           if (state.needsDependencyRepresentation) {
+               var dependendNodeS = dependencies.getStrongNode(state);
+               if (state.needsWeakRepresentation) {
+                  var dependendNodeW  = dependencies.getWeakNode(state);
                   dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeW, transition.isImmediate)
                }
                dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeS, transition.isImmediate)
+           }
 
 // FIXME: Do we need that?!                
 //                    if (transition.sourceState.hierarchical) {
@@ -377,7 +397,9 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
 //                        
 //                    }
     }
+
     
+    // SIGNAL DEPENDENCY //
     
     // For a state get all outer states until reaching a non-initial state that contains it
     // Attention: Take into account ALSO all incoming transitions to the last state,
@@ -451,9 +473,6 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
         return true;
     }
 
-
-    // SIGNAL DEPENDENCY //
-    
     // Create signal dependencies for states emitting signals and other states testing for these signals in triggers of
     // their outgoing transitions.
     def handleSignalDependency(Dependencies dependencies, Transition transition, State rootState) {
@@ -596,7 +615,7 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
         } else if (newDependency instanceof SignalDependency) {
             dependencyType = "S";
         }
-        System::out.println(sourceNode.id + " --[" + dependencyType + "]--> " + targetNode.id);
+//        System::out.println(sourceNode.id + " --[" + dependencyType + "]--> " + targetNode.id);
         // not yet found newDependency => add it
         newDependency.setSourceNode(sourceNode);
         newDependency.setTargetNode(targetNode);
@@ -725,24 +744,27 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
         !state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT).nullOrEmpty;
     }
     
-    // Returns true iff the state is hierarchical and has outgoing weak abort transitions.
+    // Returns true iff state needs a dependency representation at all AND
+    // the state is hierarchical and has outgoing weak abort transitions.
     // Note that the root state cannot be aborted but always gets a weak representation.
     def boolean needsWeakRepresentation(State state) {
-        state.rootState || (state.hierarchical && state.hasWeakAborts);
+        state.rootState || state.needsDependencyRepresentation && (state.hierarchical && state.hasWeakAborts);
     }
     
-    // Returns true iff 
-    // - the state is simple or 
+    // Returns true iff the state needs a dependency representation at all AND
+    // - the state is simple (and has outgoing transitions) or 
     // - it has outgoing strong aborts or 
     // - it has no outgoing weak aborts (maybe without any outgoing transitions = fallback)
     // Note that the root state cannot be aborted but always gets a strong representation.
     def boolean needsStrongRepresentation(State state) {
-        state.rootState || (!state.hierarchical || state.hasStrongAborts || !state.hasWeakAborts);
+        // see example 43 why hierarchical states always need a strong representation
+        state.rootState || state.needsDependencyRepresentation;// && (!state.hierarchical || state.hasStrongAborts || !state.hasWeakAborts);
     }    
     
-    // Returns true iff the state is simple and has no further outgoing transitions
-    def boolean needsNoRepresentation(State state) {
-        !state.hierarchical && !state.hasOutgoingTransitions
+    // Returns true if the state is hierarchical or has outgoing transitions.
+    // Thus rules out states that are simple and have no further outgoing transitions.
+    def boolean needsDependencyRepresentation(State state) {
+        state.hierarchical || state.hasOutgoingTransitions
     }
 
     // Compare two transitions by their priority.
