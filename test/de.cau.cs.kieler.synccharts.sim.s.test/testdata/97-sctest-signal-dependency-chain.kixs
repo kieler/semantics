@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
-  <states id="SyncChart" label="SyncChart" interfaceDeclaration="signal a, b, c, d, e, f, g;&#xA;output O;">
+  <states id="SyncChart" label="SyncChart" interfaceDeclaration="">
     <signals name="O" isOutput="true"/>
-    <signals name="a"/>
-    <signals name="b"/>
-    <signals name="c"/>
-    <signals name="d"/>
-    <signals name="e"/>
-    <signals name="f"/>
-    <signals name="g"/>
+    <signals name="a" isOutput="true"/>
+    <signals name="b" isOutput="true"/>
+    <signals name="c" isOutput="true"/>
+    <signals name="d" isOutput="true"/>
+    <signals name="e" isOutput="true"/>
+    <signals name="f" isOutput="true"/>
+    <signals name="g" isOutput="true"/>
     <regions id="R2">
       <states id="T20" label="T20" isInitial="true">
         <outgoingTransitions label="/ a" priority="1" targetState="//@states.0/@regions.0/@states.1">

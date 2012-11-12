@@ -39,13 +39,13 @@
     </regions>
     <regions id="ExitActionRegion17159221">
       <states id="Reset" label="Reset" isInitial="true" incomingTransitions="//@states.0/@regions.1/@states.1/@outgoingTransitions.0">
-        <outgoingTransitions label="ExitSetC / O" targetState="//@states.0/@regions.1/@states.1">
+        <outgoingTransitions label="ExitSetC / O" priority="1" targetState="//@states.0/@regions.1/@states.1">
           <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
           <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.2"/>
         </outgoingTransitions>
       </states>
       <states id="Set" label="Set" incomingTransitions="//@states.0/@regions.1/@states.0/@outgoingTransitions.0">
-        <outgoingTransitions label="ExitResetC" targetState="//@states.0/@regions.1/@states.0">
+        <outgoingTransitions label="ExitResetC" priority="1" targetState="//@states.0/@regions.1/@states.0">
           <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.3"/>
         </outgoingTransitions>
       </states>

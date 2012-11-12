@@ -2,64 +2,53 @@
 <synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
   <states id="Module_tcint_debug01" label="Module_tcint_debug01">
     <signals name="R" isOutput="true"/>
-    <signals name="S" isOutput="true"/>
     <signals name="T" isOutput="true"/>
-    <signals name="U" isOutput="true"/>
-    <signals name="V" isOutput="true"/>
-    <signals name="W" isOutput="true"/>
-    <signals name="A" isInput="true"/>
-    <signals name="B" isInput="true"/>
-    <signals name="C" isInput="true"/>
-    <signals name="D" isInput="true"/>
-    <signals name="E" isInput="true"/>
-    <signals name="F" isInput="true"/>
-    <signals name="T_"/>
-    <signals name="haltTrap46_"/>
+    <signals name="haltTrap46" isInput="true"/>
     <regions>
       <states id="10" label="10" incomingTransitions="//@states.0/@regions.0/@states.2/@outgoingTransitions.0"/>
       <states id="6" label="6" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.2/@outgoingTransitions.1"/>
       <states id="ParallelStatementList47state" label="ParallelStatementList47state" incomingTransitions="//@states.0/@regions.0/@states.3/@outgoingTransitions.0">
         <regions id="R0" label="R0">
           <states id="init0" label="I" isInitial="true">
-            <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.2/@regions.0/@states.1"/>
+            <outgoingTransitions isImmediate="true" label="#" priority="1" targetState="//@states.0/@regions.0/@states.2/@regions.0/@states.1"/>
           </states>
           <states id="20" label="20" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.2/@regions.0/@states.0/@outgoingTransitions.0"/>
         </regions>
         <regions id="R1" label="R1">
           <states id="init1" label="I" isInitial="true">
-            <outgoingTransitions isImmediate="true" label="#  / R" targetState="//@states.0/@regions.0/@states.2/@regions.1/@states.1">
+            <outgoingTransitions isImmediate="true" label="#  / R" priority="1" targetState="//@states.0/@regions.0/@states.2/@regions.1/@states.1">
               <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
             </outgoingTransitions>
           </states>
           <states id="ParallelStatementList51state" label="ParallelStatementList51state" incomingTransitions="//@states.0/@regions.0/@states.2/@regions.1/@states.0/@outgoingTransitions.0">
             <regions id="R0" label="R0">
               <states id="init2" label="I" isInitial="true">
-                <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.2/@regions.1/@states.1/@regions.0/@states.1"/>
+                <outgoingTransitions isImmediate="true" label="#" priority="1" targetState="//@states.0/@regions.0/@states.2/@regions.1/@states.1/@regions.0/@states.1"/>
               </states>
               <states id="67" label="67" incomingTransitions="//@states.0/@regions.0/@states.2/@regions.1/@states.1/@regions.0/@states.0/@outgoingTransitions.0">
-                <outgoingTransitions label="/ T_" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.2/@regions.1/@states.1/@regions.0/@states.2">
-                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.12"/>
+                <outgoingTransitions label="/ T" priority="1" targetState="//@states.0/@regions.0/@states.2/@regions.1/@states.1/@regions.0/@states.2">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
                 </outgoingTransitions>
               </states>
               <states id="95" label="95" incomingTransitions="//@states.0/@regions.0/@states.2/@regions.1/@states.1/@regions.0/@states.1/@outgoingTransitions.0"/>
             </regions>
             <regions id="R1" label="R1">
               <states id="init3" label="I" isInitial="true">
-                <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.2/@regions.1/@states.1/@regions.1/@states.1"/>
+                <outgoingTransitions isImmediate="true" label="#" priority="1" targetState="//@states.0/@regions.0/@states.2/@regions.1/@states.1/@regions.1/@states.1"/>
               </states>
               <states id="129" label="129" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.2/@regions.1/@states.1/@regions.1/@states.0/@outgoingTransitions.0"/>
             </regions>
           </states>
         </regions>
-        <outgoingTransitions isImmediate="true" label="# haltTrap46_" targetState="//@states.0/@regions.0/@states.0">
-          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.13"/>
+        <outgoingTransitions isImmediate="true" label="# haltTrap46" priority="1" targetState="//@states.0/@regions.0/@states.0">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.2"/>
         </outgoingTransitions>
-        <outgoingTransitions isImmediate="true" label="# T_" priority="1" targetState="//@states.0/@regions.0/@states.1">
-          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.12"/>
+        <outgoingTransitions isImmediate="true" label="# T" priority="2" targetState="//@states.0/@regions.0/@states.1">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
         </outgoingTransitions>
       </states>
       <states id="init4" label="I" isInitial="true">
-        <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.2"/>
+        <outgoingTransitions isImmediate="true" label="#" priority="1" targetState="//@states.0/@regions.0/@states.2"/>
       </states>
     </regions>
   </states>
