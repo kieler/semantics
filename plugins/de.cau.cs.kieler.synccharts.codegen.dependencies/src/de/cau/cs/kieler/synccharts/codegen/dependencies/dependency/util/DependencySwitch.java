@@ -28,217 +28,217 @@ import org.eclipse.emf.ecore.util.Switch;
  */
 public class DependencySwitch<T> extends Switch<T> {
 	/**
-	 * The cached model package
-	 * <!-- begin-user-doc -->
+     * The cached model package
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected static DependencyPackage modelPackage;
 
 	/**
-	 * Creates an instance of the switch.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the switch.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public DependencySwitch() {
-		if (modelPackage == null) {
-			modelPackage = DependencyPackage.eINSTANCE;
-		}
-	}
+        if (modelPackage == null) {
+            modelPackage = DependencyPackage.eINSTANCE;
+        }
+    }
 
 	/**
-	 * Checks whether this is a switch for the given package.
-	 * <!-- begin-user-doc -->
+     * Checks whether this is a switch for the given package.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @parameter ePackage the package in question.
-	 * @return whether this is a switch for the given package.
-	 * @generated
-	 */
+     * @parameter ePackage the package in question.
+     * @return whether this is a switch for the given package.
+     * @generated
+     */
 	@Override
 	protected boolean isSwitchFor(EPackage ePackage) {
-		return ePackage == modelPackage;
-	}
+        return ePackage == modelPackage;
+    }
 
 	/**
-	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-	 * <!-- begin-user-doc -->
+     * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the first non-null result returned by a <code>caseXXX</code> call.
-	 * @generated
-	 */
+     * @return the first non-null result returned by a <code>caseXXX</code> call.
+     * @generated
+     */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID) {
-			case DependencyPackage.DEPENDENCY: {
-				Dependency dependency = (Dependency)theEObject;
-				T result = caseDependency(dependency);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case DependencyPackage.SIGNAL_DEPENDENCY: {
-				SignalDependency signalDependency = (SignalDependency)theEObject;
-				T result = caseSignalDependency(signalDependency);
-				if (result == null) result = caseDependency(signalDependency);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case DependencyPackage.HIERARCHY_DEPENDENCY: {
-				HierarchyDependency hierarchyDependency = (HierarchyDependency)theEObject;
-				T result = caseHierarchyDependency(hierarchyDependency);
-				if (result == null) result = caseDependency(hierarchyDependency);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case DependencyPackage.CONTROLFLOW_DEPENDENCY: {
-				ControlflowDependency controlflowDependency = (ControlflowDependency)theEObject;
-				T result = caseControlflowDependency(controlflowDependency);
-				if (result == null) result = caseDependency(controlflowDependency);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case DependencyPackage.TRANSITION_DEPENDENCY: {
-				TransitionDependency transitionDependency = (TransitionDependency)theEObject;
-				T result = caseTransitionDependency(transitionDependency);
-				if (result == null) result = caseDependency(transitionDependency);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case DependencyPackage.DEPENDENCIES: {
-				Dependencies dependencies = (Dependencies)theEObject;
-				T result = caseDependencies(dependencies);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case DependencyPackage.NODE: {
-				Node node = (Node)theEObject;
-				T result = caseNode(node);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			default: return defaultCase(theEObject);
-		}
-	}
+        switch (classifierID) {
+            case DependencyPackage.DEPENDENCY: {
+                Dependency dependency = (Dependency)theEObject;
+                T result = caseDependency(dependency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case DependencyPackage.SIGNAL_DEPENDENCY: {
+                SignalDependency signalDependency = (SignalDependency)theEObject;
+                T result = caseSignalDependency(signalDependency);
+                if (result == null) result = caseDependency(signalDependency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case DependencyPackage.HIERARCHY_DEPENDENCY: {
+                HierarchyDependency hierarchyDependency = (HierarchyDependency)theEObject;
+                T result = caseHierarchyDependency(hierarchyDependency);
+                if (result == null) result = caseDependency(hierarchyDependency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case DependencyPackage.CONTROLFLOW_DEPENDENCY: {
+                ControlflowDependency controlflowDependency = (ControlflowDependency)theEObject;
+                T result = caseControlflowDependency(controlflowDependency);
+                if (result == null) result = caseDependency(controlflowDependency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case DependencyPackage.TRANSITION_DEPENDENCY: {
+                TransitionDependency transitionDependency = (TransitionDependency)theEObject;
+                T result = caseTransitionDependency(transitionDependency);
+                if (result == null) result = caseDependency(transitionDependency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case DependencyPackage.DEPENDENCIES: {
+                Dependencies dependencies = (Dependencies)theEObject;
+                T result = caseDependencies(dependencies);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case DependencyPackage.NODE: {
+                Node node = (Node)theEObject;
+                T result = caseNode(node);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            default: return defaultCase(theEObject);
+        }
+    }
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Dependency</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Dependency</em>'.
+     * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Dependency</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
 	public T caseDependency(Dependency object) {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Signal Dependency</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Signal Dependency</em>'.
+     * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Signal Dependency</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Signal Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
 	public T caseSignalDependency(SignalDependency object) {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Hierarchy Dependency</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Hierarchy Dependency</em>'.
+     * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Hierarchy Dependency</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Hierarchy Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
 	public T caseHierarchyDependency(HierarchyDependency object) {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Controlflow Dependency</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Controlflow Dependency</em>'.
+     * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Controlflow Dependency</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Controlflow Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
 	public T caseControlflowDependency(ControlflowDependency object) {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Transition Dependency</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Transition Dependency</em>'.
+     * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Transition Dependency</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Transition Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
 	public T caseTransitionDependency(TransitionDependency object) {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Dependencies</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Dependencies</em>'.
+     * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Dependencies</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Dependencies</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
 	public T caseDependencies(Dependencies object) {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
+     * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Node</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Node</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
 	public T caseNode(Node object) {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+     * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
-	 * @generated
-	 */
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject)
+     * @generated
+     */
 	@Override
 	public T defaultCase(EObject object) {
-		return null;
-	}
+        return null;
+    }
 
 } //DependencySwitch

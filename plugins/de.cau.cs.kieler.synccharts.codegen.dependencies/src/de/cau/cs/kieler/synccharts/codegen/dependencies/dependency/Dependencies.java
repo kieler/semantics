@@ -29,35 +29,35 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Dependencies extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Dependencies</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Dependencies</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Dependencies</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Dependencies</em>' containment reference list.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getDependencies_Dependencies()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Dependencies</em>' containment reference list.
+     * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getDependencies_Dependencies()
+     * @model containment="true"
+     * @generated
+     */
 	EList<Dependency> getDependencies();
 
 	/**
-	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Nodes</em>' containment reference list.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getDependencies_Nodes()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Nodes</em>' containment reference list.
+     * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getDependencies_Nodes()
+     * @model containment="true"
+     * @generated
+     */
 	EList<Node> getNodes();
 
 } // Dependencies

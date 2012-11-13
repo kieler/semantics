@@ -191,7 +191,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         } else if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             // add/pass-through normal signals directly
                             returnObj.accumulate(signalName, signalValue);
                         }
@@ -329,6 +329,8 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 // SyncCharts2Simulation transform =
                 // Guice.createInjector().getInstance(SyncCharts2Simulation.class);
                 // transformedModel = transform.transform2Simulation(myModel);
+                
+                // Simulation Visualization
                 transformedModel = (new SyncCharts2Simulation()).transform2Simulation(myModel);
 
                 // Because we transformed the S program we need to save a different file
@@ -336,6 +338,16 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFragment();
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
+
+//                // History transitions. (@requires: suspend)
+//                transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
+//
+//                // Suspends (non-immediate and non-delayed) (@requires: during)
+//                transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
+//                
+//                // During actions (@requires: none)
+//                transformedModel = (new SyncCharts2Simulation())
+//                        .transformDuringAction(transformedModel);
 
                 try {
                     // Write out copy/transformation of syncchart program
@@ -357,10 +369,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // These are done AFTER the visualization transformation because the visualization
             // transformation MUST operate on the resource file (for URI gathering reasons).
 
-            // We now support raising Local Signals (@requires: none)
-            transformedModel = (new SyncCharts2Simulation())
-                    .transformRaiseLocalSignal(transformedModel);
-
             if (this.getProperties()[KIEM_PROPERTY_EXPOSELOCALSIGNALS + KIEM_PROPERTY_DIFF]
                     .getValueAsBoolean()) {
                 // We now support exposing Local Signals (should run AFTER raising local signals)
@@ -368,26 +376,26 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         .transformExposeLocalSignal(transformedModel);
             }
 
-            // We now support Normal Termination transitions (@requires: during actions)
+            // Normal Termination transitions (@requires: during actions, @before: exit actions)
             transformedModel = (new SyncCharts2Simulation())
                     .transformNormalTermination(transformedModel);
 
-            // We support Count Delays now for the SC (host code) simulation.
+            // Count Delays now for the SC (host code) simulation.
             transformedModel = (new SyncCharts2Simulation()).transformCountDelay(transformedModel);
 
-            // We now support Exit actions (@requires: entry actions, during actions, history)
+            // Exit actions (@requires: entry actions, during actions, history)
             transformedModel = (new SyncCharts2Simulation()).transformExitAction(transformedModel);
 
-            // We support History transitions. (@requires: suspend)
+            // History transitions. (@requires: suspend)
             transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
 
-            // We support (non-immediate and non-delayed) Suspends now. (@requires: during)
+            // Suspends (non-immediate and non-delayed) (@requires: during)
             transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
 
-            // We now support Entry actions (@requires: during actions)
+            // Entry actions (@requires: during actions)
             transformedModel = (new SyncCharts2Simulation()).transformEntryAction(transformedModel);
 
-            // We now support During actions (@requires: none)
+            // During actions (@requires: none)
             transformedModel = (new SyncCharts2Simulation())
                     .transformDuringAction(transformedModel);
 
@@ -448,7 +456,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                             .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             returnObj.accumulate(signalName, signalValue);
                         }
                     } catch (JSONException e) {

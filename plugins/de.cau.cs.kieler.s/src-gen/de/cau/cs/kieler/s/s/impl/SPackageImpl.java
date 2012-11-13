@@ -14,6 +14,7 @@ import de.cau.cs.kieler.s.s.HostCodeInstruction;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.Join;
+import de.cau.cs.kieler.s.s.LocalSignal;
 import de.cau.cs.kieler.s.s.Pause;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.Program;
@@ -128,6 +129,13 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * @generated
    */
   private EClass haltEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass localSignalEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -578,6 +586,26 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getLocalSignal()
+  {
+    return localSignalEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLocalSignal_Signal()
+  {
+    return (EReference)localSignalEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getEmit()
   {
     return emitEClass;
@@ -781,6 +809,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     haltEClass = createEClass(HALT);
     createEReference(haltEClass, HALT__CONTINUATION);
 
+    localSignalEClass = createEClass(LOCAL_SIGNAL);
+    createEReference(localSignalEClass, LOCAL_SIGNAL__SIGNAL);
+
     emitEClass = createEClass(EMIT);
     createEReference(emitEClass, EMIT__SIGNAL);
     createEReference(emitEClass, EMIT__VALUE);
@@ -841,6 +872,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     pauseEClass.getESuperTypes().add(this.getInstruction());
     termEClass.getESuperTypes().add(this.getInstruction());
     haltEClass.getESuperTypes().add(this.getInstruction());
+    localSignalEClass.getESuperTypes().add(this.getInstruction());
     emitEClass.getESuperTypes().add(this.getInstruction());
     abortEClass.getESuperTypes().add(this.getInstruction());
     ifEClass.getESuperTypes().add(this.getInstruction());
@@ -894,6 +926,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
 
     initEClass(haltEClass, Halt.class, "Halt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getHalt_Continuation(), this.getContinuation(), null, "continuation", null, 0, 1, Halt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(localSignalEClass, LocalSignal.class, "LocalSignal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLocalSignal_Signal(), theKExpressionsPackage.getSignal(), null, "signal", null, 0, 1, LocalSignal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(emitEClass, Emit.class, "Emit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEmit_Signal(), theKExpressionsPackage.getSignal(), null, "signal", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

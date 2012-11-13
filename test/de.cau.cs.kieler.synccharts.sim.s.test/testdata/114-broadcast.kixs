@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="SyncChart" label="SyncChart">
+    <signals name="door"/>
+    <signals name="up" isInput="true"/>
+    <signals name="out" isOutput="true"/>
+    <regions>
+      <states id="s1" label="s1" isInitial="true">
+        <regions>
+          <states id="s1" label="s1" isInitial="true">
+            <outgoingTransitions label="up / door" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+            </outgoingTransitions>
+          </states>
+          <states id="s2" label="s2" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+        </regions>
+      </states>
+    </regions>
+    <regions>
+      <states id="s1" label="s1" isInitial="true">
+        <outgoingTransitions label="door / out" priority="1" targetState="//@states.0/@regions.1/@states.1">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+        </outgoingTransitions>
+      </states>
+      <states id="s2" label="s2" incomingTransitions="//@states.0/@regions.1/@states.0/@outgoingTransitions.0"/>
+    </regions>
+  </states>
+</synccharts:Region>

@@ -575,17 +575,18 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIfParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cTransParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cForkParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cEmitParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final RuleCall cAwaitParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
-		private final RuleCall cPrioParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
-		private final RuleCall cHostCodeInstructionParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cLocalSignalParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cEmitParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cAwaitParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cPrioParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cHostCodeInstructionParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
 		
 		//Instruction:
 		//
-		//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | Emit | Await | Prio | HostCodeInstruction;
+		//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction;
 		public ParserRule getRule() { return rule; }
 
-		//Halt | Abort | Join | Pause | Term | If | Trans | Fork | Emit | Await | Prio | HostCodeInstruction
+		//Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Halt
@@ -612,17 +613,20 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//Fork
 		public RuleCall getForkParserRuleCall_7() { return cForkParserRuleCall_7; }
 
+		//LocalSignal
+		public RuleCall getLocalSignalParserRuleCall_8() { return cLocalSignalParserRuleCall_8; }
+
 		//Emit
-		public RuleCall getEmitParserRuleCall_8() { return cEmitParserRuleCall_8; }
+		public RuleCall getEmitParserRuleCall_9() { return cEmitParserRuleCall_9; }
 
 		//Await
-		public RuleCall getAwaitParserRuleCall_9() { return cAwaitParserRuleCall_9; }
+		public RuleCall getAwaitParserRuleCall_10() { return cAwaitParserRuleCall_10; }
 
 		//Prio
-		public RuleCall getPrioParserRuleCall_10() { return cPrioParserRuleCall_10; }
+		public RuleCall getPrioParserRuleCall_11() { return cPrioParserRuleCall_11; }
 
 		//HostCodeInstruction
-		public RuleCall getHostCodeInstructionParserRuleCall_11() { return cHostCodeInstructionParserRuleCall_11; }
+		public RuleCall getHostCodeInstructionParserRuleCall_12() { return cHostCodeInstructionParserRuleCall_12; }
 	}
 
 	public class PrioElements extends AbstractParserRuleElementFinder {
@@ -953,6 +957,44 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 	}
 
+	public class LocalSignalElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalSignal");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cSignalKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cSignalAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cSignalSignalCrossReference_2_0 = (CrossReference)cSignalAssignment_2.eContents().get(0);
+		private final RuleCall cSignalSignalIDTerminalRuleCall_2_0_1 = (RuleCall)cSignalSignalCrossReference_2_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//// For handling local signal re-initialization (taking care or reincarnation)
+		// LocalSignal:
+		//
+		//	"signal" "(" signal=[kexpressions::Signal] ")";
+		public ParserRule getRule() { return rule; }
+
+		//"signal" "(" signal=[kexpressions::Signal] ")"
+		public Group getGroup() { return cGroup; }
+
+		//"signal"
+		public Keyword getSignalKeyword_0() { return cSignalKeyword_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//signal=[kexpressions::Signal]
+		public Assignment getSignalAssignment_2() { return cSignalAssignment_2; }
+
+		//[kexpressions::Signal]
+		public CrossReference getSignalSignalCrossReference_2_0() { return cSignalSignalCrossReference_2_0; }
+
+		//ID
+		public RuleCall getSignalSignalIDTerminalRuleCall_2_0_1() { return cSignalSignalIDTerminalRuleCall_2_0_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+	}
+
 	public class EmitElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Emit");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1245,6 +1287,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	private PauseElements pPause;
 	private TermElements pTerm;
 	private HaltElements pHalt;
+	private LocalSignalElements pLocalSignal;
 	private EmitElements pEmit;
 	private AbortElements pAbort;
 	private IfElements pIf;
@@ -1403,7 +1446,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Instruction:
 	//
-	//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | Emit | Await | Prio | HostCodeInstruction;
+	//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction;
 	public InstructionElements getInstructionAccess() {
 		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
 	}
@@ -1492,6 +1535,18 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getHaltRule() {
 		return getHaltAccess().getRule();
+	}
+
+	//// For handling local signal re-initialization (taking care or reincarnation)
+	// LocalSignal:
+	//
+	//	"signal" "(" signal=[kexpressions::Signal] ")";
+	public LocalSignalElements getLocalSignalAccess() {
+		return (pLocalSignal != null) ? pLocalSignal : (pLocalSignal = new LocalSignalElements());
+	}
+	
+	public ParserRule getLocalSignalRule() {
+		return getLocalSignalAccess().getRule();
 	}
 
 	//Emit:

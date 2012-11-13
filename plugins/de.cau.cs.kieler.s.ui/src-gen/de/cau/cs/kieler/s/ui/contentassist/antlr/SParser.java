@@ -93,6 +93,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPauseAccess().getGroup(), "rule__Pause__Group__0");
 					put(grammarAccess.getTermAccess().getGroup(), "rule__Term__Group__0");
 					put(grammarAccess.getHaltAccess().getGroup(), "rule__Halt__Group__0");
+					put(grammarAccess.getLocalSignalAccess().getGroup(), "rule__LocalSignal__Group__0");
 					put(grammarAccess.getEmitAccess().getGroup(), "rule__Emit__Group__0");
 					put(grammarAccess.getEmitAccess().getGroup_3(), "rule__Emit__Group_3__0");
 					put(grammarAccess.getEmitAccess().getGroup_4(), "rule__Emit__Group_4__0");
@@ -198,6 +199,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPauseAccess().getContinuationAssignment_3(), "rule__Pause__ContinuationAssignment_3");
 					put(grammarAccess.getTermAccess().getContinuationAssignment_3(), "rule__Term__ContinuationAssignment_3");
 					put(grammarAccess.getHaltAccess().getContinuationAssignment_3(), "rule__Halt__ContinuationAssignment_3");
+					put(grammarAccess.getLocalSignalAccess().getSignalAssignment_2(), "rule__LocalSignal__SignalAssignment_2");
 					put(grammarAccess.getEmitAccess().getSignalAssignment_2(), "rule__Emit__SignalAssignment_2");
 					put(grammarAccess.getEmitAccess().getValueAssignment_3_1(), "rule__Emit__ValueAssignment_3_1");
 					put(grammarAccess.getEmitAccess().getContinuationAssignment_4_1(), "rule__Emit__ContinuationAssignment_4_1");

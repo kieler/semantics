@@ -33,6 +33,10 @@ import de.cau.cs.kieler.core.krendering.KXPosition
 import de.cau.cs.kieler.core.krendering.KYPosition
 import de.cau.cs.kieler.core.krendering.KLineWidth
 import de.cau.cs.kieler.core.krendering.KForegroundColor
+import de.cau.cs.kieler.klighd.TransformationOption
+import java.util.List
+import java.util.Set
+import com.google.common.collect.Sets
 
 /**
  * Visualization of a dependency graph for a SyncChart.
@@ -47,14 +51,28 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 	@Inject
 	extension KRenderingUtil
 	
+	static TransformationOption edgeStyle = TransformationOption::createCheckOption("Spline", false);
+	
+	override Set<TransformationOption> getTransformationOptions() {
+	    return Sets::newHashSet(edgeStyle);
+	}
+	
 	// Main transformation for every dependency node create a node figure and for every dependency an connecting edge figure.
 	override KNode transform(Dependencies model, TransformationContext<Dependencies, KNode> transformationContext) {
+		use(transformationContext);
 		
 		val rootNode = KimlUtil::createInitializedNode;
-		rootNode.KShapeLayout.setProperty(LayoutOptions::SPACING, Float::valueOf("10.0"));
-	    rootNode.KShapeLayout.setProperty(LayoutOptions::DIRECTION, Direction::DOWN);
-	    rootNode.KShapeLayout.setProperty(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-	    rootNode.KShapeLayout.setProperty(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+		if (edgeStyle.optionBooleanValue) {
+           rootNode.KShapeLayout.setProperty(LayoutOptions::SPACING, Float::valueOf("25.0"));
+           rootNode.KShapeLayout.setProperty(LayoutOptions::DIRECTION, Direction::DOWN);
+           rootNode.KShapeLayout.setProperty(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+           rootNode.KShapeLayout.setProperty(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
+		} else {
+           rootNode.KShapeLayout.setProperty(LayoutOptions::SPACING, Float::valueOf("10.0"));
+           rootNode.KShapeLayout.setProperty(LayoutOptions::DIRECTION, Direction::DOWN);
+           rootNode.KShapeLayout.setProperty(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+           rootNode.KShapeLayout.setProperty(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+		}
 		
 		val nodes = model.nodes;
 		for (node : nodes) {
@@ -100,7 +118,7 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 	// For a dependency edge create a connecting figure with a decorator. Depending on the type use
 	// a different color.
 	def createDependencyFigure(Dependency dependency, KNode rootNode) {
-		val kEdge = dependency.createPolyLineEdge;
+		val kEdge = if (edgeStyle.optionBooleanValue) dependency.createSplineEdge else dependency.createPolyLineEdge;
 		kEdge.KRendering.add(factory.createKLineWidth.of(2));
 		
 		var color = factory.createKForegroundColor();

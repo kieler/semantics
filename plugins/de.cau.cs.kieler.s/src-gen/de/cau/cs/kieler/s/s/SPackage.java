@@ -556,6 +556,34 @@ public interface SPackage extends EPackage
   int HALT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.LocalSignalImpl <em>Local Signal</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.LocalSignalImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getLocalSignal()
+   * @generated
+   */
+  int LOCAL_SIGNAL = 13;
+
+  /**
+   * The feature id for the '<em><b>Signal</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_SIGNAL__SIGNAL = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Local Signal</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_SIGNAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.EmitImpl <em>Emit</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -563,7 +591,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getEmit()
    * @generated
    */
-  int EMIT = 13;
+  int EMIT = 14;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -609,7 +637,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAbort()
    * @generated
    */
-  int ABORT = 14;
+  int ABORT = 15;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -637,7 +665,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getIf()
    * @generated
    */
-  int IF = 15;
+  int IF = 16;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -683,7 +711,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAwait()
    * @generated
    */
-  int AWAIT = 16;
+  int AWAIT = 17;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -1084,6 +1112,27 @@ public interface SPackage extends EPackage
    * @generated
    */
   EReference getHalt_Continuation();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.LocalSignal <em>Local Signal</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Local Signal</em>'.
+   * @see de.cau.cs.kieler.s.s.LocalSignal
+   * @generated
+   */
+  EClass getLocalSignal();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.LocalSignal#getSignal <em>Signal</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Signal</em>'.
+   * @see de.cau.cs.kieler.s.s.LocalSignal#getSignal()
+   * @see #getLocalSignal()
+   * @generated
+   */
+  EReference getLocalSignal_Signal();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Emit <em>Emit</em>}'.
@@ -1552,6 +1601,24 @@ public interface SPackage extends EPackage
      * @generated
      */
     EReference HALT__CONTINUATION = eINSTANCE.getHalt_Continuation();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.LocalSignalImpl <em>Local Signal</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.s.s.impl.LocalSignalImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getLocalSignal()
+     * @generated
+     */
+    EClass LOCAL_SIGNAL = eINSTANCE.getLocalSignal();
+
+    /**
+     * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_SIGNAL__SIGNAL = eINSTANCE.getLocalSignal_Signal();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.EmitImpl <em>Emit</em>}' class.
