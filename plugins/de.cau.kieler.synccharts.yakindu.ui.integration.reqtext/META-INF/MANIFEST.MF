@@ -7,12 +7,10 @@ Bundle-Activator: de.cau.kieler.synccharts.yakindu.ui.integration.reqtext.Activa
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.kieler.synccharts.yakindu.model.reqtext;bundle-version="1.0.0",
- de.cau.kieler.synccharts.yakindu.model.reqtext.ui;bundle-version="1.0.0",
- org.yakindu.sct.model.stext;bundle-version="1.0.0"
+ org.yakindu.sct.model.stext;bundle-version="1.0.0",
+ de.cau.kieler.synccharts.yakindu.model.reqtext.ui;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: de.cau.kieler.synccharts.yakindu.model.reqtext,
- org.eclipse.xtext.ui.editor.contentassist.antlr,
+Import-Package: org.eclipse.xtext.ui.editor.contentassist.antlr,
  org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
- org.yakindu.sct.model.stext.stext,
  org.yakindu.sct.ui.editor.extensions
