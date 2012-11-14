@@ -99,15 +99,6 @@
       </configExtension>
    </extension>
    <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            class="de.cau.cs.kieler.core.ui.ModelingPerspective"
-            icon="icons/kieler_16.gif"
-            id="de.cau.cs.kieler.Modeling"
-            name="KIELER Modeling">
-      </perspective>
-   </extension>
-   <extension
          point="org.eclipse.ui.statusHandlers">
       <statusHandlerProductBinding
             handlerId="de.cau.cs.kieler.core.ui.statusHandler"
