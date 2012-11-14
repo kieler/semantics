@@ -15,3 +15,4 @@ Import-Package: de.cau.kieler.synccharts.yakindu.model.reqtext,
  org.eclipse.xtext.ui.editor.contentassist.antlr,
  org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
  org.yakindu.sct.model.stext.stext
+Export-Package: de.cau.kieler.synccharts.yakindu.ui.integration.reqtext.modules
