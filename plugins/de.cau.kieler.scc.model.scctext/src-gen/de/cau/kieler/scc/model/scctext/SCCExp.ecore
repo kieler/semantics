@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sccexp" nsURI="http://cau.kieler.de/scc/SCCExp" nsPrefix="sccexp">
+  <eClassifiers xsi:type="ecore:EClass" name="Root" eSuperTypes="../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Root"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DefRoot" eSuperTypes="../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//DefRoot"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StateRoot" eSuperTypes="#//DefRoot ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//StateRoot"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TransitionRoot" eSuperTypes="#//DefRoot ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//TransitionRoot"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StateScope" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Scope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InterfaceScopeRoot" eSuperTypes="#//StateScope">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interfaceScope" upperBound="-1"
+        eType="#//InterfaceScope" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InterfaceScope" eSuperTypes="../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//InterfaceScope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InterfaceDeclaration" eSuperTypes="#//InterfaceScope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ActionDeclaration" eSuperTypes="#//InterfaceScope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExitActionDeclaration" eSuperTypes="#//ActionDeclaration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InsideActionDeclaration" eSuperTypes="#//ActionDeclaration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EntryActionDeclaration" eSuperTypes="#//ActionDeclaration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SuspendDeclaration" eSuperTypes="#//InterfaceScope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TransitionReaction" eSuperTypes="../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//TransitionReaction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MyTrigger" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"/>
+</ecore:EPackage>

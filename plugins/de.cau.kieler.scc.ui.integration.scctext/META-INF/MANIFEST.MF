@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Scctext
+Bundle-SymbolicName: de.cau.kieler.scc.ui.integration.scctext
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.kieler.scc.ui.integration.scctext.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.yakindu.sct.ui.editor;bundle-version="1.0.0",
+ org.eclipse.xtext.ui,
+ de.cau.kieler.scc.model.scctext;bundle-version="1.0.0",
+ de.cau.kieler.scc.model.scctext.ui;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Import-Package: de.cau.kieler.scc.model.scctext,
+ org.eclipse.xtext.ui.editor.contentassist.antlr,
+ org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
+ org.yakindu.sct.model.stext.stext
+Export-Package: de.cau.kieler.scc.ui.integration.scctext 

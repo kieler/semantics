@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.kieler.scc.model.scctext/src-gen" editDirectory="/de.cau.kieler.scc.model.scctext.edit/src"
+    editorDirectory="/de.cau.kieler.scc.model.scctext.editor/src" modelPluginID="de.cau.kieler.scc.model.scctext"
+    forceOverwrite="true" modelName="SCCExp" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.kieler.scc.model.scctext.edit"
+    editorPluginID="de.cau.kieler.scc.model.scctext.editor" runtimeVersion="2.9" usedGenPackages="../../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
+  <genPackages prefix="Sccexp" basePackage="de.cau.kieler.scc.model.scctext" disposableProviderFactory="true"
+      ecorePackage="SCCExp.ecore#/">
+    <genClasses ecoreClass="SCCExp.ecore#//Root"/>
+    <genClasses ecoreClass="SCCExp.ecore#//DefRoot"/>
+    <genClasses ecoreClass="SCCExp.ecore#//StateRoot"/>
+    <genClasses ecoreClass="SCCExp.ecore#//TransitionRoot"/>
+    <genClasses ecoreClass="SCCExp.ecore#//StateScope"/>
+    <genClasses ecoreClass="SCCExp.ecore#//InterfaceScopeRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//InterfaceScopeRoot/interfaceScope"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//InterfaceScope"/>
+    <genClasses ecoreClass="SCCExp.ecore#//InterfaceDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//ActionDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//ExitActionDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//InsideActionDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//EntryActionDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//SuspendDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//TransitionReaction"/>
+    <genClasses ecoreClass="SCCExp.ecore#//MyTrigger"/>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,65 @@
+grammar de.cau.kieler.scc.model.scctext.SCCExp with org.yakindu.sct.model.stext.SText
+
+generate sccexp "http://cau.kieler.de/scc/SCCExp"
+import "http://www.yakindu.org/sct/statechart/SText" as stext
+import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
+
+/* ---- root rules ----
+These root rules are not relevant for the grammar integration in the statechart. They
+just integrate the different start rules consistently
+into a single grammar.
+*/
+Root:
+	(roots+=DefRoot)*;
+
+DefRoot:
+	StateRoot | TransitionRoot;
+
+StateRoot:
+	'@@state@@' def=StateSpecification;
+
+TransitionRoot:
+	'@@transition@@' def=TransitionSpecification;
+
+/* Overriding State grammar */
+StateScope:
+	InterfaceScopeRoot;
+
+InterfaceScopeRoot:
+	{InterfaceScopeRoot} (interfaceScope+=InterfaceScope)*;
+
+InterfaceScope:
+	InterfaceDeclaration | ActionDeclaration | SuspendDeclaration;
+	
+/**
+ *  The Interface Declaration
+ */
+InterfaceDeclaration:
+	{InterfaceDeclaration} 'interface:' (declarations+=(EventDeclarartion | VariableDeclaration |
+	OperationDeclaration | Entrypoint |
+	Exitpoint))* ';';
+/**
+ *  The Action Declaration
+ */
+ActionDeclaration:
+	EntryActionDeclaration | InsideActionDeclaration | ExitActionDeclaration;
+
+ExitActionDeclaration:
+	{ExitActionDeclaration} 'OnExitAction:';
+
+InsideActionDeclaration:
+	{InsideActionDeclaration} 'OnInsideAction:';
+
+EntryActionDeclaration:
+	{EntryActionDeclaration} 'OnEntryAction:';
+
+SuspendDeclaration:
+	{SuspendDeclaration} 'Suspend:';
+
+/* Overriding transition grammar */
+TransitionReaction:
+	{TransitionReaction} (trigger=MyTrigger)? ('/' effect=ReactionEffect)? ('#' properties=ReactionProperties)?;
+
+MyTrigger returns sgraph::Trigger:
+	{MyTrigger} 'some trigger expression';
+
