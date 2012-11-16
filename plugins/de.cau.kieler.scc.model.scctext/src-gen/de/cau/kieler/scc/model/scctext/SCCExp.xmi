@@ -7,9 +7,6 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="stext">
       <ePackage href="http://www.yakindu.org/sct/statechart/SText#/"/>
     </metamodelDeclarations>
-    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="sgraph">
-      <ePackage href="http://www.yakindu.org/sct/sgraph/2.0.0#/"/>
-    </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="Root">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://cau.kieler.de/scc/SCCExp#//Root"/>
@@ -74,10 +71,15 @@
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://cau.kieler.de/scc/SCCExp#//InterfaceScope"/>
       </type>
+<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext/src-gen/de/cau/kieler/scc/model/scctext/SCCExp.xmi
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
+=======
+      <alternatives xsi:type="xtext:Assignment" feature="reaction" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.32"/>
+>>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/Kidsexp.xmi
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="InterfaceDeclaration">
@@ -130,6 +132,7 @@
         <elements xsi:type="xtext:Keyword" value="OnExitAction"/>
       </alternatives>
     </rules>
+<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext/src-gen/de/cau/kieler/scc/model/scctext/SCCExp.xmi
     <rules xsi:type="xtext:ParserRule" name="InsideActionDeclaration">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://cau.kieler.de/scc/SCCExp#//InsideActionDeclaration"/>
@@ -209,6 +212,8 @@
         <elements xsi:type="xtext:Keyword" value="some trigger expression"/>
       </alternatives>
     </rules>
+=======
+>>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/Kidsexp.xmi
   </xtext:Grammar>
   <xtext:Grammar name="org.yakindu.sct.model.stext.SText" usedGrammars="/2">
     <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="stext">
@@ -317,7 +322,11 @@
         <classifier xsi:type="ecore:EClass" href="http://www.yakindu.org/sct/statechart/SText#//TransitionSpecification"/>
       </type>
       <alternatives xsi:type="xtext:Assignment" feature="reaction" operator="=">
+<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext/src-gen/de/cau/kieler/scc/model/scctext/SCCExp.xmi
         <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+=======
+        <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.32"/>
+>>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/Kidsexp.xmi
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Scope">
@@ -652,7 +661,11 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.31"/>
+<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext/src-gen/de/cau/kieler/scc/model/scctext/SCCExp.xmi
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+=======
+        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.32"/>
+>>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/Kidsexp.xmi
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="LocalReaction">

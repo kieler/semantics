@@ -354,6 +354,7 @@ ruleInterfaceScope returns [EObject current=null]
 
 
 
+<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext/src-gen/de/cau/kieler/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g
 // Entry rule entryRuleInterfaceDeclaration
 entryRuleInterfaceDeclaration returns [EObject current=null] 
 	:
@@ -612,6 +613,8 @@ entryRuleEntryActionDeclaration returns [EObject current=null]
 	 { $current=$iv_ruleEntryActionDeclaration.current; } 
 	 EOF 
 ;
+=======
+>>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/parser/antlr/internal/InternalKidsexp.g
 
 // Rule EntryActionDeclaration
 ruleEntryActionDeclaration returns [EObject current=null] 
@@ -1793,6 +1796,95 @@ ruleReactionEffect
 
 )
 ))))
+;
+
+
+
+
+
+// Entry rule entryRuleTransitionReaction
+entryRuleTransitionReaction returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTransitionReactionRule()); }
+	 iv_ruleTransitionReaction=ruleTransitionReaction 
+	 { $current=$iv_ruleTransitionReaction.current; } 
+	 EOF 
+;
+
+// Rule TransitionReaction
+ruleTransitionReaction returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getTransitionReactionAccess().getTransitionReactionAction_0(),
+            $current);
+    }
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransitionReactionAccess().getTriggerReactionTriggerParserRuleCall_1_0()); 
+	    }
+		lv_trigger_1_0=ruleReactionTrigger		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransitionReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"trigger",
+        		lv_trigger_1_0, 
+        		"ReactionTrigger");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?(	otherlv_2='/' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getTransitionReactionAccess().getSolidusKeyword_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransitionReactionAccess().getEffectReactionEffectParserRuleCall_2_1_0()); 
+	    }
+		lv_effect_3_0=ruleReactionEffect		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransitionReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"effect",
+        		lv_effect_3_0, 
+        		"ReactionEffect");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?(	otherlv_4='#' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getTransitionReactionAccess().getNumberSignKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransitionReactionAccess().getPropertiesReactionPropertiesParserRuleCall_3_1_0()); 
+	    }
+		lv_properties_5_0=ruleReactionProperties		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransitionReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"properties",
+        		lv_properties_5_0, 
+        		"ReactionProperties");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
 ;
 
 

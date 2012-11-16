@@ -32,6 +32,7 @@ public class AbstractSCCExpProposalProvider extends STextProposalProvider {
 	public void completeInterfaceDeclaration_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
+<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/AbstractSCCExpProposalProvider.java
 	public void completeInterfaceDeclaration_Declarations(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)((Alternatives)assignment.getTerminal()).getElements().get(0)), context, acceptor);
 		completeRuleCall(((RuleCall)((Alternatives)assignment.getTerminal()).getElements().get(1)), context, acceptor);
@@ -48,6 +49,8 @@ public class AbstractSCCExpProposalProvider extends STextProposalProvider {
 	public void completeTransitionReaction_Properties(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
 	}
+=======
+>>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/AbstractKidsexpProposalProvider.java
     
 	public void complete_Root(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
@@ -70,6 +73,7 @@ public class AbstractSCCExpProposalProvider extends STextProposalProvider {
 	public void complete_InterfaceScope(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}
+<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/AbstractSCCExpProposalProvider.java
 	public void complete_InterfaceDeclaration(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}
@@ -94,4 +98,6 @@ public class AbstractSCCExpProposalProvider extends STextProposalProvider {
 	public void complete_MyTrigger(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}
+=======
+>>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/AbstractKidsexpProposalProvider.java
 }
