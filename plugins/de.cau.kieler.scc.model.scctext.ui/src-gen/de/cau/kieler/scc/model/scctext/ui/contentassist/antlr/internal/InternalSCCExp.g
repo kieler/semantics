@@ -297,9 +297,9 @@ ruleActionDeclaration
     }
 	:
 (
-{ before(grammarAccess.getActionDeclarationAccess().getAlternatives()); }
-(rule__ActionDeclaration__Alternatives)
-{ after(grammarAccess.getActionDeclarationAccess().getAlternatives()); }
+{ before(grammarAccess.getActionDeclarationAccess().getGroup()); }
+(rule__ActionDeclaration__Group__0)
+{ after(grammarAccess.getActionDeclarationAccess().getGroup()); }
 )
 
 ;
@@ -421,7 +421,6 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 // Entry rule entryRuleTransitionReaction
 entryRuleTransitionReaction 
 :
@@ -512,14 +511,6 @@ finally {
 
 // Entry rule entryRuleStateSpecification
 entryRuleStateSpecification 
-=======
-
-
-
-
-// Entry rule entryRuleStateScope
-entryRuleStateScope 
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 :
 { before(grammarAccess.getStateSpecificationRule()); }
 	 ruleStateSpecification
@@ -952,34 +943,6 @@ finally {
 
 
 
-// Entry rule entryRuleTransitionReaction
-entryRuleTransitionReaction 
-:
-{ before(grammarAccess.getTransitionReactionRule()); }
-	 ruleTransitionReaction
-{ after(grammarAccess.getTransitionReactionRule()); } 
-	 EOF 
-;
-
-// Rule TransitionReaction
-ruleTransitionReaction
-    @init {
-		int stackSize = keepStackSize();
-    }
-	:
-(
-{ before(grammarAccess.getTransitionReactionAccess().getGroup()); }
-(rule__TransitionReaction__Group__0)
-{ after(grammarAccess.getTransitionReactionAccess().getGroup()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
 // Entry rule entryRuleReactionTrigger
 entryRuleReactionTrigger 
 :
@@ -1010,65 +973,6 @@ finally {
 
 // Entry rule entryRuleReactionEffect
 entryRuleReactionEffect 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-=======
-:
-{ before(grammarAccess.getReactionEffectRule()); }
-	 ruleReactionEffect
-{ after(grammarAccess.getReactionEffectRule()); } 
-	 EOF 
-;
-
-// Rule ReactionEffect
-ruleReactionEffect
-    @init {
-		int stackSize = keepStackSize();
-    }
-	:
-(
-{ before(grammarAccess.getReactionEffectAccess().getGroup()); }
-(rule__ReactionEffect__Group__0)
-{ after(grammarAccess.getReactionEffectAccess().getGroup()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-// Entry rule entryRuleReactionProperties
-entryRuleReactionProperties 
-:
-{ before(grammarAccess.getReactionPropertiesRule()); }
-	 ruleReactionProperties
-{ after(grammarAccess.getReactionPropertiesRule()); } 
-	 EOF 
-;
-
-// Rule ReactionProperties
-ruleReactionProperties
-    @init {
-		int stackSize = keepStackSize();
-    }
-	:
-(
-{ before(grammarAccess.getReactionPropertiesAccess().getGroup()); }
-(rule__ReactionProperties__Group__0)
-{ after(grammarAccess.getReactionPropertiesAccess().getGroup()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-// Entry rule entryRuleReactionProperty
-entryRuleReactionProperty 
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 :
 { before(grammarAccess.getReactionEffectRule()); }
 	 ruleReactionEffect
@@ -2439,39 +2343,39 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__InterfaceDeclaration__DeclarationsAlternatives_4_0
+rule__InterfaceDeclaration__DeclarationsAlternatives_2_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsEventDeclarartionParserRuleCall_4_0_0()); }
+{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsEventDeclarartionParserRuleCall_2_0_0()); }
 	ruleEventDeclarartion
-{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsEventDeclarartionParserRuleCall_4_0_0()); }
+{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsEventDeclarartionParserRuleCall_2_0_0()); }
 )
 
     |(
-{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsVariableDeclarationParserRuleCall_4_0_1()); }
+{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsVariableDeclarationParserRuleCall_2_0_1()); }
 	ruleVariableDeclaration
-{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsVariableDeclarationParserRuleCall_4_0_1()); }
+{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsVariableDeclarationParserRuleCall_2_0_1()); }
 )
 
     |(
-{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsOperationDeclarationParserRuleCall_4_0_2()); }
+{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsOperationDeclarationParserRuleCall_2_0_2()); }
 	ruleOperationDeclaration
-{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsOperationDeclarationParserRuleCall_4_0_2()); }
+{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsOperationDeclarationParserRuleCall_2_0_2()); }
 )
 
     |(
-{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsEntrypointParserRuleCall_4_0_3()); }
+{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsEntrypointParserRuleCall_2_0_3()); }
 	ruleEntrypoint
-{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsEntrypointParserRuleCall_4_0_3()); }
+{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsEntrypointParserRuleCall_2_0_3()); }
 )
 
     |(
-{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsExitpointParserRuleCall_4_0_4()); }
+{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsExitpointParserRuleCall_2_0_4()); }
 	ruleExitpoint
-{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsExitpointParserRuleCall_4_0_4()); }
+{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsExitpointParserRuleCall_2_0_4()); }
 )
 
 ;
@@ -2479,27 +2383,27 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ActionDeclaration__Alternatives
+rule__ActionDeclaration__Alternatives_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getActionDeclarationAccess().getEntryActionDeclarationParserRuleCall_0()); }
+{ before(grammarAccess.getActionDeclarationAccess().getEntryActionDeclarationParserRuleCall_0_0()); }
 	ruleEntryActionDeclaration
-{ after(grammarAccess.getActionDeclarationAccess().getEntryActionDeclarationParserRuleCall_0()); }
+{ after(grammarAccess.getActionDeclarationAccess().getEntryActionDeclarationParserRuleCall_0_0()); }
 )
 
     |(
-{ before(grammarAccess.getActionDeclarationAccess().getInsideActionDeclarationParserRuleCall_1()); }
+{ before(grammarAccess.getActionDeclarationAccess().getInsideActionDeclarationParserRuleCall_0_1()); }
 	ruleInsideActionDeclaration
-{ after(grammarAccess.getActionDeclarationAccess().getInsideActionDeclarationParserRuleCall_1()); }
+{ after(grammarAccess.getActionDeclarationAccess().getInsideActionDeclarationParserRuleCall_0_1()); }
 )
 
     |(
-{ before(grammarAccess.getActionDeclarationAccess().getExitActionDeclarationParserRuleCall_2()); }
+{ before(grammarAccess.getActionDeclarationAccess().getExitActionDeclarationParserRuleCall_0_2()); }
 	ruleExitActionDeclaration
-{ after(grammarAccess.getActionDeclarationAccess().getExitActionDeclarationParserRuleCall_2()); }
+{ after(grammarAccess.getActionDeclarationAccess().getExitActionDeclarationParserRuleCall_0_2()); }
 )
 
 ;
@@ -3456,7 +3360,7 @@ rule__InterfaceDeclaration__Group__1__Impl
 (
 { before(grammarAccess.getInterfaceDeclarationAccess().getInterfaceKeyword_1()); }
 
-	'interface' 
+	'interface:' 
 
 { after(grammarAccess.getInterfaceDeclarationAccess().getInterfaceKeyword_1()); }
 )
@@ -3467,52 +3371,27 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InterfaceDeclaration__Group__2
-=======
-
-
-
-
-rule__StateScope__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__InterfaceDeclaration__Group__2__Impl
 	rule__InterfaceDeclaration__Group__3
-=======
-	rule__StateScope__Group__0__Impl
-	rule__StateScope__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InterfaceDeclaration__Group__2__Impl
-=======
-rule__StateScope__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getInterfaceDeclarationAccess().getNameAssignment_2()); }
-(rule__InterfaceDeclaration__NameAssignment_2)?
-{ after(grammarAccess.getInterfaceDeclarationAccess().getNameAssignment_2()); }
-=======
-{ before(grammarAccess.getStateScopeAccess().getSimpleScopeAction_0()); }
-(
-
-)
-{ after(grammarAccess.getStateScopeAccess().getSimpleScopeAction_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
+{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAssignment_2()); }
+(rule__InterfaceDeclaration__DeclarationsAssignment_2)*
+{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAssignment_2()); }
 )
 
 ;
@@ -3521,152 +3400,28 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InterfaceDeclaration__Group__3
-=======
-rule__StateScope__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__InterfaceDeclaration__Group__3__Impl
-	rule__InterfaceDeclaration__Group__4
-=======
-	rule__StateScope__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InterfaceDeclaration__Group__3__Impl
-=======
-rule__StateScope__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getInterfaceDeclarationAccess().getColonKeyword_3()); }
-
-	':' 
-
-{ after(grammarAccess.getInterfaceDeclarationAccess().getColonKeyword_3()); }
-=======
-{ before(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1()); }
-(rule__StateScope__DeclarationsAssignment_1)*
-{ after(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__InterfaceDeclaration__Group__4
-=======
-
-
-
-
-rule__InterfaceScope__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-	rule__InterfaceDeclaration__Group__4__Impl
-	rule__InterfaceDeclaration__Group__5
-=======
-	rule__InterfaceScope__Group__0__Impl
-	rule__InterfaceScope__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__InterfaceDeclaration__Group__4__Impl
-=======
-rule__InterfaceScope__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAssignment_4()); }
-(rule__InterfaceDeclaration__DeclarationsAssignment_4)*
-{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAssignment_4()); }
-=======
-{ before(grammarAccess.getInterfaceScopeAccess().getInterfaceScopeAction_0()); }
-(
-
-)
-{ after(grammarAccess.getInterfaceScopeAccess().getInterfaceScopeAction_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__InterfaceDeclaration__Group__5
-=======
-rule__InterfaceScope__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-	rule__InterfaceDeclaration__Group__5__Impl
-=======
-	rule__InterfaceScope__Group__1__Impl
-	rule__InterfaceScope__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__InterfaceDeclaration__Group__5__Impl
-=======
-rule__InterfaceScope__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getInterfaceDeclarationAccess().getSemicolonKeyword_5()); }
+{ before(grammarAccess.getInterfaceDeclarationAccess().getSemicolonKeyword_3()); }
 
 	';' 
 
-{ after(grammarAccess.getInterfaceDeclarationAccess().getSemicolonKeyword_5()); }
-=======
-{ before(grammarAccess.getInterfaceScopeAccess().getInterfaceKeyword_1()); }
-
-	'interface' 
-
-{ after(grammarAccess.getInterfaceScopeAccess().getInterfaceKeyword_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
+{ after(grammarAccess.getInterfaceDeclarationAccess().getSemicolonKeyword_3()); }
 )
 
 ;
@@ -3675,36 +3430,260 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
-=======
-rule__InterfaceScope__Group__2
+
+
+
+
+
+
+
+rule__ActionDeclaration__Group__0
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__InterfaceScope__Group__2__Impl
-	rule__InterfaceScope__Group__3
+	rule__ActionDeclaration__Group__0__Impl
+	rule__ActionDeclaration__Group__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__InterfaceScope__Group__2__Impl
+rule__ActionDeclaration__Group__0__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getInterfaceScopeAccess().getNameAssignment_2()); }
-(rule__InterfaceScope__NameAssignment_2)?
-{ after(grammarAccess.getInterfaceScopeAccess().getNameAssignment_2()); }
+{ before(grammarAccess.getActionDeclarationAccess().getAlternatives_0()); }
+(rule__ActionDeclaration__Alternatives_0)
+{ after(grammarAccess.getActionDeclarationAccess().getAlternatives_0()); }
 )
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ActionDeclaration__Group__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__ActionDeclaration__Group__1__Impl
+	rule__ActionDeclaration__Group__2
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ActionDeclaration__Group__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getActionDeclarationAccess().getSolidusKeyword_1()); }
+
+	'/' 
+
+{ after(grammarAccess.getActionDeclarationAccess().getSolidusKeyword_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ActionDeclaration__Group__2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__ActionDeclaration__Group__2__Impl
+	rule__ActionDeclaration__Group__3
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ActionDeclaration__Group__2__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getActionDeclarationAccess().getNameAssignment_2()); }
+(rule__ActionDeclaration__NameAssignment_2)
+{ after(grammarAccess.getActionDeclarationAccess().getNameAssignment_2()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ActionDeclaration__Group__3
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__ActionDeclaration__Group__3__Impl
+	rule__ActionDeclaration__Group__4
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ActionDeclaration__Group__3__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getActionDeclarationAccess().getGroup_3()); }
+(rule__ActionDeclaration__Group_3__0)*
+{ after(grammarAccess.getActionDeclarationAccess().getGroup_3()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ActionDeclaration__Group__4
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__ActionDeclaration__Group__4__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ActionDeclaration__Group__4__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getActionDeclarationAccess().getSemicolonKeyword_4()); }
+
+	';' 
+
+{ after(grammarAccess.getActionDeclarationAccess().getSemicolonKeyword_4()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
+
+
+
+
+
+
+
+
+
+rule__ActionDeclaration__Group_3__0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__ActionDeclaration__Group_3__0__Impl
+	rule__ActionDeclaration__Group_3__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ActionDeclaration__Group_3__0__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getActionDeclarationAccess().getCommaKeyword_3_0()); }
+
+	',' 
+
+{ after(grammarAccess.getActionDeclarationAccess().getCommaKeyword_3_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ActionDeclaration__Group_3__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__ActionDeclaration__Group_3__1__Impl
+	rule__ActionDeclaration__Group_3__2
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ActionDeclaration__Group_3__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getActionDeclarationAccess().getSolidusKeyword_3_1()); }
+
+	'/' 
+
+{ after(grammarAccess.getActionDeclarationAccess().getSolidusKeyword_3_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ActionDeclaration__Group_3__2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__ActionDeclaration__Group_3__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ActionDeclaration__Group_3__2__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getActionDeclarationAccess().getIDTerminalRuleCall_3_2()); }
+	RULE_ID
+{ after(grammarAccess.getActionDeclarationAccess().getIDTerminalRuleCall_3_2()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
 
 
@@ -3714,48 +3693,28 @@ rule__InterfaceScope__Group__2__Impl
 
 
 rule__ExitActionDeclaration__Group__0
-=======
-rule__InterfaceScope__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__ExitActionDeclaration__Group__0__Impl
 	rule__ExitActionDeclaration__Group__1
-=======
-	rule__InterfaceScope__Group__3__Impl
-	rule__InterfaceScope__Group__4
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ExitActionDeclaration__Group__0__Impl
-=======
-rule__InterfaceScope__Group__3__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getExitActionDeclarationAccess().getExitActionDeclarationAction_0()); }
 (
 
 )
 { after(grammarAccess.getExitActionDeclarationAccess().getExitActionDeclarationAction_0()); }
-=======
-{ before(grammarAccess.getInterfaceScopeAccess().getColonKeyword_3()); }
-
-	':' 
-
-{ after(grammarAccess.getInterfaceScopeAccess().getColonKeyword_3()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -3764,46 +3723,28 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ExitActionDeclaration__Group__1
-=======
-rule__InterfaceScope__Group__4
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__ExitActionDeclaration__Group__1__Impl
-=======
-	rule__InterfaceScope__Group__4__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ExitActionDeclaration__Group__1__Impl
-=======
-rule__InterfaceScope__Group__4__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getExitActionDeclarationAccess().getOnExitActionKeyword_1()); }
 
-	'OnExitAction' 
+	'OnExitAction:' 
 
 { after(grammarAccess.getExitActionDeclarationAccess().getOnExitActionKeyword_1()); }
-=======
-{ before(grammarAccess.getInterfaceScopeAccess().getDeclarationsAssignment_4()); }
-(rule__InterfaceScope__DeclarationsAssignment_4)*
-{ after(grammarAccess.getInterfaceScopeAccess().getDeclarationsAssignment_4()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -3816,56 +3757,29 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InsideActionDeclaration__Group__0
-=======
-
-
-
-
-
-
-rule__InternalScope__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__InsideActionDeclaration__Group__0__Impl
 	rule__InsideActionDeclaration__Group__1
-=======
-	rule__InternalScope__Group__0__Impl
-	rule__InternalScope__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InsideActionDeclaration__Group__0__Impl
-=======
-rule__InternalScope__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getInsideActionDeclarationAccess().getInsideActionDeclarationAction_0()); }
 (
 
 )
 { after(grammarAccess.getInsideActionDeclarationAccess().getInsideActionDeclarationAction_0()); }
-=======
-{ before(grammarAccess.getInternalScopeAccess().getInternalScopeAction_0()); }
-(
-
-)
-{ after(grammarAccess.getInternalScopeAccess().getInternalScopeAction_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -3874,49 +3788,28 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InsideActionDeclaration__Group__1
-=======
-rule__InternalScope__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__InsideActionDeclaration__Group__1__Impl
-=======
-	rule__InternalScope__Group__1__Impl
-	rule__InternalScope__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InsideActionDeclaration__Group__1__Impl
-=======
-rule__InternalScope__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getInsideActionDeclarationAccess().getOnInsideActionKeyword_1()); }
 
-	'OnInsideAction' 
+	'OnInsideAction:' 
 
 { after(grammarAccess.getInsideActionDeclarationAccess().getOnInsideActionKeyword_1()); }
-=======
-{ before(grammarAccess.getInternalScopeAccess().getInternalKeyword_1()); }
-
-	'internal' 
-
-{ after(grammarAccess.getInternalScopeAccess().getInternalKeyword_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -3925,54 +3818,33 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
 
 
 
 rule__EntryActionDeclaration__Group__0
-=======
-rule__InternalScope__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__EntryActionDeclaration__Group__0__Impl
 	rule__EntryActionDeclaration__Group__1
-=======
-	rule__InternalScope__Group__2__Impl
-	rule__InternalScope__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EntryActionDeclaration__Group__0__Impl
-=======
-rule__InternalScope__Group__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getEntryActionDeclarationAccess().getEntryActionDeclarationAction_0()); }
 (
 
 )
 { after(grammarAccess.getEntryActionDeclarationAccess().getEntryActionDeclarationAction_0()); }
-=======
-{ before(grammarAccess.getInternalScopeAccess().getColonKeyword_2()); }
-
-	':' 
-
-{ after(grammarAccess.getInternalScopeAccess().getColonKeyword_2()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -3981,46 +3853,28 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EntryActionDeclaration__Group__1
-=======
-rule__InternalScope__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__EntryActionDeclaration__Group__1__Impl
-=======
-	rule__InternalScope__Group__3__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EntryActionDeclaration__Group__1__Impl
-=======
-rule__InternalScope__Group__3__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getEntryActionDeclarationAccess().getOnEntryActionKeyword_1()); }
 
-	'OnEntryAction' 
+	'OnEntryAction:' 
 
 { after(grammarAccess.getEntryActionDeclarationAccess().getOnEntryActionKeyword_1()); }
-=======
-{ before(grammarAccess.getInternalScopeAccess().getDeclarationsAssignment_3()); }
-(rule__InternalScope__DeclarationsAssignment_3)*
-{ after(grammarAccess.getInternalScopeAccess().getDeclarationsAssignment_3()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4033,52 +3887,29 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__SuspendDeclaration__Group__0
-=======
-
-
-
-
-rule__EventDefinition__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__SuspendDeclaration__Group__0__Impl
 	rule__SuspendDeclaration__Group__1
-=======
-	rule__EventDefinition__Group__0__Impl
-	rule__EventDefinition__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__SuspendDeclaration__Group__0__Impl
-=======
-rule__EventDefinition__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getSuspendDeclarationAccess().getSuspendDeclarationAction_0()); }
 (
 
 )
 { after(grammarAccess.getSuspendDeclarationAccess().getSuspendDeclarationAction_0()); }
-=======
-{ before(grammarAccess.getEventDefinitionAccess().getDirectionAssignment_0()); }
-(rule__EventDefinition__DirectionAssignment_0)?
-{ after(grammarAccess.getEventDefinitionAccess().getDirectionAssignment_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4087,49 +3918,29 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__SuspendDeclaration__Group__1
-=======
-rule__EventDefinition__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__SuspendDeclaration__Group__1__Impl
-=======
-	rule__EventDefinition__Group__1__Impl
-	rule__EventDefinition__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
+	rule__SuspendDeclaration__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__SuspendDeclaration__Group__1__Impl
-=======
-rule__EventDefinition__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getSuspendDeclarationAccess().getSuspendKeyword_1()); }
 
-	'Suspend' 
+	'Suspend:' 
 
 { after(grammarAccess.getSuspendDeclarationAccess().getSuspendKeyword_1()); }
-=======
-{ before(grammarAccess.getEventDefinitionAccess().getEventKeyword_1()); }
-
-	'event' 
-
-{ after(grammarAccess.getEventDefinitionAccess().getEventKeyword_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4138,52 +3949,63 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
+rule__SuspendDeclaration__Group__2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__SuspendDeclaration__Group__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__SuspendDeclaration__Group__2__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getSuspendDeclarationAccess().getNameAssignment_2()); }
+(rule__SuspendDeclaration__NameAssignment_2)
+{ after(grammarAccess.getSuspendDeclarationAccess().getNameAssignment_2()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+
 
 
 
 
 rule__TransitionReaction__Group__0
-=======
-rule__EventDefinition__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__TransitionReaction__Group__0__Impl
 	rule__TransitionReaction__Group__1
-=======
-	rule__EventDefinition__Group__2__Impl
-	rule__EventDefinition__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group__0__Impl
-=======
-rule__EventDefinition__Group__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getTransitionReactionAccess().getTransitionReactionAction_0()); }
 (
 
 )
 { after(grammarAccess.getTransitionReactionAccess().getTransitionReactionAction_0()); }
-=======
-{ before(grammarAccess.getEventDefinitionAccess().getNameAssignment_2()); }
-(rule__EventDefinition__NameAssignment_2)
-{ after(grammarAccess.getEventDefinitionAccess().getNameAssignment_2()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4192,45 +4014,27 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group__1
-=======
-rule__EventDefinition__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__TransitionReaction__Group__1__Impl
 	rule__TransitionReaction__Group__2
-=======
-	rule__EventDefinition__Group__3__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group__1__Impl
-=======
-rule__EventDefinition__Group__3__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getTransitionReactionAccess().getTriggerAssignment_1()); }
 (rule__TransitionReaction__TriggerAssignment_1)?
 { after(grammarAccess.getTransitionReactionAccess().getTriggerAssignment_1()); }
-=======
-{ before(grammarAccess.getEventDefinitionAccess().getGroup_3()); }
-(rule__EventDefinition__Group_3__0)?
-{ after(grammarAccess.getEventDefinitionAccess().getGroup_3()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4239,56 +4043,27 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group__2
-=======
-
-
-
-
-
-
-
-
-rule__EventDefinition__Group_3__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__TransitionReaction__Group__2__Impl
 	rule__TransitionReaction__Group__3
-=======
-	rule__EventDefinition__Group_3__0__Impl
-	rule__EventDefinition__Group_3__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group__2__Impl
-=======
-rule__EventDefinition__Group_3__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getTransitionReactionAccess().getGroup_2()); }
 (rule__TransitionReaction__Group_2__0)?
 { after(grammarAccess.getTransitionReactionAccess().getGroup_2()); }
-=======
-{ before(grammarAccess.getEventDefinitionAccess().getColonKeyword_3_0()); }
-
-	':' 
-
-{ after(grammarAccess.getEventDefinitionAccess().getColonKeyword_3_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4297,7 +4072,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group__3
     @init {
 		int stackSize = keepStackSize();
@@ -4335,45 +4109,28 @@ finally {
 
 
 rule__TransitionReaction__Group_2__0
-=======
-rule__EventDefinition__Group_3__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__TransitionReaction__Group_2__0__Impl
 	rule__TransitionReaction__Group_2__1
-=======
-	rule__EventDefinition__Group_3__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group_2__0__Impl
-=======
-rule__EventDefinition__Group_3__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getTransitionReactionAccess().getSolidusKeyword_2_0()); }
 
 	'/' 
 
 { after(grammarAccess.getTransitionReactionAccess().getSolidusKeyword_2_0()); }
-=======
-{ before(grammarAccess.getEventDefinitionAccess().getTypeAssignment_3_1()); }
-(rule__EventDefinition__TypeAssignment_3_1)
-{ after(grammarAccess.getEventDefinitionAccess().getTypeAssignment_3_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4382,51 +4139,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group_2__1
-=======
-
-
-
-
-rule__VariableDefinition__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__TransitionReaction__Group_2__1__Impl
-=======
-	rule__VariableDefinition__Group__0__Impl
-	rule__VariableDefinition__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group_2__1__Impl
-=======
-rule__VariableDefinition__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getTransitionReactionAccess().getEffectAssignment_2_1()); }
 (rule__TransitionReaction__EffectAssignment_2_1)
 { after(grammarAccess.getTransitionReactionAccess().getEffectAssignment_2_1()); }
-=======
-{ before(grammarAccess.getVariableDefinitionAccess().getVariableDefinitionAction_0()); }
-(
-
-)
-{ after(grammarAccess.getVariableDefinitionAccess().getVariableDefinitionAction_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4435,54 +4167,33 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
 
 
 
 rule__TransitionReaction__Group_3__0
-=======
-rule__VariableDefinition__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__TransitionReaction__Group_3__0__Impl
 	rule__TransitionReaction__Group_3__1
-=======
-	rule__VariableDefinition__Group__1__Impl
-	rule__VariableDefinition__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group_3__0__Impl
-=======
-rule__VariableDefinition__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getTransitionReactionAccess().getNumberSignKeyword_3_0()); }
 
 	'#' 
 
 { after(grammarAccess.getTransitionReactionAccess().getNumberSignKeyword_3_0()); }
-=======
-{ before(grammarAccess.getVariableDefinitionAccess().getVarKeyword_1()); }
-
-	'var' 
-
-{ after(grammarAccess.getVariableDefinitionAccess().getVarKeyword_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4491,45 +4202,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group_3__1
-=======
-rule__VariableDefinition__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__TransitionReaction__Group_3__1__Impl
-=======
-	rule__VariableDefinition__Group__2__Impl
-	rule__VariableDefinition__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__TransitionReaction__Group_3__1__Impl
-=======
-rule__VariableDefinition__Group__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getTransitionReactionAccess().getPropertiesAssignment_3_1()); }
 (rule__TransitionReaction__PropertiesAssignment_3_1)
 { after(grammarAccess.getTransitionReactionAccess().getPropertiesAssignment_3_1()); }
-=======
-{ before(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2()); }
-(rule__VariableDefinition__UnorderedGroup_2)
-{ after(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4538,7 +4230,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
 
 
@@ -4575,45 +4266,27 @@ finally {
 
 
 rule__MyTrigger__Group__1
-=======
-rule__VariableDefinition__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__MyTrigger__Group__1__Impl
-=======
-	rule__VariableDefinition__Group__3__Impl
-	rule__VariableDefinition__Group__4
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__MyTrigger__Group__1__Impl
-=======
-rule__VariableDefinition__Group__3__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getMyTriggerAccess().getSomeTriggerExpressionKeyword_1()); }
 
 	'some trigger expression' 
 
 { after(grammarAccess.getMyTriggerAccess().getSomeTriggerExpressionKeyword_1()); }
-=======
-{ before(grammarAccess.getVariableDefinitionAccess().getNameAssignment_3()); }
-(rule__VariableDefinition__NameAssignment_3)
-{ after(grammarAccess.getVariableDefinitionAccess().getNameAssignment_3()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4622,55 +4295,34 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
 
 
 
 
 rule__StatechartSpecification__Group__0
-=======
-rule__VariableDefinition__Group__4
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__StatechartSpecification__Group__0__Impl
 	rule__StatechartSpecification__Group__1
-=======
-	rule__VariableDefinition__Group__4__Impl
-	rule__VariableDefinition__Group__5
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__StatechartSpecification__Group__0__Impl
-=======
-rule__VariableDefinition__Group__4__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getStatechartSpecificationAccess().getStatechartSpecificationAction_0()); }
 (
 
 )
 { after(grammarAccess.getStatechartSpecificationAccess().getStatechartSpecificationAction_0()); }
-=======
-{ before(grammarAccess.getVariableDefinitionAccess().getColonKeyword_4()); }
-
-	':' 
-
-{ after(grammarAccess.getVariableDefinitionAccess().getColonKeyword_4()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4679,46 +4331,27 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__StatechartSpecification__Group__1
-=======
-rule__VariableDefinition__Group__5
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__StatechartSpecification__Group__1__Impl
 	rule__StatechartSpecification__Group__2
-=======
-	rule__VariableDefinition__Group__5__Impl
-	rule__VariableDefinition__Group__6
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__StatechartSpecification__Group__1__Impl
-=======
-rule__VariableDefinition__Group__5__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getStatechartSpecificationAccess().getGroup_1()); }
 (rule__StatechartSpecification__Group_1__0)?
 { after(grammarAccess.getStatechartSpecificationAccess().getGroup_1()); }
-=======
-{ before(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_5()); }
-(rule__VariableDefinition__TypeAssignment_5)
-{ after(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_5()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4727,44 +4360,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__StatechartSpecification__Group__2
-=======
-rule__VariableDefinition__Group__6
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__StatechartSpecification__Group__2__Impl
-=======
-	rule__VariableDefinition__Group__6__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__StatechartSpecification__Group__2__Impl
-=======
-rule__VariableDefinition__Group__6__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getStatechartSpecificationAccess().getScopesAssignment_2()); }
 (rule__StatechartSpecification__ScopesAssignment_2)*
 { after(grammarAccess.getStatechartSpecificationAccess().getScopesAssignment_2()); }
-=======
-{ before(grammarAccess.getVariableDefinitionAccess().getGroup_6()); }
-(rule__VariableDefinition__Group_6__0)?
-{ after(grammarAccess.getVariableDefinitionAccess().getGroup_6()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4779,58 +4394,29 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__StatechartSpecification__Group_1__0
-=======
-
-
-
-
-
-
-
-
-rule__VariableDefinition__Group_6__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__StatechartSpecification__Group_1__0__Impl
 	rule__StatechartSpecification__Group_1__1
-=======
-	rule__VariableDefinition__Group_6__0__Impl
-	rule__VariableDefinition__Group_6__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__StatechartSpecification__Group_1__0__Impl
-=======
-rule__VariableDefinition__Group_6__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getStatechartSpecificationAccess().getNamespaceKeyword_1_0()); }
 
 	'namespace' 
 
 { after(grammarAccess.getStatechartSpecificationAccess().getNamespaceKeyword_1_0()); }
-=======
-{ before(grammarAccess.getVariableDefinitionAccess().getEqualsSignKeyword_6_0()); }
-
-	'=' 
-
-{ after(grammarAccess.getVariableDefinitionAccess().getEqualsSignKeyword_6_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4839,44 +4425,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__StatechartSpecification__Group_1__1
-=======
-rule__VariableDefinition__Group_6__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__StatechartSpecification__Group_1__1__Impl
-=======
-	rule__VariableDefinition__Group_6__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__StatechartSpecification__Group_1__1__Impl
-=======
-rule__VariableDefinition__Group_6__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getStatechartSpecificationAccess().getNamespaceAssignment_1_1()); }
 (rule__StatechartSpecification__NamespaceAssignment_1_1)
 { after(grammarAccess.getStatechartSpecificationAccess().getNamespaceAssignment_1_1()); }
-=======
-{ before(grammarAccess.getVariableDefinitionAccess().getInitialValueAssignment_6_1()); }
-(rule__VariableDefinition__InitialValueAssignment_6_1)
-{ after(grammarAccess.getVariableDefinitionAccess().getInitialValueAssignment_6_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4889,50 +4457,29 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InternalScope__Group__0
-=======
-rule__OperationDefinition__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__InternalScope__Group__0__Impl
 	rule__InternalScope__Group__1
-=======
-	rule__OperationDefinition__Group__0__Impl
-	rule__OperationDefinition__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InternalScope__Group__0__Impl
-=======
-rule__OperationDefinition__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getInternalScopeAccess().getInternalScopeAction_0()); }
 (
 
 )
 { after(grammarAccess.getInternalScopeAccess().getInternalScopeAction_0()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getOperationDefinitionAction_0()); }
-(
-
-)
-{ after(grammarAccess.getOperationDefinitionAccess().getOperationDefinitionAction_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4941,50 +4488,29 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InternalScope__Group__1
-=======
-rule__OperationDefinition__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__InternalScope__Group__1__Impl
 	rule__InternalScope__Group__2
-=======
-	rule__OperationDefinition__Group__1__Impl
-	rule__OperationDefinition__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InternalScope__Group__1__Impl
-=======
-rule__OperationDefinition__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getInternalScopeAccess().getInternalKeyword_1()); }
 
 	'internal' 
 
 { after(grammarAccess.getInternalScopeAccess().getInternalKeyword_1()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getOperationKeyword_1()); }
-
-	'operation' 
-
-{ after(grammarAccess.getOperationDefinitionAccess().getOperationKeyword_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -4993,48 +4519,29 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InternalScope__Group__2
-=======
-rule__OperationDefinition__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__InternalScope__Group__2__Impl
 	rule__InternalScope__Group__3
-=======
-	rule__OperationDefinition__Group__2__Impl
-	rule__OperationDefinition__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InternalScope__Group__2__Impl
-=======
-rule__OperationDefinition__Group__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getInternalScopeAccess().getColonKeyword_2()); }
 
 	':' 
 
 { after(grammarAccess.getInternalScopeAccess().getColonKeyword_2()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getNameAssignment_2()); }
-(rule__OperationDefinition__NameAssignment_2)
-{ after(grammarAccess.getOperationDefinitionAccess().getNameAssignment_2()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5043,47 +4550,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InternalScope__Group__3
-=======
-rule__OperationDefinition__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__InternalScope__Group__3__Impl
-=======
-	rule__OperationDefinition__Group__3__Impl
-	rule__OperationDefinition__Group__4
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__InternalScope__Group__3__Impl
-=======
-rule__OperationDefinition__Group__3__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getInternalScopeAccess().getDeclarationsAssignment_3()); }
 (rule__InternalScope__DeclarationsAssignment_3)*
 { after(grammarAccess.getInternalScopeAccess().getDeclarationsAssignment_3()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getLeftParenthesisKeyword_3()); }
-
-	'(' 
-
-{ after(grammarAccess.getOperationDefinitionAccess().getLeftParenthesisKeyword_3()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5092,7 +4578,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
 
 
@@ -5102,44 +4587,26 @@ finally {
 
 
 rule__EventDefinition__Group__0
-=======
-rule__OperationDefinition__Group__4
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__EventDefinition__Group__0__Impl
 	rule__EventDefinition__Group__1
-=======
-	rule__OperationDefinition__Group__4__Impl
-	rule__OperationDefinition__Group__5
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EventDefinition__Group__0__Impl
-=======
-rule__OperationDefinition__Group__4__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getEventDefinitionAccess().getDirectionAssignment_0()); }
 (rule__EventDefinition__DirectionAssignment_0)?
 { after(grammarAccess.getEventDefinitionAccess().getDirectionAssignment_0()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getGroup_4()); }
-(rule__OperationDefinition__Group_4__0)?
-{ after(grammarAccess.getOperationDefinitionAccess().getGroup_4()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5148,50 +4615,29 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EventDefinition__Group__1
-=======
-rule__OperationDefinition__Group__5
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__EventDefinition__Group__1__Impl
 	rule__EventDefinition__Group__2
-=======
-	rule__OperationDefinition__Group__5__Impl
-	rule__OperationDefinition__Group__6
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EventDefinition__Group__1__Impl
-=======
-rule__OperationDefinition__Group__5__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getEventDefinitionAccess().getEventKeyword_1()); }
 
 	'event' 
 
 { after(grammarAccess.getEventDefinitionAccess().getEventKeyword_1()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getRightParenthesisKeyword_5()); }
-
-	')' 
-
-{ after(grammarAccess.getOperationDefinitionAccess().getRightParenthesisKeyword_5()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5200,45 +4646,27 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EventDefinition__Group__2
-=======
-rule__OperationDefinition__Group__6
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__EventDefinition__Group__2__Impl
 	rule__EventDefinition__Group__3
-=======
-	rule__OperationDefinition__Group__6__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EventDefinition__Group__2__Impl
-=======
-rule__OperationDefinition__Group__6__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getEventDefinitionAccess().getNameAssignment_2()); }
 (rule__EventDefinition__NameAssignment_2)
 { after(grammarAccess.getEventDefinitionAccess().getNameAssignment_2()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getGroup_6()); }
-(rule__OperationDefinition__Group_6__0)?
-{ after(grammarAccess.getOperationDefinitionAccess().getGroup_6()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5283,50 +4711,29 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EventDefinition__Group_3__0
-=======
-
-
-rule__OperationDefinition__Group_4__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__EventDefinition__Group_3__0__Impl
 	rule__EventDefinition__Group_3__1
-=======
-	rule__OperationDefinition__Group_4__0__Impl
-	rule__OperationDefinition__Group_4__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EventDefinition__Group_3__0__Impl
-=======
-rule__OperationDefinition__Group_4__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getEventDefinitionAccess().getColonKeyword_3_0()); }
 
 	':' 
 
 { after(grammarAccess.getEventDefinitionAccess().getColonKeyword_3_0()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getParametersAssignment_4_0()); }
-(rule__OperationDefinition__ParametersAssignment_4_0)
-{ after(grammarAccess.getOperationDefinitionAccess().getParametersAssignment_4_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5335,44 +4742,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EventDefinition__Group_3__1
-=======
-rule__OperationDefinition__Group_4__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__EventDefinition__Group_3__1__Impl
-=======
-	rule__OperationDefinition__Group_4__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EventDefinition__Group_3__1__Impl
-=======
-rule__OperationDefinition__Group_4__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getEventDefinitionAccess().getTypeAssignment_3_1()); }
 (rule__EventDefinition__TypeAssignment_3_1)
 { after(grammarAccess.getEventDefinitionAccess().getTypeAssignment_3_1()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getGroup_4_1()); }
-(rule__OperationDefinition__Group_4_1__0)*
-{ after(grammarAccess.getOperationDefinitionAccess().getGroup_4_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5385,50 +4774,29 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__0
-=======
-rule__OperationDefinition__Group_4_1__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__VariableDefinition__Group__0__Impl
 	rule__VariableDefinition__Group__1
-=======
-	rule__OperationDefinition__Group_4_1__0__Impl
-	rule__OperationDefinition__Group_4_1__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__0__Impl
-=======
-rule__OperationDefinition__Group_4_1__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getVariableDefinitionAccess().getVariableDefinitionAction_0()); }
 (
 
 )
 { after(grammarAccess.getVariableDefinitionAccess().getVariableDefinitionAction_0()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getCommaKeyword_4_1_0()); }
-
-	',' 
-
-{ after(grammarAccess.getOperationDefinitionAccess().getCommaKeyword_4_1_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5437,47 +4805,29 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__1
-=======
-rule__OperationDefinition__Group_4_1__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__VariableDefinition__Group__1__Impl
 	rule__VariableDefinition__Group__2
-=======
-	rule__OperationDefinition__Group_4_1__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__1__Impl
-=======
-rule__OperationDefinition__Group_4_1__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getVariableDefinitionAccess().getVarKeyword_1()); }
 
 	'var' 
 
 { after(grammarAccess.getVariableDefinitionAccess().getVarKeyword_1()); }
-=======
-{ before(grammarAccess.getOperationDefinitionAccess().getParametersAssignment_4_1_1()); }
-(rule__OperationDefinition__ParametersAssignment_4_1_1)
-{ after(grammarAccess.getOperationDefinitionAccess().getParametersAssignment_4_1_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5486,399 +4836,27 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__2
-=======
-
-
-
-
-rule__OperationDefinition__Group_6__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__VariableDefinition__Group__2__Impl
 	rule__VariableDefinition__Group__3
-=======
-	rule__OperationDefinition__Group_6__0__Impl
-	rule__OperationDefinition__Group_6__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__OperationDefinition__Group_6__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getOperationDefinitionAccess().getColonKeyword_6_0()); }
-
-	':' 
-
-{ after(grammarAccess.getOperationDefinitionAccess().getColonKeyword_6_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__OperationDefinition__Group_6__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__OperationDefinition__Group_6__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__OperationDefinition__Group_6__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getOperationDefinitionAccess().getTypeAssignment_6_1()); }
-(rule__OperationDefinition__TypeAssignment_6_1)
-{ after(grammarAccess.getOperationDefinitionAccess().getTypeAssignment_6_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
-rule__Parameter__Group__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__Parameter__Group__0__Impl
-	rule__Parameter__Group__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Parameter__Group__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getParameterAccess().getNameAssignment_0()); }
-(rule__Parameter__NameAssignment_0)
-{ after(grammarAccess.getParameterAccess().getNameAssignment_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__Parameter__Group__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__Parameter__Group__1__Impl
-	rule__Parameter__Group__2
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Parameter__Group__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getParameterAccess().getColonKeyword_1()); }
-
-	':' 
-
-{ after(grammarAccess.getParameterAccess().getColonKeyword_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__Parameter__Group__2
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__Parameter__Group__2__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Parameter__Group__2__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getParameterAccess().getTypeAssignment_2()); }
-(rule__Parameter__TypeAssignment_2)
-{ after(grammarAccess.getParameterAccess().getTypeAssignment_2()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
-
-
-rule__Entrypoint__Group__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__Entrypoint__Group__0__Impl
-	rule__Entrypoint__Group__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Entrypoint__Group__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getEntrypointAccess().getEntrypointAction_0()); }
-(
-
-)
-{ after(grammarAccess.getEntrypointAccess().getEntrypointAction_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__Entrypoint__Group__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__Entrypoint__Group__1__Impl
-	rule__Entrypoint__Group__2
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Entrypoint__Group__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getEntrypointAccess().getEntrypointKeyword_1()); }
-
-	'entrypoint' 
-
-{ after(grammarAccess.getEntrypointAccess().getEntrypointKeyword_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__Entrypoint__Group__2
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__Entrypoint__Group__2__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Entrypoint__Group__2__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getEntrypointAccess().getNameAssignment_2()); }
-(rule__Entrypoint__NameAssignment_2)
-{ after(grammarAccess.getEntrypointAccess().getNameAssignment_2()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
-
-
-rule__Exitpoint__Group__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__Exitpoint__Group__0__Impl
-	rule__Exitpoint__Group__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Exitpoint__Group__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getExitpointAccess().getExitpointAction_0()); }
-(
-
-)
-{ after(grammarAccess.getExitpointAccess().getExitpointAction_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__Exitpoint__Group__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__Exitpoint__Group__1__Impl
-	rule__Exitpoint__Group__2
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Exitpoint__Group__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getExitpointAccess().getExitpointKeyword_1()); }
-
-	'exitpoint' 
-
-{ after(grammarAccess.getExitpointAccess().getExitpointKeyword_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__Exitpoint__Group__2
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__Exitpoint__Group__2__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Exitpoint__Group__2__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getExitpointAccess().getNameAssignment_2()); }
-(rule__Exitpoint__NameAssignment_2)
-{ after(grammarAccess.getExitpointAccess().getNameAssignment_2()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
-
-
-rule__FQN__Group__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__FQN__Group__0__Impl
-	rule__FQN__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__2__Impl
-=======
-rule__FQN__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2()); }
 (rule__VariableDefinition__UnorderedGroup_2)
 { after(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2()); }
-=======
-{ before(grammarAccess.getFQNAccess().getIDTerminalRuleCall_0()); }
-	RULE_ID
-{ after(grammarAccess.getFQNAccess().getIDTerminalRuleCall_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5887,45 +4865,27 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__3
-=======
-rule__FQN__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__VariableDefinition__Group__3__Impl
 	rule__VariableDefinition__Group__4
-=======
-	rule__FQN__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__3__Impl
-=======
-rule__FQN__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getVariableDefinitionAccess().getNameAssignment_3()); }
 (rule__VariableDefinition__NameAssignment_3)
 { after(grammarAccess.getVariableDefinitionAccess().getNameAssignment_3()); }
-=======
-{ before(grammarAccess.getFQNAccess().getGroup_1()); }
-(rule__FQN__Group_1__0)*
-{ after(grammarAccess.getFQNAccess().getGroup_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5934,54 +4894,29 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__4
-=======
-
-
-
-
-rule__FQN__Group_1__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__VariableDefinition__Group__4__Impl
 	rule__VariableDefinition__Group__5
-=======
-	rule__FQN__Group_1__0__Impl
-	rule__FQN__Group_1__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__4__Impl
-=======
-rule__FQN__Group_1__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getVariableDefinitionAccess().getColonKeyword_4()); }
 
 	':' 
 
 { after(grammarAccess.getVariableDefinitionAccess().getColonKeyword_4()); }
-=======
-{ before(grammarAccess.getFQNAccess().getFullStopKeyword_1_0()); }
-
-	'.' 
-
-{ after(grammarAccess.getFQNAccess().getFullStopKeyword_1_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -5990,45 +4925,27 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__5
-=======
-rule__FQN__Group_1__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__VariableDefinition__Group__5__Impl
 	rule__VariableDefinition__Group__6
-=======
-	rule__FQN__Group_1__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__5__Impl
-=======
-rule__FQN__Group_1__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_5()); }
 (rule__VariableDefinition__TypeAssignment_5)
 { after(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_5()); }
-=======
-{ before(grammarAccess.getFQNAccess().getIDTerminalRuleCall_1_1()); }
-	RULE_ID
-{ after(grammarAccess.getFQNAccess().getIDTerminalRuleCall_1_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6037,49 +4954,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__6
-=======
-
-
-
-
-rule__LocalReaction__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__VariableDefinition__Group__6__Impl
-=======
-	rule__LocalReaction__Group__0__Impl
-	rule__LocalReaction__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group__6__Impl
-=======
-rule__LocalReaction__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getVariableDefinitionAccess().getGroup_6()); }
 (rule__VariableDefinition__Group_6__0)?
 { after(grammarAccess.getVariableDefinitionAccess().getGroup_6()); }
-=======
-{ before(grammarAccess.getLocalReactionAccess().getTriggerAssignment_0()); }
-(rule__LocalReaction__TriggerAssignment_0)
-{ after(grammarAccess.getLocalReactionAccess().getTriggerAssignment_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6088,7 +4982,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
 
 
@@ -6104,45 +4997,28 @@ finally {
 
 
 rule__VariableDefinition__Group_6__0
-=======
-rule__LocalReaction__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__VariableDefinition__Group_6__0__Impl
 	rule__VariableDefinition__Group_6__1
-=======
-	rule__LocalReaction__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group_6__0__Impl
-=======
-rule__LocalReaction__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getVariableDefinitionAccess().getEqualsSignKeyword_6_0()); }
 
 	'=' 
 
 { after(grammarAccess.getVariableDefinitionAccess().getEqualsSignKeyword_6_0()); }
-=======
-{ before(grammarAccess.getLocalReactionAccess().getGroup_1()); }
-(rule__LocalReaction__Group_1__0)
-{ after(grammarAccess.getLocalReactionAccess().getGroup_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6151,48 +5027,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group_6__1
-=======
-
-
-
-
-rule__LocalReaction__Group_1__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__VariableDefinition__Group_6__1__Impl
-=======
-	rule__LocalReaction__Group_1__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__VariableDefinition__Group_6__1__Impl
-=======
-rule__LocalReaction__Group_1__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getVariableDefinitionAccess().getInitialValueAssignment_6_1()); }
 (rule__VariableDefinition__InitialValueAssignment_6_1)
 { after(grammarAccess.getVariableDefinitionAccess().getInitialValueAssignment_6_1()); }
-=======
-{ before(grammarAccess.getLocalReactionAccess().getGroup_1_0()); }
-(rule__LocalReaction__Group_1_0__0)
-{ after(grammarAccess.getLocalReactionAccess().getGroup_1_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6203,52 +5057,31 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
 
 rule__OperationDefinition__Group__0
-=======
-rule__LocalReaction__Group_1_0__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__OperationDefinition__Group__0__Impl
 	rule__OperationDefinition__Group__1
-=======
-	rule__LocalReaction__Group_1_0__0__Impl
-	rule__LocalReaction__Group_1_0__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group__0__Impl
-=======
-rule__LocalReaction__Group_1_0__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getOperationDefinitionAccess().getOperationDefinitionAction_0()); }
 (
 
 )
 { after(grammarAccess.getOperationDefinitionAccess().getOperationDefinitionAction_0()); }
-=======
-{ before(grammarAccess.getLocalReactionAccess().getSolidusKeyword_1_0_0()); }
-
-	'/' 
-
-{ after(grammarAccess.getLocalReactionAccess().getSolidusKeyword_1_0_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6257,47 +5090,29 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group__1
-=======
-rule__LocalReaction__Group_1_0__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__OperationDefinition__Group__1__Impl
 	rule__OperationDefinition__Group__2
-=======
-	rule__LocalReaction__Group_1_0__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group__1__Impl
-=======
-rule__LocalReaction__Group_1_0__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getOperationDefinitionAccess().getOperationKeyword_1()); }
 
 	'operation' 
 
 { after(grammarAccess.getOperationDefinitionAccess().getOperationKeyword_1()); }
-=======
-{ before(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_0_1()); }
-(rule__LocalReaction__EffectAssignment_1_0_1)
-{ after(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_0_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6335,50 +5150,29 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group__3
-=======
-rule__TransitionReaction__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__OperationDefinition__Group__3__Impl
 	rule__OperationDefinition__Group__4
-=======
-	rule__TransitionReaction__Group__0__Impl
-	rule__TransitionReaction__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group__3__Impl
-=======
-rule__TransitionReaction__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getOperationDefinitionAccess().getLeftParenthesisKeyword_3()); }
 
 	'(' 
 
 { after(grammarAccess.getOperationDefinitionAccess().getLeftParenthesisKeyword_3()); }
-=======
-{ before(grammarAccess.getTransitionReactionAccess().getTransitionReactionAction_0()); }
-(
-
-)
-{ after(grammarAccess.getTransitionReactionAccess().getTransitionReactionAction_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6387,46 +5181,27 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group__4
-=======
-rule__TransitionReaction__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__OperationDefinition__Group__4__Impl
 	rule__OperationDefinition__Group__5
-=======
-	rule__TransitionReaction__Group__1__Impl
-	rule__TransitionReaction__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group__4__Impl
-=======
-rule__TransitionReaction__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getOperationDefinitionAccess().getGroup_4()); }
 (rule__OperationDefinition__Group_4__0)?
 { after(grammarAccess.getOperationDefinitionAccess().getGroup_4()); }
-=======
-{ before(grammarAccess.getTransitionReactionAccess().getTriggerAssignment_1()); }
-(rule__TransitionReaction__TriggerAssignment_1)?
-{ after(grammarAccess.getTransitionReactionAccess().getTriggerAssignment_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6435,7 +5210,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group__5
     @init {
 		int stackSize = keepStackSize();
@@ -6468,43 +5242,25 @@ finally {
 
 
 rule__OperationDefinition__Group__6
-=======
-rule__TransitionReaction__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__OperationDefinition__Group__6__Impl
-=======
-	rule__TransitionReaction__Group__2__Impl
-	rule__TransitionReaction__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group__6__Impl
-=======
-rule__TransitionReaction__Group__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getOperationDefinitionAccess().getGroup_6()); }
 (rule__OperationDefinition__Group_6__0)?
 { after(grammarAccess.getOperationDefinitionAccess().getGroup_6()); }
-=======
-{ before(grammarAccess.getTransitionReactionAccess().getGroup_2()); }
-(rule__TransitionReaction__Group_2__0)?
-{ after(grammarAccess.getTransitionReactionAccess().getGroup_2()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6513,7 +5269,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
 
 
@@ -6529,35 +5284,23 @@ finally {
 
 
 rule__OperationDefinition__Group_4__0
-=======
-rule__TransitionReaction__Group__3
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__OperationDefinition__Group_4__0__Impl
 	rule__OperationDefinition__Group_4__1
-=======
-	rule__TransitionReaction__Group__3__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group_4__0__Impl
-=======
-rule__TransitionReaction__Group__3__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getOperationDefinitionAccess().getParametersAssignment_4_0()); }
 (rule__OperationDefinition__ParametersAssignment_4_0)
 { after(grammarAccess.getOperationDefinitionAccess().getParametersAssignment_4_0()); }
@@ -6589,11 +5332,6 @@ rule__OperationDefinition__Group_4__1__Impl
 { before(grammarAccess.getOperationDefinitionAccess().getGroup_4_1()); }
 (rule__OperationDefinition__Group_4_1__0)*
 { after(grammarAccess.getOperationDefinitionAccess().getGroup_4_1()); }
-=======
-{ before(grammarAccess.getTransitionReactionAccess().getGroup_3()); }
-(rule__TransitionReaction__Group_3__0)?
-{ after(grammarAccess.getTransitionReactionAccess().getGroup_3()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6606,54 +5344,29 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group_4_1__0
-=======
-
-
-
-
-rule__TransitionReaction__Group_2__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__OperationDefinition__Group_4_1__0__Impl
 	rule__OperationDefinition__Group_4_1__1
-=======
-	rule__TransitionReaction__Group_2__0__Impl
-	rule__TransitionReaction__Group_2__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group_4_1__0__Impl
-=======
-rule__TransitionReaction__Group_2__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getOperationDefinitionAccess().getCommaKeyword_4_1_0()); }
 
 	',' 
 
 { after(grammarAccess.getOperationDefinitionAccess().getCommaKeyword_4_1_0()); }
-=======
-{ before(grammarAccess.getTransitionReactionAccess().getSolidusKeyword_2_0()); }
-
-	'/' 
-
-{ after(grammarAccess.getTransitionReactionAccess().getSolidusKeyword_2_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6662,7 +5375,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group_4_1__1
     @init {
 		int stackSize = keepStackSize();
@@ -6696,45 +5408,28 @@ finally {
 
 
 rule__OperationDefinition__Group_6__0
-=======
-rule__TransitionReaction__Group_2__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__OperationDefinition__Group_6__0__Impl
 	rule__OperationDefinition__Group_6__1
-=======
-	rule__TransitionReaction__Group_2__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group_6__0__Impl
-=======
-rule__TransitionReaction__Group_2__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getOperationDefinitionAccess().getColonKeyword_6_0()); }
 
 	':' 
 
 { after(grammarAccess.getOperationDefinitionAccess().getColonKeyword_6_0()); }
-=======
-{ before(grammarAccess.getTransitionReactionAccess().getEffectAssignment_2_1()); }
-(rule__TransitionReaction__EffectAssignment_2_1)
-{ after(grammarAccess.getTransitionReactionAccess().getEffectAssignment_2_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -6743,7 +5438,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__OperationDefinition__Group_6__1
     @init {
 		int stackSize = keepStackSize();
@@ -7278,52 +5972,28 @@ finally {
 
 
 rule__LocalReaction__Group_1_0__0
-=======
-
-
-
-
-rule__TransitionReaction__Group_3__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__LocalReaction__Group_1_0__0__Impl
 	rule__LocalReaction__Group_1_0__1
-=======
-	rule__TransitionReaction__Group_3__0__Impl
-	rule__TransitionReaction__Group_3__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__LocalReaction__Group_1_0__0__Impl
-=======
-rule__TransitionReaction__Group_3__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getLocalReactionAccess().getSolidusKeyword_1_0_0()); }
 
 	'/' 
 
 { after(grammarAccess.getLocalReactionAccess().getSolidusKeyword_1_0_0()); }
-=======
-{ before(grammarAccess.getTransitionReactionAccess().getNumberSignKeyword_3_0()); }
-
-	'#' 
-
-{ after(grammarAccess.getTransitionReactionAccess().getNumberSignKeyword_3_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -7332,44 +6002,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__LocalReaction__Group_1_0__1
-=======
-rule__TransitionReaction__Group_3__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__LocalReaction__Group_1_0__1__Impl
-=======
-	rule__TransitionReaction__Group_3__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__LocalReaction__Group_1_0__1__Impl
-=======
-rule__TransitionReaction__Group_3__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_0_1()); }
 (rule__LocalReaction__EffectAssignment_1_0_1)
 { after(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_0_1()); }
-=======
-{ before(grammarAccess.getTransitionReactionAccess().getPropertiesAssignment_3_1()); }
-(rule__TransitionReaction__PropertiesAssignment_3_1)
-{ after(grammarAccess.getTransitionReactionAccess().getPropertiesAssignment_3_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -7748,7 +6400,6 @@ rule__ReactionTrigger__Group_1_1__1__Impl
 { before(grammarAccess.getReactionTriggerAccess().getGuardExpressionAssignment_1_1_1()); }
 (rule__ReactionTrigger__GuardExpressionAssignment_1_1_1)
 { after(grammarAccess.getReactionTriggerAccess().getGuardExpressionAssignment_1_1_1()); }
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 )
 
 ;
@@ -7779,8 +6430,6 @@ rule__ReactionTrigger__Group_1_1__2__Impl
 	']' 
 
 { after(grammarAccess.getReactionTriggerAccess().getRightSquareBracketKeyword_1_1_2()); }
-=======
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -7789,7 +6438,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
 
 
@@ -7797,51 +6445,36 @@ finally {
 
 
 rule__ReactionEffect__Group__0
-=======
-rule__ReactionTrigger__Group_1_1__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__ReactionEffect__Group__0__Impl
 	rule__ReactionEffect__Group__1
-=======
-	rule__ReactionTrigger__Group_1_1__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ReactionEffect__Group__0__Impl
-=======
-rule__ReactionTrigger__Group_1_1__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getReactionEffectAccess().getReactionEffectAction_0()); }
 (
 
 )
 { after(grammarAccess.getReactionEffectAccess().getReactionEffectAction_0()); }
 )
-=======
-{ before(grammarAccess.getReactionTriggerAccess().getRightSquareBracketKeyword_1_1_2()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 
-	']' 
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
-{ after(grammarAccess.getReactionTriggerAccess().getRightSquareBracketKeyword_1_1_2()); }
-)
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ReactionEffect__Group__1
     @init {
 		int stackSize = keepStackSize();
@@ -7849,14 +6482,11 @@ rule__ReactionEffect__Group__1
 :
 	rule__ReactionEffect__Group__1__Impl
 	rule__ReactionEffect__Group__2
-=======
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ReactionEffect__Group__1__Impl
     @init {
 		int stackSize = keepStackSize();
@@ -7867,56 +6497,33 @@ rule__ReactionEffect__Group__1__Impl
 (rule__ReactionEffect__ActionsAssignment_1)
 { after(grammarAccess.getReactionEffectAccess().getActionsAssignment_1()); }
 )
-=======
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 
-
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__ReactionEffect__Group__2
-=======
-
-
-
-
-rule__ReactionEffect__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-	rule__ReactionEffect__Group__2__Impl
-=======
-	rule__ReactionEffect__Group__0__Impl
-	rule__ReactionEffect__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
+
+rule__ReactionEffect__Group__2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__ReactionEffect__Group__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__ReactionEffect__Group__2__Impl
-=======
-rule__ReactionEffect__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getReactionEffectAccess().getGroup_2()); }
 (rule__ReactionEffect__Group_2__0)*
 { after(grammarAccess.getReactionEffectAccess().getGroup_2()); }
-=======
-{ before(grammarAccess.getReactionEffectAccess().getReactionEffectAction_0()); }
-(
-
-)
-{ after(grammarAccess.getReactionEffectAccess().getReactionEffectAction_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -7925,7 +6532,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 
 
 
@@ -7933,46 +6539,28 @@ finally {
 
 
 rule__ReactionEffect__Group_2__0
-=======
-rule__ReactionEffect__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__ReactionEffect__Group_2__0__Impl
 	rule__ReactionEffect__Group_2__1
-=======
-	rule__ReactionEffect__Group__1__Impl
-	rule__ReactionEffect__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ReactionEffect__Group_2__0__Impl
-=======
-rule__ReactionEffect__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getReactionEffectAccess().getSemicolonKeyword_2_0()); }
 (
 	';' 
 )
 { after(grammarAccess.getReactionEffectAccess().getSemicolonKeyword_2_0()); }
-=======
-{ before(grammarAccess.getReactionEffectAccess().getActionsAssignment_1()); }
-(rule__ReactionEffect__ActionsAssignment_1)
-{ after(grammarAccess.getReactionEffectAccess().getActionsAssignment_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -7981,44 +6569,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ReactionEffect__Group_2__1
-=======
-rule__ReactionEffect__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__ReactionEffect__Group_2__1__Impl
-=======
-	rule__ReactionEffect__Group__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ReactionEffect__Group_2__1__Impl
-=======
-rule__ReactionEffect__Group__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getReactionEffectAccess().getActionsAssignment_2_1()); }
 (rule__ReactionEffect__ActionsAssignment_2_1)
 { after(grammarAccess.getReactionEffectAccess().getActionsAssignment_2_1()); }
-=======
-{ before(grammarAccess.getReactionEffectAccess().getGroup_2()); }
-(rule__ReactionEffect__Group_2__0)*
-{ after(grammarAccess.getReactionEffectAccess().getGroup_2()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8031,52 +6601,29 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ReactionProperties__Group__0
-=======
-
-
-rule__ReactionEffect__Group_2__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__ReactionProperties__Group__0__Impl
 	rule__ReactionProperties__Group__1
-=======
-	rule__ReactionEffect__Group_2__0__Impl
-	rule__ReactionEffect__Group_2__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ReactionProperties__Group__0__Impl
-=======
-rule__ReactionEffect__Group_2__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getReactionPropertiesAccess().getReactionPropertiesAction_0()); }
 (
 
 )
 { after(grammarAccess.getReactionPropertiesAccess().getReactionPropertiesAction_0()); }
-=======
-{ before(grammarAccess.getReactionEffectAccess().getSemicolonKeyword_2_0()); }
-(
-	';' 
-)
-{ after(grammarAccess.getReactionEffectAccess().getSemicolonKeyword_2_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8085,44 +6632,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ReactionProperties__Group__1
-=======
-rule__ReactionEffect__Group_2__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__ReactionProperties__Group__1__Impl
-=======
-	rule__ReactionEffect__Group_2__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ReactionProperties__Group__1__Impl
-=======
-rule__ReactionEffect__Group_2__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getReactionPropertiesAccess().getPropertiesAssignment_1()); }
 (rule__ReactionProperties__PropertiesAssignment_1)*
 { after(grammarAccess.getReactionPropertiesAccess().getPropertiesAssignment_1()); }
-=======
-{ before(grammarAccess.getReactionEffectAccess().getActionsAssignment_2_1()); }
-(rule__ReactionEffect__ActionsAssignment_2_1)
-{ after(grammarAccess.getReactionEffectAccess().getActionsAssignment_2_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8135,50 +6664,29 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EntryPointSpec__Group__0
-=======
-rule__ReactionProperties__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__EntryPointSpec__Group__0__Impl
 	rule__EntryPointSpec__Group__1
-=======
-	rule__ReactionProperties__Group__0__Impl
-	rule__ReactionProperties__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EntryPointSpec__Group__0__Impl
-=======
-rule__ReactionProperties__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getEntryPointSpecAccess().getGreaterThanSignKeyword_0()); }
 
 	'>' 
 
 { after(grammarAccess.getEntryPointSpecAccess().getGreaterThanSignKeyword_0()); }
-=======
-{ before(grammarAccess.getReactionPropertiesAccess().getReactionPropertiesAction_0()); }
-(
-
-)
-{ after(grammarAccess.getReactionPropertiesAccess().getReactionPropertiesAction_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8187,44 +6695,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EntryPointSpec__Group__1
-=======
-rule__ReactionProperties__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__EntryPointSpec__Group__1__Impl
-=======
-	rule__ReactionProperties__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__EntryPointSpec__Group__1__Impl
-=======
-rule__ReactionProperties__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getEntryPointSpecAccess().getEntrypointAssignment_1()); }
 (rule__EntryPointSpec__EntrypointAssignment_1)
 { after(grammarAccess.getEntryPointSpecAccess().getEntrypointAssignment_1()); }
-=======
-{ before(grammarAccess.getReactionPropertiesAccess().getPropertiesAssignment_1()); }
-(rule__ReactionProperties__PropertiesAssignment_1)*
-{ after(grammarAccess.getReactionPropertiesAccess().getPropertiesAssignment_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8237,48 +6727,27 @@ finally {
 
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ExitPointSpec__Group__0
-=======
-rule__EntryPointSpec__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__ExitPointSpec__Group__0__Impl
 	rule__ExitPointSpec__Group__1
-=======
-	rule__EntryPointSpec__Group__0__Impl
-	rule__EntryPointSpec__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ExitPointSpec__Group__0__Impl
-=======
-rule__EntryPointSpec__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getExitPointSpecAccess().getExitpointAssignment_0()); }
 (rule__ExitPointSpec__ExitpointAssignment_0)
 { after(grammarAccess.getExitPointSpecAccess().getExitpointAssignment_0()); }
-=======
-{ before(grammarAccess.getEntryPointSpecAccess().getGreaterThanSignKeyword_0()); }
-
-	'>' 
-
-{ after(grammarAccess.getEntryPointSpecAccess().getGreaterThanSignKeyword_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8287,46 +6756,28 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ExitPointSpec__Group__1
-=======
-rule__EntryPointSpec__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 	rule__ExitPointSpec__Group__1__Impl
-=======
-	rule__EntryPointSpec__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 rule__ExitPointSpec__Group__1__Impl
-=======
-rule__EntryPointSpec__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
 { before(grammarAccess.getExitPointSpecAccess().getGreaterThanSignKeyword_1()); }
 
 	'>' 
 
 { after(grammarAccess.getExitPointSpecAccess().getGreaterThanSignKeyword_1()); }
-=======
-{ before(grammarAccess.getEntryPointSpecAccess().getEntrypointAssignment_1()); }
-(rule__EntryPointSpec__EntrypointAssignment_1)
-{ after(grammarAccess.getEntryPointSpecAccess().getEntrypointAssignment_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8335,110 +6786,6 @@ finally {
 }
 
 
-
-
-
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__TimeEventSpec__Group__0
-=======
-rule__ExitPointSpec__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-	rule__TimeEventSpec__Group__0__Impl
-	rule__TimeEventSpec__Group__1
-=======
-	rule__ExitPointSpec__Group__0__Impl
-	rule__ExitPointSpec__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__TimeEventSpec__Group__0__Impl
-=======
-rule__ExitPointSpec__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getTimeEventSpecAccess().getTypeAssignment_0()); }
-(rule__TimeEventSpec__TypeAssignment_0)
-{ after(grammarAccess.getTimeEventSpecAccess().getTypeAssignment_0()); }
-=======
-{ before(grammarAccess.getExitPointSpecAccess().getExitpointAssignment_0()); }
-(rule__ExitPointSpec__ExitpointAssignment_0)
-{ after(grammarAccess.getExitPointSpecAccess().getExitpointAssignment_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__TimeEventSpec__Group__1
-=======
-rule__ExitPointSpec__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-	rule__TimeEventSpec__Group__1__Impl
-	rule__TimeEventSpec__Group__2
-=======
-	rule__ExitPointSpec__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__TimeEventSpec__Group__1__Impl
-=======
-rule__ExitPointSpec__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getTimeEventSpecAccess().getValueAssignment_1()); }
-(rule__TimeEventSpec__ValueAssignment_1)
-{ after(grammarAccess.getTimeEventSpecAccess().getValueAssignment_1()); }
-=======
-{ before(grammarAccess.getExitPointSpecAccess().getGreaterThanSignKeyword_1()); }
-
-	'>' 
-
-{ after(grammarAccess.getExitPointSpecAccess().getGreaterThanSignKeyword_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__TimeEventSpec__Group__2
-=======
 
 
 
@@ -8473,41 +6820,26 @@ finally {
 
 
 rule__TimeEventSpec__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-	rule__TimeEventSpec__Group__2__Impl
-=======
 	rule__TimeEventSpec__Group__1__Impl
 	rule__TimeEventSpec__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__TimeEventSpec__Group__2__Impl
-=======
 rule__TimeEventSpec__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getTimeEventSpecAccess().getUnitAssignment_2()); }
-(rule__TimeEventSpec__UnitAssignment_2)?
-{ after(grammarAccess.getTimeEventSpecAccess().getUnitAssignment_2()); }
-=======
 { before(grammarAccess.getTimeEventSpecAccess().getValueAssignment_1()); }
 (rule__TimeEventSpec__ValueAssignment_1)
 { after(grammarAccess.getTimeEventSpecAccess().getValueAssignment_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8516,53 +6848,26 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-
-
-
-
-
-
-rule__EntryEvent__Group__0
-=======
 rule__TimeEventSpec__Group__2
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-	rule__EntryEvent__Group__0__Impl
-	rule__EntryEvent__Group__1
-=======
 	rule__TimeEventSpec__Group__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__EntryEvent__Group__0__Impl
-=======
 rule__TimeEventSpec__Group__2__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getEntryEventAccess().getEntryEventAction_0()); }
-(
-
-)
-{ after(grammarAccess.getEntryEventAccess().getEntryEventAction_0()); }
-=======
 { before(grammarAccess.getTimeEventSpecAccess().getUnitAssignment_2()); }
 (rule__TimeEventSpec__UnitAssignment_2)?
 { after(grammarAccess.getTimeEventSpecAccess().getUnitAssignment_2()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8571,9 +6876,6 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__EntryEvent__Group__1
-=======
 
 
 
@@ -8581,45 +6883,28 @@ rule__EntryEvent__Group__1
 
 
 rule__EntryEvent__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-	rule__EntryEvent__Group__1__Impl
-=======
 	rule__EntryEvent__Group__0__Impl
 	rule__EntryEvent__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__EntryEvent__Group__1__Impl
-=======
 rule__EntryEvent__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getEntryEventAccess().getEntryKeyword_1()); }
-
-	'entry' 
-
-{ after(grammarAccess.getEntryEventAccess().getEntryKeyword_1()); }
-=======
 { before(grammarAccess.getEntryEventAccess().getEntryEventAction_0()); }
 (
 
 )
 { after(grammarAccess.getEntryEventAccess().getEntryEventAction_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8628,53 +6913,28 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-
-
-
-
-rule__ExitEvent__Group__0
-=======
 rule__EntryEvent__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-	rule__ExitEvent__Group__0__Impl
-	rule__ExitEvent__Group__1
-=======
 	rule__EntryEvent__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__ExitEvent__Group__0__Impl
-=======
 rule__EntryEvent__Group__1__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getExitEventAccess().getExitEventAction_0()); }
-(
-
-)
-{ after(grammarAccess.getExitEventAccess().getExitEventAction_0()); }
-=======
 { before(grammarAccess.getEntryEventAccess().getEntryKeyword_1()); }
 
 	'entry' 
 
 { after(grammarAccess.getEntryEventAccess().getEntryKeyword_1()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8683,53 +6943,33 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__ExitEvent__Group__1
-=======
 
 
 
 
 rule__ExitEvent__Group__0
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-	rule__ExitEvent__Group__1__Impl
-=======
 	rule__ExitEvent__Group__0__Impl
 	rule__ExitEvent__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-rule__ExitEvent__Group__1__Impl
-=======
 rule__ExitEvent__Group__0__Impl
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-{ before(grammarAccess.getExitEventAccess().getExitKeyword_1()); }
-
-	'exit' 
-
-{ after(grammarAccess.getExitEventAccess().getExitKeyword_1()); }
-=======
 { before(grammarAccess.getExitEventAccess().getExitEventAction_0()); }
 (
 
 )
 { after(grammarAccess.getExitEventAccess().getExitEventAction_0()); }
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 )
 
 ;
@@ -8738,21 +6978,11 @@ finally {
 }
 
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-
-
-
-
-rule__OnCycleEvent__Group__0
-=======
 rule__ExitEvent__Group__1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
 :
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
-=======
 	rule__ExitEvent__Group__1__Impl
 ;
 finally {
@@ -8787,7 +7017,6 @@ rule__OnCycleEvent__Group__0
 		int stackSize = keepStackSize();
     }
 :
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
 	rule__OnCycleEvent__Group__0__Impl
 	rule__OnCycleEvent__Group__1
 ;
@@ -12810,14 +11039,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__InterfaceDeclaration__NameAssignment_2
+rule__InterfaceDeclaration__DeclarationsAssignment_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getInterfaceDeclarationAccess().getNameIDTerminalRuleCall_2_0()); }
-	RULE_ID{ after(grammarAccess.getInterfaceDeclarationAccess().getNameIDTerminalRuleCall_2_0()); }
+{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAlternatives_2_0()); }
+(rule__InterfaceDeclaration__DeclarationsAlternatives_2_0)
+{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAlternatives_2_0()); }
 )
 
 ;
@@ -12825,15 +11055,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__InterfaceDeclaration__DeclarationsAssignment_4
+rule__ActionDeclaration__NameAssignment_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAlternatives_4_0()); }
-(rule__InterfaceDeclaration__DeclarationsAlternatives_4_0)
-{ after(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAlternatives_4_0()); }
+{ before(grammarAccess.getActionDeclarationAccess().getNameIDTerminalRuleCall_2_0()); }
+	RULE_ID{ after(grammarAccess.getActionDeclarationAccess().getNameIDTerminalRuleCall_2_0()); }
 )
 
 ;
@@ -12841,7 +11070,21 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.g
+rule__SuspendDeclaration__NameAssignment_2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getSuspendDeclarationAccess().getNameIDTerminalRuleCall_2_0()); }
+	RULE_ID{ after(grammarAccess.getSuspendDeclarationAccess().getNameIDTerminalRuleCall_2_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__TransitionReaction__TriggerAssignment_1
     @init {
 		int stackSize = keepStackSize();
@@ -12904,9 +11147,6 @@ finally {
 }
 
 rule__StatechartSpecification__ScopesAssignment_2
-=======
-rule__StateScope__DeclarationsAssignment_1
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.g
     @init {
 		int stackSize = keepStackSize();
     }
@@ -13262,51 +11502,6 @@ rule__LocalReaction__EffectAssignment_1_0_1
 (
 { before(grammarAccess.getLocalReactionAccess().getEffectReactionEffectParserRuleCall_1_0_1_0()); }
 	ruleReactionEffect{ after(grammarAccess.getLocalReactionAccess().getEffectReactionEffectParserRuleCall_1_0_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TransitionReaction__TriggerAssignment_1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTransitionReactionAccess().getTriggerReactionTriggerParserRuleCall_1_0()); }
-	ruleReactionTrigger{ after(grammarAccess.getTransitionReactionAccess().getTriggerReactionTriggerParserRuleCall_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TransitionReaction__EffectAssignment_2_1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTransitionReactionAccess().getEffectReactionEffectParserRuleCall_2_1_0()); }
-	ruleReactionEffect{ after(grammarAccess.getTransitionReactionAccess().getEffectReactionEffectParserRuleCall_2_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TransitionReaction__PropertiesAssignment_3_1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTransitionReactionAccess().getPropertiesReactionPropertiesParserRuleCall_3_1_0()); }
-	ruleReactionProperties{ after(grammarAccess.getTransitionReactionAccess().getPropertiesReactionPropertiesParserRuleCall_3_1_0()); }
 )
 
 ;

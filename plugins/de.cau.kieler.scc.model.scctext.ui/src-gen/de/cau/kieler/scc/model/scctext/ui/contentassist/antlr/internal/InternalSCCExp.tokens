@@ -57,14 +57,10 @@ RULE_FLOAT=7
 T__85=85
 RULE_SL_COMMENT=11
 T__84=84
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.tokens
 T__87=87
 T__86=86
 T__89=89
 T__88=88
-=======
-T__86=86
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.tokens
 RULE_ML_COMMENT=10
 T__30=30
 T__31=31
@@ -88,64 +84,44 @@ T__73=73
 T__79=79
 T__78=78
 T__77=77
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.tokens
 'internal'=62
 'out'=18
 '>='=43
 '#'=59
-=======
-'#'=67
-'out'=18
-'>='=43
-'internal'=57
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.tokens
 '~'=39
 '/'=37
 '=='=44
-'OnEntryAction'=57
 '/='=23
 '%='=24
-'event'=63
+'event'=64
 '>'=42
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.tokens
 '||'=80
+'OnInsideAction:'=56
 '&&'=81
-';'=54
+';'=53
 'raise'=78
 '+'=34
 'active'=87
 '.'=71
 '^'=83
 'some trigger expression'=60
-=======
-'event'=58
-'||'=77
-'&&'=78
-';'=70
-'raise'=75
-'+'=34
-'active'=84
-'.'=66
-'^'=80
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.tokens
 '>>'=33
 'else'=15
-'OnExitAction'=55
+'interface:'=52
 '^='=30
 '+='=25
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.tokens
 'readonly'=88
 '>>='=28
 '?'=79
-'var'=64
+'var'=65
+'OnExitAction:'=55
 '&='=29
 's'=46
-'('=66
-':'=53
+'('=67
+':'=63
 'exit'=75
 '-'=35
-','=68
-'Suspend'=58
+','=54
 'default'=14
 'in'=17
 '-='=26
@@ -154,65 +130,26 @@ T__77=77
 'ns'=49
 '!'=82
 '|'=84
-=======
-'readonly'=85
-'>>='=28
-'?'=76
-'var'=59
-'&='=29
-'s'=46
-':'=56
-'('=61
-'exit'=72
-'-'=35
-'statechart'=53
-','=63
-'default'=14
-'in'=17
-'-='=26
-']'=69
-'<<='=27
-'ns'=49
-'!'=79
-'|'=81
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.tokens
 'ms'=47
 'every'=20
-'OnInsideAction'=56
 '|='=31
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.tokens
 'exitpoint'=70
 '@@state@@'=50
 '='=21
 'always'=77
 'oncycle'=76
-')'=67
-=======
-'@@statechart@@'=50
-'exitpoint'=65
-'@@state@@'=51
-'='=21
-'always'=74
-'oncycle'=73
-')'=62
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.tokens
+')'=68
 '*='=22
 'entry'=74
-'operation'=65
+'operation'=66
 '%'=38
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.tokens
 'after'=19
 'entrypoint'=69
-=======
-'operation'=60
-'after'=19
-'entrypoint'=64
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.tokens
 'us'=48
+'Suspend:'=58
 'namespace'=61
 '<<'=32
 '<='=41
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/internal/InternalSCCExp.tokens
 'valueof'=86
 '!='=45
 '@@transition@@'=51
@@ -220,18 +157,6 @@ T__77=77
 '<'=40
 '['=72
 '*'=36
+'OnEntryAction:'=57
 'local'=16
 '&'=85
-'interface'=52
-=======
-'valueof'=83
-'!='=45
-'@@transition@@'=52
-'external'=86
-'<'=40
-'['=68
-'*'=36
-'local'=16
-'&'=82
-'interface'=55
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/internal/InternalKidsexp.tokens

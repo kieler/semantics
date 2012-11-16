@@ -39,8 +39,8 @@ public class SCCExpParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getDefRootAccess().getAlternatives(), "rule__DefRoot__Alternatives");
 					put(grammarAccess.getInterfaceScopeAccess().getAlternatives(), "rule__InterfaceScope__Alternatives");
-					put(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAlternatives_4_0(), "rule__InterfaceDeclaration__DeclarationsAlternatives_4_0");
-					put(grammarAccess.getActionDeclarationAccess().getAlternatives(), "rule__ActionDeclaration__Alternatives");
+					put(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAlternatives_2_0(), "rule__InterfaceDeclaration__DeclarationsAlternatives_2_0");
+					put(grammarAccess.getActionDeclarationAccess().getAlternatives_0(), "rule__ActionDeclaration__Alternatives_0");
 					put(grammarAccess.getScopeAccess().getAlternatives(), "rule__Scope__Alternatives");
 					put(grammarAccess.getStatechartScopeAccess().getAlternatives(), "rule__StatechartScope__Alternatives");
 					put(grammarAccess.getInternalScopeAccess().getDeclarationsAlternatives_3_0(), "rule__InternalScope__DeclarationsAlternatives_3_0");
@@ -68,9 +68,10 @@ public class SCCExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTimeUnitAccess().getAlternatives(), "rule__TimeUnit__Alternatives");
 					put(grammarAccess.getStateRootAccess().getGroup(), "rule__StateRoot__Group__0");
 					put(grammarAccess.getTransitionRootAccess().getGroup(), "rule__TransitionRoot__Group__0");
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/SCCExpParser.java
 					put(grammarAccess.getInterfaceScopeRootAccess().getGroup(), "rule__InterfaceScopeRoot__Group__0");
 					put(grammarAccess.getInterfaceDeclarationAccess().getGroup(), "rule__InterfaceDeclaration__Group__0");
+					put(grammarAccess.getActionDeclarationAccess().getGroup(), "rule__ActionDeclaration__Group__0");
+					put(grammarAccess.getActionDeclarationAccess().getGroup_3(), "rule__ActionDeclaration__Group_3__0");
 					put(grammarAccess.getExitActionDeclarationAccess().getGroup(), "rule__ExitActionDeclaration__Group__0");
 					put(grammarAccess.getInsideActionDeclarationAccess().getGroup(), "rule__InsideActionDeclaration__Group__0");
 					put(grammarAccess.getEntryActionDeclarationAccess().getGroup(), "rule__EntryActionDeclaration__Group__0");
@@ -82,12 +83,6 @@ public class SCCExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStatechartRootAccess().getGroup(), "rule__StatechartRoot__Group__0");
 					put(grammarAccess.getStatechartSpecificationAccess().getGroup(), "rule__StatechartSpecification__Group__0");
 					put(grammarAccess.getStatechartSpecificationAccess().getGroup_1(), "rule__StatechartSpecification__Group_1__0");
-=======
-					put(grammarAccess.getStatechartSpecificationAccess().getGroup(), "rule__StatechartSpecification__Group__0");
-					put(grammarAccess.getStateSpecificationAccess().getGroup(), "rule__StateSpecification__Group__0");
-					put(grammarAccess.getStateScopeAccess().getGroup(), "rule__StateScope__Group__0");
-					put(grammarAccess.getInterfaceScopeAccess().getGroup(), "rule__InterfaceScope__Group__0");
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/KidsexpParser.java
 					put(grammarAccess.getInternalScopeAccess().getGroup(), "rule__InternalScope__Group__0");
 					put(grammarAccess.getEventDefinitionAccess().getGroup(), "rule__EventDefinition__Group__0");
 					put(grammarAccess.getEventDefinitionAccess().getGroup_3(), "rule__EventDefinition__Group_3__0");
@@ -105,9 +100,6 @@ public class SCCExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLocalReactionAccess().getGroup(), "rule__LocalReaction__Group__0");
 					put(grammarAccess.getLocalReactionAccess().getGroup_1(), "rule__LocalReaction__Group_1__0");
 					put(grammarAccess.getLocalReactionAccess().getGroup_1_0(), "rule__LocalReaction__Group_1_0__0");
-					put(grammarAccess.getTransitionReactionAccess().getGroup(), "rule__TransitionReaction__Group__0");
-					put(grammarAccess.getTransitionReactionAccess().getGroup_2(), "rule__TransitionReaction__Group_2__0");
-					put(grammarAccess.getTransitionReactionAccess().getGroup_3(), "rule__TransitionReaction__Group_3__0");
 					put(grammarAccess.getReactionTriggerAccess().getGroup(), "rule__ReactionTrigger__Group__0");
 					put(grammarAccess.getReactionTriggerAccess().getGroup_1_0(), "rule__ReactionTrigger__Group_1_0__0");
 					put(grammarAccess.getReactionTriggerAccess().getGroup_1_0_1(), "rule__ReactionTrigger__Group_1_0_1__0");
@@ -171,10 +163,10 @@ public class SCCExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRootAccess().getRootsAssignment(), "rule__Root__RootsAssignment");
 					put(grammarAccess.getStateRootAccess().getDefAssignment_1(), "rule__StateRoot__DefAssignment_1");
 					put(grammarAccess.getTransitionRootAccess().getDefAssignment_1(), "rule__TransitionRoot__DefAssignment_1");
-<<<<<<< HEAD:plugins/de.cau.kieler.scc.model.scctext.ui/src-gen/de/cau/kieler/scc/model/scctext/ui/contentassist/antlr/SCCExpParser.java
 					put(grammarAccess.getInterfaceScopeRootAccess().getInterfaceScopeAssignment_1(), "rule__InterfaceScopeRoot__InterfaceScopeAssignment_1");
-					put(grammarAccess.getInterfaceDeclarationAccess().getNameAssignment_2(), "rule__InterfaceDeclaration__NameAssignment_2");
-					put(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAssignment_4(), "rule__InterfaceDeclaration__DeclarationsAssignment_4");
+					put(grammarAccess.getInterfaceDeclarationAccess().getDeclarationsAssignment_2(), "rule__InterfaceDeclaration__DeclarationsAssignment_2");
+					put(grammarAccess.getActionDeclarationAccess().getNameAssignment_2(), "rule__ActionDeclaration__NameAssignment_2");
+					put(grammarAccess.getSuspendDeclarationAccess().getNameAssignment_2(), "rule__SuspendDeclaration__NameAssignment_2");
 					put(grammarAccess.getTransitionReactionAccess().getTriggerAssignment_1(), "rule__TransitionReaction__TriggerAssignment_1");
 					put(grammarAccess.getTransitionReactionAccess().getEffectAssignment_2_1(), "rule__TransitionReaction__EffectAssignment_2_1");
 					put(grammarAccess.getTransitionReactionAccess().getPropertiesAssignment_3_1(), "rule__TransitionReaction__PropertiesAssignment_3_1");
@@ -183,12 +175,6 @@ public class SCCExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStatechartSpecificationAccess().getScopesAssignment_2(), "rule__StatechartSpecification__ScopesAssignment_2");
 					put(grammarAccess.getStateSpecificationAccess().getScopeAssignment(), "rule__StateSpecification__ScopeAssignment");
 					put(grammarAccess.getTransitionSpecificationAccess().getReactionAssignment(), "rule__TransitionSpecification__ReactionAssignment");
-=======
-					put(grammarAccess.getTransitionSpecificationAccess().getReactionAssignment(), "rule__TransitionSpecification__ReactionAssignment");
-					put(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1(), "rule__StateScope__DeclarationsAssignment_1");
-					put(grammarAccess.getInterfaceScopeAccess().getNameAssignment_2(), "rule__InterfaceScope__NameAssignment_2");
-					put(grammarAccess.getInterfaceScopeAccess().getDeclarationsAssignment_4(), "rule__InterfaceScope__DeclarationsAssignment_4");
->>>>>>> 093211c26cb0f2657333ce8b9ce3777f2ac155e4:plugins/de.cau.kieler.synccharts.yakindu.model.reqtext.ui/src-gen/de/cau/kieler/synccharts/yakindu/model/reqtext/ui/contentassist/antlr/KidsexpParser.java
 					put(grammarAccess.getInternalScopeAccess().getDeclarationsAssignment_3(), "rule__InternalScope__DeclarationsAssignment_3");
 					put(grammarAccess.getEventDefinitionAccess().getDirectionAssignment_0(), "rule__EventDefinition__DirectionAssignment_0");
 					put(grammarAccess.getEventDefinitionAccess().getNameAssignment_2(), "rule__EventDefinition__NameAssignment_2");
@@ -208,9 +194,6 @@ public class SCCExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExitpointAccess().getNameAssignment_2(), "rule__Exitpoint__NameAssignment_2");
 					put(grammarAccess.getLocalReactionAccess().getTriggerAssignment_0(), "rule__LocalReaction__TriggerAssignment_0");
 					put(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_0_1(), "rule__LocalReaction__EffectAssignment_1_0_1");
-					put(grammarAccess.getTransitionReactionAccess().getTriggerAssignment_1(), "rule__TransitionReaction__TriggerAssignment_1");
-					put(grammarAccess.getTransitionReactionAccess().getEffectAssignment_2_1(), "rule__TransitionReaction__EffectAssignment_2_1");
-					put(grammarAccess.getTransitionReactionAccess().getPropertiesAssignment_3_1(), "rule__TransitionReaction__PropertiesAssignment_3_1");
 					put(grammarAccess.getReactionTriggerAccess().getTriggersAssignment_1_0_0(), "rule__ReactionTrigger__TriggersAssignment_1_0_0");
 					put(grammarAccess.getReactionTriggerAccess().getTriggersAssignment_1_0_1_1(), "rule__ReactionTrigger__TriggersAssignment_1_0_1_1");
 					put(grammarAccess.getReactionTriggerAccess().getGuardExpressionAssignment_1_0_2_1(), "rule__ReactionTrigger__GuardExpressionAssignment_1_0_2_1");

@@ -20,8 +20,12 @@ StateRoot:
 
 TransitionRoot:
 	'@@transition@@' def=TransitionSpecification;
+	
 
-/* Overriding State grammar */
+/************************************************/
+/*			Overriding State grammar 			*/
+/************************************************/
+
 StateScope:
 	InterfaceScopeRoot;
 
@@ -35,31 +39,41 @@ InterfaceScope:
  *  The Interface Declaration
  */
 InterfaceDeclaration:
-	{InterfaceDeclaration} 'interface:' (declarations+=(EventDeclarartion | VariableDeclaration |
-	OperationDeclaration | Entrypoint |
-	Exitpoint))* ';';
+	{InterfaceDeclaration}  'interface:' (declarations+=( VariableDeclaration))* ';';
+
+
+//(sccDirection=SCCDirection)?
 /**
  *  The Action Declaration
  */
 ActionDeclaration:
-	EntryActionDeclaration | InsideActionDeclaration | ExitActionDeclaration;
+	(EntryActionDeclaration | InsideActionDeclaration | ExitActionDeclaration) '/' ID (',' '/' ID)* ';';
 
 ExitActionDeclaration:
-	{ExitActionDeclaration} 'OnExitAction:';
+	{ExitActionDeclaration} 'OnExitAction:' ;
 
 InsideActionDeclaration:
 	{InsideActionDeclaration} 'OnInsideAction:';
 
 EntryActionDeclaration:
 	{EntryActionDeclaration} 'OnEntryAction:';
-
+	
+/**
+ *  The Suspend Declaration
+ */
 SuspendDeclaration:
-	{SuspendDeclaration} 'Suspend:';
-
-/* Overriding transition grammar */
+	{SuspendDeclaration} 'Suspend:' ID (',' ID)* ';';
+	
+	
+/************************************************/
+/*		Overriding transition grammar 			*/
+/************************************************/
 TransitionReaction:
 	{TransitionReaction} (trigger=MyTrigger)? ('/' effect=ReactionEffect)? ('#' properties=ReactionProperties)?;
 
 MyTrigger returns sgraph::Trigger:
 	{MyTrigger} 'some trigger expression';
-
+	
+enum SCCDirection:
+	INOUT='inout' | IN='in' | OUT='out'	
+;
