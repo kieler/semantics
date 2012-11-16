@@ -156,6 +156,45 @@ public class SccexpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SccexpPackage.SCC_VARIABLE_DECLARATION:
+      {
+        SCCVariableDeclaration sccVariableDeclaration = (SCCVariableDeclaration)theEObject;
+        T result = caseSCCVariableDeclaration(sccVariableDeclaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SccexpPackage.LOCAL_VARIABLE_DECLARATION:
+      {
+        LocalVariableDeclaration localVariableDeclaration = (LocalVariableDeclaration)theEObject;
+        T result = caseLocalVariableDeclaration(localVariableDeclaration);
+        if (result == null) result = caseSCCVariableDeclaration(localVariableDeclaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SccexpPackage.IN_OUT_VARIABLE_DECLARATION:
+      {
+        InOutVariableDeclaration inOutVariableDeclaration = (InOutVariableDeclaration)theEObject;
+        T result = caseInOutVariableDeclaration(inOutVariableDeclaration);
+        if (result == null) result = caseSCCVariableDeclaration(inOutVariableDeclaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SccexpPackage.OUTPUT_VARIABLEECLARATION:
+      {
+        OutputVariableeclaration outputVariableeclaration = (OutputVariableeclaration)theEObject;
+        T result = caseOutputVariableeclaration(outputVariableeclaration);
+        if (result == null) result = caseSCCVariableDeclaration(outputVariableeclaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SccexpPackage.INPUT_VARIABLE_DECLARATION:
+      {
+        InputVariableDeclaration inputVariableDeclaration = (InputVariableDeclaration)theEObject;
+        T result = caseInputVariableDeclaration(inputVariableDeclaration);
+        if (result == null) result = caseSCCVariableDeclaration(inputVariableDeclaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SccexpPackage.ACTION_DECLARATION:
       {
         ActionDeclaration actionDeclaration = (ActionDeclaration)theEObject;
@@ -207,6 +246,13 @@ public class SccexpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SccexpPackage.ACTION_VARIABLE_DECLARATION:
+      {
+        ActionVariableDeclaration actionVariableDeclaration = (ActionVariableDeclaration)theEObject;
+        T result = caseActionVariableDeclaration(actionVariableDeclaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SccexpPackage.SUSPEND_DECLARATION:
       {
         SuspendDeclaration suspendDeclaration = (SuspendDeclaration)theEObject;
@@ -219,12 +265,55 @@ public class SccexpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SccexpPackage.SUSPEND_VARIABLE_DECLARATION:
+      {
+        SuspendVariableDeclaration suspendVariableDeclaration = (SuspendVariableDeclaration)theEObject;
+        T result = caseSuspendVariableDeclaration(suspendVariableDeclaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SccexpPackage.TRANSITION_REACTION:
       {
         TransitionReaction transitionReaction = (TransitionReaction)theEObject;
         T result = caseTransitionReaction(transitionReaction);
         if (result == null) result = caseStext_TransitionReaction(transitionReaction);
         if (result == null) result = caseReaction(transitionReaction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SccexpPackage.LOCAL:
+      {
+        Local local = (Local)theEObject;
+        T result = caseLocal(local);
+        if (result == null) result = caseLocalVariableDeclaration(local);
+        if (result == null) result = caseSCCVariableDeclaration(local);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SccexpPackage.INPUT:
+      {
+        Input input = (Input)theEObject;
+        T result = caseInput(input);
+        if (result == null) result = caseInOutVariableDeclaration(input);
+        if (result == null) result = caseSCCVariableDeclaration(input);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SccexpPackage.OUTPUT:
+      {
+        Output output = (Output)theEObject;
+        T result = caseOutput(output);
+        if (result == null) result = caseOutputVariableeclaration(output);
+        if (result == null) result = caseSCCVariableDeclaration(output);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SccexpPackage.IN_OUT:
+      {
+        InOut inOut = (InOut)theEObject;
+        T result = caseInOut(inOut);
+        if (result == null) result = caseInputVariableDeclaration(inOut);
+        if (result == null) result = caseSCCVariableDeclaration(inOut);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -369,6 +458,86 @@ public class SccexpSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>SCC Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>SCC Variable Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSCCVariableDeclaration(SCCVariableDeclaration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Local Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Local Variable Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLocalVariableDeclaration(LocalVariableDeclaration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>In Out Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>In Out Variable Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInOutVariableDeclaration(InOutVariableDeclaration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Output Variableeclaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Output Variableeclaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOutputVariableeclaration(OutputVariableeclaration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Input Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Input Variable Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInputVariableDeclaration(InputVariableDeclaration object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Action Declaration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -433,6 +602,22 @@ public class SccexpSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Action Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Action Variable Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseActionVariableDeclaration(ActionVariableDeclaration object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Suspend Declaration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -449,6 +634,22 @@ public class SccexpSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Suspend Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Suspend Variable Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSuspendVariableDeclaration(SuspendVariableDeclaration object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Transition Reaction</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -460,6 +661,70 @@ public class SccexpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseTransitionReaction(TransitionReaction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Local</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Local</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLocal(Local object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Input</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Input</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInput(Input object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Output</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Output</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOutput(Output object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>In Out</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>In Out</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInOut(InOut object)
   {
     return null;
   }

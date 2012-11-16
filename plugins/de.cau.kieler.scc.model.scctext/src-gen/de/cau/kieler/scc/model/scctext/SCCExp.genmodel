@@ -4,9 +4,19 @@
     editorDirectory="/de.cau.kieler.scc.model.scctext.editor/src" modelPluginID="de.cau.kieler.scc.model.scctext"
     forceOverwrite="true" modelName="SCCExp" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.kieler.scc.model.scctext.edit"
-    editorPluginID="de.cau.kieler.scc.model.scctext.editor" runtimeVersion="2.9" usedGenPackages="../../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
+    editorPluginID="de.cau.kieler.scc.model.scctext.editor" runtimeVersion="2.9" usedGenPackages="../../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../../org.yakindu.base.types/model/types.genmodel#//types ../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
   <genPackages prefix="Sccexp" basePackage="de.cau.kieler.scc.model.scctext" disposableProviderFactory="true"
       ecorePackage="SCCExp.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SCCExp.ecore#//CombineOperator">
+      <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//CombineOperator/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//CombineOperator/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//CombineOperator/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//CombineOperator/MAX"/>
+      <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//CombineOperator/MIN"/>
+      <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//CombineOperator/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//CombineOperator/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//CombineOperator/HOST"/>
+    </genEnums>
     <genClasses ecoreClass="SCCExp.ecore#//Root"/>
     <genClasses ecoreClass="SCCExp.ecore#//DefRoot"/>
     <genClasses ecoreClass="SCCExp.ecore#//StateRoot"/>
@@ -16,13 +26,57 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//InterfaceScopeRoot/interfaceScope"/>
     </genClasses>
     <genClasses ecoreClass="SCCExp.ecore#//InterfaceScope"/>
-    <genClasses ecoreClass="SCCExp.ecore#//InterfaceDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//InterfaceDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//InterfaceDeclaration/declaration"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//SCCVariableDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//LocalVariableDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//InOutVariableDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//OutputVariableeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//InputVariableDeclaration"/>
     <genClasses ecoreClass="SCCExp.ecore#//ActionDeclaration"/>
-    <genClasses ecoreClass="SCCExp.ecore#//ExitActionDeclaration"/>
-    <genClasses ecoreClass="SCCExp.ecore#//InsideActionDeclaration"/>
-    <genClasses ecoreClass="SCCExp.ecore#//EntryActionDeclaration"/>
-    <genClasses ecoreClass="SCCExp.ecore#//SuspendDeclaration"/>
+    <genClasses ecoreClass="SCCExp.ecore#//ExitActionDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//ExitActionDeclaration/exitActionDeclaration"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//InsideActionDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//InsideActionDeclaration/insideActionDeclaration"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//EntryActionDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//EntryActionDeclaration/entryActionDeclaration"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//ActionVariableDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//ActionVariableDeclaration/name"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//SuspendDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//SuspendDeclaration/suspendDeclaration"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//SuspendVariableDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//SuspendVariableDeclaration/name"/>
+    </genClasses>
     <genClasses ecoreClass="SCCExp.ecore#//TransitionReaction"/>
+    <genClasses ecoreClass="SCCExp.ecore#//Local">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//Local/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCCExp.ecore#//Local/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//Local/initialValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//Local/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//Input">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//Input/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCCExp.ecore#//Input/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//Input/initialValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//Input/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//Output">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//Output/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCCExp.ecore#//Output/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//Output/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//InOut">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//InOut/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCCExp.ecore#//InOut/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//InOut/initialValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//InOut/operator"/>
+    </genClasses>
     <genClasses ecoreClass="SCCExp.ecore#//MyTrigger"/>
   </genPackages>
 </genmodel:GenModel>

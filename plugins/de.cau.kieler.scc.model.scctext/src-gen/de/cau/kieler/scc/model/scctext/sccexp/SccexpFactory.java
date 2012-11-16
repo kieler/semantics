@@ -95,6 +95,51 @@ public interface SccexpFactory extends EFactory
   InterfaceDeclaration createInterfaceDeclaration();
 
   /**
+   * Returns a new object of class '<em>SCC Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>SCC Variable Declaration</em>'.
+   * @generated
+   */
+  SCCVariableDeclaration createSCCVariableDeclaration();
+
+  /**
+   * Returns a new object of class '<em>Local Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Local Variable Declaration</em>'.
+   * @generated
+   */
+  LocalVariableDeclaration createLocalVariableDeclaration();
+
+  /**
+   * Returns a new object of class '<em>In Out Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>In Out Variable Declaration</em>'.
+   * @generated
+   */
+  InOutVariableDeclaration createInOutVariableDeclaration();
+
+  /**
+   * Returns a new object of class '<em>Output Variableeclaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Output Variableeclaration</em>'.
+   * @generated
+   */
+  OutputVariableeclaration createOutputVariableeclaration();
+
+  /**
+   * Returns a new object of class '<em>Input Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Input Variable Declaration</em>'.
+   * @generated
+   */
+  InputVariableDeclaration createInputVariableDeclaration();
+
+  /**
    * Returns a new object of class '<em>Action Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -131,6 +176,15 @@ public interface SccexpFactory extends EFactory
   EntryActionDeclaration createEntryActionDeclaration();
 
   /**
+   * Returns a new object of class '<em>Action Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Action Variable Declaration</em>'.
+   * @generated
+   */
+  ActionVariableDeclaration createActionVariableDeclaration();
+
+  /**
    * Returns a new object of class '<em>Suspend Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -140,6 +194,15 @@ public interface SccexpFactory extends EFactory
   SuspendDeclaration createSuspendDeclaration();
 
   /**
+   * Returns a new object of class '<em>Suspend Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Suspend Variable Declaration</em>'.
+   * @generated
+   */
+  SuspendVariableDeclaration createSuspendVariableDeclaration();
+
+  /**
    * Returns a new object of class '<em>Transition Reaction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -147,6 +210,42 @@ public interface SccexpFactory extends EFactory
    * @generated
    */
   TransitionReaction createTransitionReaction();
+
+  /**
+   * Returns a new object of class '<em>Local</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Local</em>'.
+   * @generated
+   */
+  Local createLocal();
+
+  /**
+   * Returns a new object of class '<em>Input</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Input</em>'.
+   * @generated
+   */
+  Input createInput();
+
+  /**
+   * Returns a new object of class '<em>Output</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Output</em>'.
+   * @generated
+   */
+  Output createOutput();
+
+  /**
+   * Returns a new object of class '<em>In Out</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>In Out</em>'.
+   * @generated
+   */
+  InOut createInOut();
 
   /**
    * Returns a new object of class '<em>My Trigger</em>'.

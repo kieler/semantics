@@ -5,6 +5,7 @@ package de.cau.kieler.scc.model.scctext.sccexp.impl;
 import de.cau.kieler.scc.model.scctext.sccexp.*;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -72,15 +73,60 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
       case SccexpPackage.INTERFACE_SCOPE_ROOT: return createInterfaceScopeRoot();
       case SccexpPackage.INTERFACE_SCOPE: return createInterfaceScope();
       case SccexpPackage.INTERFACE_DECLARATION: return createInterfaceDeclaration();
+      case SccexpPackage.SCC_VARIABLE_DECLARATION: return createSCCVariableDeclaration();
+      case SccexpPackage.LOCAL_VARIABLE_DECLARATION: return createLocalVariableDeclaration();
+      case SccexpPackage.IN_OUT_VARIABLE_DECLARATION: return createInOutVariableDeclaration();
+      case SccexpPackage.OUTPUT_VARIABLEECLARATION: return createOutputVariableeclaration();
+      case SccexpPackage.INPUT_VARIABLE_DECLARATION: return createInputVariableDeclaration();
       case SccexpPackage.ACTION_DECLARATION: return createActionDeclaration();
       case SccexpPackage.EXIT_ACTION_DECLARATION: return createExitActionDeclaration();
       case SccexpPackage.INSIDE_ACTION_DECLARATION: return createInsideActionDeclaration();
       case SccexpPackage.ENTRY_ACTION_DECLARATION: return createEntryActionDeclaration();
+      case SccexpPackage.ACTION_VARIABLE_DECLARATION: return createActionVariableDeclaration();
       case SccexpPackage.SUSPEND_DECLARATION: return createSuspendDeclaration();
+      case SccexpPackage.SUSPEND_VARIABLE_DECLARATION: return createSuspendVariableDeclaration();
       case SccexpPackage.TRANSITION_REACTION: return createTransitionReaction();
+      case SccexpPackage.LOCAL: return createLocal();
+      case SccexpPackage.INPUT: return createInput();
+      case SccexpPackage.OUTPUT: return createOutput();
+      case SccexpPackage.IN_OUT: return createInOut();
       case SccexpPackage.MY_TRIGGER: return createMyTrigger();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object createFromString(EDataType eDataType, String initialValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+      case SccexpPackage.COMBINE_OPERATOR:
+        return createCombineOperatorFromString(eDataType, initialValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String convertToString(EDataType eDataType, Object instanceValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+      case SccexpPackage.COMBINE_OPERATOR:
+        return convertCombineOperatorToString(eDataType, instanceValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -177,6 +223,61 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public SCCVariableDeclaration createSCCVariableDeclaration()
+  {
+    SCCVariableDeclarationImpl sccVariableDeclaration = new SCCVariableDeclarationImpl();
+    return sccVariableDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LocalVariableDeclaration createLocalVariableDeclaration()
+  {
+    LocalVariableDeclarationImpl localVariableDeclaration = new LocalVariableDeclarationImpl();
+    return localVariableDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InOutVariableDeclaration createInOutVariableDeclaration()
+  {
+    InOutVariableDeclarationImpl inOutVariableDeclaration = new InOutVariableDeclarationImpl();
+    return inOutVariableDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public OutputVariableeclaration createOutputVariableeclaration()
+  {
+    OutputVariableeclarationImpl outputVariableeclaration = new OutputVariableeclarationImpl();
+    return outputVariableeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InputVariableDeclaration createInputVariableDeclaration()
+  {
+    InputVariableDeclarationImpl inputVariableDeclaration = new InputVariableDeclarationImpl();
+    return inputVariableDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public ActionDeclaration createActionDeclaration()
   {
     ActionDeclarationImpl actionDeclaration = new ActionDeclarationImpl();
@@ -221,10 +322,32 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public ActionVariableDeclaration createActionVariableDeclaration()
+  {
+    ActionVariableDeclarationImpl actionVariableDeclaration = new ActionVariableDeclarationImpl();
+    return actionVariableDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public SuspendDeclaration createSuspendDeclaration()
   {
     SuspendDeclarationImpl suspendDeclaration = new SuspendDeclarationImpl();
     return suspendDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SuspendVariableDeclaration createSuspendVariableDeclaration()
+  {
+    SuspendVariableDeclarationImpl suspendVariableDeclaration = new SuspendVariableDeclarationImpl();
+    return suspendVariableDeclaration;
   }
 
   /**
@@ -243,10 +366,76 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public Local createLocal()
+  {
+    LocalImpl local = new LocalImpl();
+    return local;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Input createInput()
+  {
+    InputImpl input = new InputImpl();
+    return input;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Output createOutput()
+  {
+    OutputImpl output = new OutputImpl();
+    return output;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InOut createInOut()
+  {
+    InOutImpl inOut = new InOutImpl();
+    return inOut;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public MyTrigger createMyTrigger()
   {
     MyTriggerImpl myTrigger = new MyTriggerImpl();
     return myTrigger;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CombineOperator createCombineOperatorFromString(EDataType eDataType, String initialValue)
+  {
+    CombineOperator result = CombineOperator.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertCombineOperatorToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

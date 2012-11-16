@@ -3,6 +3,8 @@ grammar de.cau.kieler.scc.model.scctext.SCCExp with org.yakindu.sct.model.stext.
 generate sccexp "http://cau.kieler.de/scc/SCCExp"
 import "http://www.yakindu.org/sct/statechart/SText" as stext
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
+import "http://www.yakindu.org/base/types/2.0.0" as types
+import "http://www.yakindu.org/base/base/2.0.0" as base
 
 /* ---- root rules ----
 These root rules are not relevant for the grammar integration in the statechart. They
@@ -20,12 +22,10 @@ StateRoot:
 
 TransitionRoot:
 	'@@transition@@' def=TransitionSpecification;
-	
 
 /************************************************/
 /*			Overriding State grammar 			*/
 /************************************************/
-
 StateScope:
 	InterfaceScopeRoot;
 
@@ -34,37 +34,67 @@ InterfaceScopeRoot:
 
 InterfaceScope:
 	InterfaceDeclaration | ActionDeclaration | SuspendDeclaration;
-	
-/**
+
+	/**
  *  The Interface Declaration
  */
 InterfaceDeclaration:
-	{InterfaceDeclaration}  'interface:' (declarations+=( VariableDeclaration))* ';';
+	{InterfaceDeclaration} 'interface:' declaration+=(SCCVariableDeclaration) (','
+	declaration+=(SCCVariableDeclaration))* ';';
 
+SCCVariableDeclaration:
+	InputVariableDeclaration | OutputVariableeclaration | InOutVariableDeclaration | LocalVariableDeclaration;
 
-//(sccDirection=SCCDirection)?
-/**
+LocalVariableDeclaration:
+	{Local} 'local' name=ID ':' type=[types::Type|FQN] ('='
+	initialValue=Expression)? ('with' operator=CombineOperator)?;
+
+InOutVariableDeclaration:
+	{Input} 'in' name=ID ':' type=[types::Type|FQN] ('='
+	initialValue=Expression)? ('with' operator=CombineOperator)?;
+
+OutputVariableeclaration:
+	{Output} 'out' name=ID ':' type=[types::Type|FQN] ('with' operator=CombineOperator)?;
+
+InputVariableDeclaration:
+	{InOut} 'inout' name=ID ':' type=[types::Type|FQN] ('='
+	initialValue=Expression)? ('with' operator=CombineOperator)?;
+
+enum CombineOperator returns CombineOperator:
+	NONE="'none'" | ADD="'+'" | MULT="'*'" | MAX="'max'" |
+	MIN="'min'" | OR="'or'" | AND="'and'" | HOST="'host'";
+
+	/**
  *  The Action Declaration
  */
 ActionDeclaration:
-	(EntryActionDeclaration | InsideActionDeclaration | ExitActionDeclaration) '/' ID (',' '/' ID)* ';';
+	EntryActionDeclaration | InsideActionDeclaration | ExitActionDeclaration;
 
 ExitActionDeclaration:
-	{ExitActionDeclaration} 'OnExitAction:' ;
+	{ExitActionDeclaration} 'OnExitAction:' exitActionDeclaration+=ActionVariableDeclaration (','
+	exitActionDeclaration+=ActionVariableDeclaration)* ';';
 
 InsideActionDeclaration:
-	{InsideActionDeclaration} 'OnInsideAction:';
+	{InsideActionDeclaration} 'OnInsideAction:' insideActionDeclaration+=ActionVariableDeclaration (','
+	insideActionDeclaration+=ActionVariableDeclaration) ';';
 
 EntryActionDeclaration:
-	{EntryActionDeclaration} 'OnEntryAction:';
-	
-/**
+	{EntryActionDeclaration} 'OnEntryAction:' entryActionDeclaration+=ActionVariableDeclaration (','
+	entryActionDeclaration+=ActionVariableDeclaration) ';';
+
+ActionVariableDeclaration:
+	'/' name=ID;
+
+	/**
  *  The Suspend Declaration
  */
 SuspendDeclaration:
-	{SuspendDeclaration} 'Suspend:' ID (',' ID)* ';';
-	
-	
+	{SuspendDeclaration} 'Suspend:' suspendDeclaration+=SuspendVariableDeclaration (','
+	suspendDeclaration+=SuspendVariableDeclaration) ';';
+
+SuspendVariableDeclaration:
+	name=ID;
+
 /************************************************/
 /*		Overriding transition grammar 			*/
 /************************************************/
@@ -73,7 +103,3 @@ TransitionReaction:
 
 MyTrigger returns sgraph::Trigger:
 	{MyTrigger} 'some trigger expression';
-	
-enum SCCDirection:
-	INOUT='inout' | IN='in' | OUT='out'	
-;

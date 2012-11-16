@@ -123,6 +123,31 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
         return createInterfaceDeclarationAdapter();
       }
       @Override
+      public Adapter caseSCCVariableDeclaration(SCCVariableDeclaration object)
+      {
+        return createSCCVariableDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseLocalVariableDeclaration(LocalVariableDeclaration object)
+      {
+        return createLocalVariableDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseInOutVariableDeclaration(InOutVariableDeclaration object)
+      {
+        return createInOutVariableDeclarationAdapter();
+      }
+      @Override
+      public Adapter caseOutputVariableeclaration(OutputVariableeclaration object)
+      {
+        return createOutputVariableeclarationAdapter();
+      }
+      @Override
+      public Adapter caseInputVariableDeclaration(InputVariableDeclaration object)
+      {
+        return createInputVariableDeclarationAdapter();
+      }
+      @Override
       public Adapter caseActionDeclaration(ActionDeclaration object)
       {
         return createActionDeclarationAdapter();
@@ -143,14 +168,44 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
         return createEntryActionDeclarationAdapter();
       }
       @Override
+      public Adapter caseActionVariableDeclaration(ActionVariableDeclaration object)
+      {
+        return createActionVariableDeclarationAdapter();
+      }
+      @Override
       public Adapter caseSuspendDeclaration(SuspendDeclaration object)
       {
         return createSuspendDeclarationAdapter();
       }
       @Override
+      public Adapter caseSuspendVariableDeclaration(SuspendVariableDeclaration object)
+      {
+        return createSuspendVariableDeclarationAdapter();
+      }
+      @Override
       public Adapter caseTransitionReaction(TransitionReaction object)
       {
         return createTransitionReactionAdapter();
+      }
+      @Override
+      public Adapter caseLocal(Local object)
+      {
+        return createLocalAdapter();
+      }
+      @Override
+      public Adapter caseInput(Input object)
+      {
+        return createInputAdapter();
+      }
+      @Override
+      public Adapter caseOutput(Output object)
+      {
+        return createOutputAdapter();
+      }
+      @Override
+      public Adapter caseInOut(InOut object)
+      {
+        return createInOutAdapter();
       }
       @Override
       public Adapter caseMyTrigger(MyTrigger object)
@@ -355,6 +410,81 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.SCCVariableDeclaration <em>SCC Variable Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.SCCVariableDeclaration
+   * @generated
+   */
+  public Adapter createSCCVariableDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.LocalVariableDeclaration <em>Local Variable Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.LocalVariableDeclaration
+   * @generated
+   */
+  public Adapter createLocalVariableDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.InOutVariableDeclaration <em>In Out Variable Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.InOutVariableDeclaration
+   * @generated
+   */
+  public Adapter createInOutVariableDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.OutputVariableeclaration <em>Output Variableeclaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.OutputVariableeclaration
+   * @generated
+   */
+  public Adapter createOutputVariableeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.InputVariableDeclaration <em>Input Variable Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.InputVariableDeclaration
+   * @generated
+   */
+  public Adapter createInputVariableDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.ActionDeclaration <em>Action Declaration</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -415,6 +545,21 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.ActionVariableDeclaration <em>Action Variable Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.ActionVariableDeclaration
+   * @generated
+   */
+  public Adapter createActionVariableDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.SuspendDeclaration <em>Suspend Declaration</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -430,6 +575,21 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.SuspendVariableDeclaration <em>Suspend Variable Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.SuspendVariableDeclaration
+   * @generated
+   */
+  public Adapter createSuspendVariableDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.TransitionReaction <em>Transition Reaction</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -440,6 +600,66 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTransitionReactionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.Local <em>Local</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Local
+   * @generated
+   */
+  public Adapter createLocalAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.Input <em>Input</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Input
+   * @generated
+   */
+  public Adapter createInputAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.Output <em>Output</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Output
+   * @generated
+   */
+  public Adapter createOutputAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.kieler.scc.model.scctext.sccexp.InOut <em>In Out</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.InOut
+   * @generated
+   */
+  public Adapter createInOutAdapter()
   {
     return null;
   }
