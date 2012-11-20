@@ -25,192 +25,192 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFactory {
 	/**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static DependencyFactory init() {
-		try {
-			DependencyFactory theDependencyFactory = (DependencyFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/dependency/0.1.0"); 
-			if (theDependencyFactory != null) {
-				return theDependencyFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new DependencyFactoryImpl();
-	}
+        try {
+            DependencyFactory theDependencyFactory = (DependencyFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/dependency/0.1.0"); 
+            if (theDependencyFactory != null) {
+                return theDependencyFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new DependencyFactoryImpl();
+    }
 
 	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public DependencyFactoryImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case DependencyPackage.DEPENDENCY: return createDependency();
-			case DependencyPackage.SIGNAL_DEPENDENCY: return createSignalDependency();
-			case DependencyPackage.HIERARCHY_DEPENDENCY: return createHierarchyDependency();
-			case DependencyPackage.CONTROLFLOW_DEPENDENCY: return createControlflowDependency();
-			case DependencyPackage.TRANSITION_DEPENDENCY: return createTransitionDependency();
-			case DependencyPackage.DEPENDENCIES: return createDependencies();
-			case DependencyPackage.NODE: return createNode();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eClass.getClassifierID()) {
+            case DependencyPackage.DEPENDENCY: return createDependency();
+            case DependencyPackage.SIGNAL_DEPENDENCY: return createSignalDependency();
+            case DependencyPackage.HIERARCHY_DEPENDENCY: return createHierarchyDependency();
+            case DependencyPackage.CONTROLFLOW_DEPENDENCY: return createControlflowDependency();
+            case DependencyPackage.TRANSITION_DEPENDENCY: return createTransitionDependency();
+            case DependencyPackage.DEPENDENCIES: return createDependencies();
+            case DependencyPackage.NODE: return createNode();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
-		switch (eDataType.getClassifierID()) {
-			case DependencyPackage.DEPENDENCY_TYPE:
-				return createDependencyTypeFromString(eDataType, initialValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eDataType.getClassifierID()) {
+            case DependencyPackage.NODE_TYPE:
+                return createNodeTypeFromString(eDataType, initialValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
-		switch (eDataType.getClassifierID()) {
-			case DependencyPackage.DEPENDENCY_TYPE:
-				return convertDependencyTypeToString(eDataType, instanceValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eDataType.getClassifierID()) {
+            case DependencyPackage.NODE_TYPE:
+                return convertNodeTypeToString(eDataType, instanceValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Dependency createDependency() {
-		DependencyImpl dependency = new DependencyImpl();
-		return dependency;
-	}
+        DependencyImpl dependency = new DependencyImpl();
+        return dependency;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public SignalDependency createSignalDependency() {
-		SignalDependencyImpl signalDependency = new SignalDependencyImpl();
-		return signalDependency;
-	}
+        SignalDependencyImpl signalDependency = new SignalDependencyImpl();
+        return signalDependency;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public HierarchyDependency createHierarchyDependency() {
-		HierarchyDependencyImpl hierarchyDependency = new HierarchyDependencyImpl();
-		return hierarchyDependency;
-	}
+        HierarchyDependencyImpl hierarchyDependency = new HierarchyDependencyImpl();
+        return hierarchyDependency;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public ControlflowDependency createControlflowDependency() {
-		ControlflowDependencyImpl controlflowDependency = new ControlflowDependencyImpl();
-		return controlflowDependency;
-	}
+        ControlflowDependencyImpl controlflowDependency = new ControlflowDependencyImpl();
+        return controlflowDependency;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public TransitionDependency createTransitionDependency() {
-		TransitionDependencyImpl transitionDependency = new TransitionDependencyImpl();
-		return transitionDependency;
-	}
+        TransitionDependencyImpl transitionDependency = new TransitionDependencyImpl();
+        return transitionDependency;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Dependencies createDependencies() {
-		DependenciesImpl dependencies = new DependenciesImpl();
-		return dependencies;
-	}
+        DependenciesImpl dependencies = new DependenciesImpl();
+        return dependencies;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Node createNode() {
-		NodeImpl node = new NodeImpl();
-		return node;
-	}
+        NodeImpl node = new NodeImpl();
+        return node;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DependencyType createDependencyTypeFromString(EDataType eDataType, String initialValue) {
-		DependencyType result = DependencyType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NodeType createNodeTypeFromString(EDataType eDataType, String initialValue) {
+        NodeType result = NodeType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertDependencyTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertNodeTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public DependencyPackage getDependencyPackage() {
-		return (DependencyPackage)getEPackage();
-	}
+        return (DependencyPackage)getEPackage();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
 	@Deprecated
 	public static DependencyPackage getPackage() {
-		return DependencyPackage.eINSTANCE;
-	}
+        return DependencyPackage.eINSTANCE;
+    }
 
 } //DependencyFactoryImpl

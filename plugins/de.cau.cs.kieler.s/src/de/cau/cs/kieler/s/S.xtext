@@ -90,7 +90,7 @@ Continuation:
 ;
 
 Instruction:
-   Halt | Abort | Join | Pause | Term | If | Trans | Fork | Emit | Await | Prio | HostCodeInstruction
+   Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction
 ;
 
 // Change priority
@@ -132,6 +132,10 @@ Halt :
 	'halt''('continuation=[Continuation]?')'
 ;
   
+  
+LocalSignal: // For handling local signal re-initialization (taking care or reincarnation)
+    'signal''('signal=[kexpressions::Signal]')'
+;
 
 Emit:
 	'emit''('signal= [kexpressions::Signal] ('(' value=SExpression ')')? (',' continuation=[Continuation])?')'

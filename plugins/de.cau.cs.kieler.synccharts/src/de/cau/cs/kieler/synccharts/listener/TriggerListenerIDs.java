@@ -98,6 +98,8 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
         if (scope != null) {
             // we decided to allow empty Region IDs, so don't force them here
+            // cmot/chsch: Guessed reason for this decision might be the textual representation
+            // but truly this produces problems for code generation... :(
             if (scope instanceof Region
                     && (scope.getLabel() == null || scope.getLabel().equals(""))) {
                 cc.append(new SetCommand(getTarget(), scope,

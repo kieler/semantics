@@ -30,7 +30,6 @@ import de.cau.cs.kieler.synccharts.TextEffect
 import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
-import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.util.stdlib.TraceComponent
 import de.cau.cs.kieler.core.kexpressions.IntValue
@@ -62,6 +61,17 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     def Boolean isHierarchical(State state) {
         state.regions.size > 0;
     }
+    
+    // Returns true iff the state has at least one outgoing transition
+    def boolean hasOutgoingTransitions(State state) {
+        !state.outgoingTransitions.nullOrEmpty;
+    }
+        
+    // Returns true if the state is hierarchical or has outgoing transitions.
+    // Thus rules out states that are simple and have no further outgoing transitions.
+    def boolean needsDependencyRepresentation(State state) {
+        state.hierarchical || state.hasOutgoingTransitions
+    }    
 
     // Returns true iff the state is hierarchical and has a weak immediate transition (so it needs an extra surface state).
     def Boolean needsExtraSurfaceSState(State state) {
@@ -218,20 +228,6 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     // ==        C O N V E R T   S Y N C C H A R T   S I G N A L S   I N T O   S   S I G N A L S           ==
     // ======================================================================================================
 
-    // Convert SyncChart signals of a state into S signals and create traces between them.    
-    def List<Signal> getStateSignals (State state){
-        var List<Signal> signalList = new ArrayList()
-        for (signal : state.signals) {
-            var ssignal = signal.transform;
-                signalList.add(ssignal)
-                //     create traces for all created signals
-                TraceComponent::createTrace(signal, ssignal, "Signal" );
-                TraceComponent::createTrace(ssignal, signal, "SignalBack" );
-        }
-        signalList 
-    }        
-
-
     // Convert SyncChart variables of a state into S textual host code. Return null if there are no variables.    
     def String getStateVariables (State state){
         var StringBuffer returnText = new StringBuffer();
@@ -261,6 +257,10 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
         target.setIsInput(signal.isInput) 
         target.setIsOutput(signal.isOutput) 
         target.setType(signal.type)
+        
+        // Create traces for created signal
+        TraceComponent::createTrace(signal, target, "Signal" );
+        TraceComponent::createTrace(target, signal, "SignalBack" );
     }
 
 
@@ -279,21 +279,54 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
         }
     }
 
-    // Returns the name of a state, e.g. "L_Initial_Initial_".
-    def String getStatePathAsName(State state) {
-    //    "_" + state.hashCode.toString;
-        if (state.isRootState())  {
-            if (state.regions.size > 1) {
-                   "L_" + state.id    
-            }
-            else {
-                "L"
-            }    
-        } else {
-            var String regionString = getParentRegionString(state);
-            getStatePathAsName(state.parentRegion.parentState) + regionString + "_" + state.id
+    // For C variables it is necessary to remove special characters, this may lead
+    // to name clashes in unlikely cases. 
+    def String removeSpecialCharacters(String string) {
+        if (string == null) {
+            return null;
         }
+        return string.replace("-","").replace("_","").replace(" ","").replace("+","")
+               .replace("#","").replace("$","").replace("?","")
+               .replace("!","").replace("%","").replace("&","")
+               .replace("[","").replace("]","").replace("<","")
+               .replace(">","").replace(".","").replace(",","")
+               .replace(":","").replace(";","").replace("=","");
     }
+    
+    // This helper method returns the hierarchical name of a state considering all hierarchical
+    // higher states. A string is formed by the traversed state IDs.
+    def String getHierarchicalName(State state, String StartSymbol) {
+        if (state.parentRegion != null) {
+            if (state.parentRegion.parentState != null) {
+                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName(StartSymbol);
+                var regionId = state.parentRegion.id.removeSpecialCharacters;
+                var stateId = state.id.removeSpecialCharacters;
+                // Region IDs can be empty, state IDs normally aren't but the code generation handles 
+                // also this case. 
+                if (stateId.nullOrEmpty) {
+                    stateId = state.hashCode + "";
+                }
+                if (regionId.nullOrEmpty) {
+                    regionId = state.parentRegion.hashCode + "";
+                }
+                if (!higherHierarchyReturnedName.nullOrEmpty) {
+                    higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
+                }
+                if (state.parentRegion.parentState.regions.size > 1) {
+                    return higherHierarchyReturnedName 
+                           + regionId  + "_" +  state.id.removeSpecialCharacters;
+                }
+                else {
+                    // this is the simplified case, where there is just one region and we can
+                    // omit the region id
+                    return higherHierarchyReturnedName  
+                           + state.id.removeSpecialCharacters;
+                }
+            }
+        }
+        return StartSymbol + "_";
+    }
+
 
 
     // ======================================================================================================
@@ -396,13 +429,27 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     // ==                    D E P E N D E N C Y   N O D E S   H E L P E R S                               ==
     // ======================================================================================================
 
+    // Get the highest priority from all strong nodes for a SyncChart state or 0 if no dependency node exists.
+    def int getHighestDependencyStrong(State state) {
+          val priorityNode = state.highestDependencyStrongNode;
+          if (priorityNode != null) {
+               return priorityNode.priority;
+          } else {
+               return 1; // example 109
+          }
+    }
+
     // Get the DependenyNode with the highest priority from all strong nodes for a SyncChart state.
     def Node getHighestDependencyStrongNode(State state) {
         return  getHighestDependencyStrongNode(state, null);    
     }
     
     // Get the DependenyNode with the highest priority from all weak nodes for a SyncChart state.
+    // For simple state that do not have any representation this function returns  null.
     def Node getHighestDependencyWeakNode(State state) {
+        if (!state.needsDependencyRepresentation) {
+            return null;
+        }
         if (!state.hierarchical) {
             // for simple states, weak priorities are the same as strong priorities
             return getHighestDependencyStrongNode(state, null);
@@ -427,6 +474,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 
     // Get the highest priority for all strong nodes of this state in case transition is null
     // or the strong dependency node linked to this transition.
+    // For simple state that do not have any representation this function returns null.
     def Node getHighestDependencyStrongNode(State state, Transition transition) {
         val nodes = (TraceComponent::getTraceTargets(state, "DependencyStrong") as List<Node>);
         if (nodes.empty) {
@@ -500,10 +548,22 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 
     // Compare highest strong dependencies of two SyncChart states.
     def int compareTraceDependencyPriority(State e1, State e2) {
-        var node1 = e1.getHighestDependencyStrongNode(null);
-        var node2 = e2.getHighestDependencyStrongNode(null)
-        if (node1.priority > 
-            node2.priority) {-1} else {1}
+//        System::out.println("----");
+//        System::out.println(e1 + " : "+ e1.id);
+//        System::out.println(e2 + " : "+ e2.id);
+//        System::out.println("-");
+        val node1 = e1.getHighestDependencyStrongNode(null);
+        val node2 = e2.getHighestDependencyStrongNode(null)
+        var node1Priority = 1;
+        var node2Priority = 1;
+        if (node1 != null) {
+            node1Priority = node1.priority;
+        }
+        if (node2 != null) {
+            node2Priority = node2.priority;
+        }
+        if (node1Priority >= 
+            node2Priority) {-1} else {1}
     }
 
     // Compare two transitions by their prioritiy.

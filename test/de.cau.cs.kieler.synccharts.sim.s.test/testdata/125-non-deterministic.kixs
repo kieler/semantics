@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="S0" label="non_deterministic">
+    <signals name="A" isOutput="true"/>
+    <regions>
+      <states id="S0" label="s1" isInitial="true">
+        <outgoingTransitions label="A / A" priority="1" targetState="//@states.0/@regions.0/@states.1">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+        </outgoingTransitions>
+        <outgoingTransitions label="/ A" priority="2" targetState="//@states.0/@regions.0/@states.1">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+        </outgoingTransitions>
+      </states>
+      <states id="S1" label="s2" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.1 //@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+    </regions>
+  </states>
+</synccharts:Region>

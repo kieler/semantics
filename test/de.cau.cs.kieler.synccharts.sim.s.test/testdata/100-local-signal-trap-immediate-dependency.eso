@@ -1,0 +1,29 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+I 
+% Output: T O4 O3 O2 O1 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+! reset;
+I 
+% Output: 
+;
+I 
+% Output: T O4 O3 O2 O1 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;

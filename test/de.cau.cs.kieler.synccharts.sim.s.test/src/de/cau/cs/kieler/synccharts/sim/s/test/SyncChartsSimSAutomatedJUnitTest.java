@@ -47,6 +47,7 @@ public class SyncChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      * {@inheritDoc}
      */
     protected IPath getBundleTestPath() {
+//        return new Path("activetests");
         return new Path("testdata");
     }
 

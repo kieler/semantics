@@ -1,0 +1,9 @@
+!reset;
+% Output: V;
+A B % Output: V;
+% Output:;
+C % Output: V;
+A % Output: V;
+D % Output: V;
+A % Output:;
+C % Output:;

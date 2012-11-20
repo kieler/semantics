@@ -22,22 +22,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class HierarchyDependencyImpl extends DependencyImpl implements HierarchyDependency {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected HierarchyDependencyImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return DependencyPackage.Literals.HIERARCHY_DEPENDENCY;
-	}
+        return DependencyPackage.Literals.HIERARCHY_DEPENDENCY;
+    }
 
 } //HierarchyDependencyImpl

@@ -21,11 +21,12 @@ import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.NodeType
 import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.util.stdlib.TraceComponent
+import de.cau.cs.kieler.core.kexpressions.Signal
 
 /**
  * Converts a SyncChart into an S program.
@@ -40,6 +41,9 @@ class Synccharts2S {
          Guice::createInjector().getInstance(typeof(Helper))
     extension de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies Synccharts2Dependenies = 
          Guice::createInjector().getInstance(typeof(Synccharts2Dependenies))
+         
+    static String LabelSymbol = "L"
+    static String LocalSignalSymbol = "S"
 
     // ======================================================================================================
     // ==                                        M A I N   T R A N S F O R M A T I O N                     ==
@@ -60,7 +64,7 @@ class Synccharts2S {
         
         // create mapping from SyncChart states to dependency nodes
         for (node : dependencies.nodes) {
-            if (node.type == DependencyType::WEAK) {
+            if (node.type == NodeType::WEAK) {
                 TraceComponent::createTrace(node.state, node, "DependencyWeak");
             }
             else {
@@ -72,8 +76,19 @@ class Synccharts2S {
         target.setName(rootState.id)
 
         // add interface signals to s program (as the root state's signals)
-        for (signal : rootState.getStateSignals) {
-            target.signals.add(signal);
+        for (ssignal : rootState.signals) {
+            target.signals.add(ssignal.transform);
+        }
+        
+        // add all local signals also to s program (as the root state's signals)
+        for (region : rootState.regions) {
+            val localSignals = region.eAllContents().toIterable().filter(typeof(Signal)).toList();
+            for (localSignal : localSignals) {
+                val ssignal = localSignal.transform;
+                val ssignalName = (localSignal.eContainer as State).getHierarchicalName(LocalSignalSymbol) + "_" + localSignal.name;
+                ssignal.setName(ssignalName);
+                target.signals.add(ssignal);
+            }
         }
 
         // add interface variables to s program (as the global host code)
@@ -169,6 +184,16 @@ class Synccharts2S {
     def fillSStateSurface (State state, de.cau.cs.kieler.s.s.State sState) {
         val regardedTransitionListStrong = state.strongTransitionsOrdered.filter(e|e.isImmediate);
         val regardedTransitionListWeak = state.weakTransitionsOrdered.filter(e|e.isImmediate);
+        
+        if (!state.rootState) {
+          // first reset possible defined local (output) signals here
+          for (signal : state.signals.filter(e | !e.isInput)) {
+              val ssignal = SFactory::eINSTANCE.createLocalSignal();
+              val sSignal = TraceComponent::getSingleTraceTarget(signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal;
+              ssignal.setSignal(sSignal);
+              sState.instructions.add(ssignal);
+          }
+        }
 
         // first handle all strong preemptions
         for (transition : regardedTransitionListStrong) {
@@ -183,7 +208,7 @@ class Synccharts2S {
                 val initialState = region.initialState;
                 val sfork = SFactory::eINSTANCE.createFork();
                 sfork.setThread(initialState.surfaceSState)
-                sfork.setPriority(initialState.highestDependencyStrongNode.priority);
+                sfork.setPriority(initialState.getHighestDependencyStrong);
                 sState.instructions.add(sfork);
             }
             // if there is no immediate weak transition, we do not need an extra surface!
@@ -196,14 +221,14 @@ class Synccharts2S {
                 else {
                     sfork.setThread(state.depthSState)
                 }
-                sfork.setPriority(state.highestDependencyStrongNode.priority);
+                sfork.setPriority(state.highestDependencyStrong);
                 sState.instructions.add(sfork);
             }
             else {
                 // fork extra surface thread (instead of join/depth thread!) with same priority as current thread
                 val sfork = SFactory::eINSTANCE.createFork();
                 sfork.setThread(state.extraSurfaceSState);
-                sfork.setPriority(state.highestDependencyStrongNode.priority);
+                sfork.setPriority(state.highestDependencyStrong);
                 sState.instructions.add(sfork);
             }
         }
@@ -303,17 +328,22 @@ class Synccharts2S {
                 
         // if not a final state then process normally otherwise add halt or term 
         if (!state.finalState) {
-            
-                // before the pause statement possibly raise priority
-                if (state.highestDependencyWeakNode != null) {
-                // optimization: do this only if the priority might be lowered (weak prio exist)
-                sState.addHighestStrongPrio(state);
-              } 
-        
-              // create a pause instruction only iff no HALT or TERM instruction
-              // halt == no outgoing transition
-                // term == final state
+
+// The following is NOT correct, see test 82. The priority must be ensured to be strong (hight)
+// to be enable to take preemptive outgoing transitions after awaking from pause            
+//              // before the pause statement possibly raise priority
+//              if (state.highestDependencyWeakNode != null) {
+//                // optimization: do this only if the priority might be lowered (weak prio exist)
+//                sState.addHighestStrongPrio(state);
+//              } 
+
+            // create a pause instruction only iff no HALT or TERM instruction
+            // halt == no outgoing transition
+            // term == final state
             if (!state.finalState && !joinInstruction) {
+                // Before pausing, ensure the correct priority for possible preemption after wake up
+                sState.addHighestStrongPrio(state);
+                // Now insert the Pause
                 sState.instructions.add(SFactory::eINSTANCE.createPause());
             }
 
@@ -412,60 +442,44 @@ class Synccharts2S {
 
     def de.cau.cs.kieler.s.s.State createSStateJoin (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getStatePathAsName;
+        target.name = state.getHierarchicalName(LabelSymbol);
         if (root) {
-            target.name = "L_root";
+            target.name = LabelSymbol + "_root";
         }
         target.name = target.name + "_join";
-        if (!root) {
-            // add root state signals to program only (not to the state itself)
-            target.signals.addAll(state.getStateSignals)
-        }
         target;
     }    
     
     def de.cau.cs.kieler.s.s.State createSStateSurface (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getStatePathAsName;
+        target.name = state.getHierarchicalName(LabelSymbol);
         if (root) {
-            target.name = "L_root";
+            target.name = LabelSymbol + "_root";
         }
         target.name = target.name + "_surface";
 
-        if (!root) {
-            // add root state signals to program only (not to the state itself)
-            target.signals.addAll(state.getStateSignals)
-        }
         target;
     }    
     
     def de.cau.cs.kieler.s.s.State createSStateExtraSurface (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getStatePathAsName;
+        target.name = state.getHierarchicalName(LabelSymbol);
         if (root) {
-            target.name = "L_root";
+            target.name = LabelSymbol + "_root";
         }
         target.name = target.name + "_surface2";
 
-        if (!root) {
-            // add root state signals to program only (not to the state itself)
-            target.signals.addAll(state.getStateSignals)
-        }
         target;
     }    
 
     def de.cau.cs.kieler.s.s.State createSStateDepth (State state, Boolean root) {
         val target = SFactory::eINSTANCE.createState(); 
-        target.name = state.getStatePathAsName;
+        target.name = state.getHierarchicalName(LabelSymbol);
         if (root) {
-            target.name = "L_root";
+            target.name = LabelSymbol + "_root";
         }
         target.name = target.name + "_depth";
         
-        if (!root) {
-            // add root state signals to program only (not to the state itself)
-            target.signals.addAll(state.getStateSignals)
-        }
 
         target;
     }
