@@ -65,32 +65,17 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
   {
     switch (eClass.getClassifierID())
     {
-      case SccexpPackage.ROOT: return createRoot();
-      case SccexpPackage.DEF_ROOT: return createDefRoot();
-      case SccexpPackage.STATE_ROOT: return createStateRoot();
-      case SccexpPackage.TRANSITION_ROOT: return createTransitionRoot();
-      case SccexpPackage.STATE_SCOPE: return createStateScope();
-      case SccexpPackage.INTERFACE_SCOPE_ROOT: return createInterfaceScopeRoot();
+      case SccexpPackage.STATE_SPECIFICATION: return createStateSpecification();
       case SccexpPackage.INTERFACE_SCOPE: return createInterfaceScope();
-      case SccexpPackage.INTERFACE_DECLARATION: return createInterfaceDeclaration();
-      case SccexpPackage.SCC_VARIABLE_DECLARATION: return createSCCVariableDeclaration();
-      case SccexpPackage.LOCAL_VARIABLE_DECLARATION: return createLocalVariableDeclaration();
-      case SccexpPackage.IN_OUT_VARIABLE_DECLARATION: return createInOutVariableDeclaration();
-      case SccexpPackage.OUTPUT_VARIABLEECLARATION: return createOutputVariableeclaration();
-      case SccexpPackage.INPUT_VARIABLE_DECLARATION: return createInputVariableDeclaration();
-      case SccexpPackage.ACTION_DECLARATION: return createActionDeclaration();
-      case SccexpPackage.EXIT_ACTION_DECLARATION: return createExitActionDeclaration();
-      case SccexpPackage.INSIDE_ACTION_DECLARATION: return createInsideActionDeclaration();
-      case SccexpPackage.ENTRY_ACTION_DECLARATION: return createEntryActionDeclaration();
-      case SccexpPackage.ACTION_VARIABLE_DECLARATION: return createActionVariableDeclaration();
-      case SccexpPackage.SUSPEND_DECLARATION: return createSuspendDeclaration();
-      case SccexpPackage.SUSPEND_VARIABLE_DECLARATION: return createSuspendVariableDeclaration();
-      case SccexpPackage.TRANSITION_REACTION: return createTransitionReaction();
-      case SccexpPackage.LOCAL: return createLocal();
-      case SccexpPackage.INPUT: return createInput();
-      case SccexpPackage.OUTPUT: return createOutput();
-      case SccexpPackage.IN_OUT: return createInOut();
-      case SccexpPackage.MY_TRIGGER: return createMyTrigger();
+      case SccexpPackage.VARIABLE_DEFINITION: return createVariableDefinition();
+      case SccexpPackage.REACTION_SCOPE: return createReactionScope();
+      case SccexpPackage.TRANSITION: return createTransition();
+      case SccexpPackage.EXIT_ACTION: return createExitAction();
+      case SccexpPackage.INSIDE_ACTION: return createInsideAction();
+      case SccexpPackage.ENTRY_ACTION: return createEntryAction();
+      case SccexpPackage.SUSPEND: return createSuspend();
+      case SccexpPackage.TRIGGER: return createTrigger();
+      case SccexpPackage.EFFECT: return createEffect();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -108,6 +93,8 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
     {
       case SccexpPackage.COMBINE_OPERATOR:
         return createCombineOperatorFromString(eDataType, initialValue);
+      case SccexpPackage.VAR_DIRECTION:
+        return createVarDirectionFromString(eDataType, initialValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -125,6 +112,8 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
     {
       case SccexpPackage.COMBINE_OPERATOR:
         return convertCombineOperatorToString(eDataType, instanceValue);
+      case SccexpPackage.VAR_DIRECTION:
+        return convertVarDirectionToString(eDataType, instanceValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -135,65 +124,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Root createRoot()
+  public StateSpecification createStateSpecification()
   {
-    RootImpl root = new RootImpl();
-    return root;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DefRoot createDefRoot()
-  {
-    DefRootImpl defRoot = new DefRootImpl();
-    return defRoot;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StateRoot createStateRoot()
-  {
-    StateRootImpl stateRoot = new StateRootImpl();
-    return stateRoot;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public TransitionRoot createTransitionRoot()
-  {
-    TransitionRootImpl transitionRoot = new TransitionRootImpl();
-    return transitionRoot;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public StateScope createStateScope()
-  {
-    StateScopeImpl stateScope = new StateScopeImpl();
-    return stateScope;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InterfaceScopeRoot createInterfaceScopeRoot()
-  {
-    InterfaceScopeRootImpl interfaceScopeRoot = new InterfaceScopeRootImpl();
-    return interfaceScopeRoot;
+    StateSpecificationImpl stateSpecification = new StateSpecificationImpl();
+    return stateSpecification;
   }
 
   /**
@@ -212,10 +146,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public InterfaceDeclaration createInterfaceDeclaration()
+  public VariableDefinition createVariableDefinition()
   {
-    InterfaceDeclarationImpl interfaceDeclaration = new InterfaceDeclarationImpl();
-    return interfaceDeclaration;
+    VariableDefinitionImpl variableDefinition = new VariableDefinitionImpl();
+    return variableDefinition;
   }
 
   /**
@@ -223,10 +157,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public SCCVariableDeclaration createSCCVariableDeclaration()
+  public ReactionScope createReactionScope()
   {
-    SCCVariableDeclarationImpl sccVariableDeclaration = new SCCVariableDeclarationImpl();
-    return sccVariableDeclaration;
+    ReactionScopeImpl reactionScope = new ReactionScopeImpl();
+    return reactionScope;
   }
 
   /**
@@ -234,10 +168,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public LocalVariableDeclaration createLocalVariableDeclaration()
+  public Transition createTransition()
   {
-    LocalVariableDeclarationImpl localVariableDeclaration = new LocalVariableDeclarationImpl();
-    return localVariableDeclaration;
+    TransitionImpl transition = new TransitionImpl();
+    return transition;
   }
 
   /**
@@ -245,10 +179,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public InOutVariableDeclaration createInOutVariableDeclaration()
+  public ExitAction createExitAction()
   {
-    InOutVariableDeclarationImpl inOutVariableDeclaration = new InOutVariableDeclarationImpl();
-    return inOutVariableDeclaration;
+    ExitActionImpl exitAction = new ExitActionImpl();
+    return exitAction;
   }
 
   /**
@@ -256,10 +190,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public OutputVariableeclaration createOutputVariableeclaration()
+  public InsideAction createInsideAction()
   {
-    OutputVariableeclarationImpl outputVariableeclaration = new OutputVariableeclarationImpl();
-    return outputVariableeclaration;
+    InsideActionImpl insideAction = new InsideActionImpl();
+    return insideAction;
   }
 
   /**
@@ -267,10 +201,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public InputVariableDeclaration createInputVariableDeclaration()
+  public EntryAction createEntryAction()
   {
-    InputVariableDeclarationImpl inputVariableDeclaration = new InputVariableDeclarationImpl();
-    return inputVariableDeclaration;
+    EntryActionImpl entryAction = new EntryActionImpl();
+    return entryAction;
   }
 
   /**
@@ -278,10 +212,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ActionDeclaration createActionDeclaration()
+  public Suspend createSuspend()
   {
-    ActionDeclarationImpl actionDeclaration = new ActionDeclarationImpl();
-    return actionDeclaration;
+    SuspendImpl suspend = new SuspendImpl();
+    return suspend;
   }
 
   /**
@@ -289,10 +223,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ExitActionDeclaration createExitActionDeclaration()
+  public Trigger createTrigger()
   {
-    ExitActionDeclarationImpl exitActionDeclaration = new ExitActionDeclarationImpl();
-    return exitActionDeclaration;
+    TriggerImpl trigger = new TriggerImpl();
+    return trigger;
   }
 
   /**
@@ -300,120 +234,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public InsideActionDeclaration createInsideActionDeclaration()
+  public Effect createEffect()
   {
-    InsideActionDeclarationImpl insideActionDeclaration = new InsideActionDeclarationImpl();
-    return insideActionDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EntryActionDeclaration createEntryActionDeclaration()
-  {
-    EntryActionDeclarationImpl entryActionDeclaration = new EntryActionDeclarationImpl();
-    return entryActionDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ActionVariableDeclaration createActionVariableDeclaration()
-  {
-    ActionVariableDeclarationImpl actionVariableDeclaration = new ActionVariableDeclarationImpl();
-    return actionVariableDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SuspendDeclaration createSuspendDeclaration()
-  {
-    SuspendDeclarationImpl suspendDeclaration = new SuspendDeclarationImpl();
-    return suspendDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SuspendVariableDeclaration createSuspendVariableDeclaration()
-  {
-    SuspendVariableDeclarationImpl suspendVariableDeclaration = new SuspendVariableDeclarationImpl();
-    return suspendVariableDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public TransitionReaction createTransitionReaction()
-  {
-    TransitionReactionImpl transitionReaction = new TransitionReactionImpl();
-    return transitionReaction;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Local createLocal()
-  {
-    LocalImpl local = new LocalImpl();
-    return local;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Input createInput()
-  {
-    InputImpl input = new InputImpl();
-    return input;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Output createOutput()
-  {
-    OutputImpl output = new OutputImpl();
-    return output;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InOut createInOut()
-  {
-    InOutImpl inOut = new InOutImpl();
-    return inOut;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public MyTrigger createMyTrigger()
-  {
-    MyTriggerImpl myTrigger = new MyTriggerImpl();
-    return myTrigger;
+    EffectImpl effect = new EffectImpl();
+    return effect;
   }
 
   /**
@@ -434,6 +258,28 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * @generated
    */
   public String convertCombineOperatorToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VarDirection createVarDirectionFromString(EDataType eDataType, String initialValue)
+  {
+    VarDirection result = VarDirection.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertVarDirectionToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }

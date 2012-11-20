@@ -62,208 +62,41 @@ public interface SccexpPackage extends EPackage
   SccexpPackage eINSTANCE = de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.RootImpl <em>Root</em>}' class.
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.StateSpecificationImpl <em>State Specification</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.RootImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getRoot()
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.StateSpecificationImpl
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateSpecification()
    * @generated
    */
-  int ROOT = 0;
+  int STATE_SPECIFICATION = 0;
 
   /**
-   * The feature id for the '<em><b>Roots</b></em>' containment reference list.
+   * The feature id for the '<em><b>Scope</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ROOT__ROOTS = StextPackage.ROOT__ROOTS;
+  int STATE_SPECIFICATION__SCOPE = StextPackage.STATE_SPECIFICATION__SCOPE;
 
   /**
-   * The number of structural features of the '<em>Root</em>' class.
+   * The feature id for the '<em><b>Scopes</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ROOT_FEATURE_COUNT = StextPackage.ROOT_FEATURE_COUNT + 0;
+  int STATE_SPECIFICATION__SCOPES = StextPackage.STATE_SPECIFICATION_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.DefRootImpl <em>Def Root</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.DefRootImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getDefRoot()
-   * @generated
-   */
-  int DEF_ROOT = 1;
-
-  /**
-   * The number of structural features of the '<em>Def Root</em>' class.
+   * The number of structural features of the '<em>State Specification</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DEF_ROOT_FEATURE_COUNT = StextPackage.DEF_ROOT_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.StateRootImpl <em>State Root</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.StateRootImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateRoot()
-   * @generated
-   */
-  int STATE_ROOT = 2;
-
-  /**
-   * The feature id for the '<em><b>Def</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_ROOT__DEF = DEF_ROOT_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>State Root</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_ROOT_FEATURE_COUNT = DEF_ROOT_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionRootImpl <em>Transition Root</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionRootImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getTransitionRoot()
-   * @generated
-   */
-  int TRANSITION_ROOT = 3;
-
-  /**
-   * The feature id for the '<em><b>Def</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TRANSITION_ROOT__DEF = DEF_ROOT_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Transition Root</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TRANSITION_ROOT_FEATURE_COUNT = DEF_ROOT_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.StateScopeImpl <em>State Scope</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.StateScopeImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateScope()
-   * @generated
-   */
-  int STATE_SCOPE = 4;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SCOPE__DECLARATIONS = SGraphPackage.SCOPE__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SCOPE__EVENTS = SGraphPackage.SCOPE__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SCOPE__VARIABLES = SGraphPackage.SCOPE__VARIABLES;
-
-  /**
-   * The number of structural features of the '<em>State Scope</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SCOPE_FEATURE_COUNT = SGraphPackage.SCOPE_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InterfaceScopeRootImpl <em>Interface Scope Root</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InterfaceScopeRootImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInterfaceScopeRoot()
-   * @generated
-   */
-  int INTERFACE_SCOPE_ROOT = 5;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_SCOPE_ROOT__DECLARATIONS = STATE_SCOPE__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_SCOPE_ROOT__EVENTS = STATE_SCOPE__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_SCOPE_ROOT__VARIABLES = STATE_SCOPE__VARIABLES;
-
-  /**
-   * The feature id for the '<em><b>Interface Scope</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_SCOPE_ROOT__INTERFACE_SCOPE = STATE_SCOPE_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Interface Scope Root</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_SCOPE_ROOT_FEATURE_COUNT = STATE_SCOPE_FEATURE_COUNT + 1;
+  int STATE_SPECIFICATION_FEATURE_COUNT = StextPackage.STATE_SPECIFICATION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InterfaceScopeImpl <em>Interface Scope</em>}' class.
@@ -273,7 +106,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInterfaceScope()
    * @generated
    */
-  int INTERFACE_SCOPE = 6;
+  int INTERFACE_SCOPE = 1;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -282,7 +115,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_SCOPE__DECLARATIONS = StextPackage.INTERFACE_SCOPE__DECLARATIONS;
+  int INTERFACE_SCOPE__DECLARATIONS = SGraphPackage.SCOPE__DECLARATIONS;
 
   /**
    * The feature id for the '<em><b>Events</b></em>' reference list.
@@ -291,7 +124,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_SCOPE__EVENTS = StextPackage.INTERFACE_SCOPE__EVENTS;
+  int INTERFACE_SCOPE__EVENTS = SGraphPackage.SCOPE__EVENTS;
 
   /**
    * The feature id for the '<em><b>Variables</b></em>' reference list.
@@ -300,7 +133,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_SCOPE__VARIABLES = StextPackage.INTERFACE_SCOPE__VARIABLES;
+  int INTERFACE_SCOPE__VARIABLES = SGraphPackage.SCOPE__VARIABLES;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -309,7 +142,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_SCOPE__NAME = StextPackage.INTERFACE_SCOPE__NAME;
+  int INTERFACE_SCOPE__NAME = SGraphPackage.SCOPE_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Interface Scope</em>' class.
@@ -318,17 +151,144 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_SCOPE_FEATURE_COUNT = StextPackage.INTERFACE_SCOPE_FEATURE_COUNT + 0;
+  int INTERFACE_SCOPE_FEATURE_COUNT = SGraphPackage.SCOPE_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InterfaceDeclarationImpl <em>Interface Declaration</em>}' class.
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InterfaceDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInterfaceDeclaration()
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.VariableDefinitionImpl
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getVariableDefinition()
    * @generated
    */
-  int INTERFACE_DECLARATION = 7;
+  int VARIABLE_DEFINITION = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__NAME = SGraphPackage.DECLARATION__NAME;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__TYPE = SGraphPackage.DECLARATION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Owning Type</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__OWNING_TYPE = SGraphPackage.DECLARATION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Readonly</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__READONLY = SGraphPackage.DECLARATION_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>External</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__EXTERNAL = SGraphPackage.DECLARATION_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__INITIAL_VALUE = SGraphPackage.DECLARATION_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Direction</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__DIRECTION = SGraphPackage.DECLARATION_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Is Static</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__IS_STATIC = SGraphPackage.DECLARATION_FEATURE_COUNT + 6;
+
+  /**
+   * The feature id for the '<em><b>Var Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__VAR_NAME = SGraphPackage.DECLARATION_FEATURE_COUNT + 7;
+
+  /**
+   * The feature id for the '<em><b>Var Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__VAR_TYPE = SGraphPackage.DECLARATION_FEATURE_COUNT + 8;
+
+  /**
+   * The feature id for the '<em><b>Var Initial Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__VAR_INITIAL_VALUE = SGraphPackage.DECLARATION_FEATURE_COUNT + 9;
+
+  /**
+   * The feature id for the '<em><b>Var Combine Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = SGraphPackage.DECLARATION_FEATURE_COUNT + 10;
+
+  /**
+   * The number of structural features of the '<em>Variable Definition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION_FEATURE_COUNT = SGraphPackage.DECLARATION_FEATURE_COUNT + 11;
+
+  /**
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.ReactionScopeImpl <em>Reaction Scope</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.ReactionScopeImpl
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionScope()
+   * @generated
+   */
+  int REACTION_SCOPE = 3;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -337,7 +297,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_DECLARATION__DECLARATIONS = INTERFACE_SCOPE__DECLARATIONS;
+  int REACTION_SCOPE__DECLARATIONS = SGraphPackage.SCOPE__DECLARATIONS;
 
   /**
    * The feature id for the '<em><b>Events</b></em>' reference list.
@@ -346,7 +306,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_DECLARATION__EVENTS = INTERFACE_SCOPE__EVENTS;
+  int REACTION_SCOPE__EVENTS = SGraphPackage.SCOPE__EVENTS;
 
   /**
    * The feature id for the '<em><b>Variables</b></em>' reference list.
@@ -355,506 +315,35 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_DECLARATION__VARIABLES = INTERFACE_SCOPE__VARIABLES;
+  int REACTION_SCOPE__VARIABLES = SGraphPackage.SCOPE__VARIABLES;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Reaction Scope</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERFACE_DECLARATION__NAME = INTERFACE_SCOPE__NAME;
+  int REACTION_SCOPE__REACTION_SCOPE = SGraphPackage.SCOPE_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Declaration</b></em>' containment reference list.
+   * The number of structural features of the '<em>Reaction Scope</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERFACE_DECLARATION__DECLARATION = INTERFACE_SCOPE_FEATURE_COUNT + 0;
+  int REACTION_SCOPE_FEATURE_COUNT = SGraphPackage.SCOPE_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Interface Declaration</em>' class.
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionImpl <em>Transition</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_DECLARATION_FEATURE_COUNT = INTERFACE_SCOPE_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.SCCVariableDeclarationImpl <em>SCC Variable Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SCCVariableDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSCCVariableDeclaration()
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionImpl
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getTransition()
    * @generated
    */
-  int SCC_VARIABLE_DECLARATION = 8;
-
-  /**
-   * The number of structural features of the '<em>SCC Variable Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCC_VARIABLE_DECLARATION_FEATURE_COUNT = 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.LocalVariableDeclarationImpl <em>Local Variable Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.LocalVariableDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getLocalVariableDeclaration()
-   * @generated
-   */
-  int LOCAL_VARIABLE_DECLARATION = 9;
-
-  /**
-   * The number of structural features of the '<em>Local Variable Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LOCAL_VARIABLE_DECLARATION_FEATURE_COUNT = SCC_VARIABLE_DECLARATION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InOutVariableDeclarationImpl <em>In Out Variable Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InOutVariableDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInOutVariableDeclaration()
-   * @generated
-   */
-  int IN_OUT_VARIABLE_DECLARATION = 10;
-
-  /**
-   * The number of structural features of the '<em>In Out Variable Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IN_OUT_VARIABLE_DECLARATION_FEATURE_COUNT = SCC_VARIABLE_DECLARATION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.OutputVariableeclarationImpl <em>Output Variableeclaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.OutputVariableeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getOutputVariableeclaration()
-   * @generated
-   */
-  int OUTPUT_VARIABLEECLARATION = 11;
-
-  /**
-   * The number of structural features of the '<em>Output Variableeclaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int OUTPUT_VARIABLEECLARATION_FEATURE_COUNT = SCC_VARIABLE_DECLARATION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InputVariableDeclarationImpl <em>Input Variable Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InputVariableDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInputVariableDeclaration()
-   * @generated
-   */
-  int INPUT_VARIABLE_DECLARATION = 12;
-
-  /**
-   * The number of structural features of the '<em>Input Variable Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INPUT_VARIABLE_DECLARATION_FEATURE_COUNT = SCC_VARIABLE_DECLARATION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.ActionDeclarationImpl <em>Action Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.ActionDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getActionDeclaration()
-   * @generated
-   */
-  int ACTION_DECLARATION = 13;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTION_DECLARATION__DECLARATIONS = INTERFACE_SCOPE__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTION_DECLARATION__EVENTS = INTERFACE_SCOPE__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTION_DECLARATION__VARIABLES = INTERFACE_SCOPE__VARIABLES;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTION_DECLARATION__NAME = INTERFACE_SCOPE__NAME;
-
-  /**
-   * The number of structural features of the '<em>Action Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTION_DECLARATION_FEATURE_COUNT = INTERFACE_SCOPE_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.ExitActionDeclarationImpl <em>Exit Action Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.ExitActionDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getExitActionDeclaration()
-   * @generated
-   */
-  int EXIT_ACTION_DECLARATION = 14;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXIT_ACTION_DECLARATION__DECLARATIONS = ACTION_DECLARATION__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXIT_ACTION_DECLARATION__EVENTS = ACTION_DECLARATION__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXIT_ACTION_DECLARATION__VARIABLES = ACTION_DECLARATION__VARIABLES;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXIT_ACTION_DECLARATION__NAME = ACTION_DECLARATION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Exit Action Declaration</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXIT_ACTION_DECLARATION__EXIT_ACTION_DECLARATION = ACTION_DECLARATION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Exit Action Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXIT_ACTION_DECLARATION_FEATURE_COUNT = ACTION_DECLARATION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InsideActionDeclarationImpl <em>Inside Action Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InsideActionDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInsideActionDeclaration()
-   * @generated
-   */
-  int INSIDE_ACTION_DECLARATION = 15;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSIDE_ACTION_DECLARATION__DECLARATIONS = ACTION_DECLARATION__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSIDE_ACTION_DECLARATION__EVENTS = ACTION_DECLARATION__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSIDE_ACTION_DECLARATION__VARIABLES = ACTION_DECLARATION__VARIABLES;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSIDE_ACTION_DECLARATION__NAME = ACTION_DECLARATION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Inside Action Declaration</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSIDE_ACTION_DECLARATION__INSIDE_ACTION_DECLARATION = ACTION_DECLARATION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Inside Action Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSIDE_ACTION_DECLARATION_FEATURE_COUNT = ACTION_DECLARATION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.EntryActionDeclarationImpl <em>Entry Action Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.EntryActionDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEntryActionDeclaration()
-   * @generated
-   */
-  int ENTRY_ACTION_DECLARATION = 16;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTRY_ACTION_DECLARATION__DECLARATIONS = ACTION_DECLARATION__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTRY_ACTION_DECLARATION__EVENTS = ACTION_DECLARATION__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTRY_ACTION_DECLARATION__VARIABLES = ACTION_DECLARATION__VARIABLES;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTRY_ACTION_DECLARATION__NAME = ACTION_DECLARATION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Entry Action Declaration</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTRY_ACTION_DECLARATION__ENTRY_ACTION_DECLARATION = ACTION_DECLARATION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Entry Action Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTRY_ACTION_DECLARATION_FEATURE_COUNT = ACTION_DECLARATION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.ActionVariableDeclarationImpl <em>Action Variable Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.ActionVariableDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getActionVariableDeclaration()
-   * @generated
-   */
-  int ACTION_VARIABLE_DECLARATION = 17;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTION_VARIABLE_DECLARATION__NAME = 0;
-
-  /**
-   * The number of structural features of the '<em>Action Variable Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTION_VARIABLE_DECLARATION_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendDeclarationImpl <em>Suspend Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSuspendDeclaration()
-   * @generated
-   */
-  int SUSPEND_DECLARATION = 18;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND_DECLARATION__DECLARATIONS = INTERFACE_SCOPE__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND_DECLARATION__EVENTS = INTERFACE_SCOPE__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND_DECLARATION__VARIABLES = INTERFACE_SCOPE__VARIABLES;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND_DECLARATION__NAME = INTERFACE_SCOPE__NAME;
-
-  /**
-   * The feature id for the '<em><b>Suspend Declaration</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND_DECLARATION__SUSPEND_DECLARATION = INTERFACE_SCOPE_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Suspend Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND_DECLARATION_FEATURE_COUNT = INTERFACE_SCOPE_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendVariableDeclarationImpl <em>Suspend Variable Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendVariableDeclarationImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSuspendVariableDeclaration()
-   * @generated
-   */
-  int SUSPEND_VARIABLE_DECLARATION = 19;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND_VARIABLE_DECLARATION__NAME = 0;
-
-  /**
-   * The number of structural features of the '<em>Suspend Variable Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND_VARIABLE_DECLARATION_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionReactionImpl <em>Transition Reaction</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionReactionImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getTransitionReaction()
-   * @generated
-   */
-  int TRANSITION_REACTION = 20;
+  int TRANSITION = 4;
 
   /**
    * The feature id for the '<em><b>Trigger</b></em>' containment reference.
@@ -863,7 +352,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION_REACTION__TRIGGER = StextPackage.TRANSITION_REACTION__TRIGGER;
+  int TRANSITION__TRIGGER = SGraphPackage.REACTION__TRIGGER;
 
   /**
    * The feature id for the '<em><b>Effect</b></em>' containment reference.
@@ -872,255 +361,202 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TRANSITION_REACTION__EFFECT = StextPackage.TRANSITION_REACTION__EFFECT;
+  int TRANSITION__EFFECT = SGraphPackage.REACTION__EFFECT;
 
   /**
-   * The feature id for the '<em><b>Properties</b></em>' containment reference.
+   * The number of structural features of the '<em>Transition</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TRANSITION_REACTION__PROPERTIES = StextPackage.TRANSITION_REACTION__PROPERTIES;
+  int TRANSITION_FEATURE_COUNT = SGraphPackage.REACTION_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Transition Reaction</em>' class.
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.ExitActionImpl <em>Exit Action</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.ExitActionImpl
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getExitAction()
+   * @generated
+   */
+  int EXIT_ACTION = 5;
+
+  /**
+   * The feature id for the '<em><b>Effect</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TRANSITION_REACTION_FEATURE_COUNT = StextPackage.TRANSITION_REACTION_FEATURE_COUNT + 0;
+  int EXIT_ACTION__EFFECT = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.LocalImpl <em>Local</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.LocalImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getLocal()
-   * @generated
-   */
-  int LOCAL = 21;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The number of structural features of the '<em>Exit Action</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LOCAL__NAME = LOCAL_VARIABLE_DECLARATION_FEATURE_COUNT + 0;
+  int EXIT_ACTION_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' reference.
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InsideActionImpl <em>Inside Action</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InsideActionImpl
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInsideAction()
+   * @generated
+   */
+  int INSIDE_ACTION = 6;
+
+  /**
+   * The feature id for the '<em><b>Effect</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LOCAL__TYPE = LOCAL_VARIABLE_DECLARATION_FEATURE_COUNT + 1;
+  int INSIDE_ACTION__EFFECT = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
+   * The number of structural features of the '<em>Inside Action</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LOCAL__INITIAL_VALUE = LOCAL_VARIABLE_DECLARATION_FEATURE_COUNT + 2;
+  int INSIDE_ACTION_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Operator</b></em>' attribute.
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.EntryActionImpl <em>Entry Action</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.EntryActionImpl
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEntryAction()
+   * @generated
+   */
+  int ENTRY_ACTION = 7;
+
+  /**
+   * The feature id for the '<em><b>Effect</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LOCAL__OPERATOR = LOCAL_VARIABLE_DECLARATION_FEATURE_COUNT + 3;
+  int ENTRY_ACTION__EFFECT = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Local</em>' class.
+   * The number of structural features of the '<em>Entry Action</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LOCAL_FEATURE_COUNT = LOCAL_VARIABLE_DECLARATION_FEATURE_COUNT + 4;
+  int ENTRY_ACTION_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InputImpl <em>Input</em>}' class.
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendImpl <em>Suspend</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InputImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInput()
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendImpl
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSuspend()
    * @generated
    */
-  int INPUT = 22;
+  int SUSPEND = 8;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INPUT__NAME = IN_OUT_VARIABLE_DECLARATION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' reference.
+   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INPUT__TYPE = IN_OUT_VARIABLE_DECLARATION_FEATURE_COUNT + 1;
+  int SUSPEND__TRIGGER = SGraphPackage.TRIGGER_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
+   * The number of structural features of the '<em>Suspend</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INPUT__INITIAL_VALUE = IN_OUT_VARIABLE_DECLARATION_FEATURE_COUNT + 2;
+  int SUSPEND_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Operator</b></em>' attribute.
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.TriggerImpl <em>Trigger</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.TriggerImpl
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getTrigger()
+   * @generated
+   */
+  int TRIGGER = 9;
+
+  /**
+   * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INPUT__OPERATOR = IN_OUT_VARIABLE_DECLARATION_FEATURE_COUNT + 3;
+  int TRIGGER__IS_IMMEDIATE = SGraphPackage.TRIGGER_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Input</em>' class.
+   * The feature id for the '<em><b>Delay</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INPUT_FEATURE_COUNT = IN_OUT_VARIABLE_DECLARATION_FEATURE_COUNT + 4;
+  int TRIGGER__DELAY = SGraphPackage.TRIGGER_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.OutputImpl <em>Output</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.OutputImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getOutput()
-   * @generated
-   */
-  int OUTPUT = 23;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int OUTPUT__NAME = OUTPUT_VARIABLEECLARATION_FEATURE_COUNT + 0;
+  int TRIGGER__EXPRESSION = SGraphPackage.TRIGGER_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' reference.
+   * The number of structural features of the '<em>Trigger</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int OUTPUT__TYPE = OUTPUT_VARIABLEECLARATION_FEATURE_COUNT + 1;
+  int TRIGGER_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 3;
 
   /**
-   * The feature id for the '<em><b>Operator</b></em>' attribute.
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.EffectImpl <em>Effect</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.EffectImpl
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEffect()
+   * @generated
+   */
+  int EFFECT = 10;
+
+  /**
+   * The feature id for the '<em><b>Actions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int OUTPUT__OPERATOR = OUTPUT_VARIABLEECLARATION_FEATURE_COUNT + 2;
+  int EFFECT__ACTIONS = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Output</em>' class.
+   * The number of structural features of the '<em>Effect</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int OUTPUT_FEATURE_COUNT = OUTPUT_VARIABLEECLARATION_FEATURE_COUNT + 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InOutImpl <em>In Out</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InOutImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInOut()
-   * @generated
-   */
-  int IN_OUT = 24;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IN_OUT__NAME = INPUT_VARIABLE_DECLARATION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IN_OUT__TYPE = INPUT_VARIABLE_DECLARATION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IN_OUT__INITIAL_VALUE = INPUT_VARIABLE_DECLARATION_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Operator</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IN_OUT__OPERATOR = INPUT_VARIABLE_DECLARATION_FEATURE_COUNT + 3;
-
-  /**
-   * The number of structural features of the '<em>In Out</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IN_OUT_FEATURE_COUNT = INPUT_VARIABLE_DECLARATION_FEATURE_COUNT + 4;
-
-  /**
-   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.MyTriggerImpl <em>My Trigger</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.MyTriggerImpl
-   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getMyTrigger()
-   * @generated
-   */
-  int MY_TRIGGER = 25;
-
-  /**
-   * The number of structural features of the '<em>My Trigger</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MY_TRIGGER_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 0;
+  int EFFECT_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.CombineOperator <em>Combine Operator</em>}' enum.
@@ -1130,79 +566,39 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getCombineOperator()
    * @generated
    */
-  int COMBINE_OPERATOR = 26;
+  int COMBINE_OPERATOR = 11;
+
+  /**
+   * The meta object id for the '{@link de.cau.kieler.scc.model.scctext.sccexp.VarDirection <em>Var Direction</em>}' enum.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.kieler.scc.model.scctext.sccexp.VarDirection
+   * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getVarDirection()
+   * @generated
+   */
+  int VAR_DIRECTION = 12;
 
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.Root <em>Root</em>}'.
+   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.StateSpecification <em>State Specification</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Root</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Root
+   * @return the meta object for class '<em>State Specification</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.StateSpecification
    * @generated
    */
-  EClass getRoot();
+  EClass getStateSpecification();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.DefRoot <em>Def Root</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.kieler.scc.model.scctext.sccexp.StateSpecification#getScopes <em>Scopes</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Def Root</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.DefRoot
+   * @return the meta object for the containment reference list '<em>Scopes</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.StateSpecification#getScopes()
+   * @see #getStateSpecification()
    * @generated
    */
-  EClass getDefRoot();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.StateRoot <em>State Root</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>State Root</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.StateRoot
-   * @generated
-   */
-  EClass getStateRoot();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.TransitionRoot <em>Transition Root</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Transition Root</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.TransitionRoot
-   * @generated
-   */
-  EClass getTransitionRoot();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.StateScope <em>State Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>State Scope</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.StateScope
-   * @generated
-   */
-  EClass getStateScope();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.InterfaceScopeRoot <em>Interface Scope Root</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Interface Scope Root</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InterfaceScopeRoot
-   * @generated
-   */
-  EClass getInterfaceScopeRoot();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.kieler.scc.model.scctext.sccexp.InterfaceScopeRoot#getInterfaceScope <em>Interface Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Interface Scope</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InterfaceScopeRoot#getInterfaceScope()
-   * @see #getInterfaceScopeRoot()
-   * @generated
-   */
-  EReference getInterfaceScopeRoot_InterfaceScope();
+  EReference getStateSpecification_Scopes();
 
   /**
    * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.InterfaceScope <em>Interface Scope</em>}'.
@@ -1215,436 +611,259 @@ public interface SccexpPackage extends EPackage
   EClass getInterfaceScope();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.InterfaceDeclaration <em>Interface Declaration</em>}'.
+   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition <em>Variable Definition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Interface Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InterfaceDeclaration
+   * @return the meta object for class '<em>Variable Definition</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition
    * @generated
    */
-  EClass getInterfaceDeclaration();
+  EClass getVariableDefinition();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.kieler.scc.model.scctext.sccexp.InterfaceDeclaration#getDeclaration <em>Declaration</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#getDirection <em>Direction</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InterfaceDeclaration#getDeclaration()
-   * @see #getInterfaceDeclaration()
+   * @return the meta object for the attribute '<em>Direction</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#getDirection()
+   * @see #getVariableDefinition()
    * @generated
    */
-  EReference getInterfaceDeclaration_Declaration();
+  EAttribute getVariableDefinition_Direction();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.SCCVariableDeclaration <em>SCC Variable Declaration</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#isIsStatic <em>Is Static</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>SCC Variable Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.SCCVariableDeclaration
+   * @return the meta object for the attribute '<em>Is Static</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#isIsStatic()
+   * @see #getVariableDefinition()
    * @generated
    */
-  EClass getSCCVariableDeclaration();
+  EAttribute getVariableDefinition_IsStatic();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.LocalVariableDeclaration <em>Local Variable Declaration</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#getVarName <em>Var Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Local Variable Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.LocalVariableDeclaration
+   * @return the meta object for the attribute '<em>Var Name</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#getVarName()
+   * @see #getVariableDefinition()
    * @generated
    */
-  EClass getLocalVariableDeclaration();
+  EAttribute getVariableDefinition_VarName();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.InOutVariableDeclaration <em>In Out Variable Declaration</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#getVarType <em>Var Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>In Out Variable Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InOutVariableDeclaration
+   * @return the meta object for the reference '<em>Var Type</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#getVarType()
+   * @see #getVariableDefinition()
    * @generated
    */
-  EClass getInOutVariableDeclaration();
+  EReference getVariableDefinition_VarType();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.OutputVariableeclaration <em>Output Variableeclaration</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#getVarInitialValue <em>Var Initial Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Output Variableeclaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.OutputVariableeclaration
+   * @return the meta object for the containment reference '<em>Var Initial Value</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#getVarInitialValue()
+   * @see #getVariableDefinition()
    * @generated
    */
-  EClass getOutputVariableeclaration();
+  EReference getVariableDefinition_VarInitialValue();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.InputVariableDeclaration <em>Input Variable Declaration</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#getVarCombineOperator <em>Var Combine Operator</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Input Variable Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InputVariableDeclaration
+   * @return the meta object for the attribute '<em>Var Combine Operator</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition#getVarCombineOperator()
+   * @see #getVariableDefinition()
    * @generated
    */
-  EClass getInputVariableDeclaration();
+  EAttribute getVariableDefinition_VarCombineOperator();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.ActionDeclaration <em>Action Declaration</em>}'.
+   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.ReactionScope <em>Reaction Scope</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Action Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.ActionDeclaration
+   * @return the meta object for class '<em>Reaction Scope</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.ReactionScope
    * @generated
    */
-  EClass getActionDeclaration();
+  EClass getReactionScope();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.ExitActionDeclaration <em>Exit Action Declaration</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.kieler.scc.model.scctext.sccexp.ReactionScope#getReactionScope <em>Reaction Scope</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Exit Action Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.ExitActionDeclaration
+   * @return the meta object for the containment reference list '<em>Reaction Scope</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.ReactionScope#getReactionScope()
+   * @see #getReactionScope()
    * @generated
    */
-  EClass getExitActionDeclaration();
+  EReference getReactionScope_ReactionScope();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.kieler.scc.model.scctext.sccexp.ExitActionDeclaration#getExitActionDeclaration <em>Exit Action Declaration</em>}'.
+   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.Transition <em>Transition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Exit Action Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.ExitActionDeclaration#getExitActionDeclaration()
-   * @see #getExitActionDeclaration()
+   * @return the meta object for class '<em>Transition</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Transition
    * @generated
    */
-  EReference getExitActionDeclaration_ExitActionDeclaration();
+  EClass getTransition();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.InsideActionDeclaration <em>Inside Action Declaration</em>}'.
+   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.ExitAction <em>Exit Action</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Inside Action Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InsideActionDeclaration
+   * @return the meta object for class '<em>Exit Action</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.ExitAction
    * @generated
    */
-  EClass getInsideActionDeclaration();
+  EClass getExitAction();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.kieler.scc.model.scctext.sccexp.InsideActionDeclaration#getInsideActionDeclaration <em>Inside Action Declaration</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.kieler.scc.model.scctext.sccexp.ExitAction#getEffect <em>Effect</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Inside Action Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InsideActionDeclaration#getInsideActionDeclaration()
-   * @see #getInsideActionDeclaration()
+   * @return the meta object for the containment reference '<em>Effect</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.ExitAction#getEffect()
+   * @see #getExitAction()
    * @generated
    */
-  EReference getInsideActionDeclaration_InsideActionDeclaration();
+  EReference getExitAction_Effect();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.EntryActionDeclaration <em>Entry Action Declaration</em>}'.
+   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.InsideAction <em>Inside Action</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Entry Action Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.EntryActionDeclaration
+   * @return the meta object for class '<em>Inside Action</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.InsideAction
    * @generated
    */
-  EClass getEntryActionDeclaration();
+  EClass getInsideAction();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.kieler.scc.model.scctext.sccexp.EntryActionDeclaration#getEntryActionDeclaration <em>Entry Action Declaration</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.kieler.scc.model.scctext.sccexp.InsideAction#getEffect <em>Effect</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Entry Action Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.EntryActionDeclaration#getEntryActionDeclaration()
-   * @see #getEntryActionDeclaration()
+   * @return the meta object for the containment reference '<em>Effect</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.InsideAction#getEffect()
+   * @see #getInsideAction()
    * @generated
    */
-  EReference getEntryActionDeclaration_EntryActionDeclaration();
+  EReference getInsideAction_Effect();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.ActionVariableDeclaration <em>Action Variable Declaration</em>}'.
+   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.EntryAction <em>Entry Action</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Action Variable Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.ActionVariableDeclaration
+   * @return the meta object for class '<em>Entry Action</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.EntryAction
    * @generated
    */
-  EClass getActionVariableDeclaration();
+  EClass getEntryAction();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.ActionVariableDeclaration#getName <em>Name</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.kieler.scc.model.scctext.sccexp.EntryAction#getEffect <em>Effect</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.ActionVariableDeclaration#getName()
-   * @see #getActionVariableDeclaration()
+   * @return the meta object for the containment reference '<em>Effect</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.EntryAction#getEffect()
+   * @see #getEntryAction()
    * @generated
    */
-  EAttribute getActionVariableDeclaration_Name();
+  EReference getEntryAction_Effect();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.SuspendDeclaration <em>Suspend Declaration</em>}'.
+   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.Suspend <em>Suspend</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Suspend Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.SuspendDeclaration
+   * @return the meta object for class '<em>Suspend</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Suspend
    * @generated
    */
-  EClass getSuspendDeclaration();
+  EClass getSuspend();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.kieler.scc.model.scctext.sccexp.SuspendDeclaration#getSuspendDeclaration <em>Suspend Declaration</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.kieler.scc.model.scctext.sccexp.Suspend#getTrigger <em>Trigger</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Suspend Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.SuspendDeclaration#getSuspendDeclaration()
-   * @see #getSuspendDeclaration()
+   * @return the meta object for the containment reference '<em>Trigger</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Suspend#getTrigger()
+   * @see #getSuspend()
    * @generated
    */
-  EReference getSuspendDeclaration_SuspendDeclaration();
+  EReference getSuspend_Trigger();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.SuspendVariableDeclaration <em>Suspend Variable Declaration</em>}'.
+   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.Trigger <em>Trigger</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Suspend Variable Declaration</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.SuspendVariableDeclaration
+   * @return the meta object for class '<em>Trigger</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Trigger
    * @generated
    */
-  EClass getSuspendVariableDeclaration();
+  EClass getTrigger();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.SuspendVariableDeclaration#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.Trigger#isIsImmediate <em>Is Immediate</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.SuspendVariableDeclaration#getName()
-   * @see #getSuspendVariableDeclaration()
+   * @return the meta object for the attribute '<em>Is Immediate</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Trigger#isIsImmediate()
+   * @see #getTrigger()
    * @generated
    */
-  EAttribute getSuspendVariableDeclaration_Name();
+  EAttribute getTrigger_IsImmediate();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.TransitionReaction <em>Transition Reaction</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.Trigger#getDelay <em>Delay</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Transition Reaction</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.TransitionReaction
+   * @return the meta object for the attribute '<em>Delay</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Trigger#getDelay()
+   * @see #getTrigger()
    * @generated
    */
-  EClass getTransitionReaction();
+  EAttribute getTrigger_Delay();
 
   /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.Local <em>Local</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.kieler.scc.model.scctext.sccexp.Trigger#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Local</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Local
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Trigger#getExpression()
+   * @see #getTrigger()
    * @generated
    */
-  EClass getLocal();
+  EReference getTrigger_Expression();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.Local#getName <em>Name</em>}'.
+   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.Effect <em>Effect</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Local#getName()
-   * @see #getLocal()
+   * @return the meta object for class '<em>Effect</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Effect
    * @generated
    */
-  EAttribute getLocal_Name();
+  EClass getEffect();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.kieler.scc.model.scctext.sccexp.Local#getType <em>Type</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.kieler.scc.model.scctext.sccexp.Effect#getActions <em>Actions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Type</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Local#getType()
-   * @see #getLocal()
+   * @return the meta object for the containment reference list '<em>Actions</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.Effect#getActions()
+   * @see #getEffect()
    * @generated
    */
-  EReference getLocal_Type();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.kieler.scc.model.scctext.sccexp.Local#getInitialValue <em>Initial Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Initial Value</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Local#getInitialValue()
-   * @see #getLocal()
-   * @generated
-   */
-  EReference getLocal_InitialValue();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.Local#getOperator <em>Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Operator</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Local#getOperator()
-   * @see #getLocal()
-   * @generated
-   */
-  EAttribute getLocal_Operator();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.Input <em>Input</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Input</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Input
-   * @generated
-   */
-  EClass getInput();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.Input#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Input#getName()
-   * @see #getInput()
-   * @generated
-   */
-  EAttribute getInput_Name();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.kieler.scc.model.scctext.sccexp.Input#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Type</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Input#getType()
-   * @see #getInput()
-   * @generated
-   */
-  EReference getInput_Type();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.kieler.scc.model.scctext.sccexp.Input#getInitialValue <em>Initial Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Initial Value</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Input#getInitialValue()
-   * @see #getInput()
-   * @generated
-   */
-  EReference getInput_InitialValue();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.Input#getOperator <em>Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Operator</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Input#getOperator()
-   * @see #getInput()
-   * @generated
-   */
-  EAttribute getInput_Operator();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.Output <em>Output</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Output</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Output
-   * @generated
-   */
-  EClass getOutput();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.Output#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Output#getName()
-   * @see #getOutput()
-   * @generated
-   */
-  EAttribute getOutput_Name();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.kieler.scc.model.scctext.sccexp.Output#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Type</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Output#getType()
-   * @see #getOutput()
-   * @generated
-   */
-  EReference getOutput_Type();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.Output#getOperator <em>Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Operator</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.Output#getOperator()
-   * @see #getOutput()
-   * @generated
-   */
-  EAttribute getOutput_Operator();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.InOut <em>In Out</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>In Out</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InOut
-   * @generated
-   */
-  EClass getInOut();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.InOut#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InOut#getName()
-   * @see #getInOut()
-   * @generated
-   */
-  EAttribute getInOut_Name();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.kieler.scc.model.scctext.sccexp.InOut#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Type</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InOut#getType()
-   * @see #getInOut()
-   * @generated
-   */
-  EReference getInOut_Type();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.kieler.scc.model.scctext.sccexp.InOut#getInitialValue <em>Initial Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Initial Value</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InOut#getInitialValue()
-   * @see #getInOut()
-   * @generated
-   */
-  EReference getInOut_InitialValue();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.kieler.scc.model.scctext.sccexp.InOut#getOperator <em>Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Operator</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.InOut#getOperator()
-   * @see #getInOut()
-   * @generated
-   */
-  EAttribute getInOut_Operator();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.kieler.scc.model.scctext.sccexp.MyTrigger <em>My Trigger</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>My Trigger</em>'.
-   * @see de.cau.kieler.scc.model.scctext.sccexp.MyTrigger
-   * @generated
-   */
-  EClass getMyTrigger();
+  EReference getEffect_Actions();
 
   /**
    * Returns the meta object for enum '{@link de.cau.kieler.scc.model.scctext.sccexp.CombineOperator <em>Combine Operator</em>}'.
@@ -1655,6 +874,16 @@ public interface SccexpPackage extends EPackage
    * @generated
    */
   EEnum getCombineOperator();
+
+  /**
+   * Returns the meta object for enum '{@link de.cau.kieler.scc.model.scctext.sccexp.VarDirection <em>Var Direction</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>Var Direction</em>'.
+   * @see de.cau.kieler.scc.model.scctext.sccexp.VarDirection
+   * @generated
+   */
+  EEnum getVarDirection();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1680,72 +909,22 @@ public interface SccexpPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.RootImpl <em>Root</em>}' class.
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.StateSpecificationImpl <em>State Specification</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.RootImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getRoot()
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.StateSpecificationImpl
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateSpecification()
      * @generated
      */
-    EClass ROOT = eINSTANCE.getRoot();
+    EClass STATE_SPECIFICATION = eINSTANCE.getStateSpecification();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.DefRootImpl <em>Def Root</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.DefRootImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getDefRoot()
-     * @generated
-     */
-    EClass DEF_ROOT = eINSTANCE.getDefRoot();
-
-    /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.StateRootImpl <em>State Root</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.StateRootImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateRoot()
-     * @generated
-     */
-    EClass STATE_ROOT = eINSTANCE.getStateRoot();
-
-    /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionRootImpl <em>Transition Root</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionRootImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getTransitionRoot()
-     * @generated
-     */
-    EClass TRANSITION_ROOT = eINSTANCE.getTransitionRoot();
-
-    /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.StateScopeImpl <em>State Scope</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.StateScopeImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateScope()
-     * @generated
-     */
-    EClass STATE_SCOPE = eINSTANCE.getStateScope();
-
-    /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InterfaceScopeRootImpl <em>Interface Scope Root</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InterfaceScopeRootImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInterfaceScopeRoot()
-     * @generated
-     */
-    EClass INTERFACE_SCOPE_ROOT = eINSTANCE.getInterfaceScopeRoot();
-
-    /**
-     * The meta object literal for the '<em><b>Interface Scope</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Scopes</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference INTERFACE_SCOPE_ROOT__INTERFACE_SCOPE = eINSTANCE.getInterfaceScopeRoot_InterfaceScope();
+    EReference STATE_SPECIFICATION__SCOPES = eINSTANCE.getStateSpecification_Scopes();
 
     /**
      * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InterfaceScopeImpl <em>Interface Scope</em>}' class.
@@ -1758,370 +937,214 @@ public interface SccexpPackage extends EPackage
     EClass INTERFACE_SCOPE = eINSTANCE.getInterfaceScope();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InterfaceDeclarationImpl <em>Interface Declaration</em>}' class.
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InterfaceDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInterfaceDeclaration()
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.VariableDefinitionImpl
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getVariableDefinition()
      * @generated
      */
-    EClass INTERFACE_DECLARATION = eINSTANCE.getInterfaceDeclaration();
+    EClass VARIABLE_DEFINITION = eINSTANCE.getVariableDefinition();
 
     /**
-     * The meta object literal for the '<em><b>Declaration</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Direction</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference INTERFACE_DECLARATION__DECLARATION = eINSTANCE.getInterfaceDeclaration_Declaration();
+    EAttribute VARIABLE_DEFINITION__DIRECTION = eINSTANCE.getVariableDefinition_Direction();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.SCCVariableDeclarationImpl <em>SCC Variable Declaration</em>}' class.
+     * The meta object literal for the '<em><b>Is Static</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SCCVariableDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSCCVariableDeclaration()
      * @generated
      */
-    EClass SCC_VARIABLE_DECLARATION = eINSTANCE.getSCCVariableDeclaration();
+    EAttribute VARIABLE_DEFINITION__IS_STATIC = eINSTANCE.getVariableDefinition_IsStatic();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.LocalVariableDeclarationImpl <em>Local Variable Declaration</em>}' class.
+     * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.LocalVariableDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getLocalVariableDeclaration()
      * @generated
      */
-    EClass LOCAL_VARIABLE_DECLARATION = eINSTANCE.getLocalVariableDeclaration();
+    EAttribute VARIABLE_DEFINITION__VAR_NAME = eINSTANCE.getVariableDefinition_VarName();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InOutVariableDeclarationImpl <em>In Out Variable Declaration</em>}' class.
+     * The meta object literal for the '<em><b>Var Type</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InOutVariableDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInOutVariableDeclaration()
      * @generated
      */
-    EClass IN_OUT_VARIABLE_DECLARATION = eINSTANCE.getInOutVariableDeclaration();
+    EReference VARIABLE_DEFINITION__VAR_TYPE = eINSTANCE.getVariableDefinition_VarType();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.OutputVariableeclarationImpl <em>Output Variableeclaration</em>}' class.
+     * The meta object literal for the '<em><b>Var Initial Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.OutputVariableeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getOutputVariableeclaration()
      * @generated
      */
-    EClass OUTPUT_VARIABLEECLARATION = eINSTANCE.getOutputVariableeclaration();
+    EReference VARIABLE_DEFINITION__VAR_INITIAL_VALUE = eINSTANCE.getVariableDefinition_VarInitialValue();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InputVariableDeclarationImpl <em>Input Variable Declaration</em>}' class.
+     * The meta object literal for the '<em><b>Var Combine Operator</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InputVariableDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInputVariableDeclaration()
      * @generated
      */
-    EClass INPUT_VARIABLE_DECLARATION = eINSTANCE.getInputVariableDeclaration();
+    EAttribute VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = eINSTANCE.getVariableDefinition_VarCombineOperator();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.ActionDeclarationImpl <em>Action Declaration</em>}' class.
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.ReactionScopeImpl <em>Reaction Scope</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.ActionDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getActionDeclaration()
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.ReactionScopeImpl
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionScope()
      * @generated
      */
-    EClass ACTION_DECLARATION = eINSTANCE.getActionDeclaration();
+    EClass REACTION_SCOPE = eINSTANCE.getReactionScope();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.ExitActionDeclarationImpl <em>Exit Action Declaration</em>}' class.
+     * The meta object literal for the '<em><b>Reaction Scope</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.ExitActionDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getExitActionDeclaration()
      * @generated
      */
-    EClass EXIT_ACTION_DECLARATION = eINSTANCE.getExitActionDeclaration();
+    EReference REACTION_SCOPE__REACTION_SCOPE = eINSTANCE.getReactionScope_ReactionScope();
 
     /**
-     * The meta object literal for the '<em><b>Exit Action Declaration</b></em>' containment reference list feature.
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionImpl <em>Transition</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionImpl
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getTransition()
      * @generated
      */
-    EReference EXIT_ACTION_DECLARATION__EXIT_ACTION_DECLARATION = eINSTANCE.getExitActionDeclaration_ExitActionDeclaration();
+    EClass TRANSITION = eINSTANCE.getTransition();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InsideActionDeclarationImpl <em>Inside Action Declaration</em>}' class.
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.ExitActionImpl <em>Exit Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InsideActionDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInsideActionDeclaration()
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.ExitActionImpl
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getExitAction()
      * @generated
      */
-    EClass INSIDE_ACTION_DECLARATION = eINSTANCE.getInsideActionDeclaration();
+    EClass EXIT_ACTION = eINSTANCE.getExitAction();
 
     /**
-     * The meta object literal for the '<em><b>Inside Action Declaration</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Effect</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference INSIDE_ACTION_DECLARATION__INSIDE_ACTION_DECLARATION = eINSTANCE.getInsideActionDeclaration_InsideActionDeclaration();
+    EReference EXIT_ACTION__EFFECT = eINSTANCE.getExitAction_Effect();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.EntryActionDeclarationImpl <em>Entry Action Declaration</em>}' class.
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InsideActionImpl <em>Inside Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.EntryActionDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEntryActionDeclaration()
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InsideActionImpl
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInsideAction()
      * @generated
      */
-    EClass ENTRY_ACTION_DECLARATION = eINSTANCE.getEntryActionDeclaration();
+    EClass INSIDE_ACTION = eINSTANCE.getInsideAction();
 
     /**
-     * The meta object literal for the '<em><b>Entry Action Declaration</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Effect</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ENTRY_ACTION_DECLARATION__ENTRY_ACTION_DECLARATION = eINSTANCE.getEntryActionDeclaration_EntryActionDeclaration();
+    EReference INSIDE_ACTION__EFFECT = eINSTANCE.getInsideAction_Effect();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.ActionVariableDeclarationImpl <em>Action Variable Declaration</em>}' class.
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.EntryActionImpl <em>Entry Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.ActionVariableDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getActionVariableDeclaration()
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.EntryActionImpl
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEntryAction()
      * @generated
      */
-    EClass ACTION_VARIABLE_DECLARATION = eINSTANCE.getActionVariableDeclaration();
+    EClass ENTRY_ACTION = eINSTANCE.getEntryAction();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Effect</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ACTION_VARIABLE_DECLARATION__NAME = eINSTANCE.getActionVariableDeclaration_Name();
+    EReference ENTRY_ACTION__EFFECT = eINSTANCE.getEntryAction_Effect();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendDeclarationImpl <em>Suspend Declaration</em>}' class.
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendImpl <em>Suspend</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSuspendDeclaration()
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendImpl
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSuspend()
      * @generated
      */
-    EClass SUSPEND_DECLARATION = eINSTANCE.getSuspendDeclaration();
+    EClass SUSPEND = eINSTANCE.getSuspend();
 
     /**
-     * The meta object literal for the '<em><b>Suspend Declaration</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SUSPEND_DECLARATION__SUSPEND_DECLARATION = eINSTANCE.getSuspendDeclaration_SuspendDeclaration();
+    EReference SUSPEND__TRIGGER = eINSTANCE.getSuspend_Trigger();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendVariableDeclarationImpl <em>Suspend Variable Declaration</em>}' class.
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.TriggerImpl <em>Trigger</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SuspendVariableDeclarationImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSuspendVariableDeclaration()
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.TriggerImpl
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getTrigger()
      * @generated
      */
-    EClass SUSPEND_VARIABLE_DECLARATION = eINSTANCE.getSuspendVariableDeclaration();
+    EClass TRIGGER = eINSTANCE.getTrigger();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SUSPEND_VARIABLE_DECLARATION__NAME = eINSTANCE.getSuspendVariableDeclaration_Name();
+    EAttribute TRIGGER__IS_IMMEDIATE = eINSTANCE.getTrigger_IsImmediate();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionReactionImpl <em>Transition Reaction</em>}' class.
+     * The meta object literal for the '<em><b>Delay</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.TransitionReactionImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getTransitionReaction()
      * @generated
      */
-    EClass TRANSITION_REACTION = eINSTANCE.getTransitionReaction();
+    EAttribute TRIGGER__DELAY = eINSTANCE.getTrigger_Delay();
 
     /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.LocalImpl <em>Local</em>}' class.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.LocalImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getLocal()
      * @generated
      */
-    EClass LOCAL = eINSTANCE.getLocal();
+    EReference TRIGGER__EXPRESSION = eINSTANCE.getTrigger_Expression();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.EffectImpl <em>Effect</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.EffectImpl
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEffect()
      * @generated
      */
-    EAttribute LOCAL__NAME = eINSTANCE.getLocal_Name();
+    EClass EFFECT = eINSTANCE.getEffect();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LOCAL__TYPE = eINSTANCE.getLocal_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference LOCAL__INITIAL_VALUE = eINSTANCE.getLocal_InitialValue();
-
-    /**
-     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute LOCAL__OPERATOR = eINSTANCE.getLocal_Operator();
-
-    /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InputImpl <em>Input</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InputImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInput()
-     * @generated
-     */
-    EClass INPUT = eINSTANCE.getInput();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute INPUT__NAME = eINSTANCE.getInput_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference INPUT__TYPE = eINSTANCE.getInput_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference INPUT__INITIAL_VALUE = eINSTANCE.getInput_InitialValue();
-
-    /**
-     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute INPUT__OPERATOR = eINSTANCE.getInput_Operator();
-
-    /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.OutputImpl <em>Output</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.OutputImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getOutput()
-     * @generated
-     */
-    EClass OUTPUT = eINSTANCE.getOutput();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute OUTPUT__NAME = eINSTANCE.getOutput_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference OUTPUT__TYPE = eINSTANCE.getOutput_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute OUTPUT__OPERATOR = eINSTANCE.getOutput_Operator();
-
-    /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.InOutImpl <em>In Out</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.InOutImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInOut()
-     * @generated
-     */
-    EClass IN_OUT = eINSTANCE.getInOut();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute IN_OUT__NAME = eINSTANCE.getInOut_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference IN_OUT__TYPE = eINSTANCE.getInOut_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference IN_OUT__INITIAL_VALUE = eINSTANCE.getInOut_InitialValue();
-
-    /**
-     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute IN_OUT__OPERATOR = eINSTANCE.getInOut_Operator();
-
-    /**
-     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.impl.MyTriggerImpl <em>My Trigger</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.MyTriggerImpl
-     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getMyTrigger()
-     * @generated
-     */
-    EClass MY_TRIGGER = eINSTANCE.getMyTrigger();
+    EReference EFFECT__ACTIONS = eINSTANCE.getEffect_Actions();
 
     /**
      * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.CombineOperator <em>Combine Operator</em>}' enum.
@@ -2132,6 +1155,16 @@ public interface SccexpPackage extends EPackage
      * @generated
      */
     EEnum COMBINE_OPERATOR = eINSTANCE.getCombineOperator();
+
+    /**
+     * The meta object literal for the '{@link de.cau.kieler.scc.model.scctext.sccexp.VarDirection <em>Var Direction</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.kieler.scc.model.scctext.sccexp.VarDirection
+     * @see de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getVarDirection()
+     * @generated
+     */
+    EEnum VAR_DIRECTION = eINSTANCE.getVarDirection();
 
   }
 

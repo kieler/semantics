@@ -2,35 +2,21 @@
  */
 package de.cau.kieler.scc.model.scctext.sccexp.impl;
 
-import de.cau.kieler.scc.model.scctext.sccexp.ActionDeclaration;
-import de.cau.kieler.scc.model.scctext.sccexp.ActionVariableDeclaration;
 import de.cau.kieler.scc.model.scctext.sccexp.CombineOperator;
-import de.cau.kieler.scc.model.scctext.sccexp.DefRoot;
-import de.cau.kieler.scc.model.scctext.sccexp.EntryActionDeclaration;
-import de.cau.kieler.scc.model.scctext.sccexp.ExitActionDeclaration;
-import de.cau.kieler.scc.model.scctext.sccexp.InOut;
-import de.cau.kieler.scc.model.scctext.sccexp.InOutVariableDeclaration;
-import de.cau.kieler.scc.model.scctext.sccexp.Input;
-import de.cau.kieler.scc.model.scctext.sccexp.InputVariableDeclaration;
-import de.cau.kieler.scc.model.scctext.sccexp.InsideActionDeclaration;
-import de.cau.kieler.scc.model.scctext.sccexp.InterfaceDeclaration;
+import de.cau.kieler.scc.model.scctext.sccexp.Effect;
+import de.cau.kieler.scc.model.scctext.sccexp.EntryAction;
+import de.cau.kieler.scc.model.scctext.sccexp.ExitAction;
+import de.cau.kieler.scc.model.scctext.sccexp.InsideAction;
 import de.cau.kieler.scc.model.scctext.sccexp.InterfaceScope;
-import de.cau.kieler.scc.model.scctext.sccexp.InterfaceScopeRoot;
-import de.cau.kieler.scc.model.scctext.sccexp.Local;
-import de.cau.kieler.scc.model.scctext.sccexp.LocalVariableDeclaration;
-import de.cau.kieler.scc.model.scctext.sccexp.MyTrigger;
-import de.cau.kieler.scc.model.scctext.sccexp.Output;
-import de.cau.kieler.scc.model.scctext.sccexp.OutputVariableeclaration;
-import de.cau.kieler.scc.model.scctext.sccexp.Root;
-import de.cau.kieler.scc.model.scctext.sccexp.SCCVariableDeclaration;
+import de.cau.kieler.scc.model.scctext.sccexp.ReactionScope;
 import de.cau.kieler.scc.model.scctext.sccexp.SccexpFactory;
 import de.cau.kieler.scc.model.scctext.sccexp.SccexpPackage;
-import de.cau.kieler.scc.model.scctext.sccexp.StateRoot;
-import de.cau.kieler.scc.model.scctext.sccexp.StateScope;
-import de.cau.kieler.scc.model.scctext.sccexp.SuspendDeclaration;
-import de.cau.kieler.scc.model.scctext.sccexp.SuspendVariableDeclaration;
-import de.cau.kieler.scc.model.scctext.sccexp.TransitionReaction;
-import de.cau.kieler.scc.model.scctext.sccexp.TransitionRoot;
+import de.cau.kieler.scc.model.scctext.sccexp.StateSpecification;
+import de.cau.kieler.scc.model.scctext.sccexp.Suspend;
+import de.cau.kieler.scc.model.scctext.sccexp.Transition;
+import de.cau.kieler.scc.model.scctext.sccexp.Trigger;
+import de.cau.kieler.scc.model.scctext.sccexp.VarDirection;
+import de.cau.kieler.scc.model.scctext.sccexp.VariableDefinition;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -59,42 +45,7 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass rootEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass defRootEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass stateRootEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass transitionRootEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass stateScopeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass interfaceScopeRootEClass = null;
+  private EClass stateSpecificationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -108,133 +59,63 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass interfaceDeclarationEClass = null;
+  private EClass variableDefinitionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass sccVariableDeclarationEClass = null;
+  private EClass reactionScopeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass localVariableDeclarationEClass = null;
+  private EClass transitionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass inOutVariableDeclarationEClass = null;
+  private EClass exitActionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass outputVariableeclarationEClass = null;
+  private EClass insideActionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass inputVariableDeclarationEClass = null;
+  private EClass entryActionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass actionDeclarationEClass = null;
+  private EClass suspendEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass exitActionDeclarationEClass = null;
+  private EClass triggerEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass insideActionDeclarationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass entryActionDeclarationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass actionVariableDeclarationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass suspendDeclarationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass suspendVariableDeclarationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass transitionReactionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass localEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass inputEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass outputEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass inOutEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass myTriggerEClass = null;
+  private EClass effectEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -242,6 +123,13 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * @generated
    */
   private EEnum combineOperatorEEnum = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum varDirectionEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -314,9 +202,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getRoot()
+  public EClass getStateSpecification()
   {
-    return rootEClass;
+    return stateSpecificationEClass;
   }
 
   /**
@@ -324,59 +212,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getDefRoot()
+  public EReference getStateSpecification_Scopes()
   {
-    return defRootEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getStateRoot()
-  {
-    return stateRootEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getTransitionRoot()
-  {
-    return transitionRootEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getStateScope()
-  {
-    return stateScopeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getInterfaceScopeRoot()
-  {
-    return interfaceScopeRootEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getInterfaceScopeRoot_InterfaceScope()
-  {
-    return (EReference)interfaceScopeRootEClass.getEStructuralFeatures().get(0);
+    return (EReference)stateSpecificationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -394,9 +232,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getInterfaceDeclaration()
+  public EClass getVariableDefinition()
   {
-    return interfaceDeclarationEClass;
+    return variableDefinitionEClass;
   }
 
   /**
@@ -404,9 +242,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getInterfaceDeclaration_Declaration()
+  public EAttribute getVariableDefinition_Direction()
   {
-    return (EReference)interfaceDeclarationEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -414,9 +252,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSCCVariableDeclaration()
+  public EAttribute getVariableDefinition_IsStatic()
   {
-    return sccVariableDeclarationEClass;
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -424,9 +262,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getLocalVariableDeclaration()
+  public EAttribute getVariableDefinition_VarName()
   {
-    return localVariableDeclarationEClass;
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -434,9 +272,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getInOutVariableDeclaration()
+  public EReference getVariableDefinition_VarType()
   {
-    return inOutVariableDeclarationEClass;
+    return (EReference)variableDefinitionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -444,9 +282,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getOutputVariableeclaration()
+  public EReference getVariableDefinition_VarInitialValue()
   {
-    return outputVariableeclarationEClass;
+    return (EReference)variableDefinitionEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -454,9 +292,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getInputVariableDeclaration()
+  public EAttribute getVariableDefinition_VarCombineOperator()
   {
-    return inputVariableDeclarationEClass;
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -464,9 +302,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getActionDeclaration()
+  public EClass getReactionScope()
   {
-    return actionDeclarationEClass;
+    return reactionScopeEClass;
   }
 
   /**
@@ -474,9 +312,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getExitActionDeclaration()
+  public EReference getReactionScope_ReactionScope()
   {
-    return exitActionDeclarationEClass;
+    return (EReference)reactionScopeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -484,9 +322,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExitActionDeclaration_ExitActionDeclaration()
+  public EClass getTransition()
   {
-    return (EReference)exitActionDeclarationEClass.getEStructuralFeatures().get(0);
+    return transitionEClass;
   }
 
   /**
@@ -494,9 +332,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getInsideActionDeclaration()
+  public EClass getExitAction()
   {
-    return insideActionDeclarationEClass;
+    return exitActionEClass;
   }
 
   /**
@@ -504,9 +342,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getInsideActionDeclaration_InsideActionDeclaration()
+  public EReference getExitAction_Effect()
   {
-    return (EReference)insideActionDeclarationEClass.getEStructuralFeatures().get(0);
+    return (EReference)exitActionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -514,9 +352,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getEntryActionDeclaration()
+  public EClass getInsideAction()
   {
-    return entryActionDeclarationEClass;
+    return insideActionEClass;
   }
 
   /**
@@ -524,9 +362,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getEntryActionDeclaration_EntryActionDeclaration()
+  public EReference getInsideAction_Effect()
   {
-    return (EReference)entryActionDeclarationEClass.getEStructuralFeatures().get(0);
+    return (EReference)insideActionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -534,9 +372,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getActionVariableDeclaration()
+  public EClass getEntryAction()
   {
-    return actionVariableDeclarationEClass;
+    return entryActionEClass;
   }
 
   /**
@@ -544,9 +382,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getActionVariableDeclaration_Name()
+  public EReference getEntryAction_Effect()
   {
-    return (EAttribute)actionVariableDeclarationEClass.getEStructuralFeatures().get(0);
+    return (EReference)entryActionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -554,9 +392,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSuspendDeclaration()
+  public EClass getSuspend()
   {
-    return suspendDeclarationEClass;
+    return suspendEClass;
   }
 
   /**
@@ -564,9 +402,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSuspendDeclaration_SuspendDeclaration()
+  public EReference getSuspend_Trigger()
   {
-    return (EReference)suspendDeclarationEClass.getEStructuralFeatures().get(0);
+    return (EReference)suspendEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -574,9 +412,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSuspendVariableDeclaration()
+  public EClass getTrigger()
   {
-    return suspendVariableDeclarationEClass;
+    return triggerEClass;
   }
 
   /**
@@ -584,9 +422,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSuspendVariableDeclaration_Name()
+  public EAttribute getTrigger_IsImmediate()
   {
-    return (EAttribute)suspendVariableDeclarationEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)triggerEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -594,9 +432,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getTransitionReaction()
+  public EAttribute getTrigger_Delay()
   {
-    return transitionReactionEClass;
+    return (EAttribute)triggerEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -604,9 +442,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getLocal()
+  public EReference getTrigger_Expression()
   {
-    return localEClass;
+    return (EReference)triggerEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -614,9 +452,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getLocal_Name()
+  public EClass getEffect()
   {
-    return (EAttribute)localEClass.getEStructuralFeatures().get(0);
+    return effectEClass;
   }
 
   /**
@@ -624,179 +462,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getLocal_Type()
+  public EReference getEffect_Actions()
   {
-    return (EReference)localEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getLocal_InitialValue()
-  {
-    return (EReference)localEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getLocal_Operator()
-  {
-    return (EAttribute)localEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getInput()
-  {
-    return inputEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getInput_Name()
-  {
-    return (EAttribute)inputEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getInput_Type()
-  {
-    return (EReference)inputEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getInput_InitialValue()
-  {
-    return (EReference)inputEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getInput_Operator()
-  {
-    return (EAttribute)inputEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getOutput()
-  {
-    return outputEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getOutput_Name()
-  {
-    return (EAttribute)outputEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getOutput_Type()
-  {
-    return (EReference)outputEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getOutput_Operator()
-  {
-    return (EAttribute)outputEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getInOut()
-  {
-    return inOutEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getInOut_Name()
-  {
-    return (EAttribute)inOutEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getInOut_Type()
-  {
-    return (EReference)inOutEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getInOut_InitialValue()
-  {
-    return (EReference)inOutEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getInOut_Operator()
-  {
-    return (EAttribute)inOutEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getMyTrigger()
-  {
-    return myTriggerEClass;
+    return (EReference)effectEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -807,6 +475,16 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
   public EEnum getCombineOperator()
   {
     return combineOperatorEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EEnum getVarDirection()
+  {
+    return varDirectionEEnum;
   }
 
   /**
@@ -839,83 +517,47 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
     isCreated = true;
 
     // Create classes and their features
-    rootEClass = createEClass(ROOT);
-
-    defRootEClass = createEClass(DEF_ROOT);
-
-    stateRootEClass = createEClass(STATE_ROOT);
-
-    transitionRootEClass = createEClass(TRANSITION_ROOT);
-
-    stateScopeEClass = createEClass(STATE_SCOPE);
-
-    interfaceScopeRootEClass = createEClass(INTERFACE_SCOPE_ROOT);
-    createEReference(interfaceScopeRootEClass, INTERFACE_SCOPE_ROOT__INTERFACE_SCOPE);
+    stateSpecificationEClass = createEClass(STATE_SPECIFICATION);
+    createEReference(stateSpecificationEClass, STATE_SPECIFICATION__SCOPES);
 
     interfaceScopeEClass = createEClass(INTERFACE_SCOPE);
 
-    interfaceDeclarationEClass = createEClass(INTERFACE_DECLARATION);
-    createEReference(interfaceDeclarationEClass, INTERFACE_DECLARATION__DECLARATION);
+    variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__DIRECTION);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_STATIC);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_NAME);
+    createEReference(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_TYPE);
+    createEReference(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_INITIAL_VALUE);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR);
 
-    sccVariableDeclarationEClass = createEClass(SCC_VARIABLE_DECLARATION);
+    reactionScopeEClass = createEClass(REACTION_SCOPE);
+    createEReference(reactionScopeEClass, REACTION_SCOPE__REACTION_SCOPE);
 
-    localVariableDeclarationEClass = createEClass(LOCAL_VARIABLE_DECLARATION);
+    transitionEClass = createEClass(TRANSITION);
 
-    inOutVariableDeclarationEClass = createEClass(IN_OUT_VARIABLE_DECLARATION);
+    exitActionEClass = createEClass(EXIT_ACTION);
+    createEReference(exitActionEClass, EXIT_ACTION__EFFECT);
 
-    outputVariableeclarationEClass = createEClass(OUTPUT_VARIABLEECLARATION);
+    insideActionEClass = createEClass(INSIDE_ACTION);
+    createEReference(insideActionEClass, INSIDE_ACTION__EFFECT);
 
-    inputVariableDeclarationEClass = createEClass(INPUT_VARIABLE_DECLARATION);
+    entryActionEClass = createEClass(ENTRY_ACTION);
+    createEReference(entryActionEClass, ENTRY_ACTION__EFFECT);
 
-    actionDeclarationEClass = createEClass(ACTION_DECLARATION);
+    suspendEClass = createEClass(SUSPEND);
+    createEReference(suspendEClass, SUSPEND__TRIGGER);
 
-    exitActionDeclarationEClass = createEClass(EXIT_ACTION_DECLARATION);
-    createEReference(exitActionDeclarationEClass, EXIT_ACTION_DECLARATION__EXIT_ACTION_DECLARATION);
+    triggerEClass = createEClass(TRIGGER);
+    createEAttribute(triggerEClass, TRIGGER__IS_IMMEDIATE);
+    createEAttribute(triggerEClass, TRIGGER__DELAY);
+    createEReference(triggerEClass, TRIGGER__EXPRESSION);
 
-    insideActionDeclarationEClass = createEClass(INSIDE_ACTION_DECLARATION);
-    createEReference(insideActionDeclarationEClass, INSIDE_ACTION_DECLARATION__INSIDE_ACTION_DECLARATION);
-
-    entryActionDeclarationEClass = createEClass(ENTRY_ACTION_DECLARATION);
-    createEReference(entryActionDeclarationEClass, ENTRY_ACTION_DECLARATION__ENTRY_ACTION_DECLARATION);
-
-    actionVariableDeclarationEClass = createEClass(ACTION_VARIABLE_DECLARATION);
-    createEAttribute(actionVariableDeclarationEClass, ACTION_VARIABLE_DECLARATION__NAME);
-
-    suspendDeclarationEClass = createEClass(SUSPEND_DECLARATION);
-    createEReference(suspendDeclarationEClass, SUSPEND_DECLARATION__SUSPEND_DECLARATION);
-
-    suspendVariableDeclarationEClass = createEClass(SUSPEND_VARIABLE_DECLARATION);
-    createEAttribute(suspendVariableDeclarationEClass, SUSPEND_VARIABLE_DECLARATION__NAME);
-
-    transitionReactionEClass = createEClass(TRANSITION_REACTION);
-
-    localEClass = createEClass(LOCAL);
-    createEAttribute(localEClass, LOCAL__NAME);
-    createEReference(localEClass, LOCAL__TYPE);
-    createEReference(localEClass, LOCAL__INITIAL_VALUE);
-    createEAttribute(localEClass, LOCAL__OPERATOR);
-
-    inputEClass = createEClass(INPUT);
-    createEAttribute(inputEClass, INPUT__NAME);
-    createEReference(inputEClass, INPUT__TYPE);
-    createEReference(inputEClass, INPUT__INITIAL_VALUE);
-    createEAttribute(inputEClass, INPUT__OPERATOR);
-
-    outputEClass = createEClass(OUTPUT);
-    createEAttribute(outputEClass, OUTPUT__NAME);
-    createEReference(outputEClass, OUTPUT__TYPE);
-    createEAttribute(outputEClass, OUTPUT__OPERATOR);
-
-    inOutEClass = createEClass(IN_OUT);
-    createEAttribute(inOutEClass, IN_OUT__NAME);
-    createEReference(inOutEClass, IN_OUT__TYPE);
-    createEReference(inOutEClass, IN_OUT__INITIAL_VALUE);
-    createEAttribute(inOutEClass, IN_OUT__OPERATOR);
-
-    myTriggerEClass = createEClass(MY_TRIGGER);
+    effectEClass = createEClass(EFFECT);
+    createEReference(effectEClass, EFFECT__ACTIONS);
 
     // Create enums
     combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
+    varDirectionEEnum = createEEnum(VAR_DIRECTION);
   }
 
   /**
@@ -952,107 +594,58 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    rootEClass.getESuperTypes().add(theStextPackage.getRoot());
-    defRootEClass.getESuperTypes().add(theStextPackage.getDefRoot());
-    stateRootEClass.getESuperTypes().add(this.getDefRoot());
-    stateRootEClass.getESuperTypes().add(theStextPackage.getStateRoot());
-    transitionRootEClass.getESuperTypes().add(this.getDefRoot());
-    transitionRootEClass.getESuperTypes().add(theStextPackage.getTransitionRoot());
-    stateScopeEClass.getESuperTypes().add(theSGraphPackage.getScope());
-    interfaceScopeRootEClass.getESuperTypes().add(this.getStateScope());
+    stateSpecificationEClass.getESuperTypes().add(theStextPackage.getStateSpecification());
+    interfaceScopeEClass.getESuperTypes().add(theSGraphPackage.getScope());
     interfaceScopeEClass.getESuperTypes().add(theStextPackage.getInterfaceScope());
-    interfaceDeclarationEClass.getESuperTypes().add(this.getInterfaceScope());
-    localVariableDeclarationEClass.getESuperTypes().add(this.getSCCVariableDeclaration());
-    inOutVariableDeclarationEClass.getESuperTypes().add(this.getSCCVariableDeclaration());
-    outputVariableeclarationEClass.getESuperTypes().add(this.getSCCVariableDeclaration());
-    inputVariableDeclarationEClass.getESuperTypes().add(this.getSCCVariableDeclaration());
-    actionDeclarationEClass.getESuperTypes().add(this.getInterfaceScope());
-    exitActionDeclarationEClass.getESuperTypes().add(this.getActionDeclaration());
-    insideActionDeclarationEClass.getESuperTypes().add(this.getActionDeclaration());
-    entryActionDeclarationEClass.getESuperTypes().add(this.getActionDeclaration());
-    suspendDeclarationEClass.getESuperTypes().add(this.getInterfaceScope());
-    transitionReactionEClass.getESuperTypes().add(theStextPackage.getTransitionReaction());
-    localEClass.getESuperTypes().add(this.getLocalVariableDeclaration());
-    inputEClass.getESuperTypes().add(this.getInOutVariableDeclaration());
-    outputEClass.getESuperTypes().add(this.getOutputVariableeclaration());
-    inOutEClass.getESuperTypes().add(this.getInputVariableDeclaration());
-    myTriggerEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
+    variableDefinitionEClass.getESuperTypes().add(theSGraphPackage.getDeclaration());
+    variableDefinitionEClass.getESuperTypes().add(theStextPackage.getVariableDefinition());
+    reactionScopeEClass.getESuperTypes().add(theSGraphPackage.getScope());
+    transitionEClass.getESuperTypes().add(theSGraphPackage.getReaction());
+    exitActionEClass.getESuperTypes().add(theSGraphPackage.getEffect());
+    insideActionEClass.getESuperTypes().add(theSGraphPackage.getEffect());
+    entryActionEClass.getESuperTypes().add(theSGraphPackage.getEffect());
+    suspendEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
+    triggerEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
+    effectEClass.getESuperTypes().add(theSGraphPackage.getEffect());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(defRootEClass, DefRoot.class, "DefRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(stateRootEClass, StateRoot.class, "StateRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(transitionRootEClass, TransitionRoot.class, "TransitionRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(stateScopeEClass, StateScope.class, "StateScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(interfaceScopeRootEClass, InterfaceScopeRoot.class, "InterfaceScopeRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInterfaceScopeRoot_InterfaceScope(), this.getInterfaceScope(), null, "interfaceScope", null, 0, -1, InterfaceScopeRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(stateSpecificationEClass, StateSpecification.class, "StateSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStateSpecification_Scopes(), theSGraphPackage.getScope(), null, "scopes", null, 0, -1, StateSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(interfaceScopeEClass, InterfaceScope.class, "InterfaceScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(interfaceDeclarationEClass, InterfaceDeclaration.class, "InterfaceDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInterfaceDeclaration_Declaration(), this.getSCCVariableDeclaration(), null, "declaration", null, 0, -1, InterfaceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getVariableDefinition_Direction(), this.getVarDirection(), "direction", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDefinition_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDefinition_VarName(), ecorePackage.getEString(), "varName", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVariableDefinition_VarType(), theTypesPackage.getType(), null, "varType", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVariableDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDefinition_VarCombineOperator(), this.getCombineOperator(), "varCombineOperator", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(sccVariableDeclarationEClass, SCCVariableDeclaration.class, "SCCVariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(reactionScopeEClass, ReactionScope.class, "ReactionScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getReactionScope_ReactionScope(), ecorePackage.getEObject(), null, "reactionScope", null, 0, -1, ReactionScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(localVariableDeclarationEClass, LocalVariableDeclaration.class, "LocalVariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(inOutVariableDeclarationEClass, InOutVariableDeclaration.class, "InOutVariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(exitActionEClass, ExitAction.class, "ExitAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExitAction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, ExitAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(outputVariableeclarationEClass, OutputVariableeclaration.class, "OutputVariableeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(insideActionEClass, InsideAction.class, "InsideAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getInsideAction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, InsideAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(inputVariableDeclarationEClass, InputVariableDeclaration.class, "InputVariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(entryActionEClass, EntryAction.class, "EntryAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEntryAction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, EntryAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(actionDeclarationEClass, ActionDeclaration.class, "ActionDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(suspendEClass, Suspend.class, "Suspend", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSuspend_Trigger(), theSGraphPackage.getTrigger(), null, "trigger", null, 0, 1, Suspend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(exitActionDeclarationEClass, ExitActionDeclaration.class, "ExitActionDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExitActionDeclaration_ExitActionDeclaration(), this.getActionVariableDeclaration(), null, "exitActionDeclaration", null, 0, -1, ExitActionDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(triggerEClass, Trigger.class, "Trigger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTrigger_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, Trigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTrigger_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, Trigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTrigger_Expression(), theStextPackage.getExpression(), null, "expression", null, 0, 1, Trigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(insideActionDeclarationEClass, InsideActionDeclaration.class, "InsideActionDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInsideActionDeclaration_InsideActionDeclaration(), this.getActionVariableDeclaration(), null, "insideActionDeclaration", null, 0, -1, InsideActionDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(entryActionDeclarationEClass, EntryActionDeclaration.class, "EntryActionDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEntryActionDeclaration_EntryActionDeclaration(), this.getActionVariableDeclaration(), null, "entryActionDeclaration", null, 0, -1, EntryActionDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(actionVariableDeclarationEClass, ActionVariableDeclaration.class, "ActionVariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getActionVariableDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, ActionVariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(suspendDeclarationEClass, SuspendDeclaration.class, "SuspendDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSuspendDeclaration_SuspendDeclaration(), this.getSuspendVariableDeclaration(), null, "suspendDeclaration", null, 0, -1, SuspendDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(suspendVariableDeclarationEClass, SuspendVariableDeclaration.class, "SuspendVariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSuspendVariableDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, SuspendVariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(transitionReactionEClass, TransitionReaction.class, "TransitionReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(localEClass, Local.class, "Local", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getLocal_Name(), ecorePackage.getEString(), "name", null, 0, 1, Local.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLocal_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, Local.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLocal_InitialValue(), theStextPackage.getExpression(), null, "initialValue", null, 0, 1, Local.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getLocal_Operator(), this.getCombineOperator(), "operator", null, 0, 1, Local.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(inputEClass, Input.class, "Input", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getInput_Name(), ecorePackage.getEString(), "name", null, 0, 1, Input.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getInput_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, Input.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getInput_InitialValue(), theStextPackage.getExpression(), null, "initialValue", null, 0, 1, Input.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getInput_Operator(), this.getCombineOperator(), "operator", null, 0, 1, Input.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(outputEClass, Output.class, "Output", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getOutput_Name(), ecorePackage.getEString(), "name", null, 0, 1, Output.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getOutput_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, Output.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getOutput_Operator(), this.getCombineOperator(), "operator", null, 0, 1, Output.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(inOutEClass, InOut.class, "InOut", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getInOut_Name(), ecorePackage.getEString(), "name", null, 0, 1, InOut.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getInOut_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, InOut.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getInOut_InitialValue(), theStextPackage.getExpression(), null, "initialValue", null, 0, 1, InOut.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getInOut_Operator(), this.getCombineOperator(), "operator", null, 0, 1, InOut.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(myTriggerEClass, MyTrigger.class, "MyTrigger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(effectEClass, Effect.class, "Effect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEffect_Actions(), theStextPackage.getExpression(), null, "actions", null, 0, -1, Effect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");
@@ -1064,6 +657,11 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.OR);
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.AND);
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.HOST);
+
+    initEEnum(varDirectionEEnum, VarDirection.class, "VarDirection");
+    addEEnumLiteral(varDirectionEEnum, VarDirection.INOUT);
+    addEEnumLiteral(varDirectionEEnum, VarDirection.IN);
+    addEEnumLiteral(varDirectionEEnum, VarDirection.OUT);
 
     // Create resource
     createResource(eNS_URI);

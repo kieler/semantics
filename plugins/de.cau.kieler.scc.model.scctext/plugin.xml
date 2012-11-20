@@ -11,4 +11,12 @@
 	
   </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated SCCExp -->
+      <package
+            uri="http://cau.kieler.de/scc/SCCExp"
+            class="de.cau.kieler.scc.model.scctext.sccexp.SccexpPackage"
+            genModel="src-gen/de/cau/kieler/scc/model/scctext/SCCExp.genmodel"/>
+   </extension>
+
 </plugin>

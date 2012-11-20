@@ -4,102 +4,92 @@ generate sccexp "http://cau.kieler.de/scc/SCCExp"
 import "http://www.yakindu.org/sct/statechart/SText" as stext
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
-import "http://www.yakindu.org/base/base/2.0.0" as base
-
-/* ---- root rules ----
-These root rules are not relevant for the grammar integration in the statechart. They
-just integrate the different start rules consistently
-into a single grammar.
-*/
-Root:
-	(roots+=DefRoot)*;
-
-DefRoot:
-	StateRoot | TransitionRoot;
-
-StateRoot:
-	'@@state@@' def=StateSpecification;
-
-TransitionRoot:
-	'@@transition@@' def=TransitionSpecification;
 
 /************************************************/
 /*			Overriding State grammar 			*/
 /************************************************/
-StateScope:
-	InterfaceScopeRoot;
+StateSpecification:
+	(scopes+=StateScope)*;
+	
+//defines the possible scopes for a state
+StateScope returns sgraph::Scope:
+	InterfaceScope | ReactionScope;
 
-InterfaceScopeRoot:
-	{InterfaceScopeRoot} (interfaceScope+=InterfaceScope)*;
-
+/*********************************** INTERFACE DECLARATION **************************************** */	
+/************************************************/
+/*			  INTERFACE DECLARATION				*/
+/************************************************/
+//overwrite the SText InterfaceScope rule
+// The InterfaceScope rule specifies that a InterfaceScope starts with 
+// the literal 'interface :', followed by one or more interface declaration variables
 InterfaceScope:
-	InterfaceDeclaration | ActionDeclaration | SuspendDeclaration;
+	{InterfaceScope} 'interface' ':' declarations+=Declaration (','
+	declarations+=Declaration)* ';';
 
-	/**
- *  The Interface Declaration
+/**
+ * Declaration
  */
-InterfaceDeclaration:
-	{InterfaceDeclaration} 'interface:' declaration+=(SCCVariableDeclaration) (','
-	declaration+=(SCCVariableDeclaration))* ';';
+// Overwrite the rule Declaration
+// The InterfaceVariableDeclaration is an abstract rule.
+// It specifies that a Declaration may either be a 
+// VariableDefinition or an OperationDeclaration
+Declaration returns sgraph::Declaration:
+	VariableDefinition | OperationDeclaration;
+/**
+ * Variable Definition
+ */	
+// Overwrite the SText VariableDefinition rule
+// A variable is a Declaration. It has a Direction, a Name, a Type, an InitialValue and a CombineOperator
+VariableDefinition:
+	direction=VarDirection? isStatic?='static' varName=ID ':' varType=[types::Type|FQN] ('='
+	varInitialValue=Expression)? ('with' varCombineOperator=CombineOperator)?;
 
-SCCVariableDeclaration:
-	InputVariableDeclaration | OutputVariableeclaration | InOutVariableDeclaration | LocalVariableDeclaration;
+/************************************************/
+/*			 	ReactionScope					*/
+/************************************************/
+ReactionScope:
+	reactionScope+=(EntryAction | InsideAction | ExitAction | Suspend);
 
-LocalVariableDeclaration:
-	{Local} 'local' name=ID ':' type=[types::Type|FQN] ('='
-	initialValue=Expression)? ('with' operator=CombineOperator)?;
+ExitAction returns sgraph::Effect:
+	{ExitAction} 'Exit' ':' '/' effect=Effect ';';
 
-InOutVariableDeclaration:
-	{Input} 'in' name=ID ':' type=[types::Type|FQN] ('='
-	initialValue=Expression)? ('with' operator=CombineOperator)?;
+InsideAction returns sgraph::Effect:
+	{InsideAction} 'Inside' ':' '/' effect=Effect ';';
 
-OutputVariableeclaration:
-	{Output} 'out' name=ID ':' type=[types::Type|FQN] ('with' operator=CombineOperator)?;
+EntryAction returns sgraph::Effect:
+	{EntryAction} 'Entry' ':' '/' effect=Effect ';';
 
-InputVariableDeclaration:
-	{InOut} 'inout' name=ID ':' type=[types::Type|FQN] ('='
-	initialValue=Expression)? ('with' operator=CombineOperator)?;
+/************************************************/
+/*			 		SUSPEND 					*/
+/************************************************/
+// The  SuspendDeclaration is a Trigger
+//TODO: only variables already declared in the interface 
+Suspend returns sgraph::Trigger:
+	{Suspend} 'Suspend' ':' trigger=Trigger ';';
 
+/******************************************** TRANSITION ***************************************** */
+Reaction returns sgraph::Reaction:
+	 Transition;
+
+// The TransitionReaction is a Reaction and has an optional trigger and an optional effect 
+Transition:
+	{Transition} (trigger=Trigger)? ('/' effect=Effect)?;
+	
+// The ReactionTrigger is a Trigger and has an Expression, 
+// an optional delay and isImmediate option represented with a '#'
+Trigger returns sgraph::Trigger:
+	{Trigger} (isImmediate?='#')? (delay=INT)? '('expression=Expression ')';
+
+// The ReactionEffect is an Effect. 
+Effect returns sgraph::Effect:
+	{Effect} actions+=(Expression | EventRaisingExpression) (=> ';' actions+=(Expression |
+	EventRaisingExpression))*; // (';')?;
+
+
+/***************************************** COMBINE OPERATORS ************************************* */
 enum CombineOperator returns CombineOperator:
 	NONE="'none'" | ADD="'+'" | MULT="'*'" | MAX="'max'" |
 	MIN="'min'" | OR="'or'" | AND="'and'" | HOST="'host'";
-
-	/**
- *  The Action Declaration
- */
-ActionDeclaration:
-	EntryActionDeclaration | InsideActionDeclaration | ExitActionDeclaration;
-
-ExitActionDeclaration:
-	{ExitActionDeclaration} 'OnExitAction:' exitActionDeclaration+=ActionVariableDeclaration (','
-	exitActionDeclaration+=ActionVariableDeclaration)* ';';
-
-InsideActionDeclaration:
-	{InsideActionDeclaration} 'OnInsideAction:' insideActionDeclaration+=ActionVariableDeclaration (','
-	insideActionDeclaration+=ActionVariableDeclaration) ';';
-
-EntryActionDeclaration:
-	{EntryActionDeclaration} 'OnEntryAction:' entryActionDeclaration+=ActionVariableDeclaration (','
-	entryActionDeclaration+=ActionVariableDeclaration) ';';
-
-ActionVariableDeclaration:
-	'/' name=ID;
-
-	/**
- *  The Suspend Declaration
- */
-SuspendDeclaration:
-	{SuspendDeclaration} 'Suspend:' suspendDeclaration+=SuspendVariableDeclaration (','
-	suspendDeclaration+=SuspendVariableDeclaration) ';';
-
-SuspendVariableDeclaration:
-	name=ID;
-
-/************************************************/
-/*		Overriding transition grammar 			*/
-/************************************************/
-TransitionReaction:
-	{TransitionReaction} (trigger=MyTrigger)? ('/' effect=ReactionEffect)? ('#' properties=ReactionProperties)?;
-
-MyTrigger returns sgraph::Trigger:
-	{MyTrigger} 'some trigger expression';
+	
+enum VarDirection:
+	INOUT='inout' | IN='in' | OUT='out';

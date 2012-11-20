@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sccexp" nsURI="http://cau.kieler.de/scc/SCCExp" nsPrefix="sccexp">
-  <eClassifiers xsi:type="ecore:EClass" name="Root" eSuperTypes="../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Root"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DefRoot" eSuperTypes="../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//DefRoot"/>
-  <eClassifiers xsi:type="ecore:EClass" name="StateRoot" eSuperTypes="#//DefRoot ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//StateRoot"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TransitionRoot" eSuperTypes="#//DefRoot ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//TransitionRoot"/>
-  <eClassifiers xsi:type="ecore:EClass" name="StateScope" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Scope"/>
-  <eClassifiers xsi:type="ecore:EClass" name="InterfaceScopeRoot" eSuperTypes="#//StateScope">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="interfaceScope" upperBound="-1"
-        eType="#//InterfaceScope" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StateSpecification" eSuperTypes="../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//StateSpecification">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scopes" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Scope"
+        containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InterfaceScope" eSuperTypes="../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//InterfaceScope"/>
-  <eClassifiers xsi:type="ecore:EClass" name="InterfaceDeclaration" eSuperTypes="#//InterfaceScope">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="declaration" upperBound="-1"
-        eType="#//SCCVariableDeclaration" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InterfaceScope" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Scope ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//InterfaceScope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableDefinition" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//VariableDefinition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction" eType="#//VarDirection"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStatic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="varName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="varType" eType="ecore:EClass ../../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="varInitialValue" eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="varCombineOperator" eType="#//CombineOperator"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SCCVariableDeclaration"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LocalVariableDeclaration" eSuperTypes="#//SCCVariableDeclaration"/>
-  <eClassifiers xsi:type="ecore:EClass" name="InOutVariableDeclaration" eSuperTypes="#//SCCVariableDeclaration"/>
-  <eClassifiers xsi:type="ecore:EClass" name="OutputVariableeclaration" eSuperTypes="#//SCCVariableDeclaration"/>
-  <eClassifiers xsi:type="ecore:EClass" name="InputVariableDeclaration" eSuperTypes="#//SCCVariableDeclaration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReactionScope" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Scope">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reactionScope" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Reaction"/>
   <eClassifiers xsi:type="ecore:EEnum" name="CombineOperator">
     <eLiterals name="NONE" literal="'none'"/>
     <eLiterals name="ADD" value="1" literal="'+'"/>
@@ -30,55 +31,36 @@
     <eLiterals name="AND" value="6" literal="'and'"/>
     <eLiterals name="HOST" value="7" literal="'host'"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ActionDeclaration" eSuperTypes="#//InterfaceScope"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ExitActionDeclaration" eSuperTypes="#//ActionDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="exitActionDeclaration"
-        upperBound="-1" eType="#//ActionVariableDeclaration" containment="true"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="VarDirection">
+    <eLiterals name="INOUT" literal="inout"/>
+    <eLiterals name="IN" value="1" literal="in"/>
+    <eLiterals name="OUT" value="2" literal="out"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InsideActionDeclaration" eSuperTypes="#//ActionDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="insideActionDeclaration"
-        upperBound="-1" eType="#//ActionVariableDeclaration" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EntryActionDeclaration" eSuperTypes="#//ActionDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="entryActionDeclaration"
-        upperBound="-1" eType="#//ActionVariableDeclaration" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ActionVariableDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SuspendDeclaration" eSuperTypes="#//InterfaceScope">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="suspendDeclaration" upperBound="-1"
-        eType="#//SuspendVariableDeclaration" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SuspendVariableDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TransitionReaction" eSuperTypes="../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//TransitionReaction"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Local" eSuperTypes="#//LocalVariableDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass ../../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="initialValue" eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+  <eClassifiers xsi:type="ecore:EClass" name="ExitAction" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//CombineOperator"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Input" eSuperTypes="#//InOutVariableDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass ../../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="initialValue" eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+  <eClassifiers xsi:type="ecore:EClass" name="InsideAction" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//CombineOperator"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Output" eSuperTypes="#//OutputVariableeclaration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass ../../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//CombineOperator"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InOut" eSuperTypes="#//InputVariableDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass ../../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="initialValue" eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+  <eClassifiers xsi:type="ecore:EClass" name="EntryAction" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//CombineOperator"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MyTrigger" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Suspend" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Trigger" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Effect" eSuperTypes="../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
+        eType="ecore:EClass ../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

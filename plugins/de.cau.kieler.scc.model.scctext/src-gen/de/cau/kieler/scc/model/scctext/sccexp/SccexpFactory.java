@@ -23,58 +23,13 @@ public interface SccexpFactory extends EFactory
   SccexpFactory eINSTANCE = de.cau.kieler.scc.model.scctext.sccexp.impl.SccexpFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Root</em>'.
+   * Returns a new object of class '<em>State Specification</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Root</em>'.
+   * @return a new object of class '<em>State Specification</em>'.
    * @generated
    */
-  Root createRoot();
-
-  /**
-   * Returns a new object of class '<em>Def Root</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Def Root</em>'.
-   * @generated
-   */
-  DefRoot createDefRoot();
-
-  /**
-   * Returns a new object of class '<em>State Root</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>State Root</em>'.
-   * @generated
-   */
-  StateRoot createStateRoot();
-
-  /**
-   * Returns a new object of class '<em>Transition Root</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Transition Root</em>'.
-   * @generated
-   */
-  TransitionRoot createTransitionRoot();
-
-  /**
-   * Returns a new object of class '<em>State Scope</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>State Scope</em>'.
-   * @generated
-   */
-  StateScope createStateScope();
-
-  /**
-   * Returns a new object of class '<em>Interface Scope Root</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Interface Scope Root</em>'.
-   * @generated
-   */
-  InterfaceScopeRoot createInterfaceScopeRoot();
+  StateSpecification createStateSpecification();
 
   /**
    * Returns a new object of class '<em>Interface Scope</em>'.
@@ -86,175 +41,85 @@ public interface SccexpFactory extends EFactory
   InterfaceScope createInterfaceScope();
 
   /**
-   * Returns a new object of class '<em>Interface Declaration</em>'.
+   * Returns a new object of class '<em>Variable Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Interface Declaration</em>'.
+   * @return a new object of class '<em>Variable Definition</em>'.
    * @generated
    */
-  InterfaceDeclaration createInterfaceDeclaration();
+  VariableDefinition createVariableDefinition();
 
   /**
-   * Returns a new object of class '<em>SCC Variable Declaration</em>'.
+   * Returns a new object of class '<em>Reaction Scope</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>SCC Variable Declaration</em>'.
+   * @return a new object of class '<em>Reaction Scope</em>'.
    * @generated
    */
-  SCCVariableDeclaration createSCCVariableDeclaration();
+  ReactionScope createReactionScope();
 
   /**
-   * Returns a new object of class '<em>Local Variable Declaration</em>'.
+   * Returns a new object of class '<em>Transition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Local Variable Declaration</em>'.
+   * @return a new object of class '<em>Transition</em>'.
    * @generated
    */
-  LocalVariableDeclaration createLocalVariableDeclaration();
+  Transition createTransition();
 
   /**
-   * Returns a new object of class '<em>In Out Variable Declaration</em>'.
+   * Returns a new object of class '<em>Exit Action</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>In Out Variable Declaration</em>'.
+   * @return a new object of class '<em>Exit Action</em>'.
    * @generated
    */
-  InOutVariableDeclaration createInOutVariableDeclaration();
+  ExitAction createExitAction();
 
   /**
-   * Returns a new object of class '<em>Output Variableeclaration</em>'.
+   * Returns a new object of class '<em>Inside Action</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Output Variableeclaration</em>'.
+   * @return a new object of class '<em>Inside Action</em>'.
    * @generated
    */
-  OutputVariableeclaration createOutputVariableeclaration();
+  InsideAction createInsideAction();
 
   /**
-   * Returns a new object of class '<em>Input Variable Declaration</em>'.
+   * Returns a new object of class '<em>Entry Action</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Input Variable Declaration</em>'.
+   * @return a new object of class '<em>Entry Action</em>'.
    * @generated
    */
-  InputVariableDeclaration createInputVariableDeclaration();
+  EntryAction createEntryAction();
 
   /**
-   * Returns a new object of class '<em>Action Declaration</em>'.
+   * Returns a new object of class '<em>Suspend</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Action Declaration</em>'.
+   * @return a new object of class '<em>Suspend</em>'.
    * @generated
    */
-  ActionDeclaration createActionDeclaration();
+  Suspend createSuspend();
 
   /**
-   * Returns a new object of class '<em>Exit Action Declaration</em>'.
+   * Returns a new object of class '<em>Trigger</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Exit Action Declaration</em>'.
+   * @return a new object of class '<em>Trigger</em>'.
    * @generated
    */
-  ExitActionDeclaration createExitActionDeclaration();
+  Trigger createTrigger();
 
   /**
-   * Returns a new object of class '<em>Inside Action Declaration</em>'.
+   * Returns a new object of class '<em>Effect</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Inside Action Declaration</em>'.
+   * @return a new object of class '<em>Effect</em>'.
    * @generated
    */
-  InsideActionDeclaration createInsideActionDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Entry Action Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Entry Action Declaration</em>'.
-   * @generated
-   */
-  EntryActionDeclaration createEntryActionDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Action Variable Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Action Variable Declaration</em>'.
-   * @generated
-   */
-  ActionVariableDeclaration createActionVariableDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Suspend Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Suspend Declaration</em>'.
-   * @generated
-   */
-  SuspendDeclaration createSuspendDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Suspend Variable Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Suspend Variable Declaration</em>'.
-   * @generated
-   */
-  SuspendVariableDeclaration createSuspendVariableDeclaration();
-
-  /**
-   * Returns a new object of class '<em>Transition Reaction</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Transition Reaction</em>'.
-   * @generated
-   */
-  TransitionReaction createTransitionReaction();
-
-  /**
-   * Returns a new object of class '<em>Local</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Local</em>'.
-   * @generated
-   */
-  Local createLocal();
-
-  /**
-   * Returns a new object of class '<em>Input</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Input</em>'.
-   * @generated
-   */
-  Input createInput();
-
-  /**
-   * Returns a new object of class '<em>Output</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Output</em>'.
-   * @generated
-   */
-  Output createOutput();
-
-  /**
-   * Returns a new object of class '<em>In Out</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>In Out</em>'.
-   * @generated
-   */
-  InOut createInOut();
-
-  /**
-   * Returns a new object of class '<em>My Trigger</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>My Trigger</em>'.
-   * @generated
-   */
-  MyTrigger createMyTrigger();
+  Effect createEffect();
 
   /**
    * Returns the package supported by this factory.
