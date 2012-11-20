@@ -2,37 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
-         <command
-               commandId="de.cau.cs.kieler.synccharts.text.bridge.parseTransitionlabel"
-               label="Parse Labels"
-               style="push"
-               tooltip="Re-Parse all transition and action labels of current SyncChart.">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="activeEditorId">
-                  <equals
-                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
-                  </equals>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <command
-            categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelParseHandler"
-            description="Re-parse all transition and action labels of the current SyncChart."
-            id="de.cau.cs.kieler.synccharts.text.bridge.parseTransitionlabel"
-            name="Parse all action labels">
-      </command>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.synccharts.triggerListener">
       <triggerListener
             class="de.cau.cs.kieler.synccharts.text.actions.bridge.listeners.ChangedTriggerListener">
