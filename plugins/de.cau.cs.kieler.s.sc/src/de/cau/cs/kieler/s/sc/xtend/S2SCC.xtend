@@ -342,8 +342,13 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
             present = cJSON_GetObjectItem(child, "present");
             value = cJSON_GetObjectItem(child, "value");
             if (present != NULL && present->type) {
-                EMIT_VAL_SCC(sig_«signal.name», value, +,  «signal.combineOperator.initialValue»);
-                
+                if (value != NULL) {
+                    // Emit with given value
+                    EMIT_VAL_SCC(sig_«signal.name», value->valueint, +,  «signal.combineOperator.initialValue»);
+                } else {
+                    // Emit with initial value because no value was given
+                    EMIT_VAL_SCC(sig_«signal.name», «signal.combineOperator.initialValue», +,  «signal.combineOperator.initialValue»);
+                }        
             }
         }   
           
