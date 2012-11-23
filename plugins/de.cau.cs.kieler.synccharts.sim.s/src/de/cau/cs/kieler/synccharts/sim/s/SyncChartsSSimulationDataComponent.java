@@ -362,7 +362,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 // transformedModel = transform.transform2Simulation(myModel);
 
                 // Simulation Visualization
-                transformedModel = (new SyncCharts2Simulation()).transform2Simulation(myModel);
+                //transformedModel = (new SyncCharts2Simulation()).transform2Simulation(myModel);
 
                 // Because we transformed the S program we need to save a different file
                 // and pass this new file to the SC simulation instead.
@@ -370,9 +370,13 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
 
-                // Normal Pre operator (@requires: none)
+                // Normal SCC Aborts (@requires: none)
                 transformedModel = (new SyncCharts2Simulation())
-                        .transformPreOperator(transformedModel);
+                      .transformSCCAborts(transformedModel);
+                
+//                // Normal Pre operator (@requires: none)
+//                transformedModel = (new SyncCharts2Simulation())
+//                        .transformPreOperator(transformedModel);
 
                 // // History transitions. (@requires: suspend)
                 // transformedModel = (new

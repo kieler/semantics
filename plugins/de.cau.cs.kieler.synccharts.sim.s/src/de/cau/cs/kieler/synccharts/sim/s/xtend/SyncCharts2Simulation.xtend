@@ -1495,6 +1495,53 @@ class SyncCharts2Simulation {
             }
         }
     }
+    
+    
+    //-------------------------------------------------------------------------
+    //--                        S C C -  A B O R T S -  O P E R A T O R                     --
+    //-------------------------------------------------------------------------
+           
+    // Transforming SCC Aborts.
+    def Region transformSCCAborts(Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+
+        for(targetState : ImmutableList::copyOf(targetStates)) {
+            // This statement we want to modify
+            targetState.transformSCCAborts(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+
+    // Traverse all states 
+    def void transformSCCAborts(State state, Region targetRootRegion) {
+        
+        if (state.hierarchical && state.outgoingTransitions.size() > 0) {
+            // For a hierarchical state:
+            // 1. for each existing region, create a new Aborted-auxiliary state
+            // 2. create a watcher region
+            
+            // 2. Watcher region
+            // Add a Pre and NotPre state
+            val runState = SyncchartsFactory::eINSTANCE.createState();
+            runState.setId("Run" + state.hashCode);
+            runState.setLabel("Run");
+            runState.setIsInitial(true);
+            val abortState = SyncchartsFactory::eINSTANCE.createState();
+            abortState.setId("Abort" + state.hashCode);
+            abortState.setLabel("Abort");             
+            val preRegion = SyncchartsFactory::eINSTANCE.createRegion();
+            preRegion.setId("WatcherRegion" + state.hashCode);
+            preRegion.states.add(runState);
+            preRegion.states.add(abortState);
+            state.regions.add(preRegion);            
+            
+        }
+        
+    }
+    
 
 }
 
