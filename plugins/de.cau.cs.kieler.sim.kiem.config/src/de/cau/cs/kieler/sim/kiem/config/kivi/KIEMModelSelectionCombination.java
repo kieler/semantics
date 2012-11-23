@@ -234,11 +234,13 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
             }
         } else {
             // Other editors
-            IEditorInput editorInput = editorPart.getEditorInput();
-            if (editorInput instanceof FileEditorInput) {
-                FileEditorInput fileEditorInput = (FileEditorInput) editorInput;
-                IFile file = fileEditorInput.getFile();
-                fullPath = file.getFullPath();
+            if (editorPart != null) {
+                IEditorInput editorInput = editorPart.getEditorInput();
+                if (editorInput instanceof FileEditorInput) {
+                    FileEditorInput fileEditorInput = (FileEditorInput) editorInput;
+                    IFile file = fileEditorInput.getFile();
+                    fullPath = file.getFullPath();
+                }
             }
         }
         return fullPath;

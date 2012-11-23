@@ -182,6 +182,17 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the SC execution.
+     *
+     * @return the sC execution
+     */
+    public SCExecution getSCExecution() {
+        return scExecution;
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

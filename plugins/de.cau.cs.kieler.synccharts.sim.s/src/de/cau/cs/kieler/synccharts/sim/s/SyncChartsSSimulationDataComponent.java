@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sim.sc.SSCSimulationDataComponent;
+import de.cau.cs.kieler.sc.SCExecution;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -75,6 +76,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     /** A flag indicating that debug console output is generated and should be handled. */
     private boolean debugConsole = true;
 
+    /** The benchmark flag for generating cycle and file size signals. */
+    private boolean benchmark = false;
+
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
@@ -111,6 +115,10 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             Object obj = treeIterator.next();
             newDirtyIndicator += obj.toString().hashCode();
         }
+        // Also consider KIEM properties (may have changes and require new code generation)
+        for (int i = 0; i < KIEM_PROPERTY_MAX; i++) {
+            newDirtyIndicator += this.getProperties()[i].getValue().hashCode();
+        }
         if (newDirtyIndicator != dirtyIndicator) {
             dirtyIndicator = newDirtyIndicator;
             return true;
@@ -145,6 +153,23 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
         JSONObject signalOutput = sSCSimDataComponent.doStep(jSONObject);
         if (signalOutput != null) {
             JSONArray signalOutputArray = signalOutput.names();
+
+            if (this.benchmark) {
+                if (signalOutput.has(SCExecution.BENCHMARK_SIGNAL_CYCLES)) {
+                    Object bench;
+                    try {
+                        bench = signalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
+                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
+                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_SOURCE,
+                                sSCSimDataComponent.getSCExecution().getSourceFileSize());
+                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_EXECUTABLE,
+                                sSCSimDataComponent.getSCExecution().getExecutableFileSize());
+                    } catch (JSONException e) {
+                        // do nothing if this signal is not provided
+                        // or JSON data cannot be added
+                    }
+                }
+            }
 
             if (signalOutputArray != null) {
                 // First add auxiliary signals
@@ -319,6 +344,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             syncChartOutput = URI.createURI(input.toString());
 
             debugConsole = this.getProperties()[KIEM_PROPERTY_SCDEBUGCONSOLE + KIEM_PROPERTY_DIFF]
+                    .getValueAsBoolean();
+
+            benchmark = this.getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
                     .getValueAsBoolean();
 
             // If 'Full Debug Mode' is turned on then the user wants to have

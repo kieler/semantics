@@ -54,7 +54,6 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
@@ -273,10 +272,10 @@ public abstract class KiemAutomatedJUnitTest {
 
     /**
      * Initializes all ESO and model files, initializes KIEM. @BeforeClass can only be used with
-     * static methods so we use @Before and add an extra flag that guards against multiple
-     * initializations.
+     * static methods so we used @Before and add an extra flag that guards against multiple
+     * initializations. The @Before became irrelevant because the initialization is called
+     * anyway from the KiemRunner.
      */
-    @Before
     public void kiemAutomatedJUnitTestInitialization() {
         // Only initialize for several consecutive tests iff this is the first test,
         // i.e., the static variable firstTest is true; set it to false in this case
