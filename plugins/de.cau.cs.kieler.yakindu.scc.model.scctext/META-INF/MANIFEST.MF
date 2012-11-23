@@ -1,0 +1,39 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.cau.cs.kieler.yakindu.scc.model.scctext
+Bundle-Vendor: My Company
+Bundle-Version: 0.1.0.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.yakindu.scc.model.scctext; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext;visibility:=reexport,
+ org.eclipse.xtext.xbase;resolution:=optional;visibility:=reexport,
+ org.eclipse.xtext.generator;resolution:=optional,
+ org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ org.yakindu.sct.model.stext;bundle-version="1.0.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types
+Import-Package: de.itemis.xtext.utils.gmf.resource,
+ de.itemis.xtext.utils.jface.viewers,
+ org.apache.log4j,
+ org.eclipse.xtext.xbase.lib,
+ org.yakindu.base.types.scope
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: de.cau.cs.kieler.yakindu.scc.model.scctext,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.services,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.util,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.parseTreeConstruction,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.parser.antlr,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.parser.antlr.internal,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.validation,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.scoping,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.generator,
+ de.cau.cs.kieler.yakindu.scc.model.scctext.formatting
+
