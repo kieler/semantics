@@ -57,16 +57,18 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
     private static final int NUMBER_OF_TASKS = 10;
 
-    private static final int KIEM_PROPERTY_MAX = 5;
+    private static final int KIEM_PROPERTY_MAX = 6;
     private static final int KIEM_PROPERTY_STATENAME = 0;
     private static final int KIEM_PROPERTY_TRANSITIONNAME = 1;
     private static final int KIEM_PROPERTY_FULLDEBUGMODE = 2;
-    private static final int KIEM_PROPERTY_SCDEBUGCONSOLE = 3;
-    private static final int KIEM_PROPERTY_EXPOSELOCALSIGNALS = 4;
+    private static final int KIEM_PROPERTY_BENCHMARK = 3;
+    private static final int KIEM_PROPERTY_SCDEBUGCONSOLE = 4;
+    private static final int KIEM_PROPERTY_EXPOSELOCALSIGNALS = 5;
 
     private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
     private static final String KIEM_PROPERTY_NAME_TRANSITIONNAME = "Transition Name";
     private static final String KIEM_PROPERTY_NAME_FULLDEBUGMODE = "Full Debug Mode";
+    private static final String KIEM_PROPERTY_NAME_BENCHMARK = "Benchmark Mode";
     private static final String KIEM_PROPERTY_NAME_SCDEBUGCONSOLE = "SC Debug Console";
     private static final String KIEM_PROPERTY_NAME_EXPOSELOCALSIGNALS = "Expose Local Signals";
 
@@ -191,7 +193,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         } else if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             // add/pass-through normal signals directly
                             returnObj.accumulate(signalName, signalValue);
                         }
@@ -258,6 +260,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
 
         properties[KIEM_PROPERTY_FULLDEBUGMODE] = new KiemProperty(
                 KIEM_PROPERTY_NAME_FULLDEBUGMODE, true);
+        properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK, false);
         properties[KIEM_PROPERTY_SCDEBUGCONSOLE] = new KiemProperty(
                 KIEM_PROPERTY_NAME_SCDEBUGCONSOLE, true);
         properties[KIEM_PROPERTY_EXPOSELOCALSIGNALS] = new KiemProperty(
@@ -329,7 +332,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 // SyncCharts2Simulation transform =
                 // Guice.createInjector().getInstance(SyncCharts2Simulation.class);
                 // transformedModel = transform.transform2Simulation(myModel);
-                
+
                 // Simulation Visualization
                 transformedModel = (new SyncCharts2Simulation()).transform2Simulation(myModel);
 
@@ -339,15 +342,21 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
 
-//                // History transitions. (@requires: suspend)
-//                transformedModel = (new SyncCharts2Simulation()).transformHistory(transformedModel);
-//
-//                // Suspends (non-immediate and non-delayed) (@requires: during)
-//                transformedModel = (new SyncCharts2Simulation()).transformSuspend(transformedModel);
-//                
-//                // During actions (@requires: none)
-//                transformedModel = (new SyncCharts2Simulation())
-//                        .transformDuringAction(transformedModel);
+                // Normal Pre operator (@requires: none)
+                transformedModel = (new SyncCharts2Simulation())
+                        .transformPreOperator(transformedModel);
+
+                // // History transitions. (@requires: suspend)
+                // transformedModel = (new
+                // SyncCharts2Simulation()).transformHistory(transformedModel);
+                //
+                // // Suspends (non-immediate and non-delayed) (@requires: during)
+                // transformedModel = (new
+                // SyncCharts2Simulation()).transformSuspend(transformedModel);
+                //
+                // // During actions (@requires: none)
+                // transformedModel = (new SyncCharts2Simulation())
+                // .transformDuringAction(transformedModel);
 
                 try {
                     // Write out copy/transformation of syncchart program
@@ -375,6 +384,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 transformedModel = (new SyncCharts2Simulation())
                         .transformExposeLocalSignal(transformedModel);
             }
+
+            // Normal Pre operator (@requires: none)
+            transformedModel = (new SyncCharts2Simulation()).transformPreOperator(transformedModel);
 
             // Normal Termination transitions (@requires: during actions, @before: exit actions)
             transformedModel = (new SyncCharts2Simulation())
@@ -421,7 +433,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             }
 
             // Use the SSCSimulationDataComponent
-            sSCSimDataComponent.doModel2ModelTransform(monitor, program, false, debugConsole);
+            sSCSimDataComponent.doModel2ModelTransform(monitor, program, false, this
+                    .getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
+                    .getValueAsBoolean(), debugConsole);
 
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
@@ -456,7 +470,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                             .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             returnObj.accumulate(signalName, signalValue);
                         }
                     } catch (JSONException e) {

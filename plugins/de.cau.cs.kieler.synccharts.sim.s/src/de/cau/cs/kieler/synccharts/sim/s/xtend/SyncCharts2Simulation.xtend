@@ -31,6 +31,8 @@ import java.util.List
 import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.synccharts.Action
 import de.cau.cs.kieler.synccharts.Emission
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.ComplexExpression
 
 /**
  * This class handles the<BR>
@@ -1372,6 +1374,127 @@ class SyncCharts2Simulation {
     }
            
            
+    //-------------------------------------------------------------------------
+    //--                        P R E -  O P E R A T O R                     --
+    //-------------------------------------------------------------------------
+           
+    // Transforming PRE Operator.
+    def Region transformPreOperator(Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+
+        for(targetState : ImmutableList::copyOf(targetStates)) {
+            // This statement we want to modify
+            targetState.transformPreOperator(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+
+    // Return a list of Pre Expressions for an action that references the signal
+    def List<OperatorExpression> getPreExpression(Action action, Signal signal) {
+        val List<OperatorExpression> returnPreExpressions = <OperatorExpression> newLinkedList;
+        val preExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(e | 
+            (e.operator == OperatorType::PRE) && 
+            (e.subExpressions.size() == 1) &&  
+            (e.subExpressions.get(0) instanceof ValuedObjectReference) &&
+            ((e.subExpressions.get(0) as ValuedObjectReference).valuedObject == signal)
+        );
+        returnPreExpressions.addAll(preExpressions);
+        return returnPreExpressions;
+    }
+
+
+    
+    // Traverse all states that might declare a signal that is used with the PRE operator
+    def void transformPreOperator(State state, Region targetRootRegion) {
+        
+        // Filter all signals and retrieve those that are referenced
+        val allActions = state.eAllContents.filter(typeof(Action)).toList();
+        val allPreSignals = state.signals.filter (signal | allActions.filter(action | action.getPreExpression(signal).size > 0).size > 0); 
+        
+        for (preSignal : ImmutableList::copyOf(allPreSignals)) {
+
+            // Create PreS / PreV
+            val explicitPreSignal = KExpressionsFactory::eINSTANCE.createSignal();
+            explicitPreSignal.setName("Pre" + preSignal.name);
+            explicitPreSignal.setIsInput(false);
+            explicitPreSignal.setIsOutput(false);
+            explicitPreSignal.setType(preSignal.type);
+            if (!preSignal.initialValue.nullOrEmpty) {
+                explicitPreSignal.setInitialValue(preSignal.initialValue);
+            }
+            // Add to the current state
+            state.signals.add(explicitPreSignal);
+
+            // PreSignal and ExplicitPreSignal References                
+            val explicitPreSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                explicitPreSignalReference.setValuedObject(explicitPreSignal);
+            val preSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                preSignalReference.setValuedObject(preSignal);
+            
+            // Add a Pre and NotPre state
+            val preState = SyncchartsFactory::eINSTANCE.createState();
+            preState.setId("Pre" + preSignal.hashCode);
+            preState.setLabel("Pre");
+            val notPreState = SyncchartsFactory::eINSTANCE.createState();
+            notPreState.setId("NotPre" + preSignal.hashCode);
+            notPreState.setIsInitial(true);
+            notPreState.setLabel("NotPre");       
+            
+            // Add a region     
+            val preRegion = SyncchartsFactory::eINSTANCE.createRegion();
+            preRegion.setId("PreRegion" + preSignal.hashCode);
+            preRegion.states.add(preState);
+            preRegion.states.add(notPreState);
+            state.regions.add(preRegion);
+   
+            // Transitions         
+            val notPre2PreTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+            notPre2PreTransition.setTargetState(preState);
+            notPreState.outgoingTransitions.add(notPre2PreTransition);
+            val pre2NotPreTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+            pre2NotPreTransition.setTargetState(notPreState);
+            preState.outgoingTransitions.add(pre2NotPreTransition);
+            
+            if (preSignal.type == ValueType::PURE) {
+                // Simple Signal Case
+                notPre2PreTransition.setTrigger(preSignalReference.copy);
+                val explicitPreSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                    explicitPreSignalEmission.setSignal(explicitPreSignal);
+                val preSelfTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    preSelfTransition.setTargetState(preState);
+                    preState.outgoingTransitions.add(preSelfTransition);
+                preSelfTransition.setTrigger(preSignalReference.copy);
+                preSelfTransition.effects.add(explicitPreSignalEmission.copy);
+                pre2NotPreTransition.effects.add(explicitPreSignalEmission.copy);
+            }
+            else {
+                // Valued Signal Case
+                // TODO 
+            }
+
+            // Replace the ComplexExpression Pre(S) by the SignalReference PreS in all actions            
+            for (action : allActions) {
+               val preExpressions = action.getPreExpression(preSignal);
+               for (preExpression : preExpressions) {
+                   val container = preExpression.eContainer;
+                   
+                   if (container instanceof ComplexExpression) {
+                       // If nested PRE or PRE inside another complex expression
+                       (container as ComplexExpression).subExpressions.remove(preExpression);
+                       (container as ComplexExpression).subExpressions.add(explicitPreSignalReference.copy);
+                   } else if(container instanceof Action) {
+                       // If PRE directly a trigger
+                       (container as Action).setTrigger(explicitPreSignalReference.copy)
+                   }
+                   
+                   
+               }
+            }
+        }
+    }
 
 }
 
