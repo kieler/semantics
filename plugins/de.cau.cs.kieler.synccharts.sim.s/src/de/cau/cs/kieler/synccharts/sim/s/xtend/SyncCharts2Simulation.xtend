@@ -33,6 +33,7 @@ import de.cau.cs.kieler.synccharts.Action
 import de.cau.cs.kieler.synccharts.Emission
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.ComplexExpression
+import de.cau.cs.kieler.synccharts.StateType
 
 /**
  * This class handles the<BR>
@@ -190,6 +191,30 @@ class SyncCharts2Simulation {
           }
           
      }     
+     
+    //-------------------------------------------------------------------------
+    //--            H O T F I X   F O R   S Y N C H A R T S                  --
+    //-------------------------------------------------------------------------
+    // Because the SyncCharts KExpressions Parser has a problem with
+    // AND / OR lists of more than two elements the following fixes
+    // an OperatorExpression of such kind.
+    // Test 141
+    def OperatorExpression fixForOperatorExpressionLists(OperatorExpression operatorExpression) {
+        if (operatorExpression.subExpressions.size <= 2) {
+            // In this case we do not need the fix
+            return operatorExpression;
+        }
+        // Here we apply the fix recursively
+        val operatorExpressionCopy = operatorExpression.copy;
+        val newOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+        newOperatorExpression.setOperator(operatorExpression.operator);
+        newOperatorExpression.subExpressions.add(operatorExpression.subExpressions.head);
+        // Call recursively without the first element
+        operatorExpressionCopy.subExpressions.remove(0);
+        newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
+        return newOperatorExpression;
+    }
+    
      
     //-------------------------------------------------------------------------
     //--             E X P O S E   L O C A L   S I G N A L S                 --
@@ -372,7 +397,7 @@ class SyncCharts2Simulation {
                          normalTerminationTransition.setTrigger(triggerExpression.subExpressions.get(0));
                     }
                     else if (triggerExpression.subExpressions.size > 1) {
-                         normalTerminationTransition.setTrigger(triggerExpression);
+                         normalTerminationTransition.setTrigger(triggerExpression.fixForOperatorExpressionLists);
                     }
                } // end if normal termination present
 
@@ -1519,6 +1544,14 @@ class SyncCharts2Simulation {
     def void transformSCCAborts(State state, Region targetRootRegion) {
         
         if (state.hierarchical && state.outgoingTransitions.size() > 0) {
+            // Remember all outgoing transitions
+            val originalOutgoingTransitions = ImmutableList::copyOf(state.outgoingTransitions);
+            val outgoingStrongTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT));
+            val outgoingWeakTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::WEAKABORT));
+            // Remember all regions
+            val originalRegions = ImmutableList::copyOf(state.regions);
+            
+            
             // For a hierarchical state:
             // 1. for each existing region, create a new Aborted-auxiliary state
             // 2. create a watcher region
@@ -1529,15 +1562,136 @@ class SyncCharts2Simulation {
             runState.setId("Run" + state.hashCode);
             runState.setLabel("Run");
             runState.setIsInitial(true);
+            runState.setIsFinal(true);
             val abortState = SyncchartsFactory::eINSTANCE.createState();
             abortState.setId("Abort" + state.hashCode);
             abortState.setLabel("Abort");             
-            val preRegion = SyncchartsFactory::eINSTANCE.createRegion();
-            preRegion.setId("WatcherRegion" + state.hashCode);
-            preRegion.states.add(runState);
-            preRegion.states.add(abortState);
-            state.regions.add(preRegion);            
+            abortState.setIsFinal(true);
+            val watcherRegion = SyncchartsFactory::eINSTANCE.createRegion();
+            watcherRegion.setId("WatcherRegion" + state.hashCode);
+            watcherRegion.states.add(runState);
+            watcherRegion.states.add(abortState);
+            state.regions.add(watcherRegion);
             
+            // Add a conditional node outside of the state and connect it with
+            // a normal termination transition
+            val conditionalState = SyncchartsFactory::eINSTANCE.createState();
+            conditionalState.setId("Conditional" + state.hashCode);
+            conditionalState.setType(StateType::CONDITIONAL);
+            state.parentRegion.states.add(conditionalState);
+            val normalTerminationTransition = SyncchartsFactory::eINSTANCE.createTransition();
+                normalTerminationTransition.setTargetState(conditionalState);
+                normalTerminationTransition.setPriority(1);
+                normalTerminationTransition.setType(TransitionType::NORMALTERMINATION);
+                state.outgoingTransitions.add(normalTerminationTransition);            
+                        
+            // Create complex triggers to be filled with auxiliary signals (sorted strong or weak)                        
+            var Expression strongTrigger; 
+            val strongTriggerOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                strongTriggerOperatorExpression.setOperator(OperatorType::OR); 
+                strongTrigger = strongTriggerOperatorExpression;                
+            var Expression weakTrigger; 
+            val weakTriggerOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                weakTriggerOperatorExpression.setOperator(OperatorType::OR);                  
+                weakTrigger = weakTriggerOperatorExpression;                
+            
+            // For every transition 
+            for (transition : originalOutgoingTransitions) {
+                // Add transition to watcher region
+                // ONLY iff this is not a normal termination
+                if (transition.type != TransitionType::NORMALTERMINATION) {
+                    // Create a signal 
+                    val transitionSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                    val transitionSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                        transitionSignalReference.setValuedObject(transitionSignal);
+                    if (transition.type == TransitionType::STRONGABORT) {
+                        transitionSignal.setName(state.id + "_S" + transition.priority);
+                        strongTriggerOperatorExpression.subExpressions.add(transitionSignalReference.copy);
+                    } else {
+                        transitionSignal.setName(state.id + "_W" + transition.priority);
+                        weakTriggerOperatorExpression.subExpressions.add(transitionSignalReference.copy);
+                    }                    
+                    transitionSignal.setIsInput(false);
+                    transitionSignal.setIsOutput(false);
+                    state.parentRegion.parentState.signals.add(transitionSignal);
+                
+                    val watcherTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    watcherTransition.setTargetState(abortState);
+                    runState.outgoingTransitions.add(watcherTransition);
+                    // Move trigger from original transition to watcher transition
+                    watcherTransition.setTrigger(transition.trigger.copy);
+                    // Watcher transition gets the same priority / immediate / delay
+                    watcherTransition.setPriority(transition.priority);
+                    watcherTransition.setIsImmediate(transition.isImmediate);
+                    watcherTransition.setDelay(transition.delay);
+                    // Watcher transition emits the auxiliary signal
+                    val transitionSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                        transitionSignalEmission.setSignal(transitionSignal);
+                    watcherTransition.effects.add(transitionSignalEmission);
+                }
+                
+                // Move original transition from state to conditionalState
+                // and remove strong, normal termination attributes
+                // put immediate attribute
+                conditionalState.outgoingTransitions.add(transition);
+                transition.setType(TransitionType::WEAKABORT);
+                transition.setIsImmediate(true); 
+            }
+            
+            // Simplify triggers (if they only consist of one signal reference)
+            if (strongTriggerOperatorExpression.subExpressions.size == 1) {
+                strongTrigger = strongTriggerOperatorExpression.subExpressions.get(0);
+            }
+            if (weakTriggerOperatorExpression.subExpressions.size == 1) {
+                weakTrigger = weakTriggerOperatorExpression.subExpressions.get(0);
+            }
+            
+            // Create an Aborted state for every region
+            for (region : originalRegions) {
+                // Remember all outgoing transitions
+                val regionStates = ImmutableList::copyOf(region.states);
+                
+                val abortedState = SyncchartsFactory::eINSTANCE.createState();
+                abortedState.setId("Aborted" + state.hashCode);
+                abortedState.setLabel("Aborted");             
+                abortedState.setIsFinal(true);
+                region.states.add(abortedState);
+                
+                // For every inner state, connect with a weak and a strong transition
+                if (outgoingStrongTransitions.size > 0) {
+                    for (regionState : regionStates) {
+                            val strongAbortTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                            strongAbortTransition.setTargetState(abortedState);
+                            strongAbortTransition.setIsImmediate(true);
+                            // Now add all strong abort watcher signals as a trigger
+                            strongAbortTransition.setTrigger(strongTrigger.copy);
+                            // Set the highest priority
+                            strongAbortTransition.setPriority(1);
+                            for (regionStateOutgoingTransition : regionState.outgoingTransitions) {
+                                regionStateOutgoingTransition.setPriority(regionStateOutgoingTransition.priority + 1);
+                            }
+                            // Add transition
+                            regionState.outgoingTransitions.add(strongAbortTransition);
+                    }
+                }
+                
+                if (outgoingWeakTransitions.size > 0) {
+                    for (regionState : regionStates) {
+                            val weakAbortTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                            weakAbortTransition.setTargetState(abortedState);
+                            weakAbortTransition.setIsImmediate(true);
+                            // Now add all weak abort watcher signals as a trigger
+                            weakAbortTransition.setTrigger(weakTrigger.copy);
+                            // Set the lowest priority
+                            weakAbortTransition.setPriority(regionState.outgoingTransitions.size + 1);
+                            // Add transition
+                            regionState.outgoingTransitions.add(weakAbortTransition);
+                    }
+                }
+                                 
+            }
+            
+             
         }
         
     }

@@ -123,7 +123,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             dirtyIndicator = newDirtyIndicator;
             return true;
         }
-        return false;
+        return true;
     }
 
     // -------------------------------------------------------------------------
@@ -362,7 +362,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 // transformedModel = transform.transform2Simulation(myModel);
 
                 // Simulation Visualization
-                //transformedModel = (new SyncCharts2Simulation()).transform2Simulation(myModel);
+                transformedModel = (new SyncCharts2Simulation()).transform2Simulation(myModel);
 
                 // Because we transformed the S program we need to save a different file
                 // and pass this new file to the SC simulation instead.
@@ -371,8 +371,11 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         "simulation.kixs");
 
                 // Normal SCC Aborts (@requires: none)
-                transformedModel = (new SyncCharts2Simulation())
-                      .transformSCCAborts(transformedModel);
+                transformedModel = (new SyncCharts2Simulation()).transformSCCAborts(transformedModel);
+                
+                // Normal Termination transitions (@requires: during actions, @before: exit actions)
+                //transformedModel = (new SyncCharts2Simulation())
+                //        .transformNormalTermination(transformedModel);
                 
 //                // Normal Pre operator (@requires: none)
 //                transformedModel = (new SyncCharts2Simulation())
