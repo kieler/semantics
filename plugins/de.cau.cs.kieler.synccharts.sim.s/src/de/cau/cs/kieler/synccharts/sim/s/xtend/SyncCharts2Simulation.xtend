@@ -392,6 +392,8 @@ class SyncCharts2Simulation {
                          triggerExpression.subExpressions.add(valuedObjectReference);
                     }
                
+                    // A normal termination should immediately be triggerable! (test 145) 
+                    normalTerminationTransition.setIsImmediate(true);
                     if (triggerExpression.subExpressions.size == 1) {
                          // if there is just one signal, we do not need an AND!
                          normalTerminationTransition.setTrigger(triggerExpression.subExpressions.get(0));
@@ -705,6 +707,9 @@ class SyncCharts2Simulation {
             auxiliaryState.setLabel(state.id + "History");
             auxiliaryState.setIsInitial(true);
             
+            // Move local signal declaration to auxiliary state (test 139)
+            auxiliaryState.signals.addAll(state.signals);
+            
             // Move all regions to new auxiliary State
             for (region : ImmutableList::copyOf(state.regions)) {
                 auxiliaryState.regions.add(region)
@@ -819,7 +824,8 @@ class SyncCharts2Simulation {
             //---
             
             // For resetting the inner states when entering by a normal transition
-            // add a reset signal and emit it when entering
+            // add a reset signal and emit it when entering.
+            // On entering also all local (valued) signals will be reset automatically.
             val auxiliaryResetSignal = KExpressionsFactory::eINSTANCE.createSignal();
             val auxiliaryResetSignalUID = state.id + "Reset";
             auxiliaryResetSignal.setName(auxiliaryResetSignalUID);

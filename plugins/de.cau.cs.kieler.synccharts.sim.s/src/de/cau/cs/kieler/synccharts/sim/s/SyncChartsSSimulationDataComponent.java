@@ -371,19 +371,17 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         "simulation.kixs");
 
                 // Normal SCC Aborts (@requires: none)
-                transformedModel = (new SyncCharts2Simulation()).transformSCCAborts(transformedModel);
+                //transformedModel = (new SyncCharts2Simulation()).transformSCCAborts(transformedModel);
                 
-                // Normal Termination transitions (@requires: during actions, @before: exit actions)
-                //transformedModel = (new SyncCharts2Simulation())
-                //        .transformNormalTermination(transformedModel);
                 
 //                // Normal Pre operator (@requires: none)
 //                transformedModel = (new SyncCharts2Simulation())
 //                        .transformPreOperator(transformedModel);
 
-                // // History transitions. (@requires: suspend)
-                // transformedModel = (new
-                // SyncCharts2Simulation()).transformHistory(transformedModel);
+                // History transitions. (@requires: suspend)
+                //transformedModel = (new
+                //SyncCharts2Simulation()).transformHistory(transformedModel);
+                
                 //
                 // // Suspends (non-immediate and non-delayed) (@requires: during)
                 // transformedModel = (new
@@ -392,6 +390,10 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 // // During actions (@requires: none)
                 // transformedModel = (new SyncCharts2Simulation())
                 // .transformDuringAction(transformedModel);
+
+                // Normal Termination transitions (@requires: during actions, @before: exit actions)
+                //transformedModel = (new SyncCharts2Simulation())
+                //        .transformNormalTermination(transformedModel);
 
                 try {
                     // Write out copy/transformation of syncchart program
