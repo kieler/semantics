@@ -265,7 +265,7 @@
          </command>
       </menuContribution>
             <menuContribution
-                  locationURI="popup:de.cau.cs.kieler">
+                  locationURI="popup:org.eclipse.ui.popup.any?after=additions">
                <command
                      commandId="de.cau.cs.kieler.core.ui.expandMacroStates"
                      label="Expand Reference Macro-States"

@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
                commandId="de.cau.cs.kieler.synccharts.codegen.esterel.genEsterel"
                label="Generate Esterel Code"

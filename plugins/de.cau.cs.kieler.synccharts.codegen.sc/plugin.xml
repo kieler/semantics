@@ -14,7 +14,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
                commandId="de.cau.cs.kieler.synccharts.codegen.genSC"
                label="Generate SC Code"
@@ -34,25 +34,6 @@
             	</adapt>
          	</iterate>
           </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="menu:de.cau.cs.kieler">
-         <command
-               commandId="de.cau.cs.kieler.synccharts.codegen.genSC"
-               label="Generate SC code"
-               mnemonic="generate SC code"
-               style="push"
-               tooltip="generate SC code for the current SyncChart">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="activeEditorId">
-                  <equals
-                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
-                  </equals>
-               </with>
-            </visibleWhen>
          </command>
       </menuContribution>
    </extension>

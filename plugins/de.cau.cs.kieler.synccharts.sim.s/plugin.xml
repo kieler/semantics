@@ -31,10 +31,10 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsAbortTransformation"
-               label="Transform Strong and Weak Aborts"
+               label="Strong and Weak Aborts"
                mnemonic="A"
                style="push">
             <visibleWhen>
@@ -54,10 +54,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsNormalTerminationTransformation"
-               label="Transform Normal Terminations"
+               label="Normal Terminations"
                mnemonic="N"
                style="push">
             <visibleWhen>
@@ -77,10 +77,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsCountDelayTransformation"
-               label="Transform Count Delays"
+               label="Count Delays"
                mnemonic="C"
                style="push">
             <visibleWhen>
@@ -100,10 +100,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsSuspendTransformation"
-               label="Transform Suspends"
+               label="Suspends"
                mnemonic="S"
                style="push">
             <visibleWhen>
@@ -123,10 +123,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsHistoryTransformation"
-               label="Transform History Transitions"
+               label="History Transitions"
                mnemonic="H"
                style="push">
             <visibleWhen>
@@ -146,10 +146,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsEntryActionTransformation"
-               label="Transform Entry Actions"
+               label="Entry Actions"
                mnemonic="n"
                style="push">
             <visibleWhen>
@@ -169,10 +169,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsExposeLocalSignalsTransformation"
-               label="Transform Expose Local Signals"
+               label="Expose Local Signals"
                mnemonic="E"
                style="push">
             <visibleWhen>
@@ -192,10 +192,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsDuringActionTransformation"
-               label="Transform During Actions"
+               label="During Actions"
                mnemonic="D"
                style="push">
             <visibleWhen>
@@ -215,10 +215,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsExitActionTransformation"
-               label="Transform Exit Actions"
+               label="Exit Actions"
                mnemonic="E"
                style="push">
             <visibleWhen>
@@ -238,10 +238,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsPreTransformation"
-               label="Transform Pre Operator"
+               label="Pre Operators"
                mnemonic="P"
                style="push">
             <visibleWhen>
@@ -318,6 +318,21 @@
             id="de.cau.cs.kieler.synccharts.sim.s.SyncChartsPreTransformation"
             name="SyncChartsPreTransformation">
       </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="de.cau.cs.kieler.synccharts.sim.s.transformations"
+               label="Transform SyncCharts..."
+               mnemonic="T">
+            <separator
+                  name="de.cau.cs.kieler.core.ui.separator1"
+                  visible="true">
+            </separator>
+         </menu>
+      </menuContribution>
    </extension>
 
 </plugin>
