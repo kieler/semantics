@@ -1529,7 +1529,7 @@ class SyncCharts2Simulation {
     
     
     //-------------------------------------------------------------------------
-    //--                        S C C -  A B O R T S -  O P E R A T O R                     --
+    //--          S C C -  A B O R T S -  T R A N S F O R M A T I O N        --
     //-------------------------------------------------------------------------
            
     // Transforming SCC Aborts.
@@ -1574,7 +1574,7 @@ class SyncCharts2Simulation {
             abortState.setLabel("Abort");             
             abortState.setIsFinal(true);
             val watcherRegion = SyncchartsFactory::eINSTANCE.createRegion();
-            watcherRegion.setId("WatcherRegion" + state.hashCode);
+            watcherRegion.setId("_Watcher" + state.hashCode);
             watcherRegion.states.add(runState);
             watcherRegion.states.add(abortState);
             state.regions.add(watcherRegion);
@@ -1582,7 +1582,7 @@ class SyncCharts2Simulation {
             // Add a conditional node outside of the state and connect it with
             // a normal termination transition
             val conditionalState = SyncchartsFactory::eINSTANCE.createState();
-            conditionalState.setId("Conditional" + state.hashCode);
+            conditionalState.setId("_Conditional" + state.hashCode);
             conditionalState.setType(StateType::CONDITIONAL);
             state.parentRegion.states.add(conditionalState);
             val normalTerminationTransition = SyncchartsFactory::eINSTANCE.createTransition();
@@ -1611,10 +1611,10 @@ class SyncCharts2Simulation {
                     val transitionSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
                         transitionSignalReference.setValuedObject(transitionSignal);
                     if (transition.type == TransitionType::STRONGABORT) {
-                        transitionSignal.setName(state.id + "_S" + transition.priority);
+                        transitionSignal.setName("_" + state.id + "_S" + transition.priority);
                         strongTriggerOperatorExpression.subExpressions.add(transitionSignalReference.copy);
                     } else {
-                        transitionSignal.setName(state.id + "_W" + transition.priority);
+                        transitionSignal.setName("_" + state.id + "_W" + transition.priority);
                         weakTriggerOperatorExpression.subExpressions.add(transitionSignalReference.copy);
                     }                    
                     transitionSignal.setIsInput(false);
@@ -1634,6 +1634,8 @@ class SyncCharts2Simulation {
                     val transitionSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
                         transitionSignalEmission.setSignal(transitionSignal);
                     watcherTransition.effects.add(transitionSignalEmission);
+                    // Change trigger of original transition to transitionSignalReference
+                    transition.setTrigger(transitionSignalReference.copy);
                 }
                 
                 // Move original transition from state to conditionalState
@@ -1658,8 +1660,8 @@ class SyncCharts2Simulation {
                 val regionStates = ImmutableList::copyOf(region.states);
                 
                 val abortedState = SyncchartsFactory::eINSTANCE.createState();
-                abortedState.setId("Aborted" + state.hashCode);
-                abortedState.setLabel("Aborted");             
+                abortedState.setId("_Aborted" + state.hashCode);
+                abortedState.setLabel("_Aborted");             
                 abortedState.setIsFinal(true);
                 region.states.add(abortedState);
                 

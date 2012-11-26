@@ -7,7 +7,7 @@
             locationURI="popup:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.synccharts.codegen.s.genS"
-               label="Generate S Code (new)"
+               label="Generate S Code"
                mnemonic="S"
                style="push">
             <visibleWhen>

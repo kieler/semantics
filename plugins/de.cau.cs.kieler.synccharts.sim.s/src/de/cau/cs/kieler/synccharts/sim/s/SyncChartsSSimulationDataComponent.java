@@ -371,7 +371,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         "simulation.kixs");
 
                 // Normal SCC Aborts (@requires: none)
-                //transformedModel = (new SyncCharts2Simulation()).transformSCCAborts(transformedModel);
+                transformedModel = (new SyncCharts2Simulation()).transformSCCAborts(transformedModel);
                 
                 
 //                // Normal Pre operator (@requires: none)
