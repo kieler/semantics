@@ -39,7 +39,6 @@ import org.json.JSONObject;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
@@ -88,15 +87,6 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
     /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
     private static final int NUMBER_OF_TASKS = 10;
-
-    /** The estimated maximum buffer size (string length) used for a pure signal. */
-    private static final int PURE_SIGNAL_BUFFER_CONSTANT = 21;
-
-    /** The estimated maximum buffer size (string length)used for a valued signal. */
-    private static final int VALUED_SIGNAL_BUFFER_CONSTANT = 100;
-
-    /** The minimal buffer size for the communicating buffer of the running SC program. */
-    private static final double MINIMAL_BUFFER_SIZE = 2048;
 
     // The KIEM_PROPERTY constants
     /** The Constant KIEM_PROPERTY_NAME_STATEMENTNAME. */
@@ -409,7 +399,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final Program model,
-            final boolean debug, final boolean benchmark, final boolean debugConsoleParam)
+            final boolean debug, final boolean benchmarkParam, final boolean debugConsoleParam)
             throws KiemInitializationException {
         this.myModel = model;
         monitor.begin("S Simulation", NUMBER_OF_TASKS);
@@ -477,36 +467,19 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 
-            // Calculate buffersize for SC program
-            int bufferSizeInt = 0;
-            for (Signal signal : transformedProgram.getSignals()) {
-                if (signal.getType() == ValueType.PURE) {
-                    bufferSizeInt += signal.getName().length() + PURE_SIGNAL_BUFFER_CONSTANT;
-                } else {
-                    bufferSizeInt += signal.getName().length() + VALUED_SIGNAL_BUFFER_CONSTANT;
-                }
-            }
-            double log = Math.ceil(Math.log(bufferSizeInt) / Math.log(2));
-            double bufferSizeDouble = Math.ceil(Math.pow(2, log + 1));
-            if (bufferSizeDouble < MINIMAL_BUFFER_SIZE) {
-                bufferSizeDouble = MINIMAL_BUFFER_SIZE;
-            }
-            String bufferSize = bufferSizeDouble + "";
-            bufferSize = bufferSize.substring(0, bufferSize.lastIndexOf('.'));
-
             // Check whether alternative SC syntax is requested
             boolean alternativeSyntax = this.getProperties()[KIEM_PROPERTY_ALTERNATIVESYNTAX
                     + KIEM_PROPERTY_DIFF].getValueAsBoolean();
 
             // Check whether SC compilation should generate additional debug output
             debugConsole = debugConsoleParam;
-            this.benchmark = benchmark;
+            benchmark = benchmarkParam;
 
             // Generate SC code
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder, bufferSize,
+            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder, 
                     alternativeSyntax);
 
             // Compile
