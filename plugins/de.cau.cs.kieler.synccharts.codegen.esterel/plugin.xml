@@ -7,7 +7,7 @@
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
                commandId="de.cau.cs.kieler.synccharts.codegen.esterel.genEsterel"
-               label="Generate Esterel Code"
+               label="Generate Esterel Code (experimental)"
                mnemonic="E"
                style="push">
             <visibleWhen>
