@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
   <states id="shifter3" label="shifter3" interfaceDeclaration="signal I := &quot;1&quot; : INT;&#xA;signal S0 : INT;&#xA;signal S1 : INT;&#xA;signal O : INT;">
-    <signals name="I" type="int" initialValue="&quot;1&quot;"/>
+    <signals name="I" type="int" initialValue="&quot;1&quot;" isInput="true"/>
     <signals name="S0" type="int"/>
     <signals name="S1" type="int"/>
-    <signals name="O" type="int"/>
+    <signals name="O" type="int" isOutput="true"/>
     <regions id="R1">
       <states id="I2" label="I2" isInitial="true" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
         <outgoingTransitions label="pre(S0) / S1(pre(?S0))" priority="1" targetState="//@states.0/@regions.0/@states.0">
