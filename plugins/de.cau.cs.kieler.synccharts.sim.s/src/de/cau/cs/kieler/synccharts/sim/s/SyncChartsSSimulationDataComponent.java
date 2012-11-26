@@ -370,8 +370,8 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
 
-                // Normal SCC Aborts (@requires: none)
-                transformedModel = (new SyncCharts2Simulation()).transformSCCAborts(transformedModel);
+//                // Normal SCC Aborts (@requires: none)
+//                transformedModel = (new SyncCharts2Simulation()).transformSCCAborts(transformedModel);
                 
                 
 //                // Normal Pre operator (@requires: none)
