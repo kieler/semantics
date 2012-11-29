@@ -49,11 +49,12 @@ import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
  * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
-public class KIEMModelSelectionCombination extends AbstractCombination implements IKiemEventListener {
+public class KIEMModelSelectionCombination extends AbstractCombination implements
+        IKiemEventListener {
 
     /** The time to sleep during blocking wait. */
     public static final int SLEEP_WAIT_TIME = 50;
-    
+
     /** The deferred editor part that may be set while KIEM was executing or initializing. */
     private static IEditorPart deferredEditorPart = null;
 
@@ -69,8 +70,9 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
 
     /**
      * Execute.
-     *
-     * @param partState the part state
+     * 
+     * @param partState
+     *            the part state
      */
     public void execute(final PartState partState) {
         // to prevent UI thread deadlocks (editorIsActivePart) because during initialization
@@ -94,6 +96,8 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
                     .getExecution() != null)) {
                 // reset any deferred partState
                 deferredEditorPart = null;
+                KIEMExecutionAutoloadCombination.setLastValidEditorId(activeEditorPart.getSite()
+                        .getId());
                 refreshKIEMActiveAndOpenedModels(activeEditorPart);
             } else {
                 // defer the partState until KIEM is stopping
@@ -128,7 +132,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
 
             // this is the active editor if any
             if (editorPart == activeEditorPart) {
-                    KiemPlugin.setCurrentModelFile(inputModelPath);
+                KiemPlugin.setCurrentModelFile(inputModelPath);
             }
 
             // add to opened model files
@@ -246,28 +250,28 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
         return fullPath;
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
      */
     public void notifyEvent(final KiemEvent event) {
-      if (event.isEvent(KiemEvent.ERROR_STOP) || event.isEvent(KiemEvent.EXECUTION_STOP)) {
-          // In case of erroneous or intended execution stops
-          // trigger to select the NOW current model
-          if (deferredEditorPart != null) {
-              refreshKIEMActiveAndOpenedModels(deferredEditorPart);
-          }
-      }
+        if (event.isEvent(KiemEvent.ERROR_STOP) || event.isEvent(KiemEvent.EXECUTION_STOP)) {
+            // In case of erroneous or intended execution stops
+            // trigger to select the NOW current model
+            if (deferredEditorPart != null) {
+                refreshKIEMActiveAndOpenedModels(deferredEditorPart);
+            }
+        }
     }
-    
-    //-------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
      */
     public KiemEvent provideEventOfInterest() {
-        int[] events = { KiemEvent.EXECUTION_STOP, KiemEvent.ERROR_STOP};
+        int[] events = { KiemEvent.EXECUTION_STOP, KiemEvent.ERROR_STOP };
         return new KiemEvent(events);
     }
 

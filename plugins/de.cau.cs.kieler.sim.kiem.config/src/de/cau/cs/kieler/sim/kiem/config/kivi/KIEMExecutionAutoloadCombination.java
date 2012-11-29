@@ -43,13 +43,29 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  */
 public class KIEMExecutionAutoloadCombination extends AbstractCombination implements IKiemEventListener {
 
-    private EditorIdWrapper lastValidEditorId = null;
+    private static String lastValidEditorId = null;
 
     /**
      * Instantiates a new kIEM execution autoload combination.
      */
     public KIEMExecutionAutoloadCombination() {
     }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Sets the last valid editor id. This method is intended only for internal
+     * use when the KIEMModelSeletionCombination tells this combination which
+     * editor is the currently selected one. This prevents the autoload to 
+     * proceed if the valid current editor has not changed.
+     *
+     * @param newEditorPart the new last valid editor id
+     */
+    public static void setLastValidEditorId(final String newEditorPart) {
+        lastValidEditorId = newEditorPart;
+    }
+    
+    //-------------------------------------------------------------------------
 
     /**
      * Execute.
@@ -81,6 +97,8 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination implem
 
     }
     
+    //-------------------------------------------------------------------------
+
     private void autoloadExecutionSchedule() {
         EditorIdWrapper editorId = null;
         String editorName = null;
@@ -94,7 +112,7 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination implem
             // get the attributes from the editor
             editorId = new EditorIdWrapper(editor.getId());
             editorName = editor.getRegisteredName();
-
+            
             // only if editor has been changed to a valid one
             if (editorId == null || (!editorId.equals(lastValidEditorId))) {
                 ScheduleManager scheduleManager = ScheduleManager.getInstance();
@@ -103,7 +121,7 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination implem
 
                 // if at least one matching schedule, take the first one
                 if (scheduleDataList.size() > 0) {
-                    lastValidEditorId = editorId;
+                    lastValidEditorId = editorId.getString();
                     ScheduleData scheduleData = scheduleDataList.get(0);
                     // open execution file
                     try {

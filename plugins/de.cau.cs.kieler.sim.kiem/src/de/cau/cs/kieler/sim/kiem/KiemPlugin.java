@@ -149,6 +149,9 @@ public class KiemPlugin extends AbstractUIPlugin {
     /** The no error output. */
     private boolean forceNoErrorOutput = false;
     
+    /** Requested re-run. */
+    private boolean requestedReRun = false;    
+    
     /** The last error. */
     private static String lastError = null;
 
@@ -163,6 +166,9 @@ public class KiemPlugin extends AbstractUIPlugin {
     
     /** A mapping between model files and model root EObjects. */
     private static HashMap<IPath, EObject> openedModelRootObjects = new HashMap<IPath, EObject>();
+    
+    /** The execution reinitializer (if any, null otherwise). */
+    private KiemExecutionReinitializer executionReinitializer = null;
     
     // -------------------------------------------------------------------------
 
@@ -1706,5 +1712,45 @@ public class KiemPlugin extends AbstractUIPlugin {
         return openedModelRootObjects;
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Return whether there is a pending requested re-run. Once the re-run
+     * has initialized this flag will be turned to false.
+     * 
+     * @return the requestedReRun
+     */
+    public boolean isRequestedReRun() {
+        return requestedReRun;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Request a re-run after the current execution has finished. This can be
+     * used for regression-test or benchmark components.
+     */
+    public void requestReRun() {
+        if (!requestedReRun) {
+            // Here fork a new observer that will restart KIEM
+            executionReinitializer = new KiemExecutionReinitializer();
+            (new Thread(executionReinitializer)).start();
+        }
+        this.requestedReRun = true;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Resets a re-run request after the last one has been served. Do not call
+     * from outside. This is used internally only.
+     */
+    public void resetRequestReRun() {
+        if (executionReinitializer != null) {
+            executionReinitializer.cancel();
+        }
+        this.requestedReRun = false;
+    }
+    
     // -------------------------------------------------------------------------
 }    
