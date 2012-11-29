@@ -4,8 +4,6 @@ package de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.yakindu.sct.model.sgraph.Scope;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>State Specification</b></em>'.
@@ -26,7 +24,7 @@ public interface StateSpecification extends org.yakindu.sct.model.stext.stext.St
 {
   /**
    * Returns the value of the '<em><b>Scopes</b></em>' containment reference list.
-   * The list contents are of type {@link org.yakindu.sct.model.sgraph.Scope}.
+   * The list contents are of type {@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InterfaceScope}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Scopes</em>' containment reference list isn't clear,
@@ -38,6 +36,6 @@ public interface StateSpecification extends org.yakindu.sct.model.stext.stext.St
    * @model containment="true"
    * @generated
    */
-  EList<Scope> getScopes();
+  EList<InterfaceScope> getScopes();
 
 } // StateSpecification

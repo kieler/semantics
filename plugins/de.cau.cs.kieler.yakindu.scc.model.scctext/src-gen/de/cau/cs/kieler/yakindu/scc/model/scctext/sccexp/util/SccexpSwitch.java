@@ -17,11 +17,12 @@ import org.yakindu.base.types.TypedElement;
 
 import org.yakindu.sct.model.sgraph.Declaration;
 import org.yakindu.sct.model.sgraph.Effect;
-import org.yakindu.sct.model.sgraph.Reaction;
 import org.yakindu.sct.model.sgraph.Scope;
+import org.yakindu.sct.model.sgraph.Statement;
 import org.yakindu.sct.model.sgraph.Trigger;
 import org.yakindu.sct.model.sgraph.Variable;
 
+import org.yakindu.sct.model.stext.stext.Expression;
 import org.yakindu.sct.model.stext.stext.StatechartScope;
 
 /**
@@ -95,10 +96,19 @@ public class SccexpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SccexpPackage.STATE_SCOPE:
+      {
+        StateScope stateScope = (StateScope)theEObject;
+        T result = caseStateScope(stateScope);
+        if (result == null) result = caseScope(stateScope);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SccexpPackage.INTERFACE_SCOPE:
       {
         InterfaceScope interfaceScope = (InterfaceScope)theEObject;
         T result = caseInterfaceScope(interfaceScope);
+        if (result == null) result = caseStateScope(interfaceScope);
         if (result == null) result = caseStext_InterfaceScope(interfaceScope);
         if (result == null) result = caseStatechartScope(interfaceScope);
         if (result == null) result = caseNamedElement(interfaceScope);
@@ -124,15 +134,8 @@ public class SccexpSwitch<T> extends Switch<T>
       {
         ReactionScope reactionScope = (ReactionScope)theEObject;
         T result = caseReactionScope(reactionScope);
+        if (result == null) result = caseStateScope(reactionScope);
         if (result == null) result = caseScope(reactionScope);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SccexpPackage.TRANSITION:
-      {
-        Transition transition = (Transition)theEObject;
-        T result = caseTransition(transition);
-        if (result == null) result = caseReaction(transition);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -176,11 +179,12 @@ public class SccexpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SccexpPackage.REACTION_EFFECT:
+      case SccexpPackage.PRE_VALUE_EXPRESSIONRETURNS:
       {
-        ReactionEffect reactionEffect = (ReactionEffect)theEObject;
-        T result = caseReactionEffect(reactionEffect);
-        if (result == null) result = caseEffect(reactionEffect);
+        PreValueExpressionreturns preValueExpressionreturns = (PreValueExpressionreturns)theEObject;
+        T result = casePreValueExpressionreturns(preValueExpressionreturns);
+        if (result == null) result = caseExpression(preValueExpressionreturns);
+        if (result == null) result = caseStatement(preValueExpressionreturns);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -200,6 +204,22 @@ public class SccexpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseStateSpecification(StateSpecification object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>State Scope</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>State Scope</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStateScope(StateScope object)
   {
     return null;
   }
@@ -248,22 +268,6 @@ public class SccexpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseReactionScope(ReactionScope object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Transition</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Transition</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTransition(Transition object)
   {
     return null;
   }
@@ -349,17 +353,17 @@ public class SccexpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Reaction Effect</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Pre Value Expressionreturns</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Reaction Effect</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Pre Value Expressionreturns</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseReactionEffect(ReactionEffect object)
+  public T casePreValueExpressionreturns(PreValueExpressionreturns object)
   {
     return null;
   }
@@ -541,22 +545,6 @@ public class SccexpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Reaction</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Reaction</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseReaction(Reaction object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -584,6 +572,38 @@ public class SccexpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseTrigger(Trigger object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Statement</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Statement</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStatement(Statement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExpression(Expression object)
   {
     return null;
   }

@@ -102,11 +102,11 @@
 			</wizard> 
 		</extension>
 		
-	<!--<extension point="org.eclipse.emf.ecore.extension_parser">
+	<extension point="org.eclipse.emf.ecore.extension_parser">
 		<parser class="de.cau.cs.kieler.yakindu.scc.model.scctext.ui.SCCExpExecutableExtensionFactory:org.yakindu.sct.model.stext.resource.factory.InjectMembersResourceFactory"
-				type="sccexp">
+				type="scc">
 		</parser>
-	</extension>-->
+	</extension>
 	
 	<extension point="org.yakindu.sct.ui.editor.expressions">
 		<ExpressionLanguageProvider

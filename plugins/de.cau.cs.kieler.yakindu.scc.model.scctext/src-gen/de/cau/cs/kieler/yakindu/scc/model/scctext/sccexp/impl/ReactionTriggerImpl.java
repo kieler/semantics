@@ -5,16 +5,24 @@ package de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.yakindu.sct.model.sgraph.impl.TriggerImpl;
 
+import org.yakindu.sct.model.stext.stext.EventSpec;
 import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
@@ -26,6 +34,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl#isIsImmediate <em>Is Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl#getTriggers <em>Triggers</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl#getGuardExpression <em>Guard Expression</em>}</li>
  * </ul>
  * </p>
@@ -73,6 +82,16 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * @ordered
    */
   protected int delay = DELAY_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getTriggers() <em>Triggers</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTriggers()
+   * @generated
+   * @ordered
+   */
+  protected EList<EventSpec> triggers;
 
   /**
    * The cached value of the '{@link #getGuardExpression() <em>Guard Expression</em>}' containment reference.
@@ -156,6 +175,20 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<EventSpec> getTriggers()
+  {
+    if (triggers == null)
+    {
+      triggers = new EObjectContainmentEList<EventSpec>(EventSpec.class, this, SccexpPackage.REACTION_TRIGGER__TRIGGERS);
+    }
+    return triggers;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Expression getGuardExpression()
   {
     return guardExpression;
@@ -209,6 +242,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   {
     switch (featureID)
     {
+      case SccexpPackage.REACTION_TRIGGER__TRIGGERS:
+        return ((InternalEList<?>)getTriggers()).basicRemove(otherEnd, msgs);
       case SccexpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         return basicSetGuardExpression(null, msgs);
     }
@@ -229,6 +264,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return isIsImmediate();
       case SccexpPackage.REACTION_TRIGGER__DELAY:
         return getDelay();
+      case SccexpPackage.REACTION_TRIGGER__TRIGGERS:
+        return getTriggers();
       case SccexpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         return getGuardExpression();
     }
@@ -240,6 +277,7 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -250,6 +288,10 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return;
       case SccexpPackage.REACTION_TRIGGER__DELAY:
         setDelay((Integer)newValue);
+        return;
+      case SccexpPackage.REACTION_TRIGGER__TRIGGERS:
+        getTriggers().clear();
+        getTriggers().addAll((Collection<? extends EventSpec>)newValue);
         return;
       case SccexpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         setGuardExpression((Expression)newValue);
@@ -274,6 +316,9 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
       case SccexpPackage.REACTION_TRIGGER__DELAY:
         setDelay(DELAY_EDEFAULT);
         return;
+      case SccexpPackage.REACTION_TRIGGER__TRIGGERS:
+        getTriggers().clear();
+        return;
       case SccexpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         setGuardExpression((Expression)null);
         return;
@@ -295,6 +340,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return isImmediate != IS_IMMEDIATE_EDEFAULT;
       case SccexpPackage.REACTION_TRIGGER__DELAY:
         return delay != DELAY_EDEFAULT;
+      case SccexpPackage.REACTION_TRIGGER__TRIGGERS:
+        return triggers != null && !triggers.isEmpty();
       case SccexpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         return guardExpression != null;
     }

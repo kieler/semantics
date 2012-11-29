@@ -6,8 +6,6 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.yakindu.sct.model.sgraph.Scope;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Reaction Scope</b></em>'.
@@ -24,7 +22,7 @@ import org.yakindu.sct.model.sgraph.Scope;
  * @model
  * @generated
  */
-public interface ReactionScope extends Scope
+public interface ReactionScope extends StateScope
 {
   /**
    * Returns the value of the '<em><b>Reaction Scope</b></em>' containment reference list.

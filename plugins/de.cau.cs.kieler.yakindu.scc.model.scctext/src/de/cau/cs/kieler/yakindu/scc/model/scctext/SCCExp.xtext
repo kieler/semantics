@@ -1,9 +1,7 @@
 grammar de.cau.cs.kieler.yakindu.scc.model.scctext.SCCExp with org.yakindu.sct.model.stext.SText
-
+// reuse and override rules from the SText grammar
 generate sccexp "http://cau.kieler.de/scc/SCCExp"
-
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
-
 import "http://www.yakindu.org/sct/statechart/SText" as stext
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
@@ -12,13 +10,15 @@ import "http://www.yakindu.org/base/types/2.0.0" as types
 /*			Overriding State grammar 			*/
 /************************************************/
 StateSpecification:
-	(scopes+=StateScope)*;
-	
-//defines the possible scopes for a state
-StateScope returns sgraph::Scope:
+	{StateSpecification} (scopes+=InterfaceScope)*;
+
+////defines the possible scopes for a state
+//StateScope :
+//	{SimpleScope} (scopes+=(InterfaceScope | ReactionScope))*;
+StateScope:
 	InterfaceScope | ReactionScope;
 
-/*********************************** INTERFACE DECLARATION **************************************** */	
+/*********************************** INTERFACE DECLARATION **************************************** */
 /************************************************/
 /*			  INTERFACE DECLARATION				*/
 /************************************************/
@@ -26,25 +26,17 @@ StateScope returns sgraph::Scope:
 // The InterfaceScope rule specifies that a InterfaceScope starts with 
 // the literal 'interface :', followed by one or more interface declaration variables
 InterfaceScope:
-	{InterfaceScope} 'interface' ':' declarations+=Declaration (','
-	declarations+=Declaration)* ';';
+	{InterfaceScope} 'interface' ':' declarations+=VariableDeclaration (','
+	declarations+=VariableDeclaration)* ';';
 
-/**
- * Declaration
- */
-// Override the rule Declaration
-// The InterfaceVariableDeclaration is an abstract rule.
-// It specifies that a Declaration may either be a 
-// VariableDefinition or an OperationDeclaration
-Declaration returns sgraph::Declaration:
-	VariableDefinition | OperationDeclaration;
 /************************************************/
 /*			 Variable Definition				*/
-/************************************************/ 
+/************************************************/
 // Override the SText VariableDefinition rule
 // A variable is a Declaration. It has a Direction, a Name, a Type, an InitialValue and a CombineOperator
+/* ---- variable definition ---- */
 VariableDefinition:
-	direction=VarDirection? (isStatic?='static')? varName=ID ':' varType=[types::Type|FQN] ('='
+	{VariableDefinition} direction=VarDirection? (isStatic?='static')? name=ID ':' type=[types::Type|FQN] ('='
 	varInitialValue=Expression)? ('with' varCombineOperator=CombineOperator)?;
 
 /************************************************/
@@ -71,28 +63,40 @@ Suspend returns sgraph::Trigger:
 	{Suspend} 'Suspend' ':' trigger=ReactionTrigger ';';
 
 /******************************************** TRANSITION ***************************************** */
-Reaction returns sgraph::Reaction:
-	 Transition;
+//Reaction returns sgraph::Reaction:
+//	 Transition;
 
 // The TransitionReaction is a Reaction and has an optional trigger and an optional effect 
-Transition:
-	{Transition} (trigger=ReactionTrigger)? ('/' effect=ReactionEffect)?;
-	
+//Transition:
+//	{Transition} (trigger=ReactionTrigger)? ('/' effect=ReactionEffect)?;
+
 // The ReactionTrigger is a Trigger and has an Expression, 
 // an optional delay and isImmediate option represented with a '#'
 ReactionTrigger returns sgraph::Trigger:
-	{ReactionTrigger} (isImmediate?='#')? (delay=INT)? ('[' guardExpression=Expression ']');
+	{ReactionTrigger} (isImmediate?='#')? (delay=INT)? ((triggers+=EventSpec ("," triggers+=EventSpec)* (=> '['
+	guardExpression=Expression ']')?)
+	| ('[' guardExpression=Expression ']'));
 
-// The ReactionEffect is an Effect. 
-ReactionEffect returns sgraph::Effect:
-	{ReactionEffect} actions+=(Expression | EventRaisingExpression) (=> ';' actions+=(Expression |
-	EventRaisingExpression))*; // (';')?;
+	// The ReactionEffect is an Effect. 
+//ReactionEffect returns sgraph::Effect:
+//	{ReactionEffect} actions+=Expression (=> ';' actions+=Expression)*; // (';')?;
 
+/***************************************** Expressions ******************************************* */
+// Override the stext::PrimaryExpression
+// remove the ActiveStateReferenceExpression and the EventValueReferenceExpression
+// and add PreValueExpressionreturns that returns the value of a variable in the previous tick. 
+PrimaryExpression returns stext::Expression:
+	PrimitiveValueExpression
+	| FeatureCall
+	| PreValueExpressionreturns | '(' Expression ')';
+
+PreValueExpressionreturns returns stext::Expression:
+	{PreValueExpressionreturns} 'pre' '(' value=FeatureCall ')';
 
 /***************************************** COMBINE OPERATORS ************************************* */
 enum CombineOperator returns CombineOperator:
 	NONE="'none'" | ADD="'+'" | MULT="'*'" | MAX="'max'" |
 	MIN="'min'" | OR="'or'" | AND="'and'" | HOST="'host'";
-	
+
 enum VarDirection:
 	INOUT='inout' | IN='in' | OUT='out';

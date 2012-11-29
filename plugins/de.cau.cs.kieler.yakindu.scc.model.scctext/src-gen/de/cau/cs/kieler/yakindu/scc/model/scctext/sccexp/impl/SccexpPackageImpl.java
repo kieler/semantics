@@ -7,14 +7,14 @@ import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.EntryAction;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ExitAction;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InsideAction;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InterfaceScope;
-import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.PreValueExpressionreturns;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionScope;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpFactory;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateScope;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateSpecification;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Suspend;
-import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Transition;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VarDirection;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition;
 
@@ -25,8 +25,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import org.yakindu.base.types.TypesPackage;
 
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 
@@ -52,6 +50,13 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass stateScopeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass interfaceScopeEClass = null;
 
   /**
@@ -67,13 +72,6 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * @generated
    */
   private EClass reactionScopeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass transitionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -115,7 +113,7 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass reactionEffectEClass = null;
+  private EClass preValueExpressionreturnsEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -222,6 +220,16 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getStateScope()
+  {
+    return stateScopeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getInterfaceScope()
   {
     return interfaceScopeEClass;
@@ -262,29 +270,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableDefinition_VarName()
-  {
-    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getVariableDefinition_VarType()
-  {
-    return (EReference)variableDefinitionEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getVariableDefinition_VarInitialValue()
   {
-    return (EReference)variableDefinitionEClass.getEStructuralFeatures().get(4);
+    return (EReference)variableDefinitionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -294,7 +282,7 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    */
   public EAttribute getVariableDefinition_VarCombineOperator()
   {
-    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -315,16 +303,6 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
   public EReference getReactionScope_ReactionScope()
   {
     return (EReference)reactionScopeEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getTransition()
-  {
-    return transitionEClass;
   }
 
   /**
@@ -442,7 +420,7 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReactionTrigger_GuardExpression()
+  public EReference getReactionTrigger_Triggers()
   {
     return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(2);
   }
@@ -452,9 +430,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getReactionEffect()
+  public EReference getReactionTrigger_GuardExpression()
   {
-    return reactionEffectEClass;
+    return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -462,9 +440,19 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReactionEffect_Actions()
+  public EClass getPreValueExpressionreturns()
   {
-    return (EReference)reactionEffectEClass.getEStructuralFeatures().get(0);
+    return preValueExpressionreturnsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPreValueExpressionreturns_Value()
+  {
+    return (EReference)preValueExpressionreturnsEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -520,20 +508,18 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
     stateSpecificationEClass = createEClass(STATE_SPECIFICATION);
     createEReference(stateSpecificationEClass, STATE_SPECIFICATION__SCOPES);
 
+    stateScopeEClass = createEClass(STATE_SCOPE);
+
     interfaceScopeEClass = createEClass(INTERFACE_SCOPE);
 
     variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__DIRECTION);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_STATIC);
-    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_NAME);
-    createEReference(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_TYPE);
     createEReference(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_INITIAL_VALUE);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR);
 
     reactionScopeEClass = createEClass(REACTION_SCOPE);
     createEReference(reactionScopeEClass, REACTION_SCOPE__REACTION_SCOPE);
-
-    transitionEClass = createEClass(TRANSITION);
 
     exitActionEClass = createEClass(EXIT_ACTION);
     createEReference(exitActionEClass, EXIT_ACTION__EFFECT);
@@ -550,10 +536,11 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
     reactionTriggerEClass = createEClass(REACTION_TRIGGER);
     createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__IS_IMMEDIATE);
     createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__DELAY);
+    createEReference(reactionTriggerEClass, REACTION_TRIGGER__TRIGGERS);
     createEReference(reactionTriggerEClass, REACTION_TRIGGER__GUARD_EXPRESSION);
 
-    reactionEffectEClass = createEClass(REACTION_EFFECT);
-    createEReference(reactionEffectEClass, REACTION_EFFECT__ACTIONS);
+    preValueExpressionreturnsEClass = createEClass(PRE_VALUE_EXPRESSIONRETURNS);
+    createEReference(preValueExpressionreturnsEClass, PRE_VALUE_EXPRESSIONRETURNS__VALUE);
 
     // Create enums
     combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
@@ -587,7 +574,6 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
     // Obtain other dependent packages
     StextPackage theStextPackage = (StextPackage)EPackage.Registry.INSTANCE.getEPackage(StextPackage.eNS_URI);
     SGraphPackage theSGraphPackage = (SGraphPackage)EPackage.Registry.INSTANCE.getEPackage(SGraphPackage.eNS_URI);
-    TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
     // Create type parameters
 
@@ -595,37 +581,34 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
 
     // Add supertypes to classes
     stateSpecificationEClass.getESuperTypes().add(theStextPackage.getStateSpecification());
-    interfaceScopeEClass.getESuperTypes().add(theSGraphPackage.getScope());
+    stateScopeEClass.getESuperTypes().add(theSGraphPackage.getScope());
+    interfaceScopeEClass.getESuperTypes().add(this.getStateScope());
     interfaceScopeEClass.getESuperTypes().add(theStextPackage.getInterfaceScope());
-    variableDefinitionEClass.getESuperTypes().add(theSGraphPackage.getDeclaration());
     variableDefinitionEClass.getESuperTypes().add(theStextPackage.getVariableDefinition());
-    reactionScopeEClass.getESuperTypes().add(theSGraphPackage.getScope());
-    transitionEClass.getESuperTypes().add(theSGraphPackage.getReaction());
+    reactionScopeEClass.getESuperTypes().add(this.getStateScope());
     exitActionEClass.getESuperTypes().add(theSGraphPackage.getEffect());
     insideActionEClass.getESuperTypes().add(theSGraphPackage.getEffect());
     entryActionEClass.getESuperTypes().add(theSGraphPackage.getEffect());
     suspendEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
     reactionTriggerEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
-    reactionEffectEClass.getESuperTypes().add(theSGraphPackage.getEffect());
+    preValueExpressionreturnsEClass.getESuperTypes().add(theStextPackage.getExpression());
 
     // Initialize classes and features; add operations and parameters
     initEClass(stateSpecificationEClass, StateSpecification.class, "StateSpecification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStateSpecification_Scopes(), theSGraphPackage.getScope(), null, "scopes", null, 0, -1, StateSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStateSpecification_Scopes(), this.getInterfaceScope(), null, "scopes", null, 0, -1, StateSpecification.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(stateScopeEClass, StateScope.class, "StateScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(interfaceScopeEClass, InterfaceScope.class, "InterfaceScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVariableDefinition_Direction(), this.getVarDirection(), "direction", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariableDefinition_VarName(), ecorePackage.getEString(), "varName", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getVariableDefinition_VarType(), theTypesPackage.getType(), null, "varType", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVariableDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_VarCombineOperator(), this.getCombineOperator(), "varCombineOperator", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(reactionScopeEClass, ReactionScope.class, "ReactionScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getReactionScope_ReactionScope(), ecorePackage.getEObject(), null, "reactionScope", null, 0, -1, ReactionScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(exitActionEClass, ExitAction.class, "ExitAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExitAction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, ExitAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -642,10 +625,11 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
     initEClass(reactionTriggerEClass, ReactionTrigger.class, "ReactionTrigger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getReactionTrigger_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReactionTrigger_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReactionTrigger_Triggers(), theStextPackage.getEventSpec(), null, "triggers", null, 0, -1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getReactionTrigger_GuardExpression(), theStextPackage.getExpression(), null, "guardExpression", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(reactionEffectEClass, ReactionEffect.class, "ReactionEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getReactionEffect_Actions(), theStextPackage.getExpression(), null, "actions", null, 0, -1, ReactionEffect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(preValueExpressionreturnsEClass, PreValueExpressionreturns.class, "PreValueExpressionreturns", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPreValueExpressionreturns_Value(), theStextPackage.getExpression(), null, "value", null, 0, 1, PreValueExpressionreturns.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");

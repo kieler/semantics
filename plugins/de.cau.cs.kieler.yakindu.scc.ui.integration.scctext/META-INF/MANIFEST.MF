@@ -6,14 +6,14 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.yakindu.scc.ui.integration.scctext.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.yakindu.sct.ui.editor;bundle-version="1.0.0",
  de.cau.cs.kieler.yakindu.scc.model.scctext;bundle-version="0.1.0",
  de.cau.cs.kieler.yakindu.scc.model.scctext.ui;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Import-Package:  de.cau.cs.kieler.yakindu.scc.model.scctext,
+Import-Package: de.cau.cs.kieler.yakindu.scc.model.scctext,
  org.eclipse.xtext.ui.editor.contentassist.antlr,
  org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
- org.yakindu.sct.model.stext.stext
+ org.yakindu.sct.model.stext.stext,
+ org.yakindu.sct.ui.editor.extensions
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.yakindu.scc.ui.integration.scctext,
  de.cau.cs.kieler.yakindu.scc.ui.integration.scctext.modules

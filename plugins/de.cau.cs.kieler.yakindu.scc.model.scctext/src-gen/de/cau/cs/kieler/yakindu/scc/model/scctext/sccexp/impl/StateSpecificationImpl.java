@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl;
 
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InterfaceScope;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateSpecification;
 
@@ -16,8 +17,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.yakindu.sct.model.sgraph.Scope;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,7 +41,7 @@ public class StateSpecificationImpl extends org.yakindu.sct.model.stext.stext.im
    * @generated
    * @ordered
    */
-  protected EList<Scope> scopes;
+  protected EList<InterfaceScope> scopes;
 
   /**
    * <!-- begin-user-doc -->
@@ -70,11 +69,11 @@ public class StateSpecificationImpl extends org.yakindu.sct.model.stext.stext.im
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Scope> getScopes()
+  public EList<InterfaceScope> getScopes()
   {
     if (scopes == null)
     {
-      scopes = new EObjectContainmentEList<Scope>(Scope.class, this, SccexpPackage.STATE_SPECIFICATION__SCOPES);
+      scopes = new EObjectContainmentEList<InterfaceScope>(InterfaceScope.class, this, SccexpPackage.STATE_SPECIFICATION__SCOPES);
     }
     return scopes;
   }
@@ -124,7 +123,7 @@ public class StateSpecificationImpl extends org.yakindu.sct.model.stext.stext.im
     {
       case SccexpPackage.STATE_SPECIFICATION__SCOPES:
         getScopes().clear();
-        getScopes().addAll((Collection<? extends Scope>)newValue);
+        getScopes().addAll((Collection<? extends InterfaceScope>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

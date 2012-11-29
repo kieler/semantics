@@ -1,7 +1,9 @@
 package de.cau.cs.kieler.yakindu.scc.model.scctext.validation;
+
+import org.yakindu.sct.model.stext.validation.STextJavaValidator;
  
 
-public class SCCExpJavaValidator extends AbstractSCCExpJavaValidator {
+public class SCCExpJavaValidator extends STextJavaValidator {
 
 //	@Check
 //	public void checkGreetingStartsWithCapital(Greeting greeting) {

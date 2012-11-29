@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Editor
 Bundle-SymbolicName: de.cau.cs.kieler.yakindu.scc.ui.editor;singleton:=true
 Bundle-Version: 0.1.0.qualifier
+Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.yakindu.sct.ui.editor, 

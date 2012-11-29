@@ -99,14 +99,14 @@ public interface SccexpPackage extends EPackage
   int STATE_SPECIFICATION_FEATURE_COUNT = StextPackage.STATE_SPECIFICATION_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InterfaceScopeImpl <em>Interface Scope</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateScopeImpl <em>State Scope</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InterfaceScopeImpl
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInterfaceScope()
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateScopeImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateScope()
    * @generated
    */
-  int INTERFACE_SCOPE = 1;
+  int STATE_SCOPE = 1;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -115,7 +115,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_SCOPE__DECLARATIONS = SGraphPackage.SCOPE__DECLARATIONS;
+  int STATE_SCOPE__DECLARATIONS = SGraphPackage.SCOPE__DECLARATIONS;
 
   /**
    * The feature id for the '<em><b>Events</b></em>' reference list.
@@ -124,7 +124,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_SCOPE__EVENTS = SGraphPackage.SCOPE__EVENTS;
+  int STATE_SCOPE__EVENTS = SGraphPackage.SCOPE__EVENTS;
 
   /**
    * The feature id for the '<em><b>Variables</b></em>' reference list.
@@ -133,7 +133,53 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_SCOPE__VARIABLES = SGraphPackage.SCOPE__VARIABLES;
+  int STATE_SCOPE__VARIABLES = SGraphPackage.SCOPE__VARIABLES;
+
+  /**
+   * The number of structural features of the '<em>State Scope</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_SCOPE_FEATURE_COUNT = SGraphPackage.SCOPE_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InterfaceScopeImpl <em>Interface Scope</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InterfaceScopeImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInterfaceScope()
+   * @generated
+   */
+  int INTERFACE_SCOPE = 2;
+
+  /**
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERFACE_SCOPE__DECLARATIONS = STATE_SCOPE__DECLARATIONS;
+
+  /**
+   * The feature id for the '<em><b>Events</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERFACE_SCOPE__EVENTS = STATE_SCOPE__EVENTS;
+
+  /**
+   * The feature id for the '<em><b>Variables</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTERFACE_SCOPE__VARIABLES = STATE_SCOPE__VARIABLES;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -142,7 +188,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_SCOPE__NAME = SGraphPackage.SCOPE_FEATURE_COUNT + 0;
+  int INTERFACE_SCOPE__NAME = STATE_SCOPE_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Interface Scope</em>' class.
@@ -151,7 +197,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTERFACE_SCOPE_FEATURE_COUNT = SGraphPackage.SCOPE_FEATURE_COUNT + 1;
+  int INTERFACE_SCOPE_FEATURE_COUNT = STATE_SCOPE_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
@@ -161,7 +207,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getVariableDefinition()
    * @generated
    */
-  int VARIABLE_DEFINITION = 2;
+  int VARIABLE_DEFINITION = 3;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -170,7 +216,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__NAME = SGraphPackage.DECLARATION__NAME;
+  int VARIABLE_DEFINITION__NAME = StextPackage.VARIABLE_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -179,7 +225,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__TYPE = SGraphPackage.DECLARATION_FEATURE_COUNT + 0;
+  int VARIABLE_DEFINITION__TYPE = StextPackage.VARIABLE_DEFINITION__TYPE;
 
   /**
    * The feature id for the '<em><b>Owning Type</b></em>' container reference.
@@ -188,7 +234,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__OWNING_TYPE = SGraphPackage.DECLARATION_FEATURE_COUNT + 1;
+  int VARIABLE_DEFINITION__OWNING_TYPE = StextPackage.VARIABLE_DEFINITION__OWNING_TYPE;
 
   /**
    * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -197,7 +243,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__READONLY = SGraphPackage.DECLARATION_FEATURE_COUNT + 2;
+  int VARIABLE_DEFINITION__READONLY = StextPackage.VARIABLE_DEFINITION__READONLY;
 
   /**
    * The feature id for the '<em><b>External</b></em>' attribute.
@@ -206,7 +252,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__EXTERNAL = SGraphPackage.DECLARATION_FEATURE_COUNT + 3;
+  int VARIABLE_DEFINITION__EXTERNAL = StextPackage.VARIABLE_DEFINITION__EXTERNAL;
 
   /**
    * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
@@ -215,7 +261,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__INITIAL_VALUE = SGraphPackage.DECLARATION_FEATURE_COUNT + 4;
+  int VARIABLE_DEFINITION__INITIAL_VALUE = StextPackage.VARIABLE_DEFINITION__INITIAL_VALUE;
 
   /**
    * The feature id for the '<em><b>Direction</b></em>' attribute.
@@ -224,7 +270,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__DIRECTION = SGraphPackage.DECLARATION_FEATURE_COUNT + 5;
+  int VARIABLE_DEFINITION__DIRECTION = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -233,25 +279,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__IS_STATIC = SGraphPackage.DECLARATION_FEATURE_COUNT + 6;
-
-  /**
-   * The feature id for the '<em><b>Var Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__VAR_NAME = SGraphPackage.DECLARATION_FEATURE_COUNT + 7;
-
-  /**
-   * The feature id for the '<em><b>Var Type</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__VAR_TYPE = SGraphPackage.DECLARATION_FEATURE_COUNT + 8;
+  int VARIABLE_DEFINITION__IS_STATIC = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Var Initial Value</b></em>' containment reference.
@@ -260,7 +288,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__VAR_INITIAL_VALUE = SGraphPackage.DECLARATION_FEATURE_COUNT + 9;
+  int VARIABLE_DEFINITION__VAR_INITIAL_VALUE = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Var Combine Operator</b></em>' attribute.
@@ -269,7 +297,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = SGraphPackage.DECLARATION_FEATURE_COUNT + 10;
+  int VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Variable Definition</em>' class.
@@ -278,7 +306,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION_FEATURE_COUNT = SGraphPackage.DECLARATION_FEATURE_COUNT + 11;
+  int VARIABLE_DEFINITION_FEATURE_COUNT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionScopeImpl <em>Reaction Scope</em>}' class.
@@ -288,7 +316,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionScope()
    * @generated
    */
-  int REACTION_SCOPE = 3;
+  int REACTION_SCOPE = 4;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -297,7 +325,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_SCOPE__DECLARATIONS = SGraphPackage.SCOPE__DECLARATIONS;
+  int REACTION_SCOPE__DECLARATIONS = STATE_SCOPE__DECLARATIONS;
 
   /**
    * The feature id for the '<em><b>Events</b></em>' reference list.
@@ -306,7 +334,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_SCOPE__EVENTS = SGraphPackage.SCOPE__EVENTS;
+  int REACTION_SCOPE__EVENTS = STATE_SCOPE__EVENTS;
 
   /**
    * The feature id for the '<em><b>Variables</b></em>' reference list.
@@ -315,7 +343,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_SCOPE__VARIABLES = SGraphPackage.SCOPE__VARIABLES;
+  int REACTION_SCOPE__VARIABLES = STATE_SCOPE__VARIABLES;
 
   /**
    * The feature id for the '<em><b>Reaction Scope</b></em>' containment reference list.
@@ -324,7 +352,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_SCOPE__REACTION_SCOPE = SGraphPackage.SCOPE_FEATURE_COUNT + 0;
+  int REACTION_SCOPE__REACTION_SCOPE = STATE_SCOPE_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Reaction Scope</em>' class.
@@ -333,44 +361,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_SCOPE_FEATURE_COUNT = SGraphPackage.SCOPE_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.TransitionImpl <em>Transition</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.TransitionImpl
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getTransition()
-   * @generated
-   */
-  int TRANSITION = 4;
-
-  /**
-   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TRANSITION__TRIGGER = SGraphPackage.REACTION__TRIGGER;
-
-  /**
-   * The feature id for the '<em><b>Effect</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TRANSITION__EFFECT = SGraphPackage.REACTION__EFFECT;
-
-  /**
-   * The number of structural features of the '<em>Transition</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TRANSITION_FEATURE_COUNT = SGraphPackage.REACTION_FEATURE_COUNT + 0;
+  int REACTION_SCOPE_FEATURE_COUNT = STATE_SCOPE_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitActionImpl <em>Exit Action</em>}' class.
@@ -513,13 +504,22 @@ public interface SccexpPackage extends EPackage
   int REACTION_TRIGGER__DELAY = SGraphPackage.TRIGGER_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Triggers</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REACTION_TRIGGER__TRIGGERS = SGraphPackage.TRIGGER_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>Guard Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REACTION_TRIGGER__GUARD_EXPRESSION = SGraphPackage.TRIGGER_FEATURE_COUNT + 2;
+  int REACTION_TRIGGER__GUARD_EXPRESSION = SGraphPackage.TRIGGER_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Reaction Trigger</em>' class.
@@ -528,35 +528,35 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_TRIGGER_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 3;
+  int REACTION_TRIGGER_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 4;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionEffectImpl <em>Reaction Effect</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.PreValueExpressionreturnsImpl <em>Pre Value Expressionreturns</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionEffectImpl
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionEffect()
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.PreValueExpressionreturnsImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getPreValueExpressionreturns()
    * @generated
    */
-  int REACTION_EFFECT = 10;
+  int PRE_VALUE_EXPRESSIONRETURNS = 10;
 
   /**
-   * The feature id for the '<em><b>Actions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_EFFECT__ACTIONS = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Reaction Effect</em>' class.
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REACTION_EFFECT_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
+  int PRE_VALUE_EXPRESSIONRETURNS__VALUE = StextPackage.EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Pre Value Expressionreturns</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRE_VALUE_EXPRESSIONRETURNS_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.CombineOperator <em>Combine Operator</em>}' enum.
@@ -601,6 +601,16 @@ public interface SccexpPackage extends EPackage
   EReference getStateSpecification_Scopes();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateScope <em>State Scope</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>State Scope</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateScope
+   * @generated
+   */
+  EClass getStateScope();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InterfaceScope <em>Interface Scope</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -641,28 +651,6 @@ public interface SccexpPackage extends EPackage
    * @generated
    */
   EAttribute getVariableDefinition_IsStatic();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarName <em>Var Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Var Name</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarName()
-   * @see #getVariableDefinition()
-   * @generated
-   */
-  EAttribute getVariableDefinition_VarName();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarType <em>Var Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Var Type</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarType()
-   * @see #getVariableDefinition()
-   * @generated
-   */
-  EReference getVariableDefinition_VarType();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarInitialValue <em>Var Initial Value</em>}'.
@@ -706,16 +694,6 @@ public interface SccexpPackage extends EPackage
    * @generated
    */
   EReference getReactionScope_ReactionScope();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Transition <em>Transition</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Transition</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Transition
-   * @generated
-   */
-  EClass getTransition();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ExitAction <em>Exit Action</em>}'.
@@ -834,6 +812,17 @@ public interface SccexpPackage extends EPackage
   EAttribute getReactionTrigger_Delay();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getTriggers <em>Triggers</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Triggers</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getTriggers()
+   * @see #getReactionTrigger()
+   * @generated
+   */
+  EReference getReactionTrigger_Triggers();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -845,25 +834,25 @@ public interface SccexpPackage extends EPackage
   EReference getReactionTrigger_GuardExpression();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect <em>Reaction Effect</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.PreValueExpressionreturns <em>Pre Value Expressionreturns</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Reaction Effect</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect
+   * @return the meta object for class '<em>Pre Value Expressionreturns</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.PreValueExpressionreturns
    * @generated
    */
-  EClass getReactionEffect();
+  EClass getPreValueExpressionreturns();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect#getActions <em>Actions</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.PreValueExpressionreturns#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Actions</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect#getActions()
-   * @see #getReactionEffect()
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.PreValueExpressionreturns#getValue()
+   * @see #getPreValueExpressionreturns()
    * @generated
    */
-  EReference getReactionEffect_Actions();
+  EReference getPreValueExpressionreturns_Value();
 
   /**
    * Returns the meta object for enum '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.CombineOperator <em>Combine Operator</em>}'.
@@ -927,6 +916,16 @@ public interface SccexpPackage extends EPackage
     EReference STATE_SPECIFICATION__SCOPES = eINSTANCE.getStateSpecification_Scopes();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateScopeImpl <em>State Scope</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateScopeImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateScope()
+     * @generated
+     */
+    EClass STATE_SCOPE = eINSTANCE.getStateScope();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InterfaceScopeImpl <em>Interface Scope</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -963,22 +962,6 @@ public interface SccexpPackage extends EPackage
     EAttribute VARIABLE_DEFINITION__IS_STATIC = eINSTANCE.getVariableDefinition_IsStatic();
 
     /**
-     * The meta object literal for the '<em><b>Var Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VARIABLE_DEFINITION__VAR_NAME = eINSTANCE.getVariableDefinition_VarName();
-
-    /**
-     * The meta object literal for the '<em><b>Var Type</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference VARIABLE_DEFINITION__VAR_TYPE = eINSTANCE.getVariableDefinition_VarType();
-
-    /**
      * The meta object literal for the '<em><b>Var Initial Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1011,16 +994,6 @@ public interface SccexpPackage extends EPackage
      * @generated
      */
     EReference REACTION_SCOPE__REACTION_SCOPE = eINSTANCE.getReactionScope_ReactionScope();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.TransitionImpl <em>Transition</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.TransitionImpl
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getTransition()
-     * @generated
-     */
-    EClass TRANSITION = eINSTANCE.getTransition();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitActionImpl <em>Exit Action</em>}' class.
@@ -1121,6 +1094,14 @@ public interface SccexpPackage extends EPackage
     EAttribute REACTION_TRIGGER__DELAY = eINSTANCE.getReactionTrigger_Delay();
 
     /**
+     * The meta object literal for the '<em><b>Triggers</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REACTION_TRIGGER__TRIGGERS = eINSTANCE.getReactionTrigger_Triggers();
+
+    /**
      * The meta object literal for the '<em><b>Guard Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1129,22 +1110,22 @@ public interface SccexpPackage extends EPackage
     EReference REACTION_TRIGGER__GUARD_EXPRESSION = eINSTANCE.getReactionTrigger_GuardExpression();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionEffectImpl <em>Reaction Effect</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.PreValueExpressionreturnsImpl <em>Pre Value Expressionreturns</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionEffectImpl
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionEffect()
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.PreValueExpressionreturnsImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getPreValueExpressionreturns()
      * @generated
      */
-    EClass REACTION_EFFECT = eINSTANCE.getReactionEffect();
+    EClass PRE_VALUE_EXPRESSIONRETURNS = eINSTANCE.getPreValueExpressionreturns();
 
     /**
-     * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference REACTION_EFFECT__ACTIONS = eINSTANCE.getReactionEffect_Actions();
+    EReference PRE_VALUE_EXPRESSIONRETURNS__VALUE = eINSTANCE.getPreValueExpressionreturns_Value();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.CombineOperator <em>Combine Operator</em>}' enum.

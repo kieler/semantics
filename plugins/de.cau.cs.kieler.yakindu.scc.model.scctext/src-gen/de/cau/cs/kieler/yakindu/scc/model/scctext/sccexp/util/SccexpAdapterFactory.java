@@ -19,11 +19,12 @@ import org.yakindu.base.types.TypedElement;
 
 import org.yakindu.sct.model.sgraph.Declaration;
 import org.yakindu.sct.model.sgraph.Effect;
-import org.yakindu.sct.model.sgraph.Reaction;
 import org.yakindu.sct.model.sgraph.Scope;
+import org.yakindu.sct.model.sgraph.Statement;
 import org.yakindu.sct.model.sgraph.Trigger;
 import org.yakindu.sct.model.sgraph.Variable;
 
+import org.yakindu.sct.model.stext.stext.Expression;
 import org.yakindu.sct.model.stext.stext.StatechartScope;
 
 /**
@@ -95,6 +96,11 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
         return createStateSpecificationAdapter();
       }
       @Override
+      public Adapter caseStateScope(StateScope object)
+      {
+        return createStateScopeAdapter();
+      }
+      @Override
       public Adapter caseInterfaceScope(InterfaceScope object)
       {
         return createInterfaceScopeAdapter();
@@ -108,11 +114,6 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
       public Adapter caseReactionScope(ReactionScope object)
       {
         return createReactionScopeAdapter();
-      }
-      @Override
-      public Adapter caseTransition(Transition object)
-      {
-        return createTransitionAdapter();
       }
       @Override
       public Adapter caseExitAction(ExitAction object)
@@ -140,9 +141,9 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
         return createReactionTriggerAdapter();
       }
       @Override
-      public Adapter caseReactionEffect(ReactionEffect object)
+      public Adapter casePreValueExpressionreturns(PreValueExpressionreturns object)
       {
-        return createReactionEffectAdapter();
+        return createPreValueExpressionreturnsAdapter();
       }
       @Override
       public Adapter caseStext_StateSpecification(org.yakindu.sct.model.stext.stext.StateSpecification object)
@@ -200,11 +201,6 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
         return createStext_VariableDefinitionAdapter();
       }
       @Override
-      public Adapter caseReaction(Reaction object)
-      {
-        return createReactionAdapter();
-      }
-      @Override
       public Adapter caseEffect(Effect object)
       {
         return createEffectAdapter();
@@ -213,6 +209,16 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
       public Adapter caseTrigger(Trigger object)
       {
         return createTriggerAdapter();
+      }
+      @Override
+      public Adapter caseStatement(Statement object)
+      {
+        return createStatementAdapter();
+      }
+      @Override
+      public Adapter caseExpression(Expression object)
+      {
+        return createExpressionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -247,6 +253,21 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createStateSpecificationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateScope <em>State Scope</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateScope
+   * @generated
+   */
+  public Adapter createStateScopeAdapter()
   {
     return null;
   }
@@ -292,21 +313,6 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createReactionScopeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Transition <em>Transition</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Transition
-   * @generated
-   */
-  public Adapter createTransitionAdapter()
   {
     return null;
   }
@@ -387,16 +393,16 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect <em>Reaction Effect</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.PreValueExpressionreturns <em>Pre Value Expressionreturns</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.PreValueExpressionreturns
    * @generated
    */
-  public Adapter createReactionEffectAdapter()
+  public Adapter createPreValueExpressionreturnsAdapter()
   {
     return null;
   }
@@ -567,21 +573,6 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Reaction <em>Reaction</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Reaction
-   * @generated
-   */
-  public Adapter createReactionAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Effect <em>Effect</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -607,6 +598,36 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTriggerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Statement <em>Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.sct.model.sgraph.Statement
+   * @generated
+   */
+  public Adapter createStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.sct.model.stext.stext.Expression
+   * @generated
+   */
+  public Adapter createExpressionAdapter()
   {
     return null;
   }

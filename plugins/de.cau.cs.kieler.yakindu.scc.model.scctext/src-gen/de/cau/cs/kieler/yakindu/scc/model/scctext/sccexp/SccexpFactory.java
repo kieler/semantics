@@ -32,6 +32,15 @@ public interface SccexpFactory extends EFactory
   StateSpecification createStateSpecification();
 
   /**
+   * Returns a new object of class '<em>State Scope</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>State Scope</em>'.
+   * @generated
+   */
+  StateScope createStateScope();
+
+  /**
    * Returns a new object of class '<em>Interface Scope</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -57,15 +66,6 @@ public interface SccexpFactory extends EFactory
    * @generated
    */
   ReactionScope createReactionScope();
-
-  /**
-   * Returns a new object of class '<em>Transition</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Transition</em>'.
-   * @generated
-   */
-  Transition createTransition();
 
   /**
    * Returns a new object of class '<em>Exit Action</em>'.
@@ -113,13 +113,13 @@ public interface SccexpFactory extends EFactory
   ReactionTrigger createReactionTrigger();
 
   /**
-   * Returns a new object of class '<em>Reaction Effect</em>'.
+   * Returns a new object of class '<em>Pre Value Expressionreturns</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Reaction Effect</em>'.
+   * @return a new object of class '<em>Pre Value Expressionreturns</em>'.
    * @generated
    */
-  ReactionEffect createReactionEffect();
+  PreValueExpressionreturns createPreValueExpressionreturns();
 
   /**
    * Returns the package supported by this factory.

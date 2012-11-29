@@ -2,8 +2,11 @@
  */
 package de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.yakindu.sct.model.sgraph.Trigger;
 
+import org.yakindu.sct.model.stext.stext.EventSpec;
 import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
@@ -16,6 +19,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getTriggers <em>Triggers</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}</li>
  * </ul>
  * </p>
@@ -77,6 +81,22 @@ public interface ReactionTrigger extends Trigger
    * @generated
    */
   void setDelay(int value);
+
+  /**
+   * Returns the value of the '<em><b>Triggers</b></em>' containment reference list.
+   * The list contents are of type {@link org.yakindu.sct.model.stext.stext.EventSpec}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Triggers</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Triggers</em>' containment reference list.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage#getReactionTrigger_Triggers()
+   * @model containment="true"
+   * @generated
+   */
+  EList<EventSpec> getTriggers();
 
   /**
    * Returns the value of the '<em><b>Guard Expression</b></em>' containment reference.

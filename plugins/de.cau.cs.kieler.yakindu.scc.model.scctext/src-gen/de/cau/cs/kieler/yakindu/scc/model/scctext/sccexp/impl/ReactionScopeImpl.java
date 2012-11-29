@@ -18,8 +18,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.yakindu.sct.model.sgraph.impl.ScopeImpl;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Reaction Scope</b></em>'.
@@ -33,7 +31,7 @@ import org.yakindu.sct.model.sgraph.impl.ScopeImpl;
  *
  * @generated
  */
-public class ReactionScopeImpl extends ScopeImpl implements ReactionScope
+public class ReactionScopeImpl extends StateScopeImpl implements ReactionScope
 {
   /**
    * The cached value of the '{@link #getReactionScope() <em>Reaction Scope</em>}' containment reference list.

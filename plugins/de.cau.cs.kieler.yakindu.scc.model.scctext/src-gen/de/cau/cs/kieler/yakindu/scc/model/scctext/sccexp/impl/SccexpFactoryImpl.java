@@ -66,16 +66,16 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
     switch (eClass.getClassifierID())
     {
       case SccexpPackage.STATE_SPECIFICATION: return createStateSpecification();
+      case SccexpPackage.STATE_SCOPE: return createStateScope();
       case SccexpPackage.INTERFACE_SCOPE: return createInterfaceScope();
       case SccexpPackage.VARIABLE_DEFINITION: return createVariableDefinition();
       case SccexpPackage.REACTION_SCOPE: return createReactionScope();
-      case SccexpPackage.TRANSITION: return createTransition();
       case SccexpPackage.EXIT_ACTION: return createExitAction();
       case SccexpPackage.INSIDE_ACTION: return createInsideAction();
       case SccexpPackage.ENTRY_ACTION: return createEntryAction();
       case SccexpPackage.SUSPEND: return createSuspend();
       case SccexpPackage.REACTION_TRIGGER: return createReactionTrigger();
-      case SccexpPackage.REACTION_EFFECT: return createReactionEffect();
+      case SccexpPackage.PRE_VALUE_EXPRESSIONRETURNS: return createPreValueExpressionreturns();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -135,6 +135,17 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public StateScope createStateScope()
+  {
+    StateScopeImpl stateScope = new StateScopeImpl();
+    return stateScope;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public InterfaceScope createInterfaceScope()
   {
     InterfaceScopeImpl interfaceScope = new InterfaceScopeImpl();
@@ -161,17 +172,6 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
   {
     ReactionScopeImpl reactionScope = new ReactionScopeImpl();
     return reactionScope;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Transition createTransition()
-  {
-    TransitionImpl transition = new TransitionImpl();
-    return transition;
   }
 
   /**
@@ -234,10 +234,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ReactionEffect createReactionEffect()
+  public PreValueExpressionreturns createPreValueExpressionreturns()
   {
-    ReactionEffectImpl reactionEffect = new ReactionEffectImpl();
-    return reactionEffect;
+    PreValueExpressionreturnsImpl preValueExpressionreturns = new PreValueExpressionreturnsImpl();
+    return preValueExpressionreturns;
   }
 
   /**

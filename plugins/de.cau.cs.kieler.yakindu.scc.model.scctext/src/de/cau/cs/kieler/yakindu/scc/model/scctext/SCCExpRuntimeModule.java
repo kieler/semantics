@@ -12,13 +12,13 @@ import org.yakindu.base.types.impl.BaseTypeSystemAccessImpl;
 import org.yakindu.sct.model.stext.conversion.StextValueConverterService;
 import org.yakindu.sct.model.stext.naming.StextNameProvider;
 import org.yakindu.sct.model.stext.scoping.NamespaceLocalScopeResolver;
-import org.yakindu.sct.model.stext.scoping.STextGlobalScopeProvider;
 import org.yakindu.sct.model.stext.validation.ITypeInferrer;
 import org.yakindu.sct.model.stext.validation.TypeInferrer;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
 
+import org.yakindu.sct.model.stext.scoping.STextGlobalScopeProvider;
 import de.itemis.xtext.utils.gmf.resource.InjectMembersLinker;
 
 /**

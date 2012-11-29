@@ -2,10 +2,6 @@
  */
 package de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp;
 
-import org.yakindu.base.types.Type;
-
-import org.yakindu.sct.model.sgraph.Declaration;
-
 import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
@@ -18,8 +14,6 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getDirection <em>Direction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#isIsStatic <em>Is Static</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarName <em>Var Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarType <em>Var Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarInitialValue <em>Var Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarCombineOperator <em>Var Combine Operator</em>}</li>
  * </ul>
@@ -29,7 +23,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * @model
  * @generated
  */
-public interface VariableDefinition extends Declaration, org.yakindu.sct.model.stext.stext.VariableDefinition
+public interface VariableDefinition extends org.yakindu.sct.model.stext.stext.VariableDefinition
 {
   /**
    * Returns the value of the '<em><b>Direction</b></em>' attribute.
@@ -85,58 +79,6 @@ public interface VariableDefinition extends Declaration, org.yakindu.sct.model.s
    * @generated
    */
   void setIsStatic(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Var Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Var Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Var Name</em>' attribute.
-   * @see #setVarName(String)
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage#getVariableDefinition_VarName()
-   * @model
-   * @generated
-   */
-  String getVarName();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarName <em>Var Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Var Name</em>' attribute.
-   * @see #getVarName()
-   * @generated
-   */
-  void setVarName(String value);
-
-  /**
-   * Returns the value of the '<em><b>Var Type</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Var Type</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Var Type</em>' reference.
-   * @see #setVarType(Type)
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage#getVariableDefinition_VarType()
-   * @model
-   * @generated
-   */
-  Type getVarType();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition#getVarType <em>Var Type</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Var Type</em>' reference.
-   * @see #getVarType()
-   * @generated
-   */
-  void setVarType(Type value);
 
   /**
    * Returns the value of the '<em><b>Var Initial Value</b></em>' containment reference.

@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp;
 
-import org.yakindu.sct.model.sgraph.Scope;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +13,6 @@ import org.yakindu.sct.model.sgraph.Scope;
  * @model
  * @generated
  */
-public interface InterfaceScope extends Scope, org.yakindu.sct.model.stext.stext.InterfaceScope
+public interface InterfaceScope extends StateScope, org.yakindu.sct.model.stext.stext.InterfaceScope
 {
 } // InterfaceScope
