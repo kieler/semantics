@@ -218,7 +218,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         } else if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                  .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             // add/pass-through normal signals directly
                             returnObj.accumulate(signalName, signalValue);
                         }
@@ -507,7 +507,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             returnObj.accumulate(signalName, signalValue);
                         }
                     } catch (JSONException e) {

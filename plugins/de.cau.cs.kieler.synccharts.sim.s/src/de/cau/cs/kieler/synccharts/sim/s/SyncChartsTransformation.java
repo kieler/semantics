@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2012 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.sim.s;
 
 import java.io.IOException;
@@ -25,6 +38,7 @@ import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.sim.s.xtend.SyncCharts2Simulation;
 
+// TODO: Auto-generated Javadoc
 /**
  * SyncChartsTransformation offers all transformation used in the SyncCharts S Simulation
  * DataComponent to be called separately on a SyncCharts kixs file.
@@ -36,16 +50,45 @@ import de.cau.cs.kieler.synccharts.sim.s.xtend.SyncCharts2Simulation;
 @SuppressWarnings("restriction")
 public class SyncChartsTransformation implements IHandler {
 
-    public static final String COMMAND_ABORT = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsAbortTransformation";
-    public static final String COMMAND_NORMALTERMINATION = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsNormalTerminationTransformation";
-    public static final String COMMAND_COUNTDELAY = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsCountDelayTransformation";
-    public static final String COMMAND_SUSPEND = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsSuspendTransformation";
-    public static final String COMMAND_HISTORY = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsHistoryTransformation";
-    public static final String COMMAND_ENTRY = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsEntryActionTransformation";
-    public static final String COMMAND_DURING = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsDuringActionTransformation";
-    public static final String COMMAND_EXIT = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsExitActionTransformation";
-    public static final String COMMAND_PRE = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsPreTransformation";
-    public static final String COMMAND_EXPOSELOCALSIGNALS = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsExposeLocalSignalsTransformation";
+    /** The Constant COMMAND_ABORT. */
+    public static final String COMMAND_ABORT 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsAbortTransformation";
+
+    /** The Constant COMMAND_NORMALTERMINATION. */
+    public static final String COMMAND_NORMALTERMINATION 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsNormalTerminationTransformation";
+
+    /** The Constant COMMAND_COUNTDELAY. */
+    public static final String COMMAND_COUNTDELAY 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsCountDelayTransformation";
+
+    /** The Constant COMMAND_SUSPEND. */
+    public static final String COMMAND_SUSPEND 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsSuspendTransformation";
+
+    /** The Constant COMMAND_HISTORY. */
+    public static final String COMMAND_HISTORY 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsHistoryTransformation";
+
+    /** The Constant COMMAND_ENTRY. */
+    public static final String COMMAND_ENTRY
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsEntryActionTransformation";
+
+    /** The Constant COMMAND_DURING. */
+    public static final String COMMAND_DURING 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsDuringActionTransformation";
+
+    /** The Constant COMMAND_EXIT. */
+    public static final String COMMAND_EXIT 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsExitActionTransformation";
+
+    /** The Constant COMMAND_PRE. */
+    public static final String COMMAND_PRE 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsPreTransformation";
+
+    /** The Constant COMMAND_EXPOSELOCALSIGNALS. */
+    public static final String COMMAND_EXPOSELOCALSIGNALS 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsExposeLocalSignalsTransformation";
 
     /**
      * {@inheritDoc}
