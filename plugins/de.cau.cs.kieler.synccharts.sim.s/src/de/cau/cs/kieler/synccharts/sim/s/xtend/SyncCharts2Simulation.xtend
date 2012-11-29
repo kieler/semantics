@@ -1568,7 +1568,7 @@ class SyncCharts2Simulation {
             runState.setId("Run" + state.hashCode);
             runState.setLabel("Run");
             runState.setIsInitial(true);
-            runState.setIsFinal(true);
+            //runState.setIsFinal(true);  // DO NOT SET THE RUN STATE AS FINAL! //
             val abortState = SyncchartsFactory::eINSTANCE.createState();
             abortState.setId("Abort" + state.hashCode);
             abortState.setLabel("Abort");             
