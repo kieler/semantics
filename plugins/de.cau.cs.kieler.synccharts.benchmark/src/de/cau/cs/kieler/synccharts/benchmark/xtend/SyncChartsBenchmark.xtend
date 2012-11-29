@@ -79,10 +79,12 @@ class SyncChartsBenchmark {
         var maxLabelLength = 0;
         
         for (transition : transitions) {
-           val newLabelLength = transition.label.length;
-           if (newLabelLength > maxLabelLength) {
-               maxLabelLength = newLabelLength;
-           }
+           if (transition.label != null) {
+                val newLabelLength = transition.label.length;
+                if (newLabelLength > maxLabelLength) {
+                       maxLabelLength = newLabelLength;
+                }
+            }
         }
         
         maxLabelLength;
@@ -92,7 +94,9 @@ class SyncChartsBenchmark {
         var labelLength = 0;
         
         for (transition : transitions) {
-           labelLength = labelLength + transition.label.length;
+           if (transition.label != null) {
+               labelLength = labelLength + transition.label.length;
+           }
         }
         labelLength;
     }

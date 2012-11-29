@@ -123,7 +123,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             dirtyIndicator = newDirtyIndicator;
             return true;
         }
-        return true;
+        return false;
     }
 
     // -------------------------------------------------------------------------
