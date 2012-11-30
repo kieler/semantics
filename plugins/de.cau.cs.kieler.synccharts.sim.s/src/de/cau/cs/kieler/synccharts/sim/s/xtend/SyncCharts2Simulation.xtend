@@ -1785,6 +1785,45 @@ class SyncCharts2Simulation {
             if (weakTriggerOperatorExpression.subExpressions.size == 1) {
                 weakTrigger = weakTriggerOperatorExpression.subExpressions.get(0);
             }
+
+
+            // Collect all transitions leading to a final state in all containing regions
+            var List<Transition> finalTransitions = <Transition> newLinkedList;
+            for (region : originalRegions) {
+                for (regionState : region.states.filter( e | e.isFinal)) {
+                    finalTransitions.addAll(regionState.incomingTransitions);
+                }
+            }
+            if (!finalTransitions.nullOrEmpty) {
+                // If there is at least one such transition then whe need an "_Exit" signal
+                val exitSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                val exitSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                    exitSignalReference.setValuedObject(exitSignal);
+                    exitSignal.setName("_Term_" + state.id);
+                    state.signals.add(exitSignal);
+                    
+                    // Add emission of _Exit signal to all incoming transitions to the
+                    // final state
+                    for (finalTransition : finalTransitions) {
+                        val exitSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                        exitSignalEmission.setSignal(exitSignal);
+                        finalTransition.effects.add(exitSignalEmission);
+                    }
+                    
+                    // Add a watcher transition from Run to Abort triggered by _Exit
+                    val watcherTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    watcherTransition.setTargetState(abortState);
+                    runState.outgoingTransitions.add(watcherTransition);
+                    watcherTransition.setTrigger(exitSignalReference);
+                    var priority = runState.outgoingTransitions.size;
+                    if (priority == 0) {
+                        priority = 1;
+                    }
+                    watcherTransition.setPriority(priority);
+                    watcherTransition.setIsImmediate(true);
+                    watcherTransition.setDelay(0);
+            }
+
             
             // Create an Aborted state for every region
             for (region : originalRegions) {
