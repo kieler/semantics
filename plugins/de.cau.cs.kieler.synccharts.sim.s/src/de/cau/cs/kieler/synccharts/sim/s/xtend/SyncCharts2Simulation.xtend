@@ -1436,6 +1436,21 @@ class SyncCharts2Simulation {
         return returnPreExpressions;
     }
 
+    // Return a list of Pre Expressions for an action that references the value of a signal
+    def List<OperatorExpression> getPreValExpression(Action action, Signal signal) {
+        val List<OperatorExpression> returnPreValExpressions = <OperatorExpression> newLinkedList;
+        val preValExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(e | 
+            (e.operator == OperatorType::PRE) && 
+            (e.subExpressions.size() == 1) &&  
+            (e.subExpressions.get(0) instanceof OperatorExpression) &&
+            ((e.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) &&
+            ((e.subExpressions.get(0) as OperatorExpression).subExpressions.size() == 1) &&
+            ((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) instanceof ValuedObjectReference) &&
+            (((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject == signal)
+        );
+        returnPreValExpressions.addAll(preValExpressions);
+        return returnPreValExpressions;
+    }
 
     
     // Traverse all states that might declare a signal that is used with the PRE operator
@@ -1506,12 +1521,99 @@ class SyncCharts2Simulation {
             }
             else {
                 // Valued Signal Case
-                // TODO 
+                
+                // Additional PreB state
+                val preBState = SyncchartsFactory::eINSTANCE.createState();
+                    preBState.setId("PreB" + preSignal.hashCode);
+                    preBState.setLabel("PreB");
+                preRegion.states.add(preBState);
+                
+                val preB2PreTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    preB2PreTransition.setTargetState(preState);
+                    preB2PreTransition.setPriority(1);
+                    preBState.outgoingTransitions.add(preB2PreTransition);
+                val preB2NotPreTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    preB2NotPreTransition.setTargetState(notPreState);
+                    preB2NotPreTransition.setPriority(2);
+                    preBState.outgoingTransitions.add(preB2NotPreTransition);
+                val pre2PreBTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    pre2PreBTransition.setTargetState(preBState);
+                    pre2PreBTransition.setPriority(1);
+                    preState.outgoingTransitions.add(pre2PreBTransition);
+                    
+                // Additional Signals                    
+                val explicitPre1Signal = KExpressionsFactory::eINSTANCE.createSignal();
+                explicitPre1Signal.setName("Pre1" + preSignal.name);
+                explicitPre1Signal.setIsInput(false);
+                explicitPre1Signal.setIsOutput(false);
+                explicitPre1Signal.setType(preSignal.type);
+                if (!preSignal.initialValue.nullOrEmpty) {
+                    explicitPre1Signal.setInitialValue(preSignal.initialValue);
+                }
+                state.signals.add(explicitPre1Signal);
+                val explicitPre2Signal = KExpressionsFactory::eINSTANCE.createSignal();
+                explicitPre2Signal.setName("Pre2" + preSignal.name);
+                explicitPre2Signal.setIsInput(false);
+                explicitPre2Signal.setIsOutput(false);
+                explicitPre2Signal.setType(preSignal.type);
+                if (!preSignal.initialValue.nullOrEmpty) {
+                    explicitPre2Signal.setInitialValue(preSignal.initialValue);
+                }
+                state.signals.add(explicitPre2Signal);
+                
+                // Transition triggers & effects
+                val explicitPre1SignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    explicitPre1SignalReference.setValuedObject(explicitPre1Signal);
+                val explicitPre2SignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    explicitPre2SignalReference.setValuedObject(explicitPre2Signal);
+                                    
+                val valPreExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                    valPreExpression.setOperator(OperatorType::VAL);   
+                    valPreExpression.subExpressions.add(preSignalReference.copy);             
+                val valExplicitPre1Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                    valExplicitPre1Expression.setOperator(OperatorType::VAL);   
+                    valExplicitPre1Expression.subExpressions.add(explicitPre1SignalReference.copy);             
+                val valExplicitPre2Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                    valExplicitPre2Expression.setOperator(OperatorType::VAL);   
+                    valExplicitPre2Expression.subExpressions.add(explicitPre2SignalReference.copy);             
+                
+                val explicitPreSignalEmissionFromPre1 = SyncchartsFactory::eINSTANCE.createEmission();
+                    explicitPreSignalEmissionFromPre1.setSignal(explicitPreSignal);
+                    explicitPreSignalEmissionFromPre1.setNewValue(valExplicitPre1Expression.copy);
+                val explicitPreSignalEmissionFromPre2 = SyncchartsFactory::eINSTANCE.createEmission();
+                    explicitPreSignalEmissionFromPre2.setSignal(explicitPreSignal);
+                    explicitPreSignalEmissionFromPre2.setNewValue(valExplicitPre2Expression.copy);
+                    
+                val explicitPre1SignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                    explicitPre1SignalEmission.setSignal(explicitPre1Signal);
+                    explicitPre1SignalEmission.setNewValue(valPreExpression.copy);
+                val explicitPre2SignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                    explicitPre2SignalEmission.setSignal(explicitPre2Signal);
+                    explicitPre2SignalEmission.setNewValue(valPreExpression.copy);
+                    
+                // Fill transitions
+                pre2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
+
+                pre2PreBTransition.setTrigger(preSignalReference.copy);
+                pre2PreBTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
+                pre2PreBTransition.effects.add(explicitPre2SignalEmission.copy);
+                 
+                preB2PreTransition.setTrigger(preSignalReference.copy);
+                preB2PreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
+                preB2PreTransition.effects.add(explicitPre1SignalEmission.copy);
+                 
+                preB2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
+                 
+                notPre2PreTransition.setTrigger(preSignalReference.copy);
+                notPre2PreTransition.effects.add(explicitPre1SignalEmission.copy);
             }
 
             // Replace the ComplexExpression Pre(S) by the SignalReference PreS in all actions            
+            // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
             for (action : allActions) {
                val preExpressions = action.getPreExpression(preSignal);
+               val preValExpressions = action.getPreValExpression(preSignal);
+
                for (preExpression : preExpressions) {
                    val container = preExpression.eContainer;
                    
@@ -1523,9 +1625,26 @@ class SyncCharts2Simulation {
                        // If PRE directly a trigger
                        (container as Action).setTrigger(explicitPreSignalReference.copy)
                    }
-                   
-                   
                }
+                   
+               for (preValExpression : preValExpressions) {
+                   val container = preValExpression.eContainer;
+                   
+
+                   
+                   if ((!preValExpression.subExpressions.nullOrEmpty) && 
+                       preValExpression.subExpressions.get(0) instanceof OperatorExpression && 
+                       (preValExpression.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL
+                   ) {
+                       // Transform pre(?V) --> ?PreV
+                       val valueExpression = preValExpression.subExpressions.get(0);
+                       (valueExpression as OperatorExpression).subExpressions.remove(0);
+                       (valueExpression as OperatorExpression).subExpressions.add(explicitPreSignalReference.copy);
+                       (container as Emission).setNewValue(valueExpression.copy);
+                   }
+               }
+               
+               
             }
         }
     }
