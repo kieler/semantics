@@ -325,7 +325,7 @@
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
                id="de.cau.cs.kieler.synccharts.sim.s.transformations"
-               label="Transform SyncCharts..."
+               label="Transform SyncCharts"
                mnemonic="T">
             <separator
                   name="de.cau.cs.kieler.core.ui.separator1"
