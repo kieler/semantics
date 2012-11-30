@@ -381,7 +381,8 @@ class SyncCharts2Simulation {
                         terminatedSignal.setIsInput(false);
                         terminatedSignal.setIsOutput(false);
                         terminatedSignal.setType(ValueType::PURE);
-                        state.parentRegion.parentState.signals.add(terminatedSignal);
+//                        state.parentRegion.parentState.signals.add(terminatedSignal);
+                        targetRootRegion.states.get(0).signals.add(terminatedSignal);
                         
                     val terminatedSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
                         terminatedSignalReference.setValuedObject(terminatedSignal);
@@ -419,8 +420,8 @@ class SyncCharts2Simulation {
                               finalState.setIsFinal(false);
                          }
                     
-                         state.parentRegion.parentState.signals.add(finishedSignal);
-//                       targetRootRegion.states.get(0).signals.add(finishedSignal);
+//                         state.parentRegion.parentState.signals.add(finishedSignal);
+                       targetRootRegion.states.get(0).signals.add(finishedSignal);
                          val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
                          valuedObjectReference.setValuedObject(finishedSignal);
                          triggerExpression.subExpressions.add(valuedObjectReference);
@@ -1716,6 +1717,7 @@ class SyncCharts2Simulation {
             val originalOutgoingTransitions = ImmutableList::copyOf(state.outgoingTransitions);
             val outgoingStrongTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT));
             val outgoingWeakTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::WEAKABORT));
+            val normalTerminationExists = originalOutgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0;
             // Remember all regions
             val originalRegions = ImmutableList::copyOf(state.regions);
             
@@ -1736,7 +1738,7 @@ class SyncCharts2Simulation {
             abortState.setLabel("Abort");             
             abortState.setIsFinal(true);
             val watcherRegion = SyncchartsFactory::eINSTANCE.createRegion();
-            watcherRegion.setId("_Watcher" + state.hashCode);
+            watcherRegion.setId("Ctrl" + state.hashCode);
             watcherRegion.states.add(runState);
             watcherRegion.states.add(abortState);
             val needWatcherRegion = (originalOutgoingTransitions.filter(e| e.type != TransitionType::NORMALTERMINATION).size > 0);
@@ -1821,28 +1823,16 @@ class SyncCharts2Simulation {
             }
 
 
-            // Collect all transitions leading to a final state in all containing regions
-            var List<Transition> finalTransitions = <Transition> newLinkedList;
-            for (region : originalRegions) {
-                for (regionState : region.states.filter( e | e.isFinal)) {
-                    finalTransitions.addAll(regionState.incomingTransitions);
-                }
-            }
-            if (!finalTransitions.nullOrEmpty) {
+            // Optimization: If a normal termination is outgoing then the following 
+            // transformation is necessary to be able to abort the watcher in case
+            // of triggering the normal termination.
+            val exitSignal = KExpressionsFactory::eINSTANCE.createSignal();
+            if (normalTerminationExists) {
                 // If there is at least one such transition then whe need an "_Exit" signal
-                val exitSignal = KExpressionsFactory::eINSTANCE.createSignal();
                 val exitSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
                     exitSignalReference.setValuedObject(exitSignal);
                     exitSignal.setName("_Term_" + state.id);
                     state.signals.add(exitSignal);
-                    
-                    // Add emission of _Exit signal to all incoming transitions to the
-                    // final state
-                    for (finalTransition : finalTransitions) {
-                        val exitSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                        exitSignalEmission.setSignal(exitSignal);
-                        finalTransition.effects.add(exitSignalEmission);
-                    }
                     
                     // Add a watcher transition from Run to Abort triggered by _Exit
                     val watcherTransition =  SyncchartsFactory::eINSTANCE.createTransition();
@@ -1894,7 +1884,7 @@ class SyncCharts2Simulation {
                                 regionStateOutgoingTransition.setPriority(regionStateOutgoingTransition.priority + 1);
                             }
                             // Add transition
-                            regionState.outgoingTransitions.add(strongAbortTransition);
+                            regionState.outgoingTransitions.add(0, strongAbortTransition);
                         }
                     }
                 }
@@ -1917,6 +1907,45 @@ class SyncCharts2Simulation {
                     }
                 }
                                  
+            }
+            
+            // Optimization: If a normal termination is outgoing then the following 
+            // transformation is necessary to be able to abort the watcher in case
+            // of triggering the normal termination.
+            if (normalTerminationExists) {
+                val mainRegion = SyncchartsFactory::eINSTANCE.createRegion();
+                mainRegion.setId("Body" + state.hashCode);
+                val mainState = SyncchartsFactory::eINSTANCE.createState();
+                mainState.setId("Main" + state.hashCode);
+                mainState.setLabel("Main");
+                mainState.setIsInitial(true);
+                val termState = SyncchartsFactory::eINSTANCE.createState();
+                termState.setId("Term" + state.hashCode);
+                termState.setLabel("Term");
+                termState.setIsFinal(true);
+                // Move all inner regions of the state to the mainState
+                val regions = ImmutableList::copyOf(state.regions);
+                for (region : regions) {
+                    mainState.regions.add(region);
+                    if (region.id.nullOrEmpty) {
+                        region.setId("R" + region.hashCode);
+                    }
+                }
+                mainRegion.states.add(mainState);
+                mainRegion.states.add(termState);
+                state.regions.add(mainRegion);
+                // Create a transition from Main to Term
+                val transition = SyncchartsFactory::eINSTANCE.createTransition();
+                transition.setTargetState(termState);
+                transition.setPriority(1);
+                transition.setType(TransitionType::NORMALTERMINATION);
+                mainState.outgoingTransitions.add(transition);            
+                val exitSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                exitSignalEmission.setSignal(exitSignal);
+                transition.effects.add(exitSignalEmission);
+                
+                // Move the watcher region outside the mainState
+                state.regions.add(watcherRegion);
             }
             
              
