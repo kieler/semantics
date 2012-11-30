@@ -1705,7 +1705,10 @@ class SyncCharts2Simulation {
             watcherRegion.setId("_Watcher" + state.hashCode);
             watcherRegion.states.add(runState);
             watcherRegion.states.add(abortState);
-            state.regions.add(watcherRegion);
+            val needWatcherRegion = (originalOutgoingTransitions.filter(e| e.type != TransitionType::NORMALTERMINATION).size > 0);
+            if (needWatcherRegion) {
+                state.regions.add(watcherRegion);
+            }
             
             // Add a conditional node outside of the state and connect it with
             // a normal termination transition
@@ -1728,6 +1731,7 @@ class SyncCharts2Simulation {
             val weakTriggerOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                 weakTriggerOperatorExpression.setOperator(OperatorType::OR);                  
                 weakTrigger = weakTriggerOperatorExpression;                
+            
             
             // For every transition 
             for (transition : originalOutgoingTransitions) {
@@ -1791,11 +1795,21 @@ class SyncCharts2Simulation {
                 abortedState.setId("_Aborted" + state.hashCode);
                 abortedState.setLabel("_Aborted");             
                 abortedState.setIsFinal(true);
-                region.states.add(abortedState);
+                val needAbortedState = ((outgoingStrongTransitions.size > 0 || 
+                                         outgoingWeakTransitions.size > 0
+                                        ) && (regionStates.filter(e | !e.isFinal).size > 0));
+                if (needAbortedState) {
+                       region.states.add(abortedState);
+                }
+                // Do not add the state here, only add the state iff there are any transitions
+                // ending up in this _Aborted state (within the if-for-constructs below)
                 
                 // For every inner state, connect with a weak and a strong transition
                 if (outgoingStrongTransitions.size > 0) {
                     for (regionState : regionStates) {
+                        // If the state is a final state do NOT connect it with the _Aborted state
+                        if (!regionState.isFinal) {
+                            // Create a transition ending up in _Aborted
                             val strongAbortTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                             strongAbortTransition.setTargetState(abortedState);
                             strongAbortTransition.setIsImmediate(true);
@@ -1808,11 +1822,15 @@ class SyncCharts2Simulation {
                             }
                             // Add transition
                             regionState.outgoingTransitions.add(strongAbortTransition);
+                        }
                     }
                 }
                 
                 if (outgoingWeakTransitions.size > 0) {
                     for (regionState : regionStates) {
+                        // If the state is a final state do NOT connect it with the _Aborted state
+                        if (!regionState.isFinal) {
+                            // Create a transition ending up in _Aborted
                             val weakAbortTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                             weakAbortTransition.setTargetState(abortedState);
                             weakAbortTransition.setIsImmediate(true);
@@ -1822,6 +1840,7 @@ class SyncCharts2Simulation {
                             weakAbortTransition.setPriority(regionState.outgoingTransitions.size + 1);
                             // Add transition
                             regionState.outgoingTransitions.add(weakAbortTransition);
+                        }
                     }
                 }
                                  
