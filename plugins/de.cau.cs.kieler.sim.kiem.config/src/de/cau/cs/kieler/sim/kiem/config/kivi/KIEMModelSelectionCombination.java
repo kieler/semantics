@@ -96,8 +96,10 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
                     .getExecution() != null)) {
                 // reset any deferred partState
                 deferredEditorPart = null;
-                KIEMExecutionAutoloadCombination.setLastValidEditorId(activeEditorPart.getSite()
-                        .getId());
+                if (KIEMExecutionAutoloadCombination.getLastValidEditorId() == null) {
+                  KIEMExecutionAutoloadCombination.setLastValidEditorId(activeEditorPart.getSite()
+                  .getId());
+                }
                 refreshKIEMActiveAndOpenedModels(activeEditorPart);
             } else {
                 // defer the partState until KIEM is stopping

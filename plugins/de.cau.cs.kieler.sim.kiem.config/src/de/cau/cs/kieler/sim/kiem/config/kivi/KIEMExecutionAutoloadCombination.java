@@ -68,6 +68,17 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination implem
     //-------------------------------------------------------------------------
 
     /**
+     * Gets the last valid editor id.
+     *
+     * @return the last valid editor id
+     */
+    public static String getLastValidEditorId() {
+        return lastValidEditorId;
+    }
+    
+    //-------------------------------------------------------------------------
+
+    /**
      * Execute.
      *
      * @param partState the part state
