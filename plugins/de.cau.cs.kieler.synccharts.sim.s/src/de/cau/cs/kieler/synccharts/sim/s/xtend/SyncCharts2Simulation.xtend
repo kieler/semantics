@@ -331,6 +331,18 @@ class SyncCharts2Simulation {
     //--              N O R M A L   T E R M I N A T I O N                    --
     //-------------------------------------------------------------------------
     // @requires: during actions
+    
+    // Edit: 30.11.2012: Normal Terminations are considered to be immediate
+    // This means that e.g. test10 with a normal termination self loop can
+    // be executed as long as the body not immediately.
+    // For this reason ANOTHER signal terminated is introduced not per region
+    // byt per normal termination, indicating a taken normal termination
+    // and preventing the same to be taken again within a tick.
+    // Like adding a pause in Esterel to
+    // loop
+    // [ p || pause ]
+    // end loop
+    // when p may or may not be instantanous.
 
     
     // Transforming Normal Termination. 
@@ -361,34 +373,56 @@ class SyncCharts2Simulation {
                     normalTerminationTransition.setType(TransitionType::WEAKABORT);
                     val triggerExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
                          triggerExpression.setOperator(OperatorType::AND);
-                         triggerExpression.subExpressions
                
+                    // Setup the auxiliary terminated signal indicating that a normal termination
+                    // has been taken in the same synchronous tick and must not be taken again.
+                    val terminatedSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                        terminatedSignal.setName("terminated" + state.hashCode);
+                        terminatedSignal.setIsInput(false);
+                        terminatedSignal.setIsOutput(false);
+                        terminatedSignal.setType(ValueType::PURE);
+                        state.parentRegion.parentState.signals.add(terminatedSignal);
+                        
+                    val terminatedSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                        terminatedSignalReference.setValuedObject(terminatedSignal);
+                    val notTerminatedExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+                        notTerminatedExpression.setOperator(OperatorType::NOT);
+                        notTerminatedExpression.subExpressions.add(terminatedSignalReference);
+                    val terminatedEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                        terminatedEmission.setSignal(terminatedSignal);
+                    // Add the prevention of re-run of normal termination within the same tick
+                    triggerExpression.subExpressions.add(notTerminatedExpression);
+                    // Prevent the normal termination to be taken again by emitting this helper signal (test10)
+                    normalTerminationTransition.effects.add(terminatedEmission);
+                                        
                     // Walk thru all regions that must terminate and create one termination signal per
                     // region. For the weak abort create a conjunction of these signals as the trigger.
                     for (region : state.regions) {
-                         // Setup the auxiliarySignal as an OUTPUT to the module
-                         val termSignal = KExpressionsFactory::eINSTANCE.createSignal();
-                         termSignal.setName("term" + region.hashCode);
-                         termSignal.setIsInput(false);
-                         termSignal.setIsOutput(false);
-                         termSignal.setType(ValueType::PURE);
-                    
+                         // Setup the auxiliary termination signal indicating that a normal termination
+                         // should be taken.
+                         val finishedSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                         finishedSignal.setName("finished" + region.hashCode);
+                         finishedSignal.setIsInput(false);
+                         finishedSignal.setIsOutput(false);
+                         finishedSignal.setType(ValueType::PURE);
+
                          val finalStates = region.states.filter(e | e.isFinal == true);
                          // For all final states add a during action that emits the termination signal
                          for (finalState : finalStates) {
-                              val termEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                              termEmission.setSignal(termSignal);
-                              val termDuringAction =  SyncchartsFactory::eINSTANCE.createAction
+                              val finishedEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                              finishedEmission.setSignal(finishedSignal);
+                              val termDuringAction = SyncchartsFactory::eINSTANCE.createAction
                               termDuringAction.setIsImmediate(true);
-                              termDuringAction.effects.add(termEmission);
+                              termDuringAction.effects.add(finishedEmission);
                               finalState.innerActions.add(termDuringAction);
                               // Set the final state flag to false
                               finalState.setIsFinal(false);
                          }
                     
-                         targetRootRegion.states.get(0).signals.add(termSignal);
+                         state.parentRegion.parentState.signals.add(finishedSignal);
+//                       targetRootRegion.states.get(0).signals.add(finishedSignal);
                          val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                         valuedObjectReference.setValuedObject(termSignal);
+                         valuedObjectReference.setValuedObject(finishedSignal);
                          triggerExpression.subExpressions.add(valuedObjectReference);
                     }
                
