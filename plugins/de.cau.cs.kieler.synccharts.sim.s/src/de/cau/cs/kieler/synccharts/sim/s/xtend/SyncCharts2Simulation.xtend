@@ -1484,8 +1484,10 @@ class SyncCharts2Simulation {
             // Transitions         
             val notPre2PreTransition =  SyncchartsFactory::eINSTANCE.createTransition();
             notPre2PreTransition.setTargetState(preState);
+            notPre2PreTransition.setPriority(1);
             notPreState.outgoingTransitions.add(notPre2PreTransition);
             val pre2NotPreTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+            pre2NotPreTransition.setPriority(2);
             pre2NotPreTransition.setTargetState(notPreState);
             preState.outgoingTransitions.add(pre2NotPreTransition);
             
@@ -1496,6 +1498,7 @@ class SyncCharts2Simulation {
                     explicitPreSignalEmission.setSignal(explicitPreSignal);
                 val preSelfTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                     preSelfTransition.setTargetState(preState);
+                    preSelfTransition.setPriority(1);
                     preState.outgoingTransitions.add(preSelfTransition);
                 preSelfTransition.setTrigger(preSignalReference.copy);
                 preSelfTransition.effects.add(explicitPreSignalEmission.copy);
