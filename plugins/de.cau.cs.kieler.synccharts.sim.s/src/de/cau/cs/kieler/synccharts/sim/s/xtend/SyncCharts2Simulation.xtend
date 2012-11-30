@@ -1458,7 +1458,7 @@ class SyncCharts2Simulation {
         
         // Filter all signals and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList();
-        val allPreSignals = state.signals.filter (signal | allActions.filter(action | action.getPreExpression(signal).size > 0).size > 0); 
+        val allPreSignals = state.signals.filter (signal | allActions.filter(action | action.getPreExpression(signal).size > 0 || action.getPreValExpression(signal).size > 0).size > 0); 
         
         for (preSignal : ImmutableList::copyOf(allPreSignals)) {
 
@@ -1640,11 +1640,17 @@ class SyncCharts2Simulation {
                        val valueExpression = preValExpression.subExpressions.get(0);
                        (valueExpression as OperatorExpression).subExpressions.remove(0);
                        (valueExpression as OperatorExpression).subExpressions.add(explicitPreSignalReference.copy);
-                       (container as Emission).setNewValue(valueExpression.copy);
-                   }
+                       if (container instanceof Emission) {
+                            (container as Emission).setNewValue(valueExpression.copy);
+                       }
+                       else if (container instanceof ComplexExpression) {
+                           // If nested PRE or PRE inside another complex expression
+                           (container as ComplexExpression).subExpressions.remove(preValExpression);
+                           (container as ComplexExpression).subExpressions.add(valueExpression.copy);
+                      }
+                  }
+               
                }
-               
-               
             }
         }
     }

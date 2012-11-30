@@ -1,6 +1,6 @@
 ! reset;
 % Output:;
-On_Off % Output: GameOver Display;
+OnOff % Output: GameOver Display;
 % Output: GameOver Display;
 Coin % Output:;
 Ready % Output:;
@@ -14,16 +14,16 @@ Ms % Output:;
 
 ! reset;
 % Output:;
-On_Off % Output: GameOver Display;
+OnOff % Output: GameOver Display;
 % Output: GameOver Display;
 Coin % Output:;
 Ready % Output:;
-On_Off % Output:;
-On_Off % Output: GameOver Display;
+OnOff % Output:;
+OnOff % Output: GameOver Display;
 
 ! reset;
 % Output:;
-On_Off % Output: GameOver Display;
+OnOff % Output: GameOver Display;
 % Output: GameOver Display;
 Coin % Output:;
 Ready % Output:;
