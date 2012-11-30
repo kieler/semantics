@@ -335,7 +335,7 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
      * {@inheritDoc}
      */
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[NUM_PROPERTIES + 2];
+        KiemProperty[] properties = new KiemProperty[NUM_PROPERTIES + 2 + 1];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile(true);
 
         properties[0] = new KiemProperty("State Name", "state");
@@ -349,6 +349,8 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
         String[] items = { "Complete Hierarchie" };
         KiemPropertyTypeChoice choice = new KiemPropertyTypeChoice(items);
         properties[2 * 2] = new KiemProperty("Label Names for SC Code", choice, items[0]);
+
+        properties[ 2  * 2 + 1] = new KiemProperty("Benchmark Mode", false);
 
         return properties;
     }
