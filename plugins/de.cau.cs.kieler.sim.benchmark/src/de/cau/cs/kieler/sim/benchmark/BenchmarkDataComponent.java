@@ -97,7 +97,7 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
         // If wrapped up and num to run > 0, then run again!
         numToRun = this.getProperties()[KIEM_PROPERTY_RUNS + KIEM_PROPERTY_DIFF].getValueAsInt();
         int updatedNumToRun = numToRun - 1;
-        if (numToRun > 0) {
+        if (updatedNumToRun > 0) {
             // Reduce counter
             this.getProperties()[KIEM_PROPERTY_RUNS + KIEM_PROPERTY_DIFF].setValue(""
                     + updatedNumToRun);
