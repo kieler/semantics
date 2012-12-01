@@ -222,6 +222,28 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      *             never thrown
      */
     public void wrapup() throws KiemInitializationException {
+        
+        // If KART is in automatic mode, then update/increment the trace number
+        if (this.automatic) {
+            KiemProperty[] properties = this.getProperties();
+            int tracenum = 0;
+            for (KiemProperty prop : properties) {
+                if (prop.getKey().equals(KartConstants.TRACENUM)) {
+                    tracenum = prop.getValueAsInt();
+                    int numberOfTraces = KartPlugin.getNumberOfTraces(esoFilePath);
+                    tracenum++;
+                    if (tracenum < numberOfTraces) {
+                        prop.setValue("" + tracenum);
+                    } else {
+                        // Turn-a-round: The next trace is trace number 0
+                        prop.setValue("" + 0);
+                    }
+                }
+            }
+
+            
+
+        }
 
     }
 
