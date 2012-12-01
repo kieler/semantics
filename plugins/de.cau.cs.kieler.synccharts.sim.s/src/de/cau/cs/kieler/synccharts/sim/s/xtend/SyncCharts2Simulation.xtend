@@ -1821,6 +1821,13 @@ class SyncCharts2Simulation {
             if (weakTriggerOperatorExpression.subExpressions.size == 1) {
                 weakTrigger = weakTriggerOperatorExpression.subExpressions.get(0);
             }
+            // Hotfix for SyncCharts
+            if (strongTrigger instanceof OperatorExpression) {
+                strongTrigger = (strongTrigger as OperatorExpression).fixForOperatorExpressionLists;
+            }
+            if (weakTrigger instanceof OperatorExpression) {
+                weakTrigger = (weakTrigger as OperatorExpression).fixForOperatorExpressionLists;
+            }
 
 
             // Optimization: If a normal termination is outgoing then the following 
@@ -1837,12 +1844,9 @@ class SyncCharts2Simulation {
                     // Add a watcher transition from Run to Abort triggered by _Exit
                     val watcherTransition =  SyncchartsFactory::eINSTANCE.createTransition();
                     watcherTransition.setTargetState(abortState);
+                    val priority = runState.outgoingTransitions.size + 1;
                     runState.outgoingTransitions.add(watcherTransition);
                     watcherTransition.setTrigger(exitSignalReference);
-                    var priority = runState.outgoingTransitions.size;
-                    if (priority == 0) {
-                        priority = 1;
-                    }
                     watcherTransition.setPriority(priority);
                     watcherTransition.setIsImmediate(true);
                     watcherTransition.setDelay(0);
