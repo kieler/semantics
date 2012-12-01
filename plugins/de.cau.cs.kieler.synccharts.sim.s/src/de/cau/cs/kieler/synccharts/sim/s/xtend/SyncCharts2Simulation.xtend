@@ -1708,6 +1708,18 @@ class SyncCharts2Simulation {
         
         targetRootRegion;
     }
+    
+    // For all transitions of a state compute the maximal priority
+    def int maxPriority(State state) {
+        var priority = 0;
+        for (transition : state.outgoingTransitions) {
+            val newPriority = transition.priority;
+            if (newPriority > priority) {
+                priority = newPriority;
+            }
+        }
+        priority;
+    }
 
     // Traverse all states 
     def void transformSCCAborts(State state, Region targetRootRegion) {
@@ -1829,29 +1841,6 @@ class SyncCharts2Simulation {
                 weakTrigger = (weakTrigger as OperatorExpression).fixForOperatorExpressionLists;
             }
 
-
-            // Optimization: If a normal termination is outgoing then the following 
-            // transformation is necessary to be able to abort the watcher in case
-            // of triggering the normal termination.
-            val exitSignal = KExpressionsFactory::eINSTANCE.createSignal();
-            if (normalTerminationExists) {
-                // If there is at least one such transition then whe need an "_Exit" signal
-                val exitSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                    exitSignalReference.setValuedObject(exitSignal);
-                    exitSignal.setName("_Term_" + state.id);
-                    state.signals.add(exitSignal);
-                    
-                    // Add a watcher transition from Run to Abort triggered by _Exit
-                    val watcherTransition =  SyncchartsFactory::eINSTANCE.createTransition();
-                    watcherTransition.setTargetState(abortState);
-                    val priority = runState.outgoingTransitions.size + 1;
-                    runState.outgoingTransitions.add(watcherTransition);
-                    watcherTransition.setTrigger(exitSignalReference);
-                    watcherTransition.setPriority(priority);
-                    watcherTransition.setIsImmediate(true);
-                    watcherTransition.setDelay(0);
-            }
-
             
             // Create an Aborted state for every region
             for (region : originalRegions) {
@@ -1904,7 +1893,7 @@ class SyncCharts2Simulation {
                             // Now add all weak abort watcher signals as a trigger
                             weakAbortTransition.setTrigger(weakTrigger.copy);
                             // Set the lowest priority
-                            weakAbortTransition.setPriority(regionState.outgoingTransitions.size + 1);
+                            weakAbortTransition.setPriority(regionState.maxPriority + 1);
                             // Add transition
                             regionState.outgoingTransitions.add(weakAbortTransition);
                         }
@@ -1917,6 +1906,21 @@ class SyncCharts2Simulation {
             // transformation is necessary to be able to abort the watcher in case
             // of triggering the normal termination.
             if (normalTerminationExists) {
+                // If there is at least one such transition then whe need an "_Exit" signal
+                val exitSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                val exitSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                    exitSignalReference.setValuedObject(exitSignal);
+                exitSignal.setName("_Term_" + state.id);
+                state.signals.add(exitSignal);
+                // Add a watcher transition from Run to Abort triggered by _Exit
+                val watcherTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                watcherTransition.setTargetState(abortState);
+                runState.outgoingTransitions.add(watcherTransition);
+                watcherTransition.setTrigger(exitSignalReference);
+                watcherTransition.setPriority(runState.maxPriority + 1);
+                watcherTransition.setIsImmediate(true);
+                watcherTransition.setDelay(0);
+                              
                 val mainRegion = SyncchartsFactory::eINSTANCE.createRegion();
                 mainRegion.setId("Body" + state.hashCode);
                 val mainState = SyncchartsFactory::eINSTANCE.createState();
