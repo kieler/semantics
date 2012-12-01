@@ -216,7 +216,7 @@ public class SyncChartsGenerateRandomInputs implements IHandler {
             // For each tick decide which signals to emit
             Set<String> signalNameSet = new HashSet<String>();
             int randomDense2 = randomGenerator.nextInt(numberOfSignals);
-            int randomDense = randomGenerator.nextInt(randomDense2);
+            int randomDense = randomGenerator.nextInt(randomDense2 + 1);
             for (int i = 0; i < randomDense; i++) {
                 int randomSignalIndex = randomGenerator.nextInt(numberOfSignals);
                 String randomSignalName = inputSignalList.get(randomSignalIndex);
