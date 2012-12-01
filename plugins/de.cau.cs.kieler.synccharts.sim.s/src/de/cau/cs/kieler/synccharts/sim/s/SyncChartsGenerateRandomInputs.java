@@ -44,7 +44,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.synccharts.Region;
 
 /**
@@ -62,7 +61,8 @@ public class SyncChartsGenerateRandomInputs implements IHandler {
     private static final String INPUT_DLG_TITLE = "ESO Model Random Input Generation";
 
     /** The user input dialog text. */
-    private static final String INPUT_DLG_TEXT = "Set the number of ticks to generate random inputs for the selected model:";
+    private static final String INPUT_DLG_TEXT = 
+            "Set the number of ticks to generate random inputs for the selected model:";
 
     /** The user input dialog default. */
     private static final long INPUT_DLG_DEFAULT = 1000;
@@ -215,7 +215,8 @@ public class SyncChartsGenerateRandomInputs implements IHandler {
         for (long tick = 0; tick < ticks; tick++) {
             // For each tick decide which signals to emit
             Set<String> signalNameSet = new HashSet<String>();
-            int randomDense = randomGenerator.nextInt(numberOfSignals);
+            int randomDense2 = randomGenerator.nextInt(numberOfSignals);
+            int randomDense = randomGenerator.nextInt(randomDense2);
             for (int i = 0; i < randomDense; i++) {
                 int randomSignalIndex = randomGenerator.nextInt(numberOfSignals);
                 String randomSignalName = inputSignalList.get(randomSignalIndex);
@@ -253,7 +254,7 @@ public class SyncChartsGenerateRandomInputs implements IHandler {
                     returnList.add(signal.getName());
                 }
             }
-     }
+        }
         return returnList;
     }
 
