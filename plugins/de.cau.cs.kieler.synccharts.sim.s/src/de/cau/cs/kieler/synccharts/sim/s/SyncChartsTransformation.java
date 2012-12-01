@@ -38,7 +38,6 @@ import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.sim.s.xtend.SyncCharts2Simulation;
 
-// TODO: Auto-generated Javadoc
 /**
  * SyncChartsTransformation offers all transformation used in the SyncCharts S Simulation
  * DataComponent to be called separately on a SyncCharts kixs file.

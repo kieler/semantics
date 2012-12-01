@@ -260,6 +260,29 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsGenerateRandomInputs"
+               label="Generate Random Inputs (ESO) ..."
+               mnemonic="E"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="kixs">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -317,6 +340,11 @@
             defaultHandler="de.cau.cs.kieler.synccharts.sim.s.SyncChartsTransformation"
             id="de.cau.cs.kieler.synccharts.sim.s.SyncChartsPreTransformation"
             name="SyncChartsPreTransformation">
+      </command>
+      <command
+            defaultHandler="de.cau.cs.kieler.synccharts.sim.s.SyncChartsGenerateRandomInputs"
+            id="de.cau.cs.kieler.synccharts.sim.s.SyncChartsGenerateRandomInputs"
+            name="SyncChartsGenerateRandomInputs">
       </command>
    </extension>
    <extension
