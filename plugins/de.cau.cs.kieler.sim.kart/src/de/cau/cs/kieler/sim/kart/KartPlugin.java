@@ -13,8 +13,17 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import org.eclipse.core.runtime.IPath;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * This activator class controls the lifecycle of the KartPlugin.
@@ -25,6 +34,12 @@ import org.osgi.framework.BundleContext;
  * 
  */
 public class KartPlugin implements BundleActivator {
+
+    /**
+     * The id used to separate traces within ESO files is used to count the number of available
+     * traces.
+     */
+    private static final String ESO_FILE_RESET_TRACE_ID = "! reset;";
 
     // ---------------------------------------------------------------------
 
@@ -56,4 +71,35 @@ public class KartPlugin implements BundleActivator {
 
     // ---------------------------------------------------------------------
 
+    /**
+     * Gets the number of traces of an eso file.
+     * 
+     * @param esoFilePath
+     *            the ESO file path
+     * @return the number of traces
+     */
+    public static int getNumberOfTraces(final IPath esoFilePath) {
+        try {
+            InputStream inputStream = KiemUtil.openWorkspaceFile(esoFilePath);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            int number = 0;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains(ESO_FILE_RESET_TRACE_ID)) {
+                    number++;
+                }
+            }
+            bufferedReader.close();
+            inputStream.close();
+            return number;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
+                    + "' in order to count the maximum number of traces. (FileNotFoundException)");
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
+                    + "' in order to count the maximum number of traces. (IOException)");
+        }
+    }
+
+    // -------------------------------------------------------------------------
 }

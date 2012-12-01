@@ -16,11 +16,8 @@ package de.cau.cs.kieler.sim.kiem.test;
 
 import static org.junit.Assert.fail;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -60,6 +57,7 @@ import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.kart.KartConstants;
+import de.cau.cs.kieler.sim.kart.KartPlugin;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
@@ -126,11 +124,6 @@ public abstract class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
     // ESO file an KART configuration
 
-    /**
-     * The id used to separate traces within ESO files is used to count the number of available
-     * traces.
-     */
-    private static final String ESO_FILE_RESET_TRACE_ID = "! reset;";
 
     /**
      * The error signal name to observe the KIEM data pool for potential execution errors detected
@@ -339,7 +332,7 @@ public abstract class KiemAutomatedJUnitTest {
         DataComponentWrapper kartReplay = getKartReplayComponent();
         DataComponentWrapper kartValidation = getKartValidationComponent();
         KiemProperty errorProperty = getProperty(KartConstants.SIGNALVAR, kartValidation);
-        KiemProperty stopProperty = getProperty(KartConstants.STOPEXECUTION, kartReplay);
+        KiemProperty stopProperty = getProperty(KartConstants.AUTOMATIC, kartReplay);
         stopProperty.setValue("true"); // not stop execution after ESO file is
                                        // done
         errorSignalName = errorProperty.getValue(); // extract the correct error
@@ -426,7 +419,7 @@ public abstract class KiemAutomatedJUnitTest {
         KiemPlugin.setCurrentModelFile(modelFilePath);
         logger.info("Model File: " + modelFilePath);
 
-        int numberOfTraces = getNumberOfTraces(esoFilePath);
+        int numberOfTraces = KartPlugin.getNumberOfTraces(esoFilePath);
 
         for (int traceNumber = 0; traceNumber < numberOfTraces; traceNumber++) {
             logger.info("Trace Number " + traceNumber);
@@ -799,37 +792,7 @@ public abstract class KiemAutomatedJUnitTest {
 
     }
 
-    // -------------------------------------------------------------------------
 
-    /**
-     * Gets the number of traces of an eso file.
-     * 
-     * @param esoFilePath
-     *            the ESO file path
-     * @return the number of traces
-     */
-    private static int getNumberOfTraces(final IPath esoFilePath) {
-        try {
-            InputStream inputStream = KiemUtil.openWorkspaceFile(esoFilePath);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            int number = 0;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains(ESO_FILE_RESET_TRACE_ID)) {
-                    number++;
-                }
-            }
-            bufferedReader.close();
-            inputStream.close();
-            return number;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
-                    + "' in order to count the maximum number of traces. (FileNotFoundException)");
-        } catch (IOException e) {
-            throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
-                    + "' in order to count the maximum number of traces. (IOException)");
-        }
-    }
 
     // -------------------------------------------------------------------------
 
