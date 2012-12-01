@@ -32,7 +32,6 @@ import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is intended to compile and execute SC code.
  * 
@@ -388,7 +387,14 @@ public class SCExecution {
     // cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
     // cJSON_AddItemToObject(output, "cycles", value);
 
-    String addCycleCounterCode(final String filePath) throws IOException {
+    /**
+     * Adds cycle counter code.
+     *
+     * @param filePath the file path
+     * @return the string
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public static String addCycleCounterCode(final String filePath) throws IOException {
 
         String newFilePath = filePath.replace(".c", ".cyclecount.c");
 
