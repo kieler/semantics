@@ -39,7 +39,8 @@ public class KartPlugin implements BundleActivator {
      * The id used to separate traces within ESO files is used to count the number of available
      * traces.
      */
-    private static final String ESO_FILE_RESET_TRACE_ID = "! reset;";
+    private static final String ESO_FILE_RESET_TRACE_ID1 = "!";
+    private static final String ESO_FILE_RESET_TRACE_ID2 = "reset;";
 
     // ---------------------------------------------------------------------
 
@@ -85,7 +86,7 @@ public class KartPlugin implements BundleActivator {
             String line;
             int number = 0;
             while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains(ESO_FILE_RESET_TRACE_ID)) {
+                if (line.contains(ESO_FILE_RESET_TRACE_ID1) && line.contains(ESO_FILE_RESET_TRACE_ID2)) {
                     number++;
                 }
             }
