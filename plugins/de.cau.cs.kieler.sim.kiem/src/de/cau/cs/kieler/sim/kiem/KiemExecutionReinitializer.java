@@ -54,12 +54,14 @@ public class KiemExecutionReinitializer implements Runnable {
                     if (KiemPlugin.getDefault().getExecution() == null) {
                         // We now detected that KIEM has finished execution.
                         // Reset the flag and then initialize Kiem again
-                        KiemPlugin.getDefault().resetRequestReRun();
+                        KiemPlugin.getDefault().resetRequestReRun(false);
                         pauseLong();
-                        if (KiemPlugin.getDefault().initExecution()) {
-                            if (!wasKiemExecutionPreviouslyPaused) {
-                                pauseLong();
-                                KiemPlugin.getDefault().getExecution().runExecutionSync();
+                        if (!cancelled) {
+                            if (KiemPlugin.getDefault().initExecution()) {
+                                if (!wasKiemExecutionPreviouslyPaused) {
+                                    pauseLong();
+                                    KiemPlugin.getDefault().getExecution().runExecutionSync();
+                                }
                             }
                         }
                         // We have successfully re-started KIEM execution an can exit here
@@ -71,7 +73,6 @@ public class KiemExecutionReinitializer implements Runnable {
                 }
             }
         }
-
     }
 
     // -------------------------------------------------------------------------

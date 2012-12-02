@@ -1772,7 +1772,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     // currentMaster.masterGUIpause();
                 } else {
                     // otherwise default implementation
-                    kIEMInstance.resetRequestReRun();
+                    kIEMInstance.resetRequestReRun(true);
                     if (kIEMInstance.initExecution()) {
                         kIEMInstance.getExecution().pauseExecutionSync();
                     }
@@ -1810,15 +1810,15 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 // abortion button implicitly
                 if (kIEMInstance == null || kIEMInstance.isInitializingExecution()) {
                     if (kIEMInstance != null && kIEMInstance.getExecution() != null) {
-                        kIEMInstance.resetRequestReRun();
+                        kIEMInstance.resetRequestReRun(true);
                         kIEMInstance.getExecution().abortExecutionAsync();
                     }
                     if (kIEMInstance != null && kIEMInstance.isInitializingExecution()) {
-                        kIEMInstance.resetRequestReRun();
+                        kIEMInstance.resetRequestReRun(true);
                         kIEMInstance.cancelInitialization();
                     }
                     if (kIEMInstance != null) {
-                        kIEMInstance.resetRequestReRun();
+                        kIEMInstance.resetRequestReRun(true);
                         kIEMInstance.setExecution(null);
                     }
                     updateView(true);
@@ -1832,6 +1832,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
                     (new Thread(new Runnable() {
                         public void run() {
+                            kIEMInstance.resetRequestReRun(true);
                             actionStopExecution();
 
                         }
