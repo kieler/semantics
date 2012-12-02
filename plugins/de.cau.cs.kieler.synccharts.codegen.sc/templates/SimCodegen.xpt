@@ -62,7 +62,7 @@
 			«EXPAND CodegenMisc::generateInputSignal FOR ((Signal)signal)»
 		«ENDIF-»
 	«ENDFOREACH-»
-	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.states.first())»
+	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.states.first()).select(e| ((Signal)e).isOutput)»
 	int tick(){
 	TICKSTART(«EXPAND CodegenPriority::mainThreadPrio FOR this.states.first()-»);
 «ENDDEFINE»
