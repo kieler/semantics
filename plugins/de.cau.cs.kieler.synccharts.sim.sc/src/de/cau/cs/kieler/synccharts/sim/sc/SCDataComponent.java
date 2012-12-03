@@ -104,6 +104,9 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
 
     private boolean benchmark;
     
+    /** Compile with SC Light. */
+    private boolean sclcompilation;
+    
     // -------------------------------------------------------------------------
 
     /*
@@ -149,12 +152,24 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
+        setSourceFileSize(0);
+        setExecutableFileSize(0);
+
+        benchmark = this.getProperties()[2 * 2 + 2].getValueAsBoolean();
+        sclcompilation = this.getProperties()[2 * 2 + 2 + 1].getValueAsBoolean();
+        
         // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 
         URL url = null;
         try {
-            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulation"), null));
+            if (!sclcompilation) { 
+                // normal (full) SC constructs
+                url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulation"), null));
+            } else {
+                // light SC constructs (no aborts)
+                url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulationscl"), null));
+            }
         } catch (IOException e2) {
             e2.printStackTrace();
         }
@@ -166,7 +181,6 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
             bundleLocation = bundleLocation.substring(1);
         }
         
-        benchmark = this.getProperties()[2 * 2 + 2].getValueAsBoolean();
         
         String simDataFileName = "sim_data.c";
         if (benchmark) {
@@ -415,7 +429,7 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
      * {@inheritDoc}
      */
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[NUM_PROPERTIES + 2 + 1];
+        KiemProperty[] properties = new KiemProperty[NUM_PROPERTIES + 2 + 2];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile(true);
 
         properties[0] = new KiemProperty("State Name", "state");
@@ -431,6 +445,7 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
         properties[2 * 2] = new KiemProperty("Label Names for SC Code", choice, items[0]);
 
         properties[ 2  * 2 + 1] = new KiemProperty("Benchmark Mode", false);
+        properties[ 2  * 2 + 2] = new KiemProperty("SCL (SC Light)", false);
 
         return properties;
     }
@@ -758,4 +773,6 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
         this.executableFileSize = executableFileSize;
     }
     
+    
+
 }
