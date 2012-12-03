@@ -62,43 +62,6 @@ public interface SccexpPackage extends EPackage
   SccexpPackage eINSTANCE = de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateSpecificationImpl <em>State Specification</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateSpecificationImpl
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateSpecification()
-   * @generated
-   */
-  int STATE_SPECIFICATION = 0;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SPECIFICATION__SCOPE = StextPackage.STATE_SPECIFICATION__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Scopes</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SPECIFICATION__SCOPES = StextPackage.STATE_SPECIFICATION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>State Specification</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SPECIFICATION_FEATURE_COUNT = StextPackage.STATE_SPECIFICATION_FEATURE_COUNT + 1;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateScopeImpl <em>State Scope</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -106,7 +69,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateScope()
    * @generated
    */
-  int STATE_SCOPE = 1;
+  int STATE_SCOPE = 0;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -145,61 +108,6 @@ public interface SccexpPackage extends EPackage
   int STATE_SCOPE_FEATURE_COUNT = SGraphPackage.SCOPE_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InterfaceScopeImpl <em>Interface Scope</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InterfaceScopeImpl
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInterfaceScope()
-   * @generated
-   */
-  int INTERFACE_SCOPE = 2;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_SCOPE__DECLARATIONS = STATE_SCOPE__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_SCOPE__EVENTS = STATE_SCOPE__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_SCOPE__VARIABLES = STATE_SCOPE__VARIABLES;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_SCOPE__NAME = STATE_SCOPE_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Interface Scope</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERFACE_SCOPE_FEATURE_COUNT = STATE_SCOPE_FEATURE_COUNT + 1;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -207,7 +115,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getVariableDefinition()
    * @generated
    */
-  int VARIABLE_DEFINITION = 3;
+  int VARIABLE_DEFINITION = 1;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -316,34 +224,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionScope()
    * @generated
    */
-  int REACTION_SCOPE = 4;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_SCOPE__DECLARATIONS = STATE_SCOPE__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_SCOPE__EVENTS = STATE_SCOPE__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_SCOPE__VARIABLES = STATE_SCOPE__VARIABLES;
+  int REACTION_SCOPE = 2;
 
   /**
    * The feature id for the '<em><b>Reaction Scope</b></em>' containment reference list.
@@ -352,7 +233,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_SCOPE__REACTION_SCOPE = STATE_SCOPE_FEATURE_COUNT + 0;
+  int REACTION_SCOPE__REACTION_SCOPE = 0;
 
   /**
    * The number of structural features of the '<em>Reaction Scope</em>' class.
@@ -361,7 +242,53 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_SCOPE_FEATURE_COUNT = STATE_SCOPE_FEATURE_COUNT + 1;
+  int REACTION_SCOPE_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SimpleScopeImpl <em>Simple Scope</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SimpleScopeImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSimpleScope()
+   * @generated
+   */
+  int SIMPLE_SCOPE = 3;
+
+  /**
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_SCOPE__DECLARATIONS = STATE_SCOPE__DECLARATIONS;
+
+  /**
+   * The feature id for the '<em><b>Events</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_SCOPE__EVENTS = STATE_SCOPE__EVENTS;
+
+  /**
+   * The feature id for the '<em><b>Variables</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_SCOPE__VARIABLES = STATE_SCOPE__VARIABLES;
+
+  /**
+   * The number of structural features of the '<em>Simple Scope</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_SCOPE_FEATURE_COUNT = STATE_SCOPE_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitActionImpl <em>Exit Action</em>}' class.
@@ -371,7 +298,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getExitAction()
    * @generated
    */
-  int EXIT_ACTION = 5;
+  int EXIT_ACTION = 4;
 
   /**
    * The feature id for the '<em><b>Effect</b></em>' containment reference.
@@ -399,7 +326,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInsideAction()
    * @generated
    */
-  int INSIDE_ACTION = 6;
+  int INSIDE_ACTION = 5;
 
   /**
    * The feature id for the '<em><b>Effect</b></em>' containment reference.
@@ -427,7 +354,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEntryAction()
    * @generated
    */
-  int ENTRY_ACTION = 7;
+  int ENTRY_ACTION = 6;
 
   /**
    * The feature id for the '<em><b>Effect</b></em>' containment reference.
@@ -455,7 +382,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSuspend()
    * @generated
    */
-  int SUSPEND = 8;
+  int SUSPEND = 7;
 
   /**
    * The feature id for the '<em><b>Trigger</b></em>' containment reference.
@@ -483,7 +410,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionTrigger()
    * @generated
    */
-  int REACTION_TRIGGER = 9;
+  int REACTION_TRIGGER = 8;
 
   /**
    * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
@@ -538,7 +465,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getPreValueExpressionreturns()
    * @generated
    */
-  int PRE_VALUE_EXPRESSIONRETURNS = 10;
+  int PRE_VALUE_EXPRESSIONRETURNS = 9;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -566,7 +493,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getCombineOperator()
    * @generated
    */
-  int COMBINE_OPERATOR = 11;
+  int COMBINE_OPERATOR = 10;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VarDirection <em>Var Direction</em>}' enum.
@@ -576,29 +503,8 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getVarDirection()
    * @generated
    */
-  int VAR_DIRECTION = 12;
+  int VAR_DIRECTION = 11;
 
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateSpecification <em>State Specification</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>State Specification</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateSpecification
-   * @generated
-   */
-  EClass getStateSpecification();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateSpecification#getScopes <em>Scopes</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Scopes</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateSpecification#getScopes()
-   * @see #getStateSpecification()
-   * @generated
-   */
-  EReference getStateSpecification_Scopes();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateScope <em>State Scope</em>}'.
@@ -609,16 +515,6 @@ public interface SccexpPackage extends EPackage
    * @generated
    */
   EClass getStateScope();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InterfaceScope <em>Interface Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Interface Scope</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InterfaceScope
-   * @generated
-   */
-  EClass getInterfaceScope();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition <em>Variable Definition</em>}'.
@@ -694,6 +590,16 @@ public interface SccexpPackage extends EPackage
    * @generated
    */
   EReference getReactionScope_ReactionScope();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SimpleScope <em>Simple Scope</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Simple Scope</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SimpleScope
+   * @generated
+   */
+  EClass getSimpleScope();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ExitAction <em>Exit Action</em>}'.
@@ -898,24 +804,6 @@ public interface SccexpPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateSpecificationImpl <em>State Specification</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateSpecificationImpl
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateSpecification()
-     * @generated
-     */
-    EClass STATE_SPECIFICATION = eINSTANCE.getStateSpecification();
-
-    /**
-     * The meta object literal for the '<em><b>Scopes</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_SPECIFICATION__SCOPES = eINSTANCE.getStateSpecification_Scopes();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateScopeImpl <em>State Scope</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -924,16 +812,6 @@ public interface SccexpPackage extends EPackage
      * @generated
      */
     EClass STATE_SCOPE = eINSTANCE.getStateScope();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InterfaceScopeImpl <em>Interface Scope</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InterfaceScopeImpl
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInterfaceScope()
-     * @generated
-     */
-    EClass INTERFACE_SCOPE = eINSTANCE.getInterfaceScope();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
@@ -994,6 +872,16 @@ public interface SccexpPackage extends EPackage
      * @generated
      */
     EReference REACTION_SCOPE__REACTION_SCOPE = eINSTANCE.getReactionScope_ReactionScope();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SimpleScopeImpl <em>Simple Scope</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SimpleScopeImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSimpleScope()
+     * @generated
+     */
+    EClass SIMPLE_SCOPE = eINSTANCE.getSimpleScope();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitActionImpl <em>Exit Action</em>}' class.

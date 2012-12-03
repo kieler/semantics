@@ -6,17 +6,12 @@ import "http://www.yakindu.org/sct/statechart/SText" as stext
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 
-/************************************************/
-/*			Overriding State grammar 			*/
-/************************************************/
-StateSpecification:
-	{StateSpecification} (scopes+=InterfaceScope)*;
-
 ////defines the possible scopes for a state
-//StateScope :
-//	{SimpleScope} (scopes+=(InterfaceScope | ReactionScope))*;
-StateScope:
-	InterfaceScope | ReactionScope;
+StateScope :
+	{SimpleScope} declarations+=(VariableDeclaration)*;
+
+//StateScope returns sgraph::Scope:
+//	InterfaceScope;// | ReactionScope;
 
 /*********************************** INTERFACE DECLARATION **************************************** */
 /************************************************/
@@ -25,9 +20,9 @@ StateScope:
 //override the SText InterfaceScope rule
 // The InterfaceScope rule specifies that a InterfaceScope starts with 
 // the literal 'interface :', followed by one or more interface declaration variables
-InterfaceScope:
-	{InterfaceScope} 'interface' ':' declarations+=VariableDeclaration (','
-	declarations+=VariableDeclaration)* ';';
+//InterfaceScope:
+//	{InterfaceScope} 'interface' ':' declarations+=VariableDeclaration (','
+//	declarations+=VariableDeclaration)* ';';
 
 /************************************************/
 /*			 Variable Definition				*/

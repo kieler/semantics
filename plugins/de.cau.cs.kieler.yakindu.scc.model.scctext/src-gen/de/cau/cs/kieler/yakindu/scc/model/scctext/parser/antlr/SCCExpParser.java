@@ -25,7 +25,7 @@ public class SCCExpParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPa
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "StateSpecification";
+		return "StateScope";
 	}
 	
 	public SCCExpGrammarAccess getGrammarAccess() {

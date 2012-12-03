@@ -65,11 +65,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
   {
     switch (eClass.getClassifierID())
     {
-      case SccexpPackage.STATE_SPECIFICATION: return createStateSpecification();
       case SccexpPackage.STATE_SCOPE: return createStateScope();
-      case SccexpPackage.INTERFACE_SCOPE: return createInterfaceScope();
       case SccexpPackage.VARIABLE_DEFINITION: return createVariableDefinition();
       case SccexpPackage.REACTION_SCOPE: return createReactionScope();
+      case SccexpPackage.SIMPLE_SCOPE: return createSimpleScope();
       case SccexpPackage.EXIT_ACTION: return createExitAction();
       case SccexpPackage.INSIDE_ACTION: return createInsideAction();
       case SccexpPackage.ENTRY_ACTION: return createEntryAction();
@@ -124,32 +123,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public StateSpecification createStateSpecification()
-  {
-    StateSpecificationImpl stateSpecification = new StateSpecificationImpl();
-    return stateSpecification;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public StateScope createStateScope()
   {
     StateScopeImpl stateScope = new StateScopeImpl();
     return stateScope;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InterfaceScope createInterfaceScope()
-  {
-    InterfaceScopeImpl interfaceScope = new InterfaceScopeImpl();
-    return interfaceScope;
   }
 
   /**
@@ -172,6 +149,17 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
   {
     ReactionScopeImpl reactionScope = new ReactionScopeImpl();
     return reactionScope;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SimpleScope createSimpleScope()
+  {
+    SimpleScopeImpl simpleScope = new SimpleScopeImpl();
+    return simpleScope;
   }
 
   /**

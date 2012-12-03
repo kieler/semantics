@@ -19,121 +19,31 @@ import org.yakindu.sct.model.stext.services.STextGrammarAccess;
 public class SCCExpGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class StateSpecificationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StateSpecification");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cStateSpecificationAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cScopesAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cScopesInterfaceScopeParserRuleCall_1_0 = (RuleCall)cScopesAssignment_1.eContents().get(0);
-		
-		/// ************************************************ / / *			Overriding State grammar 			* /
-		//
-		/// ************************************************ / StateSpecification:
-		//
-		//	{StateSpecification} scopes+=InterfaceScope*;
-		public ParserRule getRule() { return rule; }
-
-		//{StateSpecification} scopes+=InterfaceScope*
-		public Group getGroup() { return cGroup; }
-
-		//{StateSpecification}
-		public Action getStateSpecificationAction_0() { return cStateSpecificationAction_0; }
-
-		//scopes+=InterfaceScope*
-		public Assignment getScopesAssignment_1() { return cScopesAssignment_1; }
-
-		//InterfaceScope
-		public RuleCall getScopesInterfaceScopeParserRuleCall_1_0() { return cScopesInterfaceScopeParserRuleCall_1_0; }
-	}
-
 	public class StateScopeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StateScope");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cInterfaceScopeParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cReactionScopeParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cSimpleScopeAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cDeclarationsVariableDeclarationParserRuleCall_1_0 = (RuleCall)cDeclarationsAssignment_1.eContents().get(0);
 		
 		//////defines the possible scopes for a state
 		//
-		////StateScope :
-		//
-		////	{SimpleScope} (scopes+=(InterfaceScope | ReactionScope))*;
-		//
 		//StateScope:
 		//
-		//	InterfaceScope | ReactionScope;
+		//	{SimpleScope} declarations+=VariableDeclaration*;
 		public ParserRule getRule() { return rule; }
 
-		//InterfaceScope | ReactionScope
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//InterfaceScope
-		public RuleCall getInterfaceScopeParserRuleCall_0() { return cInterfaceScopeParserRuleCall_0; }
-
-		//ReactionScope
-		public RuleCall getReactionScopeParserRuleCall_1() { return cReactionScopeParserRuleCall_1; }
-	}
-
-	public class InterfaceScopeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InterfaceScope");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cInterfaceScopeAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cInterfaceKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cDeclarationsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cDeclarationsVariableDeclarationParserRuleCall_3_0 = (RuleCall)cDeclarationsAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cDeclarationsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cDeclarationsVariableDeclarationParserRuleCall_4_1_0 = (RuleCall)cDeclarationsAssignment_4_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		
-		/// *********************************** INTERFACE DECLARATION **************************************** * /
-		//
-		/// ************************************************ / / *			  INTERFACE DECLARATION				* /
-		//
-		/// ************************************************ / //override the SText InterfaceScope rule
-		//
-		//// The InterfaceScope rule specifies that a InterfaceScope starts with 
-		//
-		//// the literal 'interface :', followed by one or more interface declaration variables
-		//
-		//InterfaceScope:
-		//
-		//	{InterfaceScope} "interface" ":" declarations+=VariableDeclaration ("," declarations+=VariableDeclaration)* ";";
-		public ParserRule getRule() { return rule; }
-
-		//{InterfaceScope} "interface" ":" declarations+=VariableDeclaration ("," declarations+=VariableDeclaration)* ";"
+		//{SimpleScope} declarations+=VariableDeclaration*
 		public Group getGroup() { return cGroup; }
 
-		//{InterfaceScope}
-		public Action getInterfaceScopeAction_0() { return cInterfaceScopeAction_0; }
+		//{SimpleScope}
+		public Action getSimpleScopeAction_0() { return cSimpleScopeAction_0; }
 
-		//"interface"
-		public Keyword getInterfaceKeyword_1() { return cInterfaceKeyword_1; }
-
-		//":"
-		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
-
-		//declarations+=VariableDeclaration
-		public Assignment getDeclarationsAssignment_3() { return cDeclarationsAssignment_3; }
+		//declarations+=VariableDeclaration*
+		public Assignment getDeclarationsAssignment_1() { return cDeclarationsAssignment_1; }
 
 		//VariableDeclaration
-		public RuleCall getDeclarationsVariableDeclarationParserRuleCall_3_0() { return cDeclarationsVariableDeclarationParserRuleCall_3_0; }
-
-		//("," declarations+=VariableDeclaration)*
-		public Group getGroup_4() { return cGroup_4; }
-
-		//","
-		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
-
-		//declarations+=VariableDeclaration
-		public Assignment getDeclarationsAssignment_4_1() { return cDeclarationsAssignment_4_1; }
-
-		//VariableDeclaration
-		public RuleCall getDeclarationsVariableDeclarationParserRuleCall_4_1_0() { return cDeclarationsVariableDeclarationParserRuleCall_4_1_0; }
-
-		//";"
-		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+		public RuleCall getDeclarationsVariableDeclarationParserRuleCall_1_0() { return cDeclarationsVariableDeclarationParserRuleCall_1_0; }
 	}
 
 	public class VariableDefinitionElements extends AbstractParserRuleElementFinder {
@@ -159,6 +69,26 @@ public class SCCExpGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cVarCombineOperatorAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
 		private final RuleCall cVarCombineOperatorCombineOperatorEnumRuleCall_7_1_0 = (RuleCall)cVarCombineOperatorAssignment_7_1.eContents().get(0);
 		
+		////StateScope returns sgraph::Scope:
+		//
+		////	InterfaceScope;// | ReactionScope;
+		//
+		/// *********************************** INTERFACE DECLARATION **************************************** * /
+		//
+		/// ************************************************ / / *			  INTERFACE DECLARATION				* /
+		//
+		/// ************************************************ / //override the SText InterfaceScope rule
+		//
+		//// The InterfaceScope rule specifies that a InterfaceScope starts with 
+		//
+		//// the literal 'interface :', followed by one or more interface declaration variables
+		//
+		////InterfaceScope:
+		//
+		////	{InterfaceScope} 'interface' ':' declarations+=VariableDeclaration (','
+		//
+		////	declarations+=VariableDeclaration)* ';';
+		//
 		/// ************************************************ / / *			 Variable Definition				* /
 		//
 		/// ************************************************ / // Override the SText VariableDefinition rule
@@ -772,9 +702,7 @@ public class SCCExpGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getOUTOutKeyword_2_0() { return cOUTOutKeyword_2_0; }
 	}
 	
-	private StateSpecificationElements pStateSpecification;
 	private StateScopeElements pStateScope;
-	private InterfaceScopeElements pInterfaceScope;
 	private VariableDefinitionElements pVariableDefinition;
 	private ReactionScopeElements pReactionScope;
 	private ExitActionElements pExitAction;
@@ -825,28 +753,11 @@ public class SCCExpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	/// ************************************************ / / *			Overriding State grammar 			* /
-	//
-	/// ************************************************ / StateSpecification:
-	//
-	//	{StateSpecification} scopes+=InterfaceScope*;
-	public StateSpecificationElements getStateSpecificationAccess() {
-		return (pStateSpecification != null) ? pStateSpecification : (pStateSpecification = new StateSpecificationElements());
-	}
-	
-	public ParserRule getStateSpecificationRule() {
-		return getStateSpecificationAccess().getRule();
-	}
-
 	//////defines the possible scopes for a state
-	//
-	////StateScope :
-	//
-	////	{SimpleScope} (scopes+=(InterfaceScope | ReactionScope))*;
 	//
 	//StateScope:
 	//
-	//	InterfaceScope | ReactionScope;
+	//	{SimpleScope} declarations+=VariableDeclaration*;
 	public StateScopeElements getStateScopeAccess() {
 		return (pStateScope != null) ? pStateScope : (pStateScope = new StateScopeElements());
 	}
@@ -855,6 +766,10 @@ public class SCCExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getStateScopeAccess().getRule();
 	}
 
+	////StateScope returns sgraph::Scope:
+	//
+	////	InterfaceScope;// | ReactionScope;
+	//
 	/// *********************************** INTERFACE DECLARATION **************************************** * /
 	//
 	/// ************************************************ / / *			  INTERFACE DECLARATION				* /
@@ -865,17 +780,12 @@ public class SCCExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// the literal 'interface :', followed by one or more interface declaration variables
 	//
-	//InterfaceScope:
+	////InterfaceScope:
 	//
-	//	{InterfaceScope} "interface" ":" declarations+=VariableDeclaration ("," declarations+=VariableDeclaration)* ";";
-	public InterfaceScopeElements getInterfaceScopeAccess() {
-		return (pInterfaceScope != null) ? pInterfaceScope : (pInterfaceScope = new InterfaceScopeElements());
-	}
-	
-	public ParserRule getInterfaceScopeRule() {
-		return getInterfaceScopeAccess().getRule();
-	}
-
+	////	{InterfaceScope} 'interface' ':' declarations+=VariableDeclaration (','
+	//
+	////	declarations+=VariableDeclaration)* ';';
+	//
 	/// ************************************************ / / *			 Variable Definition				* /
 	//
 	/// ************************************************ / // Override the SText VariableDefinition rule
@@ -1131,6 +1041,17 @@ public class SCCExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getStatechartSpecificationAccess().getRule();
 	}
 
+	//StateSpecification:
+	//
+	//	scope=StateScope;
+	public STextGrammarAccess.StateSpecificationElements getStateSpecificationAccess() {
+		return gaSText.getStateSpecificationAccess();
+	}
+	
+	public ParserRule getStateSpecificationRule() {
+		return getStateSpecificationAccess().getRule();
+	}
+
 	//TransitionSpecification:
 	//
 	//	reaction=TransitionReaction;
@@ -1178,6 +1099,19 @@ public class SCCExpGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getNamedInterfaceScopeRule() {
 		return getNamedInterfaceScopeAccess().getRule();
+	}
+
+	//InterfaceScope:
+	//
+	//	{InterfaceScope} "interface" name=ID? ":" declarations+=(EventDeclarartion | VariableDeclaration |
+	//
+	//	OperationDeclaration | Entrypoint | Exitpoint)*;
+	public STextGrammarAccess.InterfaceScopeElements getInterfaceScopeAccess() {
+		return gaSText.getInterfaceScopeAccess();
+	}
+	
+	public ParserRule getInterfaceScopeRule() {
+		return getInterfaceScopeAccess().getRule();
 	}
 
 	//InternalScope:

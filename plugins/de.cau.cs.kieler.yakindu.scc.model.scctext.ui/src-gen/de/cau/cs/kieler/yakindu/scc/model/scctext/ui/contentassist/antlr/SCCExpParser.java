@@ -37,13 +37,13 @@ public class SCCExpParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getStateScopeAccess().getAlternatives(), "rule__StateScope__Alternatives");
 					put(grammarAccess.getReactionScopeAccess().getReactionScopeAlternatives_0(), "rule__ReactionScope__ReactionScopeAlternatives_0");
 					put(grammarAccess.getReactionTriggerAccess().getAlternatives_3(), "rule__ReactionTrigger__Alternatives_3");
 					put(grammarAccess.getPrimaryExpressionAccess().getAlternatives(), "rule__PrimaryExpression__Alternatives");
 					put(grammarAccess.getDefRootAccess().getAlternatives(), "rule__DefRoot__Alternatives");
 					put(grammarAccess.getScopeAccess().getAlternatives(), "rule__Scope__Alternatives");
 					put(grammarAccess.getStatechartScopeAccess().getAlternatives(), "rule__StatechartScope__Alternatives");
+					put(grammarAccess.getInterfaceScopeAccess().getDeclarationsAlternatives_4_0(), "rule__InterfaceScope__DeclarationsAlternatives_4_0");
 					put(grammarAccess.getInternalScopeAccess().getDeclarationsAlternatives_3_0(), "rule__InternalScope__DeclarationsAlternatives_3_0");
 					put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
 					put(grammarAccess.getReactionAccess().getAlternatives(), "rule__Reaction__Alternatives");
@@ -67,9 +67,7 @@ public class SCCExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUnaryOperatorAccess().getAlternatives(), "rule__UnaryOperator__Alternatives");
 					put(grammarAccess.getRelationalOperatorAccess().getAlternatives(), "rule__RelationalOperator__Alternatives");
 					put(grammarAccess.getTimeUnitAccess().getAlternatives(), "rule__TimeUnit__Alternatives");
-					put(grammarAccess.getStateSpecificationAccess().getGroup(), "rule__StateSpecification__Group__0");
-					put(grammarAccess.getInterfaceScopeAccess().getGroup(), "rule__InterfaceScope__Group__0");
-					put(grammarAccess.getInterfaceScopeAccess().getGroup_4(), "rule__InterfaceScope__Group_4__0");
+					put(grammarAccess.getStateScopeAccess().getGroup(), "rule__StateScope__Group__0");
 					put(grammarAccess.getVariableDefinitionAccess().getGroup(), "rule__VariableDefinition__Group__0");
 					put(grammarAccess.getVariableDefinitionAccess().getGroup_6(), "rule__VariableDefinition__Group_6__0");
 					put(grammarAccess.getVariableDefinitionAccess().getGroup_7(), "rule__VariableDefinition__Group_7__0");
@@ -89,6 +87,7 @@ public class SCCExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionRootAccess().getGroup(), "rule__TransitionRoot__Group__0");
 					put(grammarAccess.getStatechartSpecificationAccess().getGroup(), "rule__StatechartSpecification__Group__0");
 					put(grammarAccess.getStatechartSpecificationAccess().getGroup_1(), "rule__StatechartSpecification__Group_1__0");
+					put(grammarAccess.getInterfaceScopeAccess().getGroup(), "rule__InterfaceScope__Group__0");
 					put(grammarAccess.getInternalScopeAccess().getGroup(), "rule__InternalScope__Group__0");
 					put(grammarAccess.getEventDefinitionAccess().getGroup(), "rule__EventDefinition__Group__0");
 					put(grammarAccess.getEventDefinitionAccess().getGroup_3(), "rule__EventDefinition__Group_3__0");
@@ -161,9 +160,7 @@ public class SCCExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRealLiteralAccess().getGroup(), "rule__RealLiteral__Group__0");
 					put(grammarAccess.getHexLiteralAccess().getGroup(), "rule__HexLiteral__Group__0");
 					put(grammarAccess.getStringLiteralAccess().getGroup(), "rule__StringLiteral__Group__0");
-					put(grammarAccess.getStateSpecificationAccess().getScopesAssignment_1(), "rule__StateSpecification__ScopesAssignment_1");
-					put(grammarAccess.getInterfaceScopeAccess().getDeclarationsAssignment_3(), "rule__InterfaceScope__DeclarationsAssignment_3");
-					put(grammarAccess.getInterfaceScopeAccess().getDeclarationsAssignment_4_1(), "rule__InterfaceScope__DeclarationsAssignment_4_1");
+					put(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1(), "rule__StateScope__DeclarationsAssignment_1");
 					put(grammarAccess.getVariableDefinitionAccess().getDirectionAssignment_1(), "rule__VariableDefinition__DirectionAssignment_1");
 					put(grammarAccess.getVariableDefinitionAccess().getIsStaticAssignment_2(), "rule__VariableDefinition__IsStaticAssignment_2");
 					put(grammarAccess.getVariableDefinitionAccess().getNameAssignment_3(), "rule__VariableDefinition__NameAssignment_3");
@@ -188,7 +185,10 @@ public class SCCExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionRootAccess().getDefAssignment_1(), "rule__TransitionRoot__DefAssignment_1");
 					put(grammarAccess.getStatechartSpecificationAccess().getNamespaceAssignment_1_1(), "rule__StatechartSpecification__NamespaceAssignment_1_1");
 					put(grammarAccess.getStatechartSpecificationAccess().getScopesAssignment_2(), "rule__StatechartSpecification__ScopesAssignment_2");
+					put(grammarAccess.getStateSpecificationAccess().getScopeAssignment(), "rule__StateSpecification__ScopeAssignment");
 					put(grammarAccess.getTransitionSpecificationAccess().getReactionAssignment(), "rule__TransitionSpecification__ReactionAssignment");
+					put(grammarAccess.getInterfaceScopeAccess().getNameAssignment_2(), "rule__InterfaceScope__NameAssignment_2");
+					put(grammarAccess.getInterfaceScopeAccess().getDeclarationsAssignment_4(), "rule__InterfaceScope__DeclarationsAssignment_4");
 					put(grammarAccess.getInternalScopeAccess().getDeclarationsAssignment_3(), "rule__InternalScope__DeclarationsAssignment_3");
 					put(grammarAccess.getEventDefinitionAccess().getDirectionAssignment_0(), "rule__EventDefinition__DirectionAssignment_0");
 					put(grammarAccess.getEventDefinitionAccess().getNameAssignment_2(), "rule__EventDefinition__NameAssignment_2");
@@ -263,7 +263,7 @@ public class SCCExpParser extends AbstractContentAssistParser {
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
 			de.cau.cs.kieler.yakindu.scc.model.scctext.ui.contentassist.antlr.internal.InternalSCCExpParser typedParser = (de.cau.cs.kieler.yakindu.scc.model.scctext.ui.contentassist.antlr.internal.InternalSCCExpParser) parser;
-			typedParser.entryRuleStateSpecification();
+			typedParser.entryRuleStateScope();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);

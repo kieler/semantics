@@ -24,11 +24,7 @@
       <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//VarDirection/IN"/>
       <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//VarDirection/OUT"/>
     </genEnums>
-    <genClasses ecoreClass="SCCExp.ecore#//StateSpecification">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//StateSpecification/scopes"/>
-    </genClasses>
     <genClasses ecoreClass="SCCExp.ecore#//StateScope"/>
-    <genClasses ecoreClass="SCCExp.ecore#//InterfaceScope"/>
     <genClasses ecoreClass="SCCExp.ecore#//VariableDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//VariableDefinition/direction"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//VariableDefinition/isStatic"/>
@@ -38,6 +34,7 @@
     <genClasses ecoreClass="SCCExp.ecore#//ReactionScope">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//ReactionScope/reactionScope"/>
     </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//SimpleScope"/>
     <genClasses ecoreClass="SCCExp.ecore#//ExitAction">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//ExitAction/effect"/>
     </genClasses>

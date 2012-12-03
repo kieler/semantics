@@ -25,7 +25,6 @@ import org.yakindu.sct.model.sgraph.Trigger;
 import org.yakindu.sct.model.sgraph.Variable;
 
 import org.yakindu.sct.model.stext.stext.Expression;
-import org.yakindu.sct.model.stext.stext.StatechartScope;
 
 /**
  * <!-- begin-user-doc -->
@@ -91,19 +90,9 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
     new SccexpSwitch<Adapter>()
     {
       @Override
-      public Adapter caseStateSpecification(StateSpecification object)
-      {
-        return createStateSpecificationAdapter();
-      }
-      @Override
       public Adapter caseStateScope(StateScope object)
       {
         return createStateScopeAdapter();
-      }
-      @Override
-      public Adapter caseInterfaceScope(InterfaceScope object)
-      {
-        return createInterfaceScopeAdapter();
       }
       @Override
       public Adapter caseVariableDefinition(VariableDefinition object)
@@ -114,6 +103,11 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
       public Adapter caseReactionScope(ReactionScope object)
       {
         return createReactionScopeAdapter();
+      }
+      @Override
+      public Adapter caseSimpleScope(SimpleScope object)
+      {
+        return createSimpleScopeAdapter();
       }
       @Override
       public Adapter caseExitAction(ExitAction object)
@@ -146,29 +140,14 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
         return createPreValueExpressionreturnsAdapter();
       }
       @Override
-      public Adapter caseStext_StateSpecification(org.yakindu.sct.model.stext.stext.StateSpecification object)
-      {
-        return createStext_StateSpecificationAdapter();
-      }
-      @Override
       public Adapter caseScope(Scope object)
       {
         return createScopeAdapter();
       }
       @Override
-      public Adapter caseStatechartScope(StatechartScope object)
-      {
-        return createStatechartScopeAdapter();
-      }
-      @Override
       public Adapter caseNamedElement(NamedElement object)
       {
         return createNamedElementAdapter();
-      }
-      @Override
-      public Adapter caseStext_InterfaceScope(org.yakindu.sct.model.stext.stext.InterfaceScope object)
-      {
-        return createStext_InterfaceScopeAdapter();
       }
       @Override
       public Adapter caseDeclaration(Declaration object)
@@ -243,21 +222,6 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateSpecification <em>State Specification</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateSpecification
-   * @generated
-   */
-  public Adapter createStateSpecificationAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateScope <em>State Scope</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -268,21 +232,6 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createStateScopeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InterfaceScope <em>Interface Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InterfaceScope
-   * @generated
-   */
-  public Adapter createInterfaceScopeAdapter()
   {
     return null;
   }
@@ -313,6 +262,21 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createReactionScopeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SimpleScope <em>Simple Scope</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SimpleScope
+   * @generated
+   */
+  public Adapter createSimpleScopeAdapter()
   {
     return null;
   }
@@ -408,21 +372,6 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.StateSpecification <em>State Specification</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.stext.stext.StateSpecification
-   * @generated
-   */
-  public Adapter createStext_StateSpecificationAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Scope <em>Scope</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -438,21 +387,6 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.StatechartScope <em>Statechart Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.stext.stext.StatechartScope
-   * @generated
-   */
-  public Adapter createStatechartScopeAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.yakindu.base.base.NamedElement <em>Named Element</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -463,21 +397,6 @@ public class SccexpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createNamedElementAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.InterfaceScope <em>Interface Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.stext.stext.InterfaceScope
-   * @generated
-   */
-  public Adapter createStext_InterfaceScopeAdapter()
   {
     return null;
   }

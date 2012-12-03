@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sccexp" nsURI="http://cau.kieler.de/scc/SCCExp" nsPrefix="sccexp">
-  <eClassifiers xsi:type="ecore:EClass" name="StateSpecification" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//StateSpecification">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="scopes" upperBound="-1"
-        eType="#//InterfaceScope" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StateScope" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Scope"/>
-  <eClassifiers xsi:type="ecore:EClass" name="InterfaceScope" eSuperTypes="#//StateScope ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//InterfaceScope"/>
   <eClassifiers xsi:type="ecore:EClass" name="VariableDefinition" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//VariableDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction" eType="#//VarDirection"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStatic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -14,7 +9,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="varCombineOperator" eType="#//CombineOperator"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ReactionScope" eSuperTypes="#//StateScope">
+  <eClassifiers xsi:type="ecore:EClass" name="ReactionScope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="reactionScope" upperBound="-1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
   </eClassifiers>
@@ -33,6 +28,7 @@
     <eLiterals name="IN" value="1" literal="in"/>
     <eLiterals name="OUT" value="2" literal="out"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleScope" eSuperTypes="#//StateScope"/>
   <eClassifiers xsi:type="ecore:EClass" name="ExitAction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"
         containment="true"/>

@@ -3,6 +3,7 @@
  */
 package de.cau.cs.kieler.yakindu.scc.model.scctext.scoping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -11,16 +12,25 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
+import org.yakindu.sct.model.sgraph.Declaration;
+import org.yakindu.sct.model.sgraph.Region;
+import org.yakindu.sct.model.sgraph.SGraphPackage;
 import org.yakindu.sct.model.sgraph.Scope;
 import org.yakindu.sct.model.sgraph.State;
 import org.yakindu.sct.model.sgraph.Statechart;
+import org.yakindu.sct.model.sgraph.Vertex;
 import org.yakindu.sct.model.stext.scoping.STextScopeProvider;
 import org.yakindu.sct.model.stext.stext.InterfaceScope;
+import org.yakindu.sct.model.stext.stext.InternalScope;
 
 import com.google.common.collect.Lists;
 
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.util.SccUtils;
 import de.itemis.xtext.utils.jface.viewers.ContextElementAdapter;
 
 /**
@@ -33,57 +43,23 @@ import de.itemis.xtext.utils.jface.viewers.ContextElementAdapter;
 public class SCCExpScopeProvider extends STextScopeProvider {
 
 	/**
-	 * Override the method getUnnamedTopLevelScope to get declared variables and
-	 * signals in parent states
+	 * Returns a scope with all toplevel declarations of parent States
 	 */
-	// @Override
-	// protected IScope getUnnamedTopLevelScope(final EObject context,
-	// EReference reference) {
-	// List<EObject> scopeCandidates = Lists.newArrayList();
-	// // get statechart interface elements
-	// Statechart statechart = getStatechart(context);
-	// if (statechart == null)
-	// return IScope.NULLSCOPE;
-	// EList<Scope> scopes = statechart.getScopes();
-	// for (Scope scope : scopes) {
-	// if (scope instanceof InterfaceScope) {
-	// String name = ((InterfaceScope) scope).getName();
-	// if (name == null || name.trim().length() == 0) {
-	// scopeCandidates.addAll(scope.getDeclarations());
-	// }
-	// }
-	// }
-	// return Scopes.scopeFor(scopeCandidates);
-	// }
+	@Override
+	protected IScope getUnnamedTopLevelScope(final EObject context,
+			EReference reference) {
+		final ContextElementAdapter provider = (ContextElementAdapter) EcoreUtil
+				.getExistingAdapter(context.eResource(),
+						ContextElementAdapter.class);
+		List<EObject> scopeCandidates = Lists.newArrayList();
+		ArrayList<Declaration> declarations = SccUtils
+				.getAncestorDeclarations(provider.getElement().eContainer());
+		if (declarations.size() > 0) {
+			scopeCandidates.addAll(declarations);
+			return Scopes.scopeFor(scopeCandidates);
+		} else {
+			return IScope.NULLSCOPE;
+		}
 
-//	@Override
-//	protected IScope getUnnamedTopLevelScope(final EObject context,
-//			EReference reference) {
-//
-//		List<EObject> scopeCandidates = Lists.newArrayList();
-//		final ContextElementAdapter provider = (ContextElementAdapter) EcoreUtil
-//				.getExistingAdapter(context.eResource(),
-//						ContextElementAdapter.class);
-//		if (provider == null) {
-//			return IScope.NULLSCOPE;
-//		} else {
-//			// search states container and find variable declarations
-//			EObject obj = provider.getElement().eContainer();
-//			while (obj != null) {
-//				State state = (State) EcoreUtil2.getContainerOfType(obj,
-//						State.class);
-//				EList<Scope> scopes = state.getScopes();
-//				for (Scope scope : scopes) {
-//					if (scope instanceof InterfaceScope) {
-//						String name = ((InterfaceScope) scope).getName();
-//						if (name == null || name.trim().length() == 0) {
-//							scopeCandidates.addAll(scope.getDeclarations());
-//						}
-//					}
-//				}
-//				obj = obj.eContainer();
-//			}
-//			return Scopes.scopeFor(scopeCandidates);
-//		}
-//	}
+	}
 }

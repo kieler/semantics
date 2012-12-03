@@ -15,6 +15,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -31,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ReactionScopeImpl extends StateScopeImpl implements ReactionScope
+public class ReactionScopeImpl extends MinimalEObjectImpl.Container implements ReactionScope
 {
   /**
    * The cached value of the '{@link #getReactionScope() <em>Reaction Scope</em>}' containment reference list.

@@ -23,7 +23,6 @@ import org.yakindu.sct.model.sgraph.Trigger;
 import org.yakindu.sct.model.sgraph.Variable;
 
 import org.yakindu.sct.model.stext.stext.Expression;
-import org.yakindu.sct.model.stext.stext.StatechartScope;
 
 /**
  * <!-- begin-user-doc -->
@@ -88,31 +87,11 @@ public class SccexpSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case SccexpPackage.STATE_SPECIFICATION:
-      {
-        StateSpecification stateSpecification = (StateSpecification)theEObject;
-        T result = caseStateSpecification(stateSpecification);
-        if (result == null) result = caseStext_StateSpecification(stateSpecification);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SccexpPackage.STATE_SCOPE:
       {
         StateScope stateScope = (StateScope)theEObject;
         T result = caseStateScope(stateScope);
         if (result == null) result = caseScope(stateScope);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SccexpPackage.INTERFACE_SCOPE:
-      {
-        InterfaceScope interfaceScope = (InterfaceScope)theEObject;
-        T result = caseInterfaceScope(interfaceScope);
-        if (result == null) result = caseStateScope(interfaceScope);
-        if (result == null) result = caseStext_InterfaceScope(interfaceScope);
-        if (result == null) result = caseStatechartScope(interfaceScope);
-        if (result == null) result = caseNamedElement(interfaceScope);
-        if (result == null) result = caseScope(interfaceScope);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -134,8 +113,15 @@ public class SccexpSwitch<T> extends Switch<T>
       {
         ReactionScope reactionScope = (ReactionScope)theEObject;
         T result = caseReactionScope(reactionScope);
-        if (result == null) result = caseStateScope(reactionScope);
-        if (result == null) result = caseScope(reactionScope);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SccexpPackage.SIMPLE_SCOPE:
+      {
+        SimpleScope simpleScope = (SimpleScope)theEObject;
+        T result = caseSimpleScope(simpleScope);
+        if (result == null) result = caseStateScope(simpleScope);
+        if (result == null) result = caseScope(simpleScope);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -193,22 +179,6 @@ public class SccexpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>State Specification</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>State Specification</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStateSpecification(StateSpecification object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>State Scope</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -220,22 +190,6 @@ public class SccexpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseStateScope(StateScope object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Interface Scope</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Interface Scope</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseInterfaceScope(InterfaceScope object)
   {
     return null;
   }
@@ -268,6 +222,22 @@ public class SccexpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseReactionScope(ReactionScope object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Simple Scope</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Simple Scope</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSimpleScope(SimpleScope object)
   {
     return null;
   }
@@ -369,22 +339,6 @@ public class SccexpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>State Specification</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>State Specification</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStext_StateSpecification(org.yakindu.sct.model.stext.stext.StateSpecification object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -401,22 +355,6 @@ public class SccexpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Statechart Scope</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Statechart Scope</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStatechartScope(StatechartScope object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Named Element</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -428,22 +366,6 @@ public class SccexpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseNamedElement(NamedElement object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Interface Scope</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Interface Scope</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStext_InterfaceScope(org.yakindu.sct.model.stext.stext.InterfaceScope object)
   {
     return null;
   }

@@ -23,15 +23,6 @@ public interface SccexpFactory extends EFactory
   SccexpFactory eINSTANCE = de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>State Specification</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>State Specification</em>'.
-   * @generated
-   */
-  StateSpecification createStateSpecification();
-
-  /**
    * Returns a new object of class '<em>State Scope</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -39,15 +30,6 @@ public interface SccexpFactory extends EFactory
    * @generated
    */
   StateScope createStateScope();
-
-  /**
-   * Returns a new object of class '<em>Interface Scope</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Interface Scope</em>'.
-   * @generated
-   */
-  InterfaceScope createInterfaceScope();
 
   /**
    * Returns a new object of class '<em>Variable Definition</em>'.
@@ -66,6 +48,15 @@ public interface SccexpFactory extends EFactory
    * @generated
    */
   ReactionScope createReactionScope();
+
+  /**
+   * Returns a new object of class '<em>Simple Scope</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Simple Scope</em>'.
+   * @generated
+   */
+  SimpleScope createSimpleScope();
 
   /**
    * Returns a new object of class '<em>Exit Action</em>'.

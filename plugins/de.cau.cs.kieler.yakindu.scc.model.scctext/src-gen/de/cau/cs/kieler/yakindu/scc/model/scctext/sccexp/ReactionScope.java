@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ReactionScope extends StateScope
+public interface ReactionScope extends EObject
 {
   /**
    * Returns the value of the '<em><b>Reaction Scope</b></em>' containment reference list.
