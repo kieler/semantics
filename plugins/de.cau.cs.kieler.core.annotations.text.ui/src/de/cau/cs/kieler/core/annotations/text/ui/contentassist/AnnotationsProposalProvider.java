@@ -16,14 +16,19 @@ package de.cau.cs.kieler.core.annotations.text.ui.contentassist;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.common.ui.contentassist.TerminalsProposalProvider;
+import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
-
-import com.google.common.base.Strings;
+import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.kiml.LayoutAlgorithmData;
 import de.cau.cs.kieler.kiml.LayoutDataService;
@@ -43,6 +48,78 @@ import de.cau.cs.kieler.core.annotations.impl.AnnotationImpl;
  */
 public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProvider {
 
+    /**
+     * Need this delegate in order to call methods of that class that are also generated
+     * into {@link AbstractAnnotationsProposalProvider} (due to some terminal re-definitions).
+     */
+    @Inject
+    private TerminalsProposalProvider delegate;    
+    
+    // ---------------------------------------------------------
+    //  Terminal-specific annotation proposals
+    // ---------------------------------------------------------
+    
+    public void complete_BOOLEAN(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        acceptor.accept(createCompletionProposal("false", "false", getImage(ruleCall), context));
+        acceptor.accept(createCompletionProposal("true", "true", getImage(ruleCall), context));
+    }
+    
+    public void complete_ExtendedID(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        delegate.complete_ID(model, ruleCall, context, acceptor);
+    }
+    
+    public void complete_EString(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        delegate.complete_STRING(model, ruleCall, context, acceptor);
+    }
+    
+    public void complete_INT(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        delegate.complete_INT(model, ruleCall, context, acceptor);
+    }
+    
+    public void complete_FLOAT(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        createFloatProposal(context, acceptor, ruleCall, getAssignedFeature(ruleCall), 1f);
+    }
+    
+    public void complete_STRING(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        delegate.complete_STRING(model, ruleCall, context, acceptor);
+    }    
+    
+    // this method has been copied from TerminalsProposalProvider
+    private String getAssignedFeature(RuleCall call) {
+        Assignment ass = GrammarUtil.containingAssignment(call);
+        if (ass != null) {
+                String result = ass.getFeature();
+                if (result.equals(result.toLowerCase()))
+                        result = Strings.toFirstUpper(result);
+                return result;
+        }
+        return null;
+    }
+
+    // this method has been copied and adapted from TerminalsProposalProvider
+    private void createFloatProposal(final ContentAssistContext context,
+            final ICompletionProposalAcceptor acceptor, final RuleCall ruleCall, final String feature, float i) {
+        String proposalText = getValueConverter().toString(i, ruleCall.getRule().getName());
+        String displayText = proposalText + " - " + ruleCall.getRule().getName();
+        if (feature != null)
+            displayText = proposalText + " - " + feature;
+        ICompletionProposal proposal = createCompletionProposal(proposalText, displayText, null,
+                context);
+        if (proposal instanceof ConfigurableCompletionProposal) {
+            ConfigurableCompletionProposal configurable = (ConfigurableCompletionProposal) proposal;
+            configurable.setSelectionStart(configurable.getReplacementOffset());
+            configurable.setSelectionLength(proposalText.length());
+            configurable.setAutoInsertable(false);
+            configurable.setSimpleLinkedMode(context.getViewer(), '\t', ' ');
+        }
+        acceptor.accept(proposal);
+    }
+    
+    
+    // ---------------------------------------------------------
+    //  Semantic automatic layout specific annotation proposals
+    // ---------------------------------------------------------
+    
     /**
      * Computes the annotation key proposals based on available layout options.
      * 
@@ -98,7 +175,7 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
                     && context.getCurrentModel().getClass().equals(AnnotationImpl.class)) {
 
                 String annotationName = ((Annotation) context.getCurrentModel()).getName();
-                if (!Strings.isNullOrEmpty(annotationName)) {
+                if (!Strings.isEmpty(annotationName)) {
 
                     // get the option list
                     LayoutDataService layoutServices = LayoutDataService.getInstance();

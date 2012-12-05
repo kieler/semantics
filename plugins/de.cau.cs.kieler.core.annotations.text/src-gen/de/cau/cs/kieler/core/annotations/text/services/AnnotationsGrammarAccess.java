@@ -536,6 +536,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private ExtendedIDElements pExtendedID;
 	private TerminalRule tCOMMENT_ANNOTATION;
 	private TerminalRule tML_COMMENT;
+	private TerminalRule tNUMBER;
 	private TerminalRule tINT;
 	private TerminalRule tFLOAT;
 	private TerminalRule tBOOLEAN;
@@ -737,16 +738,22 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// generic terminals
+	//terminal fragment NUMBER:
+	//	"0".."9";
+	public TerminalRule getNUMBERRule() {
+		return (tNUMBER != null) ? tNUMBER : (tNUMBER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "NUMBER"));
+	} 
+
 	//// redefine INT terminal to allow negative numbers
 	//terminal INT returns ecore::EInt:
-	//	"-"? "0".."9"+;
+	//	"-"? NUMBER+;
 	public TerminalRule getINTRule() {
 		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
 	//terminal FLOAT returns ecore::EFloatObject:
-	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
+	//	"-"? NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | "-"? NUMBER+ "f";
 	public TerminalRule getFLOATRule() {
 		return (tFLOAT != null) ? tFLOAT : (tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "FLOAT"));
 	} 
@@ -759,9 +766,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// custom terminal rule for strings
-	//// type identifiers can reference Java classes
-	////terminal TypeId returns ecore::EString:
-	////    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
 	//terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
 	public TerminalRule getSTRINGRule() {
