@@ -10,8 +10,15 @@ import org.yakindu.sct.model.sgraph.State;
 
 public class SccUtils {
 
-	public static ArrayList<Declaration> getAncestorDeclarations(
-			EObject object) {
+	/**
+	 * Method to find all ancestor declarations. All declarations in parent
+	 * state and parent of parent states.
+	 * 
+	 * @param object
+	 *            the eContainer object
+	 * @return ArrayList of Declarations
+	 */
+	public static ArrayList<Declaration> getAncestorDeclarations(EObject object) {
 		ArrayList<Declaration> declarations = new ArrayList<Declaration>();
 		object = object.eContainer();
 		while (object != null) {
@@ -25,8 +32,15 @@ public class SccUtils {
 		}
 		return declarations;
 	}
-	
-	public static ArrayList<Declaration> getStateDeclarations(
+
+	/**
+	 * Method to return declarations made in the current state.
+	 * 
+	 * @param object
+	 *            the eContainer object
+	 * @return ArrayList of Declarations
+	 */
+	public static ArrayList<Declaration> getCurrentStateDeclarations(
 			EObject object) {
 		ArrayList<Declaration> declarations = new ArrayList<Declaration>();
 		while (object != null) {

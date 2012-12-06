@@ -6,14 +6,20 @@ import "http://www.yakindu.org/sct/statechart/SText" as stext
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 
+/*********************************** INTERFACE DECLARATION **************************************** */
 ////defines the possible scopes for a state
-StateScope :
-	{SimpleScope} declarations+=(VariableDeclaration)*;
+StateScope:
+	{SimpleScope} declarations+=(VariableDeclaration | SignalDeclaration | LocalReaction)*;
 
-//StateScope returns sgraph::Scope:
+SignalDeclaration returns sgraph::Event:
+	SignalDefinition;
+
+SignalDefinition:
+	{EventDefinition} 'signal' name=ID ';';
+
+	//StateScope returns sgraph::Scope:
 //	InterfaceScope;// | ReactionScope;
 
-/*********************************** INTERFACE DECLARATION **************************************** */
 /************************************************/
 /*			  INTERFACE DECLARATION				*/
 /************************************************/
@@ -31,48 +37,73 @@ StateScope :
 // A variable is a Declaration. It has a Direction, a Name, a Type, an InitialValue and a CombineOperator
 /* ---- variable definition ---- */
 VariableDefinition:
-	{VariableDefinition} direction=VarDirection? (isStatic?='static')? name=ID ':' type=[types::Type|FQN] ('='
-	varInitialValue=Expression)? ('with' varCombineOperator=CombineOperator)?;
+	{VariableDefinition} direction=VarDirection? (isStatic?='static')? type=[types::Type|FQN] name=ID 
+	 ('=' varInitialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';
 
 /************************************************/
 /*			 	ReactionScope					*/
 /************************************************/
-ReactionScope:
-	reactionScope+=(EntryAction | InsideAction | ExitAction | Suspend);
+LocalReaction:
+	(trigger=LocalReactionTrigger) =>('/' effect=LocalReactionEffect);
 
-ExitAction returns sgraph::Effect:
-	{ExitAction} 'Exit' ':' '/' effect=ReactionEffect ';';
+LocalReactionTrigger returns sgraph::Trigger:
+	{ReactionTrigger} ((triggers+=LocalReactionSpec ("," triggers+=LocalReactionSpec)* (=> '[' guardExpression=Expression ']')?)
+	| ('[' guardExpression=Expression ']'));
+	
+LocalReactionEffect returns sgraph::Effect:
+	{ReactionEffect} actions+=Expression (=> ';' actions+=Expression)* ; // (';')?;
+	
 
-InsideAction returns sgraph::Effect:
-	{InsideAction} 'Inside' ':' '/' effect=ReactionEffect ';';
+LocalReactionSpec returns stext::EventSpec:
+	RegularEventSpec | StateReaction;
 
-EntryAction returns sgraph::Effect:
-	{EntryAction} 'Entry' ':' '/' effect=ReactionEffect ';';
+StateReaction:
+	Entry | Inside | Exit
+;
+
+Entry:
+	{Entry} 'Entry'
+;
+
+Inside:
+	{Inside} 'During'
+;
+
+Exit:
+	{Exit} 'Exit'
+;
+
+
+//ReactionScope:
+//	reactionScope+=(EntryAction | InsideAction | ExitAction | Suspend);
+//
+//ExitAction returns sgraph::Effect:
+//	{ExitAction} 'Exit' ':' '/' effect=ReactionEffect ';';
+//
+//InsideAction returns sgraph::Effect:
+//	{InsideAction} 'Inside' ':' '/' effect=ReactionEffect ';';
+//
+//EntryAction returns sgraph::Effect:
+//	{EntryAction} 'Entry' ':' '/' effect=ReactionEffect ';';
 
 /************************************************/
 /*			 		SUSPEND 					*/
 /************************************************/
 // The  SuspendDeclaration is a Trigger
 //TODO: only variables already declared in the interface 
-Suspend returns sgraph::Trigger:
-	{Suspend} 'Suspend' ':' trigger=ReactionTrigger ';';
+//Suspend returns sgraph::Trigger:
+//	{Suspend} 'Suspend' ':' trigger=ReactionTrigger ';';
 
 /******************************************** TRANSITION ***************************************** */
-//Reaction returns sgraph::Reaction:
-//	 Transition;
-
-// The TransitionReaction is a Reaction and has an optional trigger and an optional effect 
-//Transition:
-//	{Transition} (trigger=ReactionTrigger)? ('/' effect=ReactionEffect)?;
 
 // The ReactionTrigger is a Trigger and has an Expression, 
 // an optional delay and isImmediate option represented with a '#'
 ReactionTrigger returns sgraph::Trigger:
 	{ReactionTrigger} (isImmediate?='#')? (delay=INT)? ((triggers+=EventSpec ("," triggers+=EventSpec)* (=> '['
 	guardExpression=Expression ']')?)
-	| ('[' guardExpression=Expression ']'));
+	| ( '['guardExpression=Expression']'));
 
-	// The ReactionEffect is an Effect. 
+// The ReactionEffect is an Effect. 
 //ReactionEffect returns sgraph::Effect:
 //	{ReactionEffect} actions+=Expression (=> ';' actions+=Expression)*; // (';')?;
 
@@ -94,4 +125,4 @@ enum CombineOperator returns CombineOperator:
 	MIN="'min'" | OR="'or'" | AND="'and'" | HOST="'host'";
 
 enum VarDirection:
-	INOUT='inout' | IN='in' | OUT='out';
+	INOUT='inputoutut' | IN='input' | OUT='output';

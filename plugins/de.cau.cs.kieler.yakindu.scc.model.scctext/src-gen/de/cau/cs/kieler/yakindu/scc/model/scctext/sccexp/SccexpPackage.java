@@ -108,6 +108,34 @@ public interface SccexpPackage extends EPackage
   int STATE_SCOPE_FEATURE_COUNT = SGraphPackage.SCOPE_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SignalDefinitionImpl <em>Signal Definition</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SignalDefinitionImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSignalDefinition()
+   * @generated
+   */
+  int SIGNAL_DEFINITION = 1;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL_DEFINITION__NAME = SGraphPackage.EVENT__NAME;
+
+  /**
+   * The number of structural features of the '<em>Signal Definition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL_DEFINITION_FEATURE_COUNT = SGraphPackage.EVENT_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -115,7 +143,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getVariableDefinition()
    * @generated
    */
-  int VARIABLE_DEFINITION = 1;
+  int VARIABLE_DEFINITION = 2;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -217,32 +245,126 @@ public interface SccexpPackage extends EPackage
   int VARIABLE_DEFINITION_FEATURE_COUNT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 4;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionScopeImpl <em>Reaction Scope</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.LocalReactionImpl <em>Local Reaction</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionScopeImpl
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionScope()
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.LocalReactionImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getLocalReaction()
    * @generated
    */
-  int REACTION_SCOPE = 2;
+  int LOCAL_REACTION = 3;
 
   /**
-   * The feature id for the '<em><b>Reaction Scope</b></em>' containment reference list.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REACTION_SCOPE__REACTION_SCOPE = 0;
+  int LOCAL_REACTION__NAME = StextPackage.LOCAL_REACTION__NAME;
 
   /**
-   * The number of structural features of the '<em>Reaction Scope</em>' class.
+   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REACTION_SCOPE_FEATURE_COUNT = 1;
+  int LOCAL_REACTION__TRIGGER = StextPackage.LOCAL_REACTION__TRIGGER;
+
+  /**
+   * The feature id for the '<em><b>Effect</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_REACTION__EFFECT = StextPackage.LOCAL_REACTION__EFFECT;
+
+  /**
+   * The number of structural features of the '<em>Local Reaction</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_REACTION_FEATURE_COUNT = StextPackage.LOCAL_REACTION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateActionImpl <em>State Action</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateActionImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateAction()
+   * @generated
+   */
+  int STATE_ACTION = 4;
+
+  /**
+   * The number of structural features of the '<em>State Action</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_ACTION_FEATURE_COUNT = StextPackage.EVENT_SPEC_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EntryImpl <em>Entry</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EntryImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEntry()
+   * @generated
+   */
+  int ENTRY = 5;
+
+  /**
+   * The number of structural features of the '<em>Entry</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENTRY_FEATURE_COUNT = STATE_ACTION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InsideImpl <em>Inside</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InsideImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInside()
+   * @generated
+   */
+  int INSIDE = 6;
+
+  /**
+   * The number of structural features of the '<em>Inside</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INSIDE_FEATURE_COUNT = STATE_ACTION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitImpl <em>Exit</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getExit()
+   * @generated
+   */
+  int EXIT = 7;
+
+  /**
+   * The number of structural features of the '<em>Exit</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXIT_FEATURE_COUNT = STATE_ACTION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SimpleScopeImpl <em>Simple Scope</em>}' class.
@@ -252,7 +374,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSimpleScope()
    * @generated
    */
-  int SIMPLE_SCOPE = 3;
+  int SIMPLE_SCOPE = 8;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -291,116 +413,32 @@ public interface SccexpPackage extends EPackage
   int SIMPLE_SCOPE_FEATURE_COUNT = STATE_SCOPE_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitActionImpl <em>Exit Action</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EventDefinitionImpl <em>Event Definition</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitActionImpl
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getExitAction()
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EventDefinitionImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEventDefinition()
    * @generated
    */
-  int EXIT_ACTION = 4;
+  int EVENT_DEFINITION = 9;
 
   /**
-   * The feature id for the '<em><b>Effect</b></em>' containment reference.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXIT_ACTION__EFFECT = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
+  int EVENT_DEFINITION__NAME = SIGNAL_DEFINITION__NAME;
 
   /**
-   * The number of structural features of the '<em>Exit Action</em>' class.
+   * The number of structural features of the '<em>Event Definition</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXIT_ACTION_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InsideActionImpl <em>Inside Action</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InsideActionImpl
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInsideAction()
-   * @generated
-   */
-  int INSIDE_ACTION = 5;
-
-  /**
-   * The feature id for the '<em><b>Effect</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSIDE_ACTION__EFFECT = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Inside Action</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSIDE_ACTION_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EntryActionImpl <em>Entry Action</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EntryActionImpl
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEntryAction()
-   * @generated
-   */
-  int ENTRY_ACTION = 6;
-
-  /**
-   * The feature id for the '<em><b>Effect</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTRY_ACTION__EFFECT = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Entry Action</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTRY_ACTION_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SuspendImpl <em>Suspend</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SuspendImpl
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSuspend()
-   * @generated
-   */
-  int SUSPEND = 7;
-
-  /**
-   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND__TRIGGER = SGraphPackage.TRIGGER_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Suspend</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 1;
+  int EVENT_DEFINITION_FEATURE_COUNT = SIGNAL_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl <em>Reaction Trigger</em>}' class.
@@ -410,25 +448,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionTrigger()
    * @generated
    */
-  int REACTION_TRIGGER = 8;
-
-  /**
-   * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_TRIGGER__IS_IMMEDIATE = SGraphPackage.TRIGGER_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Delay</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_TRIGGER__DELAY = SGraphPackage.TRIGGER_FEATURE_COUNT + 1;
+  int REACTION_TRIGGER = 10;
 
   /**
    * The feature id for the '<em><b>Triggers</b></em>' containment reference list.
@@ -437,7 +457,7 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_TRIGGER__TRIGGERS = SGraphPackage.TRIGGER_FEATURE_COUNT + 2;
+  int REACTION_TRIGGER__TRIGGERS = SGraphPackage.TRIGGER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Guard Expression</b></em>' containment reference.
@@ -446,7 +466,25 @@ public interface SccexpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_TRIGGER__GUARD_EXPRESSION = SGraphPackage.TRIGGER_FEATURE_COUNT + 3;
+  int REACTION_TRIGGER__GUARD_EXPRESSION = SGraphPackage.TRIGGER_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REACTION_TRIGGER__IS_IMMEDIATE = SGraphPackage.TRIGGER_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Delay</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REACTION_TRIGGER__DELAY = SGraphPackage.TRIGGER_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Reaction Trigger</em>' class.
@@ -458,6 +496,34 @@ public interface SccexpPackage extends EPackage
   int REACTION_TRIGGER_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 4;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionEffectImpl <em>Reaction Effect</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionEffectImpl
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionEffect()
+   * @generated
+   */
+  int REACTION_EFFECT = 11;
+
+  /**
+   * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REACTION_EFFECT__ACTIONS = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Reaction Effect</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REACTION_EFFECT_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.PreValueExpressionreturnsImpl <em>Pre Value Expressionreturns</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -465,7 +531,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getPreValueExpressionreturns()
    * @generated
    */
-  int PRE_VALUE_EXPRESSIONRETURNS = 9;
+  int PRE_VALUE_EXPRESSIONRETURNS = 12;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -493,7 +559,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getCombineOperator()
    * @generated
    */
-  int COMBINE_OPERATOR = 10;
+  int COMBINE_OPERATOR = 13;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VarDirection <em>Var Direction</em>}' enum.
@@ -503,7 +569,7 @@ public interface SccexpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getVarDirection()
    * @generated
    */
-  int VAR_DIRECTION = 11;
+  int VAR_DIRECTION = 14;
 
 
   /**
@@ -515,6 +581,16 @@ public interface SccexpPackage extends EPackage
    * @generated
    */
   EClass getStateScope();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SignalDefinition <em>Signal Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Signal Definition</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SignalDefinition
+   * @generated
+   */
+  EClass getSignalDefinition();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition <em>Variable Definition</em>}'.
@@ -571,25 +647,54 @@ public interface SccexpPackage extends EPackage
   EAttribute getVariableDefinition_VarCombineOperator();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionScope <em>Reaction Scope</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.LocalReaction <em>Local Reaction</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Reaction Scope</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionScope
+   * @return the meta object for class '<em>Local Reaction</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.LocalReaction
    * @generated
    */
-  EClass getReactionScope();
+  EClass getLocalReaction();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionScope#getReactionScope <em>Reaction Scope</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateAction <em>State Action</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Reaction Scope</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionScope#getReactionScope()
-   * @see #getReactionScope()
+   * @return the meta object for class '<em>State Action</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateAction
    * @generated
    */
-  EReference getReactionScope_ReactionScope();
+  EClass getStateAction();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Entry <em>Entry</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Entry</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Entry
+   * @generated
+   */
+  EClass getEntry();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Inside <em>Inside</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Inside</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Inside
+   * @generated
+   */
+  EClass getInside();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Exit <em>Exit</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Exit</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Exit
+   * @generated
+   */
+  EClass getExit();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SimpleScope <em>Simple Scope</em>}'.
@@ -602,88 +707,14 @@ public interface SccexpPackage extends EPackage
   EClass getSimpleScope();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ExitAction <em>Exit Action</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.EventDefinition <em>Event Definition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Exit Action</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ExitAction
+   * @return the meta object for class '<em>Event Definition</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.EventDefinition
    * @generated
    */
-  EClass getExitAction();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ExitAction#getEffect <em>Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Effect</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ExitAction#getEffect()
-   * @see #getExitAction()
-   * @generated
-   */
-  EReference getExitAction_Effect();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InsideAction <em>Inside Action</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Inside Action</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InsideAction
-   * @generated
-   */
-  EClass getInsideAction();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InsideAction#getEffect <em>Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Effect</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InsideAction#getEffect()
-   * @see #getInsideAction()
-   * @generated
-   */
-  EReference getInsideAction_Effect();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.EntryAction <em>Entry Action</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Entry Action</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.EntryAction
-   * @generated
-   */
-  EClass getEntryAction();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.EntryAction#getEffect <em>Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Effect</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.EntryAction#getEffect()
-   * @see #getEntryAction()
-   * @generated
-   */
-  EReference getEntryAction_Effect();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Suspend <em>Suspend</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Suspend</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Suspend
-   * @generated
-   */
-  EClass getSuspend();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Suspend#getTrigger <em>Trigger</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Trigger</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Suspend#getTrigger()
-   * @see #getSuspend()
-   * @generated
-   */
-  EReference getSuspend_Trigger();
+  EClass getEventDefinition();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger <em>Reaction Trigger</em>}'.
@@ -694,6 +725,28 @@ public interface SccexpPackage extends EPackage
    * @generated
    */
   EClass getReactionTrigger();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getTriggers <em>Triggers</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Triggers</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getTriggers()
+   * @see #getReactionTrigger()
+   * @generated
+   */
+  EReference getReactionTrigger_Triggers();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Guard Expression</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getGuardExpression()
+   * @see #getReactionTrigger()
+   * @generated
+   */
+  EReference getReactionTrigger_GuardExpression();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}'.
@@ -718,26 +771,25 @@ public interface SccexpPackage extends EPackage
   EAttribute getReactionTrigger_Delay();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getTriggers <em>Triggers</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect <em>Reaction Effect</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Triggers</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getTriggers()
-   * @see #getReactionTrigger()
+   * @return the meta object for class '<em>Reaction Effect</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect
    * @generated
    */
-  EReference getReactionTrigger_Triggers();
+  EClass getReactionEffect();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect#getActions <em>Actions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Guard Expression</em>'.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getGuardExpression()
-   * @see #getReactionTrigger()
+   * @return the meta object for the containment reference list '<em>Actions</em>'.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect#getActions()
+   * @see #getReactionEffect()
    * @generated
    */
-  EReference getReactionTrigger_GuardExpression();
+  EReference getReactionEffect_Actions();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.PreValueExpressionreturns <em>Pre Value Expressionreturns</em>}'.
@@ -814,6 +866,16 @@ public interface SccexpPackage extends EPackage
     EClass STATE_SCOPE = eINSTANCE.getStateScope();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SignalDefinitionImpl <em>Signal Definition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SignalDefinitionImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSignalDefinition()
+     * @generated
+     */
+    EClass SIGNAL_DEFINITION = eINSTANCE.getSignalDefinition();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -856,22 +918,54 @@ public interface SccexpPackage extends EPackage
     EAttribute VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = eINSTANCE.getVariableDefinition_VarCombineOperator();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionScopeImpl <em>Reaction Scope</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.LocalReactionImpl <em>Local Reaction</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionScopeImpl
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionScope()
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.LocalReactionImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getLocalReaction()
      * @generated
      */
-    EClass REACTION_SCOPE = eINSTANCE.getReactionScope();
+    EClass LOCAL_REACTION = eINSTANCE.getLocalReaction();
 
     /**
-     * The meta object literal for the '<em><b>Reaction Scope</b></em>' containment reference list feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateActionImpl <em>State Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.StateActionImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getStateAction()
      * @generated
      */
-    EReference REACTION_SCOPE__REACTION_SCOPE = eINSTANCE.getReactionScope_ReactionScope();
+    EClass STATE_ACTION = eINSTANCE.getStateAction();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EntryImpl <em>Entry</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EntryImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEntry()
+     * @generated
+     */
+    EClass ENTRY = eINSTANCE.getEntry();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InsideImpl <em>Inside</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InsideImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInside()
+     * @generated
+     */
+    EClass INSIDE = eINSTANCE.getInside();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitImpl <em>Exit</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getExit()
+     * @generated
+     */
+    EClass EXIT = eINSTANCE.getExit();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SimpleScopeImpl <em>Simple Scope</em>}' class.
@@ -884,76 +978,14 @@ public interface SccexpPackage extends EPackage
     EClass SIMPLE_SCOPE = eINSTANCE.getSimpleScope();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitActionImpl <em>Exit Action</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EventDefinitionImpl <em>Event Definition</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ExitActionImpl
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getExitAction()
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EventDefinitionImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEventDefinition()
      * @generated
      */
-    EClass EXIT_ACTION = eINSTANCE.getExitAction();
-
-    /**
-     * The meta object literal for the '<em><b>Effect</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EXIT_ACTION__EFFECT = eINSTANCE.getExitAction_Effect();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InsideActionImpl <em>Inside Action</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.InsideActionImpl
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getInsideAction()
-     * @generated
-     */
-    EClass INSIDE_ACTION = eINSTANCE.getInsideAction();
-
-    /**
-     * The meta object literal for the '<em><b>Effect</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference INSIDE_ACTION__EFFECT = eINSTANCE.getInsideAction_Effect();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EntryActionImpl <em>Entry Action</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.EntryActionImpl
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getEntryAction()
-     * @generated
-     */
-    EClass ENTRY_ACTION = eINSTANCE.getEntryAction();
-
-    /**
-     * The meta object literal for the '<em><b>Effect</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ENTRY_ACTION__EFFECT = eINSTANCE.getEntryAction_Effect();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SuspendImpl <em>Suspend</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SuspendImpl
-     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getSuspend()
-     * @generated
-     */
-    EClass SUSPEND = eINSTANCE.getSuspend();
-
-    /**
-     * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SUSPEND__TRIGGER = eINSTANCE.getSuspend_Trigger();
+    EClass EVENT_DEFINITION = eINSTANCE.getEventDefinition();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl <em>Reaction Trigger</em>}' class.
@@ -964,6 +996,22 @@ public interface SccexpPackage extends EPackage
      * @generated
      */
     EClass REACTION_TRIGGER = eINSTANCE.getReactionTrigger();
+
+    /**
+     * The meta object literal for the '<em><b>Triggers</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REACTION_TRIGGER__TRIGGERS = eINSTANCE.getReactionTrigger_Triggers();
+
+    /**
+     * The meta object literal for the '<em><b>Guard Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REACTION_TRIGGER__GUARD_EXPRESSION = eINSTANCE.getReactionTrigger_GuardExpression();
 
     /**
      * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
@@ -982,20 +1030,22 @@ public interface SccexpPackage extends EPackage
     EAttribute REACTION_TRIGGER__DELAY = eINSTANCE.getReactionTrigger_Delay();
 
     /**
-     * The meta object literal for the '<em><b>Triggers</b></em>' containment reference list feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionEffectImpl <em>Reaction Effect</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionEffectImpl
+     * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.SccexpPackageImpl#getReactionEffect()
      * @generated
      */
-    EReference REACTION_TRIGGER__TRIGGERS = eINSTANCE.getReactionTrigger_Triggers();
+    EClass REACTION_EFFECT = eINSTANCE.getReactionEffect();
 
     /**
-     * The meta object literal for the '<em><b>Guard Expression</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference REACTION_TRIGGER__GUARD_EXPRESSION = eINSTANCE.getReactionTrigger_GuardExpression();
+    EReference REACTION_EFFECT__ACTIONS = eINSTANCE.getReactionEffect_Actions();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.PreValueExpressionreturnsImpl <em>Pre Value Expressionreturns</em>}' class.

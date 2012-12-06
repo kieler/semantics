@@ -3,17 +3,20 @@
 package de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl;
 
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.CombineOperator;
-import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.EntryAction;
-import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ExitAction;
-import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.InsideAction;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Entry;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.EventDefinition;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Exit;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Inside;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.LocalReaction;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.PreValueExpressionreturns;
-import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionScope;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionEffect;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpFactory;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SignalDefinition;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SimpleScope;
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateAction;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.StateScope;
-import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Suspend;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VarDirection;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.VariableDefinition;
 
@@ -49,6 +52,13 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass signalDefinitionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass variableDefinitionEClass = null;
 
   /**
@@ -56,7 +66,35 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass reactionScopeEClass = null;
+  private EClass localReactionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass stateActionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass entryEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass insideEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass exitEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -70,28 +108,7 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass exitActionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass insideActionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass entryActionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass suspendEClass = null;
+  private EClass eventDefinitionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -99,6 +116,13 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * @generated
    */
   private EClass reactionTriggerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass reactionEffectEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -202,6 +226,16 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getSignalDefinition()
+  {
+    return signalDefinitionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getVariableDefinition()
   {
     return variableDefinitionEClass;
@@ -252,9 +286,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getReactionScope()
+  public EClass getLocalReaction()
   {
-    return reactionScopeEClass;
+    return localReactionEClass;
   }
 
   /**
@@ -262,9 +296,39 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReactionScope_ReactionScope()
+  public EClass getStateAction()
   {
-    return (EReference)reactionScopeEClass.getEStructuralFeatures().get(0);
+    return stateActionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEntry()
+  {
+    return entryEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getInside()
+  {
+    return insideEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExit()
+  {
+    return exitEClass;
   }
 
   /**
@@ -282,79 +346,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getExitAction()
+  public EClass getEventDefinition()
   {
-    return exitActionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExitAction_Effect()
-  {
-    return (EReference)exitActionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getInsideAction()
-  {
-    return insideActionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getInsideAction_Effect()
-  {
-    return (EReference)insideActionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getEntryAction()
-  {
-    return entryActionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEntryAction_Effect()
-  {
-    return (EReference)entryActionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getSuspend()
-  {
-    return suspendEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSuspend_Trigger()
-  {
-    return (EReference)suspendEClass.getEStructuralFeatures().get(0);
+    return eventDefinitionEClass;
   }
 
   /**
@@ -372,29 +366,9 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getReactionTrigger_IsImmediate()
-  {
-    return (EAttribute)reactionTriggerEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getReactionTrigger_Delay()
-  {
-    return (EAttribute)reactionTriggerEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getReactionTrigger_Triggers()
   {
-    return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(2);
+    return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -404,7 +378,47 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
    */
   public EReference getReactionTrigger_GuardExpression()
   {
-    return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(3);
+    return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getReactionTrigger_IsImmediate()
+  {
+    return (EAttribute)reactionTriggerEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getReactionTrigger_Delay()
+  {
+    return (EAttribute)reactionTriggerEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getReactionEffect()
+  {
+    return reactionEffectEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReactionEffect_Actions()
+  {
+    return (EReference)reactionEffectEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -479,34 +493,36 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
     // Create classes and their features
     stateScopeEClass = createEClass(STATE_SCOPE);
 
+    signalDefinitionEClass = createEClass(SIGNAL_DEFINITION);
+
     variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__DIRECTION);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_STATIC);
     createEReference(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_INITIAL_VALUE);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR);
 
-    reactionScopeEClass = createEClass(REACTION_SCOPE);
-    createEReference(reactionScopeEClass, REACTION_SCOPE__REACTION_SCOPE);
+    localReactionEClass = createEClass(LOCAL_REACTION);
+
+    stateActionEClass = createEClass(STATE_ACTION);
+
+    entryEClass = createEClass(ENTRY);
+
+    insideEClass = createEClass(INSIDE);
+
+    exitEClass = createEClass(EXIT);
 
     simpleScopeEClass = createEClass(SIMPLE_SCOPE);
 
-    exitActionEClass = createEClass(EXIT_ACTION);
-    createEReference(exitActionEClass, EXIT_ACTION__EFFECT);
-
-    insideActionEClass = createEClass(INSIDE_ACTION);
-    createEReference(insideActionEClass, INSIDE_ACTION__EFFECT);
-
-    entryActionEClass = createEClass(ENTRY_ACTION);
-    createEReference(entryActionEClass, ENTRY_ACTION__EFFECT);
-
-    suspendEClass = createEClass(SUSPEND);
-    createEReference(suspendEClass, SUSPEND__TRIGGER);
+    eventDefinitionEClass = createEClass(EVENT_DEFINITION);
 
     reactionTriggerEClass = createEClass(REACTION_TRIGGER);
-    createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__IS_IMMEDIATE);
-    createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__DELAY);
     createEReference(reactionTriggerEClass, REACTION_TRIGGER__TRIGGERS);
     createEReference(reactionTriggerEClass, REACTION_TRIGGER__GUARD_EXPRESSION);
+    createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__IS_IMMEDIATE);
+    createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__DELAY);
+
+    reactionEffectEClass = createEClass(REACTION_EFFECT);
+    createEReference(reactionEffectEClass, REACTION_EFFECT__ACTIONS);
 
     preValueExpressionreturnsEClass = createEClass(PRE_VALUE_EXPRESSIONRETURNS);
     createEReference(preValueExpressionreturnsEClass, PRE_VALUE_EXPRESSIONRETURNS__VALUE);
@@ -550,17 +566,23 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
 
     // Add supertypes to classes
     stateScopeEClass.getESuperTypes().add(theSGraphPackage.getScope());
+    signalDefinitionEClass.getESuperTypes().add(theSGraphPackage.getEvent());
     variableDefinitionEClass.getESuperTypes().add(theStextPackage.getVariableDefinition());
+    localReactionEClass.getESuperTypes().add(theStextPackage.getLocalReaction());
+    stateActionEClass.getESuperTypes().add(theStextPackage.getEventSpec());
+    entryEClass.getESuperTypes().add(this.getStateAction());
+    insideEClass.getESuperTypes().add(this.getStateAction());
+    exitEClass.getESuperTypes().add(this.getStateAction());
     simpleScopeEClass.getESuperTypes().add(this.getStateScope());
-    exitActionEClass.getESuperTypes().add(theSGraphPackage.getEffect());
-    insideActionEClass.getESuperTypes().add(theSGraphPackage.getEffect());
-    entryActionEClass.getESuperTypes().add(theSGraphPackage.getEffect());
-    suspendEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
+    eventDefinitionEClass.getESuperTypes().add(this.getSignalDefinition());
     reactionTriggerEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
+    reactionEffectEClass.getESuperTypes().add(theSGraphPackage.getEffect());
     preValueExpressionreturnsEClass.getESuperTypes().add(theStextPackage.getExpression());
 
     // Initialize classes and features; add operations and parameters
     initEClass(stateScopeEClass, StateScope.class, "StateScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(signalDefinitionEClass, SignalDefinition.class, "SignalDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVariableDefinition_Direction(), this.getVarDirection(), "direction", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -568,28 +590,28 @@ public class SccexpPackageImpl extends EPackageImpl implements SccexpPackage
     initEReference(getVariableDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_VarCombineOperator(), this.getCombineOperator(), "varCombineOperator", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(reactionScopeEClass, ReactionScope.class, "ReactionScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getReactionScope_ReactionScope(), ecorePackage.getEObject(), null, "reactionScope", null, 0, -1, ReactionScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(localReactionEClass, LocalReaction.class, "LocalReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(stateActionEClass, StateAction.class, "StateAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(entryEClass, Entry.class, "Entry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(insideEClass, Inside.class, "Inside", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(exitEClass, Exit.class, "Exit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(simpleScopeEClass, SimpleScope.class, "SimpleScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(exitActionEClass, ExitAction.class, "ExitAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExitAction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, ExitAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(insideActionEClass, InsideAction.class, "InsideAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInsideAction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, InsideAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(entryActionEClass, EntryAction.class, "EntryAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEntryAction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, EntryAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(suspendEClass, Suspend.class, "Suspend", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSuspend_Trigger(), theSGraphPackage.getTrigger(), null, "trigger", null, 0, 1, Suspend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(eventDefinitionEClass, EventDefinition.class, "EventDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(reactionTriggerEClass, ReactionTrigger.class, "ReactionTrigger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getReactionTrigger_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getReactionTrigger_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getReactionTrigger_Triggers(), theStextPackage.getEventSpec(), null, "triggers", null, 0, -1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getReactionTrigger_GuardExpression(), theStextPackage.getExpression(), null, "guardExpression", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getReactionTrigger_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getReactionTrigger_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(reactionEffectEClass, ReactionEffect.class, "ReactionEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getReactionEffect_Actions(), theStextPackage.getExpression(), null, "actions", null, 0, -1, ReactionEffect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(preValueExpressionreturnsEClass, PreValueExpressionreturns.class, "PreValueExpressionreturns", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPreValueExpressionreturns_Value(), theStextPackage.getExpression(), null, "value", null, 0, 1, PreValueExpressionreturns.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -2,30 +2,28 @@
  */
 package de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl;
 
+import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Exit;
 import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage;
-import de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.Transition;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.yakindu.sct.model.sgraph.impl.ReactionImpl;
-
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Transition</b></em>'.
+ * An implementation of the model object '<em><b>Exit</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public class TransitionImpl extends ReactionImpl implements Transition
+public class ExitImpl extends StateActionImpl implements Exit
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected TransitionImpl()
+  protected ExitImpl()
   {
     super();
   }
@@ -38,7 +36,7 @@ public class TransitionImpl extends ReactionImpl implements Transition
   @Override
   protected EClass eStaticClass()
   {
-    return SccexpPackage.Literals.TRANSITION;
+    return SccexpPackage.Literals.EXIT;
   }
 
-} //TransitionImpl
+} //ExitImpl

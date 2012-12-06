@@ -25,33 +25,28 @@
       <genEnumLiterals ecoreEnumLiteral="SCCExp.ecore#//VarDirection/OUT"/>
     </genEnums>
     <genClasses ecoreClass="SCCExp.ecore#//StateScope"/>
+    <genClasses ecoreClass="SCCExp.ecore#//SignalDefinition"/>
     <genClasses ecoreClass="SCCExp.ecore#//VariableDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//VariableDefinition/direction"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//VariableDefinition/isStatic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//VariableDefinition/varInitialValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//VariableDefinition/varCombineOperator"/>
     </genClasses>
-    <genClasses ecoreClass="SCCExp.ecore#//ReactionScope">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//ReactionScope/reactionScope"/>
-    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//LocalReaction"/>
+    <genClasses ecoreClass="SCCExp.ecore#//StateAction"/>
+    <genClasses ecoreClass="SCCExp.ecore#//Entry"/>
+    <genClasses ecoreClass="SCCExp.ecore#//Inside"/>
+    <genClasses ecoreClass="SCCExp.ecore#//Exit"/>
     <genClasses ecoreClass="SCCExp.ecore#//SimpleScope"/>
-    <genClasses ecoreClass="SCCExp.ecore#//ExitAction">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//ExitAction/effect"/>
-    </genClasses>
-    <genClasses ecoreClass="SCCExp.ecore#//InsideAction">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//InsideAction/effect"/>
-    </genClasses>
-    <genClasses ecoreClass="SCCExp.ecore#//EntryAction">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//EntryAction/effect"/>
-    </genClasses>
-    <genClasses ecoreClass="SCCExp.ecore#//Suspend">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//Suspend/trigger"/>
-    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//EventDefinition"/>
     <genClasses ecoreClass="SCCExp.ecore#//ReactionTrigger">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//ReactionTrigger/isImmediate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//ReactionTrigger/delay"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//ReactionTrigger/triggers"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//ReactionTrigger/guardExpression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//ReactionTrigger/isImmediate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCCExp.ecore#//ReactionTrigger/delay"/>
+    </genClasses>
+    <genClasses ecoreClass="SCCExp.ecore#//ReactionEffect">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//ReactionEffect/actions"/>
     </genClasses>
     <genClasses ecoreClass="SCCExp.ecore#//PreValueExpressionreturns">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCCExp.ecore#//PreValueExpressionreturns/value"/>

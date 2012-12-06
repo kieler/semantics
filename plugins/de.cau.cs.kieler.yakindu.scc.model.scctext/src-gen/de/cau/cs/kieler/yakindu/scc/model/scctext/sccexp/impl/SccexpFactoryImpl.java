@@ -66,14 +66,17 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
     switch (eClass.getClassifierID())
     {
       case SccexpPackage.STATE_SCOPE: return createStateScope();
+      case SccexpPackage.SIGNAL_DEFINITION: return createSignalDefinition();
       case SccexpPackage.VARIABLE_DEFINITION: return createVariableDefinition();
-      case SccexpPackage.REACTION_SCOPE: return createReactionScope();
+      case SccexpPackage.LOCAL_REACTION: return createLocalReaction();
+      case SccexpPackage.STATE_ACTION: return createStateAction();
+      case SccexpPackage.ENTRY: return createEntry();
+      case SccexpPackage.INSIDE: return createInside();
+      case SccexpPackage.EXIT: return createExit();
       case SccexpPackage.SIMPLE_SCOPE: return createSimpleScope();
-      case SccexpPackage.EXIT_ACTION: return createExitAction();
-      case SccexpPackage.INSIDE_ACTION: return createInsideAction();
-      case SccexpPackage.ENTRY_ACTION: return createEntryAction();
-      case SccexpPackage.SUSPEND: return createSuspend();
+      case SccexpPackage.EVENT_DEFINITION: return createEventDefinition();
       case SccexpPackage.REACTION_TRIGGER: return createReactionTrigger();
+      case SccexpPackage.REACTION_EFFECT: return createReactionEffect();
       case SccexpPackage.PRE_VALUE_EXPRESSIONRETURNS: return createPreValueExpressionreturns();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -134,6 +137,17 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public SignalDefinition createSignalDefinition()
+  {
+    SignalDefinitionImpl signalDefinition = new SignalDefinitionImpl();
+    return signalDefinition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public VariableDefinition createVariableDefinition()
   {
     VariableDefinitionImpl variableDefinition = new VariableDefinitionImpl();
@@ -145,10 +159,54 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ReactionScope createReactionScope()
+  public LocalReaction createLocalReaction()
   {
-    ReactionScopeImpl reactionScope = new ReactionScopeImpl();
-    return reactionScope;
+    LocalReactionImpl localReaction = new LocalReactionImpl();
+    return localReaction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StateAction createStateAction()
+  {
+    StateActionImpl stateAction = new StateActionImpl();
+    return stateAction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Entry createEntry()
+  {
+    EntryImpl entry = new EntryImpl();
+    return entry;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Inside createInside()
+  {
+    InsideImpl inside = new InsideImpl();
+    return inside;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Exit createExit()
+  {
+    ExitImpl exit = new ExitImpl();
+    return exit;
   }
 
   /**
@@ -167,43 +225,10 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ExitAction createExitAction()
+  public EventDefinition createEventDefinition()
   {
-    ExitActionImpl exitAction = new ExitActionImpl();
-    return exitAction;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InsideAction createInsideAction()
-  {
-    InsideActionImpl insideAction = new InsideActionImpl();
-    return insideAction;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EntryAction createEntryAction()
-  {
-    EntryActionImpl entryAction = new EntryActionImpl();
-    return entryAction;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Suspend createSuspend()
-  {
-    SuspendImpl suspend = new SuspendImpl();
-    return suspend;
+    EventDefinitionImpl eventDefinition = new EventDefinitionImpl();
+    return eventDefinition;
   }
 
   /**
@@ -215,6 +240,17 @@ public class SccexpFactoryImpl extends EFactoryImpl implements SccexpFactory
   {
     ReactionTriggerImpl reactionTrigger = new ReactionTriggerImpl();
     return reactionTrigger;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ReactionEffect createReactionEffect()
+  {
+    ReactionEffectImpl reactionEffect = new ReactionEffectImpl();
+    return reactionEffect;
   }
 
   /**

@@ -32,6 +32,15 @@ public interface SccexpFactory extends EFactory
   StateScope createStateScope();
 
   /**
+   * Returns a new object of class '<em>Signal Definition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Signal Definition</em>'.
+   * @generated
+   */
+  SignalDefinition createSignalDefinition();
+
+  /**
    * Returns a new object of class '<em>Variable Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -41,13 +50,49 @@ public interface SccexpFactory extends EFactory
   VariableDefinition createVariableDefinition();
 
   /**
-   * Returns a new object of class '<em>Reaction Scope</em>'.
+   * Returns a new object of class '<em>Local Reaction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Reaction Scope</em>'.
+   * @return a new object of class '<em>Local Reaction</em>'.
    * @generated
    */
-  ReactionScope createReactionScope();
+  LocalReaction createLocalReaction();
+
+  /**
+   * Returns a new object of class '<em>State Action</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>State Action</em>'.
+   * @generated
+   */
+  StateAction createStateAction();
+
+  /**
+   * Returns a new object of class '<em>Entry</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Entry</em>'.
+   * @generated
+   */
+  Entry createEntry();
+
+  /**
+   * Returns a new object of class '<em>Inside</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Inside</em>'.
+   * @generated
+   */
+  Inside createInside();
+
+  /**
+   * Returns a new object of class '<em>Exit</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Exit</em>'.
+   * @generated
+   */
+  Exit createExit();
 
   /**
    * Returns a new object of class '<em>Simple Scope</em>'.
@@ -59,40 +104,13 @@ public interface SccexpFactory extends EFactory
   SimpleScope createSimpleScope();
 
   /**
-   * Returns a new object of class '<em>Exit Action</em>'.
+   * Returns a new object of class '<em>Event Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Exit Action</em>'.
+   * @return a new object of class '<em>Event Definition</em>'.
    * @generated
    */
-  ExitAction createExitAction();
-
-  /**
-   * Returns a new object of class '<em>Inside Action</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Inside Action</em>'.
-   * @generated
-   */
-  InsideAction createInsideAction();
-
-  /**
-   * Returns a new object of class '<em>Entry Action</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Entry Action</em>'.
-   * @generated
-   */
-  EntryAction createEntryAction();
-
-  /**
-   * Returns a new object of class '<em>Suspend</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Suspend</em>'.
-   * @generated
-   */
-  Suspend createSuspend();
+  EventDefinition createEventDefinition();
 
   /**
    * Returns a new object of class '<em>Reaction Trigger</em>'.
@@ -102,6 +120,15 @@ public interface SccexpFactory extends EFactory
    * @generated
    */
   ReactionTrigger createReactionTrigger();
+
+  /**
+   * Returns a new object of class '<em>Reaction Effect</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Reaction Effect</em>'.
+   * @generated
+   */
+  ReactionEffect createReactionEffect();
 
   /**
    * Returns a new object of class '<em>Pre Value Expressionreturns</em>'.

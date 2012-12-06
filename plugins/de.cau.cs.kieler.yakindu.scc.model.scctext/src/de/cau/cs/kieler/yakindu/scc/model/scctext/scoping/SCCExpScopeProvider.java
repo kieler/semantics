@@ -42,6 +42,12 @@ import de.itemis.xtext.utils.jface.viewers.ContextElementAdapter;
  */
 public class SCCExpScopeProvider extends STextScopeProvider {
 
+	@Override
+	public IScope scope_ElementReferenceExpression_reference(
+			final EObject context, EReference reference) {
+				return super.scope_ElementReferenceExpression_reference(context, reference);
+	}
+
 	/**
 	 * Returns a scope with all toplevel declarations of parent States
 	 */

@@ -37,6 +37,8 @@ public class InternalSCCExpLexer extends Lexer {
     public static final int T__18=18;
     public static final int T__17=17;
     public static final int T__14=14;
+    public static final int T__98=98;
+    public static final int T__97=97;
     public static final int T__96=96;
     public static final int T__95=95;
     public static final int T__80=80;
@@ -125,10 +127,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__14;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:11:7: ( 'static' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:11:9: 'static'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:11:7: ( 'signal' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:11:9: 'signal'
             {
-            match("static"); 
+            match("signal"); 
 
 
             }
@@ -146,10 +148,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:12:7: ( ':' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:12:9: ':'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:12:7: ( ';' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:12:9: ';'
             {
-            match(':'); 
+            match(';'); 
 
             }
 
@@ -166,10 +168,11 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:13:7: ( '=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:13:9: '='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:13:7: ( 'static' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:13:9: 'static'
             {
-            match('='); 
+            match("static"); 
+
 
             }
 
@@ -186,11 +189,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:14:7: ( 'with' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:14:9: 'with'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:14:7: ( '=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:14:9: '='
             {
-            match("with"); 
-
+            match('='); 
 
             }
 
@@ -207,10 +209,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:15:7: ( 'Exit' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:15:9: 'Exit'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:15:7: ( 'with' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:15:9: 'with'
             {
-            match("Exit"); 
+            match("with"); 
 
 
             }
@@ -248,10 +250,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:17:7: ( ';' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:17:9: ';'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:17:7: ( ',' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:17:9: ','
             {
-            match(';'); 
+            match(','); 
 
             }
 
@@ -268,11 +270,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:18:7: ( 'Inside' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:18:9: 'Inside'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:18:7: ( '[' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:18:9: '['
             {
-            match("Inside"); 
-
+            match('['); 
 
             }
 
@@ -289,11 +290,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:19:7: ( 'Entry' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:19:9: 'Entry'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:19:7: ( ']' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:19:9: ']'
             {
-            match("Entry"); 
-
+            match(']'); 
 
             }
 
@@ -310,10 +310,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:20:7: ( 'Suspend' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:20:9: 'Suspend'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:20:7: ( 'Entry' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:20:9: 'Entry'
             {
-            match("Suspend"); 
+            match("Entry"); 
 
 
             }
@@ -331,10 +331,11 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:21:7: ( '#' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:21:9: '#'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:21:7: ( 'During' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:21:9: 'During'
             {
-            match('#'); 
+            match("During"); 
+
 
             }
 
@@ -351,10 +352,11 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:22:7: ( ',' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:22:9: ','
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:22:7: ( 'Exit' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:22:9: 'Exit'
             {
-            match(','); 
+            match("Exit"); 
+
 
             }
 
@@ -371,10 +373,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:23:7: ( '[' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:23:9: '['
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:23:7: ( '#' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:23:9: '#'
             {
-            match('['); 
+            match('#'); 
 
             }
 
@@ -391,10 +393,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:24:7: ( ']' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:24:9: ']'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:24:7: ( '(' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:24:9: '('
             {
-            match(']'); 
+            match('('); 
 
             }
 
@@ -411,10 +413,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:25:7: ( '(' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:25:9: '('
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:25:7: ( ')' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:25:9: ')'
             {
-            match('('); 
+            match(')'); 
 
             }
 
@@ -431,10 +433,11 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:26:7: ( ')' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:26:9: ')'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:26:7: ( 'pre' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:26:9: 'pre'
             {
-            match(')'); 
+            match("pre"); 
+
 
             }
 
@@ -451,10 +454,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:27:7: ( 'pre' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:27:9: 'pre'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:27:7: ( '@@statechart@@' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:27:9: '@@statechart@@'
             {
-            match("pre"); 
+            match("@@statechart@@"); 
 
 
             }
@@ -472,10 +475,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:28:7: ( '@@statechart@@' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:28:9: '@@statechart@@'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:28:7: ( '@@state@@' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:28:9: '@@state@@'
             {
-            match("@@statechart@@"); 
+            match("@@state@@"); 
 
 
             }
@@ -493,10 +496,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:29:7: ( '@@state@@' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:29:9: '@@state@@'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:29:7: ( '@@transition@@' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:29:9: '@@transition@@'
             {
-            match("@@state@@"); 
+            match("@@transition@@"); 
 
 
             }
@@ -514,10 +517,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:30:7: ( '@@transition@@' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:30:9: '@@transition@@'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:30:7: ( 'namespace' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:30:9: 'namespace'
             {
-            match("@@transition@@"); 
+            match("namespace"); 
 
 
             }
@@ -535,10 +538,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:31:7: ( 'namespace' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:31:9: 'namespace'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:31:7: ( 'interface' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:31:9: 'interface'
             {
-            match("namespace"); 
+            match("interface"); 
 
 
             }
@@ -556,11 +559,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:32:7: ( 'interface' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:32:9: 'interface'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:32:7: ( ':' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:32:9: ':'
             {
-            match("interface"); 
-
+            match(':'); 
 
             }
 
@@ -1179,10 +1181,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__65;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:62:7: ( 'inout' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:62:9: 'inout'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:62:7: ( 'inputoutut' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:62:9: 'inputoutut'
             {
-            match("inout"); 
+            match("inputoutut"); 
 
 
             }
@@ -1200,10 +1202,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__66;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:63:7: ( 'in' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:63:9: 'in'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:63:7: ( 'input' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:63:9: 'input'
             {
-            match("in"); 
+            match("input"); 
 
 
             }
@@ -1221,10 +1223,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__67;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:64:7: ( 'out' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:64:9: 'out'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:64:7: ( 'output' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:64:9: 'output'
             {
-            match("out"); 
+            match("output"); 
 
 
             }
@@ -1263,10 +1265,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__69;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:66:7: ( 'after' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:66:9: 'after'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:66:7: ( 'in' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:66:9: 'in'
             {
-            match("after"); 
+            match("in"); 
 
 
             }
@@ -1284,10 +1286,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__70;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:67:7: ( 'every' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:67:9: 'every'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:67:7: ( 'out' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:67:9: 'out'
             {
-            match("every"); 
+            match("out"); 
 
 
             }
@@ -1305,10 +1307,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__71;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:68:7: ( '*=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:68:9: '*='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:68:7: ( 'after' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:68:9: 'after'
             {
-            match("*="); 
+            match("after"); 
 
 
             }
@@ -1326,10 +1328,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__72;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:69:7: ( '/=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:69:9: '/='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:69:7: ( 'every' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:69:9: 'every'
             {
-            match("/="); 
+            match("every"); 
 
 
             }
@@ -1347,10 +1349,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__73;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:70:7: ( '%=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:70:9: '%='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:70:7: ( '*=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:70:9: '*='
             {
-            match("%="); 
+            match("*="); 
 
 
             }
@@ -1368,10 +1370,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__74;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:71:7: ( '+=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:71:9: '+='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:71:7: ( '/=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:71:9: '/='
             {
-            match("+="); 
+            match("/="); 
 
 
             }
@@ -1389,10 +1391,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__75;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:72:7: ( '-=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:72:9: '-='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:72:7: ( '%=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:72:9: '%='
             {
-            match("-="); 
+            match("%="); 
 
 
             }
@@ -1410,10 +1412,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__76;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:73:7: ( '<<=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:73:9: '<<='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:73:7: ( '+=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:73:9: '+='
             {
-            match("<<="); 
+            match("+="); 
 
 
             }
@@ -1431,10 +1433,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__77;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:74:7: ( '>>=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:74:9: '>>='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:74:7: ( '-=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:74:9: '-='
             {
-            match(">>="); 
+            match("-="); 
 
 
             }
@@ -1452,10 +1454,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__78;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:75:7: ( '&=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:75:9: '&='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:75:7: ( '<<=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:75:9: '<<='
             {
-            match("&="); 
+            match("<<="); 
 
 
             }
@@ -1473,10 +1475,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__79;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:76:7: ( '^=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:76:9: '^='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:76:7: ( '>>=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:76:9: '>>='
             {
-            match("^="); 
+            match(">>="); 
 
 
             }
@@ -1494,10 +1496,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__80;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:77:7: ( '|=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:77:9: '|='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:77:7: ( '&=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:77:9: '&='
             {
-            match("|="); 
+            match("&="); 
 
 
             }
@@ -1515,10 +1517,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__81;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:78:7: ( '<<' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:78:9: '<<'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:78:7: ( '^=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:78:9: '^='
             {
-            match("<<"); 
+            match("^="); 
 
 
             }
@@ -1536,10 +1538,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__82;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:79:7: ( '>>' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:79:9: '>>'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:79:7: ( '|=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:79:9: '|='
             {
-            match(">>"); 
+            match("|="); 
 
 
             }
@@ -1557,10 +1559,11 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__83;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:80:7: ( '+' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:80:9: '+'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:80:7: ( '<<' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:80:9: '<<'
             {
-            match('+'); 
+            match("<<"); 
+
 
             }
 
@@ -1577,10 +1580,11 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__84;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:81:7: ( '-' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:81:9: '-'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:81:7: ( '>>' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:81:9: '>>'
             {
-            match('-'); 
+            match(">>"); 
+
 
             }
 
@@ -1597,10 +1601,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__85;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:82:7: ( '*' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:82:9: '*'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:82:7: ( '+' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:82:9: '+'
             {
-            match('*'); 
+            match('+'); 
 
             }
 
@@ -1617,10 +1621,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__86;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:83:7: ( '%' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:83:9: '%'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:83:7: ( '-' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:83:9: '-'
             {
-            match('%'); 
+            match('-'); 
 
             }
 
@@ -1637,10 +1641,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__87;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:84:7: ( '~' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:84:9: '~'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:84:7: ( '*' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:84:9: '*'
             {
-            match('~'); 
+            match('*'); 
 
             }
 
@@ -1657,10 +1661,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__88;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:85:7: ( '<' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:85:9: '<'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:85:7: ( '%' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:85:9: '%'
             {
-            match('<'); 
+            match('%'); 
 
             }
 
@@ -1677,11 +1681,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__89;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:86:7: ( '<=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:86:9: '<='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:86:7: ( '~' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:86:9: '~'
             {
-            match("<="); 
-
+            match('~'); 
 
             }
 
@@ -1698,11 +1701,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__90;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:87:7: ( '>=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:87:9: '>='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:87:7: ( '<' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:87:9: '<'
             {
-            match(">="); 
-
+            match('<'); 
 
             }
 
@@ -1719,10 +1721,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__91;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:88:7: ( '==' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:88:9: '=='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:88:7: ( '<=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:88:9: '<='
             {
-            match("=="); 
+            match("<="); 
 
 
             }
@@ -1740,10 +1742,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__92;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:89:7: ( '!=' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:89:9: '!='
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:89:7: ( '>=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:89:9: '>='
             {
-            match("!="); 
+            match(">="); 
 
 
             }
@@ -1761,10 +1763,11 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__93;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:90:7: ( 's' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:90:9: 's'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:90:7: ( '==' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:90:9: '=='
             {
-            match('s'); 
+            match("=="); 
+
 
             }
 
@@ -1781,10 +1784,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__94;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:91:7: ( 'ms' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:91:9: 'ms'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:91:7: ( '!=' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:91:9: '!='
             {
-            match("ms"); 
+            match("!="); 
 
 
             }
@@ -1802,11 +1805,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__95;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:92:7: ( 'us' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:92:9: 'us'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:92:7: ( 's' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:92:9: 's'
             {
-            match("us"); 
-
+            match('s'); 
 
             }
 
@@ -1823,10 +1825,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = T__96;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:93:7: ( 'ns' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:93:9: 'ns'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:93:7: ( 'ms' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:93:9: 'ms'
             {
-            match("ns"); 
+            match("ms"); 
 
 
             }
@@ -1839,15 +1841,57 @@ public class InternalSCCExpLexer extends Lexer {
     }
     // $ANTLR end "T__96"
 
+    // $ANTLR start "T__97"
+    public final void mT__97() throws RecognitionException {
+        try {
+            int _type = T__97;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:94:7: ( 'us' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:94:9: 'us'
+            {
+            match("us"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__97"
+
+    // $ANTLR start "T__98"
+    public final void mT__98() throws RecognitionException {
+        try {
+            int _type = T__98;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:95:7: ( 'ns' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:95:9: 'ns'
+            {
+            match("ns"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__98"
+
     // $ANTLR start "RULE_BOOL"
     public final void mRULE_BOOL() throws RecognitionException {
         try {
             int _type = RULE_BOOL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4583:11: ( ( 'true' | 'false' | 'yes' | 'no' ) )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4583:13: ( 'true' | 'false' | 'yes' | 'no' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4801:11: ( ( 'true' | 'false' | 'yes' | 'no' ) )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4801:13: ( 'true' | 'false' | 'yes' | 'no' )
             {
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4583:13: ( 'true' | 'false' | 'yes' | 'no' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4801:13: ( 'true' | 'false' | 'yes' | 'no' )
             int alt1=4;
             switch ( input.LA(1) ) {
             case 't':
@@ -1879,7 +1923,7 @@ public class InternalSCCExpLexer extends Lexer {
 
             switch (alt1) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4583:14: 'true'
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4801:14: 'true'
                     {
                     match("true"); 
 
@@ -1887,7 +1931,7 @@ public class InternalSCCExpLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4583:21: 'false'
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4801:21: 'false'
                     {
                     match("false"); 
 
@@ -1895,7 +1939,7 @@ public class InternalSCCExpLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4583:29: 'yes'
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4801:29: 'yes'
                     {
                     match("yes"); 
 
@@ -1903,7 +1947,7 @@ public class InternalSCCExpLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4583:35: 'no'
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4801:35: 'no'
                     {
                     match("no"); 
 
@@ -1929,8 +1973,8 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = RULE_HEX;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4585:10: ( '0' ( 'x' | 'X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+ )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4585:12: '0' ( 'x' | 'X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4803:10: ( '0' ( 'x' | 'X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+ )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4803:12: '0' ( 'x' | 'X' ) ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
             {
             match('0'); 
             if ( input.LA(1)=='X'||input.LA(1)=='x' ) {
@@ -1942,7 +1986,7 @@ public class InternalSCCExpLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4585:26: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4803:26: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )+
             int cnt2=0;
             loop2:
             do {
@@ -1996,13 +2040,13 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4587:12: ( RULE_INT '.' RULE_INT ( 'e' ( '-' | '+' ) RULE_INT )? ( 'f' | 'F' | 'd' | 'D' )? )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4587:14: RULE_INT '.' RULE_INT ( 'e' ( '-' | '+' ) RULE_INT )? ( 'f' | 'F' | 'd' | 'D' )?
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4805:12: ( RULE_INT '.' RULE_INT ( 'e' ( '-' | '+' ) RULE_INT )? ( 'f' | 'F' | 'd' | 'D' )? )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4805:14: RULE_INT '.' RULE_INT ( 'e' ( '-' | '+' ) RULE_INT )? ( 'f' | 'F' | 'd' | 'D' )?
             {
             mRULE_INT(); 
             match('.'); 
             mRULE_INT(); 
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4587:36: ( 'e' ( '-' | '+' ) RULE_INT )?
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4805:36: ( 'e' ( '-' | '+' ) RULE_INT )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -2011,7 +2055,7 @@ public class InternalSCCExpLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4587:37: 'e' ( '-' | '+' ) RULE_INT
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4805:37: 'e' ( '-' | '+' ) RULE_INT
                     {
                     match('e'); 
                     if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
@@ -2030,7 +2074,7 @@ public class InternalSCCExpLexer extends Lexer {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4587:62: ( 'f' | 'F' | 'd' | 'D' )?
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4805:62: ( 'f' | 'F' | 'd' | 'D' )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -2072,10 +2116,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4589:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4589:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4807:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4807:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4589:11: ( '^' )?
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4807:11: ( '^' )?
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -2084,7 +2128,7 @@ public class InternalSCCExpLexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4589:11: '^'
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4807:11: '^'
                     {
                     match('^'); 
 
@@ -2102,7 +2146,7 @@ public class InternalSCCExpLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4589:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4807:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop6:
             do {
                 int alt6=2;
@@ -2151,10 +2195,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4591:10: ( ( '0' .. '9' )+ )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4591:12: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4809:10: ( ( '0' .. '9' )+ )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4809:12: ( '0' .. '9' )+
             {
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4591:12: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4809:12: ( '0' .. '9' )+
             int cnt7=0;
             loop7:
             do {
@@ -2168,7 +2212,7 @@ public class InternalSCCExpLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4591:13: '0' .. '9'
+            	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4809:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -2200,10 +2244,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -2221,10 +2265,10 @@ public class InternalSCCExpLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop8:
                     do {
                         int alt8=3;
@@ -2240,7 +2284,7 @@ public class InternalSCCExpLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -2256,7 +2300,7 @@ public class InternalSCCExpLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:66: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -2281,10 +2325,10 @@ public class InternalSCCExpLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop9:
                     do {
                         int alt9=3;
@@ -2300,7 +2344,7 @@ public class InternalSCCExpLexer extends Lexer {
 
                         switch (alt9) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -2316,7 +2360,7 @@ public class InternalSCCExpLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4593:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4811:137: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -2359,12 +2403,12 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4595:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4595:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4813:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4813:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4595:24: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4813:24: ( options {greedy=false; } : . )*
             loop11:
             do {
                 int alt11=2;
@@ -2389,7 +2433,7 @@ public class InternalSCCExpLexer extends Lexer {
 
                 switch (alt11) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4595:52: .
+            	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4813:52: .
             	    {
             	    matchAny(); 
 
@@ -2419,12 +2463,12 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4597:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4597:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4815:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4815:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4597:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4815:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop12:
             do {
                 int alt12=2;
@@ -2437,7 +2481,7 @@ public class InternalSCCExpLexer extends Lexer {
 
                 switch (alt12) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4597:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4815:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2457,7 +2501,7 @@ public class InternalSCCExpLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4597:40: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4815:40: ( ( '\\r' )? '\\n' )?
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -2466,9 +2510,9 @@ public class InternalSCCExpLexer extends Lexer {
             }
             switch (alt14) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4597:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4815:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4597:41: ( '\\r' )?
+                    // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4815:41: ( '\\r' )?
                     int alt13=2;
                     int LA13_0 = input.LA(1);
 
@@ -2477,7 +2521,7 @@ public class InternalSCCExpLexer extends Lexer {
                     }
                     switch (alt13) {
                         case 1 :
-                            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4597:41: '\\r'
+                            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4815:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2509,10 +2553,10 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4599:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4599:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4817:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4817:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4599:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4817:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt15=0;
             loop15:
             do {
@@ -2566,8 +2610,8 @@ public class InternalSCCExpLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4601:16: ( . )
-            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4601:18: .
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4819:16: ( . )
+            // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:4819:18: .
             {
             matchAny(); 
 
@@ -2582,8 +2626,8 @@ public class InternalSCCExpLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:8: ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | RULE_BOOL | RULE_HEX | RULE_FLOAT | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt16=93;
+        // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:8: ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | RULE_BOOL | RULE_HEX | RULE_FLOAT | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt16=95;
         alt16 = dfa16.predict(input);
         switch (alt16) {
             case 1 :
@@ -3168,70 +3212,84 @@ public class InternalSCCExpLexer extends Lexer {
                 }
                 break;
             case 84 :
-                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:508: RULE_BOOL
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:508: T__97
+                {
+                mT__97(); 
+
+                }
+                break;
+            case 85 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:514: T__98
+                {
+                mT__98(); 
+
+                }
+                break;
+            case 86 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:520: RULE_BOOL
                 {
                 mRULE_BOOL(); 
 
                 }
                 break;
-            case 85 :
-                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:518: RULE_HEX
+            case 87 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:530: RULE_HEX
                 {
                 mRULE_HEX(); 
 
                 }
                 break;
-            case 86 :
-                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:527: RULE_FLOAT
+            case 88 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:539: RULE_FLOAT
                 {
                 mRULE_FLOAT(); 
 
                 }
                 break;
-            case 87 :
-                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:538: RULE_ID
+            case 89 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:550: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
-            case 88 :
-                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:546: RULE_INT
+            case 90 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:558: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 89 :
-                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:555: RULE_STRING
+            case 91 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:567: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 90 :
-                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:567: RULE_ML_COMMENT
+            case 92 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:579: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 91 :
-                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:583: RULE_SL_COMMENT
+            case 93 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:595: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 92 :
-                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:599: RULE_WS
+            case 94 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:611: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 93 :
-                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:607: RULE_ANY_OTHER
+            case 95 :
+                // ../de.cau.cs.kieler.yakindu.scc.model.scctext/src-gen/de/cau/cs/kieler/yakindu/scc/model/scctext/parser/antlr/internal/InternalSCCExp.g:1:619: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -3245,145 +3303,148 @@ public class InternalSCCExpLexer extends Lexer {
 
     protected DFA16 dfa16 = new DFA16(this);
     static final String DFA16_eotS =
-        "\1\uffff\1\64\1\uffff\1\70\2\65\1\77\1\uffff\2\65\6\uffff\1\65"+
-        "\1\62\4\65\1\uffff\1\131\3\65\1\uffff\1\141\1\144\1\146\1\150\1"+
-        "\62\1\65\1\163\1\165\1\167\1\171\1\174\1\uffff\5\65\2\u0084\1\uffff"+
-        "\1\62\2\uffff\1\65\5\uffff\3\65\5\uffff\2\65\6\uffff\1\65\1\uffff"+
-        "\1\65\1\u0092\1\u0093\1\u0096\7\65\1\uffff\1\u009f\2\uffff\4\65"+
-        "\23\uffff\1\65\10\uffff\1\u00ae\3\uffff\1\u00af\1\u00b0\3\65\2\uffff"+
-        "\1\u0084\2\uffff\6\65\1\u00ba\2\uffff\1\65\2\uffff\2\65\1\uffff"+
-        "\6\65\1\u00c6\2\uffff\4\65\10\uffff\1\65\4\uffff\2\65\1\u0093\1"+
-        "\65\1\u00d7\1\u00d8\3\65\2\uffff\6\65\1\u00e4\1\u00e5\2\65\1\uffff"+
-        "\4\65\10\uffff\1\65\1\u0093\2\65\2\uffff\1\u00f5\2\65\1\uffff\2"+
-        "\65\1\u00fc\1\u00fd\1\u00fe\1\u0100\1\65\2\uffff\3\65\1\u0105\1"+
-        "\65\1\u0107\6\uffff\1\u010d\1\u0093\1\u010e\1\uffff\1\u010f\1\65"+
-        "\1\uffff\3\65\3\uffff\1\65\1\uffff\3\65\1\u0119\1\uffff\1\65\11"+
-        "\uffff\1\u011d\1\uffff\6\65\1\u0126\1\uffff\1\u0127\5\uffff\2\65"+
-        "\1\u012a\3\65\2\uffff\1\u012e\1\u012f\1\uffff\1\65\1\u0131\1\u0132"+
-        "\2\uffff\1\u0133\3\uffff";
+        "\1\uffff\1\64\1\uffff\1\70\1\65\1\75\3\uffff\2\65\3\uffff\1\65"+
+        "\1\61\2\65\1\uffff\2\65\1\uffff\1\130\3\65\1\uffff\1\140\1\143\1"+
+        "\145\1\147\1\61\1\65\1\162\1\164\1\166\1\170\1\173\1\uffff\5\65"+
+        "\2\u0083\1\uffff\1\61\2\uffff\2\65\5\uffff\1\65\7\uffff\3\65\3\uffff"+
+        "\1\65\1\uffff\1\65\1\u0091\1\u0092\1\u0095\1\uffff\7\65\1\uffff"+
+        "\1\u009e\2\uffff\4\65\23\uffff\1\65\10\uffff\1\u00ad\3\uffff\1\u00ae"+
+        "\1\u00af\3\65\2\uffff\1\u0083\2\uffff\6\65\1\u00b9\2\uffff\1\65"+
+        "\2\uffff\2\65\1\uffff\6\65\1\u00c6\2\uffff\4\65\10\uffff\1\65\4"+
+        "\uffff\2\65\1\u0092\2\65\1\u00d8\1\65\1\u00da\1\65\2\uffff\6\65"+
+        "\1\u00e4\1\u00e5\3\65\1\uffff\4\65\10\uffff\1\65\1\u0092\3\65\1"+
+        "\uffff\1\u00f7\1\uffff\1\65\1\uffff\2\65\1\u00fe\1\u00ff\1\u0100"+
+        "\1\u0102\1\65\2\uffff\4\65\1\u0108\1\65\1\u010a\6\uffff\1\u0110"+
+        "\1\u0092\1\u0111\1\u0112\1\uffff\1\u0113\1\uffff\4\65\3\uffff\1"+
+        "\65\1\uffff\3\65\1\u011d\1\u011e\1\uffff\1\65\13\uffff\7\65\1\u012b"+
+        "\2\uffff\1\u012c\4\uffff\2\65\1\u012f\4\65\2\uffff\1\u0134\1\u0135"+
+        "\1\uffff\2\65\1\u0138\1\u0139\2\uffff\1\u013a\1\u013b\4\uffff";
     static final String DFA16_eofS =
-        "\u0134\uffff";
+        "\u013c\uffff";
     static final String DFA16_minS =
-        "\1\0\1\60\1\uffff\1\75\1\151\1\156\1\52\1\uffff\1\156\1\165\6\uffff"+
-        "\1\162\1\100\1\141\1\156\1\154\1\156\1\uffff\1\75\1\146\1\145\1"+
-        "\141\1\uffff\1\75\1\46\2\75\1\0\1\157\4\75\1\74\1\uffff\2\163\1"+
-        "\162\1\141\1\145\2\56\1\uffff\1\0\2\uffff\1\141\5\uffff\1\164\1"+
-        "\151\1\164\5\uffff\2\163\6\uffff\1\145\1\163\1\155\3\60\1\145\1"+
-        "\164\1\151\1\163\1\145\1\143\1\164\1\uffff\1\75\2\uffff\1\167\1"+
-        "\164\1\146\1\151\13\uffff\7\0\1\uffff\1\143\10\uffff\1\75\3\uffff"+
-        "\2\60\1\165\1\154\1\163\2\uffff\1\56\2\uffff\1\164\1\150\1\164\1"+
-        "\162\1\151\1\160\1\60\1\164\1\uffff\1\145\2\uffff\1\145\1\165\1"+
-        "\uffff\1\156\1\162\1\164\1\145\1\162\1\171\1\60\2\uffff\1\141\1"+
-        "\145\1\141\1\163\1\0\2\uffff\5\0\1\141\4\uffff\1\145\1\163\1\60"+
-        "\1\151\2\60\1\171\1\144\1\145\1\uffff\1\141\1\163\1\162\2\164\2"+
-        "\171\2\60\1\141\1\143\1\uffff\1\171\1\162\1\165\1\145\1\0\2\uffff"+
-        "\2\0\1\uffff\2\0\1\154\1\60\1\145\1\143\2\uffff\1\60\1\145\1\156"+
-        "\1\164\1\160\1\146\4\60\1\157\2\uffff\1\164\1\154\1\163\1\60\1\154"+
-        "\1\60\1\0\4\uffff\1\0\3\60\1\uffff\1\60\1\144\1\145\3\141\3\uffff"+
-        "\1\157\1\uffff\2\151\1\145\1\60\1\uffff\1\164\11\uffff\1\60\1\100"+
-        "\2\143\1\154\1\151\1\156\1\157\1\60\1\uffff\1\60\5\uffff\2\145\1"+
-        "\60\1\156\1\164\1\156\2\uffff\2\60\1\uffff\1\164\2\60\2\uffff\1"+
-        "\60\3\uffff";
+        "\1\0\1\60\1\uffff\1\75\1\151\1\52\3\uffff\1\156\1\165\3\uffff\1"+
+        "\162\1\100\1\141\1\156\1\uffff\1\154\1\156\1\uffff\1\75\1\146\1"+
+        "\145\1\141\1\uffff\1\75\1\46\2\75\1\0\1\157\4\75\1\74\1\uffff\2"+
+        "\163\1\162\1\141\1\145\2\56\1\uffff\1\0\2\uffff\1\147\1\141\5\uffff"+
+        "\1\164\7\uffff\1\164\1\151\1\162\3\uffff\1\145\1\163\1\155\3\60"+
+        "\1\uffff\1\145\1\164\1\151\1\163\1\145\1\143\1\164\1\uffff\1\75"+
+        "\2\uffff\1\167\1\164\1\146\1\151\13\uffff\7\0\1\uffff\1\143\10\uffff"+
+        "\1\75\3\uffff\2\60\1\165\1\154\1\163\2\uffff\1\56\2\uffff\1\156"+
+        "\1\164\1\150\1\162\1\164\1\151\1\60\1\164\1\uffff\1\145\2\uffff"+
+        "\1\145\1\165\1\uffff\1\156\1\162\1\164\1\145\1\162\1\171\1\60\2"+
+        "\uffff\1\141\1\145\1\141\1\163\1\0\2\uffff\5\0\1\141\4\uffff\1\145"+
+        "\1\163\1\60\1\141\1\151\1\60\1\171\1\60\1\156\1\uffff\1\141\1\163"+
+        "\1\162\2\164\2\171\2\60\1\141\1\143\1\165\1\uffff\1\171\1\162\1"+
+        "\165\1\145\1\0\2\uffff\2\0\1\uffff\2\0\1\154\1\60\1\145\1\154\1"+
+        "\143\1\uffff\1\60\1\uffff\1\147\1\164\1\160\1\146\4\60\1\157\2\uffff"+
+        "\1\164\1\154\1\164\1\163\1\60\1\154\1\60\1\0\4\uffff\1\0\4\60\1"+
+        "\uffff\1\60\1\145\3\141\1\165\3\uffff\1\157\1\uffff\2\151\1\145"+
+        "\2\60\1\uffff\1\164\12\uffff\1\100\2\143\1\154\1\164\1\151\1\156"+
+        "\1\157\1\60\2\uffff\1\60\4\uffff\2\145\1\60\1\165\1\156\1\164\1"+
+        "\156\2\uffff\2\60\1\uffff\2\164\2\60\2\uffff\2\60\4\uffff";
     static final String DFA16_maxS =
-        "\1\uffff\1\172\1\uffff\1\75\1\151\1\170\1\75\1\uffff\1\156\1\165"+
-        "\6\uffff\1\162\1\100\1\163\1\156\1\170\1\165\1\uffff\1\76\1\154"+
+        "\1\uffff\1\172\1\uffff\1\75\1\151\1\75\3\uffff\1\170\1\165\3\uffff"+
+        "\1\162\1\100\1\163\1\156\1\uffff\1\170\1\165\1\uffff\1\76\1\154"+
         "\1\145\1\141\1\uffff\1\174\2\75\1\172\1\uffff\1\157\5\75\1\uffff"+
-        "\2\163\1\162\1\141\1\145\1\170\1\71\1\uffff\1\uffff\2\uffff\1\141"+
-        "\5\uffff\1\164\1\151\1\164\5\uffff\2\163\6\uffff\1\145\1\164\1\155"+
-        "\3\172\1\145\1\164\1\151\1\163\1\145\1\143\1\164\1\uffff\1\75\2"+
-        "\uffff\1\167\1\164\1\146\1\151\13\uffff\7\uffff\1\uffff\1\143\10"+
-        "\uffff\1\75\3\uffff\2\172\1\165\1\154\1\163\2\uffff\1\71\2\uffff"+
-        "\1\164\1\150\1\164\1\162\1\151\1\160\1\172\1\164\1\uffff\1\145\2"+
-        "\uffff\1\145\1\165\1\uffff\2\162\1\164\1\145\1\162\1\171\1\172\2"+
-        "\uffff\1\141\1\145\1\141\1\163\1\uffff\2\uffff\5\uffff\1\141\4\uffff"+
-        "\1\145\1\163\1\172\1\151\2\172\1\171\1\144\1\145\1\uffff\1\141\1"+
-        "\163\1\162\2\164\2\171\2\172\1\141\1\143\1\uffff\1\171\1\162\1\165"+
-        "\1\145\1\uffff\2\uffff\2\uffff\1\uffff\2\uffff\1\154\1\172\1\145"+
-        "\1\143\2\uffff\1\172\1\145\1\156\1\164\1\160\1\156\4\172\1\157\2"+
-        "\uffff\1\164\1\154\1\163\1\172\1\154\1\172\1\uffff\4\uffff\1\uffff"+
-        "\3\172\1\uffff\1\172\1\144\1\145\3\141\3\uffff\1\157\1\uffff\2\151"+
-        "\1\145\1\172\1\uffff\1\164\11\uffff\1\172\3\143\1\154\1\151\1\156"+
-        "\1\157\1\172\1\uffff\1\172\5\uffff\2\145\1\172\1\156\1\164\1\156"+
-        "\2\uffff\2\172\1\uffff\1\164\2\172\2\uffff\1\172\3\uffff";
+        "\2\163\1\162\1\141\1\145\1\170\1\71\1\uffff\1\uffff\2\uffff\1\147"+
+        "\1\141\5\uffff\1\164\7\uffff\1\164\1\151\1\162\3\uffff\1\145\1\164"+
+        "\1\155\3\172\1\uffff\1\145\1\164\1\151\1\163\1\145\1\143\1\164\1"+
+        "\uffff\1\75\2\uffff\1\167\1\164\1\146\1\151\13\uffff\7\uffff\1\uffff"+
+        "\1\143\10\uffff\1\75\3\uffff\2\172\1\165\1\154\1\163\2\uffff\1\71"+
+        "\2\uffff\1\156\1\164\1\150\1\162\1\164\1\151\1\172\1\164\1\uffff"+
+        "\1\145\2\uffff\1\145\1\165\1\uffff\2\162\1\164\1\145\1\162\1\171"+
+        "\1\172\2\uffff\1\141\1\145\1\141\1\163\1\uffff\2\uffff\5\uffff\1"+
+        "\141\4\uffff\1\145\1\163\1\172\1\141\1\151\1\172\1\171\1\172\1\156"+
+        "\1\uffff\1\141\1\163\1\162\2\164\2\171\2\172\1\141\1\143\1\165\1"+
+        "\uffff\1\171\1\162\1\165\1\145\1\uffff\2\uffff\2\uffff\1\uffff\2"+
+        "\uffff\1\154\1\172\1\145\1\154\1\143\1\uffff\1\172\1\uffff\1\147"+
+        "\1\164\1\160\1\156\4\172\1\157\2\uffff\1\164\1\154\1\164\1\163\1"+
+        "\172\1\154\1\172\1\uffff\4\uffff\1\uffff\4\172\1\uffff\1\172\1\145"+
+        "\3\141\1\165\3\uffff\1\157\1\uffff\2\151\1\145\2\172\1\uffff\1\164"+
+        "\12\uffff\3\143\1\154\1\164\1\151\1\156\1\157\1\172\2\uffff\1\172"+
+        "\4\uffff\2\145\1\172\1\165\1\156\1\164\1\156\2\uffff\2\172\1\uffff"+
+        "\2\164\2\172\2\uffff\2\172\4\uffff";
     static final String DFA16_acceptS =
-        "\2\uffff\1\2\4\uffff\1\7\2\uffff\1\13\1\14\1\15\1\16\1\17\1\20"+
-        "\6\uffff\1\34\4\uffff\1\45\13\uffff\1\112\7\uffff\1\127\1\uffff"+
-        "\1\134\1\135\1\uffff\1\120\1\127\1\2\1\116\1\3\3\uffff\1\73\1\132"+
-        "\1\133\1\6\1\7\2\uffff\1\13\1\14\1\15\1\16\1\17\1\20\15\uffff\1"+
-        "\34\1\uffff\1\115\1\35\4\uffff\1\45\1\46\1\103\1\52\1\47\1\101\1"+
-        "\53\1\117\1\50\1\102\1\51\7\uffff\1\131\1\uffff\1\72\1\110\1\74"+
-        "\1\111\1\75\1\106\1\76\1\107\1\uffff\1\114\1\113\1\112\5\uffff\1"+
-        "\125\1\130\1\uffff\1\126\1\134\10\uffff\1\24\1\uffff\1\123\1\124"+
-        "\2\uffff\1\65\7\uffff\1\100\1\105\5\uffff\1\55\1\56\6\uffff\1\77"+
-        "\1\104\1\121\1\122\11\uffff\1\21\13\uffff\1\66\5\uffff\1\55\1\56"+
-        "\2\uffff\1\61\6\uffff\1\4\1\5\13\uffff\1\37\1\43\7\uffff\1\57\1"+
-        "\60\1\61\1\62\4\uffff\1\11\6\uffff\1\64\1\30\1\71\1\uffff\1\36\4"+
-        "\uffff\1\70\1\uffff\1\44\1\54\1\57\1\60\1\62\1\63\1\67\1\1\1\10"+
-        "\11\uffff\1\41\1\uffff\1\54\1\63\1\12\1\22\1\23\6\uffff\1\40\1\42"+
-        "\2\uffff\1\27\3\uffff\1\25\1\26\1\uffff\1\33\1\31\1\32";
+        "\2\uffff\1\2\3\uffff\1\7\1\10\1\11\2\uffff\1\15\1\16\1\17\4\uffff"+
+        "\1\26\2\uffff\1\34\4\uffff\1\45\13\uffff\1\114\7\uffff\1\131\1\uffff"+
+        "\1\136\1\137\2\uffff\1\122\1\131\1\2\1\120\1\4\1\uffff\1\75\1\134"+
+        "\1\135\1\6\1\7\1\10\1\11\3\uffff\1\15\1\16\1\17\6\uffff\1\26\7\uffff"+
+        "\1\34\1\uffff\1\117\1\35\4\uffff\1\45\1\46\1\105\1\52\1\47\1\103"+
+        "\1\53\1\121\1\50\1\104\1\51\7\uffff\1\133\1\uffff\1\74\1\112\1\76"+
+        "\1\113\1\77\1\110\1\100\1\111\1\uffff\1\116\1\115\1\114\5\uffff"+
+        "\1\127\1\132\1\uffff\1\130\1\136\10\uffff\1\23\1\uffff\1\125\1\126"+
+        "\2\uffff\1\70\7\uffff\1\102\1\107\5\uffff\1\55\1\56\6\uffff\1\101"+
+        "\1\106\1\123\1\124\11\uffff\1\20\14\uffff\1\71\5\uffff\1\55\1\56"+
+        "\2\uffff\1\61\7\uffff\1\5\1\uffff\1\14\11\uffff\1\37\1\43\10\uffff"+
+        "\1\57\1\60\1\61\1\62\5\uffff\1\12\6\uffff\1\65\1\30\1\73\1\uffff"+
+        "\1\36\5\uffff\1\72\1\uffff\1\44\1\54\1\57\1\60\1\62\1\63\1\67\1"+
+        "\1\1\3\1\13\11\uffff\1\66\1\41\1\uffff\1\54\1\63\1\21\1\22\7\uffff"+
+        "\1\40\1\42\2\uffff\1\27\4\uffff\1\24\1\25\2\uffff\1\33\1\31\1\64"+
+        "\1\32";
     static final String DFA16_specialS =
-        "\1\26\37\uffff\1\0\17\uffff\1\25\70\uffff\1\1\1\5\1\6\1\14\1\21"+
-        "\1\23\1\10\64\uffff\1\2\2\uffff\1\15\1\17\1\20\1\24\1\7\37\uffff"+
-        "\1\3\2\uffff\1\13\1\16\1\uffff\1\22\1\12\31\uffff\1\4\4\uffff\1"+
-        "\11\102\uffff}>";
+        "\1\0\36\uffff\1\11\17\uffff\1\22\70\uffff\1\4\1\1\1\10\1\26\1\17"+
+        "\1\24\1\12\64\uffff\1\5\2\uffff\1\7\1\21\1\25\1\23\1\13\40\uffff"+
+        "\1\2\2\uffff\1\6\1\20\1\uffff\1\14\1\15\32\uffff\1\3\4\uffff\1\16"+
+        "\111\uffff}>";
     static final String[] DFA16_transitionS = {
-            "\11\62\2\61\2\62\1\61\22\62\1\61\1\36\1\60\1\12\1\62\1\43\1"+
-            "\35\1\40\1\16\1\17\1\42\1\44\1\13\1\45\1\26\1\6\1\55\11\56\1"+
-            "\2\1\7\1\46\1\3\1\27\1\33\1\21\4\57\1\5\3\57\1\10\11\57\1\11"+
-            "\7\57\1\14\1\62\1\15\1\37\1\57\1\62\1\30\2\57\1\31\1\24\1\53"+
-            "\2\57\1\23\2\57\1\41\1\50\1\22\1\25\1\20\1\57\1\32\1\1\1\52"+
-            "\1\51\1\57\1\4\1\57\1\54\1\57\1\62\1\34\1\62\1\47\uff81\62",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\23\65\1\63\6\65",
+            "\11\61\2\60\2\61\1\60\22\61\1\60\1\35\1\57\1\13\1\61\1\42\1"+
+            "\34\1\37\1\14\1\15\1\41\1\43\1\6\1\44\1\25\1\5\1\54\11\55\1"+
+            "\22\1\2\1\45\1\3\1\26\1\32\1\17\3\56\1\12\1\11\25\56\1\7\1\61"+
+            "\1\10\1\36\1\56\1\61\1\27\2\56\1\30\1\23\1\52\2\56\1\21\2\56"+
+            "\1\40\1\47\1\20\1\24\1\16\1\56\1\31\1\1\1\51\1\50\1\56\1\4\1"+
+            "\56\1\53\1\56\1\61\1\33\1\61\1\46\uff81\61",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\10\65\1\62\12\65"+
+            "\1\63\6\65",
             "",
             "\1\67",
             "\1\71",
-            "\1\73\11\uffff\1\72",
-            "\1\75\4\uffff\1\76\15\uffff\1\74",
-            "",
-            "\1\101",
-            "\1\102",
+            "\1\73\4\uffff\1\74\15\uffff\1\72",
             "",
             "",
             "",
+            "\1\101\11\uffff\1\102",
+            "\1\103",
             "",
             "",
             "",
-            "\1\111",
-            "\1\112",
-            "\1\113\15\uffff\1\115\3\uffff\1\114",
-            "\1\116",
-            "\1\122\1\uffff\1\120\7\uffff\1\117\1\uffff\1\121",
-            "\1\124\1\uffff\1\123\4\uffff\1\125",
+            "\1\107",
+            "\1\110",
+            "\1\111\15\uffff\1\113\3\uffff\1\112",
+            "\1\114",
             "",
-            "\1\130\1\127",
-            "\1\133\5\uffff\1\132",
+            "\1\121\1\uffff\1\117\7\uffff\1\116\1\uffff\1\120",
+            "\1\123\1\uffff\1\122\4\uffff\1\124",
+            "",
+            "\1\127\1\126",
+            "\1\132\5\uffff\1\131",
+            "\1\133",
             "\1\134",
-            "\1\135",
             "",
-            "\1\140\76\uffff\1\137",
-            "\1\142\26\uffff\1\143",
-            "\1\145",
-            "\1\147\3\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\52\160\1\153\1\152\65\160\1\156\6\160\1\157\4\160\1\154\1"+
-            "\151\1\155\uff90\160",
+            "\1\137\76\uffff\1\136",
+            "\1\141\26\uffff\1\142",
+            "\1\144",
+            "\1\146\3\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\52\157\1\152\1\151\65\157\1\155\6\157\1\156\4\157\1\153\1"+
+            "\150\1\154\uff90\157",
+            "\1\160",
             "\1\161",
-            "\1\162",
-            "\1\164",
-            "\1\166",
-            "\1\170",
-            "\1\172\1\173",
+            "\1\163",
+            "\1\165",
+            "\1\167",
+            "\1\171\1\172",
             "",
+            "\1\175",
             "\1\176",
             "\1\177",
             "\1\u0080",
             "\1\u0081",
-            "\1\u0082",
-            "\1\u0086\1\uffff\12\u0085\36\uffff\1\u0083\37\uffff\1\u0083",
-            "\1\u0086\1\uffff\12\u0085",
+            "\1\u0085\1\uffff\12\u0084\36\uffff\1\u0082\37\uffff\1\u0082",
+            "\1\u0085\1\uffff\12\u0084",
             "",
-            "\0\160",
+            "\0\157",
             "",
             "",
+            "\1\u0087",
             "\1\u0088",
             "",
             "",
@@ -3391,43 +3452,42 @@ public class InternalSCCExpLexer extends Lexer {
             "",
             "",
             "\1\u0089",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\u008a",
             "\1\u008b",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\u008c",
+            "",
+            "",
+            "",
             "\1\u008d",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\u008e",
-            "\1\u008f\1\u0090",
-            "\1\u0091",
+            "\1\u008e\1\u008f",
+            "\1\u0090",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\16\65\1\u0095\4"+
-            "\65\1\u0094\6\65",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\17\65\1\u0094\3"+
+            "\65\1\u0093\6\65",
+            "",
+            "\1\u0096",
             "\1\u0097",
             "\1\u0098",
             "\1\u0099",
             "\1\u009a",
             "\1\u009b",
             "\1\u009c",
+            "",
             "\1\u009d",
             "",
-            "\1\u009e",
             "",
-            "",
+            "\1\u009f",
             "\1\u00a0",
             "\1\u00a1",
             "\1\u00a2",
-            "\1\u00a3",
             "",
             "",
             "",
@@ -3439,73 +3499,74 @@ public class InternalSCCExpLexer extends Lexer {
             "",
             "",
             "",
-            "\157\160\1\u00a4\uff90\160",
-            "\47\160\1\u00a5\uffd8\160",
-            "\47\160\1\u00a6\uffd8\160",
-            "\141\160\1\u00a7\7\160\1\u00a8\uff96\160",
-            "\162\160\1\u00a9\uff8d\160",
-            "\156\160\1\u00aa\uff91\160",
-            "\157\160\1\u00ab\uff90\160",
+            "\157\157\1\u00a3\uff90\157",
+            "\47\157\1\u00a4\uffd8\157",
+            "\47\157\1\u00a5\uffd8\157",
+            "\141\157\1\u00a6\7\157\1\u00a7\uff96\157",
+            "\162\157\1\u00a8\uff8d\157",
+            "\156\157\1\u00a9\uff91\157",
+            "\157\157\1\u00aa\uff90\157",
+            "",
+            "\1\u00ab",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "",
             "\1\u00ac",
             "",
             "",
             "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\u00ad",
-            "",
-            "",
-            "",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\1\u00b0",
             "\1\u00b1",
             "\1\u00b2",
+            "",
+            "",
+            "\1\u0085\1\uffff\12\u0084",
+            "",
+            "",
             "\1\u00b3",
-            "",
-            "",
-            "\1\u0086\1\uffff\12\u0085",
-            "",
-            "",
             "\1\u00b4",
             "\1\u00b5",
             "\1\u00b6",
             "\1\u00b7",
             "\1\u00b8",
-            "\1\u00b9",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\1\u00ba",
+            "",
             "\1\u00bb",
             "",
+            "",
             "\1\u00bc",
-            "",
-            "",
             "\1\u00bd",
-            "\1\u00be",
             "",
-            "\1\u00bf\3\uffff\1\u00c0",
+            "\1\u00be\3\uffff\1\u00bf",
+            "\1\u00c0",
             "\1\u00c1",
             "\1\u00c2",
             "\1\u00c3",
             "\1\u00c4",
-            "\1\u00c5",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\17\65\1\u00c5\12"+
+            "\65",
             "",
             "",
             "\1\u00c7",
             "\1\u00c8",
             "\1\u00c9",
             "\1\u00ca",
-            "\156\160\1\u00cb\uff91\160",
+            "\156\157\1\u00cb\uff91\157",
             "",
             "",
-            "\170\160\1\u00ce\uff87\160",
-            "\156\160\1\u00cf\uff91\160",
-            "\47\160\1\u00d0\uffd8\160",
-            "\144\160\1\u00d1\uff9b\160",
-            "\163\160\1\u00d2\uff8c\160",
+            "\170\157\1\u00ce\uff87\157",
+            "\156\157\1\u00cf\uff91\157",
+            "\47\157\1\u00d0\uffd8\157",
+            "\144\157\1\u00d1\uff9b\157",
+            "\163\157\1\u00d2\uff8c\157",
             "\1\u00d3",
             "",
             "",
@@ -3515,10 +3576,10 @@ public class InternalSCCExpLexer extends Lexer {
             "\1\u00d5",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\1\u00d6",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\1\u00d7",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\1\u00d9",
-            "\1\u00da",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\1\u00db",
             "",
             "\1\u00dc",
@@ -3533,114 +3594,124 @@ public class InternalSCCExpLexer extends Lexer {
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\1\u00e6",
             "\1\u00e7",
-            "",
             "\1\u00e8",
+            "",
             "\1\u00e9",
             "\1\u00ea",
             "\1\u00eb",
-            "\145\160\1\u00ec\uff9a\160",
+            "\1\u00ec",
+            "\145\157\1\u00ed\uff9a\157",
             "",
             "",
-            "\47\160\1\u00ed\uffd8\160",
-            "\47\160\1\u00ee\uffd8\160",
+            "\47\157\1\u00ee\uffd8\157",
+            "\47\157\1\u00ef\uffd8\157",
             "",
-            "\47\160\1\u00f0\uffd8\160",
-            "\164\160\1\u00f1\uff8b\160",
-            "\1\u00f2",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\47\157\1\u00f1\uffd8\157",
+            "\164\157\1\u00f2\uff8b\157",
             "\1\u00f3",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\1\u00f4",
-            "",
+            "\1\u00f5",
+            "\1\u00f6",
             "",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\1\u00f6",
-            "\1\u00f7",
+            "",
             "\1\u00f8",
             "\1\u00f9",
-            "\1\u00fa\7\uffff\1\u00fb",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\17\65\1\u00ff\12"+
+            "\1\u00fa",
+            "\1\u00fb\7\uffff\1\u00fc",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\16\65\1\u00fd\13"+
             "\65",
-            "\1\u0101",
-            "",
-            "",
-            "\1\u0102",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\17\65\1\u0101\12"+
+            "\65",
             "\1\u0103",
+            "",
+            "",
             "\1\u0104",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\1\u0105",
             "\1\u0106",
+            "\1\u0107",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\47\160\1\u0108\uffd8\160",
+            "\1\u0109",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\47\157\1\u010b\uffd8\157",
             "",
             "",
             "",
             "",
-            "\47\160\1\u010c\uffd8\160",
+            "\47\157\1\u010f\uffd8\157",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\1\u0110",
-            "\1\u0111",
-            "\1\u0112",
-            "\1\u0113",
             "\1\u0114",
-            "",
-            "",
-            "",
             "\1\u0115",
-            "",
             "\1\u0116",
             "\1\u0117",
             "\1\u0118",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "",
+            "",
+            "",
+            "\1\u0119",
             "",
             "\1\u011a",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            "\1\u011b",
+            "\1\u011c",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\1\u011f\42\uffff\1\u011e",
-            "\1\u0120",
-            "\1\u0121",
-            "\1\u0122",
-            "\1\u0123",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "",
+            "\1\u011f",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\u0123\42\uffff\1\u0122",
             "\1\u0124",
             "\1\u0125",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "",
-            "",
-            "",
-            "",
-            "",
+            "\1\u0126",
+            "\1\u0127",
             "\1\u0128",
             "\1\u0129",
+            "\1\u012a",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\1\u012b",
-            "\1\u012c",
+            "",
+            "",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "",
+            "",
+            "",
+            "",
             "\1\u012d",
-            "",
-            "",
+            "\1\u012e",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
-            "",
             "\1\u0130",
+            "\1\u0131",
+            "\1\u0132",
+            "\1\u0133",
+            "",
+            "",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "",
+            "\1\u0136",
+            "\1\u0137",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
             "",
             "",
             "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "\12\65\7\uffff\32\65\4\uffff\1\65\1\uffff\32\65",
+            "",
             "",
             "",
             ""
@@ -3676,33 +3747,113 @@ public class InternalSCCExpLexer extends Lexer {
             this.transition = DFA16_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | RULE_BOOL | RULE_HEX | RULE_FLOAT | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | RULE_BOOL | RULE_HEX | RULE_FLOAT | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA16_32 = input.LA(1);
+                        int LA16_0 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_32=='n') ) {s = 105;}
+                        if ( (LA16_0=='s') ) {s = 1;}
 
-                        else if ( (LA16_32=='+') ) {s = 106;}
+                        else if ( (LA16_0==';') ) {s = 2;}
 
-                        else if ( (LA16_32=='*') ) {s = 107;}
+                        else if ( (LA16_0=='=') ) {s = 3;}
 
-                        else if ( (LA16_32=='m') ) {s = 108;}
+                        else if ( (LA16_0=='w') ) {s = 4;}
 
-                        else if ( (LA16_32=='o') ) {s = 109;}
+                        else if ( (LA16_0=='/') ) {s = 5;}
 
-                        else if ( (LA16_32=='a') ) {s = 110;}
+                        else if ( (LA16_0==',') ) {s = 6;}
 
-                        else if ( (LA16_32=='h') ) {s = 111;}
+                        else if ( (LA16_0=='[') ) {s = 7;}
 
-                        else if ( ((LA16_32>='\u0000' && LA16_32<=')')||(LA16_32>=',' && LA16_32<='`')||(LA16_32>='b' && LA16_32<='g')||(LA16_32>='i' && LA16_32<='l')||(LA16_32>='p' && LA16_32<='\uFFFF')) ) {s = 112;}
+                        else if ( (LA16_0==']') ) {s = 8;}
 
-                        else s = 50;
+                        else if ( (LA16_0=='E') ) {s = 9;}
+
+                        else if ( (LA16_0=='D') ) {s = 10;}
+
+                        else if ( (LA16_0=='#') ) {s = 11;}
+
+                        else if ( (LA16_0=='(') ) {s = 12;}
+
+                        else if ( (LA16_0==')') ) {s = 13;}
+
+                        else if ( (LA16_0=='p') ) {s = 14;}
+
+                        else if ( (LA16_0=='@') ) {s = 15;}
+
+                        else if ( (LA16_0=='n') ) {s = 16;}
+
+                        else if ( (LA16_0=='i') ) {s = 17;}
+
+                        else if ( (LA16_0==':') ) {s = 18;}
+
+                        else if ( (LA16_0=='e') ) {s = 19;}
+
+                        else if ( (LA16_0=='o') ) {s = 20;}
+
+                        else if ( (LA16_0=='.') ) {s = 21;}
+
+                        else if ( (LA16_0=='>') ) {s = 22;}
+
+                        else if ( (LA16_0=='a') ) {s = 23;}
+
+                        else if ( (LA16_0=='d') ) {s = 24;}
+
+                        else if ( (LA16_0=='r') ) {s = 25;}
+
+                        else if ( (LA16_0=='?') ) {s = 26;}
+
+                        else if ( (LA16_0=='|') ) {s = 27;}
+
+                        else if ( (LA16_0=='&') ) {s = 28;}
+
+                        else if ( (LA16_0=='!') ) {s = 29;}
+
+                        else if ( (LA16_0=='^') ) {s = 30;}
+
+                        else if ( (LA16_0=='\'') ) {s = 31;}
+
+                        else if ( (LA16_0=='l') ) {s = 32;}
+
+                        else if ( (LA16_0=='*') ) {s = 33;}
+
+                        else if ( (LA16_0=='%') ) {s = 34;}
+
+                        else if ( (LA16_0=='+') ) {s = 35;}
+
+                        else if ( (LA16_0=='-') ) {s = 36;}
+
+                        else if ( (LA16_0=='<') ) {s = 37;}
+
+                        else if ( (LA16_0=='~') ) {s = 38;}
+
+                        else if ( (LA16_0=='m') ) {s = 39;}
+
+                        else if ( (LA16_0=='u') ) {s = 40;}
+
+                        else if ( (LA16_0=='t') ) {s = 41;}
+
+                        else if ( (LA16_0=='f') ) {s = 42;}
+
+                        else if ( (LA16_0=='y') ) {s = 43;}
+
+                        else if ( (LA16_0=='0') ) {s = 44;}
+
+                        else if ( ((LA16_0>='1' && LA16_0<='9')) ) {s = 45;}
+
+                        else if ( ((LA16_0>='A' && LA16_0<='C')||(LA16_0>='F' && LA16_0<='Z')||LA16_0=='_'||(LA16_0>='b' && LA16_0<='c')||(LA16_0>='g' && LA16_0<='h')||(LA16_0>='j' && LA16_0<='k')||LA16_0=='q'||LA16_0=='v'||LA16_0=='x'||LA16_0=='z') ) {s = 46;}
+
+                        else if ( (LA16_0=='\"') ) {s = 47;}
+
+                        else if ( ((LA16_0>='\t' && LA16_0<='\n')||LA16_0=='\r'||LA16_0==' ') ) {s = 48;}
+
+                        else if ( ((LA16_0>='\u0000' && LA16_0<='\b')||(LA16_0>='\u000B' && LA16_0<='\f')||(LA16_0>='\u000E' && LA16_0<='\u001F')||LA16_0=='$'||LA16_0=='\\'||LA16_0=='`'||LA16_0=='{'||LA16_0=='}'||(LA16_0>='\u007F' && LA16_0<='\uFFFF')) ) {s = 49;}
 
                         if ( s>=0 ) return s;
                         break;
@@ -3710,317 +3861,235 @@ public class InternalSCCExpLexer extends Lexer {
                         int LA16_105 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_105=='o') ) {s = 164;}
+                        if ( (LA16_105=='\'') ) {s = 164;}
 
-                        else if ( ((LA16_105>='\u0000' && LA16_105<='n')||(LA16_105>='p' && LA16_105<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_105>='\u0000' && LA16_105<='&')||(LA16_105>='(' && LA16_105<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA16_164 = input.LA(1);
+                        int LA16_203 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_164=='n') ) {s = 203;}
+                        if ( (LA16_203=='e') ) {s = 237;}
 
-                        else if ( ((LA16_164>='\u0000' && LA16_164<='m')||(LA16_164>='o' && LA16_164<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_203>='\u0000' && LA16_203<='d')||(LA16_203>='f' && LA16_203<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA16_203 = input.LA(1);
+                        int LA16_237 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_203=='e') ) {s = 236;}
+                        if ( (LA16_237=='\'') ) {s = 267;}
 
-                        else if ( ((LA16_203>='\u0000' && LA16_203<='d')||(LA16_203>='f' && LA16_203<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_237>='\u0000' && LA16_237<='&')||(LA16_237>='(' && LA16_237<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
-                        int LA16_236 = input.LA(1);
+                        int LA16_104 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_236=='\'') ) {s = 264;}
+                        if ( (LA16_104=='o') ) {s = 163;}
 
-                        else if ( ((LA16_236>='\u0000' && LA16_236<='&')||(LA16_236>='(' && LA16_236<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_104>='\u0000' && LA16_104<='n')||(LA16_104>='p' && LA16_104<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 5 : 
+                        int LA16_163 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA16_163=='n') ) {s = 203;}
+
+                        else if ( ((LA16_163>='\u0000' && LA16_163<='m')||(LA16_163>='o' && LA16_163<='\uFFFF')) ) {s = 111;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 6 : 
+                        int LA16_206 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA16_206=='\'') ) {s = 238;}
+
+                        else if ( ((LA16_206>='\u0000' && LA16_206<='&')||(LA16_206>='(' && LA16_206<='\uFFFF')) ) {s = 111;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 7 : 
+                        int LA16_166 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA16_166=='x') ) {s = 206;}
+
+                        else if ( ((LA16_166>='\u0000' && LA16_166<='w')||(LA16_166>='y' && LA16_166<='\uFFFF')) ) {s = 111;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 8 : 
                         int LA16_106 = input.LA(1);
 
                         s = -1;
                         if ( (LA16_106=='\'') ) {s = 165;}
 
-                        else if ( ((LA16_106>='\u0000' && LA16_106<='&')||(LA16_106>='(' && LA16_106<='\uFFFF')) ) {s = 112;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 6 : 
-                        int LA16_107 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA16_107=='\'') ) {s = 166;}
-
-                        else if ( ((LA16_107>='\u0000' && LA16_107<='&')||(LA16_107>='(' && LA16_107<='\uFFFF')) ) {s = 112;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 7 : 
-                        int LA16_171 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA16_171=='s') ) {s = 210;}
-
-                        else if ( ((LA16_171>='\u0000' && LA16_171<='r')||(LA16_171>='t' && LA16_171<='\uFFFF')) ) {s = 112;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 8 : 
-                        int LA16_111 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA16_111=='o') ) {s = 171;}
-
-                        else if ( ((LA16_111>='\u0000' && LA16_111<='n')||(LA16_111>='p' && LA16_111<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_106>='\u0000' && LA16_106<='&')||(LA16_106>='(' && LA16_106<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 9 : 
-                        int LA16_241 = input.LA(1);
+                        int LA16_31 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_241=='\'') ) {s = 268;}
+                        if ( (LA16_31=='n') ) {s = 104;}
 
-                        else if ( ((LA16_241>='\u0000' && LA16_241<='&')||(LA16_241>='(' && LA16_241<='\uFFFF')) ) {s = 112;}
+                        else if ( (LA16_31=='+') ) {s = 105;}
+
+                        else if ( (LA16_31=='*') ) {s = 106;}
+
+                        else if ( (LA16_31=='m') ) {s = 107;}
+
+                        else if ( (LA16_31=='o') ) {s = 108;}
+
+                        else if ( (LA16_31=='a') ) {s = 109;}
+
+                        else if ( (LA16_31=='h') ) {s = 110;}
+
+                        else if ( ((LA16_31>='\u0000' && LA16_31<=')')||(LA16_31>=',' && LA16_31<='`')||(LA16_31>='b' && LA16_31<='g')||(LA16_31>='i' && LA16_31<='l')||(LA16_31>='p' && LA16_31<='\uFFFF')) ) {s = 111;}
+
+                        else s = 49;
 
                         if ( s>=0 ) return s;
                         break;
                     case 10 : 
-                        int LA16_210 = input.LA(1);
+                        int LA16_110 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_210=='t') ) {s = 241;}
+                        if ( (LA16_110=='o') ) {s = 170;}
 
-                        else if ( ((LA16_210>='\u0000' && LA16_210<='s')||(LA16_210>='u' && LA16_210<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_110>='\u0000' && LA16_110<='n')||(LA16_110>='p' && LA16_110<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 11 : 
-                        int LA16_206 = input.LA(1);
+                        int LA16_170 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_206=='\'') ) {s = 237;}
+                        if ( (LA16_170=='s') ) {s = 210;}
 
-                        else if ( ((LA16_206>='\u0000' && LA16_206<='&')||(LA16_206>='(' && LA16_206<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_170>='\u0000' && LA16_170<='r')||(LA16_170>='t' && LA16_170<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 12 : 
-                        int LA16_108 = input.LA(1);
+                        int LA16_209 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_108=='a') ) {s = 167;}
+                        if ( (LA16_209=='\'') ) {s = 241;}
 
-                        else if ( (LA16_108=='i') ) {s = 168;}
-
-                        else if ( ((LA16_108>='\u0000' && LA16_108<='`')||(LA16_108>='b' && LA16_108<='h')||(LA16_108>='j' && LA16_108<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_209>='\u0000' && LA16_209<='&')||(LA16_209>='(' && LA16_209<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 13 : 
-                        int LA16_167 = input.LA(1);
+                        int LA16_210 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_167=='x') ) {s = 206;}
+                        if ( (LA16_210=='t') ) {s = 242;}
 
-                        else if ( ((LA16_167>='\u0000' && LA16_167<='w')||(LA16_167>='y' && LA16_167<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_210>='\u0000' && LA16_210<='s')||(LA16_210>='u' && LA16_210<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 14 : 
-                        int LA16_207 = input.LA(1);
+                        int LA16_242 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_207=='\'') ) {s = 238;}
+                        if ( (LA16_242=='\'') ) {s = 271;}
 
-                        else if ( ((LA16_207>='\u0000' && LA16_207<='&')||(LA16_207>='(' && LA16_207<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_242>='\u0000' && LA16_242<='&')||(LA16_242>='(' && LA16_242<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 15 : 
-                        int LA16_168 = input.LA(1);
+                        int LA16_108 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_168=='n') ) {s = 207;}
+                        if ( (LA16_108=='r') ) {s = 168;}
 
-                        else if ( ((LA16_168>='\u0000' && LA16_168<='m')||(LA16_168>='o' && LA16_168<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_108>='\u0000' && LA16_108<='q')||(LA16_108>='s' && LA16_108<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 16 : 
-                        int LA16_169 = input.LA(1);
+                        int LA16_207 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_169=='\'') ) {s = 208;}
+                        if ( (LA16_207=='\'') ) {s = 239;}
 
-                        else if ( ((LA16_169>='\u0000' && LA16_169<='&')||(LA16_169>='(' && LA16_169<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_207>='\u0000' && LA16_207<='&')||(LA16_207>='(' && LA16_207<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 17 : 
-                        int LA16_109 = input.LA(1);
+                        int LA16_167 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_109=='r') ) {s = 169;}
+                        if ( (LA16_167=='n') ) {s = 207;}
 
-                        else if ( ((LA16_109>='\u0000' && LA16_109<='q')||(LA16_109>='s' && LA16_109<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_167>='\u0000' && LA16_167<='m')||(LA16_167>='o' && LA16_167<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 18 : 
-                        int LA16_209 = input.LA(1);
+                        int LA16_47 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_209=='\'') ) {s = 240;}
+                        if ( ((LA16_47>='\u0000' && LA16_47<='\uFFFF')) ) {s = 111;}
 
-                        else if ( ((LA16_209>='\u0000' && LA16_209<='&')||(LA16_209>='(' && LA16_209<='\uFFFF')) ) {s = 112;}
+                        else s = 49;
 
                         if ( s>=0 ) return s;
                         break;
                     case 19 : 
-                        int LA16_110 = input.LA(1);
+                        int LA16_169 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_110=='n') ) {s = 170;}
+                        if ( (LA16_169=='d') ) {s = 209;}
 
-                        else if ( ((LA16_110>='\u0000' && LA16_110<='m')||(LA16_110>='o' && LA16_110<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_169>='\u0000' && LA16_169<='c')||(LA16_169>='e' && LA16_169<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 20 : 
-                        int LA16_170 = input.LA(1);
+                        int LA16_109 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_170=='d') ) {s = 209;}
+                        if ( (LA16_109=='n') ) {s = 169;}
 
-                        else if ( ((LA16_170>='\u0000' && LA16_170<='c')||(LA16_170>='e' && LA16_170<='\uFFFF')) ) {s = 112;}
+                        else if ( ((LA16_109>='\u0000' && LA16_109<='m')||(LA16_109>='o' && LA16_109<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 21 : 
-                        int LA16_48 = input.LA(1);
+                        int LA16_168 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA16_48>='\u0000' && LA16_48<='\uFFFF')) ) {s = 112;}
+                        if ( (LA16_168=='\'') ) {s = 208;}
 
-                        else s = 50;
+                        else if ( ((LA16_168>='\u0000' && LA16_168<='&')||(LA16_168>='(' && LA16_168<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 22 : 
-                        int LA16_0 = input.LA(1);
+                        int LA16_107 = input.LA(1);
 
                         s = -1;
-                        if ( (LA16_0=='s') ) {s = 1;}
+                        if ( (LA16_107=='a') ) {s = 166;}
 
-                        else if ( (LA16_0==':') ) {s = 2;}
+                        else if ( (LA16_107=='i') ) {s = 167;}
 
-                        else if ( (LA16_0=='=') ) {s = 3;}
-
-                        else if ( (LA16_0=='w') ) {s = 4;}
-
-                        else if ( (LA16_0=='E') ) {s = 5;}
-
-                        else if ( (LA16_0=='/') ) {s = 6;}
-
-                        else if ( (LA16_0==';') ) {s = 7;}
-
-                        else if ( (LA16_0=='I') ) {s = 8;}
-
-                        else if ( (LA16_0=='S') ) {s = 9;}
-
-                        else if ( (LA16_0=='#') ) {s = 10;}
-
-                        else if ( (LA16_0==',') ) {s = 11;}
-
-                        else if ( (LA16_0=='[') ) {s = 12;}
-
-                        else if ( (LA16_0==']') ) {s = 13;}
-
-                        else if ( (LA16_0=='(') ) {s = 14;}
-
-                        else if ( (LA16_0==')') ) {s = 15;}
-
-                        else if ( (LA16_0=='p') ) {s = 16;}
-
-                        else if ( (LA16_0=='@') ) {s = 17;}
-
-                        else if ( (LA16_0=='n') ) {s = 18;}
-
-                        else if ( (LA16_0=='i') ) {s = 19;}
-
-                        else if ( (LA16_0=='e') ) {s = 20;}
-
-                        else if ( (LA16_0=='o') ) {s = 21;}
-
-                        else if ( (LA16_0=='.') ) {s = 22;}
-
-                        else if ( (LA16_0=='>') ) {s = 23;}
-
-                        else if ( (LA16_0=='a') ) {s = 24;}
-
-                        else if ( (LA16_0=='d') ) {s = 25;}
-
-                        else if ( (LA16_0=='r') ) {s = 26;}
-
-                        else if ( (LA16_0=='?') ) {s = 27;}
-
-                        else if ( (LA16_0=='|') ) {s = 28;}
-
-                        else if ( (LA16_0=='&') ) {s = 29;}
-
-                        else if ( (LA16_0=='!') ) {s = 30;}
-
-                        else if ( (LA16_0=='^') ) {s = 31;}
-
-                        else if ( (LA16_0=='\'') ) {s = 32;}
-
-                        else if ( (LA16_0=='l') ) {s = 33;}
-
-                        else if ( (LA16_0=='*') ) {s = 34;}
-
-                        else if ( (LA16_0=='%') ) {s = 35;}
-
-                        else if ( (LA16_0=='+') ) {s = 36;}
-
-                        else if ( (LA16_0=='-') ) {s = 37;}
-
-                        else if ( (LA16_0=='<') ) {s = 38;}
-
-                        else if ( (LA16_0=='~') ) {s = 39;}
-
-                        else if ( (LA16_0=='m') ) {s = 40;}
-
-                        else if ( (LA16_0=='u') ) {s = 41;}
-
-                        else if ( (LA16_0=='t') ) {s = 42;}
-
-                        else if ( (LA16_0=='f') ) {s = 43;}
-
-                        else if ( (LA16_0=='y') ) {s = 44;}
-
-                        else if ( (LA16_0=='0') ) {s = 45;}
-
-                        else if ( ((LA16_0>='1' && LA16_0<='9')) ) {s = 46;}
-
-                        else if ( ((LA16_0>='A' && LA16_0<='D')||(LA16_0>='F' && LA16_0<='H')||(LA16_0>='J' && LA16_0<='R')||(LA16_0>='T' && LA16_0<='Z')||LA16_0=='_'||(LA16_0>='b' && LA16_0<='c')||(LA16_0>='g' && LA16_0<='h')||(LA16_0>='j' && LA16_0<='k')||LA16_0=='q'||LA16_0=='v'||LA16_0=='x'||LA16_0=='z') ) {s = 47;}
-
-                        else if ( (LA16_0=='\"') ) {s = 48;}
-
-                        else if ( ((LA16_0>='\t' && LA16_0<='\n')||LA16_0=='\r'||LA16_0==' ') ) {s = 49;}
-
-                        else if ( ((LA16_0>='\u0000' && LA16_0<='\b')||(LA16_0>='\u000B' && LA16_0<='\f')||(LA16_0>='\u000E' && LA16_0<='\u001F')||LA16_0=='$'||LA16_0=='\\'||LA16_0=='`'||LA16_0=='{'||LA16_0=='}'||(LA16_0>='\u007F' && LA16_0<='\uFFFF')) ) {s = 50;}
+                        else if ( ((LA16_107>='\u0000' && LA16_107<='`')||(LA16_107>='b' && LA16_107<='h')||(LA16_107>='j' && LA16_107<='\uFFFF')) ) {s = 111;}
 
                         if ( s>=0 ) return s;
                         break;

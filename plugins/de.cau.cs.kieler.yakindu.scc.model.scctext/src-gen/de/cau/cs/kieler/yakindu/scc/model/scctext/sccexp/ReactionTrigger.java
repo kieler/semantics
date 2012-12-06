@@ -17,10 +17,10 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getTriggers <em>Triggers</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getDelay <em>Delay</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,6 +30,48 @@ import org.yakindu.sct.model.stext.stext.Expression;
  */
 public interface ReactionTrigger extends Trigger
 {
+  /**
+   * Returns the value of the '<em><b>Triggers</b></em>' containment reference list.
+   * The list contents are of type {@link org.yakindu.sct.model.stext.stext.EventSpec}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Triggers</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Triggers</em>' containment reference list.
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage#getReactionTrigger_Triggers()
+   * @model containment="true"
+   * @generated
+   */
+  EList<EventSpec> getTriggers();
+
+  /**
+   * Returns the value of the '<em><b>Guard Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Guard Expression</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Guard Expression</em>' containment reference.
+   * @see #setGuardExpression(Expression)
+   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage#getReactionTrigger_GuardExpression()
+   * @model containment="true"
+   * @generated
+   */
+  Expression getGuardExpression();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Guard Expression</em>' containment reference.
+   * @see #getGuardExpression()
+   * @generated
+   */
+  void setGuardExpression(Expression value);
+
   /**
    * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -81,47 +123,5 @@ public interface ReactionTrigger extends Trigger
    * @generated
    */
   void setDelay(int value);
-
-  /**
-   * Returns the value of the '<em><b>Triggers</b></em>' containment reference list.
-   * The list contents are of type {@link org.yakindu.sct.model.stext.stext.EventSpec}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Triggers</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Triggers</em>' containment reference list.
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage#getReactionTrigger_Triggers()
-   * @model containment="true"
-   * @generated
-   */
-  EList<EventSpec> getTriggers();
-
-  /**
-   * Returns the value of the '<em><b>Guard Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Guard Expression</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Guard Expression</em>' containment reference.
-   * @see #setGuardExpression(Expression)
-   * @see de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.SccexpPackage#getReactionTrigger_GuardExpression()
-   * @model containment="true"
-   * @generated
-   */
-  Expression getGuardExpression();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Guard Expression</em>' containment reference.
-   * @see #getGuardExpression()
-   * @generated
-   */
-  void setGuardExpression(Expression value);
 
 } // ReactionTrigger

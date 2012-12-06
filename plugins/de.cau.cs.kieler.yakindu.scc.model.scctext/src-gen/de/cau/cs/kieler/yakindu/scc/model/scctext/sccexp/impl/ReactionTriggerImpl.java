@@ -32,10 +32,10 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl#isIsImmediate <em>Is Immediate</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl#getTriggers <em>Triggers</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl#getGuardExpression <em>Guard Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl#isIsImmediate <em>Is Immediate</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.scc.model.scctext.sccexp.impl.ReactionTriggerImpl#getDelay <em>Delay</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,6 +43,26 @@ import org.yakindu.sct.model.stext.stext.Expression;
  */
 public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
 {
+  /**
+   * The cached value of the '{@link #getTriggers() <em>Triggers</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTriggers()
+   * @generated
+   * @ordered
+   */
+  protected EList<EventSpec> triggers;
+
+  /**
+   * The cached value of the '{@link #getGuardExpression() <em>Guard Expression</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGuardExpression()
+   * @generated
+   * @ordered
+   */
+  protected Expression guardExpression;
+
   /**
    * The default value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -84,26 +104,6 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   protected int delay = DELAY_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getTriggers() <em>Triggers</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTriggers()
-   * @generated
-   * @ordered
-   */
-  protected EList<EventSpec> triggers;
-
-  /**
-   * The cached value of the '{@link #getGuardExpression() <em>Guard Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getGuardExpression()
-   * @generated
-   * @ordered
-   */
-  protected Expression guardExpression;
-
-  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -122,52 +122,6 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   protected EClass eStaticClass()
   {
     return SccexpPackage.Literals.REACTION_TRIGGER;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public boolean isIsImmediate()
-  {
-    return isImmediate;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setIsImmediate(boolean newIsImmediate)
-  {
-    boolean oldIsImmediate = isImmediate;
-    isImmediate = newIsImmediate;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SccexpPackage.REACTION_TRIGGER__IS_IMMEDIATE, oldIsImmediate, isImmediate));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public int getDelay()
-  {
-    return delay;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setDelay(int newDelay)
-  {
-    int oldDelay = delay;
-    delay = newDelay;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SccexpPackage.REACTION_TRIGGER__DELAY, oldDelay, delay));
   }
 
   /**
@@ -237,6 +191,52 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isIsImmediate()
+  {
+    return isImmediate;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setIsImmediate(boolean newIsImmediate)
+  {
+    boolean oldIsImmediate = isImmediate;
+    isImmediate = newIsImmediate;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SccexpPackage.REACTION_TRIGGER__IS_IMMEDIATE, oldIsImmediate, isImmediate));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public int getDelay()
+  {
+    return delay;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDelay(int newDelay)
+  {
+    int oldDelay = delay;
+    delay = newDelay;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SccexpPackage.REACTION_TRIGGER__DELAY, oldDelay, delay));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -260,14 +260,14 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   {
     switch (featureID)
     {
-      case SccexpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
-        return isIsImmediate();
-      case SccexpPackage.REACTION_TRIGGER__DELAY:
-        return getDelay();
       case SccexpPackage.REACTION_TRIGGER__TRIGGERS:
         return getTriggers();
       case SccexpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         return getGuardExpression();
+      case SccexpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
+        return isIsImmediate();
+      case SccexpPackage.REACTION_TRIGGER__DELAY:
+        return getDelay();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -283,18 +283,18 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   {
     switch (featureID)
     {
-      case SccexpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
-        setIsImmediate((Boolean)newValue);
-        return;
-      case SccexpPackage.REACTION_TRIGGER__DELAY:
-        setDelay((Integer)newValue);
-        return;
       case SccexpPackage.REACTION_TRIGGER__TRIGGERS:
         getTriggers().clear();
         getTriggers().addAll((Collection<? extends EventSpec>)newValue);
         return;
       case SccexpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         setGuardExpression((Expression)newValue);
+        return;
+      case SccexpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
+        setIsImmediate((Boolean)newValue);
+        return;
+      case SccexpPackage.REACTION_TRIGGER__DELAY:
+        setDelay((Integer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -310,17 +310,17 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   {
     switch (featureID)
     {
-      case SccexpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
-        setIsImmediate(IS_IMMEDIATE_EDEFAULT);
-        return;
-      case SccexpPackage.REACTION_TRIGGER__DELAY:
-        setDelay(DELAY_EDEFAULT);
-        return;
       case SccexpPackage.REACTION_TRIGGER__TRIGGERS:
         getTriggers().clear();
         return;
       case SccexpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         setGuardExpression((Expression)null);
+        return;
+      case SccexpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
+        setIsImmediate(IS_IMMEDIATE_EDEFAULT);
+        return;
+      case SccexpPackage.REACTION_TRIGGER__DELAY:
+        setDelay(DELAY_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -336,14 +336,14 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   {
     switch (featureID)
     {
-      case SccexpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
-        return isImmediate != IS_IMMEDIATE_EDEFAULT;
-      case SccexpPackage.REACTION_TRIGGER__DELAY:
-        return delay != DELAY_EDEFAULT;
       case SccexpPackage.REACTION_TRIGGER__TRIGGERS:
         return triggers != null && !triggers.isEmpty();
       case SccexpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         return guardExpression != null;
+      case SccexpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
+        return isImmediate != IS_IMMEDIATE_EDEFAULT;
+      case SccexpPackage.REACTION_TRIGGER__DELAY:
+        return delay != DELAY_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }

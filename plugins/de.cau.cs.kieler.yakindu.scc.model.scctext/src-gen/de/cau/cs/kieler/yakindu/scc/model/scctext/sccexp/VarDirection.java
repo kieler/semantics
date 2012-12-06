@@ -27,7 +27,7 @@ public enum VarDirection implements Enumerator
    * @generated
    * @ordered
    */
-  INOUT(0, "INOUT", "inout"),
+  INOUT(0, "INOUT", "inputoutut"),
 
   /**
    * The '<em><b>IN</b></em>' literal object.
@@ -37,7 +37,7 @@ public enum VarDirection implements Enumerator
    * @generated
    * @ordered
    */
-  IN(1, "IN", "in"),
+  IN(1, "IN", "input"),
 
   /**
    * The '<em><b>OUT</b></em>' literal object.
@@ -47,7 +47,7 @@ public enum VarDirection implements Enumerator
    * @generated
    * @ordered
    */
-  OUT(2, "OUT", "out");
+  OUT(2, "OUT", "output");
 
   /**
    * The '<em><b>INOUT</b></em>' literal value.
@@ -58,7 +58,7 @@ public enum VarDirection implements Enumerator
    * </p>
    * <!-- end-user-doc -->
    * @see #INOUT
-   * @model literal="inout"
+   * @model literal="inputoutut"
    * @generated
    * @ordered
    */
@@ -73,7 +73,7 @@ public enum VarDirection implements Enumerator
    * </p>
    * <!-- end-user-doc -->
    * @see #IN
-   * @model literal="in"
+   * @model literal="input"
    * @generated
    * @ordered
    */
@@ -88,7 +88,7 @@ public enum VarDirection implements Enumerator
    * </p>
    * <!-- end-user-doc -->
    * @see #OUT
-   * @model literal="out"
+   * @model literal="output"
    * @generated
    * @ordered
    */
