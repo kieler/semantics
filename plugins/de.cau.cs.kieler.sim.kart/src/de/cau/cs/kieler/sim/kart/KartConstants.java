@@ -106,7 +106,7 @@ public final class KartConstants {
     public static final String SIGNALVAR = "Erroneous signals variable";
 
     /** The Constant STOPEXECUTION. */
-    public static final String STOPEXECUTION = "Stop execution upon end of ESO file";
+    public static final String AUTOMATIC = "Automatic stop and increment tace";
 
     /** The Constant FILEEXTS. */
     public static final String[] FILEEXTS = { "*.eso", "*.esi" };

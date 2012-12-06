@@ -431,6 +431,34 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+         
+   <plugin
+         id="de.cau.cs.kieler.sim.kart"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>         
+
+   <plugin
+         id="de.cau.cs.kieler.sim.kart.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>         
+
+   <plugin
+         id="de.cau.cs.kieler.sim.benchmark"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="de.cau.cs.kieler.synccharts.benchmark"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sim.kiem.ui.datacomponent"
@@ -566,6 +594,13 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.synccharts.sim.sc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.synccharts.sim.s"
          download-size="0"
          install-size="0"
          version="0.0.0"

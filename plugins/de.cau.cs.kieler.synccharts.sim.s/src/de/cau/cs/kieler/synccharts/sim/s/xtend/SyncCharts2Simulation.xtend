@@ -31,6 +31,9 @@ import java.util.List
 import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.synccharts.Action
 import de.cau.cs.kieler.synccharts.Emission
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.ComplexExpression
+import de.cau.cs.kieler.synccharts.StateType
 
 /**
  * This class handles the<BR>
@@ -190,6 +193,30 @@ class SyncCharts2Simulation {
      }     
      
     //-------------------------------------------------------------------------
+    //--            H O T F I X   F O R   S Y N C H A R T S                  --
+    //-------------------------------------------------------------------------
+    // Because the SyncCharts KExpressions Parser has a problem with
+    // AND / OR lists of more than two elements the following fixes
+    // an OperatorExpression of such kind.
+    // Test 141
+    def OperatorExpression fixForOperatorExpressionLists(OperatorExpression operatorExpression) {
+        if (operatorExpression.subExpressions.size <= 2) {
+            // In this case we do not need the fix
+            return operatorExpression;
+        }
+        // Here we apply the fix recursively
+        val operatorExpressionCopy = operatorExpression.copy;
+        val newOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+        newOperatorExpression.setOperator(operatorExpression.operator);
+        newOperatorExpression.subExpressions.add(operatorExpression.subExpressions.head);
+        // Call recursively without the first element
+        operatorExpressionCopy.subExpressions.remove(0);
+        newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
+        return newOperatorExpression;
+    }
+    
+     
+    //-------------------------------------------------------------------------
     //--             E X P O S E   L O C A L   S I G N A L S                 --
     //-------------------------------------------------------------------------
     // @requires: none
@@ -304,6 +331,18 @@ class SyncCharts2Simulation {
     //--              N O R M A L   T E R M I N A T I O N                    --
     //-------------------------------------------------------------------------
     // @requires: during actions
+    
+    // Edit: 30.11.2012: Normal Terminations are considered to be immediate
+    // This means that e.g. test10 with a normal termination self loop can
+    // be executed as long as the body not immediately.
+    // For this reason ANOTHER signal terminated is introduced not per region
+    // byt per normal termination, indicating a taken normal termination
+    // and preventing the same to be taken again within a tick.
+    // Like adding a pause in Esterel to
+    // loop
+    // [ p || pause ]
+    // end loop
+    // when p may or may not be instantanous.
 
     
     // Transforming Normal Termination. 
@@ -334,43 +373,68 @@ class SyncCharts2Simulation {
                     normalTerminationTransition.setType(TransitionType::WEAKABORT);
                     val triggerExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
                          triggerExpression.setOperator(OperatorType::AND);
-                         triggerExpression.subExpressions
                
+                    // Setup the auxiliary terminated signal indicating that a normal termination
+                    // has been taken in the same synchronous tick and must not be taken again.
+                    val terminatedSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                        terminatedSignal.setName("terminated" + state.hashCode);
+                        terminatedSignal.setIsInput(false);
+                        terminatedSignal.setIsOutput(false);
+                        terminatedSignal.setType(ValueType::PURE);
+//                        state.parentRegion.parentState.signals.add(terminatedSignal);
+                        targetRootRegion.states.get(0).signals.add(terminatedSignal);
+                        
+                    val terminatedSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                        terminatedSignalReference.setValuedObject(terminatedSignal);
+                    val notTerminatedExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+                        notTerminatedExpression.setOperator(OperatorType::NOT);
+                        notTerminatedExpression.subExpressions.add(terminatedSignalReference);
+                    val terminatedEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                        terminatedEmission.setSignal(terminatedSignal);
+                    // Add the prevention of re-run of normal termination within the same tick
+                    triggerExpression.subExpressions.add(notTerminatedExpression);
+                    // Prevent the normal termination to be taken again by emitting this helper signal (test10)
+                    normalTerminationTransition.effects.add(terminatedEmission);
+                                        
                     // Walk thru all regions that must terminate and create one termination signal per
                     // region. For the weak abort create a conjunction of these signals as the trigger.
                     for (region : state.regions) {
-                         // Setup the auxiliarySignal as an OUTPUT to the module
-                         val termSignal = KExpressionsFactory::eINSTANCE.createSignal();
-                         termSignal.setName("term" + region.hashCode);
-                         termSignal.setIsInput(false);
-                         termSignal.setIsOutput(false);
-                         termSignal.setType(ValueType::PURE);
-                    
+                         // Setup the auxiliary termination signal indicating that a normal termination
+                         // should be taken.
+                         val finishedSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                         finishedSignal.setName("finished" + region.hashCode);
+                         finishedSignal.setIsInput(false);
+                         finishedSignal.setIsOutput(false);
+                         finishedSignal.setType(ValueType::PURE);
+
                          val finalStates = region.states.filter(e | e.isFinal == true);
                          // For all final states add a during action that emits the termination signal
                          for (finalState : finalStates) {
-                              val termEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                              termEmission.setSignal(termSignal);
-                              val termDuringAction =  SyncchartsFactory::eINSTANCE.createAction
+                              val finishedEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                              finishedEmission.setSignal(finishedSignal);
+                              val termDuringAction = SyncchartsFactory::eINSTANCE.createAction
                               termDuringAction.setIsImmediate(true);
-                              termDuringAction.effects.add(termEmission);
+                              termDuringAction.effects.add(finishedEmission);
                               finalState.innerActions.add(termDuringAction);
                               // Set the final state flag to false
                               finalState.setIsFinal(false);
                          }
                     
-                         targetRootRegion.states.get(0).signals.add(termSignal);
+//                         state.parentRegion.parentState.signals.add(finishedSignal);
+                       targetRootRegion.states.get(0).signals.add(finishedSignal);
                          val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                         valuedObjectReference.setValuedObject(termSignal);
+                         valuedObjectReference.setValuedObject(finishedSignal);
                          triggerExpression.subExpressions.add(valuedObjectReference);
                     }
                
+                    // A normal termination should immediately be triggerable! (test 145) 
+                    normalTerminationTransition.setIsImmediate(true);
                     if (triggerExpression.subExpressions.size == 1) {
                          // if there is just one signal, we do not need an AND!
                          normalTerminationTransition.setTrigger(triggerExpression.subExpressions.get(0));
                     }
                     else if (triggerExpression.subExpressions.size > 1) {
-                         normalTerminationTransition.setTrigger(triggerExpression);
+                         normalTerminationTransition.setTrigger(triggerExpression.fixForOperatorExpressionLists);
                     }
                } // end if normal termination present
 
@@ -678,6 +742,9 @@ class SyncCharts2Simulation {
             auxiliaryState.setLabel(state.id + "History");
             auxiliaryState.setIsInitial(true);
             
+            // Move local signal declaration to auxiliary state (test 139)
+            auxiliaryState.signals.addAll(state.signals);
+            
             // Move all regions to new auxiliary State
             for (region : ImmutableList::copyOf(state.regions)) {
                 auxiliaryState.regions.add(region)
@@ -792,7 +859,8 @@ class SyncCharts2Simulation {
             //---
             
             // For resetting the inner states when entering by a normal transition
-            // add a reset signal and emit it when entering
+            // add a reset signal and emit it when entering.
+            // On entering also all local (valued) signals will be reset automatically.
             val auxiliaryResetSignal = KExpressionsFactory::eINSTANCE.createSignal();
             val auxiliaryResetSignalUID = state.id + "Reset";
             auxiliaryResetSignal.setName(auxiliaryResetSignalUID);
@@ -1372,6 +1440,527 @@ class SyncCharts2Simulation {
     }
            
            
+    //-------------------------------------------------------------------------
+    //--                        P R E -  O P E R A T O R                     --
+    //-------------------------------------------------------------------------
+           
+    // Transforming PRE Operator.
+    def Region transformPreOperator(Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+
+        for(targetState : ImmutableList::copyOf(targetStates)) {
+            // This statement we want to modify
+            targetState.transformPreOperator(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+
+    // Return a list of Pre Expressions for an action that references the signal
+    def List<OperatorExpression> getPreExpression(Action action, Signal signal) {
+        val List<OperatorExpression> returnPreExpressions = <OperatorExpression> newLinkedList;
+        val preExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(e | 
+            (e.operator == OperatorType::PRE) && 
+            (e.subExpressions.size() == 1) &&  
+            (e.subExpressions.get(0) instanceof ValuedObjectReference) &&
+            ((e.subExpressions.get(0) as ValuedObjectReference).valuedObject == signal)
+        );
+        returnPreExpressions.addAll(preExpressions);
+        return returnPreExpressions;
+    }
+
+    // Return a list of Pre Expressions for an action that references the value of a signal
+    def List<OperatorExpression> getPreValExpression(Action action, Signal signal) {
+        val List<OperatorExpression> returnPreValExpressions = <OperatorExpression> newLinkedList;
+        val preValExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(e | 
+            (e.operator == OperatorType::PRE) && 
+            (e.subExpressions.size() == 1) &&  
+            (e.subExpressions.get(0) instanceof OperatorExpression) &&
+            ((e.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) &&
+            ((e.subExpressions.get(0) as OperatorExpression).subExpressions.size() == 1) &&
+            ((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) instanceof ValuedObjectReference) &&
+            (((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject == signal)
+        );
+        returnPreValExpressions.addAll(preValExpressions);
+        return returnPreValExpressions;
+    }
+
+    
+    // Traverse all states that might declare a signal that is used with the PRE operator
+    def void transformPreOperator(State state, Region targetRootRegion) {
+        
+        // Filter all signals and retrieve those that are referenced
+        val allActions = state.eAllContents.filter(typeof(Action)).toList();
+        val allPreSignals = state.signals.filter (signal | allActions.filter(action | action.getPreExpression(signal).size > 0 || action.getPreValExpression(signal).size > 0).size > 0); 
+        
+        for (preSignal : ImmutableList::copyOf(allPreSignals)) {
+
+            // Create PreS / PreV
+            val explicitPreSignal = KExpressionsFactory::eINSTANCE.createSignal();
+            explicitPreSignal.setName("Pre" + preSignal.name);
+            explicitPreSignal.setIsInput(false);
+            explicitPreSignal.setIsOutput(false);
+            explicitPreSignal.setType(preSignal.type);
+            if (!preSignal.initialValue.nullOrEmpty) {
+                explicitPreSignal.setInitialValue(preSignal.initialValue);
+            }
+            // Add to the current state
+            state.signals.add(explicitPreSignal);
+
+            // PreSignal and ExplicitPreSignal References                
+            val explicitPreSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                explicitPreSignalReference.setValuedObject(explicitPreSignal);
+            val preSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                preSignalReference.setValuedObject(preSignal);
+            
+            // Add a Pre and NotPre state
+            val preState = SyncchartsFactory::eINSTANCE.createState();
+            preState.setId("Pre" + preSignal.hashCode);
+            preState.setLabel("Pre");
+            val notPreState = SyncchartsFactory::eINSTANCE.createState();
+            notPreState.setId("NotPre" + preSignal.hashCode);
+            notPreState.setIsInitial(true);
+            notPreState.setLabel("NotPre");       
+            
+            // Add a region     
+            val preRegion = SyncchartsFactory::eINSTANCE.createRegion();
+            preRegion.setId("PreRegion" + preSignal.hashCode);
+            preRegion.states.add(preState);
+            preRegion.states.add(notPreState);
+            state.regions.add(preRegion);
+   
+            // Transitions         
+            val notPre2PreTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+            notPre2PreTransition.setTargetState(preState);
+            notPre2PreTransition.setPriority(1);
+            notPreState.outgoingTransitions.add(notPre2PreTransition);
+            val pre2NotPreTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+            pre2NotPreTransition.setPriority(2);
+            pre2NotPreTransition.setTargetState(notPreState);
+            preState.outgoingTransitions.add(pre2NotPreTransition);
+            
+            if (preSignal.type == ValueType::PURE) {
+                // Simple Signal Case
+                notPre2PreTransition.setTrigger(preSignalReference.copy);
+                val explicitPreSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                    explicitPreSignalEmission.setSignal(explicitPreSignal);
+                val preSelfTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    preSelfTransition.setTargetState(preState);
+                    preSelfTransition.setPriority(1);
+                    preState.outgoingTransitions.add(preSelfTransition);
+                preSelfTransition.setTrigger(preSignalReference.copy);
+                preSelfTransition.effects.add(explicitPreSignalEmission.copy);
+                pre2NotPreTransition.effects.add(explicitPreSignalEmission.copy);
+            }
+            else {
+                // Valued Signal Case
+                
+                // Additional PreB state
+                val preBState = SyncchartsFactory::eINSTANCE.createState();
+                    preBState.setId("PreB" + preSignal.hashCode);
+                    preBState.setLabel("PreB");
+                preRegion.states.add(preBState);
+                
+                val preB2PreTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    preB2PreTransition.setTargetState(preState);
+                    preB2PreTransition.setPriority(1);
+                    preBState.outgoingTransitions.add(preB2PreTransition);
+                val preB2NotPreTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    preB2NotPreTransition.setTargetState(notPreState);
+                    preB2NotPreTransition.setPriority(2);
+                    preBState.outgoingTransitions.add(preB2NotPreTransition);
+                val pre2PreBTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    pre2PreBTransition.setTargetState(preBState);
+                    pre2PreBTransition.setPriority(1);
+                    preState.outgoingTransitions.add(pre2PreBTransition);
+                    
+                // Additional Signals                    
+                val explicitPre1Signal = KExpressionsFactory::eINSTANCE.createSignal();
+                explicitPre1Signal.setName("Pre1" + preSignal.name);
+                explicitPre1Signal.setIsInput(false);
+                explicitPre1Signal.setIsOutput(false);
+                explicitPre1Signal.setType(preSignal.type);
+                if (!preSignal.initialValue.nullOrEmpty) {
+                    explicitPre1Signal.setInitialValue(preSignal.initialValue);
+                }
+                state.signals.add(explicitPre1Signal);
+                val explicitPre2Signal = KExpressionsFactory::eINSTANCE.createSignal();
+                explicitPre2Signal.setName("Pre2" + preSignal.name);
+                explicitPre2Signal.setIsInput(false);
+                explicitPre2Signal.setIsOutput(false);
+                explicitPre2Signal.setType(preSignal.type);
+                if (!preSignal.initialValue.nullOrEmpty) {
+                    explicitPre2Signal.setInitialValue(preSignal.initialValue);
+                }
+                state.signals.add(explicitPre2Signal);
+                
+                // Transition triggers & effects
+                val explicitPre1SignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    explicitPre1SignalReference.setValuedObject(explicitPre1Signal);
+                val explicitPre2SignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    explicitPre2SignalReference.setValuedObject(explicitPre2Signal);
+                                    
+                val valPreExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                    valPreExpression.setOperator(OperatorType::VAL);   
+                    valPreExpression.subExpressions.add(preSignalReference.copy);             
+                val valExplicitPre1Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                    valExplicitPre1Expression.setOperator(OperatorType::VAL);   
+                    valExplicitPre1Expression.subExpressions.add(explicitPre1SignalReference.copy);             
+                val valExplicitPre2Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                    valExplicitPre2Expression.setOperator(OperatorType::VAL);   
+                    valExplicitPre2Expression.subExpressions.add(explicitPre2SignalReference.copy);             
+                
+                val explicitPreSignalEmissionFromPre1 = SyncchartsFactory::eINSTANCE.createEmission();
+                    explicitPreSignalEmissionFromPre1.setSignal(explicitPreSignal);
+                    explicitPreSignalEmissionFromPre1.setNewValue(valExplicitPre1Expression.copy);
+                val explicitPreSignalEmissionFromPre2 = SyncchartsFactory::eINSTANCE.createEmission();
+                    explicitPreSignalEmissionFromPre2.setSignal(explicitPreSignal);
+                    explicitPreSignalEmissionFromPre2.setNewValue(valExplicitPre2Expression.copy);
+                    
+                val explicitPre1SignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                    explicitPre1SignalEmission.setSignal(explicitPre1Signal);
+                    explicitPre1SignalEmission.setNewValue(valPreExpression.copy);
+                val explicitPre2SignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                    explicitPre2SignalEmission.setSignal(explicitPre2Signal);
+                    explicitPre2SignalEmission.setNewValue(valPreExpression.copy);
+                    
+                // Fill transitions
+                pre2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
+
+                pre2PreBTransition.setTrigger(preSignalReference.copy);
+                pre2PreBTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
+                pre2PreBTransition.effects.add(explicitPre2SignalEmission.copy);
+                 
+                preB2PreTransition.setTrigger(preSignalReference.copy);
+                preB2PreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
+                preB2PreTransition.effects.add(explicitPre1SignalEmission.copy);
+                 
+                preB2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
+                 
+                notPre2PreTransition.setTrigger(preSignalReference.copy);
+                notPre2PreTransition.effects.add(explicitPre1SignalEmission.copy);
+            }
+
+            // Replace the ComplexExpression Pre(S) by the SignalReference PreS in all actions            
+            // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
+            for (action : allActions) {
+               val preExpressions = action.getPreExpression(preSignal);
+               val preValExpressions = action.getPreValExpression(preSignal);
+
+               for (preExpression : preExpressions) {
+                   val container = preExpression.eContainer;
+                   
+                   if (container instanceof ComplexExpression) {
+                       // If nested PRE or PRE inside another complex expression
+                       (container as ComplexExpression).subExpressions.remove(preExpression);
+                       (container as ComplexExpression).subExpressions.add(explicitPreSignalReference.copy);
+                   } else if(container instanceof Action) {
+                       // If PRE directly a trigger
+                       (container as Action).setTrigger(explicitPreSignalReference.copy)
+                   }
+               }
+                   
+               for (preValExpression : preValExpressions) {
+                   val container = preValExpression.eContainer;
+                   
+
+                   
+                   if ((!preValExpression.subExpressions.nullOrEmpty) && 
+                       preValExpression.subExpressions.get(0) instanceof OperatorExpression && 
+                       (preValExpression.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL
+                   ) {
+                       // Transform pre(?V) --> ?PreV
+                       val valueExpression = preValExpression.subExpressions.get(0);
+                       (valueExpression as OperatorExpression).subExpressions.remove(0);
+                       (valueExpression as OperatorExpression).subExpressions.add(explicitPreSignalReference.copy);
+                       if (container instanceof Emission) {
+                            (container as Emission).setNewValue(valueExpression.copy);
+                       }
+                       else if (container instanceof ComplexExpression) {
+                           // If nested PRE or PRE inside another complex expression
+                           (container as ComplexExpression).subExpressions.remove(preValExpression);
+                           (container as ComplexExpression).subExpressions.add(valueExpression.copy);
+                      }
+                  }
+               
+               }
+            }
+        }
+    }
+    
+    
+    //-------------------------------------------------------------------------
+    //--          S C C -  A B O R T S -  T R A N S F O R M A T I O N        --
+    //-------------------------------------------------------------------------
+           
+    // Transforming SCC Aborts.
+    def Region transformSCCAborts(Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        val targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+
+        for(targetState : ImmutableList::copyOf(targetStates)) {
+            // This statement we want to modify
+            targetState.transformSCCAborts(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+    
+    // For all transitions of a state compute the maximal priority
+    def int maxPriority(State state) {
+        var priority = 0;
+        for (transition : state.outgoingTransitions) {
+            val newPriority = transition.priority;
+            if (newPriority > priority) {
+                priority = newPriority;
+            }
+        }
+        priority;
+    }
+
+    // Traverse all states 
+    def void transformSCCAborts(State state, Region targetRootRegion) {
+        
+        if (state.hierarchical && state.outgoingTransitions.size() > 0) {
+            // Remember all outgoing transitions
+            val originalOutgoingTransitions = ImmutableList::copyOf(state.outgoingTransitions);
+            val outgoingStrongTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::STRONGABORT));
+            val outgoingWeakTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::WEAKABORT));
+            val normalTerminationExists = originalOutgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0;
+            // Remember all regions
+            val originalRegions = ImmutableList::copyOf(state.regions);
+            
+            
+            // For a hierarchical state:
+            // 1. for each existing region, create a new Aborted-auxiliary state
+            // 2. create a watcher region
+            
+            // 2. Watcher region
+            // Add a Pre and NotPre state
+            val runState = SyncchartsFactory::eINSTANCE.createState();
+            runState.setId("Run" + state.hashCode);
+            runState.setLabel("Run");
+            runState.setIsInitial(true);
+            //runState.setIsFinal(true);  // DO NOT SET THE RUN STATE AS FINAL! //
+            val abortState = SyncchartsFactory::eINSTANCE.createState();
+            abortState.setId("Abort" + state.hashCode);
+            abortState.setLabel("Abort");             
+            abortState.setIsFinal(true);
+            val watcherRegion = SyncchartsFactory::eINSTANCE.createRegion();
+            watcherRegion.setId("Ctrl" + state.hashCode);
+            watcherRegion.states.add(runState);
+            watcherRegion.states.add(abortState);
+            val needWatcherRegion = (originalOutgoingTransitions.filter(e| e.type != TransitionType::NORMALTERMINATION).size > 0);
+            if (needWatcherRegion) {
+                state.regions.add(watcherRegion);
+            }
+            
+            // Add a conditional node outside of the state and connect it with
+            // a normal termination transition
+            val conditionalState = SyncchartsFactory::eINSTANCE.createState();
+            conditionalState.setId("_Conditional" + state.hashCode);
+            conditionalState.setType(StateType::CONDITIONAL);
+            state.parentRegion.states.add(conditionalState);
+            val normalTerminationTransition = SyncchartsFactory::eINSTANCE.createTransition();
+                normalTerminationTransition.setTargetState(conditionalState);
+                normalTerminationTransition.setPriority(1);
+                normalTerminationTransition.setType(TransitionType::NORMALTERMINATION);
+                state.outgoingTransitions.add(normalTerminationTransition);            
+                        
+            // Create complex triggers to be filled with auxiliary signals (sorted strong or weak)                        
+            var Expression strongTrigger; 
+            val strongTriggerOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                strongTriggerOperatorExpression.setOperator(OperatorType::OR); 
+                strongTrigger = strongTriggerOperatorExpression;                
+            var Expression weakTrigger; 
+            val weakTriggerOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                weakTriggerOperatorExpression.setOperator(OperatorType::OR);                  
+                weakTrigger = weakTriggerOperatorExpression;                
+            
+            
+            // For every transition 
+            for (transition : originalOutgoingTransitions) {
+                // Add transition to watcher region
+                // ONLY iff this is not a normal termination
+                if (transition.type != TransitionType::NORMALTERMINATION) {
+                    // Create a signal 
+                    val transitionSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                    val transitionSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                        transitionSignalReference.setValuedObject(transitionSignal);
+                    if (transition.type == TransitionType::STRONGABORT) {
+                        transitionSignal.setName("_" + state.id + "_S" + transition.priority);
+                        strongTriggerOperatorExpression.subExpressions.add(transitionSignalReference.copy);
+                    } else {
+                        transitionSignal.setName("_" + state.id + "_W" + transition.priority);
+                        weakTriggerOperatorExpression.subExpressions.add(transitionSignalReference.copy);
+                    }                    
+                    transitionSignal.setIsInput(false);
+                    transitionSignal.setIsOutput(false);
+                    state.parentRegion.parentState.signals.add(transitionSignal);
+                
+                    val watcherTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                    watcherTransition.setTargetState(abortState);
+                    runState.outgoingTransitions.add(watcherTransition);
+                    // Move trigger from original transition to watcher transition
+                    watcherTransition.setTrigger(transition.trigger.copy);
+                    // Watcher transition gets the same priority / immediate / delay
+                    watcherTransition.setPriority(transition.priority);
+                    watcherTransition.setIsImmediate(transition.isImmediate);
+                    watcherTransition.setDelay(transition.delay);
+                    // Watcher transition emits the auxiliary signal
+                    val transitionSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                        transitionSignalEmission.setSignal(transitionSignal);
+                    watcherTransition.effects.add(transitionSignalEmission);
+                    // Change trigger of original transition to transitionSignalReference
+                    transition.setTrigger(transitionSignalReference.copy);
+                }
+                
+                // Move original transition from state to conditionalState
+                // and remove strong, normal termination attributes
+                // put immediate attribute
+                conditionalState.outgoingTransitions.add(transition);
+                transition.setType(TransitionType::WEAKABORT);
+                transition.setIsImmediate(true); 
+            }
+            
+            // Simplify triggers (if they only consist of one signal reference)
+            if (strongTriggerOperatorExpression.subExpressions.size == 1) {
+                strongTrigger = strongTriggerOperatorExpression.subExpressions.get(0);
+            }
+            if (weakTriggerOperatorExpression.subExpressions.size == 1) {
+                weakTrigger = weakTriggerOperatorExpression.subExpressions.get(0);
+            }
+            // Hotfix for SyncCharts
+            if (strongTrigger instanceof OperatorExpression) {
+                strongTrigger = (strongTrigger as OperatorExpression).fixForOperatorExpressionLists;
+            }
+            if (weakTrigger instanceof OperatorExpression) {
+                weakTrigger = (weakTrigger as OperatorExpression).fixForOperatorExpressionLists;
+            }
+
+            
+            // Create an Aborted state for every region
+            for (region : originalRegions) {
+                // Remember all outgoing transitions
+                val regionStates = ImmutableList::copyOf(region.states);
+                
+                val abortedState = SyncchartsFactory::eINSTANCE.createState();
+                abortedState.setId("_Aborted" + state.hashCode);
+                abortedState.setLabel("_Aborted");             
+                abortedState.setIsFinal(true);
+                val needAbortedState = ((outgoingStrongTransitions.size > 0 || 
+                                         outgoingWeakTransitions.size > 0
+                                        ) && (regionStates.filter(e | !e.isFinal).size > 0));
+                if (needAbortedState) {
+                       region.states.add(abortedState);
+                }
+                // Do not add the state here, only add the state iff there are any transitions
+                // ending up in this _Aborted state (within the if-for-constructs below)
+                
+                // For every inner state, connect with a weak and a strong transition
+                if (outgoingStrongTransitions.size > 0) {
+                    for (regionState : regionStates) {
+                        // If the state is a final state do NOT connect it with the _Aborted state
+                        if (!regionState.isFinal) {
+                            // Create a transition ending up in _Aborted
+                            val strongAbortTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                            strongAbortTransition.setTargetState(abortedState);
+                            strongAbortTransition.setIsImmediate(true);
+                            // Now add all strong abort watcher signals as a trigger
+                            strongAbortTransition.setTrigger(strongTrigger.copy);
+                            // Set the highest priority
+                            strongAbortTransition.setPriority(1);
+                            for (regionStateOutgoingTransition : regionState.outgoingTransitions) {
+                                regionStateOutgoingTransition.setPriority(regionStateOutgoingTransition.priority + 1);
+                            }
+                            // Add transition
+                            regionState.outgoingTransitions.add(0, strongAbortTransition);
+                        }
+                    }
+                }
+                
+                if (outgoingWeakTransitions.size > 0) {
+                    for (regionState : regionStates) {
+                        // If the state is a final state do NOT connect it with the _Aborted state
+                        if (!regionState.isFinal) {
+                            // Create a transition ending up in _Aborted
+                            val weakAbortTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                            weakAbortTransition.setTargetState(abortedState);
+                            weakAbortTransition.setIsImmediate(true);
+                            // Now add all weak abort watcher signals as a trigger
+                            weakAbortTransition.setTrigger(weakTrigger.copy);
+                            // Set the lowest priority
+                            weakAbortTransition.setPriority(regionState.maxPriority + 1);
+                            // Add transition
+                            regionState.outgoingTransitions.add(weakAbortTransition);
+                        }
+                    }
+                }
+                                 
+            }
+            
+            // Optimization: If a normal termination is outgoing then the following 
+            // transformation is necessary to be able to abort the watcher in case
+            // of triggering the normal termination.
+            if (normalTerminationExists) {
+                // If there is at least one such transition then whe need an "_Exit" signal
+                val exitSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                val exitSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                    exitSignalReference.setValuedObject(exitSignal);
+                exitSignal.setName("_Term_" + state.id);
+                state.signals.add(exitSignal);
+                // Add a watcher transition from Run to Abort triggered by _Exit
+                val watcherTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+                watcherTransition.setTargetState(abortState);
+                runState.outgoingTransitions.add(watcherTransition);
+                watcherTransition.setTrigger(exitSignalReference);
+                watcherTransition.setPriority(runState.maxPriority + 1);
+                watcherTransition.setIsImmediate(true);
+                watcherTransition.setDelay(0);
+                              
+                val mainRegion = SyncchartsFactory::eINSTANCE.createRegion();
+                mainRegion.setId("Body" + state.hashCode);
+                val mainState = SyncchartsFactory::eINSTANCE.createState();
+                mainState.setId("Main" + state.hashCode);
+                mainState.setLabel("Main");
+                mainState.setIsInitial(true);
+                val termState = SyncchartsFactory::eINSTANCE.createState();
+                termState.setId("Term" + state.hashCode);
+                termState.setLabel("Term");
+                termState.setIsFinal(true);
+                // Move all inner regions of the state to the mainState
+                val regions = ImmutableList::copyOf(state.regions);
+                for (region : regions) {
+                    mainState.regions.add(region);
+                    if (region.id.nullOrEmpty) {
+                        region.setId("R" + region.hashCode);
+                    }
+                }
+                mainRegion.states.add(mainState);
+                mainRegion.states.add(termState);
+                state.regions.add(mainRegion);
+                // Create a transition from Main to Term
+                val transition = SyncchartsFactory::eINSTANCE.createTransition();
+                transition.setTargetState(termState);
+                transition.setPriority(1);
+                transition.setType(TransitionType::NORMALTERMINATION);
+                mainState.outgoingTransitions.add(transition);            
+                val exitSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                exitSignalEmission.setSignal(exitSignal);
+                transition.effects.add(exitSignalEmission);
+                
+                // Move the watcher region outside the mainState
+                state.regions.add(watcherRegion);
+            }
+            
+             
+        }
+        
+    }
+    
 
 }
 

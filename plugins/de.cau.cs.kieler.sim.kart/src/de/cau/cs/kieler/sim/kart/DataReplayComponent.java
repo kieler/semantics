@@ -59,8 +59,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         IJSONObjectDataComponent, IKiemEventListener {
 
     /** The Constant DATA_REPLAY_COMPONENT_ID. */
-    public static final String DATA_REPLAY_COMPONENT_ID
-                               = "de.cau.cs.kieler.sim.kart.DataReplayComponent";
+    public static final String DATA_REPLAY_COMPONENT_ID 
+    = "de.cau.cs.kieler.sim.kart.DataReplayComponent";
 
     /** The Constant for the name of the KIEM property model file selection. */
     public static final String KIEM_PROPERTY_MODEFILE = "ESO Model File";
@@ -80,6 +80,9 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     private String outputVarName;
 
+    /** The wrapup already called. */
+    private boolean wrapupAlreadyCalled = false;
+
     /**
      * Name of the variable under which all signals injected into the simulation by components in
      * front of this component will be saved. These will be regarded as input signals when writing
@@ -93,8 +96,11 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     /** Are we in training mode, i. e. recording, or not. */
     private boolean trainingMode;
 
-    /** Stop the KIEM execution automatically if reaching end of ESO file. */
-    private boolean stopExecution;
+    /**
+     * Stop the KIEM execution automatically if reaching end of ESO file. This option also updates
+     * the trace file to the next trace.
+     */
+    private boolean automatic;
 
     // -------------------------------------------------------------------------
 
@@ -124,6 +130,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         configVarName = "";
         outputVarName = "";
         prevInputVarName = "";
+        wrapupAlreadyCalled = false;
 
         // load properties
         for (KiemProperty prop : properties) {
@@ -137,8 +144,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 outputVarName = prop.getValue();
             } else if (prop.getKey().equals(KartConstants.PREVINVAR)) {
                 prevInputVarName = prop.getValue();
-            } else if (prop.getKey().equals(KartConstants.STOPEXECUTION)) {
-                stopExecution = prop.getValueAsBoolean();
+            } else if (prop.getKey().equals(KartConstants.AUTOMATIC)) {
+                automatic = prop.getValueAsBoolean();
             }
         }
 
@@ -221,6 +228,28 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      *             never thrown
      */
     public void wrapup() throws KiemInitializationException {
+        if (!wrapupAlreadyCalled) {
+            wrapupAlreadyCalled = true;
+            // If KART is in automatic mode, then update/increment the trace number
+            if (this.automatic) {
+                KiemProperty[] properties = this.getProperties();
+                int tracenum = 0;
+                for (KiemProperty prop : properties) {
+                    if (prop.getKey().equals(KartConstants.TRACENUM)) {
+                        tracenum = prop.getValueAsInt();
+                        int numberOfTraces = KartPlugin.getNumberOfTraces(esoFilePath);
+                        tracenum++;
+                        if (tracenum < numberOfTraces) {
+                            prop.setValue("" + tracenum);
+                        } else {
+                            // Turn-a-round: The next trace is trace number 0
+                            prop.setValue("" + 0);
+                        }
+                    }
+                }
+            }
+
+        }
 
     }
 
@@ -466,7 +495,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             value.accumulate(KartConstants.VAR_ESOFILE, esoFilePath.toString());
             if (!trainingMode && trace.getSize() <= (step - 1)) {
                 value.accumulate(KartConstants.VAR_EOT, true);
-                if (stopExecution) {
+                if (automatic) {
                     // stop execution if this property is set to true and the EOT is reached
                     throw new KiemExecutionException("End of ESO file reached", true, true, true,
                             null);
@@ -503,7 +532,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         properties[KartConstants.KIEM_PROPERTY_REPLAY_PREVINVAR] = new KiemProperty(
                 KartConstants.PREVINVAR, KartConstants.DEF_PREVINVAR);
         properties[KartConstants.KIEM_PROPERTY_REPLAY_STOPEXECUTION] = new KiemProperty(
-                KartConstants.STOPEXECUTION, true);
+                KartConstants.AUTOMATIC, true);
         return properties;
     }
 
