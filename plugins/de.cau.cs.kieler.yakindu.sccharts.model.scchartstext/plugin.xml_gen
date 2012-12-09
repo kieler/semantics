@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://cau.kieler.de/scc/SCChartsExp" 
+       class = "de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.sCChartsExp.SCChartsExpPackage"
+       genModel = "de/cau/cs/kieler/yakindu/sccharts/model/scchartstext/SCChartsExp.genmodel" /> 
+	
+  </extension>
+
+
+
+
+</plugin>

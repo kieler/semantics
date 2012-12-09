@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Scchartstext
+Bundle-SymbolicName: de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.yakindu.sct.ui.editor;bundle-version="1.0.0",
+ de.cau.cs.kieler.yakindu.sccharts.model.scchartstext;bundle-version="1.0.0",
+ de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.ui;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: org.eclipse.xtext.ui.editor.contentassist.antlr,
+ org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
+ org.yakindu.sct.model.stext.stext
