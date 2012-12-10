@@ -7,6 +7,7 @@ import com.google.inject.Module;
 import de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext.modules.TransitionRuntimeModule;
 import de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext.modules.TransitionUIModule;
 
+
 public class TransitionExpressionProvider extends AbstractExpressionsProvider {
 	@Override
 	protected Module getRuntimeModule() {

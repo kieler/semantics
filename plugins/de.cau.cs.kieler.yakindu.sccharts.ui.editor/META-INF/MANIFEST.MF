@@ -3,8 +3,10 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Editor
 Bundle-SymbolicName: de.cau.cs.kieler.yakindu.sccharts.ui.editor;singleton:=true
 Bundle-Version: 0.1.0.qualifier
+Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Import-Package: org.eclipse.gmf.runtime.common.ui.action.global
-Require-Bundle: org.yakindu.sct.ui.editor;bundle-version="1.0.0",
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.yakindu.sct.ui.editor;bundle-version="2.0.0",
  de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext;bundle-version="0.1.0",
+ de.cau.cs.kieler.yakindu.sccharts.model.scchartstext;bundle-version="1.0.0",
  de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.ui;bundle-version="1.0.0"

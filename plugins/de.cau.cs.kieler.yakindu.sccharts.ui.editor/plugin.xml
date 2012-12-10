@@ -103,8 +103,8 @@
 		</extension>
 		
 	<extension point="org.eclipse.emf.ecore.extension_parser">
-		<parser class="de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.ui.SCChartsExpExecutableExtensionFactory:org.yakindu.sct.model.stext.resource.factory.InjectMembersResourceFactory"
-				type="scc">
+		<parser class="de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.ui.SCChartsExpExecutableExtensionFactory:org.yakindu.sct.model.stext.resource.factory.InjectMembersResourceFactory"
+				type="scchartsexp">
 		</parser>
 	</extension>
 	
@@ -124,6 +124,6 @@
 			resourceExtension="scc"
 			semanticTarget="StateSpecification">
 			</ExpressionLanguageProvider>
-	</extension>
+	</extension>-->
 
 </plugin>

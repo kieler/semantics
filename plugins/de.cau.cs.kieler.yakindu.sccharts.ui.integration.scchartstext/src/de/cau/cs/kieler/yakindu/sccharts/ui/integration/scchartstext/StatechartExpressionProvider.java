@@ -8,7 +8,6 @@ import de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext.modules.Sta
 import de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext.modules.StatechartUIModule;
 
 
-
 public class StatechartExpressionProvider extends AbstractExpressionsProvider {
 	@Override
 	protected Module getRuntimeModule() {

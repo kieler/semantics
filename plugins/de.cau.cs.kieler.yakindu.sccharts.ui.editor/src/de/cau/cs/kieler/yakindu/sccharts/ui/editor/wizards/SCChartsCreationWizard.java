@@ -4,7 +4,7 @@ import org.yakindu.sct.ui.editor.wizards.CreationWizard;
 import org.yakindu.sct.ui.editor.wizards.CreationWizardPage;
 
 public class SCChartsCreationWizard extends CreationWizard {
-	public static final String ID = "de.cau.cs.kieler.yakindu.sccharts.ui.editor.SCChartsCreationWizard";
+	public static final String ID = "de.cau.cs.kieler.yakindu.sccharts.ui.editor.wizards.SCChartsCreationWizard";
 
 	@Override
 	public void addPages() {
