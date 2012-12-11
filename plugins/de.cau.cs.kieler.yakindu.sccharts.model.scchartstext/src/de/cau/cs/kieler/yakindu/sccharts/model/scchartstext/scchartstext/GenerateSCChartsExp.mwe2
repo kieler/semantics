@@ -13,16 +13,18 @@ Workflow {
 	bean = StandaloneSetup {
 		scanClassPath = true
 		platformUri = "${runtimeProject}/.."
-		uriMap = {
-			from = "platform:/plugin/org.yakindu.sct.model.stext/model/SText.genmodel"
-			to = "platform:/resource/org.yakindu.sct.model.stext/model/SText.genmodel"
-		}
-		uriMap = {
-			from = "platform:/plugin/org.yakindu.sct.model.stext/model/SText.ecore"
-			to = "platform:/resource/org.yakindu.sct.model.stext/model/SText.ecore"
-		}
+//		uriMap = {
+//			from = "platform:/plugin/org.yakindu.sct.model.stext/model/SText.genmodel"
+//			to = "platform:/resource/org.yakindu.sct.model.stext/model/SText.genmodel"
+//		}
+//		uriMap = {
+//			from = "platform:/plugin/org.yakindu.sct.model.stext/model/SText.ecore"
+//			to = "platform:/resource/org.yakindu.sct.model.stext/model/SText.ecore"
+//		}
 		registerGeneratedEPackage = "org.yakindu.sct.model.stext.stext.StextPackage"
 		registerGenModelFile = "platform:/resource/org.yakindu.sct.model.stext/model/SText.genmodel"
+		registerGeneratedEPackage = "org.yakindu.sct.model.sgraph.SGraphPackage"
+		registerGenModelFile = "platform:/resource/org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel"
 	}
 
 	component = DirectoryCleaner {

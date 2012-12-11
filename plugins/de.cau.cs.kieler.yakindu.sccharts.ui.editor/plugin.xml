@@ -102,11 +102,11 @@
 			</wizard> 
 		</extension>
 		
-	<extension point="org.eclipse.emf.ecore.extension_parser">
-		<parser class="de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.ui.SCChartsExpExecutableExtensionFactory:org.yakindu.sct.model.stext.resource.factory.InjectMembersResourceFactory"
-				type="scchartsexp">
+	<!--<extension point="org.eclipse.emf.ecore.extension_parser">
+		<parser class="de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.ui.SCChartsExpExecutableExtensionFactory:org.yakindu.sct.model.stext.resource.factory.StextResourceFactory"
+				type="scc">
 		</parser>
-	</extension>
+	</extension>-->
 	
 	<extension point="org.yakindu.sct.ui.editor.expressions">
 		<ExpressionLanguageProvider
