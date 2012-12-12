@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="ABSWO" label="ABSWO">
+    <signals name="A" isInput="true"/>
+    <signals name="B" isInput="true"/>
+    <signals name="O" isOutput="true"/>
+    <signals name="W" isInput="true"/>
+    <signals name="S" isInput="true"/>
+    <regions id="">
+      <states id="ABO" label="ABO" isInitial="true" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0 //@states.0/@regions.0/@states.0/@outgoingTransitions.1">
+        <regions id="Main" label="Main">
+          <states id="WaitAB" label="WaitAB" isInitial="true">
+            <regions id="WaitA" label="WaitA">
+              <states id="wA" label="wA" isInitial="true">
+                <outgoingTransitions label="A / B" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.1">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+                  <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+                </outgoingTransitions>
+              </states>
+              <states id="dA" label="dA" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+            </regions>
+            <regions id="WaitB" label="WaitB">
+              <states id="wB" label="wB" isInitial="true">
+                <outgoingTransitions label="B" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.1/@states.1">
+                  <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+                </outgoingTransitions>
+              </states>
+              <states id="dB" label="dB" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.1/@states.0/@outgoingTransitions.0"/>
+            </regions>
+            <outgoingTransitions label="/ O" priority="1" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
+            </outgoingTransitions>
+          </states>
+          <states id="done" label="done" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+        </regions>
+        <outgoingTransitions label="S" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.0">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.4"/>
+        </outgoingTransitions>
+        <outgoingTransitions label="W" priority="2" targetState="//@states.0/@regions.0/@states.0">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.3"/>
+        </outgoingTransitions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

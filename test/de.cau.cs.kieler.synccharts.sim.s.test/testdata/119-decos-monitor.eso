@@ -1,0 +1,70 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+TIMER 
+% Output: 
+;
+
+% Output: 
+;
+TIMER 
+% Output: 
+;
+DRVCOMMAND 
+% Output: 
+;
+DRVCOMMAND TIMER 
+% Output: 
+;
+DRVCOMMAND 
+% Output: 
+;
+DRVCOMMAND 
+% Output: 
+;
+DRVCOMMAND 
+% Output: 
+;
+DRVCOMMAND 
+% Output: 
+;
+FAIL_ACTUATOR DRVCOMMAND 
+% Output: 
+;
+DRVCOMMAND 
+% Output: 
+;
+DRVCOMMAND 
+% Output: 
+;
+
+% Output: 
+;
+TIMER 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+RESET 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;

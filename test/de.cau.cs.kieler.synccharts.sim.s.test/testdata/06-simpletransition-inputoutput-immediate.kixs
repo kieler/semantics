@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="syncchart" label="syncchart">
+    <signals name="I" isInput="true"/>
+    <signals name="O" isOutput="true"/>
+    <regions id="">
+      <states id="H" label="H" isInitial="true">
+        <regions id="">
+          <states id="A" label="A" isInitial="true">
+            <outgoingTransitions label="I" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+            </outgoingTransitions>
+          </states>
+          <states id="B" label="B" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+            <outgoingTransitions isImmediate="true" label="#  / O" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.2">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+            </outgoingTransitions>
+          </states>
+          <states id="C" label="C" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.1/@outgoingTransitions.0"/>
+        </regions>
+        <outgoingTransitions isImmediate="true" label="# I" priority="1" targetState="//@states.0/@regions.0/@states.1">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+        </outgoingTransitions>
+      </states>
+      <states id="S" label="S" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+    </regions>
+  </states>
+</synccharts:Region>

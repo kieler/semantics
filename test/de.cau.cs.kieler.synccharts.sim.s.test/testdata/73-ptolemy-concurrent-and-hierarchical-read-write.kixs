@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="_73_ptolemy_concurrecnt_and_hierarchical_read_write" label="73-ptolemy-concurrecnt-and-hierarchical-read-write">
+    <signals name="Out" type="int" initialValue="0" isOutput="true"/>
+    <signals name="In" isOutput="true"/>
+    <signals name="Out2" type="int" isOutput="true"/>
+    <signals name="Const" isInput="true"/>
+    <regions id="">
+      <states id="SeeminglyNonmontonic" label="SeeminglyNonmontonic" isInitial="true">
+        <regions id="">
+          <states id="state1" label="state1" isInitial="true">
+            <regions id="">
+              <states id="state5" label="state5" isInitial="true">
+                <outgoingTransitions label="In / Out(2)" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.1">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0">
+                    <newValue xsi:type="kexpressions:IntValue" value="2"/>
+                  </effects>
+                  <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+                </outgoingTransitions>
+              </states>
+              <states id="state6" label="state6" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+            </regions>
+            <regions id="">
+              <states id="state3" label="state3" isInitial="true">
+                <outgoingTransitions label="/ Out(1)" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.1/@states.1">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0">
+                    <newValue xsi:type="kexpressions:IntValue" value="1"/>
+                  </effects>
+                </outgoingTransitions>
+              </states>
+              <states id="state4" label="state4" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.1/@states.0/@outgoingTransitions.0"/>
+            </regions>
+            <outgoingTransitions label="/ Out2(1)" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2">
+                <newValue xsi:type="kexpressions:IntValue" value="1"/>
+              </effects>
+            </outgoingTransitions>
+          </states>
+          <states id="state2" label="state2" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+        </regions>
+      </states>
+    </regions>
+    <regions id="">
+      <states id="Const" label="Const" isInitial="true" incomingTransitions="//@states.0/@regions.1/@states.0/@outgoingTransitions.0">
+        <outgoingTransitions label="Const / In" priority="1" targetState="//@states.0/@regions.1/@states.0">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.3"/>
+        </outgoingTransitions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

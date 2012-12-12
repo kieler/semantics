@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="DVDPlayer2" label="DVDPlayer">
+    <signals name="POWER" isInput="true"/>
+    <signals name="PLAY" isInput="true"/>
+    <signals name="O" isOutput="true"/>
+    <regions id="">
+      <states id="Off" label="Off" isInitial="true" incomingTransitions="//@states.0/@regions.0/@states.1/@outgoingTransitions.0">
+        <outgoingTransitions label="POWER" priority="1" targetState="//@states.0/@regions.0/@states.1">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+        </outgoingTransitions>
+      </states>
+      <states id="On" label="On" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+        <regions id="">
+          <states id="H" label="H" isInitial="true">
+            <regions id="">
+              <states id="English" label="English" isInitial="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.0/@states.1/@outgoingTransitions.0">
+                <outgoingTransitions label="/ O" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.0/@states.2">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
+                </outgoingTransitions>
+              </states>
+              <states id="German" label="German" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.0/@states.2/@outgoingTransitions.0">
+                <outgoingTransitions label="/ O" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.0/@states.0">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
+                </outgoingTransitions>
+              </states>
+              <states id="French" label="French" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+                <outgoingTransitions label="/ O" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.0/@states.1">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
+                </outgoingTransitions>
+              </states>
+            </regions>
+            <regions id="">
+              <states id="PAUSE" label="PAUSE" isInitial="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.1/@states.1/@outgoingTransitions.0">
+                <outgoingTransitions label="PLAY" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.1/@states.1">
+                  <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+                </outgoingTransitions>
+              </states>
+              <states id="Playing" label="Playing" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.1/@states.0/@outgoingTransitions.0">
+                <outgoingTransitions label="PLAY" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.1/@states.0">
+                  <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+                </outgoingTransitions>
+                <outgoingTransitions priority="2" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.1/@states.2"/>
+              </states>
+              <states id="S" label="S" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@regions.1/@states.1/@outgoingTransitions.1"/>
+            </regions>
+          </states>
+        </regions>
+        <outgoingTransitions label="POWER" priority="1" targetState="//@states.0/@regions.0/@states.0">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+        </outgoingTransitions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

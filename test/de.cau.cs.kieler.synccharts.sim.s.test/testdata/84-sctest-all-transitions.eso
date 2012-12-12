@@ -1,0 +1,44 @@
+! reset;
+% Output:O O1 O2 O3 O4 O5;
+% Output:;
+I1 % Output:O1 O;
+
+! reset;
+% Output:O O1 O2 O3 O4 O5;
+% Output:;
+I2 % Output:O2;
+
+! reset;
+% Output:O O1 O2 O3 O4 O5;
+% Output:;
+I3 % Output:O3 O;
+
+! reset;
+% Output:O O1 O2 O3 O4 O5;
+% Output:;
+I4 % Output:O4;
+
+! reset;
+% Output:O O1 O2 O3 O4 O5;
+% Output:;
+% Output:O O5;
+
+! reset;
+% Output:O O1 O2 O3 O4 O5;
+I1 % Output:;
+I1 % Output:O1 O;
+
+! reset;
+% Output:O O1 O2 O3 O4 O5;
+I2 % Output:;
+I2 % Output:O2;
+
+! reset;
+% Output:O O1 O2 O3 O4 O5;
+I3 % Output:O3;
+I3 % Output:;
+
+! reset;
+% Output:O O1 O2 O3 O4 O5;
+I4 % Output:O4;
+I4 % Output:;

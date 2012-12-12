@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="nested_abort_www" label="nested_abort_www">
+    <signals name="E" isOutput="true"/>
+    <signals name="F" isOutput="true"/>
+    <signals name="G" isOutput="true"/>
+    <signals name="H" isOutput="true"/>
+    <signals name="A" isInput="true"/>
+    <signals name="B" isInput="true"/>
+    <signals name="C" isInput="true"/>
+    <signals name="D" isInput="true"/>
+    <regions id="main" label="main">
+      <states id="init0" label="I" isInitial="true">
+        <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.1"/>
+      </states>
+      <states id="StatementList47state" label="StatementList47state" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+        <regions id="R0" label="R0">
+          <states id="init1" label="I" isInitial="true">
+            <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1"/>
+          </states>
+          <states id="StatementList51state" label="StatementList51state" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0">
+            <regions id="R0" label="R0">
+              <states id="init2" label="I" isInitial="true">
+                <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1"/>
+              </states>
+              <states id="StatementList55state" label="StatementList55state" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0">
+                <regions id="R0" label="R0">
+                  <states id="init3" label="I" isInitial="true">
+                    <outgoingTransitions isImmediate="true" label="#" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1"/>
+                  </states>
+                  <states id="49" label="49" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0">
+                    <outgoingTransitions label="D / E" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.2">
+                      <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+                      <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.7"/>
+                    </outgoingTransitions>
+                  </states>
+                  <states id="78" label="78" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1/@outgoingTransitions.0"/>
+                </regions>
+                <outgoingTransitions label="C / F" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.3">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+                  <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.6"/>
+                </outgoingTransitions>
+                <outgoingTransitions label="/ F" priority="1" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.3">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+                </outgoingTransitions>
+              </states>
+              <states id="176" label="176" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0"/>
+              <states id="147" label="147" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1/@outgoingTransitions.1 //@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1/@outgoingTransitions.0">
+                <outgoingTransitions label="D / E" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.2">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+                  <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.7"/>
+                </outgoingTransitions>
+              </states>
+            </regions>
+            <outgoingTransitions label="B" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.3">
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.5"/>
+            </outgoingTransitions>
+            <outgoingTransitions priority="1" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.3"/>
+          </states>
+          <states id="254" label="254" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0"/>
+          <states id="225" label="225" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.1/@outgoingTransitions.0 //@states.0/@regions.0/@states.1/@regions.0/@states.1/@outgoingTransitions.1">
+            <outgoingTransitions label="D / G" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.2">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.7"/>
+            </outgoingTransitions>
+          </states>
+        </regions>
+        <outgoingTransitions label="A / H" targetState="//@states.0/@regions.0/@states.2">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.3"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.4"/>
+        </outgoingTransitions>
+        <outgoingTransitions label="/ H" priority="1" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.2">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.3"/>
+        </outgoingTransitions>
+      </states>
+      <states id="323" label="323" incomingTransitions="//@states.0/@regions.0/@states.1/@outgoingTransitions.1 //@states.0/@regions.0/@states.1/@outgoingTransitions.0"/>
+    </regions>
+  </states>
+</synccharts:Region>

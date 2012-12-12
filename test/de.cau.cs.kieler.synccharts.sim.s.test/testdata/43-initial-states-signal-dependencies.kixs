@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="_28_exit_actions" label="28-exit-actions">
+    <signals name="O" isOutput="true"/>
+    <signals name="R" isInput="true"/>
+    <signals name="ExitSetC" isOutput="true"/>
+    <signals name="ExitResetC" isOutput="true"/>
+    <regions id="">
+      <states id="hierarchy" label="hierarchy" isInitial="true" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+        <regions id="">
+          <states id="exited" label="exited" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.1/@outgoingTransitions.0"/>
+          <states id="entry" label="entry" isInitial="true">
+            <regions id="EntrySurroundRegion25588941">
+              <states id="done" label="done" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.1/@regions.0/@states.1/@outgoingTransitions.0"/>
+              <states id="init" label="init" isInitial="true">
+                <regions id="">
+                  <states id="initI" label="initI" isInitial="true">
+                    <outgoingTransitions isImmediate="true" label="#" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.2"/>
+                  </states>
+                  <states id="initF" label="initF" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.2/@outgoingTransitions.0"/>
+                  <states id="dummy" label="dummy" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0">
+                    <outgoingTransitions isImmediate="true" label="#  / ExitResetC" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1/@regions.0/@states.1/@regions.0/@states.1">
+                      <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.3"/>
+                    </outgoingTransitions>
+                  </states>
+                </regions>
+                <outgoingTransitions isImmediate="true" label="#" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1/@regions.0/@states.0"/>
+              </states>
+            </regions>
+            <outgoingTransitions label="/ ExitSetC" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.0">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
+            </outgoingTransitions>
+          </states>
+        </regions>
+        <outgoingTransitions label="R" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.0">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+        </outgoingTransitions>
+      </states>
+    </regions>
+    <regions id="ExitActionRegion17159221">
+      <states id="Reset" label="Reset" isInitial="true" incomingTransitions="//@states.0/@regions.1/@states.1/@outgoingTransitions.0">
+        <outgoingTransitions label="ExitSetC / O" priority="1" targetState="//@states.0/@regions.1/@states.1">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.2"/>
+        </outgoingTransitions>
+      </states>
+      <states id="Set" label="Set" incomingTransitions="//@states.0/@regions.1/@states.0/@outgoingTransitions.0">
+        <outgoingTransitions label="ExitResetC" priority="1" targetState="//@states.0/@regions.1/@states.0">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.3"/>
+        </outgoingTransitions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

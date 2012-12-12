@@ -1,0 +1,22 @@
+!reset;
+% Output:;
+% Output:O OEntry;
+% Output:OInside;
+
+!reset;
+% Output:;
+% Output:O OEntry;
+s4 % Output:OInside;
+
+!reset;
+% Output:;
+% Output:O OEntry;
+s2 % Output:;
+
+!reset;
+% Output:;
+s1 % Output:;
+
+!reset;
+% Output:;
+s3 % Output:O OEntry;

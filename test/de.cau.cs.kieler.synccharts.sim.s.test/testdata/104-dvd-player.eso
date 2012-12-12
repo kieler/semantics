@@ -1,0 +1,61 @@
+! reset;
+
+% Output: off 
+;
+
+% Output: off 
+;
+POWER 
+% Output: off on openedtray 
+;
+
+% Output: on openedtray 
+;
+
+% Output: on openedtray 
+;
+EJECT 
+% Output: pause closedtray on english openedtray 
+;
+
+% Output: pause closedtray on english 
+;
+
+% Output: pause closedtray on english 
+;
+AUDIO 
+% Output: pause closedtray german on english 
+;
+AUDIO 
+% Output: pause closedtray german on french 
+;
+AUDIO 
+% Output: pause closedtray german on french english 
+;
+PLAY 
+% Output: playing pause closedtray german on 
+;
+
+% Output: playing closedtray german on 
+;
+
+% Output: playing closedtray german on 
+;
+EJECT 
+% Output: pause closedtray on english openedtray 
+;
+POWER 
+% Output: off 
+;
+
+% Output: off 
+;
+POWER AUDIO EJECT 
+% Output: pause closedtray german off on english openedtray 
+;
+
+% Output: pause closedtray german on 
+;
+
+% Output: pause closedtray german on 
+;

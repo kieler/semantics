@@ -1,0 +1,52 @@
+! reset;
+
+% Output: 
+;
+I1 
+% Output: O1 
+;
+IS I2 
+% Output: OS 
+;
+
+% Output: 
+;
+! reset;
+I1 I2 IW 
+% Output: 
+;
+I1 I2 IW 
+% Output: OW O1 
+;
+I1 I2 IW 
+% Output: 
+;
+I1 I2 IW 
+% Output: 
+;
+! reset;
+
+% Output: 
+;
+I1 
+% Output: O1 
+;
+I2 IW 
+% Output: OW O2 
+;
+
+% Output: 
+;
+! reset;
+
+% Output: 
+;
+I1 
+% Output: O1 
+;
+I2 
+% Output: ON O2 
+;
+
+% Output: 
+;

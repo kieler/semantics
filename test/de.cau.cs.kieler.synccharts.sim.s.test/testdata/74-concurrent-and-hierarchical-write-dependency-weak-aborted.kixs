@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="_74_concurrent_and_hierarchical_write_dependency_weak_aborted" label="74-concurrent-and-hierarchical-write-dependency-weak-aborted">
+    <signals name="O" initialValue="0" isOutput="true"/>
+    <signals name="L" isOutput="true"/>
+    <signals name="I" isInput="true"/>
+    <signals name="O2" isOutput="true"/>
+    <regions id="">
+      <states id="A" label="A" isInitial="true">
+        <regions id="">
+          <states id="B" label="B" isInitial="true">
+            <outgoingTransitions label="L / O" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+            </outgoingTransitions>
+          </states>
+          <states id="C" label="C" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+        </regions>
+        <outgoingTransitions label="/ O2" priority="1" targetState="//@states.0/@regions.0/@states.1">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.3"/>
+        </outgoingTransitions>
+      </states>
+      <states id="D" label="D" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+    </regions>
+    <regions id="">
+      <states id="E" label="E" isInitial="true" incomingTransitions="//@states.0/@regions.1/@states.0/@outgoingTransitions.0">
+        <outgoingTransitions label="I / L" priority="1" targetState="//@states.0/@regions.1/@states.0">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.2"/>
+        </outgoingTransitions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="_53_exit_actions_charles_andre_paper_excerpt" label="53-exit-actions-charles-andre-paper-excerpt">
+    <signals name="X0" isOutput="true"/>
+    <signals name="Y0" isOutput="true"/>
+    <signals name="Y1" isOutput="true"/>
+    <signals name="b" isInput="true"/>
+    <signals name="R" isInput="true"/>
+    <signals name="X1" isOutput="true"/>
+    <regions id="">
+      <states id="M0" label="M0" isInitial="true" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+        <exitActions label="/ Y0">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+        </exitActions>
+        <regions id="">
+          <states id="M10" label="M10" isInitial="true">
+            <exitActions label="/ Y1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
+            </exitActions>
+            <outgoingTransitions label="b / X1" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.5"/>
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.3"/>
+            </outgoingTransitions>
+          </states>
+          <states id="_" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+        </regions>
+        <outgoingTransitions label="R / X0" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.0">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.4"/>
+        </outgoingTransitions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

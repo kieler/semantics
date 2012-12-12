@@ -1,0 +1,79 @@
+! reset;
+
+% Output: 
+;
+
+% Output: OFF 
+;
+
+% Output: OFF 
+;
+S 
+% Output: OFF 
+;
+
+% Output: OFF 
+;
+S 
+% Output: OFF 
+;
+S 
+% Output: OFF 
+;
+
+% Output: ON 
+;
+
+% Output: ON 
+;
+
+% Output: ON 
+;
+R 
+% Output: ON 
+;
+
+% Output: ON 
+;
+R 
+% Output: ON 
+;
+R 
+% Output: ON 
+;
+
+% Output: OFF 
+;
+
+% Output: OFF 
+;
+S R 
+% Output: OFF 
+;
+S R 
+% Output: OFF 
+;
+S R 
+% Output: ON 
+;
+S R 
+% Output: OFF 
+;
+S R 
+% Output: ON 
+;
+S R 
+% Output: OFF 
+;
+S R 
+% Output: ON 
+;
+S R 
+% Output: OFF 
+;
+S R 
+% Output: ON 
+;
+S R 
+% Output: OFF 
+;

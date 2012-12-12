@@ -1,0 +1,64 @@
+! reset;
+S 
+% Output: O2 
+;
+S 
+% Output: 
+;
+S 
+% Output: 
+;
+S 
+% Output: 
+;
+
+% Output: O O2 
+;
+
+% Output: O O2 
+;
+
+% Output: O O2 
+;
+S 
+% Output: 
+;
+S 
+% Output: 
+;
+S 
+% Output: 
+;
+S 
+% Output: 
+;
+
+% Output: O O2 
+;
+
+% Output: O O2 
+;
+R 
+% Output: O O2 
+;
+
+% Output: O O2 
+;
+
+% Output: O O2 
+;
+
+% Output: O O2 
+;
+S R 
+% Output: O2 
+;
+S 
+% Output: 
+;
+S 
+% Output: 
+;
+S 
+% Output: 
+;
