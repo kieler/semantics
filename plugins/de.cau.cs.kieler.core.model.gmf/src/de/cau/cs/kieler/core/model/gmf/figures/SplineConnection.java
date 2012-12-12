@@ -42,10 +42,11 @@ import de.cau.cs.kieler.core.model.gmf.IJoinPointFactory;
 import de.cau.cs.kieler.core.model.gmf.util.SplineUtilities;
 
 /**
- * Temporary class implementing the spline extension to polylines until the changes are merged into
- * GMF.
+ * A bend-point-based connection that is able to render real splines using the OS' advanced
+ * graphics support. The bend points are treated as control points of the cubic spline.
  * 
- * @author mmu, ckru
+ * @author mmu
+ * @author ckru
  */
 public class SplineConnection extends PolylineConnectionEx {
 
@@ -184,9 +185,10 @@ public class SplineConnection extends PolylineConnectionEx {
     /**
      * This method checks if we are on a feedback layer by comparing the value of a Dimension with
      * the value after translating it into relative coordinates.
-     * 
-     * Copied from PolylineConnectionEx because it is private there but required for
-     * containsPoint().
+     * <p>
+     * Copied from {@link org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx}
+     * because it is private there but required for {@link #containsPoint()}.
+     * </p>
      * 
      * @return true if we are on a feedback layer, which means the results after translating were
      *         the same as not translating, or false if we are not on a feedback layer.
@@ -214,9 +216,10 @@ public class SplineConnection extends PolylineConnectionEx {
     /**
      * Calculate and store the tolerance value for determining whether the line contains a point or
      * not.
-     * 
-     * Copied from PolylineConnectionEx because it is private there but required for
-     * containsPoint().
+     * <p>
+     * Copied from {@link org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx}
+     * because it is private there but required for {@link #containsPoint()}.
+     * </p>
      * 
      * @param isFeedbackLayer
      *            see the isFeedbackLayer() method

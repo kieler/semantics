@@ -84,7 +84,10 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
         delegate.complete_STRING(model, ruleCall, context, acceptor);
     }    
     
-    // this method has been copied from TerminalsProposalProvider
+    /**
+     * This method has been copied from
+     * {@link org.eclipse.xtext.common.ui.contentassist.TerminalsProposalProvider}.
+     */
     private String getAssignedFeature(RuleCall call) {
         Assignment ass = GrammarUtil.containingAssignment(call);
         if (ass != null) {
@@ -96,7 +99,10 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
         return null;
     }
 
-    // this method has been copied and adapted from TerminalsProposalProvider
+    /**
+     * This method has been copied and adapted from
+     * {@link org.eclipse.xtext.common.ui.contentassist.TerminalsProposalProvider}.
+     */
     private void createFloatProposal(final ContentAssistContext context,
             final ICompletionProposalAcceptor acceptor, final RuleCall ruleCall, final String feature, float i) {
         String proposalText = getValueConverter().toString(i, ruleCall.getRule().getName());
