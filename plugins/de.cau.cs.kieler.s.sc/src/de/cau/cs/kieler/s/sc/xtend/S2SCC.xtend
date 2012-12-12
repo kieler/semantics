@@ -342,8 +342,13 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
             present = cJSON_GetObjectItem(child, "present");
             value = cJSON_GetObjectItem(child, "value");
             if (present != NULL && present->type) {
-                EMIT_VAL_SCC(sig_«signal.name», value, +,  «signal.combineOperator.initialValue»);
-                
+                if (value != NULL) {
+                    // Emit with given value
+                    EMIT_VAL_SCC(sig_«signal.name», value->valueint, +,  «signal.combineOperator.initialValue»);
+                } else {
+                    // Emit with initial value because no value was given
+                    EMIT_VAL_SCC(sig_«signal.name», «signal.combineOperator.initialValue», +,  «signal.combineOperator.initialValue»);
+                }        
             }
         }   
           
@@ -454,8 +459,10 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    
    // Expand SIGNAL instruction. This takes care of reincarnation
    // by resetting local signals when the state is re-entered.
+   // Also reset the value of valued signals (test 139).
    def dispatch expand(LocalSignal signalInstruction) {
-       '''presentSigInt[sig_«signalInstruction.signal.name»] = 0;'''
+       '''presentSigInt[sig_«signalInstruction.signal.name»] = 0;
+          valSigInt[sig_«signalInstruction.signal.name»] = «signalInstruction.signal.combineOperator.initialValue»;'''   
    }
    
    // Expand an EMIT instruction.

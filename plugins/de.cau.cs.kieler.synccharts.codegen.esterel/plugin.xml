@@ -4,11 +4,11 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
-               commandId="de.cau.cs.kieler.synccharts.codegen.s.genS"
-               label="Generate S Code (new)"
-               mnemonic="S"
+               commandId="de.cau.cs.kieler.synccharts.codegen.esterel.genEsterel"
+               label="Generate Esterel Code (experimental)"
+               mnemonic="E"
                style="push">
             <visibleWhen>
                <iterate
@@ -31,7 +31,7 @@
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="de.cau.cs.kieler.synccharts.codegen.esterel.EsterelGenerator"
-            id="de.cau.cs.kieler.synccharts.codegen.s.genS"
+            id="de.cau.cs.kieler.synccharts.codegen.esterel.genEsterel"
             name="genS">
       </command>
    </extension>

@@ -16,6 +16,7 @@ package de.cau.cs.kieler.synccharts.sim.sc;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -64,6 +65,13 @@ import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
  */
 public class SCDataComponent extends JSONObjectSimulationDataComponent {
 
+    /** The Constant BENCHMARK_SIGNAL. */
+    public static final String BENCHMARK_SIGNAL_CYCLES = "benchCycles";
+    /** The Constant BENCHMARK_SIGNAL. */
+    public static final String BENCHMARK_SIGNAL_SOURCE = "benchSource";
+    /** The Constant BENCHMARK_SIGNAL. */
+    public static final String BENCHMARK_SIGNAL_EXECUTABLE = "benchExecutable";
+
     private static final int PROP_COMPILER = 1;
     private static final int PROP_PATH = 2;
     private static final int NUM_PROPERTIES = 3;
@@ -82,6 +90,23 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
     private boolean newValidation;
     private String fileLocation;
 
+    /** The cyclecount flag. */
+    private boolean cycleCount;
+
+    /** The source file size. */
+    private long sourceFileSize;
+
+    /** The executable file size. */
+    private long executableFileSize;
+
+    /** The accumulated cycles since last reset. */
+    private int cycles;
+
+    private boolean benchmark;
+    
+    /** Compile with SC Light. */
+    private boolean sclcompilation;
+    
     // -------------------------------------------------------------------------
 
     /*
@@ -127,12 +152,24 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
+        setSourceFileSize(0);
+        setExecutableFileSize(0);
+
+        benchmark = this.getProperties()[2 * 2 + 2].getValueAsBoolean();
+        sclcompilation = this.getProperties()[2 * 2 + 2 + 1].getValueAsBoolean();
+        
         // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 
         URL url = null;
         try {
-            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulation"), null));
+            if (!sclcompilation) { 
+                // normal (full) SC constructs
+                url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulation"), null));
+            } else {
+                // light SC constructs (no aborts)
+                url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulationscl"), null));
+            }
         } catch (IOException e2) {
             e2.printStackTrace();
         }
@@ -143,7 +180,32 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
         if (bundleLocation.startsWith("\\")) {
             bundleLocation = bundleLocation.substring(1);
         }
-
+        
+        
+        String simDataFileName = "sim_data.c";
+        if (benchmark) {
+            try {
+                addCycleCounterCode(outPath + simDataFileName);
+                simDataFileName = "sim_data.cyclecount.c";
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        String simFileName = "sim.c";
+        if (benchmark) {
+            try {
+                simFileName = stripDownCode(outPath + simFileName);
+                simFileName = "sim.cyclecount.c";
+                
+                File currentFile = new File(outPath + simFileName);
+                setSourceFileSize(getSourceFileSize() + currentFile.length());
+                
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }        
+        
         boolean compiled = false;
 
         try {
@@ -156,14 +218,17 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
                 String compile = compiler
                         + " "
                         + outPath
-                        + "sim.c "
+                        + simFileName + " " 
                         + outPath
-                        + "sim_data.c "
+                        + simDataFileName + " "
                         + outPath
                         + "misc.c "
                         + bundleLocation
-                        + "cJSON.c "
-                        + "-I "
+                        + "cJSON.c ";
+                if (benchmark) {
+                   compile += bundleLocation + "cycle.h ";   
+                }
+                compile += "-I "
                         + bundleLocation
                         + " "
                         + "-o "
@@ -192,6 +257,17 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
                             + "the generated C code.\n\nCheck that the path to "
                             + "your Workspace/Eclipse installation does not "
                             + "contain any white spaces.\n", true, new Exception(errorString));
+                }
+            }
+            
+            File file = new File(outPath + "simulation");
+            if (file.exists()) {
+                setExecutableFileSize(file.length());
+            } else {
+                // The Windows case
+                file = new File(outPath + "simulation" + ".exe");
+                if (file.exists()) {
+                    setExecutableFileSize(file.length());
                 }
             }
 
@@ -313,6 +389,24 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
             System.err.println(e.getMessage());
             process.destroy();
         }
+        
+        if (this.benchmark) {
+                try {
+                    out.accumulate(BENCHMARK_SIGNAL_SOURCE,
+                            getSourceFileSize());
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                try {
+                    out.accumulate(BENCHMARK_SIGNAL_EXECUTABLE,
+                            getExecutableFileSize());
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+        }
+        
 
         return out;
     }
@@ -335,7 +429,7 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
      * {@inheritDoc}
      */
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[NUM_PROPERTIES + 2];
+        KiemProperty[] properties = new KiemProperty[NUM_PROPERTIES + 2 + 2];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile(true);
 
         properties[0] = new KiemProperty("State Name", "state");
@@ -349,6 +443,9 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
         String[] items = { "Complete Hierarchie" };
         KiemPropertyTypeChoice choice = new KiemPropertyTypeChoice(items);
         properties[2 * 2] = new KiemProperty("Label Names for SC Code", choice, items[0]);
+
+        properties[ 2  * 2 + 1] = new KiemProperty("Benchmark Mode", false);
+        properties[ 2  * 2 + 2] = new KiemProperty("SCL (SC Light)", false);
 
         return properties;
     }
@@ -537,5 +634,145 @@ public class SCDataComponent extends JSONObjectSimulationDataComponent {
         out = noDebugInfos[noDebugInfos.length - 1];
         return out;
     }
+    
+    // -------------------------------------------------------------------------
+
+    // If Cycle counting activated, do the following on all sc files:
+    // 1. include header #include<cycle.h>
+    // 2. add "ticks t0, t1;" as global variables
+    // 3. search for "tick();" and surround with
+    // t0 = getticks();
+    // tick();
+    // t1 = getticks();
+    // value = cJSON_CreateObject();
+    // cJSON_AddItemToObject(value, "value",
+    // cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));
+    // cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
+    // cJSON_AddItemToObject(output, "cycles", value);
+    
+    /**
+     * Adds cycle counter code.
+     *
+     * @param filePath the file path
+     * @return the string
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public static String addCycleCounterCode(final String filePath) throws IOException {
+
+        String newFilePath = filePath.replace(".c", ".cyclecount.c");
+
+        LinkedList<String> fileContent = new LinkedList<String>();
+
+        // Load original SC file
+        FileInputStream fis = new FileInputStream(filePath);
+        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+        String lineIn;
+        while ((lineIn = br.readLine()) != null) {
+
+            // Before the main function, add
+            // #include<cycle.h>
+            // ticks t0, t1;
+            if (lineIn.contains("int main")) {
+                fileContent.add("#include<cycle.h>");
+                fileContent.add("ticks t0, t1;");
+            }
+
+            // Instead of the tick() function add
+            // t0 = getticks();
+            // tick();
+            // t1 = getticks();
+            // value = cJSON_CreateObject();
+            // cJSON_AddItemToObject(value, "value",
+            // cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));
+            // cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
+            // cJSON_AddItemToObject(output, "cycles", value);
+            if (lineIn.contains("tick();")) {
+                fileContent.add("t0 = getticks();");
+                fileContent.add("tick();");
+                fileContent.add("t1 = getticks();");
+                //fileContent.add("value = cJSON_CreateObject();");
+                //fileContent.add("cJSON_AddItemToObject(value, \"value\", "
+                //         + "cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
+                //fileContent.add("cJSON_AddItemToObject(value, \"present\", cJSON_CreateTrue());");
+                fileContent.add("cJSON_AddItemToObject(output, \"" + BENCHMARK_SIGNAL_CYCLES + "\""
+                        + ", cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
+            } else {
+                fileContent.add(lineIn);
+            }
+        }
+        br.close();
+        fis.close();
+
+        // Write out SC modified file
+        PrintWriter out = new PrintWriter(newFilePath);
+        for (String lineOut : fileContent) {
+            out.println(lineOut);
+        }
+        out.close();
+
+        return newFilePath;
+    }
+
+
+    //remove JSONstate
+    //remove JSONtransition
+    public static String stripDownCode(final String filePath) throws IOException {
+
+        String newFilePath = filePath.replace(".c", ".cyclecount.c");
+
+        LinkedList<String> fileContent = new LinkedList<String>();
+
+        // Load original SC file
+        FileInputStream fis = new FileInputStream(filePath);
+        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+        String lineIn;
+        while ((lineIn = br.readLine()) != null) {
+            if (!lineIn.trim().startsWith("JSONstate")
+                 &&!lineIn.trim().startsWith("JSONtransition")) {
+                fileContent.add(lineIn);
+            }
+        }
+        br.close();
+        fis.close();
+
+        // Write out SC modified file
+        PrintWriter out = new PrintWriter(newFilePath);
+        for (String lineOut : fileContent) {
+            out.println(lineOut);
+        }
+        out.close();
+
+        return newFilePath;
+    }
+
+    /**
+     * @return the sourceFileSize
+     */
+    public long getSourceFileSize() {
+        return sourceFileSize;
+    }
+
+    /**
+     * @param sourceFileSize the sourceFileSize to set
+     */
+    public void setSourceFileSize(long sourceFileSize) {
+        this.sourceFileSize = sourceFileSize;
+    }
+
+    /**
+     * @return the executableFileSize
+     */
+    public long getExecutableFileSize() {
+        return executableFileSize;
+    }
+
+    /**
+     * @param executableFileSize the executableFileSize to set
+     */
+    public void setExecutableFileSize(long executableFileSize) {
+        this.executableFileSize = executableFileSize;
+    }
+    
+    
 
 }

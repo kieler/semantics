@@ -29,12 +29,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * Added a Details button to the MessageDialog to show the exception stack
- * trace.
+ * Copied from {@link org.eclipse.ui.internal.ide.dialogs.InternalErrorDialog}.
  * 
  * @author Sebastian Davids
  * @kieler.ignore We don't review copied code.
  */
+@SuppressWarnings("restriction")
 public class InternalErrorDialog extends MessageDialog {
 
     private Throwable detail;

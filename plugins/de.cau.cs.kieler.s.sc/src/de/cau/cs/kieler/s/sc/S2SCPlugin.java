@@ -20,6 +20,8 @@ import java.io.IOException;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.xtend.S2SCC;
 import de.cau.cs.kieler.s.sc.xtend.S2SCALT;
@@ -35,6 +37,15 @@ public class S2SCPlugin extends AbstractUIPlugin {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.s.sc"; //$NON-NLS-1$
+
+    /** The estimated maximum buffer size (string length) used for a pure signal. */
+    private static final int PURE_SIGNAL_BUFFER_CONSTANT = 21;
+
+    /** The estimated maximum buffer size (string length)used for a valued signal. */
+    private static final int VALUED_SIGNAL_BUFFER_CONSTANT = 100;
+
+    /** The minimal buffer size for the communicating buffer of the running SC program. */
+    private static final double MINIMAL_BUFFER_SIZE = 2048;
 
     /** The shared instance. */
     private static S2SCPlugin plugin;
@@ -77,14 +88,16 @@ public class S2SCPlugin extends AbstractUIPlugin {
      * @param program the program
      * @param outputFile the output file (platform specific, resolved paths)
      * @param outputFolder the output folder (platform specific, resolved paths)
-     * @param bufferSize the buffer size, estimated for input to the running SC program
      * @param alternativeSyntax the alternative SC syntax should be produced
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public static void generateSCCode(final Program program, final String outputFile,
-            final String outputFolder, final String bufferSize, final boolean alternativeSyntax)
+            final String outputFolder, final boolean alternativeSyntax)
             throws IOException {
 
+        // Calculate/Estimate the buffer size
+        String bufferSize = estimateBufferSize(program);
+        
         String ccode;
         if (alternativeSyntax) {
             // produce alternative SC syntax on request
@@ -108,6 +121,34 @@ public class S2SCPlugin extends AbstractUIPlugin {
         }
     }
 
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Calculate estimated buffer size needed for an SC program to interact with
+     * the stimulating environment.
+     *
+     * @param program the program
+     * @return the estimated buffer size as a String
+     */
+    public static String estimateBufferSize(final Program program) {
+        int bufferSizeInt = 0;
+        for (Signal signal : program.getSignals()) {
+            if (signal.getType() == ValueType.PURE) {
+                bufferSizeInt += signal.getName().length() + PURE_SIGNAL_BUFFER_CONSTANT;
+            } else {
+                bufferSizeInt += signal.getName().length() + VALUED_SIGNAL_BUFFER_CONSTANT;
+            }
+        }
+        double log = Math.ceil(Math.log(bufferSizeInt) / Math.log(2));
+        double bufferSizeDouble = Math.ceil(Math.pow(2, log + 1));
+        if (bufferSizeDouble < MINIMAL_BUFFER_SIZE) {
+            bufferSizeDouble = MINIMAL_BUFFER_SIZE;
+        }
+        String bufferSize = bufferSizeDouble + "";
+        bufferSize = bufferSize.substring(0, bufferSize.lastIndexOf('.'));
+        return bufferSize;
+    }
+    
     // -----------------------------------------------------------------------------
 
     /**
