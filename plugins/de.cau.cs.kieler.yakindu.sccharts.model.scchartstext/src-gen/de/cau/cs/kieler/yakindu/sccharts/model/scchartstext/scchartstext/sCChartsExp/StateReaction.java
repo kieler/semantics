@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp;
 
-import org.yakindu.sct.model.stext.stext.EventSpec;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +14,6 @@ import org.yakindu.sct.model.stext.stext.EventSpec;
  * @model
  * @generated
  */
-public interface StateReaction extends EventSpec
+public interface StateReaction extends EObject
 {
 } // StateReaction

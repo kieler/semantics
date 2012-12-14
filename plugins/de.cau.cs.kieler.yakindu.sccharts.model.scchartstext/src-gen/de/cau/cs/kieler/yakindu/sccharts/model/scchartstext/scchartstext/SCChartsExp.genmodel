@@ -28,7 +28,8 @@
     <genClasses ecoreClass="SCChartsExp.ecore#//StateScope"/>
     <genClasses ecoreClass="SCChartsExp.ecore#//SignalDefinition"/>
     <genClasses ecoreClass="SCChartsExp.ecore#//VariableDefinition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/direction"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isInput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isOutput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isStatic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//VariableDefinition/varInitialValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/varCombineOperator"/>
@@ -39,18 +40,22 @@
     <genClasses ecoreClass="SCChartsExp.ecore#//Inside"/>
     <genClasses ecoreClass="SCChartsExp.ecore#//Exit"/>
     <genClasses ecoreClass="SCChartsExp.ecore#//SimpleScope"/>
-    <genClasses ecoreClass="SCChartsExp.ecore#//EventDefinition"/>
+    <genClasses ecoreClass="SCChartsExp.ecore#//EventDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//EventDefinition/isInput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//EventDefinition/isOutput"/>
+    </genClasses>
+    <genClasses ecoreClass="SCChartsExp.ecore#//SuspendEffect"/>
     <genClasses ecoreClass="SCChartsExp.ecore#//ReactionTrigger">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionTrigger/triggers"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionTrigger/guardExpression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//ReactionTrigger/isImmediate"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//ReactionTrigger/delay"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionTrigger/guardExpression"/>
     </genClasses>
     <genClasses ecoreClass="SCChartsExp.ecore#//ReactionEffect">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionEffect/actions"/>
     </genClasses>
-    <genClasses ecoreClass="SCChartsExp.ecore#//PreValueExpressionreturns">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//PreValueExpressionreturns/value"/>
+    <genClasses ecoreClass="SCChartsExp.ecore#//PreValueExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//PreValueExpression/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

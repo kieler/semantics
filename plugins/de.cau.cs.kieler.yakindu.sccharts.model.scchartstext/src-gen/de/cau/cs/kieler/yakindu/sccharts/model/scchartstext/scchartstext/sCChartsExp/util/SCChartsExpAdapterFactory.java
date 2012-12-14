@@ -26,7 +26,6 @@ import org.yakindu.sct.model.sgraph.Statement;
 import org.yakindu.sct.model.sgraph.Trigger;
 import org.yakindu.sct.model.sgraph.Variable;
 
-import org.yakindu.sct.model.stext.stext.EventSpec;
 import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
@@ -143,6 +142,11 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
         return createEventDefinitionAdapter();
       }
       @Override
+      public Adapter caseSuspendEffect(SuspendEffect object)
+      {
+        return createSuspendEffectAdapter();
+      }
+      @Override
       public Adapter caseReactionTrigger(ReactionTrigger object)
       {
         return createReactionTriggerAdapter();
@@ -153,9 +157,9 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
         return createReactionEffectAdapter();
       }
       @Override
-      public Adapter casePreValueExpressionreturns(PreValueExpressionreturns object)
+      public Adapter casePreValueExpression(PreValueExpression object)
       {
-        return createPreValueExpressionreturnsAdapter();
+        return createPreValueExpressionAdapter();
       }
       @Override
       public Adapter caseScope(Scope object)
@@ -213,19 +217,14 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
         return createStext_LocalReactionAdapter();
       }
       @Override
-      public Adapter caseEventSpec(EventSpec object)
+      public Adapter caseEffect(Effect object)
       {
-        return createEventSpecAdapter();
+        return createEffectAdapter();
       }
       @Override
       public Adapter caseTrigger(Trigger object)
       {
         return createTriggerAdapter();
-      }
-      @Override
-      public Adapter caseEffect(Effect object)
-      {
-        return createEffectAdapter();
       }
       @Override
       public Adapter caseStatement(Statement object)
@@ -410,6 +409,21 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SuspendEffect <em>Suspend Effect</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SuspendEffect
+   * @generated
+   */
+  public Adapter createSuspendEffectAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.ReactionTrigger <em>Reaction Trigger</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -440,16 +454,16 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.PreValueExpressionreturns <em>Pre Value Expressionreturns</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.PreValueExpression <em>Pre Value Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.PreValueExpressionreturns
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.PreValueExpression
    * @generated
    */
-  public Adapter createPreValueExpressionreturnsAdapter()
+  public Adapter createPreValueExpressionAdapter()
   {
     return null;
   }
@@ -620,16 +634,16 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.EventSpec <em>Event Spec</em>}'.
+   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Effect <em>Effect</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.yakindu.sct.model.stext.stext.EventSpec
+   * @see org.yakindu.sct.model.sgraph.Effect
    * @generated
    */
-  public Adapter createEventSpecAdapter()
+  public Adapter createEffectAdapter()
   {
     return null;
   }
@@ -645,21 +659,6 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTriggerAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Effect <em>Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Effect
-   * @generated
-   */
-  public Adapter createEffectAdapter()
   {
     return null;
   }

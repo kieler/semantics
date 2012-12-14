@@ -8,7 +8,7 @@ import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChart
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.Exit;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.Inside;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.LocalReaction;
-import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.PreValueExpressionreturns;
+import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.PreValueExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.ReactionEffect;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SCChartsExpFactory;
@@ -17,6 +17,7 @@ import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChart
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SimpleScope;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.StateReaction;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.StateScope;
+import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SuspendEffect;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VarDirection;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition;
 
@@ -115,6 +116,13 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass suspendEffectEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass reactionTriggerEClass = null;
 
   /**
@@ -129,7 +137,7 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass preValueExpressionreturnsEClass = null;
+  private EClass preValueExpressionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -246,7 +254,7 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableDefinition_Direction()
+  public EAttribute getVariableDefinition_IsInput()
   {
     return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(0);
   }
@@ -256,7 +264,7 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableDefinition_IsStatic()
+  public EAttribute getVariableDefinition_IsOutput()
   {
     return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(1);
   }
@@ -266,9 +274,19 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getVariableDefinition_IsStatic()
+  {
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getVariableDefinition_VarInitialValue()
   {
-    return (EReference)variableDefinitionEClass.getEStructuralFeatures().get(2);
+    return (EReference)variableDefinitionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -278,7 +296,7 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    */
   public EAttribute getVariableDefinition_VarCombineOperator()
   {
-    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -356,6 +374,36 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getEventDefinition_IsInput()
+  {
+    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEventDefinition_IsOutput()
+  {
+    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSuspendEffect()
+  {
+    return suspendEffectEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getReactionTrigger()
   {
     return reactionTriggerEClass;
@@ -376,19 +424,9 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReactionTrigger_GuardExpression()
-  {
-    return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getReactionTrigger_IsImmediate()
   {
-    return (EAttribute)reactionTriggerEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)reactionTriggerEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -398,7 +436,17 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    */
   public EAttribute getReactionTrigger_Delay()
   {
-    return (EAttribute)reactionTriggerEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)reactionTriggerEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReactionTrigger_GuardExpression()
+  {
+    return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -426,9 +474,9 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getPreValueExpressionreturns()
+  public EClass getPreValueExpression()
   {
-    return preValueExpressionreturnsEClass;
+    return preValueExpressionEClass;
   }
 
   /**
@@ -436,9 +484,9 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPreValueExpressionreturns_Value()
+  public EReference getPreValueExpression_Value()
   {
-    return (EReference)preValueExpressionreturnsEClass.getEStructuralFeatures().get(0);
+    return (EReference)preValueExpressionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -496,7 +544,8 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     signalDefinitionEClass = createEClass(SIGNAL_DEFINITION);
 
     variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
-    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__DIRECTION);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_INPUT);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_OUTPUT);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_STATIC);
     createEReference(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_INITIAL_VALUE);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR);
@@ -514,18 +563,22 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     simpleScopeEClass = createEClass(SIMPLE_SCOPE);
 
     eventDefinitionEClass = createEClass(EVENT_DEFINITION);
+    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__IS_INPUT);
+    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__IS_OUTPUT);
+
+    suspendEffectEClass = createEClass(SUSPEND_EFFECT);
 
     reactionTriggerEClass = createEClass(REACTION_TRIGGER);
     createEReference(reactionTriggerEClass, REACTION_TRIGGER__TRIGGERS);
-    createEReference(reactionTriggerEClass, REACTION_TRIGGER__GUARD_EXPRESSION);
     createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__IS_IMMEDIATE);
     createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__DELAY);
+    createEReference(reactionTriggerEClass, REACTION_TRIGGER__GUARD_EXPRESSION);
 
     reactionEffectEClass = createEClass(REACTION_EFFECT);
     createEReference(reactionEffectEClass, REACTION_EFFECT__ACTIONS);
 
-    preValueExpressionreturnsEClass = createEClass(PRE_VALUE_EXPRESSIONRETURNS);
-    createEReference(preValueExpressionreturnsEClass, PRE_VALUE_EXPRESSIONRETURNS__VALUE);
+    preValueExpressionEClass = createEClass(PRE_VALUE_EXPRESSION);
+    createEReference(preValueExpressionEClass, PRE_VALUE_EXPRESSION__VALUE);
 
     // Create enums
     combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
@@ -569,15 +622,15 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     signalDefinitionEClass.getESuperTypes().add(theSGraphPackage.getEvent());
     variableDefinitionEClass.getESuperTypes().add(theStextPackage.getVariableDefinition());
     localReactionEClass.getESuperTypes().add(theStextPackage.getLocalReaction());
-    stateReactionEClass.getESuperTypes().add(theStextPackage.getEventSpec());
     entryEClass.getESuperTypes().add(this.getStateReaction());
     insideEClass.getESuperTypes().add(this.getStateReaction());
     exitEClass.getESuperTypes().add(this.getStateReaction());
     simpleScopeEClass.getESuperTypes().add(this.getStateScope());
     eventDefinitionEClass.getESuperTypes().add(this.getSignalDefinition());
+    suspendEffectEClass.getESuperTypes().add(theSGraphPackage.getEffect());
     reactionTriggerEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
     reactionEffectEClass.getESuperTypes().add(theSGraphPackage.getEffect());
-    preValueExpressionreturnsEClass.getESuperTypes().add(theStextPackage.getExpression());
+    preValueExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
 
     // Initialize classes and features; add operations and parameters
     initEClass(stateScopeEClass, StateScope.class, "StateScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -585,7 +638,8 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     initEClass(signalDefinitionEClass, SignalDefinition.class, "SignalDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVariableDefinition_Direction(), this.getVarDirection(), "direction", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDefinition_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDefinition_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVariableDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_VarCombineOperator(), this.getCombineOperator(), "varCombineOperator", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -603,18 +657,22 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     initEClass(simpleScopeEClass, SimpleScope.class, "SimpleScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(eventDefinitionEClass, EventDefinition.class, "EventDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEventDefinition_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEventDefinition_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(suspendEffectEClass, SuspendEffect.class, "SuspendEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(reactionTriggerEClass, ReactionTrigger.class, "ReactionTrigger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getReactionTrigger_Triggers(), theStextPackage.getEventSpec(), null, "triggers", null, 0, -1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getReactionTrigger_GuardExpression(), theStextPackage.getExpression(), null, "guardExpression", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReactionTrigger_Triggers(), ecorePackage.getEObject(), null, "triggers", null, 0, -1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReactionTrigger_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReactionTrigger_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReactionTrigger_GuardExpression(), theStextPackage.getExpression(), null, "guardExpression", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(reactionEffectEClass, ReactionEffect.class, "ReactionEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getReactionEffect_Actions(), theStextPackage.getExpression(), null, "actions", null, 0, -1, ReactionEffect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(preValueExpressionreturnsEClass, PreValueExpressionreturns.class, "PreValueExpressionreturns", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPreValueExpressionreturns_Value(), theStextPackage.getExpression(), null, "value", null, 0, 1, PreValueExpressionreturns.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(preValueExpressionEClass, PreValueExpression.class, "PreValueExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPreValueExpression_Value(), theStextPackage.getExpression(), null, "value", null, 0, 1, PreValueExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");

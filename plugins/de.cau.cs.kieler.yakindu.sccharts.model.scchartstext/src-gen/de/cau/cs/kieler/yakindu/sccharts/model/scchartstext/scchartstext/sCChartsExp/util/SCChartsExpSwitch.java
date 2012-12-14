@@ -24,7 +24,6 @@ import org.yakindu.sct.model.sgraph.Statement;
 import org.yakindu.sct.model.sgraph.Trigger;
 import org.yakindu.sct.model.sgraph.Variable;
 
-import org.yakindu.sct.model.stext.stext.EventSpec;
 import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
@@ -137,7 +136,6 @@ public class SCChartsExpSwitch<T> extends Switch<T>
       {
         StateReaction stateReaction = (StateReaction)theEObject;
         T result = caseStateReaction(stateReaction);
-        if (result == null) result = caseEventSpec(stateReaction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -146,7 +144,6 @@ public class SCChartsExpSwitch<T> extends Switch<T>
         Entry entry = (Entry)theEObject;
         T result = caseEntry(entry);
         if (result == null) result = caseStateReaction(entry);
-        if (result == null) result = caseEventSpec(entry);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -155,7 +152,6 @@ public class SCChartsExpSwitch<T> extends Switch<T>
         Inside inside = (Inside)theEObject;
         T result = caseInside(inside);
         if (result == null) result = caseStateReaction(inside);
-        if (result == null) result = caseEventSpec(inside);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -164,7 +160,6 @@ public class SCChartsExpSwitch<T> extends Switch<T>
         Exit exit = (Exit)theEObject;
         T result = caseExit(exit);
         if (result == null) result = caseStateReaction(exit);
-        if (result == null) result = caseEventSpec(exit);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -188,6 +183,14 @@ public class SCChartsExpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SCChartsExpPackage.SUSPEND_EFFECT:
+      {
+        SuspendEffect suspendEffect = (SuspendEffect)theEObject;
+        T result = caseSuspendEffect(suspendEffect);
+        if (result == null) result = caseEffect(suspendEffect);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SCChartsExpPackage.REACTION_TRIGGER:
       {
         ReactionTrigger reactionTrigger = (ReactionTrigger)theEObject;
@@ -204,12 +207,12 @@ public class SCChartsExpSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SCChartsExpPackage.PRE_VALUE_EXPRESSIONRETURNS:
+      case SCChartsExpPackage.PRE_VALUE_EXPRESSION:
       {
-        PreValueExpressionreturns preValueExpressionreturns = (PreValueExpressionreturns)theEObject;
-        T result = casePreValueExpressionreturns(preValueExpressionreturns);
-        if (result == null) result = caseExpression(preValueExpressionreturns);
-        if (result == null) result = caseStatement(preValueExpressionreturns);
+        PreValueExpression preValueExpression = (PreValueExpression)theEObject;
+        T result = casePreValueExpression(preValueExpression);
+        if (result == null) result = caseExpression(preValueExpression);
+        if (result == null) result = caseStatement(preValueExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -378,6 +381,22 @@ public class SCChartsExpSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Suspend Effect</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Suspend Effect</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSuspendEffect(SuspendEffect object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Reaction Trigger</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -410,17 +429,17 @@ public class SCChartsExpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Pre Value Expressionreturns</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Pre Value Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Pre Value Expressionreturns</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Pre Value Expression</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePreValueExpressionreturns(PreValueExpressionreturns object)
+  public T casePreValueExpression(PreValueExpression object)
   {
     return null;
   }
@@ -602,17 +621,17 @@ public class SCChartsExpSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Event Spec</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Event Spec</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Effect</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseEventSpec(EventSpec object)
+  public T caseEffect(Effect object)
   {
     return null;
   }
@@ -629,22 +648,6 @@ public class SCChartsExpSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseTrigger(Trigger object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Effect</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEffect(Effect object)
   {
     return null;
   }

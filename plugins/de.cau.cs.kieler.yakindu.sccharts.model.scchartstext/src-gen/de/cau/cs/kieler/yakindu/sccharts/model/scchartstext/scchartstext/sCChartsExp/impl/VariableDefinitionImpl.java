@@ -4,7 +4,6 @@ package de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChar
 
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.CombineOperator;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SCChartsExpPackage;
-import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VarDirection;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -24,7 +23,8 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.VariableDefinitionImpl#getDirection <em>Direction</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.VariableDefinitionImpl#isIsInput <em>Is Input</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.VariableDefinitionImpl#isIsOutput <em>Is Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.VariableDefinitionImpl#isIsStatic <em>Is Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.VariableDefinitionImpl#getVarInitialValue <em>Var Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.VariableDefinitionImpl#getVarCombineOperator <em>Var Combine Operator</em>}</li>
@@ -36,24 +36,44 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public class VariableDefinitionImpl extends org.yakindu.sct.model.stext.stext.impl.VariableDefinitionImpl implements VariableDefinition
 {
   /**
-   * The default value of the '{@link #getDirection() <em>Direction</em>}' attribute.
+   * The default value of the '{@link #isIsInput() <em>Is Input</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getDirection()
+   * @see #isIsInput()
    * @generated
    * @ordered
    */
-  protected static final VarDirection DIRECTION_EDEFAULT = VarDirection.INOUT;
+  protected static final boolean IS_INPUT_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getDirection() <em>Direction</em>}' attribute.
+   * The cached value of the '{@link #isIsInput() <em>Is Input</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getDirection()
+   * @see #isIsInput()
    * @generated
    * @ordered
    */
-  protected VarDirection direction = DIRECTION_EDEFAULT;
+  protected boolean isInput = IS_INPUT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isIsOutput() <em>Is Output</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIsOutput()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean IS_OUTPUT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isIsOutput() <em>Is Output</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIsOutput()
+   * @generated
+   * @ordered
+   */
+  protected boolean isOutput = IS_OUTPUT_EDEFAULT;
 
   /**
    * The default value of the '{@link #isIsStatic() <em>Is Static</em>}' attribute.
@@ -131,9 +151,9 @@ public class VariableDefinitionImpl extends org.yakindu.sct.model.stext.stext.im
    * <!-- end-user-doc -->
    * @generated
    */
-  public VarDirection getDirection()
+  public boolean isIsInput()
   {
-    return direction;
+    return isInput;
   }
 
   /**
@@ -141,12 +161,35 @@ public class VariableDefinitionImpl extends org.yakindu.sct.model.stext.stext.im
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDirection(VarDirection newDirection)
+  public void setIsInput(boolean newIsInput)
   {
-    VarDirection oldDirection = direction;
-    direction = newDirection == null ? DIRECTION_EDEFAULT : newDirection;
+    boolean oldIsInput = isInput;
+    isInput = newIsInput;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.VARIABLE_DEFINITION__DIRECTION, oldDirection, direction));
+      eNotify(new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.VARIABLE_DEFINITION__IS_INPUT, oldIsInput, isInput));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isIsOutput()
+  {
+    return isOutput;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setIsOutput(boolean newIsOutput)
+  {
+    boolean oldIsOutput = isOutput;
+    isOutput = newIsOutput;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.VARIABLE_DEFINITION__IS_OUTPUT, oldIsOutput, isOutput));
   }
 
   /**
@@ -269,8 +312,10 @@ public class VariableDefinitionImpl extends org.yakindu.sct.model.stext.stext.im
   {
     switch (featureID)
     {
-      case SCChartsExpPackage.VARIABLE_DEFINITION__DIRECTION:
-        return getDirection();
+      case SCChartsExpPackage.VARIABLE_DEFINITION__IS_INPUT:
+        return isIsInput();
+      case SCChartsExpPackage.VARIABLE_DEFINITION__IS_OUTPUT:
+        return isIsOutput();
       case SCChartsExpPackage.VARIABLE_DEFINITION__IS_STATIC:
         return isIsStatic();
       case SCChartsExpPackage.VARIABLE_DEFINITION__VAR_INITIAL_VALUE:
@@ -291,8 +336,11 @@ public class VariableDefinitionImpl extends org.yakindu.sct.model.stext.stext.im
   {
     switch (featureID)
     {
-      case SCChartsExpPackage.VARIABLE_DEFINITION__DIRECTION:
-        setDirection((VarDirection)newValue);
+      case SCChartsExpPackage.VARIABLE_DEFINITION__IS_INPUT:
+        setIsInput((Boolean)newValue);
+        return;
+      case SCChartsExpPackage.VARIABLE_DEFINITION__IS_OUTPUT:
+        setIsOutput((Boolean)newValue);
         return;
       case SCChartsExpPackage.VARIABLE_DEFINITION__IS_STATIC:
         setIsStatic((Boolean)newValue);
@@ -317,8 +365,11 @@ public class VariableDefinitionImpl extends org.yakindu.sct.model.stext.stext.im
   {
     switch (featureID)
     {
-      case SCChartsExpPackage.VARIABLE_DEFINITION__DIRECTION:
-        setDirection(DIRECTION_EDEFAULT);
+      case SCChartsExpPackage.VARIABLE_DEFINITION__IS_INPUT:
+        setIsInput(IS_INPUT_EDEFAULT);
+        return;
+      case SCChartsExpPackage.VARIABLE_DEFINITION__IS_OUTPUT:
+        setIsOutput(IS_OUTPUT_EDEFAULT);
         return;
       case SCChartsExpPackage.VARIABLE_DEFINITION__IS_STATIC:
         setIsStatic(IS_STATIC_EDEFAULT);
@@ -343,8 +394,10 @@ public class VariableDefinitionImpl extends org.yakindu.sct.model.stext.stext.im
   {
     switch (featureID)
     {
-      case SCChartsExpPackage.VARIABLE_DEFINITION__DIRECTION:
-        return direction != DIRECTION_EDEFAULT;
+      case SCChartsExpPackage.VARIABLE_DEFINITION__IS_INPUT:
+        return isInput != IS_INPUT_EDEFAULT;
+      case SCChartsExpPackage.VARIABLE_DEFINITION__IS_OUTPUT:
+        return isOutput != IS_OUTPUT_EDEFAULT;
       case SCChartsExpPackage.VARIABLE_DEFINITION__IS_STATIC:
         return isStatic != IS_STATIC_EDEFAULT;
       case SCChartsExpPackage.VARIABLE_DEFINITION__VAR_INITIAL_VALUE:
@@ -366,8 +419,10 @@ public class VariableDefinitionImpl extends org.yakindu.sct.model.stext.stext.im
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (direction: ");
-    result.append(direction);
+    result.append(" (isInput: ");
+    result.append(isInput);
+    result.append(", isOutput: ");
+    result.append(isOutput);
     result.append(", isStatic: ");
     result.append(isStatic);
     result.append(", varCombineOperator: ");

@@ -13,6 +13,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -22,7 +23,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.yakindu.sct.model.sgraph.impl.TriggerImpl;
 
-import org.yakindu.sct.model.stext.stext.EventSpec;
 import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
@@ -33,9 +33,9 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.ReactionTriggerImpl#getTriggers <em>Triggers</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.ReactionTriggerImpl#getGuardExpression <em>Guard Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.ReactionTriggerImpl#isIsImmediate <em>Is Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.ReactionTriggerImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl.ReactionTriggerImpl#getGuardExpression <em>Guard Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,17 +51,7 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * @generated
    * @ordered
    */
-  protected EList<EventSpec> triggers;
-
-  /**
-   * The cached value of the '{@link #getGuardExpression() <em>Guard Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getGuardExpression()
-   * @generated
-   * @ordered
-   */
-  protected Expression guardExpression;
+  protected EList<EObject> triggers;
 
   /**
    * The default value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
@@ -104,6 +94,16 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   protected int delay = DELAY_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getGuardExpression() <em>Guard Expression</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGuardExpression()
+   * @generated
+   * @ordered
+   */
+  protected Expression guardExpression;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -129,13 +129,59 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<EventSpec> getTriggers()
+  public EList<EObject> getTriggers()
   {
     if (triggers == null)
     {
-      triggers = new EObjectContainmentEList<EventSpec>(EventSpec.class, this, SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS);
+      triggers = new EObjectContainmentEList<EObject>(EObject.class, this, SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS);
     }
     return triggers;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isIsImmediate()
+  {
+    return isImmediate;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setIsImmediate(boolean newIsImmediate)
+  {
+    boolean oldIsImmediate = isImmediate;
+    isImmediate = newIsImmediate;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.REACTION_TRIGGER__IS_IMMEDIATE, oldIsImmediate, isImmediate));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public int getDelay()
+  {
+    return delay;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDelay(int newDelay)
+  {
+    int oldDelay = delay;
+    delay = newDelay;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.REACTION_TRIGGER__DELAY, oldDelay, delay));
   }
 
   /**
@@ -191,52 +237,6 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isIsImmediate()
-  {
-    return isImmediate;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setIsImmediate(boolean newIsImmediate)
-  {
-    boolean oldIsImmediate = isImmediate;
-    isImmediate = newIsImmediate;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.REACTION_TRIGGER__IS_IMMEDIATE, oldIsImmediate, isImmediate));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public int getDelay()
-  {
-    return delay;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setDelay(int newDelay)
-  {
-    int oldDelay = delay;
-    delay = newDelay;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.REACTION_TRIGGER__DELAY, oldDelay, delay));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -262,12 +262,12 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
     {
       case SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS:
         return getTriggers();
-      case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
-        return getGuardExpression();
       case SCChartsExpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
         return isIsImmediate();
       case SCChartsExpPackage.REACTION_TRIGGER__DELAY:
         return getDelay();
+      case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
+        return getGuardExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -285,16 +285,16 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
     {
       case SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS:
         getTriggers().clear();
-        getTriggers().addAll((Collection<? extends EventSpec>)newValue);
-        return;
-      case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
-        setGuardExpression((Expression)newValue);
+        getTriggers().addAll((Collection<? extends EObject>)newValue);
         return;
       case SCChartsExpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
         setIsImmediate((Boolean)newValue);
         return;
       case SCChartsExpPackage.REACTION_TRIGGER__DELAY:
         setDelay((Integer)newValue);
+        return;
+      case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
+        setGuardExpression((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -313,14 +313,14 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
       case SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS:
         getTriggers().clear();
         return;
-      case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
-        setGuardExpression((Expression)null);
-        return;
       case SCChartsExpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
         setIsImmediate(IS_IMMEDIATE_EDEFAULT);
         return;
       case SCChartsExpPackage.REACTION_TRIGGER__DELAY:
         setDelay(DELAY_EDEFAULT);
+        return;
+      case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
+        setGuardExpression((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -338,12 +338,12 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
     {
       case SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS:
         return triggers != null && !triggers.isEmpty();
-      case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
-        return guardExpression != null;
       case SCChartsExpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
         return isImmediate != IS_IMMEDIATE_EDEFAULT;
       case SCChartsExpPackage.REACTION_TRIGGER__DELAY:
         return delay != DELAY_EDEFAULT;
+      case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
+        return guardExpression != null;
     }
     return super.eIsSet(featureID);
   }

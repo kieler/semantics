@@ -3,29 +3,29 @@
 package de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SCChartsExpPackage;
-import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.StateReaction;
+import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SuspendEffect;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.yakindu.sct.model.sgraph.impl.EffectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>State Reaction</b></em>'.
+ * An implementation of the model object '<em><b>Suspend Effect</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public class StateReactionImpl extends MinimalEObjectImpl.Container implements StateReaction
+public class SuspendEffectImpl extends EffectImpl implements SuspendEffect
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected StateReactionImpl()
+  protected SuspendEffectImpl()
   {
     super();
   }
@@ -38,7 +38,7 @@ public class StateReactionImpl extends MinimalEObjectImpl.Container implements S
   @Override
   protected EClass eStaticClass()
   {
-    return SCChartsExpPackage.Literals.STATE_REACTION;
+    return SCChartsExpPackage.Literals.SUSPEND_EFFECT;
   }
 
-} //StateReactionImpl
+} //SuspendEffectImpl

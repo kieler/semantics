@@ -12,7 +12,8 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition#getDirection <em>Direction</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition#isIsInput <em>Is Input</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition#isIsOutput <em>Is Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition#isIsStatic <em>Is Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition#getVarInitialValue <em>Var Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition#getVarCombineOperator <em>Var Combine Operator</em>}</li>
@@ -26,33 +27,56 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public interface VariableDefinition extends org.yakindu.sct.model.stext.stext.VariableDefinition
 {
   /**
-   * Returns the value of the '<em><b>Direction</b></em>' attribute.
-   * The literals are from the enumeration {@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VarDirection}.
+   * Returns the value of the '<em><b>Is Input</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Direction</em>' attribute isn't clear,
+   * If the meaning of the '<em>Is Input</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Direction</em>' attribute.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VarDirection
-   * @see #setDirection(VarDirection)
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SCChartsExpPackage#getVariableDefinition_Direction()
+   * @return the value of the '<em>Is Input</em>' attribute.
+   * @see #setIsInput(boolean)
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SCChartsExpPackage#getVariableDefinition_IsInput()
    * @model
    * @generated
    */
-  VarDirection getDirection();
+  boolean isIsInput();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition#getDirection <em>Direction</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition#isIsInput <em>Is Input</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Direction</em>' attribute.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VarDirection
-   * @see #getDirection()
+   * @param value the new value of the '<em>Is Input</em>' attribute.
+   * @see #isIsInput()
    * @generated
    */
-  void setDirection(VarDirection value);
+  void setIsInput(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Is Output</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Is Output</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Is Output</em>' attribute.
+   * @see #setIsOutput(boolean)
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SCChartsExpPackage#getVariableDefinition_IsOutput()
+   * @model
+   * @generated
+   */
+  boolean isIsOutput();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition#isIsOutput <em>Is Output</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Is Output</em>' attribute.
+   * @see #isIsOutput()
+   * @generated
+   */
+  void setIsOutput(boolean value);
 
   /**
    * Returns the value of the '<em><b>Is Static</b></em>' attribute.

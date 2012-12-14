@@ -75,9 +75,10 @@ public class SCChartsExpFactoryImpl extends EFactoryImpl implements SCChartsExpF
       case SCChartsExpPackage.EXIT: return createExit();
       case SCChartsExpPackage.SIMPLE_SCOPE: return createSimpleScope();
       case SCChartsExpPackage.EVENT_DEFINITION: return createEventDefinition();
+      case SCChartsExpPackage.SUSPEND_EFFECT: return createSuspendEffect();
       case SCChartsExpPackage.REACTION_TRIGGER: return createReactionTrigger();
       case SCChartsExpPackage.REACTION_EFFECT: return createReactionEffect();
-      case SCChartsExpPackage.PRE_VALUE_EXPRESSIONRETURNS: return createPreValueExpressionreturns();
+      case SCChartsExpPackage.PRE_VALUE_EXPRESSION: return createPreValueExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -236,6 +237,17 @@ public class SCChartsExpFactoryImpl extends EFactoryImpl implements SCChartsExpF
    * <!-- end-user-doc -->
    * @generated
    */
+  public SuspendEffect createSuspendEffect()
+  {
+    SuspendEffectImpl suspendEffect = new SuspendEffectImpl();
+    return suspendEffect;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public ReactionTrigger createReactionTrigger()
   {
     ReactionTriggerImpl reactionTrigger = new ReactionTriggerImpl();
@@ -258,10 +270,10 @@ public class SCChartsExpFactoryImpl extends EFactoryImpl implements SCChartsExpF
    * <!-- end-user-doc -->
    * @generated
    */
-  public PreValueExpressionreturns createPreValueExpressionreturns()
+  public PreValueExpression createPreValueExpression()
   {
-    PreValueExpressionreturnsImpl preValueExpressionreturns = new PreValueExpressionreturnsImpl();
-    return preValueExpressionreturns;
+    PreValueExpressionImpl preValueExpression = new PreValueExpressionImpl();
+    return preValueExpression;
   }
 
   /**

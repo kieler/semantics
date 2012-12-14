@@ -30,7 +30,7 @@ public class SCChartsExpJavaValidator extends STextJavaValidator {
 				if (declaration.getName().equals(variable.getName())) {
 					error("Variable '" + variable.getName()
 							+ "' already exists in an ancestor State.",
-							SCChartsExpPackage.Literals.VARIABLE_DEFINITION__DIRECTION);
+							null);
 					return;
 				}
 			}
@@ -51,7 +51,7 @@ public class SCChartsExpJavaValidator extends STextJavaValidator {
 					} else {
 						error("Variable '" + variable.getName()
 								+ "' exists more than ones in the same State.",
-								SCChartsExpPackage.Literals.VARIABLE_DEFINITION__DIRECTION);
+								null);
 						return;
 					}
 				}

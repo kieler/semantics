@@ -113,6 +113,15 @@ public interface SCChartsExpFactory extends EFactory
   EventDefinition createEventDefinition();
 
   /**
+   * Returns a new object of class '<em>Suspend Effect</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Suspend Effect</em>'.
+   * @generated
+   */
+  SuspendEffect createSuspendEffect();
+
+  /**
    * Returns a new object of class '<em>Reaction Trigger</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -131,13 +140,13 @@ public interface SCChartsExpFactory extends EFactory
   ReactionEffect createReactionEffect();
 
   /**
-   * Returns a new object of class '<em>Pre Value Expressionreturns</em>'.
+   * Returns a new object of class '<em>Pre Value Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Pre Value Expressionreturns</em>'.
+   * @return a new object of class '<em>Pre Value Expression</em>'.
    * @generated
    */
-  PreValueExpressionreturns createPreValueExpressionreturns();
+  PreValueExpression createPreValueExpression();
 
   /**
    * Returns the package supported by this factory.

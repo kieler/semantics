@@ -4,9 +4,10 @@ package de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChar
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.ecore.EObject;
+
 import org.yakindu.sct.model.sgraph.Trigger;
 
-import org.yakindu.sct.model.stext.stext.EventSpec;
 import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
@@ -18,9 +19,9 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.ReactionTrigger#getTriggers <em>Triggers</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.ReactionTrigger#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,7 +33,7 @@ public interface ReactionTrigger extends Trigger
 {
   /**
    * Returns the value of the '<em><b>Triggers</b></em>' containment reference list.
-   * The list contents are of type {@link org.yakindu.sct.model.stext.stext.EventSpec}.
+   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Triggers</em>' containment reference list isn't clear,
@@ -44,33 +45,7 @@ public interface ReactionTrigger extends Trigger
    * @model containment="true"
    * @generated
    */
-  EList<EventSpec> getTriggers();
-
-  /**
-   * Returns the value of the '<em><b>Guard Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Guard Expression</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Guard Expression</em>' containment reference.
-   * @see #setGuardExpression(Expression)
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SCChartsExpPackage#getReactionTrigger_GuardExpression()
-   * @model containment="true"
-   * @generated
-   */
-  Expression getGuardExpression();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Guard Expression</em>' containment reference.
-   * @see #getGuardExpression()
-   * @generated
-   */
-  void setGuardExpression(Expression value);
+  EList<EObject> getTriggers();
 
   /**
    * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
@@ -123,5 +98,31 @@ public interface ReactionTrigger extends Trigger
    * @generated
    */
   void setDelay(int value);
+
+  /**
+   * Returns the value of the '<em><b>Guard Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Guard Expression</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Guard Expression</em>' containment reference.
+   * @see #setGuardExpression(Expression)
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SCChartsExpPackage#getReactionTrigger_GuardExpression()
+   * @model containment="true"
+   * @generated
+   */
+  Expression getGuardExpression();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Guard Expression</em>' containment reference.
+   * @see #getGuardExpression()
+   * @generated
+   */
+  void setGuardExpression(Expression value);
 
 } // ReactionTrigger
