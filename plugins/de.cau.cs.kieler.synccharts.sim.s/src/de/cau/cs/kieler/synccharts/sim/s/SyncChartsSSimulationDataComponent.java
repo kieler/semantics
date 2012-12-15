@@ -58,13 +58,14 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
     private static final int NUMBER_OF_TASKS = 10;
 
-    private static final int KIEM_PROPERTY_MAX = 6;
+    private static final int KIEM_PROPERTY_MAX = 7;
     private static final int KIEM_PROPERTY_STATENAME = 0;
     private static final int KIEM_PROPERTY_TRANSITIONNAME = 1;
     private static final int KIEM_PROPERTY_FULLDEBUGMODE = 2;
     private static final int KIEM_PROPERTY_BENCHMARK = 3;
     private static final int KIEM_PROPERTY_SCDEBUGCONSOLE = 4;
     private static final int KIEM_PROPERTY_EXPOSELOCALSIGNALS = 5;
+    private static final int KIEM_PROPERTY_SCL = 6;
 
     private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
     private static final String KIEM_PROPERTY_NAME_TRANSITIONNAME = "Transition Name";
@@ -72,6 +73,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     private static final String KIEM_PROPERTY_NAME_BENCHMARK = "Benchmark Mode";
     private static final String KIEM_PROPERTY_NAME_SCDEBUGCONSOLE = "SC Debug Console";
     private static final String KIEM_PROPERTY_NAME_EXPOSELOCALSIGNALS = "Expose Local Signals";
+    private static final String KIEM_PROPERTY_NAME_SCL = "SCL (SC Light)";
 
     /** A flag indicating that debug console output is generated and should be handled. */
     private boolean debugConsole = true;
@@ -290,6 +292,8 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 KIEM_PROPERTY_NAME_SCDEBUGCONSOLE, true);
         properties[KIEM_PROPERTY_EXPOSELOCALSIGNALS] = new KiemProperty(
                 KIEM_PROPERTY_NAME_EXPOSELOCALSIGNALS, false);
+        properties[KIEM_PROPERTY_SCL] = new KiemProperty(
+                KIEM_PROPERTY_NAME_SCL, false);
 
         return properties;
     }
@@ -472,7 +476,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // Use the SSCSimulationDataComponent
             sSCSimDataComponent.doModel2ModelTransform(monitor, program, false, this
                     .getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
-                    .getValueAsBoolean(), debugConsole);
+                    .getValueAsBoolean(), debugConsole, this
+                    .getProperties()[KIEM_PROPERTY_SCL + KIEM_PROPERTY_DIFF]
+                    .getValueAsBoolean());
 
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "

@@ -101,6 +101,9 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
     /** The Constant KIEM_PROPERTY_NAME_BENCHMARK. */
     private static final String KIEM_PROPERTY_NAME_BENCHMARK = "Benchmark Mode";
 
+    /** The Constant KIEM_PROPERTY_NAME_SCL. */
+    private static final String KIEM_PROPERTY_NAME_SCL = "SCL (SC Light)";
+
     /** The Constant KIEM_PROPERTY_NAME_SCDEBUGCONSOLE. */
     private static final String KIEM_PROPERTY_NAME_SCDEBUGCONSOLE = "SC Debug Console";
 
@@ -125,6 +128,9 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
     /** The Constant KIEM_PROPERTY_DEFAULT_BENCHMARK. */
     private static final boolean KIEM_PROPERTY_DEFAULT_BENCHMARK = false;
 
+    /** The Constant KIEM_PROPERTY_DEFAULT_SCL. */
+    private static final boolean KIEM_PROPERTY_DEFAULT_SCL = false;
+
     /** The Constant KIEM_PROPERTY_STATEMENTNAME. */
     private static final int KIEM_PROPERTY_STATEMENTNAME = 0;
 
@@ -143,8 +149,11 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
     /** The Constant KIEM_PROPERTY_ALTERNATIVESYNTAX. */
     private static final int KIEM_PROPERTY_ALTERNATIVESYNTAX = 5;
 
+    /** The Constant KIEM_PROPERTY_SCL. */
+    private static final int KIEM_PROPERTY_SCL = 6;
+
     /** The Constant KIEM_PROPERTY_MAX. */
-    private static final int KIEM_PROPERTY_MAX = 6;
+    private static final int KIEM_PROPERTY_MAX = 7;
 
     // -------------------------------------------------------------------------
 
@@ -172,10 +181,10 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the SC execution.
-     *
+     * 
      * @return the sC execution
      */
     public SCExecution getSCExecution() {
@@ -246,7 +255,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                                         activeStatementsBuf.append(",");
                                     }
 
-                                    activeStatementsBuf.append(statementWithoutAuxiliaryVariableTag);
+                                    activeStatementsBuf
+                                            .append(statementWithoutAuxiliaryVariableTag);
 
                                 } catch (Exception e) {
                                     // ignore error
@@ -261,8 +271,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
                 if (this.benchmark) {
                     if (sSignalOutput.has(SCExecution.BENCHMARK_SIGNAL_CYCLES)) {
-                        Object bench = sSignalOutput
-                                .get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
+                        Object bench = sSignalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
                         returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
 
                         returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_SOURCE,
@@ -359,6 +368,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                 KIEM_PROPERTY_NAME_ALTERNATIVESYNTAX, KIEM_PROPERTY_DEFAULT_ALTERNATIVESYNTAX);
         properties[KIEM_PROPERTY_SCDEBUGCONSOLE] = new KiemProperty(
                 KIEM_PROPERTY_NAME_SCDEBUGCONSOLE, KIEM_PROPERTY_DEFAULT_SCDEBUGCONSOLE);
+        properties[KIEM_PROPERTY_SCL] = new KiemProperty(KIEM_PROPERTY_NAME_SCL,
+                KIEM_PROPERTY_DEFAULT_SCL);
 
         return properties;
     }
@@ -390,7 +401,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                         .getValueAsBoolean(), this.getProperties()[KIEM_PROPERTY_BENCHMARK
                         + KIEM_PROPERTY_DIFF].getValueAsBoolean(),
                 this.getProperties()[KIEM_PROPERTY_SCDEBUGCONSOLE + KIEM_PROPERTY_DIFF]
-                        .getValueAsBoolean());
+                        .getValueAsBoolean(), this.getProperties()[KIEM_PROPERTY_SCL
+                        + KIEM_PROPERTY_DIFF].getValueAsBoolean());
     }
 
     // -------------------------------------------------------------------------
@@ -399,8 +411,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final Program model,
-            final boolean debug, final boolean benchmarkParam, final boolean debugConsoleParam)
-            throws KiemInitializationException {
+            final boolean debug, final boolean benchmarkParam, final boolean debugConsoleParam,
+            final boolean scl) throws KiemInitializationException {
         this.myModel = model;
         monitor.begin("S Simulation", NUMBER_OF_TASKS);
 
@@ -479,14 +491,14 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder, 
+            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder,
                     alternativeSyntax);
 
             // Compile
             scExecution = new SCExecution(outputFolder, benchmark);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(scOutputString);
-            scExecution.compile(generatedSCFiles, debugConsole);
+            scExecution.compile(generatedSCFiles, debugConsole, scl);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
