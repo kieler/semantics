@@ -104,6 +104,18 @@ import com.google.common.collect.ImmutableList
                }
             }
         }
+        
+        
+        // Signal dependencies
+        
+        // Signal dependencies are necessary for control flow dependency optimization
+        // because only relevant control flow dependencies should be added to prevent unnecessary 
+        // cycles in the dependency graph. It is necessary to add the signal dependencies BEFORE
+        // calculating control flow dependencies.
+        var allTransitions = rootState.eAllContents.toIterable().filter(typeof(Transition)).toList;
+        for (transition : allTransitions) {
+              dependencies.handleSignalDependency(transition, rootState);
+        }        
 
         // Create dependencies between nodes
         //
@@ -175,11 +187,7 @@ import com.google.common.collect.ImmutableList
                         
         }
 
-        // Signal dependencies
-        var allTransitions = rootState.eAllContents.toIterable().filter(typeof(Transition)).toList;
-        for (transition : allTransitions) {
-              dependencies.handleSignalDependency(transition, rootState);
-        }
+
 
 // 10.11.2012
 // The following optimization is not necessary any more because
@@ -304,6 +312,11 @@ import com.google.common.collect.ImmutableList
         val PS = dependencies.getStrongNode(state, stateTransition);
         // Parent state is hierarchical and has weak aborting transitions (otherwise this will be the strong representation automatically)
         var PW = dependencies.getWeakNode(state, stateTransition);
+            // By default ALWAYS connect weak with strong representation 
+            if (state.needsStrongRepresentation && state.needsWeakRepresentation) {
+                dependencies.getHierarchyDependency(PW, PS);
+            }        
+        
         // If state has no outgoing transitions, do with dummy self-transition
         if (!childState.hasOutgoingTransitions) { 
             if (state.needsStrongRepresentation) { 
@@ -371,29 +384,107 @@ import com.google.common.collect.ImmutableList
     }
     
     
-    // CONTROLFLOW DEPENDENCY //
+    // CONTROL FLOW DEPENDENCY //
     
-    // Create control flow dependencies for immediate transitions only.
+    def getInnerInitialStates(State state) {
+        val List<State> innerInitialStates = <State> newLinkedList;
+        if (state.hierarchical) {
+            for (region : state.regions) {
+                innerInitialStates.addAll(region.states.filter(e | e.isInitial));
+            }
+        }
+        return innerInitialStates;
+    }
+    
+    def getImmediateTargets(State state) {
+        val List<State> allImmediateTargets = <State> newLinkedList;
+        val innerInititialStates = state.getInnerInitialStates;
+        // Only start with inner initial states because these may lead to
+        // dependency inheritance (like test 102)
+        for (State innerInitialState : innerInititialStates) {
+          innerInitialState.getImmediateTargetsHelper(allImmediateTargets);
+        }
+        return allImmediateTargets;
+    }
+    def getImmediateTargetsHelper(State state, List<State> allImmediateTargets) {
+        // Consider each state just once
+        if (!allImmediateTargets.contains(state)) {
+            allImmediateTargets.add(state);
+            // Consider immediate transitions
+            val immediateTransitions = state.outgoingTransitions.filter(e | e.isImmediate);
+            for (Transition transition : immediateTransitions) {
+               // Recursive closure
+               transition.targetState.getImmediateTargetsHelper(allImmediateTargets);
+            }
+            // Also consider inner initial states (these can be reachable also immediately)
+            val innerInititialStates = state.getInnerInitialStates;
+            for (State innerInitialState : innerInititialStates) {
+               // Recursive closure
+               innerInitialState.getImmediateTargetsHelper(allImmediateTargets);
+            }
+        }
+        return allImmediateTargets;
+    }
+    
+    def targetHasImmediateReaction(Transition transition, Dependencies dependencies) {
+        val immediateTargets = transition.targetState.getImmediateTargets;
+        if (immediateTargets.filter(e | e.needsDependencyRepresentation).size > 0) {
+            
+            // if there are immediate transitions reachable with effects
+            // that result in other signal dependencies to the dependency representation 
+            // of this state then return true
+            
+            // Do not add any such dependencies for test 133
+            // but add control flow dependencies for test 102
+            for (immediateTarget : immediateTargets) {
+               if (immediateTarget.needsDependencyRepresentation) {
+                   var dependendNodeS = dependencies.getStrongNode(immediateTarget);
+                   if (dependendNodeS.incomingDependencies.filter(e | e instanceof SignalDependency).size > 0) {
+                       return true;
+                   }   
+               }
+               if (immediateTarget.needsWeakRepresentation) {
+                  var dependendNodeW  = dependencies.getWeakNode(immediateTarget);
+                   if (dependendNodeW.incomingDependencies.filter(e | e instanceof SignalDependency).size > 0) {
+                       return true;
+                   }   
+              }
+            }
+            return false;
+        }
+        return false;
+    }
+    
+    // Create control flow dependencies for immediate transitions AND non immediate ones 
+    // test 102 => also consider non-immediate ones!
     def handleControlFlowDependency(Dependencies dependencies, Node dependencyTargetNode, State state, Transition transition) {
             // transition == incoming transition from A to S responsible for the dependency
             // targetTransition 
             
-           if (state.needsDependencyRepresentation) {
+           //133-tokenring-excerpt-defect.kids => transition.isImmediate 
+           if (transition.isImmediate || transition.targetHasImmediateReaction(dependencies)) {
+             if (state.needsDependencyRepresentation) {
                var dependendNodeS = dependencies.getStrongNode(state);
                if (state.needsWeakRepresentation) {
                   var dependendNodeW  = dependencies.getWeakNode(state);
                   // No dependency self loops AND no dependencies from strong to weak representation of same state
-                  if (dependencyTargetNode.state != dependendNodeW.state) {
+                     // Only if there are strong outgoing transitions from state (== transition is strong)
+                  if (dependencyTargetNode.state != dependendNodeW.state && !transition.strong) {
                       dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeW, transition.isImmediate)
                   }
                }
                // No dependency self loops AND no dependencies from strong to weak representation of same state
-               if (dependencyTargetNode.state != dependendNodeS.state) {
+               // Only if there are weak or normal termination outgoing transitions from state (== transition is not strong)
+               // test 100 reveals that we need this dependency for simple states (these have only strong representations)
+               // also when the transition is weak. ...|| (!state.needsWeakRepresentation)
+               if (dependencyTargetNode.state != dependendNodeS.state  && (transition.strong || (!state.needsWeakRepresentation))) {
                    dependencies.getControlFlowDependency(dependencyTargetNode, dependendNodeS, transition.isImmediate)
                }
-           }
+              }
+           } 
+            
 
-// FIXME: Do we need that?!                
+// FIXME: Do we need that?!               
 //                    if (transition.sourceState.hierarchical) {
 //                        var firstNodeW  = dependencies.getNode(transition.sourceState, transition, NodeType::WEAK);
 //                        if (transition.isImmediate) {
@@ -719,7 +810,7 @@ import com.google.common.collect.ImmutableList
         var newNode = DependencyFactory::eINSTANCE.createNode();
         newNode.setState(state);
         var stateId = state.getHierarchicalName("L");
-        System::out.println(stateId);
+//        System::out.println(stateId);
         if (transition != null) {
             stateId = stateId + "_" + transition.priority;
         }
@@ -740,6 +831,16 @@ import com.google.common.collect.ImmutableList
     // ======================================================================================================
     // ==                                          H E L P E R                                             ==
     // ======================================================================================================
+    
+    // Returns true if transition is a strong abort
+    def Boolean isStrong(Transition transition) {
+        transition.type == TransitionType::STRONGABORT;
+    }
+    
+    // Returns true if transition is a weak abort
+    def Boolean isWeak(Transition transition) {
+        transition.type == TransitionType::WEAKABORT;
+    }    
 
     // Returns true iff the state is the one and only root state of the SyncChart having no parent state.
     def Boolean isRootState(State state) {
@@ -948,20 +1049,22 @@ import com.google.common.collect.ImmutableList
     // Visit helper function for topological sorting the dependency nodes.
     def int visit(Node node, int priority) {
         if (node.priority == -1) {
+//            System::out.println(node.id + "("+node.incomingDependencies.size +  ") ... ");
             node.setPriority(-2);
             var tmpPrio = priority;
             for (incomingDependency : node.incomingDependencies) {
                 val nextNode = incomingDependency.sourceNode;
                 if (nextNode != node) {
-                    tmpPrio = nextNode.visit(tmpPrio);
+                        tmpPrio = nextNode.visit(tmpPrio);
                 }
             }
 //            node.setPriority(1 + (node.eContainer as Dependencies).nodes.size - (tmpPrio + 1)); // REVERSE ORDERING
+//            System::out.println(node.id + "("+node.incomingDependencies.size +  ")" +  ": " + (tmpPrio + 1));
             node.setPriority((tmpPrio + 1));
             return tmpPrio + 1;
         }
         else {
-            return priority;
+           return priority;
         }
     }
     
