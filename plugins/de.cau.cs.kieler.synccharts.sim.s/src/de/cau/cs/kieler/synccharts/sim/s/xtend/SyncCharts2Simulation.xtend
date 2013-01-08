@@ -343,6 +343,12 @@ class SyncCharts2Simulation {
     // [ p || pause ]
     // end loop
     // when p may or may not be instantanous.
+    
+    // Edit: 08.01.2013: Normal Terminations must not be taken after a self
+    // loop returns to the macro state that is left by the normal termination
+    // like in test147.
+    // Therefore a transformed transition must explicitly negate all triggers
+    // of other outgoing transitions.
 
     
     // Transforming Normal Termination. 
@@ -366,10 +372,13 @@ class SyncCharts2Simulation {
         // of a new termSignal, one for every contained region.
         // For every region add an immediate during action to all final state emitting this termSignal
         // (belonging to the region).
+        // Explicitly negate triggers of other outgoing transitions (see test147)
         
                // This is the special case where we must taken care of a normal termination 
                if (state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0) {
                     val normalTerminationTransition = state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).head;
+                    val otherTransitions = state.outgoingTransitions.filter(e | e.type != TransitionType::NORMALTERMINATION);
+                    
                     normalTerminationTransition.setType(TransitionType::WEAKABORT);
                     val triggerExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
                          triggerExpression.setOperator(OperatorType::AND);
@@ -393,6 +402,16 @@ class SyncCharts2Simulation {
                         terminatedEmission.setSignal(terminatedSignal);
                     // Add the prevention of re-run of normal termination within the same tick
                     triggerExpression.subExpressions.add(notTerminatedExpression);
+                    // Explicitly prevent that a normal termination is taken when another transition
+                    // has been taken before (e.g., a weak abort self loop like in test 147)
+                    for (otherTransition : otherTransitions) {
+                        if (otherTransition.trigger != null) {
+                            val negatedExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+                            negatedExpression.subExpressions.add(otherTransition.trigger.copy);
+                            triggerExpression.subExpressions.add(negatedExpression);
+                        }
+                    }
+                    
                     // Prevent the normal termination to be taken again by emitting this helper signal (test10)
                     normalTerminationTransition.effects.add(terminatedEmission);
                                         
