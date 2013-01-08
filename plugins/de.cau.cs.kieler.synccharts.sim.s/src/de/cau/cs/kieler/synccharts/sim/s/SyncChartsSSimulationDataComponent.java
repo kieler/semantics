@@ -118,7 +118,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             newDirtyIndicator += obj.toString().hashCode();
         }
         // Also consider KIEM properties (may have changes and require new code generation)
-        for (int i = 0; i < KIEM_PROPERTY_MAX; i++) {
+        for (int i = 0; i < KIEM_PROPERTY_MAX + KIEM_PROPERTY_DIFF; i++) {
             newDirtyIndicator += this.getProperties()[i].getValue().hashCode();
         }
         if (newDirtyIndicator != dirtyIndicator) {
@@ -292,8 +292,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 KIEM_PROPERTY_NAME_SCDEBUGCONSOLE, true);
         properties[KIEM_PROPERTY_EXPOSELOCALSIGNALS] = new KiemProperty(
                 KIEM_PROPERTY_NAME_EXPOSELOCALSIGNALS, false);
-        properties[KIEM_PROPERTY_SCL] = new KiemProperty(
-                KIEM_PROPERTY_NAME_SCL, false);
+        properties[KIEM_PROPERTY_SCL] = new KiemProperty(KIEM_PROPERTY_NAME_SCL, false);
 
         return properties;
     }
@@ -353,6 +352,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             benchmark = this.getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
                     .getValueAsBoolean();
 
+            boolean scl = this.getProperties()[KIEM_PROPERTY_SCL + KIEM_PROPERTY_DIFF]
+                    .getValueAsBoolean();
+
             // If 'Full Debug Mode' is turned on then the user wants to have
             // also states visualized.
             // Hence some pre-processing is needed and done by the
@@ -373,31 +375,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 syncChartOutput = syncChartOutput.trimFragment();
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
                         "simulation.kixs");
-
-//                // Normal SCC Aborts (@requires: none)
-//                transformedModel = (new SyncCharts2Simulation()).transformSCCAborts(transformedModel);
-                
-                
-//                // Normal Pre operator (@requires: none)
-//                transformedModel = (new SyncCharts2Simulation())
-//                        .transformPreOperator(transformedModel);
-
-                // History transitions. (@requires: suspend)
-                //transformedModel = (new
-                //SyncCharts2Simulation()).transformHistory(transformedModel);
-                
-                //
-                // // Suspends (non-immediate and non-delayed) (@requires: during)
-                // transformedModel = (new
-                // SyncCharts2Simulation()).transformSuspend(transformedModel);
-                //
-                // // During actions (@requires: none)
-                // transformedModel = (new SyncCharts2Simulation())
-                // .transformDuringAction(transformedModel);
-
-                // Normal Termination transitions (@requires: during actions, @before: exit actions)
-                //transformedModel = (new SyncCharts2Simulation())
-                //        .transformNormalTermination(transformedModel);
 
                 try {
                     // Write out copy/transformation of syncchart program
@@ -429,9 +406,11 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // Normal Pre operator (@requires: none)
             transformedModel = (new SyncCharts2Simulation()).transformPreOperator(transformedModel);
 
-            // Normal Termination transitions (@requires: during actions, @before: exit actions)
-            transformedModel = (new SyncCharts2Simulation())
-                    .transformNormalTermination(transformedModel);
+            if (!scl) {
+                // Normal Termination transitions (@requires: during actions, @before: exit actions)
+                transformedModel = (new SyncCharts2Simulation())
+                        .transformNormalTermination(transformedModel);
+            }
 
             // Count Delays now for the SC (host code) simulation.
             transformedModel = (new SyncCharts2Simulation()).transformCountDelay(transformedModel);
@@ -451,6 +430,12 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // During actions (@requires: none)
             transformedModel = (new SyncCharts2Simulation())
                     .transformDuringAction(transformedModel);
+            
+            if (scl) {
+                // Normal SCC Aborts (@requires: none)
+                transformedModel = (new SyncCharts2Simulation())
+                        .transformSCCAborts(transformedModel);
+            }
 
             // Transform SyncChart into S code
             Program program = new Synccharts2S().transform(transformedModel);
@@ -476,9 +461,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // Use the SSCSimulationDataComponent
             sSCSimDataComponent.doModel2ModelTransform(monitor, program, false, this
                     .getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
-                    .getValueAsBoolean(), debugConsole, this
-                    .getProperties()[KIEM_PROPERTY_SCL + KIEM_PROPERTY_DIFF]
-                    .getValueAsBoolean());
+                    .getValueAsBoolean(), debugConsole, scl);
 
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
@@ -513,7 +496,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             returnObj.accumulate(signalName, signalValue);
                         }
                     } catch (JSONException e) {
