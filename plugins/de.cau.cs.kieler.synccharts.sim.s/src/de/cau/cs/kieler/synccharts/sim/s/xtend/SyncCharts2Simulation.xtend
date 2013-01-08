@@ -407,6 +407,7 @@ class SyncCharts2Simulation {
                     for (otherTransition : otherTransitions) {
                         if (otherTransition.trigger != null) {
                             val negatedExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+                            negatedExpression.setOperator(OperatorType::NOT);
                             negatedExpression.subExpressions.add(otherTransition.trigger.copy);
                             triggerExpression.subExpressions.add(negatedExpression);
                         }
