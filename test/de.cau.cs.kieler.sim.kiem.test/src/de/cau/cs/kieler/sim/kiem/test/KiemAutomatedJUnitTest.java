@@ -447,7 +447,7 @@ public abstract class KiemAutomatedJUnitTest {
                     if (tick > MAX_NUMBER_OF_TICKS_UNTIL_ERROR) {
                         // Assume this to be a good sign (stopping execution)
                         // !!! LIKE EOT DETECTED !!! //
-                        execution.stopExecutionSync();
+                        execution.abortExecutionAsync();
                         execution.cancel();
                         while (kiemPlugin.getExecution() != null) {
                             pause();
@@ -458,7 +458,13 @@ public abstract class KiemAutomatedJUnitTest {
                     // Remember the pool counter number
                     long poolCounter = execution.getDataPool().getPoolCounter();
                     execution.stepExecutionSync();
+                    
+                    if (KiemPlugin.getLastError() != null) {
+                        logger.debug(KiemPlugin.getLastError());
+                    }
+                    
                     // Wait until step is done
+                    pause();
                     while (!execution.isPaused() && execution.isStarted()) {
                         pause();
                     }
