@@ -54,8 +54,8 @@ public class Execution extends Job {
     private static final int TIMEOUTMULTIPLICITY = 10;
 
     /** The Constant HEAPERRORMESSAGE as an error message when threads cannot be created. */
-    private static final String HEAPERRORMESSAGE = "Out of heap memory. Cannot create dynamic execution" 
-                                                 + " threads. You're suggested to restart the program.";
+    private static final String HEAPERRORMESSAGE = "Out of heap memory. Cannot create dynamic execution"
+            + " threads. You're suggested to restart the program.";
 
     // /** The TIMEOUT for DataComponents. */
     // private static int TIMEOUT;
@@ -206,10 +206,13 @@ public class Execution extends Job {
 
     /**
      * Instantiates and starts a new execution (thread).
-     *
-     * @param dataComponentWrapperListParam the current DataComponentWrapper
-     * @param eventManagerParam the evenet manager param
-     * @throws KiemInitializationException the kiem initialization exception
+     * 
+     * @param dataComponentWrapperListParam
+     *            the current DataComponentWrapper
+     * @param eventManagerParam
+     *            the evenet manager param
+     * @throws KiemInitializationException
+     *             the kiem initialization exception
      */
     public Execution(final List<DataComponentWrapper> dataComponentWrapperListParam,
             final EventManager eventManagerParam) throws KiemInitializationException {
@@ -936,28 +939,38 @@ public class Execution extends Job {
 
     // -------------------------------------------------------------------------
 
-//TODO: is this always right? It seems to be wrong to depend on the garbage 
-// collector (cmot, 11.06.2012)
-//    /*
-//     * (non-Javadoc)
-//     * 
-//     * @see java.lang.Object#finalize()
-//     */
-//    @Override
-//    protected void finalize() {
-//        errorTerminate();
-//    }
+    // TODO: is this always right? It seems to be wrong to depend on the garbage
+    // collector (cmot, 11.06.2012)
+    // /*
+    // * (non-Javadoc)
+    // *
+    // * @see java.lang.Object#finalize()
+    // */
+    // @Override
+    // protected void finalize() {
+    // errorTerminate();
+    // }
 
     // -------------------------------------------------------------------------
 
     /**
      * Wrap-up components after execution was stopped. The quietmode should only be used if the
-     * wrapupComponents is called by the handleComponentError to not get any recusive call!
+     * wrapupComponents is called by the handleComponentError to not get any recursive call!
      * 
      * @param quietmode
      *            the quiet mode omits any errors
      */
-    public synchronized void wrapupComponents(final boolean quietmode) {
+    public void wrapupComponents(final boolean quietmode) {
+        if (!quietmode) {
+            synchronized (this) {
+                wrapupComponentsAsync(quietmode);
+            }
+        } else {
+            wrapupComponentsAsync(quietmode);
+        }
+    }
+
+    private void wrapupComponentsAsync(final boolean quietmode) {
         for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
             DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
             if (dataComponentWrapper.isEnabled()) {
