@@ -6,7 +6,7 @@
  * application-specific constants (such as the highest thread ID in
  * use). Hence, it can be included by the generic SC files that are
  * compiled separately from application-specific files.
- * 
+ *
  * See README.txt for general information.
  * See LICENSE.txt for licensing information.
  * For further information, see
@@ -15,8 +15,25 @@
  * @author Reinhard v. Hanxleden,
  * rvh@informatik.uni-kiel.de
  */
+
+int _i;
+
 #include <stdio.h>
 #include <limits.h>
+
+#define false 0
+#define true 1
+
+// SCL Macros
+//#ifndef _SC_NO_SIGNALS2VARS
+//#define _signals2vars signals2vars();
+//#define _vars2signals vars2signals();
+//#else
+#define _signals2vars
+#define _vars2signals
+//#endif
+
+
 
 // Question: does it make sense to ABORT without terminating child threads? Or should ABORT be made part of TERM?
 
@@ -107,7 +124,7 @@ idtype       _cid;                   //!< Id of current thread
  * (_SC_ID_MAX or _SC_SIG_MAX) is determined as follows:
  *
  * - If MAX >= _setPartSize, then use an array _setPartType[_idsetSize].
- * 
+ *
  * - If _setPartSize >= MAX >= WORD_BIT, use a scalar _setPartType.
  *
  * - Else (_setPartSize < WORD_BIT), use a scalar unsigned int.
@@ -192,7 +209,7 @@ extern char    *state[];              //!< State where thread resumed current ti
   _pc[id] = _ref(label);						\
   statePrev[id] = state[id];						\
   state[id] = #label
-#endif 	// _SC_NOTRACE					
+#endif 	// _SC_NOTRACE
 
 
 // ===================================================================
@@ -239,7 +256,7 @@ char *_set2str(char *str, int max, _setPartType *setPtr);   // Defined in sc.c
 
 
 // ===================================================================
-// Set operations based on bit vectors presented by a scalar of type idset/sigset 
+// Set operations based on bit vectors presented by a scalar of type idset/sigset
 // (eg int or long int)
 
 // Simplified for SCL
@@ -425,11 +442,11 @@ int tick();
 
 #else
 #define _declState
-#define _BEGIN_SWITCH 
+#define _BEGIN_SWITCH
 #define _END_SWITCH1
 #define _END_SWITCH2
 #define _case
-#define _break           
+#define _break
 #define _goto(label)       goto label
 #define _deref(label)      *label
 #define _ref(label)        &&label
@@ -566,7 +583,28 @@ void RESET();                         // Defined in sc.c
   _BEGIN_SWITCH
 */
 
-#define TICKSTART(p)							\
+// Begin a tick
+#define TICKSTART(p)			\
+  _declState				\
+  freezePreClear			\
+  _checkTickInit			\
+  _signals2vars				\
+  if (_notInitial) {			\
+    _SC_ERROR_DETECT_NORESET		\
+    _idCopyFrom(active, enabled);	\
+    dispatch_;				\
+  } else {				\
+    initPC(_TickEnd, _L_TICKEND);	\
+    enableInit(_TickEnd);		\
+    _cid = p;				\
+    clearPC(_cid);			\
+    enable(_cid);			\
+    _setStateInit			\
+    _notInitial = _notInitialDetect;	\
+  }
+
+
+#define BACKUPTICKSTART(p)							\
   _declState								\
   freezePreClear							\
   _checkTickInit							\
@@ -586,37 +624,49 @@ void RESET();                         // Defined in sc.c
   }									\
   _BEGIN_SWITCH
 
-//    dispatch_init_;					
+//    dispatch_init_;
+
+
+// End a tick
+// End a tick
+#define TICKEND			\
+  mergedDispatch		        \
+  _case _L_TICKEND:			\
+  _vars2signals				\
+  return isEnabledNotOnly_TickEnd()
+
+
 
 //! Complete a tick.
 /*! Return 0 iff computation has terminated.
  * This starts with TERM_, to properly terminate a thread that runs into TICKEND.
  */
-#define TICKEND						\
+#define BACKUPTICKEND						\
   TERM_;						\
   _case _L_TICKEND: setPre				\
   return isEnabledNotOnly_TickEnd();                	\
   _END_SWITCH1			                        \
   mergedDispatch		                        \
   _END_SWITCH2
- 
+
 
 //! If _SC_INLINE_DISPATCH is defined, call dispatcher at each operator that needs it.
 //! Otherwise, create shared code block for TERM/PAUSE/dispatch.
 /*! This can be included by TICKEND
  */
-#ifdef _SC_INLINE_DISPATCH
+/*#ifdef _SC_INLINE_DISPATCH
 #define dispatch_ dispatch()
 #define mergedDispatch
 
 #else                             // Shared dispatch
+*/
 #define dispatch_ goto _L_DISPATCH
 #define mergedDispatch							\
   _L_TERM:   disable(_cid);						\
 _L_PAUSE:   deactivate(_cid);						\
 _L_DISPATCH: dispatch();
 
-#endif
+//#endif
 
 
 
@@ -632,7 +682,7 @@ _L_DISPATCH: dispatch();
  *   "PAUSE; PAUSE" in one line)
  * - not include another files within a function (this appears
  *   unlikely anyway)
- * 
+ *
  * Note that goto labels have function scope, hence it is ok to have
  * identical labels in different files, as long as they belong to
  * different functions.
@@ -660,7 +710,7 @@ _L_DISPATCH: dispatch();
 // Simplified for SCL
 #define PAUSE								\
     trace1t("PAUSE:", "pauses, active = %s\n", _id2str(active))		\
-    PAUSEG_(__LABEL__); _case __LABEL__: 
+    PAUSEG_(__LABEL__); _case __LABEL__:
 /*
 #define PAUSE								\
   do {									\
@@ -698,7 +748,7 @@ _L_DISPATCH: dispatch();
     _case __LABEL__: trace1t("HALT:", "pauses, active = %s\n", _id2str(active))	\
     PAUSEG_(__LABEL__);						        \
   } while (0)
- 
+
 
 //! Suspend current thread if 'cond' is true.
 /*! Note: suspension is implemented by deactivating the current thread
@@ -750,10 +800,11 @@ _L_DISPATCH: dispatch();
 
 
 //!  Helper function (if/else-unsafe)
-#define ABORT_								\
+#define BACKUPABORT_								\
     disableSet(_descs[_cid]);						\
     deactivateSet(_descs[_cid])
-
+//!  Helper function (if/else-unsafe)
+#define ABORT_ { } ;
 
 //! Terminate a thread.
 /* Compare to definition of HALT, which lets a thread idle at current position.
@@ -778,12 +829,18 @@ _L_DISPATCH: dispatch();
 // Handling concurrency
 
 //! Spawn a thread at 'label', with priority 'p'.
-/*! 
+/*!
  */
-#define FORK(label, p) do {						\
+#define BACKUPFORK(label, p) do {						\
     FORK_(label, p);							\
     trace3t("FORK:", "forks %d/%s, active = %s\n", p, #label, _id2str(active)) \
   } while (0)
+
+#define FORK(label, p) 						\
+  initPC(p, label);							\
+  _idAdd(_descs[_cid], p);						\
+  enable(p)
+
 
 //! Helper function (if/else-unsafe)
 #define FORK_(label, p)							\
@@ -799,11 +856,15 @@ _L_DISPATCH: dispatch();
  * - to check for termination (with JOIN)
  * - to be disabled upon abortion (with TRANS)
  */
-#define FORKE(label) do {						\
+#define BACKUPFORKE(label) do {						\
   trace1t("FORKE:", "continues at %s\n", #label)			\
     FORKE_(label);							\
   } while (0)
 
+
+#define FORKE(label) do {						\
+  _goto(label);  						\
+} while (0)
 
 //! Helper function (if/else-unsafe)
 #define FORKE_(label)							\
@@ -847,12 +908,21 @@ _case __LABEL__: (void) 0;						\
 
 
 //! Helper function (if/else-unsafe)
-#define JOINELSEG_(thenlabel, elselabel)				\
+#define BACKUPJOINELSEG_(thenlabel, elselabel)				\
   if (isEnabledNoneOf(_descs[_cid])) {					\
     trace1t("JOINELSEG:", "joins, transfers to %s\n", #thenlabel)	\
     _goto(thenlabel);							\
   }									\
   trace1t("JOINELSEG:", "does not join, pauses at %s\n", #elselabel)	\
+  instrCntDecr								\
+  PAUSEG_(elselabel)
+
+
+//! Helper function (if/else-unsafe)
+#define JOINELSEG_(thenlabel, elselabel)				\
+  if (isEnabledNoneOf(_descs[_cid])) {					\
+    _goto(thenlabel);							\
+  }									\
   instrCntDecr								\
   PAUSEG_(elselabel)
 
@@ -871,11 +941,23 @@ _case __LABEL__: (void) 0;						\
   } while (0)
 
 
+// The following is not tested yet:
+#define PRIO(p)								\
+  deactivate(_cid);							\
+  disable(_cid);							\
+  _cid = p;								\
+  enable(_cid);								\
+  setPC(_cid, __LABEL__);						\
+  dispatch_;								\
+__LABEL__:
+
+
+
 //! Change priority of a thread, from '_cid' to 'p'
 /*! Semantically, this is the primitive operator.
  * In terms of implementation, PRIOG is the basic operator.
  */
-#define PRIO(p)	do {			                                \
+#define BACKUPPRIO(p)	do {			                                \
     trace1t("PRIO:", "set to priority %d\n", p)				\
     PRIOG_(p, __LABEL__);						\
     _case __LABEL__: (void) 0;						\
@@ -1523,7 +1605,7 @@ void _checkSIG_ID(sigtype s, sigtype max);      // Defined in sc.c
 // ===================================================================
 //! Dump set of ids or signals
 
-#ifdef _SC_NOTRACE 
+#ifdef _SC_NOTRACE
 
 #define id2names(prefix, suffix, setPtr)
 #define sig2names(prefix, suffix, setPtr)
