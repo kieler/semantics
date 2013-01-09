@@ -58,12 +58,6 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:de.cau.cs.kieler">
-         <separator
-               name="de.cau.cs.kieler.core.model.separator3">
-         </separator>
-      </menuContribution>
-      <menuContribution
             locationURI="toolbar:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.core.model.validate"
