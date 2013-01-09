@@ -38,9 +38,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Path;
 
+import de.cau.cs.kieler.core.alg.IFactory;
 import de.cau.cs.kieler.core.math.KVector;
 import de.cau.cs.kieler.core.math.KVectorChain;
-import de.cau.cs.kieler.core.model.gmf.IJoinPointFactory;
 import de.cau.cs.kieler.core.model.gmf.util.SplineUtilities;
 
 /**
@@ -523,7 +523,7 @@ public class SplineConnection extends PolylineConnectionEx {
     // bugfix end
 
     /** The factory for creating junction points. */
-    private IJoinPointFactory joinPointFactory = null;
+    private IFactory<IFigure> joinPointFactory = null;
     
     /** The junction points that have been created so far. */
     private IFigure[] createdJunctionPoints;
@@ -533,7 +533,7 @@ public class SplineConnection extends PolylineConnectionEx {
      * 
      * @return the join point decoration factory or null
      */
-    public IJoinPointFactory getJoinPointFactory() {
+    public IFactory<IFigure> getJoinPointFactory() {
         return joinPointFactory;
     }
 
@@ -543,7 +543,7 @@ public class SplineConnection extends PolylineConnectionEx {
      * @param dec
      *            the new join point decoration factory
      */
-    public void setJoinPointFactory(final IJoinPointFactory dec) {
+    public void setJoinPointFactory(final IFactory<IFigure> dec) {
         joinPointFactory = dec;
     }
 
@@ -560,6 +560,9 @@ public class SplineConnection extends PolylineConnectionEx {
         if (createdJunctionPoints != null) {
             for (IFigure figure : createdJunctionPoints) {
                 this.remove(figure);
+                if (joinPointFactory != null) {
+                    joinPointFactory.destroy(figure);
+                }
             }
             createdJunctionPoints = null;
         }
@@ -594,7 +597,7 @@ public class SplineConnection extends PolylineConnectionEx {
      * @param position the position where the new join point is created
      */
     private IFigure addJoinPoint(final Point position) {
-        IFigure joinp = joinPointFactory.getNewJoinPointDecorator();
+        IFigure joinp = joinPointFactory.create();
         int yOffset = joinp.getBounds().height / 2;
         int xOffset = joinp.getBounds().width / 2;
         joinp.getBounds().setLocation(new Point(position.x - xOffset, position.y - yOffset));
