@@ -511,69 +511,66 @@ import com.google.common.collect.ImmutableList
     // test case 07-ABO.
     // Test 74-concurrent-and-hierarchical-write-dependency-weak-aborted reveals that
     // the stopAtCommonParent should NOT be added itself to the list if it is the rootState!
-    def List<State> getOuterStatesUntilNonInitial(State state, State stopAtCommonParent, State rootState) {
-        var List<State> states = <State> newLinkedList;
-        if (state.parentRegion != null && state.parentRegion.parentState != null &&
-            state.parentRegion.parentState != stopAtCommonParent) {
-
-            var outerState = state.parentRegion.parentState;
-            if (outerState != rootState) {
-                    // tested by 74-concurrent-and-hierarchical-write-dependency-weak-aborted
-                    states.add(outerState);
-            }
-            if (outerState.isInitial) {
-               var listFromOutSide = outerState.getOuterStatesUntilNonInitial(stopAtCommonParent, rootState);
-               states.addAll(listFromOutSide);
-            }
-            else {
-                // because of 50-initial-states-signal-dependencies3
-                for (transition : outerState.incomingTransitions) {
-                   states.add(transition.sourceState);
-                }
-            }
-        }
-        return states;
-    }
+//    def List<State> getOuterStatesUntilNonInitial(State state, State stopAtCommonParent, State rootState) {
+//        var List<State> states = <State> newLinkedList;
+//        if (state.parentRegion != null && state.parentRegion.parentState != null &&
+//            state.parentRegion.parentState != stopAtCommonParent) {
+//
+//            var outerState = state.parentRegion.parentState;
+//            if (outerState != rootState) {
+//                    // tested by 74-concurrent-and-hierarchical-write-dependency-weak-aborted
+//                    states.add(outerState);
+//            }
+//            if (outerState.isInitial) {
+//               var listFromOutSide = outerState.getOuterStatesUntilNonInitial(stopAtCommonParent, rootState);
+//               states.addAll(listFromOutSide);
+//            }
+//            else {
+//                // because of 50-initial-states-signal-dependencies3
+//                for (transition : outerState.incomingTransitions) {
+//                   states.add(transition.sourceState);
+//                }
+//           }
+//        }
+//        return states;
+//    }
     
     
     // For the state in question try to find a possible sequence of immediate transitions from
     // the initial state of the same region. If there is such a route, return TRUE. Return FALSE
     // otherwise.
-    def boolean isImmediatelyReachableFromInitialState(State state) {
-        // The following MUST exist if there is an initial state defined in each region!
-        var initialState = state.parentRegion.states.filter(e | e.isInitial).head as State;
-        return initialState.isImmediatelyReachableFromInitialState(state); 
-    }
+//    def boolean isImmediatelyReachableFromInitialState(State state) {
+//        // The following MUST exist if there is an initial state defined in each region!
+//        var initialState = state.parentRegion.states.filter(e | e.isInitial).head as State;
+//        return initialState.isImmediatelyReachableFromInitialState(state); 
+//    }
     // The following helper function tries to follow immediate transitions from the current
     // state until it reached the target state. If it does it will return TRUE, otherwise
     // it will return FALSE with OR-combined return values for all outgoing immediate
     // transitions.
-    def boolean isImmediatelyReachableFromInitialState(State currentState, State finalTargetState) {
-        var immediateTransitions = currentState.outgoingTransitions.filter(e | e.isImmediate);
-        
-        var hasReachedFinalTargetState = false;
-        for (immediateTransition : immediateTransitions) {
-            val nextState = immediateTransition.targetState;
-            if (nextState == currentState) {
-                // Do not follow self loops
-                hasReachedFinalTargetState = hasReachedFinalTargetState || false;
-            }
-            else if (nextState == finalTargetState) {
-                // Declare success, because the target state is reachable over a
-                // possible sequence of immediate transitions.
-                hasReachedFinalTargetState =  hasReachedFinalTargetState || true;
-            }
-            else {
-                hasReachedFinalTargetState =  hasReachedFinalTargetState || 
-                                nextState.isImmediatelyReachableFromInitialState(finalTargetState);
-            }
-            return hasReachedFinalTargetState;
-        }
-        
-        
-        
-        return true;
-    }
+//    def boolean isImmediatelyReachableFromInitialState(State currentState, State finalTargetState) {
+//        var immediateTransitions = currentState.outgoingTransitions.filter(e | e.isImmediate);
+//        
+//        var hasReachedFinalTargetState = false;
+//        for (immediateTransition : immediateTransitions) {
+//            val nextState = immediateTransition.targetState;
+//            if (nextState == currentState) {
+//                // Do not follow self loops
+//                hasReachedFinalTargetState = hasReachedFinalTargetState || false;
+//            }
+//            else if (nextState == finalTargetState) {
+//                // Declare success, because the target state is reachable over a
+//                // possible sequence of immediate transitions.
+//                hasReachedFinalTargetState =  hasReachedFinalTargetState || true;
+//            }
+//            else {
+//                hasReachedFinalTargetState =  hasReachedFinalTargetState || 
+//                                nextState.isImmediatelyReachableFromInitialState(finalTargetState);
+//            }
+//            return hasReachedFinalTargetState;
+//        }
+//        return true;
+//    }
 
     // Create signal dependencies for states emitting signals and other states testing for these signals in triggers of
     // their outgoing transitions.
@@ -600,8 +597,11 @@ import com.google.common.collect.ImmutableList
                     for (triggeredTransition : triggeredTransitions) {
                         var triggerState = (triggeredTransition as Transition).sourceState;
                         val emitterState = transition.sourceState;
-                        // The normal case
-                        dependencies.handleSignalDependencyHelper(emitterState, triggerState, triggeredTransition, transition, rootState);
+                        // Do not consider self-loops
+                        if (triggerState != emitterState) {
+                            // The normal case
+                            dependencies.handleSignalDependencyHelper(emitterState, triggerState, triggeredTransition, transition, rootState);
+                        }
 
 //                        // Test case 43-initial-states-signal-dependencies.kixs
 //                        // Test case 44-initial-states-with-hierarchy.kixs
@@ -644,6 +644,8 @@ import com.google.common.collect.ImmutableList
                                      Transition transition, State rootState) {
                            val emitterNode = dependencies.getStrongNode(emitterState, transition);
                            val triggerNode = dependencies.getStrongNode(triggerState, triggeredTransition);
+                           
+                           // The following cases must exclude each other (test 148) 
                            if (emitterState.needsStrongRepresentation() && triggerState.needsStrongRepresentation) {
                                // Do not allow iff emitter is child of trigger (test 111)
                                if (!emitterState.isChildOf(triggerState)) {
@@ -651,7 +653,7 @@ import com.google.common.collect.ImmutableList
                                }
                            }
                            //TODO: all the following necessary/correct???
-                           if (emitterState.needsWeakRepresentation && triggerState.needsStrongRepresentation) {
+                           else if (emitterState.needsWeakRepresentation && triggerState.needsStrongRepresentation) {
                                // Do not allow iff emitter is child of trigger (test 111)
                                // Dependency from E2-weak (abort) to C-strong is WRONG
                                // because the weak abort can only happen if C's last wish is executed
@@ -661,11 +663,11 @@ import com.google.common.collect.ImmutableList
                                    dependencies.getSignalDependency(emitterNodeW, triggerNode);
                                }
                            }
-                           if (triggerState.needsWeakRepresentation && emitterState.needsStrongRepresentation()) {
+                           else if (triggerState.needsWeakRepresentation && emitterState.needsStrongRepresentation()) {
                                    var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
                                    dependencies.getSignalDependency(emitterNode, triggerNodeW);
                            }
-                           if (emitterState.needsWeakRepresentation && triggerState.needsWeakRepresentation) {
+                           else if (emitterState.needsWeakRepresentation && triggerState.needsWeakRepresentation) {
                                 var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
                                 var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
                                 dependencies.getSignalDependency(emitterNodeW, triggerNodeW);
