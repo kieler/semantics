@@ -31,12 +31,10 @@ import java.util.List
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.NodeType
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.TransitionDependency
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDependency
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDependency
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import com.google.common.collect.ImmutableList
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
