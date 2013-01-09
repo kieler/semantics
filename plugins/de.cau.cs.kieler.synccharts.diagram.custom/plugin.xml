@@ -244,7 +244,7 @@
          </command>
          <command
                commandId="de.cau.cs.kieler.kiml.gmf.layoutDiagramFile"
-               label="Layout the Diagram File"
+               label="Layout Without Opening"
                style="push"
                tooltip="Perform layout directly on the diagram file and store the result">
             <visibleWhen
