@@ -14,8 +14,7 @@
 package de.cau.cs.kieler.core.model.gmf.figures;
 
 import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ListIterator;
 
 import org.eclipse.draw2d.ArrowLocator;
 import org.eclipse.draw2d.Connection;
@@ -523,7 +522,11 @@ public class SplineConnection extends PolylineConnectionEx {
 
     // bugfix end
 
+    /** The factory for creating junction points. */
     private IJoinPointFactory joinPointFactory = null;
+    
+    /** The junction points that have been created so far. */
+    private IFigure[] createdJunctionPoints;
 
     /**
      * Get the current join point decoration factory. If it is null the mechanism is deactivated.
@@ -540,7 +543,7 @@ public class SplineConnection extends PolylineConnectionEx {
      * @param dec
      *            the new join point decoration factory
      */
-    public void setJoinPointDecoration(final IJoinPointFactory dec) {
+    public void setJoinPointFactory(final IJoinPointFactory dec) {
         joinPointFactory = dec;
     }
 
@@ -553,16 +556,33 @@ public class SplineConnection extends PolylineConnectionEx {
      *            belongs so.
      */
     public void drawJoinPointDecoration(final ConnectionNodeEditPart thisPart) {
+        // remove previously created junction points
+        if (createdJunctionPoints != null) {
+            for (IFigure figure : createdJunctionPoints) {
+                this.remove(figure);
+            }
+            createdJunctionPoints = null;
+        }
+        
+        // create new junction points
         if (joinPointFactory != null) {
             View view = thisPart.getNotationView();
             StringValueStyle style = (StringValueStyle) view.getNamedStyle(
-                    NotationPackage.eINSTANCE.getStringValueStyle(), "joinPoints");
+                    NotationPackage.eINSTANCE.getStringValueStyle(), "junctionPoints");
             if (style != null) {
-                KVectorChain points = new KVectorChain();
-                points.parse(style.getStringValue());
-                
-                for (KVector point:points) {
-                    addJoinPoint(new PrecisionPoint(point.x, point.y));
+                try {
+                    KVectorChain points = new KVectorChain();
+                    points.parse(style.getStringValue());
+                    
+                    createdJunctionPoints = new IFigure[points.size()];
+                    ListIterator<KVector> pointIter = points.listIterator();
+                    while (pointIter.hasNext()) {
+                        KVector point = pointIter.next();
+                        IFigure figure = addJoinPoint(new PrecisionPoint(point.x, point.y));
+                        createdJunctionPoints[pointIter.previousIndex()] = figure;
+                    }
+                } catch (IllegalArgumentException exception) {
+                    // ignore exception
                 }
             }
         }
@@ -573,32 +593,25 @@ public class SplineConnection extends PolylineConnectionEx {
      * 
      * @param position the position where the new join point is created
      */
-    private void addJoinPoint(final Point position) {
-        IFigure joinp = joinPointFactory
-                .getNewJoinPointDecorator();
+    private IFigure addJoinPoint(final Point position) {
+        IFigure joinp = joinPointFactory.getNewJoinPointDecorator();
         int yOffset = joinp.getBounds().height / 2;
         int xOffset = joinp.getBounds().width / 2;
-        joinp.getBounds().setLocation(
-                new Point(position.x - xOffset, position.y - yOffset));
+        joinp.getBounds().setLocation(new Point(position.x - xOffset, position.y - yOffset));
         this.add(joinp);
+        return joinp;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.draw2d.PolylineConnection#setTargetDecoration(org.eclipse
-     * .draw2d.RotatableDecoration)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void setTargetDecoration(final RotatableDecoration dec) {
         super.setTargetDecoration(dec, new ArrowLocatorEx(this, ConnectionLocator.TARGET));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.draw2d.PolylineConnection#setSourceDecoration(org.eclipse
-     * .draw2d.RotatableDecoration)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void setSourceDecoration(final RotatableDecoration dec) {
@@ -641,7 +654,6 @@ public class SplineConnection extends PolylineConnectionEx {
      * An extension of the ArrowLocator that is capable of using spline points as references.
      * 
      * @author mmu
-     * 
      */
     public static class ArrowLocatorEx extends ArrowLocator {
 
