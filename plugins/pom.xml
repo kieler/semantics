@@ -98,6 +98,7 @@
     <module>de.cau.cs.kieler.klighd</module>
     <module>de.cau.cs.kieler.klighd.examples</module>
     <module>de.cau.cs.kieler.klighd.piccolo</module>
+    <module>de.cau.cs.kieler.klighd.piccolo.draw2d</module>
     <module>de.cau.cs.kieler.klighd.xtext</module>
     <module>de.cau.cs.kieler.klots</module>
     <module>de.cau.cs.kieler.klots.examples</module>
