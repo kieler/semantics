@@ -44,7 +44,7 @@
   	  <wizard
   	     name="%newWizardName"
   	     icon="icons/obj16/SyncchartsDiagramFile.gif"
-  	     category="de.cau.cs.kieler"
+  	     category="de.cau.cs.kieler.synccharts"
   	     class="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsCreationWizard"
   	     id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsCreationWizardID">
   	  	 <description>%newWizardDesc</description>  
@@ -125,7 +125,7 @@
       <page
             id="de.cau.cs.kieler.synccharts.diagram.general"
             name="%prefpage.de.cau.cs.kieler.synccharts.diagram.general"
-            category="de.cau.cs.kieler"
+            category="de.cau.cs.kieler.synccharts"
 
             class="de.cau.cs.kieler.synccharts.diagram.preferences.DiagramGeneralPreferencePage">
       </page>
