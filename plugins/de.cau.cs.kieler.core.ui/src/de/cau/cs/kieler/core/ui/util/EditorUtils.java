@@ -105,7 +105,7 @@ public final class EditorUtils {
                 try {
                     Thread.sleep(WAIT_SLEEP_TIME);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    // ignore the interrupt
                 }
             }
         } else {
