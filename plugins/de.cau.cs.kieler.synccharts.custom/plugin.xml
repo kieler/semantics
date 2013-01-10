@@ -733,5 +733,27 @@
          </editPart>
       </configuration>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="de.cau.cs.kieler.synccharts"
+            name="KIELER SyncCharts">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="de.cau.cs.kieler.synccharts.custom.preferences.KielerSyncChartsPreferencePage"
+            id="de.cau.cs.kieler.synccharts"
+            name="KIELER SyncCharts">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="de.cau.cs.kieler.synccharts"
+            name="KIELER SyncCharts">
+      </category>
+   </extension>
   
 </plugin>
