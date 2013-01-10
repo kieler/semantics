@@ -168,7 +168,7 @@ public final class ModelingUtil {
                     currentUri = kielerUri.substring(lastOccurance);
                     lastOccurance = kielerUri.length();
                 }
-                String currentResult = new String(result);
+                StringBuilder currentResult = new StringBuilder(result);
                 for (EObject eo : root.eContents()) {
                     // iterate through the current level and find the NamedObject with the same name
                     try {
@@ -176,8 +176,8 @@ public final class ModelingUtil {
                         if (obj instanceof String) {
                             String name = (String) obj;
                             if (name.equals(currentUri.split("\\.")[1])) {
-                                result += ((InternalEObject) eo.eContainer()).eURIFragmentSegment(
-                                        eo.eContainingFeature(), eo);
+                                currentResult.append(((InternalEObject) eo.eContainer())
+                                        .eURIFragmentSegment(eo.eContainingFeature(), eo));
                                 root = eo;
                                 break;
                             }
@@ -186,11 +186,12 @@ public final class ModelingUtil {
                         // a lot can go wrong with reflection, so ignore it
                     }
                 }
-                if (currentResult.equals(result)) {
+                if (currentResult.toString().equals(result)) {
                     // Element wasn't found, although this was the right level
                     // Return null then
                     return null;
                 }
+                result = currentResult.toString();
             }
         } else {
             // more than one root node

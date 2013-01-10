@@ -29,6 +29,8 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.ltk.core.refactoring.RefactoringDescriptor;
 import org.eclipse.ltk.core.refactoring.history.IRefactoringHistoryListener;
 import org.eclipse.ltk.core.refactoring.history.RefactoringHistoryEvent;
@@ -134,8 +136,8 @@ public class RefactoringListener implements IRefactoringHistoryListener {
                     ResourcesPlugin.getWorkspace().delete(
                             deletedFiles.toArray(new IResource[deletedFiles
                                     .size()]), true, null);
-                } catch (CoreException e0) {
-                    e0.printStackTrace();
+                } catch (CoreException exception) {
+                    StatusManager.getManager().handle(exception.getStatus());
                 }
             }
         }
@@ -206,8 +208,8 @@ public class RefactoringListener implements IRefactoringHistoryListener {
                                 find(result, (IFile) res, path, op, newName, i);
                             }
                         }
-                    } catch (CoreException e0) {
-                        e0.printStackTrace();
+                    } catch (CoreException exception) {
+                        StatusManager.getManager().handle(exception.getStatus());
                     }
                 }
             }
@@ -296,16 +298,19 @@ public class RefactoringListener implements IRefactoringHistoryListener {
                                 .toString().getBytes("UTF-8")), true, true,
                                 null);
                     } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+                        IStatus status = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID, "Aaaah!", e);
+                        StatusManager.getManager().handle(status);
                     }
 
                 }
-            } catch (FileNotFoundException e0) {
-                e0.printStackTrace();
-            } catch (IOException e0) {
-                e0.printStackTrace();
-            } catch (CoreException e0) {
-                e0.printStackTrace();
+            } catch (FileNotFoundException e) {
+                IStatus status = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID, "Aaaah!", e);
+                StatusManager.getManager().handle(status);
+            } catch (IOException e) {
+                IStatus status = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID, "Aaaah!", e);
+                StatusManager.getManager().handle(status);
+            } catch (CoreException exception) {
+                StatusManager.getManager().handle(exception.getStatus());
             }
         }
     }
@@ -330,8 +335,8 @@ public class RefactoringListener implements IRefactoringHistoryListener {
                         partner.move(
                                 dest.addTrailingSeparator().append(
                                         partner.getName()), false, null);
-                    } catch (CoreException e0) {
-                        e0.printStackTrace();
+                    } catch (CoreException exception) {
+                        StatusManager.getManager().handle(exception.getStatus());
                     }
                 }
             }
