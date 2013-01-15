@@ -1571,8 +1571,13 @@ class SyncCharts2Simulation {
                     preSelfTransition.setPriority(1);
                     preState.outgoingTransitions.add(preSelfTransition);
                 preSelfTransition.setTrigger(preSignalReference.copy);
-                preSelfTransition.effects.add(explicitPreSignalEmission.copy);
-                pre2NotPreTransition.effects.add(explicitPreSignalEmission.copy);
+                // PreSignal emission must be added as an inner action
+                // to be decoupled from deciding for a specific transition (B is present or B is not present)
+                val explicitPreSignalEmissionAction = SyncchartsFactory::eINSTANCE.createAction();
+                explicitPreSignalEmissionAction.effects.add(explicitPreSignalEmission.copy);
+                preState.innerActions.add(explicitPreSignalEmissionAction);
+                //preSelfTransition.effects.add(explicitPreSignalEmission.copy);
+                //pre2NotPreTransition.effects.add(explicitPreSignalEmission.copy);
             }
             else {
                 // Valued Signal Case
@@ -1646,18 +1651,27 @@ class SyncCharts2Simulation {
                     explicitPre2SignalEmission.setSignal(explicitPre2Signal);
                     explicitPre2SignalEmission.setNewValue(valPreExpression.copy);
                     
+                // PreSignal emission must be added as an inner action
+                // to be decoupled from deciding for a specific transition (B is present or B is not present)
+                val explicitPreSignalEmissionFromPre1Action = SyncchartsFactory::eINSTANCE.createAction();
+                explicitPreSignalEmissionFromPre1Action.effects.add(explicitPreSignalEmissionFromPre1);
+                val explicitPreSignalEmissionFromPre2Action = SyncchartsFactory::eINSTANCE.createAction();
+                explicitPreSignalEmissionFromPre2Action.effects.add(explicitPreSignalEmissionFromPre2);
+                preState.innerActions.add(explicitPreSignalEmissionFromPre1Action);
+                preBState.innerActions.add(explicitPreSignalEmissionFromPre2Action);
+                    
                 // Fill transitions
-                pre2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
+//                pre2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
 
                 pre2PreBTransition.setTrigger(preSignalReference.copy);
-                pre2PreBTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
+//                pre2PreBTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
                 pre2PreBTransition.effects.add(explicitPre2SignalEmission.copy);
                  
                 preB2PreTransition.setTrigger(preSignalReference.copy);
-                preB2PreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
+//                preB2PreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
                 preB2PreTransition.effects.add(explicitPre1SignalEmission.copy);
                  
-                preB2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
+//                preB2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
                  
                 notPre2PreTransition.setTrigger(preSignalReference.copy);
                 notPre2PreTransition.effects.add(explicitPre1SignalEmission.copy);
