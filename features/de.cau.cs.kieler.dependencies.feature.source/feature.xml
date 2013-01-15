@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.dependencies.feature"
-      label="Dependencies"
+      id="de.cau.cs.kieler.dependencies.feature.source"
+      label="Dependencies (Sources)"
       version="0.4.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
