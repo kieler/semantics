@@ -12,7 +12,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.papyrus.infra.core;bundle-version="0.8.0",
  org.eclipse.papyrus.uml.diagram.statemachine,
  org.eclipse.papyrus.uml.diagram.common,
- org.eclipse.papyrus.infra.core.adaptor.gmf;bundle-version="0.8.0",
  org.eclipse.gmf.runtime.diagram.ui.resources.editor;bundle-version="1.4.0",
  de.cau.cs.kieler.sim.kivi,
  de.cau.cs.kieler.sim.kiem,
@@ -21,3 +20,4 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.model.gmf
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.gmf.runtime.diagram.ui.parts
