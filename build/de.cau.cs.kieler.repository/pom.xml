@@ -44,6 +44,12 @@
           </products>
         </configuration>
       </plugin>
+      
+      <!-- Fix for broken product icons.
+           The problem is that the product file contains paths to icons that are interpreted differently by
+           the Eclipse PDE and Maven/Tycho. To fix this, we use Maven's resources plugin to copy the files
+           to the location they have to be in for Tycho to find them.
+           Yes, this is ugly. -->
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
         <version>2.5</version>
