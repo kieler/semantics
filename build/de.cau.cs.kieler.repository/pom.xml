@@ -55,7 +55,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/products/${product-id}/icons/</outputDirectory>
+              <outputDirectory>${project.build.directory}/products/de.cau.cs.kieler.product/de.cau.cs.kieler.core.product/icons/</outputDirectory>
               <nonFilteredFileExtensions>
                 <nonFilteredFileExtension>gif</nonFilteredFileExtension>
                 <nonFilteredFileExtension>icns</nonFilteredFileExtension>
