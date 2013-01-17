@@ -40,9 +40,43 @@
             <product>
               <id>de.cau.cs.kieler.product</id>
               <rootFolder>kieler</rootFolder>
+              <archiveFileName>kieler_nightly_${buildQualifier}</archiveFileName>
             </product>
           </products>
         </configuration>
+      </plugin>
+      
+      <!-- Fix for broken product icons.
+           The problem is that the product file contains paths to icons that are interpreted differently by
+           the Eclipse PDE and Maven/Tycho. To fix this, we use Maven's resources plugin to copy the files
+           to the location they have to be in for Tycho to find them.
+           Yes, this is ugly. -->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.5</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/products/de.cau.cs.kieler.product/de.cau.cs.kieler.core.product/icons/</outputDirectory>
+              <nonFilteredFileExtensions>
+                <nonFilteredFileExtension>gif</nonFilteredFileExtension>
+                <nonFilteredFileExtension>icns</nonFilteredFileExtension>
+                <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+                <nonFilteredFileExtension>xpm</nonFilteredFileExtension>
+              </nonFilteredFileExtensions>
+              <resources>
+                <resource>
+                  <directory>icons</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build> 

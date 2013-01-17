@@ -31,7 +31,9 @@ Require-Bundle: org.eclipse.emf.ecore.xmi;bundle-version="2.5.0",
  de.cau.cs.kieler.sim.kiem.config,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  de.cau.cs.kieler.maude,
- de.cau.cs.kieler.sim.signals
+ de.cau.cs.kieler.sim.signals,
+ org.eclipse.papyrus.extensionpoints.editors;bundle-version="0.9.1",
+ org.eclipse.papyrus.uml.diagram.statemachine;bundle-version="0.9.1"
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui.part
 

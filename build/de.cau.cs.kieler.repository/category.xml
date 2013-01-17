@@ -65,7 +65,7 @@
       <category name="KIELER Development"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.core.annotations_0.4.0.qualifier.jar" id="de.cau.cs.kieler.core.annotations.feature" version="0.4.0.qualifier">
-      <category name="KIELER"/>
+      <category name="KIELER Development"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.core.annotations.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.core.annotations.feature.source" version="0.4.0.qualifier">
       <category name="KIELER Development"/>

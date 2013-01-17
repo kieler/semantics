@@ -88,7 +88,7 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            category="de.cau.cs.kieler"
+            category="de.cau.cs.kieler.synccharts"
             class="de.cau.cs.kieler.synccharts.synchronizer.kitsView.KitsView"
             icon="icons/obj16/SyncchartsTextFile.gif"
             id="de.cau.cs.kieler.synccharts.synchronizer.kitsView"

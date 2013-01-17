@@ -22,14 +22,15 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAnnotationsParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_COMMENT_ANNOTATION", "RULE_BOOLEAN", "RULE_INT", "RULE_FLOAT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'@'", "'('", "')'", "'['", "']'", "'.'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_COMMENT_ANNOTATION", "RULE_BOOLEAN", "RULE_INT", "RULE_FLOAT", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'@'", "'('", "')'", "'['", "']'", "'.'"
     };
     public static final int RULE_BOOLEAN=7;
     public static final int RULE_ID=5;
-    public static final int RULE_ANY_OTHER=13;
+    public static final int RULE_ANY_OTHER=14;
+    public static final int T__20=20;
     public static final int RULE_FLOAT=9;
     public static final int EOF=-1;
-    public static final int RULE_SL_COMMENT=11;
+    public static final int RULE_SL_COMMENT=12;
     public static final int RULE_ML_COMMENT=10;
     public static final int T__19=19;
     public static final int RULE_STRING=4;
@@ -37,9 +38,9 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     public static final int T__15=15;
     public static final int T__18=18;
     public static final int T__17=17;
-    public static final int T__14=14;
+    public static final int RULE_NUMBER=11;
     public static final int RULE_INT=8;
-    public static final int RULE_WS=12;
+    public static final int RULE_WS=13;
     public static final int RULE_COMMENT_ANNOTATION=6;
 
     // delegates
@@ -1133,7 +1134,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:439:1: '@'
             {
              before(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,14,FollowSets000.FOLLOW_14_in_rule__TagAnnotation__Group__0__Impl887); 
+            match(input,15,FollowSets000.FOLLOW_15_in_rule__TagAnnotation__Group__0__Impl887); 
              after(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -1292,7 +1293,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             int alt3=2;
             int LA3_0 = input.LA(1);
 
-            if ( (LA3_0==15) ) {
+            if ( (LA3_0==16) ) {
                 alt3=1;
             }
             switch (alt3) {
@@ -1384,7 +1385,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:533:1: '('
             {
              before(grammarAccess.getTagAnnotationAccess().getLeftParenthesisKeyword_2_0()); 
-            match(input,15,FollowSets000.FOLLOW_15_in_rule__TagAnnotation__Group_2__0__Impl1073); 
+            match(input,16,FollowSets000.FOLLOW_16_in_rule__TagAnnotation__Group_2__0__Impl1073); 
              after(grammarAccess.getTagAnnotationAccess().getLeftParenthesisKeyword_2_0()); 
 
             }
@@ -1465,7 +1466,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( (LA4_0==RULE_COMMENT_ANNOTATION||LA4_0==14) ) {
+                if ( (LA4_0==RULE_COMMENT_ANNOTATION||LA4_0==15) ) {
                     alt4=1;
                 }
 
@@ -1557,7 +1558,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:592:1: ')'
             {
              before(grammarAccess.getTagAnnotationAccess().getRightParenthesisKeyword_2_2()); 
-            match(input,16,FollowSets000.FOLLOW_16_in_rule__TagAnnotation__Group_2__2__Impl1193); 
+            match(input,17,FollowSets000.FOLLOW_17_in_rule__TagAnnotation__Group_2__2__Impl1193); 
              after(grammarAccess.getTagAnnotationAccess().getRightParenthesisKeyword_2_2()); 
 
             }
@@ -1632,7 +1633,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:629:1: '@'
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,14,FollowSets000.FOLLOW_14_in_rule__KeyStringValueAnnotation__Group__0__Impl1261); 
+            match(input,15,FollowSets000.FOLLOW_15_in_rule__KeyStringValueAnnotation__Group__0__Impl1261); 
              after(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -1876,7 +1877,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( (LA5_0==15) ) {
+            if ( (LA5_0==16) ) {
                 alt5=1;
             }
             switch (alt5) {
@@ -1968,7 +1969,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:754:1: '('
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
-            match(input,15,FollowSets000.FOLLOW_15_in_rule__KeyStringValueAnnotation__Group_3__0__Impl1509); 
+            match(input,16,FollowSets000.FOLLOW_16_in_rule__KeyStringValueAnnotation__Group_3__0__Impl1509); 
              after(grammarAccess.getKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
 
             }
@@ -2049,7 +2050,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==RULE_COMMENT_ANNOTATION||LA6_0==14) ) {
+                if ( (LA6_0==RULE_COMMENT_ANNOTATION||LA6_0==15) ) {
                     alt6=1;
                 }
 
@@ -2141,7 +2142,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:813:1: ')'
             {
              before(grammarAccess.getKeyStringValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
-            match(input,16,FollowSets000.FOLLOW_16_in_rule__KeyStringValueAnnotation__Group_3__2__Impl1629); 
+            match(input,17,FollowSets000.FOLLOW_17_in_rule__KeyStringValueAnnotation__Group_3__2__Impl1629); 
              after(grammarAccess.getKeyStringValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
 
             }
@@ -2216,7 +2217,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:850:1: '@'
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,14,FollowSets000.FOLLOW_14_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl1697); 
+            match(input,15,FollowSets000.FOLLOW_15_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl1697); 
              after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -2376,7 +2377,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:910:1: '['
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
-            match(input,17,FollowSets000.FOLLOW_17_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl1819); 
+            match(input,18,FollowSets000.FOLLOW_18_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl1819); 
              after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
 
             }
@@ -2536,7 +2537,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:970:1: ']'
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
-            match(input,18,FollowSets000.FOLLOW_18_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl1941); 
+            match(input,19,FollowSets000.FOLLOW_19_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl1941); 
              after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
 
             }
@@ -2695,7 +2696,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             int alt7=2;
             int LA7_0 = input.LA(1);
 
-            if ( (LA7_0==15) ) {
+            if ( (LA7_0==16) ) {
                 alt7=1;
             }
             switch (alt7) {
@@ -2787,7 +2788,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1072:1: '('
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_6_0()); 
-            match(input,15,FollowSets000.FOLLOW_15_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl2135); 
+            match(input,16,FollowSets000.FOLLOW_16_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl2135); 
              after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_6_0()); 
 
             }
@@ -2868,7 +2869,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==RULE_COMMENT_ANNOTATION||LA8_0==14) ) {
+                if ( (LA8_0==RULE_COMMENT_ANNOTATION||LA8_0==15) ) {
                     alt8=1;
                 }
 
@@ -2960,7 +2961,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1131:1: ')'
             {
              before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_6_2()); 
-            match(input,16,FollowSets000.FOLLOW_16_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl2255); 
+            match(input,17,FollowSets000.FOLLOW_17_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl2255); 
              after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_6_2()); 
 
             }
@@ -3035,7 +3036,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1168:1: '@'
             {
              before(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,14,FollowSets000.FOLLOW_14_in_rule__KeyBooleanValueAnnotation__Group__0__Impl2323); 
+            match(input,15,FollowSets000.FOLLOW_15_in_rule__KeyBooleanValueAnnotation__Group__0__Impl2323); 
              after(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -3279,7 +3280,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             int alt9=2;
             int LA9_0 = input.LA(1);
 
-            if ( (LA9_0==15) ) {
+            if ( (LA9_0==16) ) {
                 alt9=1;
             }
             switch (alt9) {
@@ -3371,7 +3372,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1293:1: '('
             {
              before(grammarAccess.getKeyBooleanValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
-            match(input,15,FollowSets000.FOLLOW_15_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl2571); 
+            match(input,16,FollowSets000.FOLLOW_16_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl2571); 
              after(grammarAccess.getKeyBooleanValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
 
             }
@@ -3452,7 +3453,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                 int alt10=2;
                 int LA10_0 = input.LA(1);
 
-                if ( (LA10_0==RULE_COMMENT_ANNOTATION||LA10_0==14) ) {
+                if ( (LA10_0==RULE_COMMENT_ANNOTATION||LA10_0==15) ) {
                     alt10=1;
                 }
 
@@ -3544,7 +3545,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1352:1: ')'
             {
              before(grammarAccess.getKeyBooleanValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
-            match(input,16,FollowSets000.FOLLOW_16_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl2691); 
+            match(input,17,FollowSets000.FOLLOW_17_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl2691); 
              after(grammarAccess.getKeyBooleanValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
 
             }
@@ -3619,7 +3620,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1389:1: '@'
             {
              before(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,14,FollowSets000.FOLLOW_14_in_rule__KeyIntValueAnnotation__Group__0__Impl2759); 
+            match(input,15,FollowSets000.FOLLOW_15_in_rule__KeyIntValueAnnotation__Group__0__Impl2759); 
              after(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -3863,7 +3864,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             int alt11=2;
             int LA11_0 = input.LA(1);
 
-            if ( (LA11_0==15) ) {
+            if ( (LA11_0==16) ) {
                 alt11=1;
             }
             switch (alt11) {
@@ -3955,7 +3956,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1514:1: '('
             {
              before(grammarAccess.getKeyIntValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
-            match(input,15,FollowSets000.FOLLOW_15_in_rule__KeyIntValueAnnotation__Group_3__0__Impl3007); 
+            match(input,16,FollowSets000.FOLLOW_16_in_rule__KeyIntValueAnnotation__Group_3__0__Impl3007); 
              after(grammarAccess.getKeyIntValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
 
             }
@@ -4036,7 +4037,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                 int alt12=2;
                 int LA12_0 = input.LA(1);
 
-                if ( (LA12_0==RULE_COMMENT_ANNOTATION||LA12_0==14) ) {
+                if ( (LA12_0==RULE_COMMENT_ANNOTATION||LA12_0==15) ) {
                     alt12=1;
                 }
 
@@ -4128,7 +4129,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1573:1: ')'
             {
              before(grammarAccess.getKeyIntValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
-            match(input,16,FollowSets000.FOLLOW_16_in_rule__KeyIntValueAnnotation__Group_3__2__Impl3127); 
+            match(input,17,FollowSets000.FOLLOW_17_in_rule__KeyIntValueAnnotation__Group_3__2__Impl3127); 
              after(grammarAccess.getKeyIntValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
 
             }
@@ -4203,7 +4204,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1610:1: '@'
             {
              before(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()); 
-            match(input,14,FollowSets000.FOLLOW_14_in_rule__KeyFloatValueAnnotation__Group__0__Impl3195); 
+            match(input,15,FollowSets000.FOLLOW_15_in_rule__KeyFloatValueAnnotation__Group__0__Impl3195); 
              after(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()); 
 
             }
@@ -4447,7 +4448,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             int alt13=2;
             int LA13_0 = input.LA(1);
 
-            if ( (LA13_0==15) ) {
+            if ( (LA13_0==16) ) {
                 alt13=1;
             }
             switch (alt13) {
@@ -4539,7 +4540,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1735:1: '('
             {
              before(grammarAccess.getKeyFloatValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
-            match(input,15,FollowSets000.FOLLOW_15_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl3443); 
+            match(input,16,FollowSets000.FOLLOW_16_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl3443); 
              after(grammarAccess.getKeyFloatValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
 
             }
@@ -4620,7 +4621,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                 int alt14=2;
                 int LA14_0 = input.LA(1);
 
-                if ( (LA14_0==RULE_COMMENT_ANNOTATION||LA14_0==14) ) {
+                if ( (LA14_0==RULE_COMMENT_ANNOTATION||LA14_0==15) ) {
                     alt14=1;
                 }
 
@@ -4712,7 +4713,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1794:1: ')'
             {
              before(grammarAccess.getKeyFloatValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
-            match(input,16,FollowSets000.FOLLOW_16_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl3563); 
+            match(input,17,FollowSets000.FOLLOW_17_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl3563); 
              after(grammarAccess.getKeyFloatValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
 
             }
@@ -4863,7 +4864,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                 int alt15=2;
                 int LA15_0 = input.LA(1);
 
-                if ( (LA15_0==19) ) {
+                if ( (LA15_0==20) ) {
                     alt15=1;
                 }
 
@@ -4960,7 +4961,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.text.ui/src-gen/de/cau/cs/kieler/core/annotations/text/ui/contentassist/antlr/internal/InternalAnnotations.g:1893:1: '.'
             {
              before(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
-            match(input,19,FollowSets000.FOLLOW_19_in_rule__ExtendedID__Group_1__0__Impl3753); 
+            match(input,20,FollowSets000.FOLLOW_20_in_rule__ExtendedID__Group_1__0__Impl3753); 
              after(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
 
             }
@@ -5826,16 +5827,16 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     static final String DFA1_minS =
         "\1\6\1\uffff\1\5\1\4\1\5\6\uffff\1\4";
     static final String DFA1_maxS =
-        "\1\16\1\uffff\1\5\1\23\1\5\6\uffff\1\23";
+        "\1\17\1\uffff\1\5\1\24\1\5\6\uffff\1\24";
     static final String DFA1_acceptS =
         "\1\uffff\1\1\3\uffff\1\2\1\4\1\7\1\5\1\6\1\3\1\uffff";
     static final String DFA1_specialS =
         "\14\uffff}>";
     static final String[] DFA1_transitionS = {
-            "\1\1\7\uffff\1\2",
+            "\1\1\10\uffff\1\2",
             "",
             "\1\3",
-            "\2\12\1\5\1\10\1\11\1\7\4\uffff\3\5\1\6\1\uffff\1\4",
+            "\2\12\1\5\1\10\1\11\1\7\5\uffff\3\5\1\6\1\uffff\1\4",
             "\1\13",
             "",
             "",
@@ -5843,7 +5844,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             "",
             "",
             "",
-            "\2\12\1\5\1\10\1\11\1\7\4\uffff\3\5\1\6\1\uffff\1\4"
+            "\2\12\1\5\1\10\1\11\1\7\5\uffff\3\5\1\6\1\uffff\1\4"
     };
 
     static final short[] DFA1_eot = DFA.unpackEncodedString(DFA1_eotS);
@@ -5924,132 +5925,132 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         public static final BitSet FOLLOW_RULE_ID_in_rule__EString__Alternatives826 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__0856 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_rule__TagAnnotation__Group__1_in_rule__TagAnnotation__Group__0859 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_rule__TagAnnotation__Group__0__Impl887 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group__1__Impl_in_rule__TagAnnotation__Group__1918 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_15_in_rule__TagAnnotation__Group__0__Impl887 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group__1__Impl_in_rule__TagAnnotation__Group__1918 = new BitSet(new long[]{0x0000000000010000L});
         public static final BitSet FOLLOW_rule__TagAnnotation__Group__2_in_rule__TagAnnotation__Group__1921 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TagAnnotation__NameAssignment_1_in_rule__TagAnnotation__Group__1__Impl948 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TagAnnotation__Group__2__Impl_in_rule__TagAnnotation__Group__2978 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0_in_rule__TagAnnotation__Group__2__Impl1005 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0__Impl_in_rule__TagAnnotation__Group_2__01042 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0__Impl_in_rule__TagAnnotation__Group_2__01042 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1_in_rule__TagAnnotation__Group_2__01045 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_15_in_rule__TagAnnotation__Group_2__0__Impl1073 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1__Impl_in_rule__TagAnnotation__Group_2__11104 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_16_in_rule__TagAnnotation__Group_2__0__Impl1073 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1__Impl_in_rule__TagAnnotation__Group_2__11104 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__2_in_rule__TagAnnotation__Group_2__11107 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__AnnotationsAssignment_2_1_in_rule__TagAnnotation__Group_2__1__Impl1134 = new BitSet(new long[]{0x0000000000004042L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__AnnotationsAssignment_2_1_in_rule__TagAnnotation__Group_2__1__Impl1134 = new BitSet(new long[]{0x0000000000008042L});
         public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__2__Impl_in_rule__TagAnnotation__Group_2__21165 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_rule__TagAnnotation__Group_2__2__Impl1193 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_17_in_rule__TagAnnotation__Group_2__2__Impl1193 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__0__Impl_in_rule__KeyStringValueAnnotation__Group__01230 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__1_in_rule__KeyStringValueAnnotation__Group__01233 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_rule__KeyStringValueAnnotation__Group__0__Impl1261 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_15_in_rule__KeyStringValueAnnotation__Group__0__Impl1261 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__1__Impl_in_rule__KeyStringValueAnnotation__Group__11292 = new BitSet(new long[]{0x0000000000000030L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2_in_rule__KeyStringValueAnnotation__Group__11295 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__NameAssignment_1_in_rule__KeyStringValueAnnotation__Group__1__Impl1322 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2__Impl_in_rule__KeyStringValueAnnotation__Group__21352 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2__Impl_in_rule__KeyStringValueAnnotation__Group__21352 = new BitSet(new long[]{0x0000000000010000L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__3_in_rule__KeyStringValueAnnotation__Group__21355 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__ValueAssignment_2_in_rule__KeyStringValueAnnotation__Group__2__Impl1382 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__3__Impl_in_rule__KeyStringValueAnnotation__Group__31412 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0_in_rule__KeyStringValueAnnotation__Group__3__Impl1439 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0__Impl_in_rule__KeyStringValueAnnotation__Group_3__01478 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0__Impl_in_rule__KeyStringValueAnnotation__Group_3__01478 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1_in_rule__KeyStringValueAnnotation__Group_3__01481 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_15_in_rule__KeyStringValueAnnotation__Group_3__0__Impl1509 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1__Impl_in_rule__KeyStringValueAnnotation__Group_3__11540 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_16_in_rule__KeyStringValueAnnotation__Group_3__0__Impl1509 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1__Impl_in_rule__KeyStringValueAnnotation__Group_3__11540 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2_in_rule__KeyStringValueAnnotation__Group_3__11543 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl1570 = new BitSet(new long[]{0x0000000000004042L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl1570 = new BitSet(new long[]{0x0000000000008042L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__21601 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_rule__KeyStringValueAnnotation__Group_3__2__Impl1629 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_17_in_rule__KeyStringValueAnnotation__Group_3__2__Impl1629 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__01666 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__01669 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl1697 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__11728 = new BitSet(new long[]{0x0000000000020000L});
+        public static final BitSet FOLLOW_15_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl1697 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__11728 = new BitSet(new long[]{0x0000000000040000L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__11731 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl1758 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__21788 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__21791 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_17_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl1819 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__31850 = new BitSet(new long[]{0x0000000000040000L});
+        public static final BitSet FOLLOW_18_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl1819 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__31850 = new BitSet(new long[]{0x0000000000080000L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__31853 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl1880 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__41910 = new BitSet(new long[]{0x0000000000000030L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5_in_rule__TypedKeyStringValueAnnotation__Group__41913 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_18_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl1941 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5__Impl_in_rule__TypedKeyStringValueAnnotation__Group__51972 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_19_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl1941 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5__Impl_in_rule__TypedKeyStringValueAnnotation__Group__51972 = new BitSet(new long[]{0x0000000000010000L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6_in_rule__TypedKeyStringValueAnnotation__Group__51975 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_5_in_rule__TypedKeyStringValueAnnotation__Group__5__Impl2002 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6__Impl_in_rule__TypedKeyStringValueAnnotation__Group__62032 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0_in_rule__TypedKeyStringValueAnnotation__Group__6__Impl2059 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__02104 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__02104 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1_in_rule__TypedKeyStringValueAnnotation__Group_6__02107 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_15_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl2135 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__12166 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_16_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl2135 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__12166 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2_in_rule__TypedKeyStringValueAnnotation__Group_6__12169 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1_in_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl2196 = new BitSet(new long[]{0x0000000000004042L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1_in_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl2196 = new BitSet(new long[]{0x0000000000008042L});
         public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__22227 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl2255 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_17_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl2255 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__02292 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__02295 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_rule__KeyBooleanValueAnnotation__Group__0__Impl2323 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_15_in_rule__KeyBooleanValueAnnotation__Group__0__Impl2323 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1__Impl_in_rule__KeyBooleanValueAnnotation__Group__12354 = new BitSet(new long[]{0x0000000000000080L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2_in_rule__KeyBooleanValueAnnotation__Group__12357 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__NameAssignment_1_in_rule__KeyBooleanValueAnnotation__Group__1__Impl2384 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2__Impl_in_rule__KeyBooleanValueAnnotation__Group__22414 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2__Impl_in_rule__KeyBooleanValueAnnotation__Group__22414 = new BitSet(new long[]{0x0000000000010000L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__3_in_rule__KeyBooleanValueAnnotation__Group__22417 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__ValueAssignment_2_in_rule__KeyBooleanValueAnnotation__Group__2__Impl2444 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__3__Impl_in_rule__KeyBooleanValueAnnotation__Group__32474 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0_in_rule__KeyBooleanValueAnnotation__Group__3__Impl2501 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__02540 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__02540 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1_in_rule__KeyBooleanValueAnnotation__Group_3__02543 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_15_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl2571 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__12602 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_16_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl2571 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__12602 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2_in_rule__KeyBooleanValueAnnotation__Group_3__12605 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyBooleanValueAnnotation__Group_3__1__Impl2632 = new BitSet(new long[]{0x0000000000004042L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyBooleanValueAnnotation__Group_3__1__Impl2632 = new BitSet(new long[]{0x0000000000008042L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__22663 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl2691 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_17_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl2691 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__0__Impl_in_rule__KeyIntValueAnnotation__Group__02728 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__1_in_rule__KeyIntValueAnnotation__Group__02731 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_rule__KeyIntValueAnnotation__Group__0__Impl2759 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_15_in_rule__KeyIntValueAnnotation__Group__0__Impl2759 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__1__Impl_in_rule__KeyIntValueAnnotation__Group__12790 = new BitSet(new long[]{0x0000000000000100L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2_in_rule__KeyIntValueAnnotation__Group__12793 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__NameAssignment_1_in_rule__KeyIntValueAnnotation__Group__1__Impl2820 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2__Impl_in_rule__KeyIntValueAnnotation__Group__22850 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2__Impl_in_rule__KeyIntValueAnnotation__Group__22850 = new BitSet(new long[]{0x0000000000010000L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__3_in_rule__KeyIntValueAnnotation__Group__22853 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__ValueAssignment_2_in_rule__KeyIntValueAnnotation__Group__2__Impl2880 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__3__Impl_in_rule__KeyIntValueAnnotation__Group__32910 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0_in_rule__KeyIntValueAnnotation__Group__3__Impl2937 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0__Impl_in_rule__KeyIntValueAnnotation__Group_3__02976 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0__Impl_in_rule__KeyIntValueAnnotation__Group_3__02976 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1_in_rule__KeyIntValueAnnotation__Group_3__02979 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_15_in_rule__KeyIntValueAnnotation__Group_3__0__Impl3007 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1__Impl_in_rule__KeyIntValueAnnotation__Group_3__13038 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_16_in_rule__KeyIntValueAnnotation__Group_3__0__Impl3007 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1__Impl_in_rule__KeyIntValueAnnotation__Group_3__13038 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__2_in_rule__KeyIntValueAnnotation__Group_3__13041 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyIntValueAnnotation__Group_3__1__Impl3068 = new BitSet(new long[]{0x0000000000004042L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyIntValueAnnotation__Group_3__1__Impl3068 = new BitSet(new long[]{0x0000000000008042L});
         public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__2__Impl_in_rule__KeyIntValueAnnotation__Group_3__23099 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_rule__KeyIntValueAnnotation__Group_3__2__Impl3127 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_17_in_rule__KeyIntValueAnnotation__Group_3__2__Impl3127 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__0__Impl_in_rule__KeyFloatValueAnnotation__Group__03164 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__1_in_rule__KeyFloatValueAnnotation__Group__03167 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_rule__KeyFloatValueAnnotation__Group__0__Impl3195 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_15_in_rule__KeyFloatValueAnnotation__Group__0__Impl3195 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__1__Impl_in_rule__KeyFloatValueAnnotation__Group__13226 = new BitSet(new long[]{0x0000000000000200L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2_in_rule__KeyFloatValueAnnotation__Group__13229 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__NameAssignment_1_in_rule__KeyFloatValueAnnotation__Group__1__Impl3256 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__23286 = new BitSet(new long[]{0x0000000000008000L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__23286 = new BitSet(new long[]{0x0000000000010000L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__3_in_rule__KeyFloatValueAnnotation__Group__23289 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__ValueAssignment_2_in_rule__KeyFloatValueAnnotation__Group__2__Impl3316 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__3__Impl_in_rule__KeyFloatValueAnnotation__Group__33346 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0_in_rule__KeyFloatValueAnnotation__Group__3__Impl3373 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0__Impl_in_rule__KeyFloatValueAnnotation__Group_3__03412 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0__Impl_in_rule__KeyFloatValueAnnotation__Group_3__03412 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1_in_rule__KeyFloatValueAnnotation__Group_3__03415 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_15_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl3443 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1__Impl_in_rule__KeyFloatValueAnnotation__Group_3__13474 = new BitSet(new long[]{0x0000000000014040L});
+        public static final BitSet FOLLOW_16_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl3443 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1__Impl_in_rule__KeyFloatValueAnnotation__Group_3__13474 = new BitSet(new long[]{0x0000000000028040L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2_in_rule__KeyFloatValueAnnotation__Group_3__13477 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyFloatValueAnnotation__Group_3__1__Impl3504 = new BitSet(new long[]{0x0000000000004042L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyFloatValueAnnotation__Group_3__1__Impl3504 = new BitSet(new long[]{0x0000000000008042L});
         public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2__Impl_in_rule__KeyFloatValueAnnotation__Group_3__23535 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl3563 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__03601 = new BitSet(new long[]{0x0000000000080000L});
+        public static final BitSet FOLLOW_17_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl3563 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__03601 = new BitSet(new long[]{0x0000000000100000L});
         public static final BitSet FOLLOW_rule__ExtendedID__Group__1_in_rule__ExtendedID__Group__03604 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group__0__Impl3631 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__13660 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl3687 = new BitSet(new long[]{0x0000000000080002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl3687 = new BitSet(new long[]{0x0000000000100002L});
         public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__03722 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__03725 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_19_in_rule__ExtendedID__Group_1__0__Impl3753 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_20_in_rule__ExtendedID__Group_1__0__Impl3753 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__13784 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl3811 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValueAssignment3849 = new BitSet(new long[]{0x0000000000000002L});

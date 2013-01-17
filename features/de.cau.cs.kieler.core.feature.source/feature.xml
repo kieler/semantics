@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="de.cau.cs.kieler.core.feature.source"
-      label="KIELER Core"
+      label="KIELER Core (Sources)"
       version="0.7.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
       plugin="de.cau.cs.kieler.core.ui.source">

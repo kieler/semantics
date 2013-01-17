@@ -2,7 +2,16 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+    <extension
+        point="org.eclipse.emf.ecore.extension_parser">
+        <parser
+            class="de.cau.cs.kieler.core.kexpressions.ui.KExpressionsExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+            type="expr">
+        </parser>
+    </extension>
 
+<!-- We don't need that editor and all related registrations-->
+<!-- 
     <extension
             point="org.eclipse.ui.editors">
         <editor
@@ -122,15 +131,7 @@
         </handler>
     </extension>   
 
-<!-- adding resource factories -->
 
-	<extension
-		point="org.eclipse.emf.ecore.extension_parser">
-		<parser
-			class="de.cau.cs.kieler.core.kexpressions.ui.KExpressionsExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="expr">
-		</parser>
-	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
             class="de.cau.cs.kieler.core.kexpressions.ui.KExpressionsExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
@@ -140,12 +141,11 @@
 
 
 
-   <!-- quickfix marker resolution generator -->
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
             class="de.cau.cs.kieler.core.kexpressions.ui.KExpressionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
    </extension>
-
+-->
 </plugin>

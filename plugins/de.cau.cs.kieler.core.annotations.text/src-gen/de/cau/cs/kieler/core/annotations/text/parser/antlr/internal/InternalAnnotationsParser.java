@@ -21,14 +21,15 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_COMMENT_ANNOTATION", "RULE_BOOLEAN", "RULE_INT", "RULE_FLOAT", "RULE_STRING", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'@'", "'('", "')'", "'['", "']'", "'.'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_COMMENT_ANNOTATION", "RULE_BOOLEAN", "RULE_INT", "RULE_FLOAT", "RULE_STRING", "RULE_ID", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'@'", "'('", "')'", "'['", "']'", "'.'"
     };
     public static final int RULE_BOOLEAN=5;
     public static final int RULE_ID=9;
-    public static final int RULE_ANY_OTHER=13;
+    public static final int RULE_ANY_OTHER=14;
+    public static final int T__20=20;
     public static final int RULE_FLOAT=7;
     public static final int EOF=-1;
-    public static final int RULE_SL_COMMENT=11;
+    public static final int RULE_SL_COMMENT=12;
     public static final int RULE_ML_COMMENT=10;
     public static final int T__19=19;
     public static final int RULE_STRING=8;
@@ -36,9 +37,9 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
     public static final int T__15=15;
     public static final int T__18=18;
     public static final int T__17=17;
-    public static final int T__14=14;
+    public static final int RULE_NUMBER=11;
     public static final int RULE_INT=6;
-    public static final int RULE_WS=12;
+    public static final int RULE_WS=13;
     public static final int RULE_COMMENT_ANNOTATION=4;
 
     // delegates
@@ -441,7 +442,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:211:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) (otherlv_2= '(' ( (lv_annotations_3_0= ruleAnnotation ) )* otherlv_4= ')' )? )
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:211:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) (otherlv_2= '(' ( (lv_annotations_3_0= ruleAnnotation ) )* otherlv_4= ')' )?
             {
-            otherlv_0=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleTagAnnotation469); 
+            otherlv_0=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleTagAnnotation469); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0());
                 
@@ -480,14 +481,14 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             int alt3=2;
             int LA3_0 = input.LA(1);
 
-            if ( (LA3_0==15) ) {
+            if ( (LA3_0==16) ) {
                 alt3=1;
             }
             switch (alt3) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:233:4: otherlv_2= '(' ( (lv_annotations_3_0= ruleAnnotation ) )* otherlv_4= ')'
                     {
-                    otherlv_2=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleTagAnnotation503); 
+                    otherlv_2=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleTagAnnotation503); 
 
                         	newLeafNode(otherlv_2, grammarAccess.getTagAnnotationAccess().getLeftParenthesisKeyword_2_0());
                         
@@ -497,7 +498,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         int alt2=2;
                         int LA2_0 = input.LA(1);
 
-                        if ( (LA2_0==RULE_COMMENT_ANNOTATION||LA2_0==14) ) {
+                        if ( (LA2_0==RULE_COMMENT_ANNOTATION||LA2_0==15) ) {
                             alt2=1;
                         }
 
@@ -540,7 +541,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_4=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleTagAnnotation537); 
+                    otherlv_4=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleTagAnnotation537); 
 
                         	newLeafNode(otherlv_4, grammarAccess.getTagAnnotationAccess().getRightParenthesisKeyword_2_2());
                         
@@ -630,7 +631,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:280:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleEString ) ) (otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')' )? )
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:280:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleEString ) ) (otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')' )?
             {
-            otherlv_0=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleKeyStringValueAnnotation622); 
+            otherlv_0=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleKeyStringValueAnnotation622); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
                 
@@ -700,14 +701,14 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( (LA5_0==15) ) {
+            if ( (LA5_0==16) ) {
                 alt5=1;
             }
             switch (alt5) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:320:4: otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')'
                     {
-                    otherlv_3=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleKeyStringValueAnnotation677); 
+                    otherlv_3=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyStringValueAnnotation677); 
 
                         	newLeafNode(otherlv_3, grammarAccess.getKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_3_0());
                         
@@ -717,7 +718,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         int alt4=2;
                         int LA4_0 = input.LA(1);
 
-                        if ( (LA4_0==RULE_COMMENT_ANNOTATION||LA4_0==14) ) {
+                        if ( (LA4_0==RULE_COMMENT_ANNOTATION||LA4_0==15) ) {
                             alt4=1;
                         }
 
@@ -760,7 +761,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_5=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyStringValueAnnotation711); 
+                    otherlv_5=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleKeyStringValueAnnotation711); 
 
                         	newLeafNode(otherlv_5, grammarAccess.getKeyStringValueAnnotationAccess().getRightParenthesisKeyword_3_2());
                         
@@ -854,7 +855,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:367:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_value_5_0= ruleEString ) ) (otherlv_6= '(' ( (lv_annotations_7_0= ruleAnnotation ) )* otherlv_8= ')' )? )
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:367:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_value_5_0= ruleEString ) ) (otherlv_6= '(' ( (lv_annotations_7_0= ruleAnnotation ) )* otherlv_8= ')' )?
             {
-            otherlv_0=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleTypedKeyStringValueAnnotation796); 
+            otherlv_0=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleTypedKeyStringValueAnnotation796); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
                 
@@ -889,7 +890,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleTypedKeyStringValueAnnotation829); 
+            otherlv_2=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleTypedKeyStringValueAnnotation829); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
                 
@@ -924,7 +925,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,18,FollowSets000.FOLLOW_18_in_ruleTypedKeyStringValueAnnotation862); 
+            otherlv_4=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleTypedKeyStringValueAnnotation862); 
 
                 	newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
                 
@@ -963,14 +964,14 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             int alt7=2;
             int LA7_0 = input.LA(1);
 
-            if ( (LA7_0==15) ) {
+            if ( (LA7_0==16) ) {
                 alt7=1;
             }
             switch (alt7) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:433:4: otherlv_6= '(' ( (lv_annotations_7_0= ruleAnnotation ) )* otherlv_8= ')'
                     {
-                    otherlv_6=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleTypedKeyStringValueAnnotation896); 
+                    otherlv_6=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleTypedKeyStringValueAnnotation896); 
 
                         	newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_6_0());
                         
@@ -980,7 +981,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         int alt6=2;
                         int LA6_0 = input.LA(1);
 
-                        if ( (LA6_0==RULE_COMMENT_ANNOTATION||LA6_0==14) ) {
+                        if ( (LA6_0==RULE_COMMENT_ANNOTATION||LA6_0==15) ) {
                             alt6=1;
                         }
 
@@ -1023,7 +1024,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_8=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleTypedKeyStringValueAnnotation930); 
+                    otherlv_8=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleTypedKeyStringValueAnnotation930); 
 
                         	newLeafNode(otherlv_8, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_6_2());
                         
@@ -1112,7 +1113,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:480:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) (otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')' )? )
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:480:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) (otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')' )?
             {
-            otherlv_0=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleKeyBooleanValueAnnotation1015); 
+            otherlv_0=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleKeyBooleanValueAnnotation1015); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0());
                 
@@ -1177,14 +1178,14 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             int alt9=2;
             int LA9_0 = input.LA(1);
 
-            if ( (LA9_0==15) ) {
+            if ( (LA9_0==16) ) {
                 alt9=1;
             }
             switch (alt9) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:520:4: otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')'
                     {
-                    otherlv_3=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleKeyBooleanValueAnnotation1071); 
+                    otherlv_3=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyBooleanValueAnnotation1071); 
 
                         	newLeafNode(otherlv_3, grammarAccess.getKeyBooleanValueAnnotationAccess().getLeftParenthesisKeyword_3_0());
                         
@@ -1194,7 +1195,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         int alt8=2;
                         int LA8_0 = input.LA(1);
 
-                        if ( (LA8_0==RULE_COMMENT_ANNOTATION||LA8_0==14) ) {
+                        if ( (LA8_0==RULE_COMMENT_ANNOTATION||LA8_0==15) ) {
                             alt8=1;
                         }
 
@@ -1237,7 +1238,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_5=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyBooleanValueAnnotation1105); 
+                    otherlv_5=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleKeyBooleanValueAnnotation1105); 
 
                         	newLeafNode(otherlv_5, grammarAccess.getKeyBooleanValueAnnotationAccess().getRightParenthesisKeyword_3_2());
                         
@@ -1326,7 +1327,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:567:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_INT ) ) (otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')' )? )
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:567:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_INT ) ) (otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')' )?
             {
-            otherlv_0=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleKeyIntValueAnnotation1190); 
+            otherlv_0=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleKeyIntValueAnnotation1190); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0());
                 
@@ -1391,14 +1392,14 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             int alt11=2;
             int LA11_0 = input.LA(1);
 
-            if ( (LA11_0==15) ) {
+            if ( (LA11_0==16) ) {
                 alt11=1;
             }
             switch (alt11) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:607:4: otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')'
                     {
-                    otherlv_3=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleKeyIntValueAnnotation1246); 
+                    otherlv_3=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyIntValueAnnotation1246); 
 
                         	newLeafNode(otherlv_3, grammarAccess.getKeyIntValueAnnotationAccess().getLeftParenthesisKeyword_3_0());
                         
@@ -1408,7 +1409,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         int alt10=2;
                         int LA10_0 = input.LA(1);
 
-                        if ( (LA10_0==RULE_COMMENT_ANNOTATION||LA10_0==14) ) {
+                        if ( (LA10_0==RULE_COMMENT_ANNOTATION||LA10_0==15) ) {
                             alt10=1;
                         }
 
@@ -1451,7 +1452,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_5=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyIntValueAnnotation1280); 
+                    otherlv_5=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleKeyIntValueAnnotation1280); 
 
                         	newLeafNode(otherlv_5, grammarAccess.getKeyIntValueAnnotationAccess().getRightParenthesisKeyword_3_2());
                         
@@ -1540,7 +1541,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:654:1: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_FLOAT ) ) (otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')' )? )
             // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:654:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= RULE_FLOAT ) ) (otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')' )?
             {
-            otherlv_0=(Token)match(input,14,FollowSets000.FOLLOW_14_in_ruleKeyFloatValueAnnotation1365); 
+            otherlv_0=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleKeyFloatValueAnnotation1365); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0());
                 
@@ -1605,14 +1606,14 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             int alt13=2;
             int LA13_0 = input.LA(1);
 
-            if ( (LA13_0==15) ) {
+            if ( (LA13_0==16) ) {
                 alt13=1;
             }
             switch (alt13) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:694:4: otherlv_3= '(' ( (lv_annotations_4_0= ruleAnnotation ) )* otherlv_5= ')'
                     {
-                    otherlv_3=(Token)match(input,15,FollowSets000.FOLLOW_15_in_ruleKeyFloatValueAnnotation1421); 
+                    otherlv_3=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyFloatValueAnnotation1421); 
 
                         	newLeafNode(otherlv_3, grammarAccess.getKeyFloatValueAnnotationAccess().getLeftParenthesisKeyword_3_0());
                         
@@ -1622,7 +1623,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         int alt12=2;
                         int LA12_0 = input.LA(1);
 
-                        if ( (LA12_0==RULE_COMMENT_ANNOTATION||LA12_0==14) ) {
+                        if ( (LA12_0==RULE_COMMENT_ANNOTATION||LA12_0==15) ) {
                             alt12=1;
                         }
 
@@ -1665,7 +1666,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_5=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyFloatValueAnnotation1455); 
+                    otherlv_5=(Token)match(input,17,FollowSets000.FOLLOW_17_in_ruleKeyFloatValueAnnotation1455); 
 
                         	newLeafNode(otherlv_5, grammarAccess.getKeyFloatValueAnnotationAccess().getRightParenthesisKeyword_3_2());
                         
@@ -1875,7 +1876,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                 int alt15=2;
                 int LA15_0 = input.LA(1);
 
-                if ( (LA15_0==19) ) {
+                if ( (LA15_0==20) ) {
                     alt15=1;
                 }
 
@@ -1884,7 +1885,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.core.annotations.text/src-gen/de/cau/cs/kieler/core/annotations/text/parser/antlr/internal/InternalAnnotations.g:787:2: kw= '.' this_ID_2= RULE_ID
             	    {
-            	    kw=(Token)match(input,19,FollowSets000.FOLLOW_19_in_ruleExtendedID1689); 
+            	    kw=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleExtendedID1689); 
 
             	            current.merge(kw);
             	            newLeafNode(kw, grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
@@ -1935,16 +1936,16 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
     static final String DFA1_minS =
         "\1\4\1\uffff\1\11\1\4\1\11\6\uffff\1\4";
     static final String DFA1_maxS =
-        "\1\16\1\uffff\1\11\1\23\1\11\6\uffff\1\23";
+        "\1\17\1\uffff\1\11\1\24\1\11\6\uffff\1\24";
     static final String DFA1_acceptS =
         "\1\uffff\1\1\3\uffff\1\3\1\7\1\6\1\5\1\2\1\4\1\uffff";
     static final String DFA1_specialS =
         "\14\uffff}>";
     static final String[] DFA1_transitionS = {
-            "\1\1\11\uffff\1\2",
+            "\1\1\12\uffff\1\2",
             "",
             "\1\3",
-            "\1\11\1\10\1\7\1\6\2\5\4\uffff\3\11\1\12\1\uffff\1\4",
+            "\1\11\1\10\1\7\1\6\2\5\5\uffff\3\11\1\12\1\uffff\1\4",
             "\1\13",
             "",
             "",
@@ -1952,7 +1953,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             "",
             "",
             "",
-            "\1\11\1\10\1\7\1\6\2\5\4\uffff\3\11\1\12\1\uffff\1\4"
+            "\1\11\1\10\1\7\1\6\2\5\5\uffff\3\11\1\12\1\uffff\1\4"
     };
 
     static final short[] DFA1_eot = DFA.unpackEncodedString(DFA1_eotS);
@@ -2006,63 +2007,63 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_RULE_COMMENT_ANNOTATION_in_ruleCommentAnnotation382 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleTagAnnotation_in_entryRuleTagAnnotation422 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleTagAnnotation432 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_ruleTagAnnotation469 = new BitSet(new long[]{0x0000000000000200L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_ruleTagAnnotation490 = new BitSet(new long[]{0x0000000000008002L});
-        public static final BitSet FOLLOW_15_in_ruleTagAnnotation503 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleTagAnnotation524 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_16_in_ruleTagAnnotation537 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_15_in_ruleTagAnnotation469 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_ruleTagAnnotation490 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_16_in_ruleTagAnnotation503 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleTagAnnotation524 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_17_in_ruleTagAnnotation537 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_entryRuleKeyStringValueAnnotation575 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyStringValueAnnotation585 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_ruleKeyStringValueAnnotation622 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_15_in_ruleKeyStringValueAnnotation622 = new BitSet(new long[]{0x0000000000000200L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleKeyStringValueAnnotation643 = new BitSet(new long[]{0x0000000000000300L});
-        public static final BitSet FOLLOW_ruleEString_in_ruleKeyStringValueAnnotation664 = new BitSet(new long[]{0x0000000000008002L});
-        public static final BitSet FOLLOW_15_in_ruleKeyStringValueAnnotation677 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyStringValueAnnotation698 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_16_in_ruleKeyStringValueAnnotation711 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_ruleKeyStringValueAnnotation664 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_16_in_ruleKeyStringValueAnnotation677 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyStringValueAnnotation698 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_17_in_ruleKeyStringValueAnnotation711 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleTypedKeyStringValueAnnotation_in_entryRuleTypedKeyStringValueAnnotation749 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleTypedKeyStringValueAnnotation759 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_ruleTypedKeyStringValueAnnotation796 = new BitSet(new long[]{0x0000000000000200L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_ruleTypedKeyStringValueAnnotation817 = new BitSet(new long[]{0x0000000000020000L});
-        public static final BitSet FOLLOW_17_in_ruleTypedKeyStringValueAnnotation829 = new BitSet(new long[]{0x0000000000000200L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_ruleTypedKeyStringValueAnnotation850 = new BitSet(new long[]{0x0000000000040000L});
-        public static final BitSet FOLLOW_18_in_ruleTypedKeyStringValueAnnotation862 = new BitSet(new long[]{0x0000000000000300L});
-        public static final BitSet FOLLOW_ruleEString_in_ruleTypedKeyStringValueAnnotation883 = new BitSet(new long[]{0x0000000000008002L});
-        public static final BitSet FOLLOW_15_in_ruleTypedKeyStringValueAnnotation896 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleTypedKeyStringValueAnnotation917 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_16_in_ruleTypedKeyStringValueAnnotation930 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_15_in_ruleTypedKeyStringValueAnnotation796 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_ruleTypedKeyStringValueAnnotation817 = new BitSet(new long[]{0x0000000000040000L});
+        public static final BitSet FOLLOW_18_in_ruleTypedKeyStringValueAnnotation829 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_ruleTypedKeyStringValueAnnotation850 = new BitSet(new long[]{0x0000000000080000L});
+        public static final BitSet FOLLOW_19_in_ruleTypedKeyStringValueAnnotation862 = new BitSet(new long[]{0x0000000000000300L});
+        public static final BitSet FOLLOW_ruleEString_in_ruleTypedKeyStringValueAnnotation883 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_16_in_ruleTypedKeyStringValueAnnotation896 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleTypedKeyStringValueAnnotation917 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_17_in_ruleTypedKeyStringValueAnnotation930 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation968 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation978 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_ruleKeyBooleanValueAnnotation1015 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_15_in_ruleKeyBooleanValueAnnotation1015 = new BitSet(new long[]{0x0000000000000200L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleKeyBooleanValueAnnotation1036 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation1053 = new BitSet(new long[]{0x0000000000008002L});
-        public static final BitSet FOLLOW_15_in_ruleKeyBooleanValueAnnotation1071 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyBooleanValueAnnotation1092 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_16_in_ruleKeyBooleanValueAnnotation1105 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation1053 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_16_in_ruleKeyBooleanValueAnnotation1071 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyBooleanValueAnnotation1092 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_17_in_ruleKeyBooleanValueAnnotation1105 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation1143 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation1153 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_ruleKeyIntValueAnnotation1190 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_15_in_ruleKeyIntValueAnnotation1190 = new BitSet(new long[]{0x0000000000000200L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleKeyIntValueAnnotation1211 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation1228 = new BitSet(new long[]{0x0000000000008002L});
-        public static final BitSet FOLLOW_15_in_ruleKeyIntValueAnnotation1246 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyIntValueAnnotation1267 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_16_in_ruleKeyIntValueAnnotation1280 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation1228 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_16_in_ruleKeyIntValueAnnotation1246 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyIntValueAnnotation1267 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_17_in_ruleKeyIntValueAnnotation1280 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation1318 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation1328 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_14_in_ruleKeyFloatValueAnnotation1365 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_15_in_ruleKeyFloatValueAnnotation1365 = new BitSet(new long[]{0x0000000000000200L});
         public static final BitSet FOLLOW_ruleExtendedID_in_ruleKeyFloatValueAnnotation1386 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation1403 = new BitSet(new long[]{0x0000000000008002L});
-        public static final BitSet FOLLOW_15_in_ruleKeyFloatValueAnnotation1421 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyFloatValueAnnotation1442 = new BitSet(new long[]{0x0000000000014010L});
-        public static final BitSet FOLLOW_16_in_ruleKeyFloatValueAnnotation1455 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation1403 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_16_in_ruleKeyFloatValueAnnotation1421 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyFloatValueAnnotation1442 = new BitSet(new long[]{0x0000000000028010L});
+        public static final BitSet FOLLOW_17_in_ruleKeyFloatValueAnnotation1455 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleEString_in_entryRuleEString1496 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleEString1507 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_STRING_in_ruleEString1547 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_ruleEString1573 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleExtendedID_in_entryRuleExtendedID1619 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleExtendedID1630 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleExtendedID1670 = new BitSet(new long[]{0x0000000000080002L});
-        public static final BitSet FOLLOW_19_in_ruleExtendedID1689 = new BitSet(new long[]{0x0000000000000200L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleExtendedID1704 = new BitSet(new long[]{0x0000000000080002L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleExtendedID1670 = new BitSet(new long[]{0x0000000000100002L});
+        public static final BitSet FOLLOW_20_in_ruleExtendedID1689 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleExtendedID1704 = new BitSet(new long[]{0x0000000000100002L});
     }
 
 

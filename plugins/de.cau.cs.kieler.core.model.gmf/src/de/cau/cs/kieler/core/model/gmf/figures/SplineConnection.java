@@ -13,11 +13,8 @@
  */
 package de.cau.cs.kieler.core.model.gmf.figures;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ListIterator;
 
 import org.eclipse.draw2d.ArrowLocator;
 import org.eclipse.draw2d.Connection;
@@ -29,23 +26,29 @@ import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
+import org.eclipse.draw2d.geometry.PrecisionPoint;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
+import org.eclipse.gmf.runtime.notation.StringValueStyle;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Path;
 
-import de.cau.cs.kieler.core.model.gmf.IJoinPointFactory;
+import de.cau.cs.kieler.core.alg.IFactory;
+import de.cau.cs.kieler.core.math.KVector;
+import de.cau.cs.kieler.core.math.KVectorChain;
 import de.cau.cs.kieler.core.model.gmf.util.SplineUtilities;
 
 /**
- * Temporary class implementing the spline extension to polylines until the changes are merged into
- * GMF.
+ * A bend-point-based connection that is able to render real splines using the OS' advanced
+ * graphics support. The bend points are treated as control points of the cubic spline.
  * 
- * @author mmu, ckru
+ * @author mmu
+ * @author ckru
  */
 public class SplineConnection extends PolylineConnectionEx {
 
@@ -111,11 +114,6 @@ public class SplineConnection extends PolylineConnectionEx {
     public void setPart(final ConnectionNodeEditPart part) {
         this.part = part;
     }
-
-    /**
-     * All the join points currently drawn by this connection.
-     */
-    private List<IFigure> joinPoints = new LinkedList<IFigure>();
 
     /*
      * (non-Javadoc)
@@ -184,9 +182,10 @@ public class SplineConnection extends PolylineConnectionEx {
     /**
      * This method checks if we are on a feedback layer by comparing the value of a Dimension with
      * the value after translating it into relative coordinates.
-     * 
-     * Copied from PolylineConnectionEx because it is private there but required for
-     * containsPoint().
+     * <p>
+     * Copied from {@link org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx}
+     * because it is private there but required for {@link #containsPoint()}.
+     * </p>
      * 
      * @return true if we are on a feedback layer, which means the results after translating were
      *         the same as not translating, or false if we are not on a feedback layer.
@@ -214,9 +213,10 @@ public class SplineConnection extends PolylineConnectionEx {
     /**
      * Calculate and store the tolerance value for determining whether the line contains a point or
      * not.
-     * 
-     * Copied from PolylineConnectionEx because it is private there but required for
-     * containsPoint().
+     * <p>
+     * Copied from {@link org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx}
+     * because it is private there but required for {@link #containsPoint()}.
+     * </p>
      * 
      * @param isFeedbackLayer
      *            see the isFeedbackLayer() method
@@ -522,14 +522,18 @@ public class SplineConnection extends PolylineConnectionEx {
 
     // bugfix end
 
-    private IJoinPointFactory joinPointFactory = null;
+    /** The factory for creating junction points. */
+    private IFactory<IFigure> joinPointFactory = null;
+    
+    /** The junction points that have been created so far. */
+    private IFigure[] createdJunctionPoints;
 
     /**
      * Get the current join point decoration factory. If it is null the mechanism is deactivated.
      * 
      * @return the join point decoration factory or null
      */
-    public IJoinPointFactory getJoinPointFactory() {
+    public IFactory<IFigure> getJoinPointFactory() {
         return joinPointFactory;
     }
 
@@ -539,20 +543,10 @@ public class SplineConnection extends PolylineConnectionEx {
      * @param dec
      *            the new join point decoration factory
      */
-    public void setJoinPointDecoration(final IJoinPointFactory dec) {
-        if (joinPointFactory != null) {
-            for (IFigure joinPointDecoration : joinPoints) {
-                if (this.getChildren().contains(joinPointDecoration)) {
-                    this.remove(joinPointDecoration);
-                }
-                joinPointFactory = null;
-            }
-            joinPoints.clear();
-        }
+    public void setJoinPointFactory(final IFactory<IFigure> dec) {
         joinPointFactory = dec;
     }
 
-    private int[] oldPoints;
 
     /**
      * Check if we have to draw those JoinPoints and calculate their location.
@@ -561,107 +555,37 @@ public class SplineConnection extends PolylineConnectionEx {
      *            the edit part of the connection to check. Should be the same edit part this figure
      *            belongs so.
      */
-
-    // can't check generics within reasonable efficiency.
-    @SuppressWarnings("unchecked")
     public void drawJoinPointDecoration(final ConnectionNodeEditPart thisPart) {
-
-        if (!(thisPart.getFigure() instanceof SplineConnection) || oldPoints != null
-                && oldPoints.equals(((SplineConnection) thisPart.getFigure()).getPoints())) {
-            return;
-        }
-
-        if (joinPointFactory != null) {
-            for (IFigure ojp : this.joinPoints) {
-                if (this.getChildren().contains(ojp)) {
-                    this.remove(ojp);
+        // remove previously created junction points
+        if (createdJunctionPoints != null) {
+            for (IFigure figure : createdJunctionPoints) {
+                this.remove(figure);
+                if (joinPointFactory != null) {
+                    joinPointFactory.destroy(figure);
                 }
             }
-            this.joinPoints.clear();
-            
-            // for each connected port p
-            List<GraphicalEditPart> connectedItems = new ArrayList<GraphicalEditPart>(2);
-            if (thisPart.getSource() instanceof GraphicalEditPart) {
-                connectedItems.add((GraphicalEditPart) thisPart.getSource());
-            }
-            if (thisPart.getTarget() instanceof GraphicalEditPart) {
-                connectedItems.add((GraphicalEditPart) thisPart.getTarget());
-            }
-            for (GraphicalEditPart p : connectedItems) {
-                
-                // let allConnectedEdges be the set of edges connected to p without thisPart
-                List<ConnectionNodeEditPart> allConnectedEdges = 
-                        new LinkedList<ConnectionNodeEditPart>();
-                allConnectedEdges.addAll(p.getSourceConnections());
-                allConnectedEdges.addAll(p.getTargetConnections());
-                allConnectedEdges.remove(thisPart);
-                if (!allConnectedEdges.isEmpty()) {
-                    PointList thisBendpoints = ((SplineConnection) thisPart.getFigure()).getPoints();
-                    this.oldPoints = thisBendpoints.toIntArray().clone();
+            createdJunctionPoints = null;
+        }
+        
+        // create new junction points
+        if (joinPointFactory != null) {
+            View view = thisPart.getNotationView();
+            StringValueStyle style = (StringValueStyle) view.getNamedStyle(
+                    NotationPackage.eINSTANCE.getStringValueStyle(), "junctionPoints");
+            if (style != null) {
+                try {
+                    KVectorChain points = new KVectorChain();
+                    points.parse(style.getStringValue());
                     
-                    // let p1 be the start point
-                    Point p1;
-                    if (p.getSourceConnections().contains(thisPart)) {
-                        p1 = thisBendpoints.getFirstPoint();
-                    } else {
-                        p1 = thisBendpoints.getLastPoint();
-                        thisBendpoints = thisBendpoints.getCopy();
-                        thisBendpoints.reverse();
+                    createdJunctionPoints = new IFigure[points.size()];
+                    ListIterator<KVector> pointIter = points.listIterator();
+                    while (pointIter.hasNext()) {
+                        KVector point = pointIter.next();
+                        IFigure figure = addJoinPoint(new PrecisionPoint(point.x, point.y));
+                        createdJunctionPoints[pointIter.previousIndex()] = figure;
                     }
-                    
-                    // for all bend points of this connection
-                    for (int i = 1; i < thisBendpoints.size(); i++) {
-                        // let p2 be the next bend point on this connection
-                        Point p2 = thisBendpoints.getPoint(i);
-                        
-                        // for all other connections that are still on the same track as this one
-                        Iterator<ConnectionNodeEditPart> iter = allConnectedEdges.iterator();
-                        while (iter.hasNext()) {
-                            ConnectionNodeEditPart otherPart = iter.next();
-                            if (otherPart.getFigure() instanceof SplineConnection) {
-                                PointList otherBendpoints = ((SplineConnection) otherPart.getFigure())
-                                        .getPoints();
-                                if (otherBendpoints.size() <= i) {
-                                    iter.remove();
-                                } else {
-                                    if (p.getTargetConnections().contains(thisPart)) {
-                                        otherBendpoints = otherBendpoints.getCopy();
-                                        otherBendpoints.reverse();
-                                    }
-                                    
-                                    // let p3 be the next bend point of the other connection
-                                    Point p3 = otherBendpoints.getPoint(i);
-                                    if (p2.x != p3.x || p2.y != p3.y) {
-                                        // the next point of this and the other connection differ
-                                        int dx2 = p2.x - p1.x;
-                                        int dy2 = p2.y - p1.y;
-                                        int dx3 = p3.x - p1.x;
-                                        int dy3 = p3.y - p1.y;
-                                        if ((dx3 * dy2) == (dy3 * dx2)
-                                                && Integer.signum(dx2) == Integer.signum(dx3)
-                                                && Integer.signum(dy2) == Integer.signum(dy3)) {
-                                            
-                                            // the points p1, p2, p3 form a straight line,
-                                            // now check whether p2 is between p1 and p3
-                                            if (Math.abs(dx2) < Math.abs(dx3)
-                                                    || Math.abs(dy2) < Math.abs(dy3)) {
-                                                addJoinPoint(p2);
-                                            }
-                                            
-                                        } else if (i > 1) {
-                                            // p2 and p3 have diverged, so the last common point is p1
-                                            addJoinPoint(p1);
-                                        }
-
-                                        // do not consider the other connection in the next iterations
-                                        iter.remove();
-                                    }
-                                }
-                            }
-                        }
-                        // for the next iteration p2 is taken as reference point
-                        p1 = p2;
-                    }
+                } catch (IllegalArgumentException exception) {
+                    // ignore exception
                 }
             }
         }
@@ -672,33 +596,25 @@ public class SplineConnection extends PolylineConnectionEx {
      * 
      * @param position the position where the new join point is created
      */
-    private void addJoinPoint(final Point position) {
-        IFigure joinp = joinPointFactory
-                .getNewJoinPointDecorator();
+    private IFigure addJoinPoint(final Point position) {
+        IFigure joinp = joinPointFactory.create();
         int yOffset = joinp.getBounds().height / 2;
         int xOffset = joinp.getBounds().width / 2;
-        joinp.getBounds().setLocation(
-                new Point(position.x - xOffset, position.y - yOffset));
+        joinp.getBounds().setLocation(new Point(position.x - xOffset, position.y - yOffset));
         this.add(joinp);
-        this.joinPoints.add(joinp);
+        return joinp;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.draw2d.PolylineConnection#setTargetDecoration(org.eclipse
-     * .draw2d.RotatableDecoration)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void setTargetDecoration(final RotatableDecoration dec) {
         super.setTargetDecoration(dec, new ArrowLocatorEx(this, ConnectionLocator.TARGET));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.draw2d.PolylineConnection#setSourceDecoration(org.eclipse
-     * .draw2d.RotatableDecoration)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void setSourceDecoration(final RotatableDecoration dec) {
@@ -741,7 +657,6 @@ public class SplineConnection extends PolylineConnectionEx {
      * An extension of the ArrowLocator that is capable of using spline points as references.
      * 
      * @author mmu
-     * 
      */
     public static class ArrowLocatorEx extends ArrowLocator {
 
