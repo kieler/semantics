@@ -31,6 +31,15 @@ import de.cau.cs.kieler.core.model.validation.ValidationManager;
  * The preference page for configuring which CheckFile should be used to
  * validate the different diagrams.
  * 
+ * Removed from plugin.xml (20.01.13) by cmot
+ *       <page
+            category="de.cau.cs.kieler.sim"
+            class="de.cau.cs.kieler.core.model.preferences.ValidationManagerPreferencePage"
+            id="de.cau.cs.kieler.core.model.validationManager"
+            name="Validation Manager">
+      </page>
+      
+ * 
  * @author soh
  * @kieler.ignore We'd like to get rid of this.
  */

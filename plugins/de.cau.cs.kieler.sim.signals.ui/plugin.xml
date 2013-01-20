@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            category="de.cau.cs.kieler"
+            category="de.cau.cs.kieler.sim"
             class="de.cau.cs.kieler.sim.signals.ui.views.SignalsView"
             icon="icons/signalsViewIcon.png"
             id="de.cau.cs.kieler.sim.signals.ui.view"

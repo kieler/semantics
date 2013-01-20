@@ -16,6 +16,21 @@
             name="Execution Manager">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="de.cau.cs.kieler.sim"
+            name="KIELER Simulation">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="de.cau.cs.kieler.sim.kiem.ui.preferences.KielerSimPreferencePage"
+            id="de.cau.cs.kieler.sim"
+            name="KIELER Simulation">
+      </page>
+   </extension>
 
 
 </plugin>
