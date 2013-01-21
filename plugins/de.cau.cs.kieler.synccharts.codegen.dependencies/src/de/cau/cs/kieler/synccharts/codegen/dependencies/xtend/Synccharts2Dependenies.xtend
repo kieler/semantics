@@ -328,7 +328,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
             if (state.needsStrongRepresentation) { 
                 dependencies.handleHierarchyDependencyHelperPS(childState, PS, null);
             }
-            else if (state.needsWeakRepresentation) {
+            if (state.needsWeakRepresentation) {
                 dependencies.handleHierarchyDependencyHelperPW(childState, PW, null);
             }
 //            for (childStateTransition : childState.outgoingTransitions) {
