@@ -40,7 +40,7 @@ openFile</programArgsMac>
 -Xdock:icon=../Resources/kiel.icns</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/de.cau.cs.kieler.core.product/icons/kieler_16.gif" i32="/de.cau.cs.kieler.core.product/icons/kieler_32.gif" i48="/de.cau.cs.kieler.core.product/icons/kieler_48.gif" i64="/de.cau.cs.kieler.core.product/icons/kieler_64.gif" i128="/de.cau.cs.kieler.core.product/icons/kieler_128.gif"/>
+   <windowImages i16="/de.cau.cs.kieler.core.product/icons/foerde-logo-16.gif" i32="/de.cau.cs.kieler.core.product/icons/foerde-logo-32.gif" i48="/de.cau.cs.kieler.core.product/icons/foerde-logo-48.gif" i64="/de.cau.cs.kieler.core.product/icons/foerde-logo-64.gif" i128="/de.cau.cs.kieler.core.product/icons/foerde-logo-128.gif"/>
 
    <splash
       location="de.cau.cs.kieler.core.product"
@@ -48,14 +48,21 @@ openFile</programArgsMac>
       startupMessageRect="7,252,445,20"
       startupForegroundColor="000000" />
    <launcher name="kieler">
-      <linux icon="/de.cau.cs.kieler.core.product/icons/kieler_64.xpm"/>
-      <macosx icon="/de.cau.cs.kieler.core.product/icons/kieler.icns"/>
+      <linux icon="/de.cau.cs.kieler.core.product/icons/foerde-logo-64.xpm"/>
+      <macosx icon="/de.cau.cs.kieler.core.product/icons/foerde-logo.icns"/>
       <solaris/>
-      <win useIco="true">
-         <ico path="/de.cau.cs.kieler.core.product/icons/kieler.ico"/>
-         <bmp/>
+      <win useIco="false">
+         <bmp
+            winSmallHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-16.bmp"
+            winSmallLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-16i.bmp"
+            winMediumHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-32.bmp"
+            winMediumLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-32i.bmp"
+            winLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-48.bmp"
+            winLargeLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-48i.bmp"
+            winExtraLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp"/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
