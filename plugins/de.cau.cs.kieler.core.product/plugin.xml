@@ -11,7 +11,7 @@
             name="KIELER">
          <property
                name="aboutText"
-               value="KIELER - a research project on enhancing the model-based design of complex systems.&#x0A;&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2012 by Christian-Albrechts-Universit&#228;t zu Kiel, Department of Computer Science, Real-Time and Embedded Systems Group.">
+               value="KIELER - Kiel Integrated Environment for Layout (Eclipse Rich Client)&#x0A;A research project on enhancing the model-based design of complex systems&#x0A;&#x0A;&#x0A;For more information, visit our website:&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2012 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group">
          </property>
          <property
                name="aboutImage"
@@ -30,12 +30,8 @@
                value="KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client">
          </property>
          <property
-               name="startupForegroundColor"
-               value="000000">
-         </property>
-         <property
                name="startupProgressRect"
-               value="5,275,445,15">
+               value="19,301,207,15">
          </property>
          <property
                name="version"
@@ -53,10 +49,6 @@
                name="introBrandingImageText"
                value="KIELER by Christian-Albrechts-Universität zu Kiel">
          </property>
-         <property
-               name="startupMessageRect"
-               value="7,252,445,20">
-         </property>
           <property
                 name="cssTheme"
                 value="org.eclipse.e4.ui.css.theme.e4_default">
@@ -65,18 +57,15 @@
                 name="applicationCSSResources"
                 value="platform:/plugin/org.eclipse.platform/images/">
           </property>
+          <property
+                name="startupForegroundColor"
+                value="FFFFFF">
+          </property>
+          <property
+                name="startupMessageRect"
+                value="10,200,0,0">
+          </property>
       </product>
-   </extension>
-   <extension
-         point="org.eclipse.ui.splashHandlers">
-      <splashHandler
-            class="de.cau.cs.kieler.core.product.splash.KielerSplashHandler"
-            id="de.cau.cs.kieler.core.product.splash.extensible">
-      </splashHandler>
-      <splashHandlerProductBinding
-            productId="de.cau.cs.kieler.core.product.product"
-            splashId="de.cau.cs.kieler.core.product.splash.extensible">
-      </splashHandlerProductBinding>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
