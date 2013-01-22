@@ -71,7 +71,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="de.cau.cs.kieler.core.product.ModelingPerspective"
-            icon="icons/kieler_16.gif"
+            icon="icons/foerde-logo-16.gif"
             id="de.cau.cs.kieler.Modeling"
             name="KIELER Modeling">
       </perspective>
