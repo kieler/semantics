@@ -6,11 +6,14 @@
    <aboutInfo>
       <image path="/de.cau.cs.kieler.core.product/images/about.png"/>
       <text>
-         KIELER - a research project on enhancing the model-based design of complex systems.
+         KIELER - Kiel Integrated Environment for Layout (Eclipse Rich Client)
+A research project on enhancing the model-based design of complex systems
 
+
+For more information, visit our website:
 http://www.informatik.uni-kiel.de/rtsys/kieler/
 
-Copyright 2012 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group.
+Copyright 2012 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group
       </text>
    </aboutInfo>
 
@@ -40,22 +43,29 @@ openFile</programArgsMac>
 -Xdock:icon=../Resources/kiel.icns</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/de.cau.cs.kieler.core.product/icons/kieler_16.gif" i32="/de.cau.cs.kieler.core.product/icons/kieler_32.gif" i48="/de.cau.cs.kieler.core.product/icons/kieler_48.gif" i64="/de.cau.cs.kieler.core.product/icons/kieler_64.gif" i128="/de.cau.cs.kieler.core.product/icons/kieler_128.gif"/>
+   <windowImages i16="/de.cau.cs.kieler.core.product/icons/foerde-logo-16.gif" i32="/de.cau.cs.kieler.core.product/icons/foerde-logo-32.gif" i48="/de.cau.cs.kieler.core.product/icons/foerde-logo-48.gif" i64="/de.cau.cs.kieler.core.product/icons/foerde-logo-64.gif" i128="/de.cau.cs.kieler.core.product/icons/foerde-logo-128.gif"/>
 
    <splash
       location="de.cau.cs.kieler.core.product"
-      startupProgressRect="5,275,445,15"
-      startupMessageRect="7,252,445,20"
-      startupForegroundColor="000000" />
+      startupProgressRect="19,301,207,15"
+      startupMessageRect="10,200,0,0"
+      startupForegroundColor="FFFFFF" />
    <launcher name="kieler">
-      <linux icon="/de.cau.cs.kieler.core.product/icons/kieler_64.xpm"/>
-      <macosx icon="/de.cau.cs.kieler.core.product/icons/kieler.icns"/>
+      <linux icon="/de.cau.cs.kieler.core.product/icons/foerde-logo-64.xpm"/>
+      <macosx icon="/de.cau.cs.kieler.core.product/icons/foerde-logo.icns"/>
       <solaris/>
-      <win useIco="true">
-         <ico path="/de.cau.cs.kieler.core.product/icons/kieler.ico"/>
-         <bmp/>
+      <win useIco="false">
+         <bmp
+            winSmallHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-16.bmp"
+            winSmallLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-16i.bmp"
+            winMediumHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-32.bmp"
+            winMediumLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-32i.bmp"
+            winLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-48.bmp"
+            winLargeLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-48i.bmp"
+            winExtraLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp"/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>

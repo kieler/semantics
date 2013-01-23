@@ -11,7 +11,7 @@
             allowMultiple="false"
             category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.kev.views.KevView"
-            icon="icons/view/kieler.png"
+            icon="icons/view/kev.gif"
             id="de.cau.cs.kieler.kev.views.KevView"
             name="KEV View"
             restorable="true">
