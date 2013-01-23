@@ -55,20 +55,20 @@
           </states>
           <states id="C" label="C" incomingTransitions="//@states.0/@regions.2/@states.0/@regions.0/@states.1/@outgoingTransitions.0"/>
         </regions>
-        <outgoingTransitions isImmediate="true" label="# L1" priority="1" targetState="//@states.0/@regions.2/@states.1">
-          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
-        </outgoingTransitions>
-        <outgoingTransitions isImmediate="true" label="# E" priority="2" type="STRONGABORT" targetState="//@states.0/@regions.2/@states.2">
+        <outgoingTransitions isImmediate="true" label="# E" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.2/@states.2">
           <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.3"/>
         </outgoingTransitions>
+        <outgoingTransitions isImmediate="true" label="# L1" priority="2" targetState="//@states.0/@regions.2/@states.1">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+        </outgoingTransitions>
       </states>
-      <states id="D" label="D" incomingTransitions="//@states.0/@regions.2/@states.0/@outgoingTransitions.0">
+      <states id="D" label="D" incomingTransitions="//@states.0/@regions.2/@states.0/@outgoingTransitions.1">
         <outgoingTransitions isImmediate="true" label="# L2 / O2" priority="1" targetState="//@states.0/@regions.2/@states.3">
           <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.5"/>
           <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
         </outgoingTransitions>
       </states>
-      <states id="E" label="E" incomingTransitions="//@states.0/@regions.2/@states.0/@outgoingTransitions.1"/>
+      <states id="E" label="E" incomingTransitions="//@states.0/@regions.2/@states.0/@outgoingTransitions.0"/>
       <states id="F" label="F" incomingTransitions="//@states.0/@regions.2/@states.1/@outgoingTransitions.0"/>
     </regions>
     <regions id="">
