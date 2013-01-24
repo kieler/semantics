@@ -1230,7 +1230,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 
 	//InterfaceScope:
 	//
-	//	{InterfaceScope} "interface" name=ID? ":" declarations+=(EventDeclarartion //		| Entrypoint 
+	//	{InterfaceScope} "interface" name=XID? ":" declarations+=(EventDeclarartion //		| Entrypoint 
 	// //		| Exitpoint
 	// |
 	//
@@ -1297,7 +1297,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//// (derivation=EventDerivation)?;
 	// EventDefinition:
 	//
-	//	direction=Direction? "event" name=ID (":" type=[types::Type|FQN])?;
+	//	direction=Direction? "event" name=XID (":" type=[types::Type|FQN])?;
 	public STextGrammarAccess.EventDefinitionElements getEventDefinitionAccess() {
 		return gaSText.getEventDefinitionAccess();
 	}
@@ -1365,7 +1365,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 
 	//OperationDefinition:
 	//
-	//	{OperationDefinition} "operation" name=ID "(" (parameters+=Parameter ("," parameters+=Parameter)*)? ")" (":"
+	//	{OperationDefinition} "operation" name=XID "(" (parameters+=Parameter ("," parameters+=Parameter)*)? ")" (":"
 	//
 	//	type=[types::Type|FQN])?;
 	public STextGrammarAccess.OperationDefinitionElements getOperationDefinitionAccess() {
@@ -1378,7 +1378,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Parameter returns types::Parameter:
 	//
-	//	name=ID ":" type=[types::Type|FQN];
+	//	name=XID ":" type=[types::Type|FQN];
 	public STextGrammarAccess.ParameterElements getParameterAccess() {
 		return gaSText.getParameterAccess();
 	}
@@ -1388,16 +1388,29 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * ---- entrypoint definition ---- * / //Entrypoint returns sgraph::Declaration:
-	// //	{Entrypoint} 'entrypoint' name=ID;
+	// //	{Entrypoint} 'entrypoint' name=XID;
 	//
 	//
 	/// * ---- exitpoint definition ---- * / //Exitpoint returns sgraph::Declaration:
-	// //	{Exitpoint} 'exitpoint' name=ID;
+	// //	{Exitpoint} 'exitpoint' name=XID;
 	//
 	//
-	/// * ---- Datatype rules ---- * / FQN:
+	/// * ---- Datatype rules ---- * / XID:
 	//
-	//	ID ("." ID)*;
+	//	ID | "namespace" | "interface" | "internal" | "event" | "local" | "in" | "out" | "var" | "readonly" | "external" |
+	//
+	//	"operation" | "default" | "else" | "entry" | "exit" | "always" | "oncycle" | "raise" | "valueof" | "active";
+	public STextGrammarAccess.XIDElements getXIDAccess() {
+		return gaSText.getXIDAccess();
+	}
+	
+	public ParserRule getXIDRule() {
+		return getXIDAccess().getRule();
+	}
+
+	//FQN:
+	//
+	//	XID ("." XID)*;
 	public STextGrammarAccess.FQNElements getFQNAccess() {
 		return gaSText.getFQNAccess();
 	}
@@ -1424,13 +1437,35 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//// ('#' properties=ReactionProperties)?;
 	// TransitionReaction:
 	//
-	//	{TransitionReaction} trigger=ReactionTrigger? ("/" effect=ReactionEffect)?;
+	//	{TransitionReaction} trigger=StextTrigger? ("/" effect=ReactionEffect)?;
 	public STextGrammarAccess.TransitionReactionElements getTransitionReactionAccess() {
 		return gaSText.getTransitionReactionAccess();
 	}
 	
 	public ParserRule getTransitionReactionRule() {
 		return getTransitionReactionAccess().getRule();
+	}
+
+	//StextTrigger returns sgraph::Trigger:
+	//
+	//	ReactionTrigger | DefaultTrigger;
+	public STextGrammarAccess.StextTriggerElements getStextTriggerAccess() {
+		return gaSText.getStextTriggerAccess();
+	}
+	
+	public ParserRule getStextTriggerRule() {
+		return getStextTriggerAccess().getRule();
+	}
+
+	//DefaultTrigger returns sgraph::Trigger:
+	//
+	//	{DefaultTrigger} ("default" | "else");
+	public STextGrammarAccess.DefaultTriggerElements getDefaultTriggerAccess() {
+		return gaSText.getDefaultTriggerAccess();
+	}
+	
+	public ParserRule getDefaultTriggerRule() {
+		return getDefaultTriggerAccess().getRule();
 	}
 
 	////ReactionProperties:
@@ -1494,9 +1529,12 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////TODO: Group OnCycleEvent and AlwaysEvent, maybe replace it by a DoEvent
-	// BuiltinEventSpec:
+	// // | DefaultEvent | OnCycleEvent ;
 	//
-	//	EntryEvent | ExitEvent | OnCycleEvent | AlwaysEvent | DefaultEvent;
+	//
+	//BuiltinEventSpec:
+	//
+	//	EntryEvent | ExitEvent | AlwaysEvent;
 	public STextGrammarAccess.BuiltinEventSpecElements getBuiltinEventSpecAccess() {
 		return gaSText.getBuiltinEventSpecAccess();
 	}
@@ -1527,20 +1565,11 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getExitEventAccess().getRule();
 	}
 
-	//OnCycleEvent:
+	////OnCycleEvent:
+	// //	{OnCycleEvent} 'oncycle'; 
+	// AlwaysEvent:
 	//
-	//	{OnCycleEvent} "oncycle";
-	public STextGrammarAccess.OnCycleEventElements getOnCycleEventAccess() {
-		return gaSText.getOnCycleEventAccess();
-	}
-	
-	public ParserRule getOnCycleEventRule() {
-		return getOnCycleEventAccess().getRule();
-	}
-
-	//AlwaysEvent:
-	//
-	//	{AlwaysEvent} "always";
+	//	{AlwaysEvent} ("always" | "oncycle");
 	public STextGrammarAccess.AlwaysEventElements getAlwaysEventAccess() {
 		return gaSText.getAlwaysEventAccess();
 	}
@@ -1549,20 +1578,14 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getAlwaysEventAccess().getRule();
 	}
 
-	//DefaultEvent:
-	//
-	//	{DefaultEvent} ("default" | "else");
-	public STextGrammarAccess.DefaultEventElements getDefaultEventAccess() {
-		return gaSText.getDefaultEventAccess();
-	}
-	
-	public ParserRule getDefaultEventRule() {
-		return getDefaultEventAccess().getRule();
-	}
-
-	//// ****************
-	// // Expression Grammar
+	////DefaultEvent:
+	// //	{DefaultEvent} ('default' | 'else')
+	// //;
 	// // ****************
+	// // Expression Grammar
+	//
+	//
+	//// ****************
 	// EventRaisingExpression returns Expression:
 	//
 	//	{EventRaisingExpression} "raise" event=FeatureCall (":" value=Expression)?;

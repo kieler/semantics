@@ -7,13 +7,11 @@ import org.eclipse.xtext.validation.CheckType;
 import org.yakindu.sct.model.sgraph.Declaration;
 import org.yakindu.sct.model.stext.validation.STextJavaValidator;
 
-import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.SCChartsExpPackage;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.sCChartsExp.VariableDefinition;
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.util.SccUtils;
  
 
 public class SCChartsExpJavaValidator extends STextJavaValidator {
-
 	
 	/*
 	 *  Check variable definitions
@@ -42,6 +40,7 @@ public class SCChartsExpJavaValidator extends STextJavaValidator {
 		// If a declaration is found in the list with same name, isEscapeError
 		// is set to true. If another declaration with the same name is found,
 		// an error is displayed.
+		
 		boolean isEscapeError = true;
 		for (Declaration declaration : declarations) {
 			if (declaration != null) {

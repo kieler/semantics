@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Integration SyncCharts Text
+Bundle-SymbolicName: de.cau.cs.kieler.yakindu.synccharts.ui.integration.text
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.yakindu.synccharts.ui.integration.text.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ de.cau.cs.kieler.yakindu.synccharts.model.text.ui;bundle-version="0.1.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Import-Package: org.eclipse.xtext.ui.editor.contentassist.antlr,
+ org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
+ org.yakindu.sct.model.stext.stext,
+ org.yakindu.sct.ui.editor.extensions
+Export-Package: de.cau.cs.kieler.yakindu.synccharts.ui.integration.text,
+ de.cau.cs.kieler.yakindu.synccharts.ui.integration.text.modules

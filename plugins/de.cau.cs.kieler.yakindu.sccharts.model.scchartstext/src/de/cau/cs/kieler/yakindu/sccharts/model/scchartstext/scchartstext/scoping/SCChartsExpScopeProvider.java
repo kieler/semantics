@@ -6,27 +6,15 @@ package de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.scopin
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.xtext.EcoreUtil2;
-import org.eclipse.xtext.nodemodel.ICompositeNode;
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 import org.yakindu.sct.model.sgraph.Declaration;
-import org.yakindu.sct.model.sgraph.Region;
-import org.yakindu.sct.model.sgraph.SGraphPackage;
-import org.yakindu.sct.model.sgraph.Scope;
-import org.yakindu.sct.model.sgraph.State;
-import org.yakindu.sct.model.sgraph.Statechart;
-import org.yakindu.sct.model.sgraph.Vertex;
 import org.yakindu.sct.model.stext.scoping.STextScopeProvider;
-import org.yakindu.sct.model.stext.stext.InterfaceScope;
-import org.yakindu.sct.model.stext.stext.InternalScope;
+
 import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.scchartstext.util.SccUtils;

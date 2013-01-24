@@ -50,10 +50,13 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getInterfaceScopeAccess().getDeclarationsAlternatives_4_0(), "rule__InterfaceScope__DeclarationsAlternatives_4_0");
 					put(grammarAccess.getInternalScopeAccess().getDeclarationsAlternatives_3_0(), "rule__InternalScope__DeclarationsAlternatives_3_0");
 					put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
+					put(grammarAccess.getXIDAccess().getAlternatives(), "rule__XID__Alternatives");
 					put(grammarAccess.getReactionAccess().getAlternatives(), "rule__Reaction__Alternatives");
+					put(grammarAccess.getStextTriggerAccess().getAlternatives(), "rule__StextTrigger__Alternatives");
+					put(grammarAccess.getDefaultTriggerAccess().getAlternatives_1(), "rule__DefaultTrigger__Alternatives_1");
 					put(grammarAccess.getEventSpecAccess().getAlternatives(), "rule__EventSpec__Alternatives");
 					put(grammarAccess.getBuiltinEventSpecAccess().getAlternatives(), "rule__BuiltinEventSpec__Alternatives");
-					put(grammarAccess.getDefaultEventAccess().getAlternatives_1(), "rule__DefaultEvent__Alternatives_1");
+					put(grammarAccess.getAlwaysEventAccess().getAlternatives_1(), "rule__AlwaysEvent__Alternatives_1");
 					put(grammarAccess.getLogicalNotExpressionAccess().getAlternatives(), "rule__LogicalNotExpression__Alternatives");
 					put(grammarAccess.getNumericalUnaryExpressionAccess().getAlternatives(), "rule__NumericalUnaryExpression__Alternatives");
 					put(grammarAccess.getLiteralAccess().getAlternatives(), "rule__Literal__Alternatives");
@@ -105,12 +108,11 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFQNAccess().getGroup_1(), "rule__FQN__Group_1__0");
 					put(grammarAccess.getTransitionReactionAccess().getGroup(), "rule__TransitionReaction__Group__0");
 					put(grammarAccess.getTransitionReactionAccess().getGroup_2(), "rule__TransitionReaction__Group_2__0");
+					put(grammarAccess.getDefaultTriggerAccess().getGroup(), "rule__DefaultTrigger__Group__0");
 					put(grammarAccess.getTimeEventSpecAccess().getGroup(), "rule__TimeEventSpec__Group__0");
 					put(grammarAccess.getEntryEventAccess().getGroup(), "rule__EntryEvent__Group__0");
 					put(grammarAccess.getExitEventAccess().getGroup(), "rule__ExitEvent__Group__0");
-					put(grammarAccess.getOnCycleEventAccess().getGroup(), "rule__OnCycleEvent__Group__0");
 					put(grammarAccess.getAlwaysEventAccess().getGroup(), "rule__AlwaysEvent__Group__0");
-					put(grammarAccess.getDefaultEventAccess().getGroup(), "rule__DefaultEvent__Group__0");
 					put(grammarAccess.getEventRaisingExpressionAccess().getGroup(), "rule__EventRaisingExpression__Group__0");
 					put(grammarAccess.getEventRaisingExpressionAccess().getGroup_3(), "rule__EventRaisingExpression__Group_3__0");
 					put(grammarAccess.getAssignmentExpressionAccess().getGroup(), "rule__AssignmentExpression__Group__0");
