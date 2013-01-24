@@ -5,7 +5,7 @@
 <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="de.cau.cs.kieler"
+            category="de.cau.cs.kieler.sim"
             class="de.cau.cs.kieler.sim.kiem.config.preferences.ConfigurationsPreferencePage"
             id="de.cau.cs.kieler.sim.kiem.internalConfigurationPage"
             name="Execution Manager">

@@ -97,6 +97,12 @@ public class SCExecution {
 
     /** The executable name. */
     private String executableName;
+    
+    /** The path for sc. */
+    private static final String SC_PATH = "sc";
+    
+    /** The path to scl. */
+    private static final String SCL_PATH = "scl"; 
 
     // -------------------------------------------------------------------------
 
@@ -114,6 +120,8 @@ public class SCExecution {
         setOutputPath(KiemUtil.generateRandomTempOutputFolder());
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * Instantiates a new SCExecution with a concrete outputPath.
      * 
@@ -127,6 +135,8 @@ public class SCExecution {
         cycleCount = false;
         setOutputPath(outputPath);
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Instantiates a new SCExecution with a concrete outputPath.
@@ -151,18 +161,15 @@ public class SCExecution {
      * Compile the filePaths SC files together with the bundled SC core files within the given
      * outputPath folder. The executable will be randomly named and can later be started after a
      * successful compilation.
-     * 
-     * @param filePaths
-     *            the file paths
-     * @param debug
-     *            additional debug output before the signal output
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     * @throws InterruptedException
-     *             the interrupted exception
+     *
+     * @param filePaths the file paths
+     * @param debug additional debug output before the signal output
+     * @param scl a flag indicating that SC light (scl) should be used instead of (standard) SC
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
      */
-    public void compile(final List<String> filePaths, final boolean debug) throws IOException,
-            InterruptedException {
+    public void compile(final List<String> filePaths, final boolean debug, final boolean scl)
+            throws IOException, InterruptedException {
 
         List<String> usedfilePaths = filePaths;
 
@@ -185,7 +192,11 @@ public class SCExecution {
         URL url = null;
         try {
             // the SC path is the path to the needed SC c files
-            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("sc"), null));
+            if (scl) {
+                url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SCL_PATH), null));
+            } else {
+                url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SC_PATH), null));
+            }
         } catch (IOException e2) {
             e2.printStackTrace();
         }
@@ -304,7 +315,7 @@ public class SCExecution {
                             + ").\nCheck that the path to your Workspace/Eclipse"
                             + " installation does not contain any white spaces.\n\n"
                             + getCompileError());
-                } 
+                }
             }
 
         } catch (IOException e) {
@@ -389,10 +400,12 @@ public class SCExecution {
 
     /**
      * Adds cycle counter code.
-     *
-     * @param filePath the file path
+     * 
+     * @param filePath
+     *            the file path
      * @return the string
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public static String addCycleCounterCode(final String filePath) throws IOException {
 
@@ -427,10 +440,10 @@ public class SCExecution {
                 fileContent.add("t0 = getticks();");
                 fileContent.add("tick();");
                 fileContent.add("t1 = getticks();");
-                //fileContent.add("value = cJSON_CreateObject();");
-                //fileContent.add("cJSON_AddItemToObject(value, \"value\", "
-                //         + "cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
-                //fileContent.add("cJSON_AddItemToObject(value, \"present\", cJSON_CreateTrue());");
+                // fileContent.add("value = cJSON_CreateObject();");
+                // fileContent.add("cJSON_AddItemToObject(value, \"value\", "
+                // + "cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
+                // fileContent.add("cJSON_AddItemToObject(value, \"present\", cJSON_CreateTrue());");
                 fileContent.add("cJSON_AddItemToObject(output, \"" + BENCHMARK_SIGNAL_CYCLES + "\""
                         + ", cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
             } else {

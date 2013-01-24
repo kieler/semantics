@@ -116,15 +116,6 @@
       </menuContribution>
    </extension>
    <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.core.model.preferences.ValidationManagerPreferencePage"
-            id="de.cau.cs.kieler.core.model.validationManager"
-            name="Validation Manager">
-      </page>
-   </extension>
-   <extension
          point="org.eclipse.ui.startup">
       <startup
             class="de.cau.cs.kieler.core.model.validation.ValidationInformationCollector"></startup>

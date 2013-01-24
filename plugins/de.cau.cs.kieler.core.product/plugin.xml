@@ -39,7 +39,7 @@
          </property>
          <property
                name="windowImages"
-               value="icons/kieler_16.gif,icons/kieler_32.gif,icons/kieler_48.gif,icons/kieler_64.gif,icons/kieler_128.gif">
+               value="icons/foerde-logo-16.gif,icons/foerde-logo-32.gif,icons/foerde-logo-48.gif,icons/foerde-logo-64.gif,icons/foerde-logo-128.gif">
          </property>
          <property
                name="introBrandingImage"

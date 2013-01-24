@@ -343,6 +343,12 @@ class SyncCharts2Simulation {
     // [ p || pause ]
     // end loop
     // when p may or may not be instantanous.
+    
+    // Edit: 08.01.2013: Normal Terminations must not be taken after a self
+    // loop returns to the macro state that is left by the normal termination
+    // like in test147.
+    // Therefore a transformed transition must explicitly negate all triggers
+    // of other outgoing transitions.
 
     
     // Transforming Normal Termination. 
@@ -366,10 +372,13 @@ class SyncCharts2Simulation {
         // of a new termSignal, one for every contained region.
         // For every region add an immediate during action to all final state emitting this termSignal
         // (belonging to the region).
+        // Explicitly negate triggers of other outgoing transitions (see test147)
         
                // This is the special case where we must taken care of a normal termination 
                if (state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0) {
                     val normalTerminationTransition = state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).head;
+                    val otherTransitions = state.outgoingTransitions.filter(e | e.type != TransitionType::NORMALTERMINATION);
+                    
                     normalTerminationTransition.setType(TransitionType::WEAKABORT);
                     val triggerExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
                          triggerExpression.setOperator(OperatorType::AND);
@@ -393,6 +402,17 @@ class SyncCharts2Simulation {
                         terminatedEmission.setSignal(terminatedSignal);
                     // Add the prevention of re-run of normal termination within the same tick
                     triggerExpression.subExpressions.add(notTerminatedExpression);
+                    // Explicitly prevent that a normal termination is taken when another transition
+                    // has been taken before (e.g., a weak abort self loop like in test 147)
+                    for (otherTransition : otherTransitions) {
+                        if (otherTransition.trigger != null) {
+                            val negatedExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+                            negatedExpression.setOperator(OperatorType::NOT);
+                            negatedExpression.subExpressions.add(otherTransition.trigger.copy);
+                            triggerExpression.subExpressions.add(negatedExpression);
+                        }
+                    }
+                    
                     // Prevent the normal termination to be taken again by emitting this helper signal (test10)
                     normalTerminationTransition.effects.add(terminatedEmission);
                                         
@@ -1551,8 +1571,13 @@ class SyncCharts2Simulation {
                     preSelfTransition.setPriority(1);
                     preState.outgoingTransitions.add(preSelfTransition);
                 preSelfTransition.setTrigger(preSignalReference.copy);
-                preSelfTransition.effects.add(explicitPreSignalEmission.copy);
-                pre2NotPreTransition.effects.add(explicitPreSignalEmission.copy);
+                // PreSignal emission must be added as an inner action
+                // to be decoupled from deciding for a specific transition (B is present or B is not present)
+                val explicitPreSignalEmissionAction = SyncchartsFactory::eINSTANCE.createAction();
+                explicitPreSignalEmissionAction.effects.add(explicitPreSignalEmission.copy);
+                preState.innerActions.add(explicitPreSignalEmissionAction);
+                //preSelfTransition.effects.add(explicitPreSignalEmission.copy);
+                //pre2NotPreTransition.effects.add(explicitPreSignalEmission.copy);
             }
             else {
                 // Valued Signal Case
@@ -1626,18 +1651,27 @@ class SyncCharts2Simulation {
                     explicitPre2SignalEmission.setSignal(explicitPre2Signal);
                     explicitPre2SignalEmission.setNewValue(valPreExpression.copy);
                     
+                // PreSignal emission must be added as an inner action
+                // to be decoupled from deciding for a specific transition (B is present or B is not present)
+                val explicitPreSignalEmissionFromPre1Action = SyncchartsFactory::eINSTANCE.createAction();
+                explicitPreSignalEmissionFromPre1Action.effects.add(explicitPreSignalEmissionFromPre1);
+                val explicitPreSignalEmissionFromPre2Action = SyncchartsFactory::eINSTANCE.createAction();
+                explicitPreSignalEmissionFromPre2Action.effects.add(explicitPreSignalEmissionFromPre2);
+                preState.innerActions.add(explicitPreSignalEmissionFromPre1Action);
+                preBState.innerActions.add(explicitPreSignalEmissionFromPre2Action);
+                    
                 // Fill transitions
-                pre2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
+//                pre2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
 
                 pre2PreBTransition.setTrigger(preSignalReference.copy);
-                pre2PreBTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
+//                pre2PreBTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
                 pre2PreBTransition.effects.add(explicitPre2SignalEmission.copy);
                  
                 preB2PreTransition.setTrigger(preSignalReference.copy);
-                preB2PreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
+//                preB2PreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
                 preB2PreTransition.effects.add(explicitPre1SignalEmission.copy);
                  
-                preB2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
+//                preB2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
                  
                 notPre2PreTransition.setTrigger(preSignalReference.copy);
                 notPre2PreTransition.effects.add(explicitPre1SignalEmission.copy);
