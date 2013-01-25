@@ -650,7 +650,13 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
                            val triggerNode = dependencies.getStrongNode(triggerState, triggeredTransition);
                            
                            // The following cases must exclude each other (test 148) 
-                           if (emitterState.needsWeakRepresentation && triggerState.needsStrongRepresentation) {
+                           // test148 implies: dependency from strong dependency node of a state aborted via strong triggered transition ( && triggeredTransition.strong)
+                           // only! Otherwise this could result in false dependency cycles!
+                           //
+                           // Special care must be taken for transitions out of simple (non hierarchical) states because these states only have a strong representation in the dependency graph.
+                           // =>  && (triggeredTransition.strong || !triggerState.hierarchical)
+                           
+                           if (emitterState.needsWeakRepresentation && triggerState.needsStrongRepresentation && (triggeredTransition.strong || !triggerState.hierarchical)) {
                                // Do not allow iff emitter is child of trigger (test 111)
                                // Dependency from E2-weak (abort) to C-strong is WRONG
                                // because the weak abort can only happen if C's last wish is executed
@@ -660,17 +666,16 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
                                    dependencies.getSignalDependency(emitterNodeW, triggerNode);
                                }
                            }
-                           else if (emitterState.needsStrongRepresentation() && triggerState.needsStrongRepresentation) {
+                           else if (emitterState.needsStrongRepresentation() && (transition.strong || !emitterState.hierarchical) && triggerState.needsStrongRepresentation && (triggeredTransition.strong|| !triggerState.hierarchical)) {
                                // Do not allow iff emitter is child of trigger (test 111)
                                if (!emitterState.isChildOf(triggerState)) {
                                    dependencies.getSignalDependency(emitterNode, triggerNode);
                                }
                            }
-                           else if (triggerState.needsWeakRepresentation && emitterState.needsStrongRepresentation()) {
+                           else if (emitterState.needsStrongRepresentation()  && (transition.strong || !emitterState.hierarchical) && triggerState.needsWeakRepresentation) {
                                    var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
                                    dependencies.getSignalDependency(emitterNode, triggerNodeW);
                            }
-
                            else if (emitterState.needsWeakRepresentation && triggerState.needsWeakRepresentation) {
                                 var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
                                 var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
