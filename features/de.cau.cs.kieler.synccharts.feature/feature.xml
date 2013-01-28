@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.synccharts.feature"
       label="KIELER SyncCharts Editing/Simulation/Code Gen"
-      version="0.7.0.qualifier"
+      version="0.8.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
       plugin="de.cau.cs.kieler.synccharts">
 
@@ -431,20 +431,20 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="de.cau.cs.kieler.sim.kart"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>         
+         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sim.kart.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>         
+         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sim.benchmark"
@@ -452,7 +452,7 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="de.cau.cs.kieler.synccharts.benchmark"
          download-size="0"
