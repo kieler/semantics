@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.esterel.feature"
+      id="de.cau.cs.kieler.esterel.feature.source"
       label="KIELER Esterel"
       version="0.1.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
-      plugin="de.cau.cs.kieler.esterel.ui">
+      plugin="de.cau.cs.kieler.esterel.ui.source">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER Esterel feature contains an Xtext based full featured textual Esterel editor including syntaxt highlighting and code completion and a bundled version of the Columbia Esterel Compiler (CEC) for simulation. During simulation there is also debug mode available that is able to highlight active Esterel statements.
@@ -230,203 +230,203 @@ litigation.
    </requires>
 
    <plugin
-         id="de.cau.cs.kieler.core"
+         id="de.cau.cs.kieler.core.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.annotations"
+         id="de.cau.cs.kieler.core.annotations.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.annotations.edit"
+         id="de.cau.cs.kieler.core.annotations.edit.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.annotations.text"
+         id="de.cau.cs.kieler.core.annotations.text.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.annotations.text.ui"
+         id="de.cau.cs.kieler.core.annotations.text.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.kexpressions"
+         id="de.cau.cs.kieler.core.kexpressions.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.kexpressions.edit"
+         id="de.cau.cs.kieler.core.kexpressions.edit.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.kexpressions.ui"
+         id="de.cau.cs.kieler.core.kexpressions.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.kgraph"
+         id="de.cau.cs.kieler.core.kgraph.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.kivi"
+         id="de.cau.cs.kieler.core.kivi.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.model"
+         id="de.cau.cs.kieler.core.model.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.model.xtend"
+         id="de.cau.cs.kieler.core.model.xtend.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.model.xtext"
+         id="de.cau.cs.kieler.core.model.xtext.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.ui"
+         id="de.cau.cs.kieler.core.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.karma"
+         id="de.cau.cs.kieler.karma.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.kev"
+         id="de.cau.cs.kieler.kev.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.kex"
+         id="de.cau.cs.kieler.kex.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.kies"
+         id="de.cau.cs.kieler.kies.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.s"
+         id="de.cau.cs.kieler.s.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.s.ui"
+         id="de.cau.cs.kieler.s.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.kiem"
+         id="de.cau.cs.kieler.sim.kiem.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.kiem.config"
+         id="de.cau.cs.kieler.sim.kiem.config.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.kiem.ui"
+         id="de.cau.cs.kieler.sim.kiem.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.kiem.ui.datacomponent"
+         id="de.cau.cs.kieler.sim.kiem.ui.datacomponent.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.kiem.ui.launching"
+         id="de.cau.cs.kieler.sim.kiem.ui.launching.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.kivi"
+         id="de.cau.cs.kieler.sim.kivi.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.syncsignalreset"
+         id="de.cau.cs.kieler.sim.syncsignalreset.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.table"
+         id="de.cau.cs.kieler.sim.table.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.batik.swing"
+         id="org.apache.batik.swing.source"
          download-size="0"
          install-size="0"
          version="1.6.0"
@@ -440,35 +440,35 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec"
+         id="de.cau.cs.kieler.esterel.cec.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.sim"
+         id="de.cau.cs.kieler.esterel.cec.sim.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.sim.kivi"
+         id="de.cau.cs.kieler.esterel.cec.sim.kivi.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel"
+         id="de.cau.cs.kieler.esterel.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.linux.x86"
+         id="de.cau.cs.kieler.esterel.cec.linux.x86.source"
          os="linux"
          arch="x86"
          download-size="0"
@@ -477,7 +477,7 @@ litigation.
          fragment="true"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.linux.x86_64"
+         id="de.cau.cs.kieler.esterel.cec.linux.x86_64.source"
          os="linux"
          arch="x86_64"
          download-size="0"
@@ -486,7 +486,7 @@ litigation.
          fragment="true"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.macosx.x86"
+         id="de.cau.cs.kieler.esterel.cec.macosx.x86.source"
          os="macosx"
          arch="x86"
          download-size="0"
@@ -495,7 +495,7 @@ litigation.
          fragment="true"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.macosx.x86_64"
+         id="de.cau.cs.kieler.esterel.cec.macosx.x86_64.source"
          os="macosx"
          arch="x86_64"
          download-size="0"
@@ -504,7 +504,7 @@ litigation.
          fragment="true"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.win32.x86"
+         id="de.cau.cs.kieler.esterel.cec.win32.x86.source"
          os="win32"
          arch="x86"
          download-size="0"
@@ -513,40 +513,40 @@ litigation.
          fragment="true"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.ui"
+         id="de.cau.cs.kieler.esterel.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.examples"
+         id="de.cau.cs.kieler.esterel.examples.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.signals"
+         id="de.cau.cs.kieler.sim.signals.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.signals.ui"
+         id="de.cau.cs.kieler.sim.signals.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.eso"
+         id="de.cau.cs.kieler.sim.eso.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.eso.ui"
+         id="de.cau.cs.kieler.sim.eso.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
