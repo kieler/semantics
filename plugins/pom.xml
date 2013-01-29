@@ -98,6 +98,7 @@
     <module>de.cau.cs.kieler.klighd</module>
     <module>de.cau.cs.kieler.klighd.examples</module>
     <module>de.cau.cs.kieler.klighd.piccolo</module>
+    <module>de.cau.cs.kieler.klighd.piccolo.draw2d</module>
     <module>de.cau.cs.kieler.klighd.xtext</module>
     <module>de.cau.cs.kieler.klots</module>
     <module>de.cau.cs.kieler.klots.examples</module>
@@ -121,6 +122,7 @@
     <module>de.cau.cs.kieler.s.ui</module>
     <module>de.cau.cs.kieler.sc</module>
     <module>de.cau.cs.kieler.sim.abro</module>
+    <module>de.cau.cs.kieler.sim.benchmark</module>
     <module>de.cau.cs.kieler.sim.eso</module>
     <module>de.cau.cs.kieler.sim.eso.ui</module>
     <module>de.cau.cs.kieler.sim.kart</module>
@@ -137,6 +139,7 @@
     <module>de.cau.cs.kieler.sim.syncsignalreset</module>
     <module>de.cau.cs.kieler.sim.table</module>
     <module>de.cau.cs.kieler.sj</module>
+    <module>de.cau.cs.kieler.synccharts.benchmark</module>
     <module>de.cau.cs.kieler.synccharts.codegen.dependencies</module>
     <module>de.cau.cs.kieler.synccharts.codegen.dependencies.klighd</module>
     <module>de.cau.cs.kieler.synccharts.codegen.s</module>

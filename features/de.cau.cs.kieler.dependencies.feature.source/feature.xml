@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.dependencies.feature"
-      label="Dependencies"
-      version="0.4.0.qualifier"
+      id="de.cau.cs.kieler.dependencies.feature.source"
+      label="Dependencies (Sources)"
+      version="0.5.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="https://rtsys.informatik.uni-kiel.de/trac/kieler/wiki">

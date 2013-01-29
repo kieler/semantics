@@ -211,7 +211,7 @@ public class ModelErrorHandler implements StatusListener, IStartup {
                             count++;
                             // CHECKSTYLEOFF MagicNumber
                             if (count < 4) {
-                                thisJob.schedule(count * 5000);
+                                thisJob.schedule(count * 5000L);
                             }
                         }
                     } catch (Exception e) {

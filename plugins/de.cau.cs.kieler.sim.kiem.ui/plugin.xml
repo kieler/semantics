@@ -12,7 +12,7 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            category="de.cau.cs.kieler"
+            category="de.cau.cs.kieler.sim"
             class="de.cau.cs.kieler.sim.kiem.ui.views.KiemView"
             icon="icons/kiemIcon.png"
             id="de.cau.cs.kieler.sim.kiem.view"

@@ -232,8 +232,7 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
 
             return dialog.open() == 0;
         } catch (Throwable th) {
-            // Workbench may be in such bad shape (no OS handles left, out of
-            // memory, etc)
+            // Workbench may be in such bad shape (no OS handles left, out of memory, etc)
             // that is cannot show a message to the user. Just bail out now.
             System.err.println("Error while informing user about event loop exception:"); //$NON-NLS-1$
             t.printStackTrace();
@@ -294,8 +293,7 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
                 }
             });
         } catch (RuntimeException re) {
-            // Workbench may be in such bad shape (no OS handles left, out of
-            // memory, etc)
+            // Workbench may be in such bad shape (no OS handles left, out of memory, etc)
             // that is cannot even close. Just bail out now.
             String message = "Fatal runtime error happened during "
                     + "workbench emergency close."; //$NON-NLS-1$
@@ -304,8 +302,7 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
             System.exit(-1);
             throw re;
         } catch (Error e) {
-            // Workbench may be in such bad shape (no OS handles left, out of
-            // memory, etc)
+            // Workbench may be in such bad shape (no OS handles left, out of memory, etc)
             // that is cannot even close. Just bail out now.
             System.err.println("Fatal error happened during workbench emergency close."); //$NON-NLS-1$
             e.printStackTrace();

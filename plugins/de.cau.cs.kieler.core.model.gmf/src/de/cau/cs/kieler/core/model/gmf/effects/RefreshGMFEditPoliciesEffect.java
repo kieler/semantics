@@ -73,18 +73,16 @@ public class RefreshGMFEditPoliciesEffect extends AbstractEffect {
     private void refreshPolicies() {
         PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
             public void run() {
-                if (activeEditor instanceof IDiagramWorkbenchPart) {
-                    EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
-                            .getDiagramEditPart().getModel()).getElement();
-                    List<CanonicalEditPolicy> editPolicies = CanonicalEditPolicy
-                            .getRegisteredEditPolicies(obj);
-                    for (CanonicalEditPolicy editPolicy : editPolicies) {
-                        editPolicy.refresh();
-                    }
-                    IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
-                            .getDiagramGraphicalViewer();
-                    graphViewer.flush();
+                EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
+                        .getDiagramEditPart().getModel()).getElement();
+                List<CanonicalEditPolicy> editPolicies = CanonicalEditPolicy
+                        .getRegisteredEditPolicies(obj);
+                for (CanonicalEditPolicy editPolicy : editPolicies) {
+                    editPolicy.refresh();
                 }
+                IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
+                        .getDiagramGraphicalViewer();
+                graphViewer.flush();
             }
         });
     }

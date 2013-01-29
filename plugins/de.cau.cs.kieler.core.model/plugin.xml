@@ -58,12 +58,6 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:de.cau.cs.kieler">
-         <separator
-               name="de.cau.cs.kieler.core.model.separator3">
-         </separator>
-      </menuContribution>
-      <menuContribution
             locationURI="toolbar:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.core.model.validate"
@@ -120,15 +114,6 @@
             class="de.cau.cs.kieler.core.model.ui.ValidationMenuContributionFactory"
             locationURI="menu:de.cau.cs.kieler.core.model.validate">
       </menuContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.core.model.preferences.ValidationManagerPreferencePage"
-            id="de.cau.cs.kieler.core.model.validationManager"
-            name="Validation Manager">
-      </page>
    </extension>
    <extension
          point="org.eclipse.ui.startup">

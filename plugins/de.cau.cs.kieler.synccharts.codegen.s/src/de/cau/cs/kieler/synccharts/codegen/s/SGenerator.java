@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.synccharts.codegen.s;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -24,15 +22,10 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.core.internal.resources.File;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -41,10 +34,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.xtext.util.EmfFormatter;
-
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.synccharts.Region;
@@ -57,7 +46,8 @@ import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
  *             generation
  * 
  * @author cmot
- * @kieler.ignore (excluded from review process)
+ * @kieler.design 2012-11-26 proposed cmot
+ * @kieler.rating 2012-11-26 proposed yellow
  */
 @SuppressWarnings("restriction")
 public class SGenerator implements IHandler {
@@ -66,60 +56,61 @@ public class SGenerator implements IHandler {
      * {@inheritDoc}
      */
     public void addHandlerListener(final IHandlerListener handlerListener) {
-        // TODO Auto-generated method stub
-
+        // Do nothing
     }
 
+    // -------------------------------------------------------------------------
+    
     /**
      * {@inheritDoc}
      */
     public void dispose() {
-        // TODO Auto-generated method stub
-
+        // Do nothing
     }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the file string from uri.
-     * 
-     * @param uri
-     *            the uri
-     * @return the file string from uri
-     */
-    @SuppressWarnings("unused")
-    protected String getFileStringFromUri(final URI uri) {
-
-        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-
-        IPath path = new Path(uri.toPlatformString(false));
-        IFile file = myWorkspaceRoot.getFile(path);
-
-        IPath fullPath = file.getLocation();
-
-        // If we have spaces, try it like this...
-        if (fullPath == null && file instanceof org.eclipse.core.internal.resources.Resource) {
-            org.eclipse.core.internal.resources.Resource resource 
-            = (org.eclipse.core.internal.resources.Resource) file;
-            fullPath = resource.getLocalManager().locationFor(resource);
-        }
-
-        // Ensure it is absolute
-        if (fullPath == null) {
-            return null;
-        }
-        fullPath.makeAbsolute();
-
-        java.io.File javaFile = new java.io.File(fullPath.toString().replaceAll("%20", " "));
-
-        if (javaFile != null) {
-            String fileString = javaFile.getAbsolutePath();
-            return fileString;
-        }
-
-        // Something went wrong, we could not resolve the file location
-        return null;
-    }
+// Only used for debug output    
+//    /**
+//     * Gets the file string from uri.
+//     * 
+//     * @param uri
+//     *            the uri
+//     * @return the file string from uri
+//     */
+//    @SuppressWarnings("unused")
+//    protected String getFileStringFromUri(final URI uri) {
+//
+//        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+//
+//        IPath path = new Path(uri.toPlatformString(false));
+//        IFile file = myWorkspaceRoot.getFile(path);
+//
+//        IPath fullPath = file.getLocation();
+//
+//        // If we have spaces, try it like this...
+//        if (fullPath == null && file instanceof org.eclipse.core.internal.resources.Resource) {
+//            org.eclipse.core.internal.resources.Resource resource 
+//            = (org.eclipse.core.internal.resources.Resource) file;
+//            fullPath = resource.getLocalManager().locationFor(resource);
+//        }
+//
+//        // Ensure it is absolute
+//        if (fullPath == null) {
+//            return null;
+//        }
+//        fullPath.makeAbsolute();
+//
+//        java.io.File javaFile = new java.io.File(fullPath.toString().replaceAll("%20", " "));
+//
+//        if (javaFile != null) {
+//            String fileString = javaFile.getAbsolutePath();
+//            return fileString;
+//        }
+//
+//        // Something went wrong, we could not resolve the file location
+//        return null;
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -134,70 +125,31 @@ public class SGenerator implements IHandler {
         File file = (File) ((TreeSelection) selection).getFirstElement();
         URI input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
         URI output = URI.createURI("");
-        URI output2 = URI.createURI("");
 
-        // Try to load synccharts model
+        // Try to load SyncCharts model
         XMIResourceImpl inputResource = new XMIResourceImpl(input);
         try {
-            // Load synccharts model
+            // Load SyncCharts model
             inputResource.load(null);
             Region rootRegion = (Region) inputResource.getContents().get(0);
 
-            // // Generate dependencies
-            // Synccharts2Dependenies dependenciesTransform =
-            // Guice.createInjector().getInstance(Synccharts2Dependenies.class);
-            // Dependencies dependencies = dependenciesTransform.transform(rootRegion);
-            // {// Debug output
-            // Predicate<EStructuralFeature> ignoredFeatures = Predicates.alwaysFalse();
-            // String text = EmfFormatter.objToStr(dependencies, ignoredFeatures);
-            // output2 = URI.createURI(input.toString());
-            // output2 = output2.trimFragment();
-            // output2 = output2.trimFileExtension().appendFileExtension("dependencies.txt");
-            // String outputFileString = getFileStringFromUri(output2);
-            // FileWriter fw = new FileWriter(outputFileString);
-            // BufferedWriter bw = new BufferedWriter(fw);
-            // bw.write(text);
-            // bw.close();
-            //
-            // // Calculate outout path
-            // output = URI.createURI(input.toString());
-            // output = output.trimFragment();
-            // output = output.trimFileExtension().appendFileExtension("dependency");
-            //
-            // try {
-            // // Write out Dependency program
-            // Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-            // Map<String, Object> m = reg.getExtensionToFactoryMap();
-            // m.put("daform", new XMIResourceFactoryImpl());
-            // ResourceSet resSet = new ResourceSetImpl();
-            // Resource resource = resSet.createResource(output);
-            // resource.getContents().add(dependencies);
-            // resource.save(Collections.EMPTY_MAP);
-            // } catch (IOException e) {
-            // throw new ExecutionException("Cannot write output file.");
-            // }
-            // }
-
-            // Apply transformation
-            // Because for @Inject tags we cannot use the standard NEW keyword
-            // Synccharts2S transform = new Synccharts2S();
-            // Synccharts2S transform = Guice.createInjector().getInstance(Synccharts2S.class);
-            // Program program = transform.transform(rootRegion);
+            // Transform SyncCharts to S Program
             Program program = new Synccharts2S().transform(rootRegion);
 
-            // Debug output
-            Predicate<EStructuralFeature> ignoredFeatures = Predicates.alwaysFalse();
-            String text = EmfFormatter.objToStr(program, ignoredFeatures);
-            output2 = URI.createURI(input.toString());
-            output2 = output2.trimFragment();
-            output2 = output2.trimFileExtension().appendFileExtension("txt");
-            String outputFileString = getFileStringFromUri(output2);
-            FileWriter fw = new FileWriter(outputFileString);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(text);
-            bw.close();
+//            // Debug output
+//            URI output2 = URI.createURI("");
+//            Predicate<EStructuralFeature> ignoredFeatures = Predicates.alwaysFalse();
+//            String text = EmfFormatter.objToStr(program, ignoredFeatures);
+//            output2 = URI.createURI(input.toString());
+//            output2 = output2.trimFragment();
+//            output2 = output2.trimFileExtension().appendFileExtension("txt");
+//            String outputFileString = getFileStringFromUri(output2);
+//            FileWriter fw = new FileWriter(outputFileString);
+//            BufferedWriter bw = new BufferedWriter(fw);
+//            bw.write(text);
+//            bw.close();
 
-            // Calculate outout path
+            // Calculate output path
             output = URI.createURI(input.toString());
             output = output.trimFragment();
             output = output.trimFileExtension().appendFileExtension("s");
@@ -228,12 +180,16 @@ public class SGenerator implements IHandler {
         return null;
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
     public boolean isEnabled() {
         return true;
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -242,12 +198,15 @@ public class SGenerator implements IHandler {
         return true;
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
     public void removeHandlerListener(final IHandlerListener handlerListener) {
-        // TODO Auto-generated method stub
-
+        // Do nothing
     }
+
+    // -------------------------------------------------------------------------
 
 }

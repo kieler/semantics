@@ -325,9 +325,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     /**
      * Creates the part control2.
-     *
-     * @param parentParam the parent param
-     * @param viewerParam the viewer param
+     * 
+     * @param parentParam
+     *            the parent param
+     * @param viewerParam
+     *            the viewer param
      * @return the kiem table viewer
      */
     public KiemTableViewer createPartControl2(final Composite parentParam,
@@ -354,8 +356,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     /**
      * This will create the columns for the table.
-     *
-     * @param viewerParam the viewer param
+     * 
+     * @param viewerParam
+     *            the viewer param
      */
     public void createColumns(final KiemTableViewer viewerParam) {
         for (int i = 0; i < COLUMN_TITLES.length; i++) {
@@ -381,9 +384,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     /**
      * Refreshes the tables columns an fold/unfold KiemProperties i.e., the value column.
-     *
-     * @param collapsed the collapsed
-     * @param viewerParam the viewer param
+     * 
+     * @param collapsed
+     *            the collapsed
+     * @param viewerParam
+     *            the viewer param
      */
     private void refreshTableColumns(final boolean collapsed, final KiemTableViewer viewerParam) {
         Tree tree = viewerParam.getTree();
@@ -574,8 +579,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * Add components contributed by other plugins through the ToolBarContributor extension point.
      * 
      * @author soh
-     *
-     * @param manager the manager where to add the components
+     * 
+     * @param manager
+     *            the manager where to add the components
      */
     private void addExternalContributions(final IToolBarManager manager) {
         IConfigurationElement[] contributors = Platform.getExtensionRegistry()
@@ -1040,8 +1046,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 if ((obj instanceof KiemProperty)
                         || ((obj instanceof DataComponentWrapper)
                                 && (((DataComponentWrapper) obj).getProperties() != null)
-                                && (((DataComponentWrapper) obj).getProperties().length > 0) 
-                                && (((DataComponentWrapper) obj)
+                                && (((DataComponentWrapper) obj).getProperties().length > 0) && (((DataComponentWrapper) obj)
                                     .isUnfolded()))) {
                     // unfolded - show property headers
                     refreshTableColumns(false, viewerParam);
@@ -1767,6 +1772,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     // currentMaster.masterGUIpause();
                 } else {
                     // otherwise default implementation
+                    kIEMInstance.resetRequestReRun(true);
                     if (kIEMInstance.initExecution()) {
                         kIEMInstance.getExecution().pauseExecutionSync();
                     }
@@ -1804,12 +1810,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 // abortion button implicitly
                 if (kIEMInstance == null || kIEMInstance.isInitializingExecution()) {
                     if (kIEMInstance != null && kIEMInstance.getExecution() != null) {
+                        kIEMInstance.resetRequestReRun(true);
                         kIEMInstance.getExecution().abortExecutionAsync();
                     }
                     if (kIEMInstance != null && kIEMInstance.isInitializingExecution()) {
+                        kIEMInstance.resetRequestReRun(true);
                         kIEMInstance.cancelInitialization();
                     }
-                    kIEMInstance.setExecution(null);
+                    if (kIEMInstance != null) {
+                        kIEMInstance.resetRequestReRun(true);
+                        kIEMInstance.setExecution(null);
+                    }
                     updateView(true);
                 } else if ((KiemPlugin.getDefault().getCurrentMaster() != null)
                         && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
@@ -1821,6 +1832,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
                     (new Thread(new Runnable() {
                         public void run() {
+                            kIEMInstance.resetRequestReRun(true);
                             actionStopExecution();
 
                         }
@@ -1946,6 +1958,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     public void doSave(final IProgressMonitor monitor) {
         KiemPlugin.getDefault().doSave(monitor, this.getViewSite().getShell());
     }
+
     // -------------------------------------------------------------------------
     /**
      * {@inheritDoc}
@@ -1953,6 +1966,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     public void doSaveAs() {
         KiemPlugin.getDefault().doSaveAs(this.getViewSite().getShell());
     }
+
     // -------------------------------------------------------------------------
     /**
      * {@inheritDoc}
@@ -1974,6 +1988,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         KiemPlugin.getDefault().setDirty(isDirtyParam);
         firePropertyChange(IWorkbenchPartConstants.PROP_DIRTY);
     }
+
     // -------------------------------------------------------------------------
     /**
      * {@inheritDoc}
@@ -1981,6 +1996,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     public boolean isSaveAsAllowed() {
         return true;
     }
+
     // -------------------------------------------------------------------------
     /**
      * {@inheritDoc}
@@ -1988,6 +2004,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     public boolean isSaveOnCloseNeeded() {
         return true;
     }
+
     // -------------------------------------------------------------------------
     /**
      * {@inheritDoc}

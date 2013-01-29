@@ -124,16 +124,12 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                     getCorrespondingLayout(attrStateFigure));
         }
         */
-        if (stateFigure instanceof IFigure) {
-            // printChildOverview(stateFigure);
-            IFigure attrStateFigure = (IFigure) stateFigure;
+        // printChildOverview(stateFigure);
 
-            invalidateLabels(stateFigure);
+        invalidateLabels(stateFigure);
 
-            // trigger the actual layout-process
-            doTableLayout(attrStateFigure,
-                    getCorrespondingLayout(attrStateFigure));
-        }
+        // trigger the actual layout-process
+        doTableLayout(stateFigure, getCorrespondingLayout(stateFigure));
     }
 
     /**

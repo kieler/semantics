@@ -25,7 +25,7 @@
 				<transformation
           icon="icons/successor_state.gif"
           keyboardShortcut="M1+R S"
-          menu="true"
+          menu="false"
           name="Add Successor State"
           popup="true"
           popupbar="false"
@@ -39,7 +39,7 @@
 				<transformation
           icon="icons/predecessor_state.gif"
           keyboardShortcut="M1+R P"
-          menu="true"
+          menu="false"
           name="Add Predecessor State"
           popup="true"
           popupbar="true"
@@ -53,7 +53,7 @@
 				<transformation
           icon="icons/choice.gif"
           keyboardShortcut="M1+R C"
-          menu="true"
+          menu="false"
           name="Add Choice"
           popup="true"
           popupbar="true"
@@ -67,7 +67,7 @@
     <transformation
           icon="icons/upgrade.gif"
           keyboardShortcut="M1+R R"
-          menu="true"
+          menu="false"
           name="Add Region"
           popup="true"
           popupbar="true"
@@ -80,7 +80,7 @@
     <transformation
           icon="icons/downgrade.gif"
           keyboardShortcut="M1+R D"
-          menu="true"
+          menu="false"
           name="Remove All Regions"
           popup="true"
           popupbar="true"
@@ -93,7 +93,7 @@
     </transformation>
     <transformation
           icon="icons/default.gif"
-          menu="true"
+          menu="false"
           name="Create State"
           popup="true"
           popupbar="true"
@@ -107,7 +107,7 @@
     <transformation
           icon="icons/connect.gif"
           keyboardShortcut="M1+R W"
-          menu="true"
+          menu="false"
           name="Connect States"
           popup="true"
           popupbar="false"
@@ -121,7 +121,7 @@
     <transformation
           icon="icons/self_loop.gif"
           keyboardShortcut="M1+R O"
-          menu="true"
+          menu="false"
           name="Add Self Loop"
           popup="true"
           popupbar="true"
@@ -134,7 +134,7 @@
     </transformation>
     <transformation
           icon="icons/successor_state.gif"
-          menu="true"
+          menu="false"
           name="Insert State"
           popup="true"
           popupbar="true"
@@ -147,7 +147,7 @@
 				<transformation
           icon="icons/flip.gif"
           keyboardShortcut="M1+R F"
-          menu="true"
+          menu="false"
           name="Flip Transition"
           popup="true"
           popupbar="true"
@@ -160,7 +160,7 @@
     <transformation
           icon="icons/reconnect_target.gif"
           keyboardShortcut="M1+R N"
-          menu="true"
+          menu="false"
           name="Set Transition Target"
           popup="true"
           popupbar="false"
@@ -174,7 +174,7 @@
     <transformation
           icon="icons/reconnect_source.gif"
           keyboardShortcut="M1+R J"
-          menu="true"
+          menu="false"
           name="Set Transition Source"
           popup="true"
           popupbar="false"
@@ -188,7 +188,7 @@
        <transformation
              icon="icons/encapsulate.gif"
              keyboardShortcut="M1+R E"
-             menu="true"
+             menu="false"
              name="Encapsulate Regions"
              popup="true"
              popupbar="true"
@@ -201,7 +201,7 @@
        <transformation
              icon="icons/flatten.gif"
              keyboardShortcut="M1+R X"
-             menu="true"
+             menu="false"
              name="Extract State"
              popup="true"
              popupbar="true"
@@ -213,7 +213,7 @@
        </transformation>
        <transformation
              icon="icons/encapsulate.gif"
-             menu="true"
+             menu="false"
              name="Encapsulate Region"
              popup="true"
              popupbar="true"
@@ -226,7 +226,7 @@
        </transformation>
        <transformation
              icon="icons/flatten.gif"
-             menu="true"
+             menu="false"
              name="Flatten Region"
              popup="true"
              popupbar="true"
@@ -263,11 +263,12 @@
               </transformation>
               <transformation
                     icon="icons/abro.gif"
-                    menu="true"
-                    name="Add ABRO"
+                    menu="false"
+                    name="ABRO"
                     popup="false"
                     popupbar="false"
-                    separated="true"
+                    separated="false"
+                    templates="true"
                     toolbar="false"
                     tooltip="Create an ABRO SyncChart"
                     transformation="addABRO"
@@ -287,7 +288,7 @@
               </transformation>
               <transformation
                     icon="icons/strongAbort.gif"
-                    menu="true"
+                    menu="false"
                     name="Strong abort"
                     popup="true"
                     popupbar="true"
@@ -300,7 +301,7 @@
               </transformation>
               <transformation
                     icon="icons/weakAbort.gif"
-                    menu="true"
+                    menu="false"
                     name="Weak abort"
                     popup="true"
                     popupbar="true"
@@ -313,7 +314,7 @@
               </transformation>
               <transformation
                     icon="icons/normalTermination.gif"
-                    menu="true"
+                    menu="false"
                     name="Normal termination"
                     popup="true"
                     popupbar="true"
@@ -327,7 +328,7 @@
               <transformation
                     icon="icons/initialfinal.png"
                     keyboardShortcut="M1+R T"
-                    menu="true"
+                    menu="false"
                     name="Toggle Initial/Final"
                     popup="true"
                     popupbar="true"

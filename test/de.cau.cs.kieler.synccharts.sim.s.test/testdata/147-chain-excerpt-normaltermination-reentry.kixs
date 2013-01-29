@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4" id="_R">
+  <states id="SyncChart" label="SyncChart">
+    <signals name="I" isInput="true"/>
+    <signals name="O4" isOutput="true"/>
+    <signals name="O5" isOutput="true"/>
+    <regions id="_R0">
+      <states id="Initial" label="Initial" isInitial="true">
+        <outgoingTransitions priority="1" targetState="//@states.0/@regions.0/@states.1"/>
+      </states>
+      <states id="H" label="H" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0 //@states.0/@regions.0/@states.1/@outgoingTransitions.0">
+        <regions id="_R0">
+          <states id="A" label="A" isInitial="true">
+            <outgoingTransitions label="I" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1">
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+            </outgoingTransitions>
+          </states>
+          <states id="B" label="B" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0"/>
+        </regions>
+        <outgoingTransitions label="I / O4" priority="1" targetState="//@states.0/@regions.0/@states.1">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+        </outgoingTransitions>
+        <outgoingTransitions label="/ O5" priority="2" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.2">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.2"/>
+        </outgoingTransitions>
+      </states>
+      <states id="E" label="E" incomingTransitions="//@states.0/@regions.0/@states.1/@outgoingTransitions.1"/>
+    </regions>
+  </states>
+</synccharts:Region>

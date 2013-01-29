@@ -244,7 +244,7 @@
          </command>
          <command
                commandId="de.cau.cs.kieler.kiml.gmf.layoutDiagramFile"
-               label="Layout the Diagram File"
+               label="Layout Without Opening"
                style="push"
                tooltip="Perform layout directly on the diagram file and store the result">
             <visibleWhen
@@ -265,7 +265,7 @@
          </command>
       </menuContribution>
             <menuContribution
-                  locationURI="popup:de.cau.cs.kieler">
+                  locationURI="popup:org.eclipse.ui.popup.any?after=additions">
                <command
                      commandId="de.cau.cs.kieler.core.ui.expandMacroStates"
                      label="Expand Reference Macro-States"

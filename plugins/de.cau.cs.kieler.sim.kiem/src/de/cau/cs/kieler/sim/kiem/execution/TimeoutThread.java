@@ -230,6 +230,7 @@ public class TimeoutThread extends Thread {
                     }
                     
                 } else if (System.currentTimeMillis() > stopTime) {
+                    abortTimeout();
                     // timeout is triggered
                     this.execution.showError(
                             Messages.mErrorTimeoutExecution.replace("%JOBDESCRIPTION",

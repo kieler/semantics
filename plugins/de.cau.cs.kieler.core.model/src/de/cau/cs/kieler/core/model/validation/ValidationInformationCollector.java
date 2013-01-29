@@ -268,7 +268,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
             for (String key : validateActions.keySet()) {
                 Object o = validateActions.get(key);
 
-                if (o != null && o instanceof List<?>) {
+                if (o instanceof List<?>) {
                     @SuppressWarnings("unchecked")
                     List<IValidationActionFactory> list = (List<IValidationActionFactory>) o;
 
@@ -302,7 +302,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         for (String key : validateActions.keySet()) {
             Object o = validateActions.get(key);
 
-            if (o != null && o instanceof List<?>) {
+            if (o instanceof List<?>) {
                 @SuppressWarnings("unchecked")
                 List<IValidationActionFactory> factories = (List<IValidationActionFactory>) o;
 
@@ -355,7 +355,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     private static boolean hasValidateActionForKey(final String key) {
         Object o = validateActions.get(key);
 
-        if (o != null && o instanceof List<?>) {
+        if (o instanceof List<?>) {
             @SuppressWarnings("unchecked")
             List<IValidationActionFactory> factories = (List<IValidationActionFactory>) o;
 
@@ -381,7 +381,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         for (String key : checkfiles.keySet()) {
             Object o = checkfiles.get(key);
 
-            if (o != null && o instanceof Map<?, ?>) {
+            if (o instanceof Map<?, ?>) {
                 @SuppressWarnings("unchecked")
                 Map<String, CheckfileDefinition> map = (Map<String, CheckfileDefinition>) o;
 

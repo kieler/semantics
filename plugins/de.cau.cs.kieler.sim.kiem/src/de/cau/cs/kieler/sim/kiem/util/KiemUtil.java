@@ -508,7 +508,6 @@ public final class KiemUtil {
             IEditorPart editor = KiemPlugin.getOpenedModelEditors().get(currentModelPath);
             if (editor != null) {
                 editorSite = editor.getEditorSite();
-
             }
         }
         return editorSite;

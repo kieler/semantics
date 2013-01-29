@@ -17,9 +17,12 @@ import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
-import org.eclipse.papyrus.diagram.statemachine.UmlStateMachineDiagramForMultiEditor;
+import org.eclipse.papyrus.uml.diagram.statemachine.UmlStateMachineDiagramForMultiEditor;
+//import org.eclipse.papyrus.uml.diagram.statemachine.UmlStateMachineDiagramForMultiEditor;
+//import org.eclipse.papyrus.diagram.statemachine.UmlStateMachineDiagramForMultiEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
@@ -62,8 +65,7 @@ public class StateMachineCombination extends AbstractCombination {
                     "The color to use for highlighting previously active states",
                     ColorConstants.blue.getRGB()),
             new CombinationParameter<Boolean>(BW_MODE, getPreferenceStore(), "Black && White",
-                    "Dashed lines for active states, dotted lines for history states.", false)
-    };
+                    "Dashed lines for active states, dotted lines for history states.", false) };
 
     /**
      * Execute this combination using the active states state.
@@ -72,7 +74,8 @@ public class StateMachineCombination extends AbstractCombination {
      *            the active states
      */
     public void execute(final ActiveStates activeStates) {
-        if (!(activeStates.getDiagramEditor() instanceof UmlStateMachineDiagramForMultiEditor)) {
+        Object umlStateMachineDiagramEditor = activeStates.getDiagramEditor();
+        if (!(umlStateMachineDiagramEditor instanceof UmlStateMachineDiagramForMultiEditor)) {
             return;
         }
         undoRecordedEffects();
@@ -81,17 +84,22 @@ public class StateMachineCombination extends AbstractCombination {
             return;
         }
 
+        DiagramEditor diagramEditor = null;
+        if (umlStateMachineDiagramEditor instanceof DiagramEditor) {
+            diagramEditor = (DiagramEditor) umlStateMachineDiagramEditor;
+        }
+
+        int numOfStates = activeStates.getActiveStates().size();
+
         // these were most recently active i steps ago
         for (int i = 0; i < activeStates.getActiveStates().size(); i++) {
             List<EObject> currentStep = activeStates.getActiveStates().get(i);
             for (EObject e : currentStep) {
                 if (isBW()) {
-                    schedule(new HighlightEffect(e, activeStates.getDiagramEditor(), getColor(i,
-                            activeStates.getActiveStates().size()), (i == 0 ? SWT.LINE_DOT
-                            : SWT.LINE_DASH)));
+                    schedule(new HighlightEffect(e, diagramEditor, getColor(i, numOfStates),
+                            (i == 0 ? SWT.LINE_DOT : SWT.LINE_DASH)));
                 } else {
-                    schedule(new HighlightEffect(e, activeStates.getDiagramEditor(), getColor(i,
-                            activeStates.getActiveStates().size())));
+                    schedule(new HighlightEffect(e, diagramEditor, getColor(i, numOfStates)));
                 }
             }
         }

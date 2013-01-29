@@ -22,7 +22,7 @@
             id="de.cau.cs.kieler.synccharts.presentation.SyncchartsModelWizardID"
             name="%_UI_SyncchartsModelWizard_label"
             class="de.cau.cs.kieler.synccharts.presentation.SyncchartsModelWizard"
-            category="de.cau.cs.kieler"
+            category="de.cau.cs.kieler.synccharts"
             icon="icons/full/obj16/SyncchartsModelFile.gif">
          <description>%_UI_SyncchartsModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>

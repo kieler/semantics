@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            category="de.cau.cs.kieler"
+            category="de.cau.cs.kieler.sim"
             class="de.cau.cs.kieler.sim.table.views.DataTableView"
             icon="icons/tableIcon.png"
             id="de.cau.cs.kieler.sim.table.view"

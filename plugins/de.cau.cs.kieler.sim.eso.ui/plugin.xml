@@ -50,7 +50,7 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-              category="de.cau.cs.kieler"
+              category="de.cau.cs.kieler.sim"
               class="de.cau.cs.kieler.sim.eso.ui.EsoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
               id="de.cau.cs.kieler.sim.eso.Eso"
               name="ESO">

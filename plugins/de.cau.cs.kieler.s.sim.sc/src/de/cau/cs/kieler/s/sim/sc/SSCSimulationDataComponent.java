@@ -39,7 +39,6 @@ import org.json.JSONObject;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
@@ -54,6 +53,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
+// TODO: Auto-generated Javadoc
 /**
  * The SimulationDataComponent for simulating S code with and without visualization.
  * 
@@ -79,38 +79,81 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
     /** A flag indicating that debug console output is generated and should be handled. */
     private boolean debugConsole = true;
 
+    /** The benchmark flag for generating cycle and file size signals. */
+    private boolean benchmark = false;
+
     /** A separate tick counter that is computed for the SC debug console as a reference. */
     private long computedTick = 1;
 
     /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
     private static final int NUMBER_OF_TASKS = 10;
 
-    /** The estimated maximum buffer size (string length) used for a pure signal. */
-    private static final int PURE_SIGNAL_BUFFER_CONSTANT = 21;
-
-    /** The estimated maximum buffer size (string length)used for a valued signal. */
-    private static final int VALUED_SIGNAL_BUFFER_CONSTANT = 100;
-
-    /** The minimal buffer size for the communicating buffer of the running SC program. */
-    private static final double MINIMAL_BUFFER_SIZE = 2048;
-
     // The KIEM_PROPERTY constants
+    /** The Constant KIEM_PROPERTY_NAME_STATEMENTNAME. */
     private static final String KIEM_PROPERTY_NAME_STATEMENTNAME = "Statement Name";
+
+    /** The Constant KIEM_PROPERTY_NAME_CCOMPILER. */
     private static final String KIEM_PROPERTY_NAME_CCOMPILER = "SC-Compiler";
+
+    /** The Constant KIEM_PROPERTY_NAME_FULLDEBUGMODE. */
     private static final String KIEM_PROPERTY_NAME_FULLDEBUGMODE = "Full Debug Mode";
+
+    /** The Constant KIEM_PROPERTY_NAME_BENCHMARK. */
+    private static final String KIEM_PROPERTY_NAME_BENCHMARK = "Benchmark Mode";
+
+    /** The Constant KIEM_PROPERTY_NAME_SCL. */
+    private static final String KIEM_PROPERTY_NAME_SCL = "SCL (SC Light)";
+
+    /** The Constant KIEM_PROPERTY_NAME_SCDEBUGCONSOLE. */
     private static final String KIEM_PROPERTY_NAME_SCDEBUGCONSOLE = "SC Debug Console";
+
+    /** The Constant KIEM_PROPERTY_NAME_ALTERNATIVESYNTAX. */
     private static final String KIEM_PROPERTY_NAME_ALTERNATIVESYNTAX = "Alternative SC Syntax";
+
+    /** The Constant KIEM_PROPERTY_DEFAULT_STATEMENTNAME. */
     private static final String KIEM_PROPERTY_DEFAULT_STATEMENTNAME = "statement";
+
+    /** The Constant KIEM_PROPERTY_DEFAULT_CCOMPILER. */
     private static final String KIEM_PROPERTY_DEFAULT_CCOMPILER = "gcc";
+
+    /** The Constant KIEM_PROPERTY_DEFAULT_SCDEBUGCONSOLE. */
     private static final boolean KIEM_PROPERTY_DEFAULT_SCDEBUGCONSOLE = true;
+
+    /** The Constant KIEM_PROPERTY_DEFAULT_ALTERNATIVESYNTAX. */
     private static final boolean KIEM_PROPERTY_DEFAULT_ALTERNATIVESYNTAX = false;
+
+    /** The Constant KIEM_PROPERTY_DEFAULT_FULLDEBUGMODE. */
     private static final boolean KIEM_PROPERTY_DEFAULT_FULLDEBUGMODE = true;
+
+    /** The Constant KIEM_PROPERTY_DEFAULT_BENCHMARK. */
+    private static final boolean KIEM_PROPERTY_DEFAULT_BENCHMARK = false;
+
+    /** The Constant KIEM_PROPERTY_DEFAULT_SCL. */
+    private static final boolean KIEM_PROPERTY_DEFAULT_SCL = false;
+
+    /** The Constant KIEM_PROPERTY_STATEMENTNAME. */
     private static final int KIEM_PROPERTY_STATEMENTNAME = 0;
+
+    /** The Constant KIEM_PROPERTY_CCOMPILER. */
     private static final int KIEM_PROPERTY_CCOMPILER = 1;
+
+    /** The Constant KIEM_PROPERTY_FULLDEBUGMODE. */
     private static final int KIEM_PROPERTY_FULLDEBUGMODE = 2;
-    private static final int KIEM_PROPERTY_SCDEBUGCONSOLE = 3;
-    private static final int KIEM_PROPERTY_ALTERNATIVESYNTAX = 4;
-    private static final int KIEM_PROPERTY_MAX = 5;
+
+    /** The Constant KIEM_PROPERTY_BENCHMARK. */
+    private static final int KIEM_PROPERTY_BENCHMARK = 3;
+
+    /** The Constant KIEM_PROPERTY_SCDEBUGCONSOLE. */
+    private static final int KIEM_PROPERTY_SCDEBUGCONSOLE = 4;
+
+    /** The Constant KIEM_PROPERTY_ALTERNATIVESYNTAX. */
+    private static final int KIEM_PROPERTY_ALTERNATIVESYNTAX = 5;
+
+    /** The Constant KIEM_PROPERTY_SCL. */
+    private static final int KIEM_PROPERTY_SCL = 6;
+
+    /** The Constant KIEM_PROPERTY_MAX. */
+    private static final int KIEM_PROPERTY_MAX = 7;
 
     // -------------------------------------------------------------------------
 
@@ -135,6 +178,17 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      */
     public void initialize() throws KiemInitializationException {
         // do nothing
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the SC execution.
+     * 
+     * @return the sC execution
+     */
+    public SCExecution getSCExecution() {
+        return scExecution;
     }
 
     // -------------------------------------------------------------------------
@@ -181,37 +235,52 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                     // First add auxiliary signals
                     for (int i = 0; i < sSignalOutputArray.length(); i++) {
                         String sSignalOutputName = sSignalOutputArray.getString(i);
-                        boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput
-                                .getJSONObject(sSignalOutputName));
+                        if (sSignalOutput.get(sSignalOutputName) instanceof JSONObject) {
+                            boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput
+                                    .getJSONObject(sSignalOutputName));
 
-                        // Test if the output variable is an auxiliary signal
-                        // that is only there to mark the current S statement
-                        // in full_simulation mode of the simulator.
-                        //
-                        // These auxiliary signals must be encapsulated in a state variable.
-                        if (sSignalOutputName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)
-                                && sSignalIsPresent) {
-                            try {
-                                String statementWithoutAuxiliaryVariableTag = sSignalOutputName
-                                        .substring(SSimSCPlugin.AUXILIARY_VARIABLE_TAG.length());
+                            // Test if the output variable is an auxiliary signal
+                            // that is only there to mark the current S statement
+                            // in full_simulation mode of the simulator.
+                            //
+                            // These auxiliary signals must be encapsulated in a state variable.
+                            if (sSignalOutputName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)
+                                    && sSignalIsPresent) {
+                                try {
+                                    String statementWithoutAuxiliaryVariableTag = sSignalOutputName
+                                            .substring(SSimSCPlugin.AUXILIARY_VARIABLE_TAG.length());
 
-                                // Insert a "," if not the first statement
-                                if (activeStatementsBuf.length() != 0) {
-                                    activeStatementsBuf.append(",");
+                                    // Insert a "," if not the first statement
+                                    if (activeStatementsBuf.length() != 0) {
+                                        activeStatementsBuf.append(",");
+                                    }
+
+                                    activeStatementsBuf
+                                            .append(statementWithoutAuxiliaryVariableTag);
+
+                                } catch (Exception e) {
+                                    // ignore error
+                                    e.printStackTrace();
                                 }
 
-                                activeStatementsBuf.append(statementWithoutAuxiliaryVariableTag);
-
-                            } catch (Exception e) {
-                                // ignore error
-                                e.printStackTrace();
                             }
-
                         }
-
                     }
                 }
                 activeStatements = activeStatementsBuf.toString();
+
+                if (this.benchmark) {
+                    if (sSignalOutput.has(SCExecution.BENCHMARK_SIGNAL_CYCLES)) {
+                        Object bench = sSignalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
+                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
+
+                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_SOURCE,
+                                this.scExecution.getSourceFileSize());
+                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_EXECUTABLE,
+                                this.scExecution.getExecutableFileSize());
+
+                    }
+                }
 
                 // Then add normal output signals
                 for (String outputSignal : outputSignalList) {
@@ -293,10 +362,14 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                 compilerFile, KIEM_PROPERTY_DEFAULT_CCOMPILER);
         properties[KIEM_PROPERTY_FULLDEBUGMODE] = new KiemProperty(
                 KIEM_PROPERTY_NAME_FULLDEBUGMODE, KIEM_PROPERTY_DEFAULT_FULLDEBUGMODE);
+        properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK,
+                KIEM_PROPERTY_DEFAULT_BENCHMARK);
         properties[KIEM_PROPERTY_ALTERNATIVESYNTAX] = new KiemProperty(
                 KIEM_PROPERTY_NAME_ALTERNATIVESYNTAX, KIEM_PROPERTY_DEFAULT_ALTERNATIVESYNTAX);
         properties[KIEM_PROPERTY_SCDEBUGCONSOLE] = new KiemProperty(
                 KIEM_PROPERTY_NAME_SCDEBUGCONSOLE, KIEM_PROPERTY_DEFAULT_SCDEBUGCONSOLE);
+        properties[KIEM_PROPERTY_SCL] = new KiemProperty(KIEM_PROPERTY_NAME_SCL,
+                KIEM_PROPERTY_DEFAULT_SCL);
 
         return properties;
     }
@@ -325,7 +398,10 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         // get active editor
         doModel2ModelTransform(monitor, (Program) this.getModelRootElement(),
                 this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
-                        .getValueAsBoolean(), this.getProperties()[KIEM_PROPERTY_SCDEBUGCONSOLE
+                        .getValueAsBoolean(), this.getProperties()[KIEM_PROPERTY_BENCHMARK
+                        + KIEM_PROPERTY_DIFF].getValueAsBoolean(),
+                this.getProperties()[KIEM_PROPERTY_SCDEBUGCONSOLE + KIEM_PROPERTY_DIFF]
+                        .getValueAsBoolean(), this.getProperties()[KIEM_PROPERTY_SCL
                         + KIEM_PROPERTY_DIFF].getValueAsBoolean());
     }
 
@@ -335,8 +411,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final Program model,
-            final boolean debug, final boolean debugConsoleParam)
-            throws KiemInitializationException {
+            final boolean debug, final boolean benchmarkParam, final boolean debugConsoleParam,
+            final boolean scl) throws KiemInitializationException {
         this.myModel = model;
         monitor.begin("S Simulation", NUMBER_OF_TASKS);
 
@@ -403,42 +479,26 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 
-            // Calculate buffersize for SC program
-            int bufferSizeInt = 0;
-            for (Signal signal : transformedProgram.getSignals()) {
-                if (signal.getType() == ValueType.PURE) {
-                    bufferSizeInt += signal.getName().length() + PURE_SIGNAL_BUFFER_CONSTANT;
-                } else {
-                    bufferSizeInt += signal.getName().length() + VALUED_SIGNAL_BUFFER_CONSTANT;
-                }
-            }
-            double log = Math.ceil(Math.log(bufferSizeInt) / Math.log(2));
-            double bufferSizeDouble = Math.ceil(Math.pow(2, log + 1));
-            if (bufferSizeDouble < MINIMAL_BUFFER_SIZE) {
-                bufferSizeDouble = MINIMAL_BUFFER_SIZE;
-            }
-            String bufferSize = bufferSizeDouble + "";
-            bufferSize = bufferSize.substring(0, bufferSize.lastIndexOf('.'));
-
             // Check whether alternative SC syntax is requested
             boolean alternativeSyntax = this.getProperties()[KIEM_PROPERTY_ALTERNATIVESYNTAX
                     + KIEM_PROPERTY_DIFF].getValueAsBoolean();
 
             // Check whether SC compilation should generate additional debug output
             debugConsole = debugConsoleParam;
+            benchmark = benchmarkParam;
 
             // Generate SC code
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder, bufferSize,
+            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder,
                     alternativeSyntax);
 
             // Compile
-            scExecution = new SCExecution(outputFolder);
+            scExecution = new SCExecution(outputFolder, benchmark);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(scOutputString);
-            scExecution.compile(generatedSCFiles, debugConsole);
+            scExecution.compile(generatedSCFiles, debugConsole, scl);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);

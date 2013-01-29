@@ -1,0 +1,48 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+Itrig 
+% Output: O 
+;
+
+% Output: 
+;
+Otrig 
+% Output: O2 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+Itrig Otrig 
+% Output: O O2 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+! reset;
+Itrig Otrig 
+% Output: 
+;
+Itrig Otrig 
+% Output: O O2 
+;
+Itrig Otrig 
+% Output: 
+;
