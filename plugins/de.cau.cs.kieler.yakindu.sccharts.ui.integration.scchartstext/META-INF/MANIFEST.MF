@@ -1,12 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: SCCharts Text Integration
+Bundle-Name: Scctext
 Bundle-SymbolicName: de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.ui;bundle-version="0.1.0"
+ de.cau.cs.kieler.yakindu.sccharts.model.scchartstext.ui;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext,
  org.eclipse.xtext.ui.editor.contentassist.antlr,
@@ -16,4 +16,3 @@ Import-Package: de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext,
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext,
  de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext.modules
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

@@ -13,12 +13,10 @@ import org.yakindu.sct.model.stext.naming.StextNameProvider;
 import org.yakindu.sct.model.stext.scoping.STextGlobalScopeProvider;
 import org.yakindu.sct.model.stext.validation.ITypeInferrer;
 import org.yakindu.sct.model.stext.validation.TypeInferrer;
-
 //import org.yakindu.sct.model.stext.scoping.NamespaceLocalScopeResolver;
 
 /**
- * Use this class to register components to be used at runtime / without the
- * Equinox extension registry.
+ * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class SCChartsExpRuntimeModule extends AbstractSCChartsExpRuntimeModule {
 
@@ -26,7 +24,7 @@ public class SCChartsExpRuntimeModule extends AbstractSCChartsExpRuntimeModule {
 		super.bindIGlobalScopeProvider();
 		return STextGlobalScopeProvider.class;
 	}
-
+	
 	@Override
 	public Class<? extends ILinker> bindILinker() {
 		return SCTLinker.class;
@@ -41,14 +39,22 @@ public class SCChartsExpRuntimeModule extends AbstractSCChartsExpRuntimeModule {
 	public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
 		return StextValueConverterService.class;
 	}
-
-	public Class<? extends ITypeSystemAccess> bindITypeSystemAccess() {
+	
+	public Class<? extends ITypeSystemAccess> bindITypeSystemAccess(){
 		return BaseTypeSystemAccessImpl.class;
 	}
-
-	public Class<? extends ITypeInferrer> bindITypeInferrer() {
-		// return TypeInferrer.class;
+	
+	public Class<? extends ITypeInferrer> bindITypeInferrer(){
 		return TypeInferrer.class;
 	}
-
+	
+	
+//	// contributed by
+//	// org.eclipse.xtext.generator.scoping.AbstractScopingFragment
+//	public void configureIScopeProviderDelegate(Binder binder) {
+//		binder.bind(IScopeProvider.class)
+//				.annotatedWith(
+//						Names.named(AbstractDeclarativeScopeProvider.NAMED_DELEGATE))
+//				.to(NamespaceLocalScopeResolver.class);
+//	}
 }
