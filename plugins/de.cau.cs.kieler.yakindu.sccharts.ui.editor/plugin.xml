@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 
-<!--
--->
-
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
@@ -20,6 +17,7 @@
             contributorClass="org.yakindu.sct.ui.editor.editor.StatechartDiagramActionbarContributor"
             default="true"
             extensions="scc"
+            icon="icons/obj16/logo-16.png"
             id="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor"
             matchingStrategy="org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditorMatchingStrategy"
             name="KIELER SCCharts Editor">
@@ -32,11 +30,13 @@
       <wizard
             category="KIELER"
             class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerExecutableExtensionFactory:org.yakindu.sct.ui.editor.wizards.CreationWizard"
+            icon="icons/obj16/Statechart-Pictogram-16.png"
             id="de.cau.cs.kieler.yakindu.sccharts.ui.editor.KielerWizard"
             name="KIELER SCCharts Model"
             project="false">
       </wizard>
    </extension>
+   
    <!-- Palette Provider -->
     <extension
          point="org.eclipse.gmf.runtime.diagram.ui.paletteProviders">
@@ -53,17 +53,17 @@
 
 	<extension point="org.yakindu.sct.ui.editor.expressions">
 		<ExpressionLanguageProvider
-			class="de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext.TransitionExpressionProvider"
+			class="de.cau.cs.kieler.yakindu.sccharts.ui.integration.stext.TransitionExpressionProvider"
 			resourceExtension="scc"
 			semanticTarget="TransitionSpecification">
 		</ExpressionLanguageProvider>
 		<ExpressionLanguageProvider
-			class="de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext.StatechartExpressionProvider"
+			class="de.cau.cs.kieler.yakindu.sccharts.ui.integration.stext.StatechartExpressionProvider"
 			resourceExtension="scc"
 			semanticTarget="StatechartSpecification">
 		</ExpressionLanguageProvider>
 	 	<ExpressionLanguageProvider
-			class="de.cau.cs.kieler.yakindu.sccharts.ui.integration.scchartstext.StateExpressionProvider"
+			class="de.cau.cs.kieler.yakindu.sccharts.ui.integration.stext.StateExpressionProvider"
 			resourceExtension="scc"
 			semanticTarget="StateSpecification">
 			</ExpressionLanguageProvider>
