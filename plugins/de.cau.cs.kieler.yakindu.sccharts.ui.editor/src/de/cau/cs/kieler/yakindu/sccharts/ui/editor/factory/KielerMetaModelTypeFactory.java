@@ -18,8 +18,9 @@ public class KielerMetaModelTypeFactory extends StatechartMetaModelTypeFactory {
 	public static final String WEAK_TRANSITION_ID = "de.cau.cs.kieler.yakindu.sccharts.ui.editor.weaktransition";
 
 	public static final String SYNC_STATE_ID = "de.cau.cs.kieler.yakindu.sccharts.ui.editor.state";
+	public static final String SYNC_INITIAL_STATE_ID = "de.cau.cs.kieler.yakindu.sccharts.ui.editor.initialstate";
+	public static final String SYNC_FINAL_STATE_ID = "de.cau.cs.kieler.yakindu.sccharts.ui.editor.finalstate";
 
-	
 	@Inject
 	private Provider<SyncTransitionEditHelper> transitionEditHelper;
 
@@ -34,25 +35,33 @@ public class KielerMetaModelTypeFactory extends StatechartMetaModelTypeFactory {
 
 	private void registerSyncState(IMetaModelTypeAcceptor acceptor) {
 		acceptor.accept(new HintedMetamodelType(SYNC_STATE_ID,
-				getUrlFromPlugin("icons/obj16/State-16.png"),
-				"SyncState", SyncgraphPackage.Literals.SYNC_STATE,
+				getUrlFromPlugin("icons/obj16/State-16.png"), "State",
+				SyncgraphPackage.Literals.SYNC_STATE, stateEditHelper.get(),
+				SemanticHints.STATE));
+		acceptor.accept(new HintedMetamodelType(SYNC_INITIAL_STATE_ID,
+				getUrlFromPlugin("icons/obj16/Initial-State-16.png"),
+				"Initial State", SyncgraphPackage.Literals.SYNC_STATE,
+				stateEditHelper.get(), SemanticHints.STATE));
+		acceptor.accept(new HintedMetamodelType(SYNC_FINAL_STATE_ID,
+				getUrlFromPlugin("icons/obj16/Final-State-16.png"),
+				"Final State", SyncgraphPackage.Literals.SYNC_STATE,
 				stateEditHelper.get(), SemanticHints.STATE));
 	}
 
 	protected void registerSyncTransition(IMetaModelTypeAcceptor acceptor) {
 		acceptor.accept(new HintedMetamodelType(NORMAL_TRANSITION_ID,
 				getUrlFromPlugin("icons/obj16/transition-normal-16.png"),
-				"SyncTransition", SyncgraphPackage.Literals.SYNC_TRANSITION,
+				"Noraml Termination Transition", SyncgraphPackage.Literals.SYNC_TRANSITION,
 				transitionEditHelper.get(), SemanticHints.TRANSITION));
 
 		acceptor.accept(new HintedMetamodelType(STRONG_TRANSITION_ID,
 				getUrlFromPlugin("icons/obj16/transition-strong-16.png"),
-				"SyncTransition", SyncgraphPackage.Literals.SYNC_TRANSITION,
+				"Strong Abortion Transition", SyncgraphPackage.Literals.SYNC_TRANSITION,
 				transitionEditHelper.get(), SemanticHints.TRANSITION));
 
 		acceptor.accept(new HintedMetamodelType(WEAK_TRANSITION_ID,
 				getUrlFromPlugin("icons/obj16/transition-weak-16.png"),
-				"SyncTransition", SyncgraphPackage.Literals.SYNC_TRANSITION,
+				"Weak Abortion Transition", SyncgraphPackage.Literals.SYNC_TRANSITION,
 				transitionEditHelper.get(), SemanticHints.TRANSITION));
 	}
 

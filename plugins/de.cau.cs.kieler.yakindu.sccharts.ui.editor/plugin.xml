@@ -20,7 +20,7 @@
             contributorClass="org.yakindu.sct.ui.editor.editor.StatechartDiagramActionbarContributor"
             default="true"
             extensions="scc"
-            id="de.cau.cs.kieler.yakindu.sccharts.ui.editor.SCChartsEditor"
+            id="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor"
             matchingStrategy="org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditorMatchingStrategy"
             name="KIELER SCCharts Editor">
       </editor>

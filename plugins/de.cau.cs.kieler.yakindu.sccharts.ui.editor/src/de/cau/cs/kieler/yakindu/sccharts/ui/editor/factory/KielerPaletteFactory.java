@@ -1,6 +1,7 @@
 package de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory;
 
 import org.eclipse.gef.palette.PaletteContainer;
+import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.PaletteStack;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.yakindu.sct.ui.editor.providers.DefaultSCTPaletteFactory;
@@ -8,6 +9,16 @@ import org.yakindu.sct.ui.editor.providers.DefaultSCTPaletteFactory;
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.Activator;
 
 public class KielerPaletteFactory extends DefaultSCTPaletteFactory {
+
+	public void createPaletteEntries(PaletteRoot root) {
+		PaletteContainer container = createToolsCategory(root);
+		createTransitionEntry(container);
+		createStateEntry(container);
+		createInitialStateEntry(container);
+		createFinalStateEntry(container);
+		createRegionEntry(container);
+		createChoiceEntry(container);
+	}
 
 	@Override
 	protected void createTransitionEntry(PaletteContainer container) {
@@ -36,11 +47,28 @@ public class KielerPaletteFactory extends DefaultSCTPaletteFactory {
 
 	@Override
 	protected void createStateEntry(PaletteContainer container) {
-		container.add(new CreationToolEntry("SCC State",
-				"Creates a SyncCharts state",
+		container.add(new CreationToolEntry("State", "Creates a state",
 				getType(KielerMetaModelTypeFactory.SYNC_STATE_ID),
 				findIcon("icons/obj16/State-16.png"),
 				findIcon("icons/obj32/State-32.png")));
+	}
+
+	@Override
+	protected void createInitialStateEntry(PaletteContainer container) {
+		container.add(new CreationToolEntry("Initial State",
+				"Creates an initial state",
+				getType(KielerMetaModelTypeFactory.SYNC_INITIAL_STATE_ID),
+				findIcon("icons/obj16/Initial-State-16.png"),
+				findIcon("icons/obj32/Initial-State-32.png")));
+	}
+
+	@Override
+	protected void createFinalStateEntry(PaletteContainer container) {
+		container.add(new CreationToolEntry("Final State",
+				"Creates a final state",
+				getType(KielerMetaModelTypeFactory.SYNC_FINAL_STATE_ID),
+				findIcon("icons/obj16/Final-State-16.png"),
+				findIcon("icons/obj32/Final-State-32.png")));
 	}
 
 	private ImageDescriptor findIcon(String iconPath) {

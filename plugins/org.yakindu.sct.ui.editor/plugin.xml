@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<!-- Extension Points -->
+	
+   <extension-point id="expressions" name="org.yakindu.sct.ui.editor.expressions" schema="schema/expressions.exsd"/>
+  
+    <!-- Editor -->
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.yakindu.sct.ui.editor.factories.SCTExecutableExtensionFactory:org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor"
+            contributorClass="org.yakindu.sct.ui.editor.editor.StatechartDiagramActionbarContributor"
+            default="true"
+            extensions="sct"
+            icon="icons/obj16/logo-16.png"
+            id="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor"
+            matchingStrategy="org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditorMatchingStrategy"
+            name="YAKINDU Statechart Editor">
+      </editor>
+   </extension>
+   <!-- Contribution Item Provider -->
+   <extension point="org.eclipse.gmf.runtime.common.ui.services.action.contributionItemProviders">
+      <contributionItemProvider
+            class="org.eclipse.gmf.runtime.diagram.ui.providers.DiagramContributionItemProvider"
+            checkPluginLoaded="false">
+         <Priority name="Low"/>
+         <popupContribution class="org.eclipse.gmf.runtime.diagram.ui.providers.DiagramContextMenuProvider">
+            <popupStructuredContributionCriteria objectClass="org.yakindu.sct.ui.editor.editparts.StatechartTextEditPart"/>
+            <popupStructuredContributionCriteria objectClass="org.yakindu.sct.ui.editor.editparts.StatechartTextExpressionEditPart"/>
+            <popupPredefinedItem id="editGroup" remove="true"/>
+         </popupContribution>
+      </contributionItemProvider>
+   </extension>
+   
+  <!-- View Provider -->
+   
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.core.viewProviders">
+      <viewProvider
+            class="org.yakindu.sct.ui.editor.providers.StatechartDiagramViewProvider">
+         <Priority
+               name="Highest">
+         </Priority>
+      </viewProvider>
+   </extension>
+   <!--New File Wizard -->
+   <extension
+         point="org.eclipse.ui.newWizards">
+     <category id="YAKINDU" name="Yakindu"/>
+      <wizard
+            category="YAKINDU"
+            class="org.yakindu.sct.ui.editor.factories.SCTExecutableExtensionFactory:org.yakindu.sct.ui.editor.wizards.CreationWizard"
+            icon="icons/obj16/logo-16.png"
+            id="org.yakindu.sct.ui.editor.StatechartDiagramWizard"
+            name="YAKINDU Statechart Model"
+            project="false">
+      </wizard>
+   </extension>
+   <!-- Palette Provider -->
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.paletteProviders">
+      <paletteProvider
+            class="org.yakindu.sct.ui.editor.factories.SCTExecutableExtensionFactory:org.yakindu.sct.ui.editor.providers.SCTPaletteProvider">
+             <Priority
+               name="Medium">
+         </Priority>
+         <editor
+               class="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor">
+         </editor>
+      </paletteProvider>
+   </extension>
+ <!-- Modeling Assistant Provider -->
+   <extension
+         point="org.eclipse.gmf.runtime.emf.ui.modelingAssistantProviders">
+      <modelingAssistantProvider
+            class="org.yakindu.sct.ui.editor.factories.SCTExecutableExtensionFactory:org.yakindu.sct.ui.editor.assistent.SCTModelingAssistantProvider">
+         <Priority
+               name="Medium">
+         </Priority>
+      </modelingAssistantProvider>
+   </extension>
+<!-- Property Tabs -->
+<extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor" id="prop-contrib">
+      <propertyContributor
+            contributorId="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor"
+            labelProvider="org.yakindu.sct.ui.editor.propertysheets.SheetLabelProvider">
+         <propertyCategory category="domain"/>
+         <propertyCategory category="visual"/>
+         <propertyCategory category="extra"/>
+      </propertyContributor>
+   </extension>
+
+ <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="proptabs">
+      <propertyTabs contributorId="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor">
+          <propertyTab
+             category="domain"
+             id="property.tab.domain"
+             label="Model"/>
+          <propertyTab
+             category="visual"
+             id="property.tab.AppearancePropertySection"
+             label="Appearance"/>
+          <propertyTab
+             category="visual"
+             id="property.tab.DiagramPropertySection"
+             label="Diagram"/>
+      </propertyTabs>
+   </extension>  
+   
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="propsections">
+      <propertySections contributorId="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor">
+		<!-- State model section -->         
+         <propertySection
+            id="property.section.domain.state" 
+            tab="property.tab.domain"
+            class="org.yakindu.sct.ui.editor.propertysheets.StatePropertySection">
+           <input type="org.yakindu.sct.ui.editor.editparts.StateEditPart"/>
+           <input type="org.yakindu.sct.ui.editor.editparts.StateNameEditPart"/>
+           <input type="org.yakindu.sct.ui.editor.editparts.StateTextCompartmentEditPart"/>
+           <input type="org.yakindu.sct.ui.editor.editparts.StateTextCompartmentExpressionEditPart"/>
+         </propertySection>
+        <!-- Statechart model section -->         
+         <propertySection
+            id="property.section.domain.statechart" 
+            tab="property.tab.domain"
+            class="org.yakindu.sct.ui.editor.propertysheets.StatechartPropertySection">
+            <input type="org.yakindu.sct.ui.editor.editparts.StatechartNameEditPart"/>
+            <input type="org.yakindu.sct.ui.editor.editparts.StatechartTextEditPart"/>
+            <input type="org.yakindu.sct.ui.editor.editparts.StatechartTextExpressionEditPart"/>
+         </propertySection>
+        <!-- Transition model section -->         
+         <propertySection
+            id="property.section.domain.transition" 
+            tab="property.tab.domain"
+            class="org.yakindu.sct.ui.editor.propertysheets.TransitionPropertySection">
+            <input type="org.yakindu.sct.ui.editor.editparts.TransitionEditPart"/>
+               <input type="org.yakindu.sct.ui.editor.editparts.TransitionExpressionEditPart"/>
+         </propertySection>
+           <!-- Entry model section -->         
+         <propertySection
+            id="property.section.domain.entry" 
+            tab="property.tab.domain"
+            class="org.yakindu.sct.ui.editor.propertysheets.EntryPropertySection">
+            <input type="org.yakindu.sct.ui.editor.editparts.EntryEditPart"/>
+         </propertySection>
+            <!-- Exit model section -->         
+         <propertySection
+            id="property.section.domain.exit" 
+            tab="property.tab.domain"
+            class="org.yakindu.sct.ui.editor.propertysheets.ExitPropertySection">
+            <input type="org.yakindu.sct.ui.editor.editparts.ExitEditPart"/>
+         </propertySection>
+            <!-- Region model section -->         
+         <propertySection
+            id="property.section.domain.region" 
+            tab="property.tab.domain"
+            class="org.yakindu.sct.ui.editor.propertysheets.RegionPropertySection">
+            <input type="org.yakindu.sct.ui.editor.editparts.RegionEditPart"/>
+         </propertySection>
+            <!-- Choice model section -->         
+         <propertySection
+            id="property.section.domain.choice" 
+            tab="property.tab.domain"
+            class="org.yakindu.sct.ui.editor.propertysheets.ChoicePropertySection">
+            <input type="org.yakindu.sct.ui.editor.editparts.ChoiceEditPart"/>
+         </propertySection>
+         
+         <propertySection id="property.section.ConnectorAppearancePropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.ConnectionEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.ConnectionAppearancePropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection>
+         <propertySection id="property.section.ShapeColorAndFontPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.ShapeEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.ShapeColorsAndFontsPropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection> 
+         <propertySection id="property.section.DiagramColorsAndFontsPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.DiagramEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.DiagramColorsAndFontsPropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection>     
+         <propertySection id="property.section.RulerGridPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.DiagramEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.grid.RulerGridPropertySection" 
+            tab="property.tab.DiagramPropertySection">
+         </propertySection>     
+      </propertySections>
+   </extension>
+   <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            category="org.yakindu.sct.ui.preferences.root"
+            class="org.yakindu.sct.ui.editor.preferences.StatechartAppearancePreferencePage"
+            id="com.yakindu.sct.ui.appearance"
+            name="Statechart Coloring">
+        </page>
+    </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.yakindu.sct.ui.editor.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   
+   <!-- marker && validation -->
+    <extension id="org.yakindu.sct.ui.editor.diagnostic" name="Statechart Diagram problems" point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.core.resources.problemmarker"/>
+      <super type="org.eclipse.gmf.runtime.common.ui.services.marker"/>
+      <super type="org.eclipse.xtext.ui.check.fast" />
+      <persistent value="true"/>
+   </extension>   
+   
+    <extension id="org.yakindu.sct.ui.editor.xtext.diagnostic" name="Statechart Expression problems" point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.core.resources.problemmarker"/>
+      <super type="org.eclipse.gmf.runtime.common.ui.services.marker"/>
+      <super type="org.eclipse.xtext.ui.check.fast" />
+      <persistent value="true"/>
+   </extension>   
+  
+   <extension point="org.eclipse.gmf.runtime.common.ui.services.markerNavigationProviders" id="markers-navigation">
+      <MarkerNavigationProvider class="org.yakindu.sct.ui.editor.providers.StatechartMarkerNavigationProvider">
+         <MarkerType name="org.yakindu.sct.ui.editor.diagnostic"/>
+           <MarkerType name="org.yakindu.sct.ui.editor.xtext.diagnostic"/>
+         <Priority name="Medium"/>
+      </MarkerNavigationProvider>
+   </extension>
+   	
+   	<!-- Decoration Providers -->
+   <extension id="validationDecoratorProvider" name="ValidationDecorations" point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
+      <decoratorProvider class="org.yakindu.sct.ui.editor.providers.StatechartValidationDecorationProvider">
+         <Priority name="Lowest"/>
+         <object class="org.eclipse.gmf.runtime.diagram.ui.editparts.IPrimaryEditPart(org.eclipse.gmf.runtime.diagram.ui)" id="PRIMARY_VIEW"/>
+         <context decoratorTargets="PRIMARY_VIEW"/>
+      </decoratorProvider>
+   </extension>
+   <extension point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders"> 
+		<decoratorProvider class="org.yakindu.sct.ui.editor.submachine.SubmachineDecorationProvider"> 
+			<Priority name="Lowest" />
+ 		</decoratorProvider> 
+ </extension> 
+   
+   <!-- Global Action handler -->
+    <extension point="org.eclipse.gmf.runtime.common.ui.services.action.globalActionHandlerProviders" id="global-print-actions">
+      <GlobalActionHandlerProvider
+         class="org.eclipse.gmf.runtime.diagram.ui.printing.render.providers.DiagramWithPrintGlobalActionHandlerProvider"
+         id="Print handler">
+         <Priority name="Lowest"/>
+         <ViewId id="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor">
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+               <GlobalActionId actionId="print"/>
+            </ElementType>
+         </ViewId>
+      </GlobalActionHandlerProvider>
+      <GlobalActionHandlerProvider class="org.eclipse.gmf.runtime.diagram.ui.providers.DiagramGlobalActionHandlerProvider" id="global-actions">
+         <Priority name="Lowest">
+         </Priority>
+         <ViewId id="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor">
+            <ElementType class="org.yakindu.sct.ui.editor.editparts.ChoiceEditPart">
+               <GlobalActionId actionId="delete">
+               </GlobalActionId>
+                  <GlobalActionId actionId="save">
+               </GlobalActionId>
+                  <GlobalActionId actionId="copy">
+               </GlobalActionId>
+                  <GlobalActionId actionId="cut">
+               </GlobalActionId>
+            </ElementType>
+            <ElementType
+                  class="org.yakindu.sct.ui.editor.editparts.EntryEditPart">
+               <GlobalActionId
+                     actionId="delete">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="save">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="copy">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="cut">
+               </GlobalActionId>
+            </ElementType>
+            <ElementType
+                  class="org.yakindu.sct.ui.editor.editparts.ExitEditPart">
+               <GlobalActionId
+                     actionId="delete">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="save">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="copy">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="cut">
+               </GlobalActionId>
+            </ElementType>
+            <ElementType
+                  class="org.yakindu.sct.ui.editor.editparts.FinalStateEditPart">
+               <GlobalActionId
+                     actionId="delete">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="save">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="copy">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="cut">
+               </GlobalActionId>
+            </ElementType>
+            <ElementType
+                  class="org.yakindu.sct.ui.editor.editparts.TransitionEditPart">
+               <GlobalActionId
+                     actionId="delete">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="save">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="copy">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="cut">
+               </GlobalActionId>
+            </ElementType>
+            <ElementType
+                  class="org.yakindu.sct.ui.editor.editparts.RegionEditPart">
+               <GlobalActionId
+                     actionId="delete">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="save">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="copy">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="paste">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="cut">
+               </GlobalActionId>
+            </ElementType>
+            <ElementType
+                  class="org.yakindu.sct.ui.editor.editparts.StateEditPart">
+               <GlobalActionId
+                     actionId="delete">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="save">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="copy">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="paste">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="cut">
+               </GlobalActionId>
+            </ElementType>
+            <ElementType
+                  class="org.yakindu.sct.ui.editor.editparts.SynchronizationEditPart">
+               <GlobalActionId
+                     actionId="delete">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="save">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="copy">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="cut">
+               </GlobalActionId>
+            </ElementType>
+            <ElementType
+                  class="org.yakindu.sct.ui.editor.editparts.StateTextCompartmentEditPart">
+               <GlobalActionId
+                     actionId="save">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="paste">
+               </GlobalActionId>
+            </ElementType>
+            <ElementType
+                  class="org.yakindu.sct.ui.editor.editparts.StatechartDiagramEditPart">
+               <GlobalActionId
+                     actionId="save">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="copy">
+               </GlobalActionId>
+               <GlobalActionId
+                     actionId="paste">
+               </GlobalActionId>
+            </ElementType>
+         </ViewId>
+      </GlobalActionHandlerProvider>
+       <GlobalActionHandlerProvider class="org.eclipse.gmf.runtime.diagram.ui.providers.ide.providers.DiagramIDEGlobalActionHandlerProvider" id="ideActionHandlerProvider">
+         <Priority name="Lowest">
+         </Priority>
+         <ViewId id="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor">
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+               <GlobalActionId actionId="bookmark">
+               </GlobalActionId>
+            </ElementType>
+         </ViewId>
+      </GlobalActionHandlerProvider>
+      </extension>
+   
+   <!-- context menu contribution -->
+<extension point="org.eclipse.ui.commands">
+ 	<command
+       defaultHandler="org.yakindu.sct.ui.editor.commands.SetInitialEntryKindCommand"
+       id="org.yakindu.sct.ui.editor.commands.SetInitialEntryKindCommand"
+       name="Set Initial Entry Kind">
+	</command>
+ 	<command
+       defaultHandler="org.yakindu.sct.ui.editor.commands.SetDeepHistoryEntryKindCommand"
+       id="org.yakindu.sct.ui.editor.commands.SetDeepHistoryEntryKindCommand"
+       name="Set Deep History Entry Kind">
+ 	</command>
+ 	<command
+       defaultHandler="org.yakindu.sct.ui.editor.commands.SetShallowHistoryEntryKindCommand"
+       id="org.yakindu.sct.ui.editor.commands.SetShallowHistoryEntryKindCommand"
+       name="Set Shallow History Entry Kind">
+ 	</command>
+ 	<command
+       defaultHandler="org.yakindu.sct.ui.editor.commands.ToggleSubRegionLayoutCommand"
+       id="org.yakindu.sct.ui.editor.commands.ToggleSubRegionLayoutCommand"
+       name="Toggle Subregion Layout">
+ 	</command>
+</extension>
+
+<extension
+       point="org.eclipse.ui.menus">
+    <menuContribution
+          allPopups="false"
+          locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
+       <menu
+             id="changeEntryKindMenu"
+             label="Change Entry Kind">
+          <command
+                commandId="org.yakindu.sct.ui.editor.commands.SetInitialEntryKindCommand"
+                label="Initial"
+                style="push">
+             <visibleWhen
+                   checkEnabled="false">
+                <reference
+                      definitionId="oneEntrySelected">
+                </reference>
+             </visibleWhen>
+          </command>
+          <command
+                commandId="org.yakindu.sct.ui.editor.commands.SetDeepHistoryEntryKindCommand"
+                label="Deep History"
+                style="push">
+             <visibleWhen
+                   checkEnabled="false">
+                <reference
+                      definitionId="oneEntrySelected">
+                </reference>
+             </visibleWhen>
+          </command>
+          <command
+                commandId="org.yakindu.sct.ui.editor.commands.SetShallowHistoryEntryKindCommand"
+                label="Shallow History"
+                style="push">
+             <visibleWhen
+                   checkEnabled="false">
+                <reference
+                      definitionId="oneEntrySelected">
+                </reference>
+             </visibleWhen>
+          </command>
+       </menu>
+       <command
+             commandId="org.yakindu.sct.ui.editor.commands.ToggleSubRegionLayoutCommand"
+             label="Toggle Subregion Alignment"
+             style="push">
+          <visibleWhen
+                checkEnabled="false">
+             <with
+                   variable="selection">
+                <iterate
+                      ifEmpty="false"
+                      operator="and">
+                   <instanceof
+                         value="org.yakindu.sct.ui.editor.editparts.StateEditPart">
+                   </instanceof>
+                </iterate>
+             </with>
+          </visibleWhen>
+       </command>
+    </menuContribution>
+ </extension>
+ 
+ <extension
+       point="org.eclipse.core.expressions.definitions">
+    <definition
+          id="oneEntrySelected">
+       <with
+             variable="selection">
+          <and>
+             <count
+                   value="1">
+             </count>
+             <iterate
+                   ifEmpty="false"
+                   operator="and">
+                <instanceof
+                      value="org.yakindu.sct.ui.editor.editparts.EntryEditPart">
+                </instanceof>
+             </iterate>
+          </and>
+       </with>
+    </definition>
+ </extension>
+
+
+<!-- Patched Clipboard support -->
+ <extension
+         point="org.eclipse.gmf.runtime.emf.clipboard.core.clipboardSupport">
+      <factory
+            class="org.yakindu.sct.ui.editor.clipboardsupport.ClipboardSupportFactory"
+            nsURI="http://www.eclipse.org/gmf/runtime/1.0.2/notation"
+            priority="medium">
+      </factory>
+   </extension>   
+   
+</plugin>
