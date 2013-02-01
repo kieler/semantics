@@ -2,10 +2,12 @@ package de.cau.cs.kieler.synccharts.klighd;
 
 import org.eclipse.xtext.EcoreUtil2;
 import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.krendering.KInvisibility;
 import de.cau.cs.kieler.core.krendering.KLeftPosition;
 import de.cau.cs.kieler.core.krendering.KLineWidth;
 import de.cau.cs.kieler.core.krendering.KPolyline;
 import de.cau.cs.kieler.core.krendering.KPosition;
+import de.cau.cs.kieler.core.krendering.KStyle;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.klighd.IStyleModifier;
 import de.cau.cs.kieler.klighd.StyleModificationContext;
@@ -17,37 +19,40 @@ public class RegionLineModifier implements IStyleModifier {
      * {@inheritDoc}
      */
     public boolean modify(StyleModificationContext context) {
+        KStyle toBeModified = context.getStyle();
+        if (toBeModified instanceof KInvisibility) {
+            KInvisibility v = (KInvisibility) toBeModified;
+            KPolyline r = (KPolyline) v.eContainer();
 
-        KLineWidth s = (KLineWidth) context.getStyle();
-        s.setLineWidth(0);
-        KPolyline r = (KPolyline) s.eContainer();
+            KNode node = EcoreUtil2.getContainerOfType(v, KNode.class);
+            KShapeLayout layout = node.getData(KShapeLayout.class);
 
-        KNode node = EcoreUtil2.getContainerOfType(s, KNode.class);
-        KShapeLayout layout = node.getData(KShapeLayout.class);
+            KNode parent = node.getParent();
+            KShapeLayout parentlayout = parent.getData(KShapeLayout.class);
 
-        KNode parent = node.getParent();
-        KShapeLayout parentlayout = parent.getData(KShapeLayout.class);
-
-        if (r.getPoints().size() < 2) {
-            // cannot determine direction of border, so no possibility to set visibility
-            return false;
-        } else {
-            KPosition start = r.getPoints().get(0);
-            KPosition end = r.getPoints().get(r.getPoints().size() - 1);
-
-            if (isRightOf(end, start, parentlayout.getWidth())) {
-                // horizontal line
-                if (layout.getYpos() > 10) {
-                    s.setLineWidth(5);
-                }
+            if (r.getPoints().size() < 2) {
+                // cannot determine direction of border, so no possibility to set visibility
+                return false;
             } else {
-                // vertical line
-                if (layout.getXpos() > 10) {
-                    s.setLineWidth(5);
+                KPosition start = r.getPoints().get(0);
+                KPosition end = r.getPoints().get(r.getPoints().size() - 1);
+
+                if (isRightOf(end, start, parentlayout.getWidth())) {
+                    // horizontal line
+                    if (layout.getYpos() > 10) {
+                        v.setInvisible(false);
+                    }
+                } else {
+                    // vertical line
+                    if (layout.getXpos() > 10) {
+                        v.setInvisible(false);
+                    }
                 }
+                return true;
             }
-            return true;
-        }
+
+        } 
+        return false;
     }
 
     /**
