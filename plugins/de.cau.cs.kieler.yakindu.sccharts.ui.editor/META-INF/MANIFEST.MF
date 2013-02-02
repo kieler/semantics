@@ -14,12 +14,12 @@ Export-Package: de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.impl,
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: de.cau.cs.kieler.yakindu.sccharts.ui.integration.stext;bundle-version="0.1.0",
- de.cau.cs.kieler.yakindu.sccharts.model.stext.ui;bundle-version="1.0.0",
  org.yakindu.sct.ui.editor;bundle-version="2.0.0",
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.yakindu.base.types;visibility:=reexport,
- org.yakindu.sct.model.sgraph;visibility:=reexport
+ org.yakindu.sct.model.sgraph;visibility:=reexport,
+ de.cau.cs.kieler.yakindu.sccharts.model.stext.ui;bundle-version="1.0.0"
 Import-Package: de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph,
  org.eclipse.emf.databinding,
  org.eclipse.emf.databinding.edit,

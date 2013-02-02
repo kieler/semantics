@@ -138,13 +138,9 @@
 
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
-		<!--<parser
+		<parser
 			class="de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.SCChartsExpExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="scchartsexp">
-		</parser>-->
-		<parser
-			class="de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.SCChartsExpExecutableExtensionFactory:org.yakindu.sct.model.stext.resource.factory.StextResourceFactory"
-			type="scc">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">

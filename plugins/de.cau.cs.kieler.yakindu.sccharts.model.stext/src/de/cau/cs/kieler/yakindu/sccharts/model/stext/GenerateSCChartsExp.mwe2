@@ -18,6 +18,8 @@ Workflow {
 // registerGeneratedEPackage = "org.eclipse.xtext.common.types.TypesPackage"
 		registerGeneratedEPackage = "org.yakindu.sct.model.stext.stext.StextPackage"
 		registerGenModelFile = "platform:/resource/org.yakindu.sct.model.stext/model/SText.genmodel"
+				registerGeneratedEPackage = "org.yakindu.sct.model.sgraph.SGraphPackage"
+		registerGenModelFile = "platform:/resource/org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel"
 	}
 
 	component = DirectoryCleaner {
