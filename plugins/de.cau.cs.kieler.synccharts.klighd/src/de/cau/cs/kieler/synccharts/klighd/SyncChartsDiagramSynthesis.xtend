@@ -47,6 +47,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
         return r.createNode() => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
             node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT);
+            node.transferAnnotationsOf(r);
             r.states.forEach[
                node.children += it.transform;
             ];            
@@ -64,7 +65,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
                 it.children += factory.createKPolyline() => [
                     points += createKPosition(LEFT, 0, 0, TOP, 0, 0);
                     points += createKPosition(LEFT, 0, 0, BOTTOM, 0, 0);
-                    it.foreground = "black".color;
+                    it.foreground = "gray".color;
                     it.lineStyle = LineStyle::DASH;
                     it.lineWidth = 3;
                     it.invisible = true;
@@ -73,7 +74,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
                 it.children += factory.createKPolyline() => [
                     points += createKPosition(LEFT, 0, 0, TOP, 0, 0);
                     points += createKPosition(RIGHT, 0, 0, TOP, 0, 0);
-                    it.foreground = "black".color;
+                    it.foreground = "gray".color;
                     it.lineStyle = LineStyle::DASH;
                     it.lineWidth = 3;
                     it.invisible = true;
@@ -90,19 +91,24 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
             node.addLayoutParam(LayoutOptions::EXPAND_NODES, true);
             node.addLayoutParam(LayoutOptions::BORDER_SPACING, 2f);
             node.addLayoutParam(LayoutOptions::SPACING, 0f);
+            node.transferAnnotationsOf(s);
 
-            val figure = node.addRoundedRectangle(30, 30, 2);
+            val figure = node.addRoundedRectangle(30, 30, if (s.isInitial) 4 else 2);
             
-            (if (s.isFinal) factory.createKRoundedRectangle => [
-                figure.children += it;
-                it.cornerWidth = 20f;
-                it.cornerHeight = 20f;
-                it.lineWidth = 2;
-                it.placementData = factory.createKAreaPlacementData() => [
-                    it.topLeft = createKPosition(LEFT, 5, 0, TOP, 5, 0);
-                    it.bottomRight = createKPosition(RIGHT, 5, 0, BOTTOM, 5, 0);
-                ];
-            ] else figure ) => [ 
+            (
+                if (s.isFinal) factory.createKRoundedRectangle => [
+                    figure.children += it;
+                    it.cornerWidth = 20f;
+                    it.cornerHeight = 20f;
+                    it.lineWidth = if (s.isInitial) 4 else 2;
+                    it.placementData = factory.createKAreaPlacementData() => [
+                        it.topLeft = createKPosition(LEFT, 5, 0, TOP, 5, 0);
+                        it.bottomRight = createKPosition(RIGHT, 5, 0, BOTTOM, 5, 0);
+                    ];
+                ] else figure
+             ) => [
+                
+                
                 it.childPlacement = factory.createKGridPlacement() => [
                     numColumns = 1;
                 ];
@@ -143,7 +149,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
             s.outgoingTransitions.forEach[
                 it.transformTransition();
             ];
-        ];
+        ]
     }
     
     def KEdge transformTransition(Transition t) {
