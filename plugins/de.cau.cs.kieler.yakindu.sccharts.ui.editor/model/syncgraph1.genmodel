@@ -17,7 +17,6 @@
     </genEnums>
     <genClasses ecoreClass="syncgraph.ecore#//SyncTransition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute syncgraph.ecore#//SyncTransition/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute syncgraph.ecore#//SyncTransition/isHistory"/>
     </genClasses>
     <genClasses ecoreClass="syncgraph.ecore#//SyncState">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute syncgraph.ecore#//SyncState/isInitial"/>

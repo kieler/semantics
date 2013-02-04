@@ -13,6 +13,7 @@ import org.yakindu.sct.model.sgraph.Transition;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncTransition#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncTransition#isIsHistory <em>Is History</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,5 +51,32 @@ public interface SyncTransition extends Transition {
 	 * @generated
 	 */
 	void setType(TransitionType value);
+
+	/**
+	 * Returns the value of the '<em><b>Is History</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is History</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is History</em>' attribute.
+	 * @see #setIsHistory(boolean)
+	 * @see de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphPackage#getSyncTransition_IsHistory()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isIsHistory();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncTransition#isIsHistory <em>Is History</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is History</em>' attribute.
+	 * @see #isIsHistory()
+	 * @generated
+	 */
+	void setIsHistory(boolean value);
 
 } // SyncTransition

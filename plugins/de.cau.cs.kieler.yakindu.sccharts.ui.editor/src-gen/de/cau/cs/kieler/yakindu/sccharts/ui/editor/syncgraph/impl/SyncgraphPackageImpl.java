@@ -132,6 +132,15 @@ public class SyncgraphPackageImpl extends EPackageImpl implements SyncgraphPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getSyncTransition_IsHistory() {
+		return (EAttribute)syncTransitionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getSyncState() {
 		return syncStateEClass;
 	}
@@ -193,6 +202,7 @@ public class SyncgraphPackageImpl extends EPackageImpl implements SyncgraphPacka
 		// Create classes and their features
 		syncTransitionEClass = createEClass(SYNC_TRANSITION);
 		createEAttribute(syncTransitionEClass, SYNC_TRANSITION__TYPE);
+		createEAttribute(syncTransitionEClass, SYNC_TRANSITION__IS_HISTORY);
 
 		syncStateEClass = createEClass(SYNC_STATE);
 		createEAttribute(syncStateEClass, SYNC_STATE__IS_INITIAL);
@@ -239,6 +249,7 @@ public class SyncgraphPackageImpl extends EPackageImpl implements SyncgraphPacka
 		// Initialize classes and features; add operations and parameters
 		initEClass(syncTransitionEClass, SyncTransition.class, "SyncTransition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSyncTransition_Type(), this.getTransitionType(), "type", "0", 0, 1, SyncTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSyncTransition_IsHistory(), ecorePackage.getEBoolean(), "isHistory", "false", 0, 1, SyncTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(syncStateEClass, SyncState.class, "SyncState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSyncState_IsInitial(), ecorePackage.getEBoolean(), "isInitial", "false", 0, 1, SyncState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

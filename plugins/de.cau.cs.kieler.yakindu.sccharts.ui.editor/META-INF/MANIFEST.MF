@@ -19,10 +19,16 @@ Require-Bundle: de.cau.cs.kieler.yakindu.sccharts.ui.integration.stext;bundle-ve
  org.eclipse.emf.ecore;visibility:=reexport,
  org.yakindu.base.types;visibility:=reexport,
  org.yakindu.sct.model.sgraph;visibility:=reexport,
- de.cau.cs.kieler.yakindu.sccharts.model.stext.ui;bundle-version="1.0.0"
+ de.cau.cs.kieler.yakindu.sccharts.model.stext.ui;bundle-version="1.0.0",
+ org.eclipse.gmf.runtime.diagram.ui.properties;bundle-version="1.4.2",
+ de.itemis.xtext.utils.jface;bundle-version="2.0.0",
+ org.eclipse.core.databinding;bundle-version="1.4.1",
+ org.eclipse.core.databinding.property;bundle-version="1.4.100",
+ de.itemis.xtext.utils.gmf;bundle-version="2.0.0"
 Import-Package: de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph,
  org.eclipse.emf.databinding,
  org.eclipse.emf.databinding.edit,
  org.eclipse.jface.databinding.swt,
+ org.eclipse.jface.databinding.viewers,
  org.eclipse.xtext.ui.guice,
  org.yakindu.sct.model.stext.resource.factory

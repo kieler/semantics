@@ -50,8 +50,8 @@ public class KielerMetaModelTypeFactory extends StatechartMetaModelTypeFactory {
 
 	protected void registerSyncTransition(IMetaModelTypeAcceptor acceptor) {
 		acceptor.accept(new HintedMetamodelType(NORMAL_TRANSITION_ID,
-				getUrlFromPlugin("icons/obj16/transition-normal-16.png"),
-				"Noraml Termination Transition", SyncgraphPackage.Literals.SYNC_TRANSITION,
+				getUrlFromPlugin("icons/obj16/transition-16.png"),
+				"Normal Termination Transition", SyncgraphPackage.Literals.SYNC_TRANSITION,
 				transitionEditHelper.get(), SemanticHints.TRANSITION));
 
 		acceptor.accept(new HintedMetamodelType(STRONG_TRANSITION_ID,

@@ -22,6 +22,7 @@ import org.yakindu.sct.model.sgraph.impl.TransitionImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.impl.SyncTransitionImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.impl.SyncTransitionImpl#isIsHistory <em>Is History</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,6 +48,26 @@ public class SyncTransitionImpl extends TransitionImpl implements SyncTransition
 	 * @ordered
 	 */
 	protected TransitionType type = TYPE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isIsHistory() <em>Is History</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsHistory()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_HISTORY_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isIsHistory() <em>Is History</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsHistory()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isHistory = IS_HISTORY_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -93,11 +114,34 @@ public class SyncTransitionImpl extends TransitionImpl implements SyncTransition
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isIsHistory() {
+		return isHistory;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIsHistory(boolean newIsHistory) {
+		boolean oldIsHistory = isHistory;
+		isHistory = newIsHistory;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY, oldIsHistory, isHistory));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case SyncgraphPackage.SYNC_TRANSITION__TYPE:
 				return getType();
+			case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
+				return isIsHistory();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -112,6 +156,9 @@ public class SyncTransitionImpl extends TransitionImpl implements SyncTransition
 		switch (featureID) {
 			case SyncgraphPackage.SYNC_TRANSITION__TYPE:
 				setType((TransitionType)newValue);
+				return;
+			case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
+				setIsHistory((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -128,6 +175,9 @@ public class SyncTransitionImpl extends TransitionImpl implements SyncTransition
 			case SyncgraphPackage.SYNC_TRANSITION__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
+			case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
+				setIsHistory(IS_HISTORY_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -142,6 +192,8 @@ public class SyncTransitionImpl extends TransitionImpl implements SyncTransition
 		switch (featureID) {
 			case SyncgraphPackage.SYNC_TRANSITION__TYPE:
 				return type != TYPE_EDEFAULT;
+			case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
+				return isHistory != IS_HISTORY_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -158,6 +210,8 @@ public class SyncTransitionImpl extends TransitionImpl implements SyncTransition
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (type: ");
 		result.append(type);
+		result.append(", isHistory: ");
+		result.append(isHistory);
 		result.append(')');
 		return result.toString();
 	}

@@ -140,13 +140,22 @@ public interface SyncgraphPackage extends EPackage {
 	int SYNC_TRANSITION__TYPE = SGraphPackage.TRANSITION_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Is History</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNC_TRANSITION__IS_HISTORY = SGraphPackage.TRANSITION_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Sync Transition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SYNC_TRANSITION_FEATURE_COUNT = SGraphPackage.TRANSITION_FEATURE_COUNT + 1;
+	int SYNC_TRANSITION_FEATURE_COUNT = SGraphPackage.TRANSITION_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.impl.SyncStateImpl <em>Sync State</em>}' class.
@@ -380,6 +389,17 @@ public interface SyncgraphPackage extends EPackage {
 	EAttribute getSyncTransition_Type();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncTransition#isIsHistory <em>Is History</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is History</em>'.
+	 * @see de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncTransition#isIsHistory()
+	 * @see #getSyncTransition()
+	 * @generated
+	 */
+	EAttribute getSyncTransition_IsHistory();
+
+	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncState <em>Sync State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -460,6 +480,14 @@ public interface SyncgraphPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SYNC_TRANSITION__TYPE = eINSTANCE.getSyncTransition_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Is History</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SYNC_TRANSITION__IS_HISTORY = eINSTANCE.getSyncTransition_IsHistory();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.impl.SyncStateImpl <em>Sync State</em>}' class.

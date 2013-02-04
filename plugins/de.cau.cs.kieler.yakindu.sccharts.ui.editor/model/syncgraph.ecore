@@ -4,6 +4,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="SyncTransition" eSuperTypes="../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Transition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TransitionType"
         defaultValueLiteral="0"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isHistory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TransitionType">
     <eLiterals name="WEAKABORT"/>
