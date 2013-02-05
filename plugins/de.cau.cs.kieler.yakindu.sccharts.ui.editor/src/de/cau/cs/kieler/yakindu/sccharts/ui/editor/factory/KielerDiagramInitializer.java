@@ -49,15 +49,6 @@ public class KielerDiagramInitializer extends DefaultDiagramInitializer {
 				SemanticHints.REGION, preferencesHint);
 		setRegionViewLayoutConstraint(regionView);
 
-		// // Create an initial state
-		// Entry initialState = factory.createEntry();
-		// initialState.setKind(EntryKind.INITIAL);
-		// region.getVertices().add(initialState);
-		// Node initialStateView = ViewService.createNode(
-		// getRegionCompartmentView(regionView), initialState,
-		// SemanticHints.ENTRY, preferencesHint);
-		// setInitialStateViewLayoutConstraint(initialStateView);
-
 		// Create the first state
 		SyncState state = syncfactory.createSyncState();
 		state.setIsInitial(true);

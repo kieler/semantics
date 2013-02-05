@@ -3,7 +3,22 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.scoping;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.Scopes;
+import org.eclipse.xtext.scoping.impl.SimpleScope;
+import org.yakindu.sct.model.sgraph.Declaration;
 import org.yakindu.sct.model.stext.scoping.STextScopeProvider;
+
+import com.google.common.collect.Lists;
+
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.utils.SccUtils;
+import de.itemis.xtext.utils.jface.viewers.ContextElementAdapter;
 
 /**
  * This class contains custom scoping description.
@@ -13,5 +28,32 @@ import org.yakindu.sct.model.stext.scoping.STextScopeProvider;
  *
  */
 public class SCChartsExpScopeProvider extends STextScopeProvider {
+	@Override
+	public IScope scope_ElementReferenceExpression_reference(
+			final EObject context, EReference reference) {
+		// return super.scope_ElementReferenceExpression_reference(context,
+		// reference);
+		return new SimpleScope(getUnnamedTopLevelScope(context, reference)
+				.getAllElements());
+	}
 
+	/**
+	 * Returns a scope with all toplevel declarations of parent States
+	 */
+	@Override
+	protected IScope getUnnamedTopLevelScope(final EObject context,
+			EReference reference) {
+		final ContextElementAdapter provider = (ContextElementAdapter) EcoreUtil
+				.getExistingAdapter(context.eResource(),
+						ContextElementAdapter.class);
+		List<EObject> scopeCandidates = Lists.newArrayList();
+		ArrayList<Declaration> declarations = SccUtils
+				.getAncestorDeclarations(provider.getElement().eContainer());
+		if (declarations.size() > 0) {
+			scopeCandidates.addAll(declarations);
+			return Scopes.scopeFor(scopeCandidates);
+		} else {
+			return IScope.NULLSCOPE;
+		}
+	}
 }

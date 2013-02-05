@@ -608,6 +608,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cActiveStateReferenceExpressionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cPreValueExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cParenthesizedExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cEventValueReferenceExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		/// ***************************************** Expressions ******************************************* * / // Override the stext::PrimaryExpression
 		//
@@ -621,10 +622,12 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | PreValueExpression |
 		//
-		//	ParenthesizedExpression;
+		//	ParenthesizedExpression | EventValueReferenceExpression;
 		public ParserRule getRule() { return rule; }
 
-		//PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | PreValueExpression | ParenthesizedExpression
+		//PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | PreValueExpression | ParenthesizedExpression |
+		//
+		//EventValueReferenceExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//PrimitiveValueExpression
@@ -641,6 +644,9 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ParenthesizedExpression
 		public RuleCall getParenthesizedExpressionParserRuleCall_4() { return cParenthesizedExpressionParserRuleCall_4; }
+
+		//EventValueReferenceExpression
+		public RuleCall getEventValueReferenceExpressionParserRuleCall_5() { return cEventValueReferenceExpressionParserRuleCall_5; }
 	}
 
 	public class PreValueExpressionElements extends AbstractParserRuleElementFinder {
@@ -1038,7 +1044,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | PreValueExpression |
 	//
-	//	ParenthesizedExpression;
+	//	ParenthesizedExpression | EventValueReferenceExpression;
 	public PrimaryExpressionElements getPrimaryExpressionAccess() {
 		return (pPrimaryExpression != null) ? pPrimaryExpression : (pPrimaryExpression = new PrimaryExpressionElements());
 	}

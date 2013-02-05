@@ -11,8 +11,9 @@ import org.yakindu.sct.model.sgraph.resource.SCTLinker;
 import org.yakindu.sct.model.stext.conversion.StextValueConverterService;
 import org.yakindu.sct.model.stext.naming.StextNameProvider;
 import org.yakindu.sct.model.stext.scoping.STextGlobalScopeProvider;
-import org.yakindu.sct.model.stext.validation.ITypeInferrer;
-import org.yakindu.sct.model.stext.validation.TypeInferrer;
+
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.validation.ISCCTypeInferrer;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.validation.SCCTypeInferrer;
 
 //import org.yakindu.sct.model.stext.scoping.NamespaceLocalScopeResolver;
 
@@ -46,9 +47,9 @@ public class SCChartsExpRuntimeModule extends AbstractSCChartsExpRuntimeModule {
 		return BaseTypeSystemAccessImpl.class;
 	}
 
-	public Class<? extends ITypeInferrer> bindITypeInferrer() {
+	public Class<? extends ISCCTypeInferrer> bindITypeInferrer() {
 		// return TypeInferrer.class;
-		return TypeInferrer.class;
+		return SCCTypeInferrer.class;
 	}
 
 }

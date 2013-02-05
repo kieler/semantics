@@ -99,7 +99,16 @@
    </extension>
    
    <!-- end Propertysheets -->
-
+ <!-- Modeling Assistant Provider -->
+   <extension
+         point="org.eclipse.gmf.runtime.emf.ui.modelingAssistantProviders">
+      <modelingAssistantProvider
+            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerExecutableExtensionFactory:de.cau.cs.kieler.yakindu.sccharts.ui.editor.assistent.KielerModelingAssistantProvider">
+         <Priority
+               name="Medium">
+         </Priority>
+      </modelingAssistantProvider>
+   </extension>
 </plugin>
 
 	

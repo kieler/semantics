@@ -78,6 +78,7 @@ PrimaryExpression returns stext::Expression:
 	| ActiveStateReferenceExpression
 	| PreValueExpression
 	| ParenthesizedExpression
+	| EventValueReferenceExpression
 	//	| '(' Expression ')'
 ;
 

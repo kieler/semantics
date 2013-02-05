@@ -292,6 +292,7 @@
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.65"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.14"/>
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.66"/>
+        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.64"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="PreValueExpression">
