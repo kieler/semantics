@@ -10,14 +10,10 @@
  */
 package org.yakindu.sct.ui.editor.editor.guice;
 
-import org.eclipse.gef.EditPartFactory;
-import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
-import org.yakindu.sct.ui.editor.providers.ISCTPaletteFactory;
-import org.yakindu.sct.ui.editor.providers.SCTPaletteProvider;
 
 import com.google.inject.Inject;
 
@@ -29,8 +25,6 @@ import com.google.inject.Inject;
 public abstract class InjectableDiagramDocumentEditor extends
 		DiagramDocumentEditor {
 
-	@Inject
-	private EditPartFactory editPartFactory;
 	@Inject
 	private IMetaModelTypeFactory typeFactory;
 
@@ -44,11 +38,4 @@ public abstract class InjectableDiagramDocumentEditor extends
 		super.init(site, input);
 		typeFactory.registerElementTypes();
 	}
-
-	@Override
-	protected void configureGraphicalViewer() {
-		super.configureGraphicalViewer();
-		getGraphicalViewer().setEditPartFactory(editPartFactory);
-	}
-
 }

@@ -44,6 +44,16 @@
          </Priority>
       </viewProvider>
    </extension>
+    <!-- EditPart Provider -->
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders">
+      <editpartProvider
+            class="org.yakindu.sct.ui.editor.factories.SCTExecutableExtensionFactory:org.yakindu.sct.ui.editor.editor.guice.InjectableEditPartFactory">
+         <Priority
+               name="Medium">
+         </Priority>
+      </editpartProvider>
+   </extension>
    <!--New File Wizard -->
    <extension
          point="org.eclipse.ui.newWizards">
@@ -70,7 +80,7 @@
          </editor>
       </paletteProvider>
    </extension>
- <!-- Modeling Assistant Provider -->
+ <!-- Modeling Assistant Provider 
    <extension
          point="org.eclipse.gmf.runtime.emf.ui.modelingAssistantProviders">
       <modelingAssistantProvider
@@ -80,6 +90,7 @@
          </Priority>
       </modelingAssistantProvider>
    </extension>
+   -->
 <!-- Property Tabs -->
 <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor" id="prop-contrib">
       <propertyContributor

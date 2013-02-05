@@ -2,9 +2,11 @@ package de.cau.cs.kieler.yakindu.sccharts.model.stext.validation;
 
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
+import org.eclipse.xtext.validation.ComposedChecks;
 import org.yakindu.base.types.ITypeSystemAccess;
 import org.yakindu.base.types.Type;
 import org.yakindu.sct.model.sgraph.Statement;
+import org.yakindu.sct.model.sgraph.validation.SCTResourceValidator;
 import org.yakindu.sct.model.stext.stext.ReactionTrigger;
 import org.yakindu.sct.model.stext.stext.StextPackage;
 import org.yakindu.sct.model.stext.stext.VariableDefinition;
@@ -13,6 +15,10 @@ import org.yakindu.sct.model.stext.validation.TypeCheckException;
 
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.yakindu.model.sgraph.validator.SyncGraphJavaValidator;
+
+@ComposedChecks(validators = { SyncGraphJavaValidator.class,
+		SCTResourceValidator.class })
 public class SCChartsExpJavaValidator extends STextJavaValidator {
 
 	@Inject

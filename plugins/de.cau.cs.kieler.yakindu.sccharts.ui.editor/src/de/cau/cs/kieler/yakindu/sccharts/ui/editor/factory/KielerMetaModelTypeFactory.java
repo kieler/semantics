@@ -51,17 +51,17 @@ public class KielerMetaModelTypeFactory extends StatechartMetaModelTypeFactory {
 	protected void registerSyncTransition(IMetaModelTypeAcceptor acceptor) {
 		acceptor.accept(new HintedMetamodelType(NORMAL_TRANSITION_ID,
 				getUrlFromPlugin("icons/obj16/transition-16.png"),
-				"Normal Termination Transition", SyncgraphPackage.Literals.SYNC_TRANSITION,
+				"Normal Termination", SyncgraphPackage.Literals.SYNC_TRANSITION,
 				transitionEditHelper.get(), SemanticHints.TRANSITION));
 
 		acceptor.accept(new HintedMetamodelType(STRONG_TRANSITION_ID,
 				getUrlFromPlugin("icons/obj16/transition-strong-16.png"),
-				"Strong Abortion Transition", SyncgraphPackage.Literals.SYNC_TRANSITION,
+				"Strong Abortion", SyncgraphPackage.Literals.SYNC_TRANSITION,
 				transitionEditHelper.get(), SemanticHints.TRANSITION));
 
 		acceptor.accept(new HintedMetamodelType(WEAK_TRANSITION_ID,
 				getUrlFromPlugin("icons/obj16/transition-weak-16.png"),
-				"Weak Abortion Transition", SyncgraphPackage.Literals.SYNC_TRANSITION,
+				"Weak Abortion", SyncgraphPackage.Literals.SYNC_TRANSITION,
 				transitionEditHelper.get(), SemanticHints.TRANSITION));
 	}
 

@@ -18,7 +18,7 @@
             default="true"
             extensions="scc"
             icon="icons/obj16/logo-16.png"
-            id="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor"
+            id="org.yakindu.sct.ui.editor.editor.KielerStatechartDiagramEditor"
             matchingStrategy="org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditorMatchingStrategy"
             name="KIELER SCCharts Editor">
       </editor>
@@ -32,7 +32,7 @@
       <wizard
             category="KIELER"
             class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerExecutableExtensionFactory:org.yakindu.sct.ui.editor.wizards.CreationWizard"
-            icon="icons/obj16/Statechart-Pictogram-16.png"
+            icon="icons/obj16/SyncCharts-Pictogram-16.png"
             id="de.cau.cs.kieler.yakindu.sccharts.ui.editor.KielerWizard"
             name="KIELER SCCharts Model"
             project="false">
@@ -70,12 +70,38 @@
 			semanticTarget="StateSpecification">
 			</ExpressionLanguageProvider>
 	</extension>
+<!-- Property Tabs -->
+<extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor" id="prop-contrib">
+      <propertyContributor
+            contributorId="org.yakindu.sct.ui.editor.editor.KielerStatechartDiagramEditor"
+            labelProvider="org.yakindu.sct.ui.editor.propertysheets.SheetLabelProvider">
+         <propertyCategory category="domain"/>
+         <propertyCategory category="visual"/>
+         <propertyCategory category="extra"/>
+      </propertyContributor>
+   </extension>
+   
+    <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="proptabs">
+      <propertyTabs contributorId="org.yakindu.sct.ui.editor.editor.KielerStatechartDiagramEditor">
+          <propertyTab
+             category="domain"
+             id="property.tab.domain"
+             label="Model"/>
+          <propertyTab
+             category="visual"
+             id="property.tab.AppearancePropertySection"
+             label="Appearance"/>
+          <propertyTab
+             category="visual"
+             id="property.tab.DiagramPropertySection"
+             label="Diagram"/>
+      </propertyTabs>
+   </extension>  
 
-
-   <!-- Propertysheets -->
+<!-- Propertysheets -->
 <!-- Property Tabs -->   
    <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="propsections">
-      <propertySections contributorId="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor">
+      <propertySections contributorId="org.yakindu.sct.ui.editor.editor.KielerStatechartDiagramEditor">
 		<!-- State model section -->         
          <propertySection
             id="property.section.domain.state" 
@@ -94,7 +120,42 @@
             <input type="de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts.SyncTransitionEditPart"/>
             <input type="org.yakindu.sct.ui.editor.editparts.TransitionExpressionEditPart"/>
          </propertySection>
-     
+            <!-- Region model section -->         
+         <propertySection
+            id="property.section.domain.region" 
+            tab="property.tab.domain"
+            class="org.yakindu.sct.ui.editor.propertysheets.RegionPropertySection">
+            <input type="org.yakindu.sct.ui.editor.editparts.RegionEditPart"/>
+         </propertySection>
+            <!-- Choice model section -->         
+         <propertySection
+            id="property.section.domain.choice" 
+            tab="property.tab.domain"
+            class="org.yakindu.sct.ui.editor.propertysheets.ChoicePropertySection">
+            <input type="org.yakindu.sct.ui.editor.editparts.ChoiceEditPart"/>
+         </propertySection>
+         
+         <propertySection id="property.section.ConnectorAppearancePropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.ConnectionEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.ConnectionAppearancePropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection>
+         <propertySection id="property.section.ShapeColorAndFontPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.ShapeEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.ShapeColorsAndFontsPropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection> 
+         <propertySection id="property.section.DiagramColorsAndFontsPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.DiagramEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.DiagramColorsAndFontsPropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection>     
+         <propertySection id="property.section.RulerGridPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.DiagramEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.grid.RulerGridPropertySection" 
+            tab="property.tab.DiagramPropertySection">
+         </propertySection>     
+ 
       </propertySections>
    </extension>
    
@@ -109,6 +170,20 @@
          </Priority>
       </modelingAssistantProvider>
    </extension>
+   
+
+   
+   <!-- EditPart Provider -->
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders">
+      <editpartProvider
+            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerExecutableExtensionFactory:org.yakindu.sct.ui.editor.editor.guice.InjectableEditPartFactory">
+         <Priority
+               name="High">
+         </Priority>
+      </editpartProvider>
+   </extension>
+    
 </plugin>
 
 	

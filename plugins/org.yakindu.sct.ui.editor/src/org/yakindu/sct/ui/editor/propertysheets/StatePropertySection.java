@@ -79,14 +79,14 @@ public class StatePropertySection extends
 		createTransitionsControl(rightColumn);
 	}
 
-	private void createNameControl(final Composite parent) {
+	protected void createNameControl(final Composite parent) {
 		Label lblName = getToolkit().createLabel(parent, "State Name: ");
 		txtName = getToolkit().createText(parent, "");
 		GridDataFactory.fillDefaults().applyTo(lblName);
 		GridDataFactory.fillDefaults().applyTo(txtName);
 	}
 
-	private void createSpecificationControl(final Composite parent) {
+	protected void createSpecificationControl(final Composite parent) {
 		Injector injector = getInjector(SemanticTarget.StateSpecification);
 		if (injector != null) {
 			txtSpecification = new StyledText(parent, SWT.MULTI | SWT.BORDER
@@ -102,7 +102,7 @@ public class StatePropertySection extends
 				.applyTo(txtSpecification);
 	}
 
-	private void createSubmachineControl(final Composite parent) {
+	protected void createSubmachineControl(final Composite parent) {
 		Label label = getToolkit().createLabel(parent, "State Submachine:");
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackground(ColorConstants.white);
@@ -121,7 +121,7 @@ public class StatePropertySection extends
 				.applyTo(openDialog);
 	}
 
-	private void createTransitionsControl(Composite parent) {
+	protected void createTransitionsControl(Composite parent) {
 		Label label = getToolkit().createLabel(parent, "Transition Priority:");
 		GridDataFactory.fillDefaults().applyTo(label);
 		orderElementControl = new OrderElementControl(parent,
@@ -142,7 +142,7 @@ public class StatePropertySection extends
 		updateLabel();
 	}
 
-	private void bindSpecificationControl(EMFDataBindingContext context) {
+	protected void bindSpecificationControl(EMFDataBindingContext context) {
 		IEMFValueProperty specificationProperty = EMFEditProperties.value(
 				TransactionUtil.getEditingDomain(eObject),
 				SGraphPackage.Literals.SPECIFICATION_ELEMENT__SPECIFICATION);
@@ -152,7 +152,7 @@ public class StatePropertySection extends
 				specificationProperty.observe(eObject));
 	}
 
-	private void bindNameControl(EMFDataBindingContext context) {
+	protected void bindNameControl(EMFDataBindingContext context) {
 		IEMFValueProperty nameProperty = EMFEditProperties.value(
 				TransactionUtil.getEditingDomain(eObject),
 				BasePackage.Literals.NAMED_ELEMENT__NAME);
@@ -162,7 +162,7 @@ public class StatePropertySection extends
 		context.bindValue(nameTextProperty, nameProperty.observe(eObject));
 	}
 
-	private void updateLabel() {
+	protected void updateLabel() {
 		String substatechartId = getState().getSubstatechartId();
 		if (substatechartId != null) {
 			lblSubmachine.setText(substatechartId);

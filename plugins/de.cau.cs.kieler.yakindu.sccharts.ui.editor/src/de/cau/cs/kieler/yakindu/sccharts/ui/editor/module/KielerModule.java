@@ -15,6 +15,11 @@ import de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts.SyncTransitionEditPart;
 public class KielerModule extends SCTModule {
 
 	@Override
+	protected String getContributorId() {
+		return "org.yakindu.sct.ui.editor.editor.KielerStatechartDiagramEditor";
+	}
+	
+	@Override
 	protected Class<? extends IGraphicalEditPart> getTransitionEditPart() {
 		return SyncTransitionEditPart.class;
 	}

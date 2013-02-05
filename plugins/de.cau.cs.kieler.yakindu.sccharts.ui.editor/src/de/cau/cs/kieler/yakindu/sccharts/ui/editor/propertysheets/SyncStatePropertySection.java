@@ -17,17 +17,25 @@ import org.yakindu.sct.ui.editor.propertysheets.StatePropertySection;
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphPackage;
 
 public class SyncStatePropertySection extends StatePropertySection {
-	
+
 	private ComboViewer isInitialKindViewer;
 	private ComboViewer isFinalKindViewer;
-	
+
 	@Override
 	protected void createRightColumnControls(Composite rightColumn) {
-		super.createRightColumnControls(rightColumn);
+		createNameControl(rightColumn);
+	
 		createIsInitialControl(rightColumn);
 		createIsFinalControl(rightColumn);
+		createTransitionsControl(rightColumn);
+//		createSubmachineControl(rightColumn);
 	}
 
+	@Override
+	protected void updateLabel() {
+	}
+
+	
 	
 	/**
 	 * Create the isInitial Combo. It allows to select false or true
@@ -38,7 +46,8 @@ public class SyncStatePropertySection extends StatePropertySection {
 	private void createIsInitialControl(Composite parent) {
 		Label kindLabel = getToolkit().createLabel(parent, "Is Initial: ");
 		GridDataFactory.fillDefaults().applyTo(kindLabel);
-		isInitialKindViewer = new ComboViewer(parent, SWT.READ_ONLY | SWT.SINGLE);
+		isInitialKindViewer = new ComboViewer(parent, SWT.READ_ONLY
+				| SWT.SINGLE);
 		isInitialKindViewer.setContentProvider(new ArrayContentProvider());
 		isInitialKindViewer.setLabelProvider(new LabelProvider());
 		isInitialKindViewer.add(false);
@@ -46,7 +55,7 @@ public class SyncStatePropertySection extends StatePropertySection {
 		GridDataFactory.fillDefaults().grab(true, false)
 				.applyTo(isInitialKindViewer.getControl());
 	}
-	
+
 	/**
 	 * Create the isFinal Combo. It allows to select false or true
 	 * 
@@ -64,14 +73,14 @@ public class SyncStatePropertySection extends StatePropertySection {
 		GridDataFactory.fillDefaults().grab(true, false)
 				.applyTo(isFinalKindViewer.getControl());
 	}
-	
+
 	@Override
 	public void bindModel(EMFDataBindingContext context) {
 		super.bindModel(context);
 		bindIsInitialKindControl(context);
 		bindIsFinalKindControl(context);
 	}
-	
+
 	/**
 	 * This method enables to select the isInitial attribute
 	 * 
@@ -82,11 +91,10 @@ public class SyncStatePropertySection extends StatePropertySection {
 				TransactionUtil.getEditingDomain(eObject),
 				SyncgraphPackage.Literals.SYNC_STATE__IS_INITIAL);
 		context.bindValue(
-				ViewerProperties.singleSelection()
-						.observe(isInitialKindViewer), property
-						.observe(eObject));
+				ViewerProperties.singleSelection().observe(isInitialKindViewer),
+				property.observe(eObject));
 	}
-	
+
 	/**
 	 * This method enables to select the isFinal attribute
 	 * 
@@ -97,8 +105,8 @@ public class SyncStatePropertySection extends StatePropertySection {
 				TransactionUtil.getEditingDomain(eObject),
 				SyncgraphPackage.Literals.SYNC_STATE__IS_FINAL);
 		context.bindValue(
-				ViewerProperties.singleSelection()
-						.observe(isFinalKindViewer), property
-						.observe(eObject));
+				ViewerProperties.singleSelection().observe(isFinalKindViewer),
+				property.observe(eObject));
 	}
+
 }

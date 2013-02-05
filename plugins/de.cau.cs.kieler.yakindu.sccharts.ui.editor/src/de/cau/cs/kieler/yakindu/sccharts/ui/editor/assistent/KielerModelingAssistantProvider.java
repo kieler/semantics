@@ -62,10 +62,10 @@ public class KielerModelingAssistantProvider extends ModelingAssistantProvider {
 			return Lists.newArrayList(SYNC_STATE, SYNC_FINAL_STATE, CHOICE);
 		if (SyncChartsElementTypes.SYNC_STRONG_ABORT_TRANSITION
 				.equals(relationshipType))
-			return Lists.newArrayList(SYNC_INITIAL_STATE, SYNC_STATE, CHOICE);
+			return Lists.newArrayList(SYNC_STATE, SYNC_FINAL_STATE, CHOICE);
 		if (SyncChartsElementTypes.SYNC_NORMAL_TERMINATION_TRANSITION
 				.equals(relationshipType))
-			return Lists.newArrayList(SYNC_INITIAL_STATE, SYNC_STATE, CHOICE);
+			return Lists.newArrayList(SYNC_STATE, SYNC_FINAL_STATE, CHOICE);
 		return Collections.EMPTY_LIST;
 	}
 

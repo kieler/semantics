@@ -1,11 +1,14 @@
 package org.yakindu.sct.ui.editor.module;
 
-import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
+import org.eclipse.xtext.ui.editor.validation.MarkerCreator;
+import org.eclipse.xtext.ui.validation.MarkerTypeProvider;
+import org.eclipse.xtext.validation.IDiagnosticConverter;
+import org.yakindu.sct.model.sgraph.ui.validation.SCTMarkerCreator;
+import org.yakindu.sct.model.sgraph.ui.validation.SCTMarkerTypeProvider;
 import org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor;
 import org.yakindu.sct.ui.editor.editor.guice.IMetaModelTypeFactory;
-import org.yakindu.sct.ui.editor.editor.guice.InjectableEditPartFactory;
 import org.yakindu.sct.ui.editor.editor.guice.StatechartMetaModelTypeFactory;
 import org.yakindu.sct.ui.editor.editparts.BorderItemEditPart;
 import org.yakindu.sct.ui.editor.editparts.ChoiceEditPart;
@@ -30,6 +33,7 @@ import org.yakindu.sct.ui.editor.editparts.TransitionExpressionEditPart;
 import org.yakindu.sct.ui.editor.providers.DefaultSCTPaletteFactory;
 import org.yakindu.sct.ui.editor.providers.ISCTPaletteFactory;
 import org.yakindu.sct.ui.editor.providers.SemanticHints;
+import org.yakindu.sct.ui.editor.validation.SCTDiagnosticConverterImpl;
 import org.yakindu.sct.ui.editor.wizards.DefaultDiagramInitializer;
 import org.yakindu.sct.ui.editor.wizards.IDiagramInitializer;
 
@@ -44,6 +48,7 @@ import com.google.inject.name.Names;
 public class SCTModule extends AbstractModule implements SemanticHints {
 
 	public static final String FILE_EXTENSION = "fileExtension";
+	public static final String CONTRIBUTOR_ID = "propertySheetId";
 
 	/**
 	 * returns an implementation if {@link IMetaModelTypeFactory} that registers
@@ -81,11 +86,21 @@ public class SCTModule extends AbstractModule implements SemanticHints {
 		return "sct";
 	}
 
+	/**
+	 * Override the property sheet id if you want to contribute your own
+	 * property sheets via
+	 * org.eclipse.ui.views.properties.tabbed.propertyContributor extension
+	 * point
+	 * 
+	 */
+	protected String getContributorId() {
+		return "org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor";
+	}
+
 	protected Class<? extends IGraphicalEditPart> getTransitionEditPart() {
 		return TransitionEditPart.class;
 	}
 
-	// modified by wah
 	protected Class<? extends IGraphicalEditPart> getStateEditPart() {
 		return StateEditPart.class;
 	}
@@ -95,8 +110,9 @@ public class SCTModule extends AbstractModule implements SemanticHints {
 		bind(String.class).annotatedWith(Names.named(FILE_EXTENSION))
 				.toInstance(getFileExtension());
 		bind(IMetaModelTypeFactory.class).to(getMetaModelTypeFactory());
-		bind(EditPartFactory.class).to(InjectableEditPartFactory.class);
 		bind(ISCTPaletteFactory.class).to(getPaletteFactory());
+		bind(String.class).annotatedWith(Names.named(CONTRIBUTOR_ID))
+				.toInstance(getContributorId());
 		configureEditParts();
 	}
 
@@ -136,9 +152,21 @@ public class SCTModule extends AbstractModule implements SemanticHints {
 		bind(IGraphicalEditPart.class).annotatedWith(
 				Names.named(STATE_FIGURE_COMPARTMENT)).to(
 				StateFigureCompartmentEditPart.class);
+		// bind(IGraphicalEditPart.class).annotatedWith(Names.named(STATE)).to(StateEditPart.class);
+		bind(IGraphicalEditPart.class).annotatedWith(Names.named(CHOICE)).to(
+				ChoiceEditPart.class);
+		bind(IGraphicalEditPart.class).annotatedWith(Names.named(DEEPHISTORY))
+				.to(EntryEditPart.class);
+		bind(IGraphicalEditPart.class).annotatedWith(
+				Names.named(SHALLOWHISTORY)).to(EntryEditPart.class);
+		bind(IGraphicalEditPart.class).annotatedWith(Names.named(ENTRY)).to(
+				EntryEditPart.class);
+		bind(IGraphicalEditPart.class).annotatedWith(Names.named(FINALSTATE))
+				.to(FinalStateEditPart.class);
+		bind(IGraphicalEditPart.class).annotatedWith(Names.named(EXIT)).to(
+				ExitEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(Names.named(STATE)).to(
 				getStateEditPart());
-		// bind(IGraphicalEditPart.class).annotatedWith(Names.named(STATE)).to(StateEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(Names.named(CHOICE)).to(
 				ChoiceEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(Names.named(DEEPHISTORY))
@@ -153,12 +181,16 @@ public class SCTModule extends AbstractModule implements SemanticHints {
 				ExitEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(
 				Names.named(BORDER_ITEM_LABEL_CONTAINER)).to(
-				NamedElementLabelEditPart.class);
+
+		NamedElementLabelEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(
 				Names.named(BORDER_ITEM_LABEL)).to(BorderItemEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(
 				Names.named(SYNCHRONIZATION)).to(StateEditPart.class);
 		bind(IDiagramInitializer.class).to(getDiagramInitializer());
+		bind(MarkerCreator.class).to(SCTMarkerCreator.class);
+		bind(MarkerTypeProvider.class).to(SCTMarkerTypeProvider.class);
+		bind(IDiagnosticConverter.class).to(SCTDiagnosticConverterImpl.class);
 
 	}
 

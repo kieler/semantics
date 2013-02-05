@@ -63,14 +63,14 @@ public class StatechartPropertySection extends
 
 	}
 
-	private void createNameControl(Composite parent) {
+	protected void createNameControl(Composite parent) {
 		Label lblName = getToolkit().createLabel(parent, "Statechart Name: ");
 		txtName = getToolkit().createText(parent, "");
 		GridDataFactory.fillDefaults().applyTo(txtName);
 		GridDataFactory.fillDefaults().applyTo(lblName);
 	}
 
-	private void createRegionsControl(Composite rightColumn) {
+	protected void createRegionsControl(Composite rightColumn) {
 		Label label = getToolkit().createLabel(rightColumn, "Region Priority:");
 		GridDataFactory.fillDefaults().applyTo(label);
 		orderElementControl = new OrderElementControl(rightColumn,
@@ -79,7 +79,7 @@ public class StatechartPropertySection extends
 				.applyTo(orderElementControl);
 	}
 
-	private void createSpecificationControl(final Composite parent) {
+	protected void createSpecificationControl(final Composite parent) {
 		Injector injector = getInjector(SemanticTarget.StatechartSpecification);
 		if (injector != null) {
 			textControl = new StyledText(parent, SWT.MULTI | SWT.BORDER
@@ -102,7 +102,7 @@ public class StatechartPropertySection extends
 		orderElementControl.refreshInput();
 	}
 
-	private void bindSpecificationControl(EMFDataBindingContext context) {
+	protected void bindSpecificationControl(EMFDataBindingContext context) {
 		IEMFValueProperty modelProperty = EMFEditProperties.value(
 				TransactionUtil.getEditingDomain(eObject),
 				SGraphPackage.Literals.SPECIFICATION_ELEMENT__SPECIFICATION);
@@ -111,7 +111,7 @@ public class StatechartPropertySection extends
 		context.bindValue(uiProperty, modelProperty.observe(eObject));
 	}
 
-	private void bindNameControl(EMFDataBindingContext context) {
+	protected void bindNameControl(EMFDataBindingContext context) {
 		IEMFValueProperty property = EMFEditProperties.value(
 				TransactionUtil.getEditingDomain(eObject),
 				BasePackage.Literals.NAMED_ELEMENT__NAME);
