@@ -43,14 +43,6 @@
       </menuContribution>
    </extension>
    <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            class="de.cau.cs.kieler.core.ui.preferences.KielerPreferencePage"
-            id="de.cau.cs.kieler"
-            name="KIELER">
-      </page>
-   </extension>
-   <extension
          point="org.eclipse.ui.commands">
       <category
             description="%commands"

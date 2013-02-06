@@ -32,11 +32,12 @@ import de.cau.cs.kieler.core.krendering.KPosition
 import de.cau.cs.kieler.core.krendering.KXPosition
 import de.cau.cs.kieler.core.krendering.KYPosition
 import de.cau.cs.kieler.core.krendering.KLineWidth
-import de.cau.cs.kieler.core.krendering.KForegroundColor
 import de.cau.cs.kieler.klighd.TransformationOption
-import java.util.List
 import java.util.Set
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.krendering.KColor
 
 /**
  * Visualization of a dependency graph for a SyncChart.
@@ -47,10 +48,18 @@ import com.google.common.collect.Sets
  * 
  */
 class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KNode> {
+
+    // TODO: Fix checkstyle warnings (e.g. spaces for tabs)
+
+    @Inject
+    extension KRenderingUtil
 	
-	@Inject
-	extension KRenderingUtil
-	
+    @Inject
+    extension KColorExtensions
+    
+    @Inject
+    extension KRenderingExtensions
+    
 	static TransformationOption edgeStyle = TransformationOption::createCheckOption("Spline", false);
 	
 	override Set<TransformationOption> getTransformationOptions() {
@@ -95,18 +104,8 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 			val kNode = node.createRoundedRectangulareNode(25, 85);
 			kNode.KRendering.add(factory.createKLineWidth.of(2));
 			
-			val color = factory.createKForegroundColor();
-			if (node.id.endsWith("_S")) {
-				color.setRed(0);
-				color.setBlue(0);
-				color.setGreen(0);
-			}
-			else {
-				color.setRed(200);
-				color.setBlue(200);
-				color.setGreen(200);
-			}
-			kNode.KRendering.add(color);
+			kNode.KRendering.foreground = if (node.id.endsWith("_S")) "black".color else "gray".color;
+			
 			val nodeText = node.id.substring(0,node.id.length - 2);
 			
 			kNode.KRendering.add(factory.createKText.of(nodeText + " (" + node.priority + ")"));
@@ -121,8 +120,8 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 		val kEdge = if (edgeStyle.optionBooleanValue) dependency.createSplineEdge else dependency.createPolyLineEdge;
 		kEdge.KRendering.add(factory.createKLineWidth.of(2));
 		
-		var color = factory.createKForegroundColor();
-		var color2 = factory.createKForegroundColor();
+		var color = factory.createKColor();
+		var color2 = factory.createKColor();
 		if (dependency instanceof SignalDependency) {
 			color.setRed(255);
 			color2.setRed(255);
@@ -141,7 +140,7 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 			color.setGreen(255);
 			color2.setGreen(255);
 		}
-		kEdge.KRendering.add(color);
+		kEdge.KRendering.foreground = color;
 		(kEdge.KRendering as KPolyline).addConnectionArrow(1, color2, true);
 		
 //		val ellipse = factory.createKEllipse;
@@ -163,39 +162,34 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 	}
 	
 	
-	def KPolyline addConnectionArrow(KPolyline line, int scale, KForegroundColor kForegroundColor, boolean toHead) {
+	def KPolyline addConnectionArrow(KPolyline line, int scale, KColor foregroundColor, boolean toHead) {
 		val float actualScale = Math::sqrt(2*scale).floatValue;
         val dpd = factory.createKDecoratorPlacementData;
         dpd.height = 6 * actualScale;
         dpd.width = 6 * actualScale;
         dpd.XOffset = -7 * actualScale;
         dpd.YOffset = 4 - dpd.height; //(dpd.height.floatValue + (scale.floatValue / 2.floatValue)) / 2.floatValue;
-        dpd.relative = true; // this directs klighd to rotate the decorator accordingly!!
-        dpd.location = if (toHead) "1.0".float else 0;
+        dpd.rotateWithLine = true; // this directs klighd to rotate the decorator accordingly!!
+        dpd.relative = if (toHead) "1.0".float else 0;
         
-        val plp = factory.createKPolylinePlacementData;
-		plp.detailPlacementData = dpd;        
+        val arrow = factory.createKPolyline;
+        arrow.lineWidth = line.styles.filter(typeof(KLineWidth)).last?.lineWidth;
+        arrow.foreground = foregroundColor;
+        arrow.placementData = dpd;
         if (toHead) {
-            plp.points.addAll(newArrayList(
+            arrow.points.addAll(newArrayList(
         	    createPoint(createLeftPos(0,0), createTopPos(0,0)),
         	    createPoint(createRightPos(0,0), createTopPos(0.float,"0.5".float)),
         	    createPoint(createLeftPos(0,0), createBottomPos(0,0))
             ));
         } else {
-            plp.points.addAll(newArrayList(
+            arrow.points.addAll(newArrayList(
         	    createPoint(createRightPos(0,0), createTopPos(0,0)),
         	    createPoint(createLeftPos(0,0), createTopPos(0.float,"0.5".float)),
         	    createPoint(createRightPos(0,0), createBottomPos(0,0))
             ));
         }
 
-        val linewidth = factory.createKLineWidth;
-        linewidth.lineWidth = line.styles.filter(typeof(KLineWidth)).last?.lineWidth;
-        
-        val arrow =  factory.createKPolyline;
-        arrow.add(linewidth);
-        arrow.add(kForegroundColor);
-        arrow.placementData = plp;
 
         return line.add(arrow) as KPolyline;
     }
