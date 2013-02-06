@@ -51,8 +51,7 @@ public class KielerDiagramInitializer extends DefaultDiagramInitializer {
 
 		// Create the first state
 		SyncState state = syncfactory.createSyncState();
-		state.setIsInitial(true);
-		state.setName(INITIAL_STATE_NAME);
+		state.setName(statechart.getName());
 		// create the state region
 		Region stateregion = factory.createRegion();
 		state.getRegions().add(stateregion);
