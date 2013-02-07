@@ -101,9 +101,8 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
             node.transferAnnotationsOf(s);
 
             val figure = node.addRoundedRectangle(30, 30, if (s.isInitial) 4 else 2);
-            
             (
-                if (s.isFinal) figure.addRoundedRectangle(30, 30, figure.intLineWidth) => [
+                if (s.isFinal) figure.addRoundedRectangle(30, 30, figure.getLineWidthValue) => [
                     figure.cornerWidth = 40f;
                     figure.cornerHeight = 40f;
                     it.placementData = factory.createKAreaPlacementData() => [
