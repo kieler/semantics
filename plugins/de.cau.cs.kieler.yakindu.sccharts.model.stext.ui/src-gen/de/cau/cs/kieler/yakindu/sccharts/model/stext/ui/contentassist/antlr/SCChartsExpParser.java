@@ -166,7 +166,7 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDefinitionAccess().getIsStaticAssignment_3(), "rule__VariableDefinition__IsStaticAssignment_3");
 					put(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_4(), "rule__VariableDefinition__TypeAssignment_4");
 					put(grammarAccess.getVariableDefinitionAccess().getNameAssignment_5(), "rule__VariableDefinition__NameAssignment_5");
-					put(grammarAccess.getVariableDefinitionAccess().getVarInitialValueAssignment_6_1(), "rule__VariableDefinition__VarInitialValueAssignment_6_1");
+					put(grammarAccess.getVariableDefinitionAccess().getInitialValueAssignment_6_1(), "rule__VariableDefinition__InitialValueAssignment_6_1");
 					put(grammarAccess.getVariableDefinitionAccess().getVarCombineOperatorAssignment_7_1(), "rule__VariableDefinition__VarCombineOperatorAssignment_7_1");
 					put(grammarAccess.getLocalReactionAccess().getTriggerAssignment_0(), "rule__LocalReaction__TriggerAssignment_0");
 					put(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_1(), "rule__LocalReaction__EffectAssignment_1_1");

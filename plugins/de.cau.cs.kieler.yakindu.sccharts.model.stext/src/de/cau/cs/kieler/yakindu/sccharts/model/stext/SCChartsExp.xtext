@@ -30,7 +30,7 @@ SignalDefinition:
 /* ---- variable definition ---- */
 VariableDefinition:
 	{VariableDefinition} (isInput?='input')? (isOutput?='output')? (isStatic?='static')? type=[types::Type|FQN] name=ID
-	('=' varInitialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';
+	('=' initialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';
 
 /************************************************/
 /*			 	LocalReactionScope					*/
@@ -78,7 +78,7 @@ PrimaryExpression returns stext::Expression:
 	| ActiveStateReferenceExpression
 	| PreValueExpression
 	| ParenthesizedExpression
-	| EventValueReferenceExpression
+//	| EventValueReferenceExpression
 	//	| '(' Expression ')'
 ;
 

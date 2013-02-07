@@ -24,7 +24,7 @@ Require-Bundle: de.cau.cs.kieler.yakindu.sccharts.ui.integration.stext;bundle-ve
  org.eclipse.gmf.runtime.diagram.ui.providers;bundle-version="1.5.0",
  org.eclipse.gmf.runtime.diagram.ui.printing.render;bundle-version="1.4.1",
  org.eclipse.gmf.runtime.diagram.ui.providers.ide;bundle-version="1.2.0"
-Import-Package: de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph,
+Import-Package: de.cau.cs.kieler.yakindu.sgraph.syncgraph,
  org.eclipse.emf.databinding,
  org.eclipse.emf.databinding.edit,
  org.eclipse.jface.databinding.swt,

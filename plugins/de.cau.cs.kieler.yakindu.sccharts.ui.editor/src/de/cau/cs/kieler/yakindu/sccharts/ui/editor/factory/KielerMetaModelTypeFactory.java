@@ -1,7 +1,5 @@
 package de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory;
 
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphPackage;
-
 import org.yakindu.sct.ui.editor.editor.guice.StatechartMetaModelTypeFactory;
 import org.yakindu.sct.ui.editor.providers.SemanticHints;
 
@@ -10,6 +8,7 @@ import com.google.inject.Provider;
 
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.helper.SyncStateEditHelper;
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.helper.SyncTransitionEditHelper;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
 
 public class KielerMetaModelTypeFactory extends StatechartMetaModelTypeFactory {
 
@@ -51,8 +50,9 @@ public class KielerMetaModelTypeFactory extends StatechartMetaModelTypeFactory {
 	protected void registerSyncTransition(IMetaModelTypeAcceptor acceptor) {
 		acceptor.accept(new HintedMetamodelType(NORMAL_TRANSITION_ID,
 				getUrlFromPlugin("icons/obj16/transition-16.png"),
-				"Normal Termination", SyncgraphPackage.Literals.SYNC_TRANSITION,
-				transitionEditHelper.get(), SemanticHints.TRANSITION));
+				"Normal Termination",
+				SyncgraphPackage.Literals.SYNC_TRANSITION, transitionEditHelper
+						.get(), SemanticHints.TRANSITION));
 
 		acceptor.accept(new HintedMetamodelType(STRONG_TRANSITION_ID,
 				getUrlFromPlugin("icons/obj16/transition-strong-16.png"),

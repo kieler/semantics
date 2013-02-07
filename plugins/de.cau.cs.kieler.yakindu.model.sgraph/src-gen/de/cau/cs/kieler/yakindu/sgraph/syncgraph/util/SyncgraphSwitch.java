@@ -10,9 +10,9 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.util;
+package de.cau.cs.kieler.yakindu.sgraph.syncgraph.util;
 
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.*;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.*;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -42,7 +42,7 @@ import org.yakindu.sct.model.sgraph.Vertex;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphPackage
+ * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage
  * @generated
  */
 public class SyncgraphSwitch<T> extends Switch<T> {

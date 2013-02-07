@@ -46,11 +46,8 @@ public class RegionFigure extends RectangleFigure {
 
 	private void createContents() {
 		nameLabel = new WrappingLabel();
-		GridData data = GridDataFactory.fillDefaults().grab(true, false)
-				.getData();
-		nameLabel.setTextPlacement(PositionConstants.WEST);
-		this.add(nameLabel, data);
-
+		// MODIFIED BY WAH
+		addNameLabel();
 		/** Compartment container **/
 		compartmentPane = new RectangleFigure();
 		compartmentPane.setOutline(false);
@@ -58,6 +55,15 @@ public class RegionFigure extends RectangleFigure {
 		compartmentPane.setFill(false);
 		this.add(compartmentPane,
 				GridDataFactory.fillDefaults().grab(true, true).getData());
+	}
+
+	// modified by wah
+	protected void addNameLabel() {
+		GridData data = GridDataFactory.fillDefaults().grab(true, false)
+				.getData();
+
+		nameLabel.setTextPlacement(PositionConstants.WEST);
+		this.add(nameLabel, data);
 	}
 
 	public WrappingLabel getNameLabel() {

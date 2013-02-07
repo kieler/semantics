@@ -13,8 +13,8 @@ import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.ui.editor.providers.SemanticHints;
 import org.yakindu.sct.ui.editor.wizards.DefaultDiagramInitializer;
 
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncState;
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphFactory;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphFactory;
 
 public class KielerDiagramInitializer extends DefaultDiagramInitializer {
 
@@ -23,7 +23,6 @@ public class KielerDiagramInitializer extends DefaultDiagramInitializer {
 	private static final int INITIAL_REGION_WIDTH = 800;
 	private static final int INITIAL_REGION_HEIGHT = 400;
 	private static final String INITIAL_REGION_NAME = "main region";
-	private static final String INITIAL_STATE_NAME = "main state";
 
 	private SGraphFactory factory = SGraphFactory.eINSTANCE;
 	private SyncgraphFactory syncfactory = SyncgraphFactory.eINSTANCE;

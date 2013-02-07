@@ -59,7 +59,7 @@ import de.itemis.xtext.utils.gmf.resource.DirtyStateListener;
  */
 public class StatechartDiagramEditor extends InjectableDiagramDocumentEditor implements IGotoMarker {
 
-	public static final String ID = "org.yakindu.sct.ui.editor.editor.KielerStatechartDiagramEditor";
+	public static final String ID = "de.cau.cs.kieler.yakindu.sccharts.ui.editor.SCChartsDiagramEditor";
 
 	@Inject
 	@Named(SCTModule.CONTRIBUTOR_ID)

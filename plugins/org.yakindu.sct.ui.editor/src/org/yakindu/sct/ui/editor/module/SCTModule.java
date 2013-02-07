@@ -105,6 +105,11 @@ public class SCTModule extends AbstractModule implements SemanticHints {
 		return StateEditPart.class;
 	}
 
+	// added by wah
+	protected Class<? extends IGraphicalEditPart> getRegionEditPart() {
+		return RegionEditPart.class;
+	}
+
 	@Override
 	protected void configure() {
 		bind(String.class).annotatedWith(Names.named(FILE_EXTENSION))
@@ -128,9 +133,9 @@ public class SCTModule extends AbstractModule implements SemanticHints {
 		bind(IGraphicalEditPart.class).annotatedWith(
 				Names.named(STATECHART_TEXT_EXPRESSION)).to(
 				StatechartTextExpressionEditPart.class);
-
+		// modified by wah
 		bind(IGraphicalEditPart.class).annotatedWith(Names.named(REGION)).to(
-				RegionEditPart.class);
+				getRegionEditPart());
 		bind(IGraphicalEditPart.class).annotatedWith(Names.named(REGION_NAME))
 				.to(RegionNameEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(
@@ -152,19 +157,6 @@ public class SCTModule extends AbstractModule implements SemanticHints {
 		bind(IGraphicalEditPart.class).annotatedWith(
 				Names.named(STATE_FIGURE_COMPARTMENT)).to(
 				StateFigureCompartmentEditPart.class);
-		// bind(IGraphicalEditPart.class).annotatedWith(Names.named(STATE)).to(StateEditPart.class);
-		bind(IGraphicalEditPart.class).annotatedWith(Names.named(CHOICE)).to(
-				ChoiceEditPart.class);
-		bind(IGraphicalEditPart.class).annotatedWith(Names.named(DEEPHISTORY))
-				.to(EntryEditPart.class);
-		bind(IGraphicalEditPart.class).annotatedWith(
-				Names.named(SHALLOWHISTORY)).to(EntryEditPart.class);
-		bind(IGraphicalEditPart.class).annotatedWith(Names.named(ENTRY)).to(
-				EntryEditPart.class);
-		bind(IGraphicalEditPart.class).annotatedWith(Names.named(FINALSTATE))
-				.to(FinalStateEditPart.class);
-		bind(IGraphicalEditPart.class).annotatedWith(Names.named(EXIT)).to(
-				ExitEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(Names.named(STATE)).to(
 				getStateEditPart());
 		bind(IGraphicalEditPart.class).annotatedWith(Names.named(CHOICE)).to(
@@ -181,8 +173,7 @@ public class SCTModule extends AbstractModule implements SemanticHints {
 				ExitEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(
 				Names.named(BORDER_ITEM_LABEL_CONTAINER)).to(
-
-		NamedElementLabelEditPart.class);
+				NamedElementLabelEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(
 				Names.named(BORDER_ITEM_LABEL)).to(BorderItemEditPart.class);
 		bind(IGraphicalEditPart.class).annotatedWith(

@@ -284,19 +284,9 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getVariableDefinition_VarInitialValue()
-  {
-    return (EReference)variableDefinitionEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getVariableDefinition_VarCombineOperator()
   {
-    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -547,7 +537,6 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_INPUT);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_OUTPUT);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_STATIC);
-    createEReference(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_INITIAL_VALUE);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR);
 
     localReactionEClass = createEClass(LOCAL_REACTION);
@@ -641,7 +630,6 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     initEAttribute(getVariableDefinition_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getVariableDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_VarCombineOperator(), this.getCombineOperator(), "varCombineOperator", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(localReactionEClass, LocalReaction.class, "LocalReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

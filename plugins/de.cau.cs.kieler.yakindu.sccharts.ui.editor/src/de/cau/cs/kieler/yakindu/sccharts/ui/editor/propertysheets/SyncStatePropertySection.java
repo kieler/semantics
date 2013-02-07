@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.yakindu.sct.ui.editor.propertysheets.StatePropertySection;
 
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
 
 public class SyncStatePropertySection extends StatePropertySection {
 
@@ -24,19 +24,17 @@ public class SyncStatePropertySection extends StatePropertySection {
 	@Override
 	protected void createRightColumnControls(Composite rightColumn) {
 		createNameControl(rightColumn);
-	
+
 		createIsInitialControl(rightColumn);
 		createIsFinalControl(rightColumn);
 		createTransitionsControl(rightColumn);
-//		createSubmachineControl(rightColumn);
+		// createSubmachineControl(rightColumn);
 	}
 
 	@Override
 	protected void updateLabel() {
 	}
 
-	
-	
 	/**
 	 * Create the isInitial Combo. It allows to select false or true
 	 * 

@@ -8,12 +8,12 @@ import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.type.core.commands.SetValueCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphPackage;
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.TransitionType;
 import org.yakindu.sct.model.sgraph.EntryKind;
 import org.yakindu.sct.ui.editor.edithelper.TransitionEditHelper;
 
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerMetaModelTypeFactory;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType;
 
 public class SyncTransitionEditHelper extends TransitionEditHelper {
 

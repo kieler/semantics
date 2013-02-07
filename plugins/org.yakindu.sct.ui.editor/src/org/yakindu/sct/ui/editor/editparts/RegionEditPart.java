@@ -112,7 +112,7 @@ public class RegionEditPart extends ShapeNodeEditPart {
 		return getPrimaryShape().getCompartmentPane();
 	}
 
-	private RegionFigure getPrimaryShape() {
+	protected RegionFigure getPrimaryShape() {
 		return primaryShape;
 	}
 

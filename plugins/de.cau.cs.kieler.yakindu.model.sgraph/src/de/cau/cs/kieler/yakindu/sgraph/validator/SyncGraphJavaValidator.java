@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.yakindu.model.sgraph.validator;
+package de.cau.cs.kieler.yakindu.sgraph.validator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
+import org.yakindu.sct.model.sgraph.Choice;
 import org.yakindu.sct.model.sgraph.Entry;
 import org.yakindu.sct.model.sgraph.Region;
 import org.yakindu.sct.model.sgraph.Statechart;
@@ -13,9 +14,9 @@ import org.yakindu.sct.model.sgraph.Transition;
 import org.yakindu.sct.model.sgraph.Vertex;
 import org.yakindu.sct.model.sgraph.validation.SGraphJavaValidator;
 
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncState;
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncTransition;
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.TransitionType;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType;
 
 /**
  * This validator is intended to be used by a compositeValidator (See
@@ -29,7 +30,8 @@ import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.TransitionType;
  */
 public class SyncGraphJavaValidator extends SGraphJavaValidator {
 
-	private static final String ISSUE_INITIAL_ENTRY_WITH_IN_TRANS = "Initial state should have no incoming transition.";
+	// private static final String ISSUE_INITIAL_ENTRY_WITH_IN_TRANS =
+	// "Initial state should have no incoming transition.";
 	private static final String NORMALTERMINATION_WITH_TRIGGER = "A normal termination may not have a trigger.";
 	private static final String REGION_HAS_ONE_INITIAL_STATE = "Every region should have exactly one initial state.";
 	private static final String STATE_HAS_ONLY_ONE_NORMAL_TERMINATION = "A state can only have one outgoing normal termination.";
@@ -42,9 +44,42 @@ public class SyncGraphJavaValidator extends SGraphJavaValidator {
 			+ "termination has to contain at least one final state in every parallel region.";
 	private static final String NORMAL_TERMINATION_SIMPLESTATE = "Simple states may not have a normal termination transition";
 	private static final String STRONGABORT_ON_SIMPLESTATE = "Strong aborts on simple states don't make sense.";
-	private static final String INTER_LEVEL_TRANSITIONS = "SyncCharts do not support inter-level transitions!\nOnly"
+	private static final String INTER_LEVEL_TRANSITIONS = "Inter-level transitions are not forbiden!\nOnly"
 			+ " use transitions between states in the same region!\nYou"
 			+ " can use final states and normal termination transitions to emulate inter-level transition behavior.";
+	private static final String ISSUE_CHOICE_MORE_INCOMING_TRANSITIONS = "At least one of the transitions will never be taken.";
+	private static final String ISSUE_CHOICE_NO_INCOMING_TRANSITIONS = "Not reachable choice! Every choice needs an incoming transition.";
+
+	/**
+	 * Check if no reachable choice
+	 */
+	@Check(CheckType.FAST)
+	public void choiceNoIncomingTransition(Choice choice) {
+		// Choice without outgoing transition
+		if (choice.getIncomingTransitions().size() == 0) {
+			error(ISSUE_CHOICE_NO_INCOMING_TRANSITIONS, choice, null, -1);
+		}
+	}
+
+	/**
+	 * Warning if a choice has more then one incoming transition
+	 */
+	@Check(CheckType.FAST)
+	public void choiceIncomingTransitionCount(Choice choice) {
+		// Choice without outgoing transition
+		if (choice.getIncomingTransitions().size() > 1) {
+			warning(ISSUE_CHOICE_MORE_INCOMING_TRANSITIONS, choice, null, -1);
+		}
+	}
+
+	/**
+	 * Override nameIsNotEmpty to enable states without name
+	 */
+	@Check(CheckType.FAST)
+	@Override
+	public void nameIsNotEmpty(org.yakindu.sct.model.sgraph.State state) {
+
+	}
 
 	/**
 	 * Verify that states except initial states are reachable (have incoming
@@ -95,23 +130,23 @@ public class SyncGraphJavaValidator extends SGraphJavaValidator {
 	public void outgoingTransitionCount(SyncState finalState) {
 		if (finalState.isIsFinal()) {
 			if ((finalState.getOutgoingTransitions().size() > 0)) {
-				error(ISSUE_FINAL_STATE_OUTGOING_TRANSITION, finalState, null,
-						-1);
+				warning(ISSUE_FINAL_STATE_OUTGOING_TRANSITION, finalState,
+						null, -1);
 			}
 		}
 	}
 
-	/**
-	 * Verify that an initial state has no incoming transition.
-	 */
-	@Check(CheckType.FAST)
-	public void incomingTransitionCount(Vertex vertex) {
-		if (vertex.getIncomingTransitions().size() > 0
-				&& vertex instanceof SyncState
-				&& ((SyncState) vertex).isIsInitial()) {
-			error(ISSUE_INITIAL_ENTRY_WITH_IN_TRANS, vertex, null, -1);
-		}
-	}
+	// /**
+	// * Verify that an initial state has no incoming transition.
+	// */
+	// @Check(CheckType.FAST)
+	// public void incomingTransitionCount(Vertex vertex) {
+	// if (vertex.getIncomingTransitions().size() > 0
+	// && vertex instanceof SyncState
+	// && ((SyncState) vertex).isIsInitial()) {
+	// error(ISSUE_INITIAL_ENTRY_WITH_IN_TRANS, vertex, null, -1);
+	// }
+	// }
 
 	/**
 	 * Verify that a normal termination transition has no trigger

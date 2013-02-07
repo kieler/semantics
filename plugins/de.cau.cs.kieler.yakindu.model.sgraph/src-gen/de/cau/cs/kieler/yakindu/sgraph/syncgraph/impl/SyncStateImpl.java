@@ -10,10 +10,10 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.impl;
+package de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncState;
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -30,8 +30,8 @@ import org.yakindu.sct.model.sgraph.impl.StateImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.impl.SyncStateImpl#isIsInitial <em>Is Initial</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.impl.SyncStateImpl#isIsFinal <em>Is Final</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncStateImpl#isIsInitial <em>Is Initial</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncStateImpl#isIsFinal <em>Is Final</em>}</li>
  * </ul>
  * </p>
  *

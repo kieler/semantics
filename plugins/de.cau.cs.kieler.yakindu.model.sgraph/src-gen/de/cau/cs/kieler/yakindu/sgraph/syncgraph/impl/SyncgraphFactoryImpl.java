@@ -10,9 +10,9 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.impl;
+package de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.*;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;

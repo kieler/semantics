@@ -10,9 +10,9 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.util;
+package de.cau.cs.kieler.yakindu.sgraph.syncgraph.util;
 
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.*;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.*;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -39,7 +39,7 @@ import org.yakindu.sct.model.sgraph.Vertex;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphPackage
+ * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage
  * @generated
  */
 public class SyncgraphAdapterFactory extends AdapterFactoryImpl {
@@ -163,13 +163,13 @@ public class SyncgraphAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncTransition <em>Sync Transition</em>}'.
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition <em>Sync Transition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncTransition
+	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition
 	 * @generated
 	 */
 	public Adapter createSyncTransitionAdapter() {
@@ -177,13 +177,13 @@ public class SyncgraphAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncState <em>Sync State</em>}'.
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState <em>Sync State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncState
+	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState
 	 * @generated
 	 */
 	public Adapter createSyncStateAdapter() {

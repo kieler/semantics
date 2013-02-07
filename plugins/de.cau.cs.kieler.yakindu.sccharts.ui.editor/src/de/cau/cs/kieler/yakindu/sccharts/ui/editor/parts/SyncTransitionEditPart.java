@@ -6,8 +6,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.yakindu.sct.ui.editor.editor.figures.TransitionFigure;
 import org.yakindu.sct.ui.editor.editparts.TransitionEditPart;
 
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncTransition;
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.TransitionType;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType;
 
 public class SyncTransitionEditPart extends TransitionEditPart {
 

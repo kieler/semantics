@@ -6,7 +6,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://kieler.org/synccharts"
-            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphPackage"
+            class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage"
             genModel="model/syncgraph.genmodel"/>
    </extension>
   <!-- Editor -->
@@ -18,7 +18,7 @@
             default="true"
             extensions="scc"
             icon="icons/obj16/logo-16.png"
-            id="org.yakindu.sct.ui.editor.editor.KielerStatechartDiagramEditor"
+            id="de.cau.cs.kieler.yakindu.sccharts.ui.editor.SCChartsDiagramEditor"
             matchingStrategy="org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditorMatchingStrategy"
             name="KIELER SCCharts Editor">
       </editor>
@@ -73,7 +73,7 @@
 <!-- Property Tabs -->
 <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor" id="prop-contrib">
       <propertyContributor
-            contributorId="org.yakindu.sct.ui.editor.editor.KielerStatechartDiagramEditor"
+            contributorId="de.cau.cs.kieler.yakindu.sccharts.ui.editor.SCChartsDiagramEditor"
             labelProvider="org.yakindu.sct.ui.editor.propertysheets.SheetLabelProvider">
          <propertyCategory category="domain"/>
          <propertyCategory category="visual"/>
@@ -82,7 +82,7 @@
    </extension>
    
     <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="proptabs">
-      <propertyTabs contributorId="org.yakindu.sct.ui.editor.editor.KielerStatechartDiagramEditor">
+      <propertyTabs contributorId="de.cau.cs.kieler.yakindu.sccharts.ui.editor.SCChartsDiagramEditor">
           <propertyTab
              category="domain"
              id="property.tab.domain"
@@ -101,7 +101,7 @@
 <!-- Propertysheets -->
 <!-- Property Tabs -->   
    <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="propsections">
-      <propertySections contributorId="org.yakindu.sct.ui.editor.editor.KielerStatechartDiagramEditor">
+      <propertySections contributorId="de.cau.cs.kieler.yakindu.sccharts.ui.editor.SCChartsDiagramEditor">
 		<!-- State model section -->         
          <propertySection
             id="property.section.domain.state" 
@@ -125,7 +125,8 @@
             id="property.section.domain.region" 
             tab="property.tab.domain"
             class="org.yakindu.sct.ui.editor.propertysheets.RegionPropertySection">
-            <input type="org.yakindu.sct.ui.editor.editparts.RegionEditPart"/>
+            <!--<input type="org.yakindu.sct.ui.editor.editparts.RegionEditPart"/>-->
+            <input type="de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts.SyncRegionEditPart"/>
          </propertySection>
             <!-- Choice model section -->         
          <propertySection

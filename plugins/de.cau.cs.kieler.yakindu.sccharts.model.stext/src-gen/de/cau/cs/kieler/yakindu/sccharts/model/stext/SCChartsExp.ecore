@@ -8,8 +8,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOutput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStatic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="varInitialValue" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="varCombineOperator" eType="#//CombineOperator"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocalReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//LocalReaction"/>

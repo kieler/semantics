@@ -143,8 +143,8 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_5_0 = (RuleCall)cNameAssignment_5.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
 		private final Keyword cEqualsSignKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cVarInitialValueAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cVarInitialValueExpressionParserRuleCall_6_1_0 = (RuleCall)cVarInitialValueAssignment_6_1.eContents().get(0);
+		private final Assignment cInitialValueAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cInitialValueExpressionParserRuleCall_6_1_0 = (RuleCall)cInitialValueAssignment_6_1.eContents().get(0);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
 		private final Keyword cWithKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
 		private final Assignment cVarCombineOperatorAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
@@ -161,12 +161,12 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	{VariableDefinition} isInput?="input"? isOutput?="output"? isStatic?="static"? type=[types::Type|FQN] name=ID ("="
 		//
-		//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";";
+		//	initialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{VariableDefinition} isInput?="input"? isOutput?="output"? isStatic?="static"? type=[types::Type|FQN] name=ID ("="
 		//
-		//varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";"
+		//initialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{VariableDefinition}
@@ -205,17 +205,17 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_5_0() { return cNameIDTerminalRuleCall_5_0; }
 
-		//("=" varInitialValue=Expression)?
+		//("=" initialValue=Expression)?
 		public Group getGroup_6() { return cGroup_6; }
 
 		//"="
 		public Keyword getEqualsSignKeyword_6_0() { return cEqualsSignKeyword_6_0; }
 
-		//varInitialValue=Expression
-		public Assignment getVarInitialValueAssignment_6_1() { return cVarInitialValueAssignment_6_1; }
+		//initialValue=Expression
+		public Assignment getInitialValueAssignment_6_1() { return cInitialValueAssignment_6_1; }
 
 		//Expression
-		public RuleCall getVarInitialValueExpressionParserRuleCall_6_1_0() { return cVarInitialValueExpressionParserRuleCall_6_1_0; }
+		public RuleCall getInitialValueExpressionParserRuleCall_6_1_0() { return cInitialValueExpressionParserRuleCall_6_1_0; }
 
 		//("with" varCombineOperator=CombineOperator)?
 		public Group getGroup_7() { return cGroup_7; }
@@ -608,7 +608,6 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cActiveStateReferenceExpressionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cPreValueExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cParenthesizedExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cEventValueReferenceExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		/// ***************************************** Expressions ******************************************* * / // Override the stext::PrimaryExpression
 		//
@@ -616,18 +615,18 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//// and add PreValueExpressionreturns that returns the value of a variable in the previous tick. 
 		//
+		////	| EventValueReferenceExpression
+		//
 		////	| '(' Expression ')'
 		//
 		//PrimaryExpression returns stext::Expression:
 		//
 		//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | PreValueExpression |
 		//
-		//	ParenthesizedExpression | EventValueReferenceExpression;
+		//	ParenthesizedExpression;
 		public ParserRule getRule() { return rule; }
 
-		//PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | PreValueExpression | ParenthesizedExpression |
-		//
-		//EventValueReferenceExpression
+		//PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | PreValueExpression | ParenthesizedExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//PrimitiveValueExpression
@@ -644,9 +643,6 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ParenthesizedExpression
 		public RuleCall getParenthesizedExpressionParserRuleCall_4() { return cParenthesizedExpressionParserRuleCall_4; }
-
-		//EventValueReferenceExpression
-		public RuleCall getEventValueReferenceExpressionParserRuleCall_5() { return cEventValueReferenceExpressionParserRuleCall_5; }
 	}
 
 	public class PreValueExpressionElements extends AbstractParserRuleElementFinder {
@@ -912,7 +908,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	{VariableDefinition} isInput?="input"? isOutput?="output"? isStatic?="static"? type=[types::Type|FQN] name=ID ("="
 	//
-	//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";";
+	//	initialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";";
 	public VariableDefinitionElements getVariableDefinitionAccess() {
 		return (pVariableDefinition != null) ? pVariableDefinition : (pVariableDefinition = new VariableDefinitionElements());
 	}
@@ -1038,13 +1034,15 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// and add PreValueExpressionreturns that returns the value of a variable in the previous tick. 
 	//
+	////	| EventValueReferenceExpression
+	//
 	////	| '(' Expression ')'
 	//
 	//PrimaryExpression returns stext::Expression:
 	//
 	//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | PreValueExpression |
 	//
-	//	ParenthesizedExpression | EventValueReferenceExpression;
+	//	ParenthesizedExpression;
 	public PrimaryExpressionElements getPrimaryExpressionAccess() {
 		return (pPrimaryExpression != null) ? pPrimaryExpression : (pPrimaryExpression = new PrimaryExpressionElements());
 	}

@@ -15,8 +15,8 @@ import org.yakindu.sct.ui.editor.editparts.StateEditPart;
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.figures.SyncStateFigure;
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncState;
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState;
+import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
 
 /**
  * Implement the Initial and Final state EditParts
@@ -74,7 +74,7 @@ public class SyncStateEditPart extends StateEditPart {
 		}
 		super.handleNotificationEvent(notification);
 	}
-	
+
 	/**
 	 * Update the State type (thick border for initial state and double line
 	 * border for final state)

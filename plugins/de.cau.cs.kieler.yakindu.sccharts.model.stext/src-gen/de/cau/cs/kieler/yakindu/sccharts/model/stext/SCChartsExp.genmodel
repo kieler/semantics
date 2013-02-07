@@ -30,7 +30,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isInput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isOutput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isStatic"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//VariableDefinition/varInitialValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/varCombineOperator"/>
     </genClasses>
     <genClasses ecoreClass="SCChartsExp.ecore#//LocalReaction"/>

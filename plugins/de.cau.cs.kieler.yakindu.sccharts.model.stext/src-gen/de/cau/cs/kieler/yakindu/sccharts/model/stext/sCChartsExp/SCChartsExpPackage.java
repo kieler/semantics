@@ -227,22 +227,13 @@ public interface SCChartsExpPackage extends EPackage
   int VARIABLE_DEFINITION__IS_STATIC = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Var Initial Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__VAR_INITIAL_VALUE = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 3;
-
-  /**
    * The feature id for the '<em><b>Var Combine Operator</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 4;
+  int VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Variable Definition</em>' class.
@@ -251,7 +242,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION_FEATURE_COUNT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 5;
+  int VARIABLE_DEFINITION_FEATURE_COUNT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.LocalReactionImpl <em>Local Reaction</em>}' class.
@@ -682,17 +673,6 @@ public interface SCChartsExpPackage extends EPackage
   EAttribute getVariableDefinition_IsStatic();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#getVarInitialValue <em>Var Initial Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Var Initial Value</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#getVarInitialValue()
-   * @see #getVariableDefinition()
-   * @generated
-   */
-  EReference getVariableDefinition_VarInitialValue();
-
-  /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#getVarCombineOperator <em>Var Combine Operator</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -997,14 +977,6 @@ public interface SCChartsExpPackage extends EPackage
      * @generated
      */
     EAttribute VARIABLE_DEFINITION__IS_STATIC = eINSTANCE.getVariableDefinition_IsStatic();
-
-    /**
-     * The meta object literal for the '<em><b>Var Initial Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference VARIABLE_DEFINITION__VAR_INITIAL_VALUE = eINSTANCE.getVariableDefinition_VarInitialValue();
 
     /**
      * The meta object literal for the '<em><b>Var Combine Operator</b></em>' attribute feature.
