@@ -2,62 +2,6 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.views">
-      <category
-            id="de.cau.cs.kieler"
-            name="KIELER">
-      </category>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               id="de.cau.cs.kieler"
-               label="KIELER"
-               mnemonic="K">
-            <separator
-                  name="de.cau.cs.kieler.core.ui.separator2"
-                  visible="true">
-            </separator>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="de.cau.cs.kieler"
-               label="KIELER">
-         </toolbar>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="de.cau.cs.kieler"
-               label="KIELER"
-               mnemonic="K">
-            <separator
-                  name="de.cau.cs.kieler.core.ui.separator1"
-                  visible="true">
-            </separator>
-         </menu>
-      </menuContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <category
-            description="%commands"
-            id="de.cau.cs.kieler"
-            name="KIELER">
-      </category>
-   </extension>
-   <extension
-         point="org.eclipse.ui.newWizards">
-      <category
-            id="de.cau.cs.kieler"
-            name="KIELER">
-      </category>
-   </extension>
-   <extension
          point="org.eclipse.core.expressions.definitions">
       <definition
             id="de.cau.cs.kieler.expression.editorActive">
@@ -122,20 +66,6 @@
             </not>
          </enablement>
       </commonWizard>
-   </extension>
-   <extension
-         point="org.eclipse.ui.importWizards">
-      <category
-            id="de.cau.cs.kieler"
-            name="KIELER">
-      </category>
-   </extension>
-   <extension
-         point="org.eclipse.ui.exportWizards">
-      <category
-            id="de.cau.cs.kieler"
-            name="KIELER">
-      </category>
    </extension>
    <extension
          point="org.eclipse.ui.startup">

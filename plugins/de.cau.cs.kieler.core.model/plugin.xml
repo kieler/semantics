@@ -16,20 +16,20 @@
       <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="de.cau.cs.kieler"
+            categoryId="org.eclipse.ui.category.edit"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.ValidateActionHandler"
             id="de.cau.cs.kieler.core.model.validate"
             name="Validate">
       </command>
       <command
-            categoryId="de.cau.cs.kieler"
+            categoryId="org.eclipse.ui.category.edit"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.RemoveMarkerHandler"
             description="Remove the visible problem markers in the current diagram, e.g. to make a proper screenshot."
             id="de.cau.cs.kieler.core.model.removeMarkers"
             name="Remove Problem Markers">
       </command>
       <command
-            categoryId="de.cau.cs.kieler"
+            categoryId="org.eclipse.ui.category.file"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.ConvertModelHandler"
             id="de.cau.cs.kieler.core.model.convert"
             name="Convert to Textual">
@@ -40,7 +40,7 @@
          </commandParameter>
       </command>
             <command
-            categoryId="de.cau.cs.kieler"
+            categoryId="org.eclipse.ui.category.edit"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.ZoomToFitHandler"
             description="Zoom so that the content fits the whole canvas"
             id="de.cau.cs.kieler.core.model.zoom"
