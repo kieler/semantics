@@ -1,38 +1,61 @@
 package de.cau.cs.kieler.synccharts.klighd
 
-import de.cau.cs.kieler.klighd.transformations.AbstractTransformation
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.klighd.TransformationContext
-import de.cau.cs.kieler.synccharts.State
-import de.cau.cs.kieler.synccharts.Region
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import javax.inject.Inject
-import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.LineStyle
-import de.cau.cs.kieler.synccharts.Transition
+import com.google.inject.Injector
+
+import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.EdgeRouting
+import de.cau.cs.kieler.core.krendering.KRenderingFactory
+import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.KPolygon
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.KRendering
+import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
+
+import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.kiml.options.Direction
+import de.cau.cs.kieler.kiml.options.EdgeRouting
+
+import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.transformations.AbstractTransformation
+import de.cau.cs.kieler.klighd.TransformationContext
+
+import de.cau.cs.kieler.synccharts.State
+import de.cau.cs.kieler.synccharts.Region
+import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.TransitionType
+import de.cau.cs.kieler.synccharts.text.actions.ActionsStandaloneSetup
+import de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider
+
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.serializer.ISerializer
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
     
     private static val KRenderingFactory factory = KRenderingFactory::eINSTANCE;
+    private static val Injector i = ActionsStandaloneSetup::doSetup();
+    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
+    private static val Resource TMP_RES = i.getInstance(typeof(ResourceSet))
+            .createResource(URI::createFileURI("dummy.action"));
     
     @Inject
     extension KNodeExtensions
     
     @Inject
     extension KEdgeExtensions
+    
+    @Inject
+    extension KLabelExtensions
     
     @Inject
     extension KRenderingExtensions
@@ -102,9 +125,10 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
 
             val figure = node.addRoundedRectangle(30, 30, if (s.isInitial) 4 else 2);
             (
-                if (s.isFinal) figure.addRoundedRectangle(30, 30, figure.getLineWidthValue) => [
+                if (s.isFinal) figure.addRoundedRectangle(30, 30) => [
                     figure.cornerWidth = 40f;
                     figure.cornerHeight = 40f;
+                    it.styleRef = figure;
                     it.placementData = factory.createKAreaPlacementData() => [
                         it.topLeft = createKPosition(LEFT, 5, 0, TOP, 5, 0);
                         it.bottomRight = createKPosition(RIGHT, 5, 0, BOTTOM, 5, 0);
@@ -166,6 +190,14 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
                         it.addNormalTerminationDecorator() 
                 };
             ];
+            scopeProvider.parent = t.sourceState;
+
+            t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
+                serializer.serialize(t.copy => [
+                    TMP_RES.contents.clear;
+                    TMP_RES.contents += it;
+                ]), 11, KlighdConstants::DEFAULT_FONT_NAME
+            );
         ];
     }
     
