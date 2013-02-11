@@ -687,9 +687,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     public String getMaudeGenCodeLocation() throws MalformedURLException, URISyntaxException {
         String maudeFileString = KiemUtil.resolveBundleOrWorkspaceFile(
                 this.getModelFilePath().toString()).toString();
-        maudeFileString = maudeFileString.substring(0, maudeFileString.lastIndexOf("/"));
+        maudeFileString = maudeFileString.substring(0, maudeFileString.lastIndexOf("."));
+        // FixME: check this with cmot
+        System.out.println("Maudefilestring: " + maudeFileString);
         maudeFileString += ".maude";
+        System.out.println("Maudefilestring: " + maudeFileString);
         maudeFileString = maudeFileString.replace("file://", "");
+        System.out.println("Maudefilestring: " + maudeFileString);
         return (maudeFileString);
     }
 
@@ -909,15 +913,17 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     /**
      * Get the editor input as fill directory.
-     * 
-     * @param editor
-     *            the editor
+     *
      * @return the string
      */
     private String getLocation() {
         IPath outPathTmp = this.getModelFilePath();
+      //Todo: remove systemout
+        System.out.println(outPathTmp.toString());
         outPathTmp = outPathTmp.removeFileExtension();
+        System.out.println(outPathTmp.toString());
         outPathTmp = outPathTmp.removeLastSegments(1);
+        System.out.println(outPathTmp.toString());
         return outPathTmp.toString();
     }
 

@@ -9,12 +9,261 @@ updatesite fix! extensions not found in models folder because it seems not to be
 «EXTENSION Extensions»
 
 «DEFINE main FOR Model»
+   «EXPAND smLoadAll FOREACH packagedElement»
    «EXPAND sm FOREACH packagedElement»
+   «EXPAND smVerts FOREACH packagedElement»
+   «EXPAND smEvents FOREACH packagedElement»
+   «EXPAND smActions FOREACH packagedElement»
+   «EXPAND smTransitions FOREACH packagedElement»
+   «EXPAND smStateMachine FOREACH packagedElement»
 «ENDDEFINE»
 
 «DEFINE main FOR Package»
+   «EXPAND smLoadAll FOREACH packagedElement»
    «EXPAND sm FOREACH packagedElement»
+   «EXPAND smVerts FOREACH packagedElement»
+   «EXPAND smEvents FOREACH packagedElement»
+   «EXPAND smActions FOREACH packagedElement»
+   «EXPAND smTransitions FOREACH packagedElement»
+   «EXPAND smStateMachine FOREACH packagedElement»
 «ENDDEFINE»
+
+«DEFINE smLoadAll FOR StateMachine»
+  «FILE "loadAll.maude"»
+    load EVENTSDEF«((String)(GLOBALVAR modelname))».maude
+    load ACTIONSDEF«((String)(GLOBALVAR modelname))».maude
+    load VERTSDEF«((String)(GLOBALVAR modelname))».maude
+    load TRANSITIONSDEF«((String)(GLOBALVAR modelname))».maude
+    load STATEMACHINEDEF«((String)(GLOBALVAR modelname))».maude
+    
+    red 2 .
+  «ENDFILE»
+«ENDDEFINE»
+
+
+
+«DEFINE smEvents FOR StateMachine»
+  «FILE "EVENTSDEF" + ((String)(GLOBALVAR modelname)) +".maude"»
+
+load «((String)(GLOBALVAR maudebasecode))»EVENTSSYNTAX
+
+fmod EVENTSDEF is
+  including EVENTSET .
+*** // Events //
+  ops «FOREACH this.getTriggerEvents() AS event SEPARATOR " "-»«event-»«ENDFOREACH-» : -> Event .
+  op allEvents : -> EventSet .
+
+endfm
+  «ENDFILE»
+«ENDDEFINE»
+
+
+«DEFINE smActions FOR StateMachine»
+  «FILE "ACTIONSDEF" + ((String)(GLOBALVAR modelname)) +".maude"»
+
+load «((String)(GLOBALVAR maudebasecode))»ACTIONSSYNTAX
+
+fmod ACTIONSDEF is
+  including ACTIONSSYNTAX .
+
+*** // allActions //
+«REM» ToDo: no double entries, no nils? nil == falsche transitionen, fehlende beschriftung«ENDREM»
+«REM» skip needs to be added automatically «ENDREM»
+  ops skip «FOREACH this.getActions() AS action SEPARATOR " "-»«action-»«ENDFOREACH-» : -> Action .
+
+endfm
+
+	«ENDFILE»
+«ENDDEFINE»
+
+
+
+
+«DEFINE smVerts FOR StateMachine»
+	«FILE "VERTSDEF" + ((String)(GLOBALVAR modelname)) +".maude"»
+
+load «((String)(GLOBALVAR maudebasecode))»VERTSSYNTAX
+
+fmod VERTSDEF is
+  including VERTSSYNTAX .
+***// States //
+  «IF  this.getStates().size > 0-»
+  ops «FOREACH this.getStates() AS state SEPARATOR " "-»«((State)state).getId()-»«ENDFOREACH-» : -> ModState .
+	«FOREACH this.getMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .
+  «ENDIF-»
+
+«REM»also generate history and deep history states«ENDREM»
+***// PseudoStates //
+*** history
+  «IF  this.getHistoryStates().size > 0-»
+  ops «FOREACH this.getHistoryStates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> ModState .
+	«FOREACH this.getHistoryMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .
+  «ENDIF-»
+*** choice
+  «IF  this.getRelevantPseudotates().size > 0-»
+  ops «FOREACH this.getRelevantPseudotates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> ModState .
+	«FOREACH this.getPseudoMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .
+  «ENDIF-»
+
+  	
+***// Regions //
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«region.getId()-»«ENDFOREACH-» : -> Region .
+	«FOREACH this.getMaudeRegions() AS region SEPARATOR " .\n"-»«region-»«ENDFOREACH-» .
+***// allVerts //
+  op allVerts : -> Verts .
+  eq allVerts = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«region.getId()-»«ENDFOREACH-» , «FOREACH this.getStates() AS state SEPARATOR ", "-»«((State)state).getId()-»«ENDFOREACH-» .
+
+endfm
+	«ENDFILE»
+«ENDDEFINE»
+
+
+«DEFINE smTransitions FOR StateMachine»
+	«FILE "TRANSITIONSDEF" + ((String)(GLOBALVAR modelname)) +".maude"»
+
+load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONSSYNTAX
+load EVENTSDEF«((String)(GLOBALVAR modelname))».maude
+load ACTIONSDEF«((String)(GLOBALVAR modelname))».maude
+load VERTSDEF«((String)(GLOBALVAR modelname))».maude
+
+fmod TRANSITIONSDEF is
+  including COMPOUNDTRANSITIONSSYNTAX .
+  including EVENTSDEF .
+  including ACTIONSDEF .
+  including VERTSDEF .
+  
+«REM» First calculate psudostates (Fork / Join) for complex transition ids «ENDREM»
+«clearDoneVertices()-»
+«FOREACH this.getForkJoinChoice() AS pseudostate-»
+   «IF !pseudostate.isDone("OUTGOING")-»
+   «ignore(pseudostate.getPseudoSourceVertices().toString())-»
+   «addPseudostate(pseudostate)-»
+   «ENDIF-»
+«ENDFOREACH-»
+«REM»No getPseudostates() can be queried«ENDREM»
+
+*******************
+*** basic transitions op declaration
+*******************      
+*** ToDo: Add trigger statt noevent!!
+  ops «FOREACH this.getTransitions().select(e|e.isBasicTrans())  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-»
+      : -> BasicTransition .
+
+*******************
+*** compound transitions op declaration
+*******************      
+  ops «FOREACH getPseudostates()  AS pseudostate SEPARATOR "  "-»ctr«pseudostate.getId()-»«ENDFOREACH-»
+  «FOREACH this.getTransitions().select(e|e.isBasicCompound())  AS transition SEPARATOR "  "-»ctr«transition.getId()-»«ENDFOREACH-»
+      : -> Compoundtransition .
+
+      
+*******************
+*** compound transitions
+*******************
+  «FOREACH this.getTransitions().select(e|e.isBasicCompound()) AS transition SEPARATOR '\n'-»«transition.genMaudeBasicCompound()-»«ENDFOREACH-»
+
+
+  «FOREACH this.getTransitions().select(e|e.isBasicTrans()) AS transition SEPARATOR '\n'-»«transition.genMaude2()-»«ENDFOREACH-»
+
+  «REM» We now work thru the Fork and Join and Choice nodes. «ENDREM»
+  «resetPseudostates()-»
+  «REM»Clear marked vertices«ENDREM»
+  «clearDoneVertices()-»
+  «FOREACH this.getForkJoinChoice() AS pseudostate SEPARATOR '\n'-»
+   «IF !pseudostate.isDone("OUTGOING")-»
+   «REM» Protocol: getPseudoTargetTransitions has to be called BEFORE getComplexTransitionInformation can be called.
+   Therefore the PsuedoSourceTransitions list is memorized as a temporary variable as it is used later than the
+   getComplexTransitionInformation. 
+   «ENDREM»
+   «LET pseudostate.getPseudoSourceTransitions() AS PseudoSourceTransitions -»
+   	eq ctr«pseudostate.getId()-» = «pseudostate.getClassIdentifier()-» "ctr«pseudostate.getId()-»" «getComplexTransitionInformation("TRIGGER").get(0)» («FOREACH PseudoSourceTransitions AS source SEPARATOR ','-»tr«source.getId()-»«ENDFOREACH-») («FOREACH pseudostate.getPseudoTargetTransitions() AS target SEPARATOR ','-»tr«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
+   «ENDLET»
+   «addPseudostate(pseudostate)-»
+   «ENDIF-»
+  «ENDFOREACH-»
+  
+  ***(
+  «getComplexTransitionInformation("TRIGGER").get(0)»
+  
+  )***
+  
+  
+  «REM»
+   TODO: 
+     allTrans mit allen basic und simple transitions?! Dann sollte man die genMaude2() Funktion eher (als Codegenerierung) 
+     nach Xpand verlagern und die (wiederverwendbare) Auswahlfunktion/ID-Funktion nach Xtend.
+   
+  «ENDREM»
+  
+  op allTrans : -> Compoundtransitions .
+  eq allTrans = «FOREACH getPseudostates()  AS pseudostate SEPARATOR ",  "-»ctr«pseudostate.getId()-»«ENDFOREACH-»
+  				«IF (getPseudostates().size > 0 && this.getTransitions().select(e|e.isBasicCompound()).size > 0)-»,«ENDIF-»
+				«FOREACH this.getTransitions().select(e|e.isBasicCompound()) AS transition SEPARATOR ", "-»ctr«transition.getId()-»«ENDFOREACH-»
+ 				.
+
+endfm
+	«ENDFILE»
+«ENDDEFINE»
+
+
+
+
+
+«DEFINE smStateMachine FOR StateMachine»
+	«FILE "STATEMACHINEDEF" + ((String)(GLOBALVAR modelname)) +".maude"»
+
+load «((String)(GLOBALVAR maudebasecode))»STATEMACHINESYNTAX
+load EVENTSDEF«((String)(GLOBALVAR modelname))».maude
+load ACTIONSDEF«((String)(GLOBALVAR modelname))».maude
+load VERTSDEF«((String)(GLOBALVAR modelname))».maude
+load TRANSITIONSDEF«((String)(GLOBALVAR modelname))».maude
+
+fmod STATEMACHINEDEF is
+  including STATEMACHINESYNTAX .
+  including COMPOUNDTRANSITIONSSYNTAX .
+  including EVENTSDEF .
+  including ACTIONSDEF .
+  including VERTSDEF .
+  including TRANSITIONSDEF .
+
+  	«REM»FIXME: only consider regions containing initial states for ops and allDefs«ENDREM» 
+***// defaults //
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"def"+region.getId()-»«ENDFOREACH-» : -> Default .
+  «FOREACH this.getInitialTransitions() AS transition SEPARATOR ""-»«transition.genDefault()-»«ENDFOREACH-»
+  op allDefs : -> Defaults .
+  eq allDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"def"+region.getId()-»«ENDFOREACH-» .
+  
+	«REM»FIXME: only consider regions containing history states with outgoing transitions for ops and allDefs«ENDREM» 
+***// deep defaults //
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"dDef"+region.getId()-»«ENDFOREACH-» : -> DeepDefault .
+  «FOREACH this.getDHDTransitions() AS transition SEPARATOR ""-»«transition.genDHDefault()-»«ENDFOREACH-»
+  op allDHDefs : -> DeepDefaults .
+  eq allDHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"dDef"+region.getId()-»«ENDFOREACH-» .
+
+	«REM»FIXME: only consider regions containing history states with outgoing transitions for ops and allDefs«ENDREM» 
+***// shallow defaults //
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"sDef"+region.getId()-»«ENDFOREACH-» : -> ShallowDefault .
+  «FOREACH this.getSHDTransitions() AS transition SEPARATOR ""-»«transition.genSHDefault()-»«ENDFOREACH-»
+  
+  op allSHDefs : -> ShallowDefaults .
+  eq allSHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"sDef"+region.getId()-»«ENDFOREACH-» .
+
+***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 
+  op SMINT : -> StateMachine .
+  ***// ToDo: add entry/exit actions//
+  eq SMINT = (allVerts allDefs allSHDefs allDHDefs (empty).EntryActions (empty).ExitActions allTrans) .
+
+
+endfm
+	«ENDFILE»
+«ENDDEFINE»
+
+
+
+
+
+
+
 
 
 	
@@ -27,6 +276,8 @@ load «((String)(GLOBALVAR maudebasecode))»EVENTSSYNTAX
 load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONSSYNTAX
 load «((String)(GLOBALVAR maudebasecode))»STATEMACHINESYNTAX
 load «((String)(GLOBALVAR maudebasecode))»SEMANTICSSYNTAX
+load «((String)(GLOBALVAR maudebasecode))»VARIABLES
+
 
 fmod eclipseInterface is
   including COMPOUNDTRANSITIONSSYNTAX .
@@ -145,6 +396,12 @@ fmod eclipseInterface is
    «ENDIF-»
   «ENDFOREACH-»
   
+  ***(
+  «getComplexTransitionInformation("TRIGGER").get(0)»
+  
+  )***
+  
+  
   «REM»
    TODO: 
      allTrans mit allen basic und simple transitions?! Dann sollte man die genMaude2() Funktion eher (als Codegenerierung) 
@@ -261,7 +518,19 @@ search (maState (stableC (<Konfiguration>) <HistoryKonfiguration>) (<EventSet>))
 
 
 «REM» needed else branch - should not be taken but should not have any effect «ENDREM»
+«DEFINE smLoadAll FOR PackageableElement»
+«ENDDEFINE»
 «DEFINE sm FOR PackageableElement»
+«ENDDEFINE»
+«DEFINE smVerts FOR PackageableElement»
+«ENDDEFINE»
+«DEFINE smEvents FOR PackageableElement»
+«ENDDEFINE»
+«DEFINE smActions FOR PackageableElement»
+«ENDDEFINE»
+«DEFINE smTransitions FOR PackageableElement»
+«ENDDEFINE»
+«DEFINE smStateMachine FOR PackageableElement»
 «ENDDEFINE»
 
 «REM» needed else branch - should not be taken but should not have any effect «ENDREM»
