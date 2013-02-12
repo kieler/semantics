@@ -9,7 +9,6 @@ import org.yakindu.sct.ui.editor.wizards.IDiagramInitializer;
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerDiagramInitializer;
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerMetaModelTypeFactory;
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerPaletteFactory;
-import de.cau.cs.kieler.yakindu.sccharts.ui.editor.figures.SyncRegionFigure;
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts.SyncRegionEditPart;
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts.SyncStateEditPart;
 import de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts.SyncTransitionEditPart;
@@ -20,23 +19,22 @@ public class KielerModule extends SCTModule {
 	protected String getContributorId() {
 		return "de.cau.cs.kieler.yakindu.sccharts.ui.editor.SCChartsDiagramEditor";
 	}
-	
+
 	@Override
 	protected Class<? extends IGraphicalEditPart> getTransitionEditPart() {
 		return SyncTransitionEditPart.class;
 	}
-	
+
 	@Override
 	protected Class<? extends IGraphicalEditPart> getStateEditPart() {
 		return SyncStateEditPart.class;
 	}
-	
+
 	@Override
 	protected Class<? extends IGraphicalEditPart> getRegionEditPart() {
-		// TODO Auto-generated method stub
 		return SyncRegionEditPart.class;
 	}
-	
+
 	@Override
 	protected Class<? extends IMetaModelTypeFactory> getMetaModelTypeFactory() {
 		return KielerMetaModelTypeFactory.class;
@@ -51,7 +49,6 @@ public class KielerModule extends SCTModule {
 	protected Class<? extends IDiagramInitializer> getDiagramInitializer() {
 		return KielerDiagramInitializer.class;
 	}
-
 
 	@Override
 	protected String getFileExtension() {

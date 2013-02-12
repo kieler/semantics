@@ -12,6 +12,7 @@ package de.cau.cs.kieler.yakindu.sccharts.ui.editor.assistent;
 
 import static de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.SyncChartsElementTypes.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class KielerModelingAssistantProvider extends ModelingAssistantProvider {
 	public List<IElementType> getTypesForTarget(IAdaptable source,
 			IElementType relationshipType) {
 		if (SyncChartsElementTypes.SYNC_WEAK_ABORT_TRANSITION
-				.equals(relationshipType))
+				.equals(relationshipType)) 
 			return Lists.newArrayList(SYNC_STATE, SYNC_FINAL_STATE, CHOICE);
 		if (SyncChartsElementTypes.SYNC_STRONG_ABORT_TRANSITION
 				.equals(relationshipType))
