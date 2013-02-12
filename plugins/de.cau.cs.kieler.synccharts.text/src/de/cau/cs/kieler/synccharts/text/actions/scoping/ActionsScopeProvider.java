@@ -29,6 +29,10 @@ import de.cau.cs.kieler.synccharts.Scope;
  */
 public class ActionsScopeProvider extends AbstractDeclarativeScopeProvider {
     public static EObject parent;
+    
+    public void setParent(EObject theParent) {
+        parent = theParent;
+    }
 
     @Override
     public IScope getScope(EObject context, EReference reference) {

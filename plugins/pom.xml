@@ -153,6 +153,7 @@
     <module>de.cau.cs.kieler.synccharts.editor</module>
     <module>de.cau.cs.kieler.synccharts.examples</module>
     <module>de.cau.cs.kieler.synccharts.kivi</module>
+    <module>de.cau.cs.kieler.synccharts.klighd</module>
     <module>de.cau.cs.kieler.synccharts.ksbase</module>
     <module>de.cau.cs.kieler.synccharts.sim.ptolemy</module>
     <module>de.cau.cs.kieler.synccharts.sim.sc</module>
