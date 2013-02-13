@@ -63,14 +63,15 @@ fmod ACTION is
     protecting VARIABLES .
     sort Action .
 
-    op _ := _ : VariableID Expression -> Action .
+    op assignAct _ := _ : VariableID Expression -> Action .
     op noac : -> Action .
     op absAct _ : String -> Action .
     
 
 endfm
-
-*** red vID "a" := 1 .
+red vID "a" .
+red (1).Expression .
+red assignAct vID "a" := 1 .
 *** red noac .
 *** red absAct "bla" .
 

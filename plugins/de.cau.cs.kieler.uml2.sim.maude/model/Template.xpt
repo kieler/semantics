@@ -16,6 +16,7 @@ updatesite fix! extensions not found in models folder because it seems not to be
    «EXPAND smActions FOREACH packagedElement»
    «EXPAND smTransitions FOREACH packagedElement»
    «EXPAND smStateMachine FOREACH packagedElement»
+   «EXPAND smInterface FOREACH packagedElement»
 «ENDDEFINE»
 
 «DEFINE main FOR Package»
@@ -26,6 +27,7 @@ updatesite fix! extensions not found in models folder because it seems not to be
    «EXPAND smActions FOREACH packagedElement»
    «EXPAND smTransitions FOREACH packagedElement»
    «EXPAND smStateMachine FOREACH packagedElement»
+   «EXPAND smInterface FOREACH packagedElement»
 «ENDDEFINE»
 
 «DEFINE smLoadAll FOR StateMachine»
@@ -37,6 +39,7 @@ updatesite fix! extensions not found in models folder because it seems not to be
     load STATEMACHINEDEF«((String)(GLOBALVAR modelname))».maude
     
     red 2 .
+    red assignAct (vID "y" := (2).Expression) .
   «ENDFILE»
 «ENDDEFINE»
 
@@ -64,12 +67,13 @@ endfm
 load «((String)(GLOBALVAR maudebasecode))»ACTIONSSYNTAX
 
 fmod ACTIONSDEF is
-  including ACTIONSSYNTAX .
+  including ACTION .
 
 *** // allActions //
 «REM» ToDo: no double entries, no nils? nil == falsche transitionen, fehlende beschriftung«ENDREM»
 «REM» skip needs to be added automatically «ENDREM»
-  ops skip «FOREACH this.getActions() AS action SEPARATOR " "-»«action-»«ENDFOREACH-» : -> Action .
+
+  op skip : -> Action .
 
 endfm
 
@@ -90,6 +94,7 @@ fmod VERTSDEF is
   «IF  this.getStates().size > 0-»
   ops «FOREACH this.getStates() AS state SEPARATOR " "-»«((State)state).getId()-»«ENDFOREACH-» : -> ModState .
 	«FOREACH this.getMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .
+
   «ENDIF-»
 
 «REM»also generate history and deep history states«ENDREM»
@@ -211,14 +216,21 @@ endfm
 
 «DEFINE smStateMachine FOR StateMachine»
 	«FILE "STATEMACHINEDEF" + ((String)(GLOBALVAR modelname)) +".maude"»
-
-load «((String)(GLOBALVAR maudebasecode))»STATEMACHINESYNTAX
+«REM»
+load «((String)(GLOBALVAR maudebasecode))»VERTSSYNTAX
+load «((String)(GLOBALVAR maudebasecode))»ACTIONSSYNTAX
+load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONSSYNTAX
+«ENDREM»
 load EVENTSDEF«((String)(GLOBALVAR modelname))».maude
 load ACTIONSDEF«((String)(GLOBALVAR modelname))».maude
 load VERTSDEF«((String)(GLOBALVAR modelname))».maude
 load TRANSITIONSDEF«((String)(GLOBALVAR modelname))».maude
+load «((String)(GLOBALVAR maudebasecode))»STATEMACHINESYNTAX
 
-fmod STATEMACHINEDEF is
+fmod eclipseInterface is
+  including VARIABLES .
+  including ACTION .
+  including ACTIONSSYNTAX .
   including STATEMACHINESYNTAX .
   including COMPOUNDTRANSITIONSSYNTAX .
   including EVENTSDEF .
@@ -248,10 +260,36 @@ fmod STATEMACHINEDEF is
   op allSHDefs : -> ShallowDefaults .
   eq allSHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"sDef"+region.getId()-»«ENDFOREACH-» .
 
+
+	
+	 «REM»
+	 entryAc__ : Vert Action -> EntryAction
+	 laenge «((String)((State)state).entry.name).length» 
+		«IF ((String)((State)state).entry.name) != "" -»
+		Name «((String)((State)state).entry.name)»
+		entryAc «((State)state).getId()-» «((State)state).entry.name-»  
+	«ENDIF-»	
+	 «ENDREM»
+	op allEntry : -> EntryActions . 
+	eq allEntry = 
+	«IF !this.getStates().select(e|((String)((State)e).entry.name).length > 0).isEmpty -»
+	«FOREACH this.getStates().select(e|((String)((State)e).entry.name).length > 0) AS state SEPARATOR " ,\n"-»entryAc «((State)state).getId()-» «((State)state).entry.name-»  
+	«ENDFOREACH-» .
+	«ELSE»
+		(empty).EntryActions .
+	«ENDIF-»
+	op allExit : -> ExitActions . 
+	eq allExit = 
+	«IF !this.getStates().select(e|((String)((State)e).exit.name).length > 0).isEmpty -»
+	«FOREACH this.getStates().select(e|((String)((State)e).exit.name).length > 0) AS state SEPARATOR " ,\n"-»exitAc «((State)state).getId()-» «((State)state).exit.name-»  
+	«ENDFOREACH-» .
+	«ELSE»
+		(empty).ExitActions .
+	«ENDIF-»
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 
   op SMINT : -> StateMachine .
   ***// ToDo: add entry/exit actions//
-  eq SMINT = (allVerts allDefs allSHDefs allDHDefs (empty).EntryActions (empty).ExitActions allTrans) .
+  eq SMINT = (allVerts allDefs allSHDefs allDHDefs allEntry allExit allTrans) .
 
 
 endfm
@@ -260,15 +298,112 @@ endfm
 
 
 
+«DEFINE smInterface FOR StateMachine»
+	«FILE ((String)(GLOBALVAR modelname)) +".maude"»
+load model-checker
+*** next we need getter functions for the SM
+load STATEMACHINEDEF«((String)(GLOBALVAR modelname))».maude
+load «((String)(GLOBALVAR maudebasecode))»SMGETTER
+load «((String)(GLOBALVAR maudebasecode))»VERTS .
+load «((String)(GLOBALVAR maudebasecode))»ACTIONS .
+load «((String)(GLOBALVAR maudebasecode))»UMLPRIORITY
+load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONS
+load «((String)(GLOBALVAR maudebasecode))»STATEMACHINE
+load «((String)(GLOBALVAR maudebasecode))»SEMANTICSSYNTAX
+load «((String)(GLOBALVAR maudebasecode))»SEMANTICS
+mod INIT is
+	including SEMANTICS .
+	including SATISFACTION .
+	including LTL .
+	including MODEL-CHECKER .
+	including LTL-SIMPLIFIER .
+	
+	
+	subsort MState < State .
+
+	vars msst mastate : MState .
+	vars V V2 : Verts .
+	var E : EventSet .
+	vars HC : HistoryConfs .
+	
+	subsort MState < State .
+	
+	op aCf : Actions -> Prop .
+	op inC : Verts -> Prop .
+    ceq maState (stableC<STATEC> V <HISTC> HC <ENDCONF>) E |= inC(V2) = true if (V2 subset V)  .
+	eq msst |= inC(V) = false [owise] .
+
+	
+	op isDone_ : MState -> Bool .
+	eq isDone (maState (doneC<STATEC> V <HISTC> HC <ENDCONF>) E) = true .
+	eq isDone msst = false [owise] .
+	
+endm
 
 
+load «((String)(GLOBALVAR maudebasecode))»QUEUESYNTAX
+ mod QUEUESEMANTICS is 
+ including eclipseInterface .
+ including QUEUESIGNATURE .
+     sort QueueStatus .
+ var el : EventSet .
+ var event : Event .
+ var equeue : EventQueue .
+
+ op <ready_ > : EventQueue -> QueueStatus .
+ op <schedule__ > : EventQueue Event -> QueueStatus .
+ op <initQueue> : -> QueueStatus .
+  
+ rl <ready (QUEUE event, el ENDQUEUE) > => <schedule (QUEUE el, event ENDQUEUE) event > .
+ rl <schedule equeue event >  => <ready equeue > .
+ rl <initQueue> => <ready emptyQueue > . 
+
+endm
+
+load «((String)(GLOBALVAR maudebasecode))»ACCS
+load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
+load «((String)(GLOBALVAR maudebasecode))»BFPOOLANDSM
+
+*** set trace on .
+«REM»
+
+***(
+set break on .
+break select finishedRTCESINT discardFSetESINT .
+)***
+
+***(
+#####################################################
+##          Interface     for     Eclipse          ##        
+#####################################################
+search (maState (stableC (State0-885791716,R-2027565592) empty) (d,a)) =>* mastate such that isDone mastate . 
+
+bzw. wenn die ID-String bei dir anders sind 
+
+search (maState (stableC (<Konfiguration>) <HistoryKonfiguration>) (<EventSet>)) =>* mastate such that isDone mastate . 
+
+
+- <Konfiguration>: eine durch "," getrennte Menge von Regionen und States. Diese muss den Anforderungen im Standard entsprechen.
+  z.B: Rroot, Csusp (aus Test.maude)
+- <HistoryKonfiguration>: kann erstmal empty sein
+- <EventSet>: eine durch "," getrennte Menge von Events die abgearbeitet werden soll
+
+
+
+
+)***
+«ENDREM»
+
+
+	«ENDFILE»
+«ENDDEFINE»
 
 
 
 
 	
 «DEFINE sm FOR StateMachine»
-	«FILE ((String)(GLOBALVAR modelname)) +".maude"»
+	«FILE ((String)(GLOBALVAR modelname)) +".maude_old"»
 	
 load «((String)(GLOBALVAR maudebasecode))»VERTSSYNTAX
 load «((String)(GLOBALVAR maudebasecode))»ACTIONSSYNTAX
@@ -531,6 +666,8 @@ search (maState (stableC (<Konfiguration>) <HistoryKonfiguration>) (<EventSet>))
 «DEFINE smTransitions FOR PackageableElement»
 «ENDDEFINE»
 «DEFINE smStateMachine FOR PackageableElement»
+«ENDDEFINE»
+«DEFINE smInterface FOR PackageableElement»
 «ENDDEFINE»
 
 «REM» needed else branch - should not be taken but should not have any effect «ENDREM»

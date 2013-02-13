@@ -364,9 +364,9 @@ String genMaude2(Transition n):
  '('+(n.source.getId()) + ') ' +
 // 'empty '+ 
 // guard 
- n.guard2() + ' ' +
+ n.guard2() + ' (' +
 // Action
- n.action2() + ' '+
+ n.action2() + ') '+
 // target 
  '('+n.target.getId()+') ' +' .'   
 ;
