@@ -162,7 +162,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
                     //add childArea itself
                     it.children += factory.createKChildArea() => [
                         it.setGridPlacementData()
-                        // .from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+                        .from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                         
                     ];
                 }
@@ -201,7 +201,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
                     TMP_RES.contents += it;
             ]);
             t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-                label, 50, KlighdConstants::DEFAULT_FONT_NAME
+                label, 11, KlighdConstants::DEFAULT_FONT_NAME
             );
             t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel("<" + String::valueOf(
                 if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)
