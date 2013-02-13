@@ -2,13 +2,10 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp;
 
-import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
-
 import org.yakindu.sct.model.sgraph.Trigger;
 
 import org.yakindu.sct.model.stext.stext.Expression;
+import org.yakindu.sct.model.stext.stext.RegularEventSpec;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,9 +15,10 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getTriggers <em>Triggers</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getStateReaction <em>State Reaction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getTrigger <em>Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}</li>
  * </ul>
  * </p>
@@ -32,20 +30,30 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public interface ReactionTrigger extends Trigger
 {
   /**
-   * Returns the value of the '<em><b>Triggers</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+   * Returns the value of the '<em><b>State Reaction</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Triggers</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>State Reaction</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Triggers</em>' containment reference list.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage#getReactionTrigger_Triggers()
+   * @return the value of the '<em>State Reaction</em>' containment reference.
+   * @see #setStateReaction(StateReaction)
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage#getReactionTrigger_StateReaction()
    * @model containment="true"
    * @generated
    */
-  EList<EObject> getTriggers();
+  StateReaction getStateReaction();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getStateReaction <em>State Reaction</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>State Reaction</em>' containment reference.
+   * @see #getStateReaction()
+   * @generated
+   */
+  void setStateReaction(StateReaction value);
 
   /**
    * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
@@ -98,6 +106,32 @@ public interface ReactionTrigger extends Trigger
    * @generated
    */
   void setDelay(int value);
+
+  /**
+   * Returns the value of the '<em><b>Trigger</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Trigger</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Trigger</em>' containment reference.
+   * @see #setTrigger(RegularEventSpec)
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage#getReactionTrigger_Trigger()
+   * @model containment="true"
+   * @generated
+   */
+  RegularEventSpec getTrigger();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getTrigger <em>Trigger</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Trigger</em>' containment reference.
+   * @see #getTrigger()
+   * @generated
+   */
+  void setTrigger(RegularEventSpec value);
 
   /**
    * Returns the value of the '<em><b>Guard Expression</b></em>' containment reference.

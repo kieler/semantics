@@ -1,13 +1,13 @@
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.validation
 
-import org.yakindu.sct.model.stext.validation.TypeInferrer
-import org.yakindu.sct.model.stext.stext.FeatureCall
-import org.yakindu.base.types.Event
-import org.yakindu.sct.model.stext.stext.EventRaisingExpression
-import org.yakindu.sct.model.stext.stext.EventValueReferenceExpression
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.PreValueExpression
+import org.yakindu.base.types.Event
 import org.yakindu.base.types.Feature
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
+import org.yakindu.sct.model.stext.stext.EventRaisingExpression
+import org.yakindu.sct.model.stext.stext.EventValueReferenceExpression
+import org.yakindu.sct.model.stext.stext.FeatureCall
+import org.yakindu.sct.model.stext.validation.TypeInferrer
 
 /**
  * 
@@ -44,8 +44,11 @@ class SCCTypeInferrer extends TypeInferrer implements ISCCTypeInferrer {
 		return ts.^boolean
 	}
 
+	/**
+ 	 * Pre(dec) operator should have the type of dec
+ 	 */
 	def dispatch inferType(PreValueExpression expression){
 		return getType(expression.value)
 	}
-
+	
 }

@@ -317,8 +317,8 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalReactionTrigger");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cReactionTriggerAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cTriggersAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTriggersStateReactionParserRuleCall_1_0 = (RuleCall)cTriggersAssignment_1.eContents().get(0);
+		private final Assignment cStateReactionAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cStateReactionStateReactionParserRuleCall_1_0 = (RuleCall)cStateReactionAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cAmpersandAmpersandKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cIsImmediateAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
@@ -326,8 +326,8 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cDelayAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
 		private final RuleCall cDelayINTTerminalRuleCall_2_2_0 = (RuleCall)cDelayAssignment_2_2.eContents().get(0);
 		private final Alternatives cAlternatives_2_3 = (Alternatives)cGroup_2.eContents().get(3);
-		private final Assignment cTriggersAssignment_2_3_0 = (Assignment)cAlternatives_2_3.eContents().get(0);
-		private final RuleCall cTriggersRegularEventSpecParserRuleCall_2_3_0_0 = (RuleCall)cTriggersAssignment_2_3_0.eContents().get(0);
+		private final Assignment cTriggerAssignment_2_3_0 = (Assignment)cAlternatives_2_3.eContents().get(0);
+		private final RuleCall cTriggerRegularEventSpecParserRuleCall_2_3_0_0 = (RuleCall)cTriggerAssignment_2_3_0.eContents().get(0);
 		private final Group cGroup_2_3_1 = (Group)cAlternatives_2_3.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_2_3_1_0 = (Keyword)cGroup_2_3_1.eContents().get(0);
 		private final Assignment cGuardExpressionAssignment_2_3_1_1 = (Assignment)cGroup_2_3_1.eContents().get(1);
@@ -336,12 +336,12 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LocalReactionTrigger returns sgraph::Trigger:
 		//
-		//	{ReactionTrigger} triggers+=StateReaction ("&&" isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "["
+		//	{ReactionTrigger} stateReaction=StateReaction ("&&" isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "["
 		//
 		//	guardExpression=Expression "]")?)?;
 		public ParserRule getRule() { return rule; }
 
-		//{ReactionTrigger} triggers+=StateReaction ("&&" isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "["
+		//{ReactionTrigger} stateReaction=StateReaction ("&&" isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "["
 		//
 		//guardExpression=Expression "]")?)?
 		public Group getGroup() { return cGroup; }
@@ -349,13 +349,13 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		//{ReactionTrigger}
 		public Action getReactionTriggerAction_0() { return cReactionTriggerAction_0; }
 
-		//triggers+=StateReaction
-		public Assignment getTriggersAssignment_1() { return cTriggersAssignment_1; }
+		//stateReaction=StateReaction
+		public Assignment getStateReactionAssignment_1() { return cStateReactionAssignment_1; }
 
 		//StateReaction
-		public RuleCall getTriggersStateReactionParserRuleCall_1_0() { return cTriggersStateReactionParserRuleCall_1_0; }
+		public RuleCall getStateReactionStateReactionParserRuleCall_1_0() { return cStateReactionStateReactionParserRuleCall_1_0; }
 
-		//("&&" isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "[" guardExpression=Expression "]")?)?
+		//("&&" isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "[" guardExpression=Expression "]")?)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//"&&"
@@ -373,14 +373,14 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getDelayINTTerminalRuleCall_2_2_0() { return cDelayINTTerminalRuleCall_2_2_0; }
 
-		//(triggers+=RegularEventSpec | "[" guardExpression=Expression "]")?
+		//(trigger=RegularEventSpec | "[" guardExpression=Expression "]")?
 		public Alternatives getAlternatives_2_3() { return cAlternatives_2_3; }
 
-		//triggers+=RegularEventSpec
-		public Assignment getTriggersAssignment_2_3_0() { return cTriggersAssignment_2_3_0; }
+		//trigger=RegularEventSpec
+		public Assignment getTriggerAssignment_2_3_0() { return cTriggerAssignment_2_3_0; }
 
 		//RegularEventSpec
-		public RuleCall getTriggersRegularEventSpecParserRuleCall_2_3_0_0() { return cTriggersRegularEventSpecParserRuleCall_2_3_0_0; }
+		public RuleCall getTriggerRegularEventSpecParserRuleCall_2_3_0_0() { return cTriggerRegularEventSpecParserRuleCall_2_3_0_0; }
 
 		//"[" guardExpression=Expression "]"
 		public Group getGroup_2_3_1() { return cGroup_2_3_1; }
@@ -495,8 +495,8 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cDelayAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cDelayINTTerminalRuleCall_2_0 = (RuleCall)cDelayAssignment_2.eContents().get(0);
 		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
-		private final Assignment cTriggersAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
-		private final RuleCall cTriggersRegularEventSpecParserRuleCall_3_0_0 = (RuleCall)cTriggersAssignment_3_0.eContents().get(0);
+		private final Assignment cTriggerAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cTriggerRegularEventSpecParserRuleCall_3_0_0 = (RuleCall)cTriggerAssignment_3_0.eContents().get(0);
 		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
 		private final Assignment cGuardExpressionAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
@@ -509,10 +509,10 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//ReactionTrigger returns sgraph::Trigger:
 		//
-		//	{ReactionTrigger} isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "[" guardExpression=Expression "]");
+		//	{ReactionTrigger} isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "[" guardExpression=Expression "]");
 		public ParserRule getRule() { return rule; }
 
-		//{ReactionTrigger} isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "[" guardExpression=Expression "]")
+		//{ReactionTrigger} isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "[" guardExpression=Expression "]")
 		public Group getGroup() { return cGroup; }
 
 		//{ReactionTrigger}
@@ -530,14 +530,14 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getDelayINTTerminalRuleCall_2_0() { return cDelayINTTerminalRuleCall_2_0; }
 
-		//triggers+=RegularEventSpec | "[" guardExpression=Expression "]"
+		//trigger=RegularEventSpec | "[" guardExpression=Expression "]"
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
-		//triggers+=RegularEventSpec
-		public Assignment getTriggersAssignment_3_0() { return cTriggersAssignment_3_0; }
+		//trigger=RegularEventSpec
+		public Assignment getTriggerAssignment_3_0() { return cTriggerAssignment_3_0; }
 
 		//RegularEventSpec
-		public RuleCall getTriggersRegularEventSpecParserRuleCall_3_0_0() { return cTriggersRegularEventSpecParserRuleCall_3_0_0; }
+		public RuleCall getTriggerRegularEventSpecParserRuleCall_3_0_0() { return cTriggerRegularEventSpecParserRuleCall_3_0_0; }
 
 		//"[" guardExpression=Expression "]"
 		public Group getGroup_3_1() { return cGroup_3_1; }
@@ -943,7 +943,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} triggers+=StateReaction ("&&" isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "["
+	//	{ReactionTrigger} stateReaction=StateReaction ("&&" isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "["
 	//
 	//	guardExpression=Expression "]")?)?;
 	public LocalReactionTriggerElements getLocalReactionTriggerAccess() {
@@ -1004,7 +1004,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//ReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "[" guardExpression=Expression "]");
+	//	{ReactionTrigger} isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "[" guardExpression=Expression "]");
 	public ReactionTriggerElements getReactionTriggerAccess() {
 		return (pReactionTrigger != null) ? pReactionTrigger : (pReactionTrigger = new ReactionTriggerElements());
 	}

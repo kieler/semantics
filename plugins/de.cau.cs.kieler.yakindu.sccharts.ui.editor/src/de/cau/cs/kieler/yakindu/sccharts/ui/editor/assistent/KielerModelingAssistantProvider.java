@@ -10,9 +10,15 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.ui.editor.assistent;
 
-import static de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.SyncChartsElementTypes.*;
+import static de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.SyncChartsElementTypes.CHOICE;
+import static de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.SyncChartsElementTypes.REGION;
+import static de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.SyncChartsElementTypes.SYNC_FINAL_STATE;
+import static de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.SyncChartsElementTypes.SYNC_INITIAL_STATE;
+import static de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.SyncChartsElementTypes.SYNC_NORMAL_TERMINATION_TRANSITION;
+import static de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.SyncChartsElementTypes.SYNC_STATE;
+import static de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.SyncChartsElementTypes.SYNC_STRONG_ABORT_TRANSITION;
+import static de.cau.cs.kieler.yakindu.sccharts.ui.editor.editor.SyncChartsElementTypes.SYNC_WEAK_ABORT_TRANSITION;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

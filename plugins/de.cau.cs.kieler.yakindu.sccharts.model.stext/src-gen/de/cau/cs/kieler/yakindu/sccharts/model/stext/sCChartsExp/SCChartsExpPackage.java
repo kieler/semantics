@@ -488,13 +488,13 @@ public interface SCChartsExpPackage extends EPackage
   int REACTION_TRIGGER = 11;
 
   /**
-   * The feature id for the '<em><b>Triggers</b></em>' containment reference list.
+   * The feature id for the '<em><b>State Reaction</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REACTION_TRIGGER__TRIGGERS = SGraphPackage.TRIGGER_FEATURE_COUNT + 0;
+  int REACTION_TRIGGER__STATE_REACTION = SGraphPackage.TRIGGER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
@@ -515,13 +515,22 @@ public interface SCChartsExpPackage extends EPackage
   int REACTION_TRIGGER__DELAY = SGraphPackage.TRIGGER_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REACTION_TRIGGER__TRIGGER = SGraphPackage.TRIGGER_FEATURE_COUNT + 3;
+
+  /**
    * The feature id for the '<em><b>Guard Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REACTION_TRIGGER__GUARD_EXPRESSION = SGraphPackage.TRIGGER_FEATURE_COUNT + 3;
+  int REACTION_TRIGGER__GUARD_EXPRESSION = SGraphPackage.TRIGGER_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Reaction Trigger</em>' class.
@@ -530,7 +539,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REACTION_TRIGGER_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 4;
+  int REACTION_TRIGGER_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionEffectImpl <em>Reaction Effect</em>}' class.
@@ -796,15 +805,15 @@ public interface SCChartsExpPackage extends EPackage
   EClass getReactionTrigger();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getTriggers <em>Triggers</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getStateReaction <em>State Reaction</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Triggers</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getTriggers()
+   * @return the meta object for the containment reference '<em>State Reaction</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getStateReaction()
    * @see #getReactionTrigger()
    * @generated
    */
-  EReference getReactionTrigger_Triggers();
+  EReference getReactionTrigger_StateReaction();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}'.
@@ -827,6 +836,17 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    */
   EAttribute getReactionTrigger_Delay();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getTrigger <em>Trigger</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Trigger</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getTrigger()
+   * @see #getReactionTrigger()
+   * @generated
+   */
+  EReference getReactionTrigger_Trigger();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}'.
@@ -1093,12 +1113,12 @@ public interface SCChartsExpPackage extends EPackage
     EClass REACTION_TRIGGER = eINSTANCE.getReactionTrigger();
 
     /**
-     * The meta object literal for the '<em><b>Triggers</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>State Reaction</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference REACTION_TRIGGER__TRIGGERS = eINSTANCE.getReactionTrigger_Triggers();
+    EReference REACTION_TRIGGER__STATE_REACTION = eINSTANCE.getReactionTrigger_StateReaction();
 
     /**
      * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
@@ -1115,6 +1135,14 @@ public interface SCChartsExpPackage extends EPackage
      * @generated
      */
     EAttribute REACTION_TRIGGER__DELAY = eINSTANCE.getReactionTrigger_Delay();
+
+    /**
+     * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REACTION_TRIGGER__TRIGGER = eINSTANCE.getReactionTrigger_Trigger();
 
     /**
      * The meta object literal for the '<em><b>Guard Expression</b></em>' containment reference feature.

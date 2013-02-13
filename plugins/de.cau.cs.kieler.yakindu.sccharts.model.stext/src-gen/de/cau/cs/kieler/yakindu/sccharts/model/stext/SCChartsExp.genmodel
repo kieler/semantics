@@ -44,9 +44,10 @@
     </genClasses>
     <genClasses ecoreClass="SCChartsExp.ecore#//SuspendEffect"/>
     <genClasses ecoreClass="SCChartsExp.ecore#//ReactionTrigger">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionTrigger/triggers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionTrigger/stateReaction"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//ReactionTrigger/isImmediate"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//ReactionTrigger/delay"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionTrigger/trigger"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionTrigger/guardExpression"/>
     </genClasses>
     <genClasses ecoreClass="SCChartsExp.ecore#//ReactionEffect">

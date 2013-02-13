@@ -37,10 +37,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SuspendEffect" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"/>
   <eClassifiers xsi:type="ecore:EClass" name="ReactionTrigger" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="triggers" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateReaction" eType="#//StateReaction"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//RegularEventSpec"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="guardExpression" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
   </eClassifiers>

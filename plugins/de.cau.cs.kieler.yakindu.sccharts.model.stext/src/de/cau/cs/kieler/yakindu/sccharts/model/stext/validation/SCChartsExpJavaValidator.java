@@ -27,6 +27,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.PreValueExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionEffect;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger;
@@ -37,6 +38,9 @@ import de.cau.cs.kieler.yakindu.sgraph.validator.SyncGraphJavaValidator;
 		SCTResourceValidator.class })
 public class SCChartsExpJavaValidator extends STextJavaValidator {
 
+	public static final String TRIGGER_EXPRESSION = "A trigger should be a signal or a variable of type boolean";
+	public static final String PRE_ASSIGNMENT = "Can not assign a value to a pre operator";
+
 	@Inject
 	private ISCCTypeInferrer sccInferrer;
 	@Inject
@@ -44,84 +48,39 @@ public class SCChartsExpJavaValidator extends STextJavaValidator {
 	@Inject
 	private IQualifiedNameProvider nameProvider;
 
+	/**
+	 * Check the Trigger and GuardExpression
+	 */
 	@Check(CheckType.FAST)
 	public void checkGuardHasBooleanExpression(ReactionTrigger trigger) {
-		if (trigger.getGuardExpression() == null)
-			return;
 		try {
-			Type type = sccInferrer.getType(trigger.getGuardExpression());
-			if (!tsAccess.isBoolean(type)) {
-				error(GUARD_EXPRESSION,
-						SCChartsExpPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
+			//
+			if (trigger.getGuardExpression() != null) {
+				if(trigger.getGuardExpression() instanceof AssignmentExpression){
+					error(GUARD_EXPRESSION,
+							SCChartsExpPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
+				}else{
+				Type type = sccInferrer.getType(trigger.getGuardExpression());
+				if (!tsAccess.isBoolean(type)) {
+					error(GUARD_EXPRESSION,
+							SCChartsExpPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
+				}
+				}
+			}else if (trigger.getTrigger() != null) {
+				if (!(((ElementReferenceExpression) trigger.getTrigger()
+						.getEvent()).getReference() instanceof EventDefinition)) {
+					Type type1 = sccInferrer.getType(trigger.getTrigger()
+							.getEvent());
+					if (!tsAccess.isBoolean(type1)) {
+						error(TRIGGER_EXPRESSION,
+								SCChartsExpPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
+					}
+				}
 			}
 		} catch (TypeCheckException ex) {
 			// This is handled by checkExpression
 		}
-
 	}
-	
-	// /**
-	// * Check Testing non-integer variables
-	// */
-	// @Check(CheckType.FAST)
-	// public void checkGuardHasBooleanAction(ReactionTrigger trigger) {
-	// EList<EObject> triggers = trigger.getTriggers();
-	// for (EObject t:triggers){
-	// if(t instanceof RegularEventSpec){
-	// Expression event = (((RegularEventSpec) t).getEvent());
-	// if(event instanceof ElementReferenceExpression){
-	// EObject reference = ((ElementReferenceExpression) event).getReference();
-	// VariableDefinition variable = (VariableDefinition) reference;
-	// variable.
-	// // Resource reference =reference.;
-	// System.out.println(reference);
-	// }
-	// }
-	// }
-	//
-	// }
-
-	@Check(CheckType.FAST)
-	public void checkVariableDefinitionInitialValue(
-			VariableDefinition definition) {
-		Type varType = definition.getType();
-		if (definition.getInitialValue() == null)
-			return;
-		try {
-			Type valType = sccInferrer.getType(definition.getInitialValue());
-			Type combine = tsAccess.combine(valType, varType);
-			if (combine == null || !tsAccess.isAssignable(varType, valType)) {
-				error("Can not assign a value of type '" + valType.getName()
-						+ "' to a variable of type '" + varType + "'",
-						StextPackage.Literals.VARIABLE_DEFINITION__INITIAL_VALUE);
-			}
-		} catch (Exception e) {
-			error(e.getMessage(), null);
-		}
-	}
-
-	@Check(CheckType.FAST)
-	public void checkExpression(final Statement statement) {
-		try {
-			sccInferrer.getType(statement);
-		} catch (TypeCheckException e) {
-			error(e.getMessage(), null);
-		} catch (IllegalArgumentException e) {
-			// This happens, when the expression is not completed for Unhandled
-			// parameter types: [null]
-			// We can safely ignore this exception
-		}
-	}
-
-	/**
-	 * Verify that no input signals/variables are affected or computed in a
-	 * ReactionTrigger
-	 */
-	// @Check(CheckType.FAST)
-	// public void checkReactionTriggerCommitInputs(ReactionTrigger
-	// reactionTrigger) {
-	// EList<EObject> triggers = reactionTrigger.getTriggers();
-	// }
 
 	/**
 	 * Only Expressions that produce an effect should be used as actions.
@@ -145,7 +104,14 @@ public class SCChartsExpJavaValidator extends STextJavaValidator {
 							effect.getActions().indexOf(exp),
 							FEATURE_CALL_HAS_NO_EFFECT);
 				}
-
+			} else if (exp instanceof AssignmentExpression) {
+				/**
+				 * Check that no value is assigned to a pre operator
+				 */
+				if (((AssignmentExpression) exp).getVarRef() instanceof PreValueExpression) {
+					error(PRE_ASSIGNMENT,
+							SCChartsExpPackage.Literals.REACTION_EFFECT__ACTIONS);
+				}
 			}
 		}
 	}
@@ -198,13 +164,41 @@ public class SCChartsExpJavaValidator extends STextJavaValidator {
 		}
 	}
 
-	private String getVariableName(AssignmentExpression exp) {
-		Expression varRef = exp.getVarRef();
-		if (varRef instanceof FeatureCall) {
-			Property reference = (Property) ((FeatureCall) varRef).getFeature();
-			return reference.getName();
+	/*********************************************************************************************************
+	 * The following methods are override to allow the Injection of sccInferrer
+	 * object
+	 */
+
+	@Check(CheckType.FAST)
+	public void checkVariableDefinitionInitialValue(
+			VariableDefinition definition) {
+		Type varType = definition.getType();
+		if (definition.getInitialValue() == null)
+			return;
+		try {
+			Type valType = sccInferrer.getType(definition.getInitialValue());
+			Type combine = tsAccess.combine(valType, varType);
+			if (combine == null || !tsAccess.isAssignable(varType, valType)) {
+				error("Can not assign a value of type '" + valType.getName()
+						+ "' to a variable of type '" + varType + "'",
+						StextPackage.Literals.VARIABLE_DEFINITION__INITIAL_VALUE);
+			}
+		} catch (Exception e) {
+			error(e.getMessage(), null);
 		}
-		return null;
+	}
+
+	@Check(CheckType.FAST)
+	public void checkExpression(final Statement statement) {
+		try {
+			sccInferrer.getType(statement);
+		} catch (TypeCheckException e) {
+			error(e.getMessage(), null);
+		} catch (IllegalArgumentException e) {
+			// This happens, when the expression is not completed for Unhandled
+			// parameter types: [null]
+			// We can safely ignore this exception
+		}
 	}
 
 	@Check(CheckType.FAST)
@@ -227,6 +221,15 @@ public class SCChartsExpJavaValidator extends STextJavaValidator {
 		if (Iterables.size(filter) > 0) {
 			error(ASSIGNMENT_EXPRESSION, null);
 		}
+	}
+
+	private String getVariableName(AssignmentExpression exp) {
+		Expression varRef = exp.getVarRef();
+		if (varRef instanceof FeatureCall) {
+			Property reference = (Property) ((FeatureCall) varRef).getFeature();
+			return reference.getName();
+		}
+		return null;
 	}
 
 }

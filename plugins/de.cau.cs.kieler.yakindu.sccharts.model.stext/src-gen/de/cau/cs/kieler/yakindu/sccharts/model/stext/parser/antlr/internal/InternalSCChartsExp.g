@@ -578,16 +578,16 @@ ruleLocalReactionTrigger returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getLocalReactionTriggerAccess().getTriggersStateReactionParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getLocalReactionTriggerAccess().getStateReactionStateReactionParserRuleCall_1_0()); 
 	    }
-		lv_triggers_1_0=ruleStateReaction		{
+		lv_stateReaction_1_0=ruleStateReaction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLocalReactionTriggerRule());
 	        }
-       		add(
+       		set(
        			$current, 
-       			"triggers",
-        		lv_triggers_1_0, 
+       			"stateReaction",
+        		lv_stateReaction_1_0, 
         		"StateReaction");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -633,16 +633,16 @@ ruleLocalReactionTrigger returns [EObject current=null]
 )?((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getLocalReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_2_3_0_0()); 
+	        newCompositeNode(grammarAccess.getLocalReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_2_3_0_0()); 
 	    }
-		lv_triggers_5_0=ruleRegularEventSpec		{
+		lv_trigger_5_0=ruleRegularEventSpec		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLocalReactionTriggerRule());
 	        }
-       		add(
+       		set(
        			$current, 
-       			"triggers",
-        		lv_triggers_5_0, 
+       			"trigger",
+        		lv_trigger_5_0, 
         		"RegularEventSpec");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -881,16 +881,16 @@ ruleReactionTrigger returns [EObject current=null]
 )?((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_3_0_0()); 
+	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_3_0_0()); 
 	    }
-		lv_triggers_3_0=ruleRegularEventSpec		{
+		lv_trigger_3_0=ruleRegularEventSpec		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getReactionTriggerRule());
 	        }
-       		add(
+       		set(
        			$current, 
-       			"triggers",
-        		lv_triggers_3_0, 
+       			"trigger",
+        		lv_trigger_3_0, 
         		"RegularEventSpec");
 	        afterParserOrEnumRuleCall();
 	    }

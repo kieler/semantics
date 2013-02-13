@@ -42,7 +42,7 @@ SuspendEffect returns sgraph::Effect:
 	{SuspendEffect} 'Suspend';
 
 LocalReactionTrigger returns sgraph::Trigger:
-	{ReactionTrigger} triggers+=StateReaction ('&&' (isImmediate?='#')? (delay=INT)? ((triggers+=RegularEventSpec)
+	{ReactionTrigger} stateReaction=StateReaction ('&&' (isImmediate?='#')? (delay=INT)? ((trigger=RegularEventSpec)
 	| ('[' guardExpression=Expression ']'))?)?;
 
 StateReaction:
@@ -61,7 +61,7 @@ Exit:
 // The ReactionTrigger is a Trigger and has an Expression, 
 // an optional delay and isImmediate option represented with a '#'
 ReactionTrigger returns sgraph::Trigger:
-	{ReactionTrigger} (isImmediate?='#')? (delay=INT)? ((triggers+=RegularEventSpec)
+	{ReactionTrigger} (isImmediate?='#')? (delay=INT)? ((trigger=RegularEventSpec)
 	| ('[' guardExpression=Expression ']'));
 
 	// The ReactionEffect is an Effect. 

@@ -4,26 +4,20 @@ package de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage;
-
-import java.util.Collection;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.StateReaction;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.yakindu.sct.model.sgraph.impl.TriggerImpl;
 
 import org.yakindu.sct.model.stext.stext.Expression;
+import org.yakindu.sct.model.stext.stext.RegularEventSpec;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,9 +26,10 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionTriggerImpl#getTriggers <em>Triggers</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionTriggerImpl#getStateReaction <em>State Reaction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionTriggerImpl#isIsImmediate <em>Is Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionTriggerImpl#getDelay <em>Delay</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionTriggerImpl#getTrigger <em>Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionTriggerImpl#getGuardExpression <em>Guard Expression</em>}</li>
  * </ul>
  * </p>
@@ -44,14 +39,14 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
 {
   /**
-   * The cached value of the '{@link #getTriggers() <em>Triggers</em>}' containment reference list.
+   * The cached value of the '{@link #getStateReaction() <em>State Reaction</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTriggers()
+   * @see #getStateReaction()
    * @generated
    * @ordered
    */
-  protected EList<EObject> triggers;
+  protected StateReaction stateReaction;
 
   /**
    * The default value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
@@ -94,6 +89,16 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   protected int delay = DELAY_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getTrigger() <em>Trigger</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTrigger()
+   * @generated
+   * @ordered
+   */
+  protected RegularEventSpec trigger;
+
+  /**
    * The cached value of the '{@link #getGuardExpression() <em>Guard Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -129,13 +134,47 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<EObject> getTriggers()
+  public StateReaction getStateReaction()
   {
-    if (triggers == null)
+    return stateReaction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetStateReaction(StateReaction newStateReaction, NotificationChain msgs)
+  {
+    StateReaction oldStateReaction = stateReaction;
+    stateReaction = newStateReaction;
+    if (eNotificationRequired())
     {
-      triggers = new EObjectContainmentEList<EObject>(EObject.class, this, SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.REACTION_TRIGGER__STATE_REACTION, oldStateReaction, newStateReaction);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return triggers;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setStateReaction(StateReaction newStateReaction)
+  {
+    if (newStateReaction != stateReaction)
+    {
+      NotificationChain msgs = null;
+      if (stateReaction != null)
+        msgs = ((InternalEObject)stateReaction).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsExpPackage.REACTION_TRIGGER__STATE_REACTION, null, msgs);
+      if (newStateReaction != null)
+        msgs = ((InternalEObject)newStateReaction).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsExpPackage.REACTION_TRIGGER__STATE_REACTION, null, msgs);
+      msgs = basicSetStateReaction(newStateReaction, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.REACTION_TRIGGER__STATE_REACTION, newStateReaction, newStateReaction));
   }
 
   /**
@@ -182,6 +221,54 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
     delay = newDelay;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.REACTION_TRIGGER__DELAY, oldDelay, delay));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RegularEventSpec getTrigger()
+  {
+    return trigger;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetTrigger(RegularEventSpec newTrigger, NotificationChain msgs)
+  {
+    RegularEventSpec oldTrigger = trigger;
+    trigger = newTrigger;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.REACTION_TRIGGER__TRIGGER, oldTrigger, newTrigger);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTrigger(RegularEventSpec newTrigger)
+  {
+    if (newTrigger != trigger)
+    {
+      NotificationChain msgs = null;
+      if (trigger != null)
+        msgs = ((InternalEObject)trigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsExpPackage.REACTION_TRIGGER__TRIGGER, null, msgs);
+      if (newTrigger != null)
+        msgs = ((InternalEObject)newTrigger).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsExpPackage.REACTION_TRIGGER__TRIGGER, null, msgs);
+      msgs = basicSetTrigger(newTrigger, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SCChartsExpPackage.REACTION_TRIGGER__TRIGGER, newTrigger, newTrigger));
   }
 
   /**
@@ -242,8 +329,10 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   {
     switch (featureID)
     {
-      case SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS:
-        return ((InternalEList<?>)getTriggers()).basicRemove(otherEnd, msgs);
+      case SCChartsExpPackage.REACTION_TRIGGER__STATE_REACTION:
+        return basicSetStateReaction(null, msgs);
+      case SCChartsExpPackage.REACTION_TRIGGER__TRIGGER:
+        return basicSetTrigger(null, msgs);
       case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         return basicSetGuardExpression(null, msgs);
     }
@@ -260,12 +349,14 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   {
     switch (featureID)
     {
-      case SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS:
-        return getTriggers();
+      case SCChartsExpPackage.REACTION_TRIGGER__STATE_REACTION:
+        return getStateReaction();
       case SCChartsExpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
         return isIsImmediate();
       case SCChartsExpPackage.REACTION_TRIGGER__DELAY:
         return getDelay();
+      case SCChartsExpPackage.REACTION_TRIGGER__TRIGGER:
+        return getTrigger();
       case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         return getGuardExpression();
     }
@@ -277,21 +368,22 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS:
-        getTriggers().clear();
-        getTriggers().addAll((Collection<? extends EObject>)newValue);
+      case SCChartsExpPackage.REACTION_TRIGGER__STATE_REACTION:
+        setStateReaction((StateReaction)newValue);
         return;
       case SCChartsExpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
         setIsImmediate((Boolean)newValue);
         return;
       case SCChartsExpPackage.REACTION_TRIGGER__DELAY:
         setDelay((Integer)newValue);
+        return;
+      case SCChartsExpPackage.REACTION_TRIGGER__TRIGGER:
+        setTrigger((RegularEventSpec)newValue);
         return;
       case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         setGuardExpression((Expression)newValue);
@@ -310,14 +402,17 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   {
     switch (featureID)
     {
-      case SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS:
-        getTriggers().clear();
+      case SCChartsExpPackage.REACTION_TRIGGER__STATE_REACTION:
+        setStateReaction((StateReaction)null);
         return;
       case SCChartsExpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
         setIsImmediate(IS_IMMEDIATE_EDEFAULT);
         return;
       case SCChartsExpPackage.REACTION_TRIGGER__DELAY:
         setDelay(DELAY_EDEFAULT);
+        return;
+      case SCChartsExpPackage.REACTION_TRIGGER__TRIGGER:
+        setTrigger((RegularEventSpec)null);
         return;
       case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         setGuardExpression((Expression)null);
@@ -336,12 +431,14 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   {
     switch (featureID)
     {
-      case SCChartsExpPackage.REACTION_TRIGGER__TRIGGERS:
-        return triggers != null && !triggers.isEmpty();
+      case SCChartsExpPackage.REACTION_TRIGGER__STATE_REACTION:
+        return stateReaction != null;
       case SCChartsExpPackage.REACTION_TRIGGER__IS_IMMEDIATE:
         return isImmediate != IS_IMMEDIATE_EDEFAULT;
       case SCChartsExpPackage.REACTION_TRIGGER__DELAY:
         return delay != DELAY_EDEFAULT;
+      case SCChartsExpPackage.REACTION_TRIGGER__TRIGGER:
+        return trigger != null;
       case SCChartsExpPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
         return guardExpression != null;
     }

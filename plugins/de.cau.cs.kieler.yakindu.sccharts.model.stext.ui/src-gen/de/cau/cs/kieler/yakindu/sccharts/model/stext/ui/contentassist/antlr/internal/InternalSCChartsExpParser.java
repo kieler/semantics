@@ -6634,13 +6634,13 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LocalReactionTrigger__Alternatives_2_3"
-    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2233:1: rule__LocalReactionTrigger__Alternatives_2_3 : ( ( ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 ) ) | ( ( rule__LocalReactionTrigger__Group_2_3_1__0 ) ) );
+    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2233:1: rule__LocalReactionTrigger__Alternatives_2_3 : ( ( ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 ) ) | ( ( rule__LocalReactionTrigger__Group_2_3_1__0 ) ) );
     public final void rule__LocalReactionTrigger__Alternatives_2_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2237:1: ( ( ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 ) ) | ( ( rule__LocalReactionTrigger__Group_2_3_1__0 ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2237:1: ( ( ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 ) ) | ( ( rule__LocalReactionTrigger__Group_2_3_1__0 ) ) )
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -6659,19 +6659,19 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
             }
             switch (alt4) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2238:1: ( ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 ) )
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2238:1: ( ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 ) )
                     {
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2238:1: ( ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 ) )
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2239:1: ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 )
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2238:1: ( ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 ) )
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2239:1: ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_2_3_0()); 
+                       before(grammarAccess.getLocalReactionTriggerAccess().getTriggerAssignment_2_3_0()); 
                     }
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2240:1: ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 )
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2240:2: rule__LocalReactionTrigger__TriggersAssignment_2_3_0
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2240:1: ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 )
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2240:2: rule__LocalReactionTrigger__TriggerAssignment_2_3_0
                     {
-                    pushFollow(FOLLOW_rule__LocalReactionTrigger__TriggersAssignment_2_3_0_in_rule__LocalReactionTrigger__Alternatives_2_34660);
-                    rule__LocalReactionTrigger__TriggersAssignment_2_3_0();
+                    pushFollow(FOLLOW_rule__LocalReactionTrigger__TriggerAssignment_2_3_0_in_rule__LocalReactionTrigger__Alternatives_2_34660);
+                    rule__LocalReactionTrigger__TriggerAssignment_2_3_0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -6679,7 +6679,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_2_3_0()); 
+                       after(grammarAccess.getLocalReactionTriggerAccess().getTriggerAssignment_2_3_0()); 
                     }
 
                     }
@@ -6854,13 +6854,13 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ReactionTrigger__Alternatives_3"
-    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2283:1: rule__ReactionTrigger__Alternatives_3 : ( ( ( rule__ReactionTrigger__TriggersAssignment_3_0 ) ) | ( ( rule__ReactionTrigger__Group_3_1__0 ) ) );
+    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2283:1: rule__ReactionTrigger__Alternatives_3 : ( ( ( rule__ReactionTrigger__TriggerAssignment_3_0 ) ) | ( ( rule__ReactionTrigger__Group_3_1__0 ) ) );
     public final void rule__ReactionTrigger__Alternatives_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2287:1: ( ( ( rule__ReactionTrigger__TriggersAssignment_3_0 ) ) | ( ( rule__ReactionTrigger__Group_3_1__0 ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2287:1: ( ( ( rule__ReactionTrigger__TriggerAssignment_3_0 ) ) | ( ( rule__ReactionTrigger__Group_3_1__0 ) ) )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -6879,19 +6879,19 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
             }
             switch (alt6) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2288:1: ( ( rule__ReactionTrigger__TriggersAssignment_3_0 ) )
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2288:1: ( ( rule__ReactionTrigger__TriggerAssignment_3_0 ) )
                     {
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2288:1: ( ( rule__ReactionTrigger__TriggersAssignment_3_0 ) )
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2289:1: ( rule__ReactionTrigger__TriggersAssignment_3_0 )
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2288:1: ( ( rule__ReactionTrigger__TriggerAssignment_3_0 ) )
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2289:1: ( rule__ReactionTrigger__TriggerAssignment_3_0 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getReactionTriggerAccess().getTriggersAssignment_3_0()); 
+                       before(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3_0()); 
                     }
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2290:1: ( rule__ReactionTrigger__TriggersAssignment_3_0 )
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2290:2: rule__ReactionTrigger__TriggersAssignment_3_0
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2290:1: ( rule__ReactionTrigger__TriggerAssignment_3_0 )
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:2290:2: rule__ReactionTrigger__TriggerAssignment_3_0
                     {
-                    pushFollow(FOLLOW_rule__ReactionTrigger__TriggersAssignment_3_0_in_rule__ReactionTrigger__Alternatives_34777);
-                    rule__ReactionTrigger__TriggersAssignment_3_0();
+                    pushFollow(FOLLOW_rule__ReactionTrigger__TriggerAssignment_3_0_in_rule__ReactionTrigger__Alternatives_34777);
+                    rule__ReactionTrigger__TriggerAssignment_3_0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -6899,7 +6899,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getReactionTriggerAccess().getTriggersAssignment_3_0()); 
+                       after(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3_0()); 
                     }
 
                     }
@@ -13055,26 +13055,26 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__LocalReactionTrigger__Group__1__Impl"
-    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4161:1: rule__LocalReactionTrigger__Group__1__Impl : ( ( rule__LocalReactionTrigger__TriggersAssignment_1 ) ) ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4161:1: rule__LocalReactionTrigger__Group__1__Impl : ( ( rule__LocalReactionTrigger__StateReactionAssignment_1 ) ) ;
     public final void rule__LocalReactionTrigger__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4165:1: ( ( ( rule__LocalReactionTrigger__TriggersAssignment_1 ) ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4166:1: ( ( rule__LocalReactionTrigger__TriggersAssignment_1 ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4165:1: ( ( ( rule__LocalReactionTrigger__StateReactionAssignment_1 ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4166:1: ( ( rule__LocalReactionTrigger__StateReactionAssignment_1 ) )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4166:1: ( ( rule__LocalReactionTrigger__TriggersAssignment_1 ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4167:1: ( rule__LocalReactionTrigger__TriggersAssignment_1 )
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4166:1: ( ( rule__LocalReactionTrigger__StateReactionAssignment_1 ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4167:1: ( rule__LocalReactionTrigger__StateReactionAssignment_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_1()); 
+               before(grammarAccess.getLocalReactionTriggerAccess().getStateReactionAssignment_1()); 
             }
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4168:1: ( rule__LocalReactionTrigger__TriggersAssignment_1 )
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4168:2: rule__LocalReactionTrigger__TriggersAssignment_1
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4168:1: ( rule__LocalReactionTrigger__StateReactionAssignment_1 )
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:4168:2: rule__LocalReactionTrigger__StateReactionAssignment_1
             {
-            pushFollow(FOLLOW_rule__LocalReactionTrigger__TriggersAssignment_1_in_rule__LocalReactionTrigger__Group__1__Impl8958);
-            rule__LocalReactionTrigger__TriggersAssignment_1();
+            pushFollow(FOLLOW_rule__LocalReactionTrigger__StateReactionAssignment_1_in_rule__LocalReactionTrigger__Group__1__Impl8958);
+            rule__LocalReactionTrigger__StateReactionAssignment_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -13082,7 +13082,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_1()); 
+               after(grammarAccess.getLocalReactionTriggerAccess().getStateReactionAssignment_1()); 
             }
 
             }
@@ -30885,9 +30885,9 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__LocalReaction__EffectAssignment_1_1"
 
 
-    // $ANTLR start "rule__LocalReactionTrigger__TriggersAssignment_1"
-    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:10729:1: rule__LocalReactionTrigger__TriggersAssignment_1 : ( ruleStateReaction ) ;
-    public final void rule__LocalReactionTrigger__TriggersAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__LocalReactionTrigger__StateReactionAssignment_1"
+    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:10729:1: rule__LocalReactionTrigger__StateReactionAssignment_1 : ( ruleStateReaction ) ;
+    public final void rule__LocalReactionTrigger__StateReactionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -30899,15 +30899,15 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:10735:1: ruleStateReaction
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLocalReactionTriggerAccess().getTriggersStateReactionParserRuleCall_1_0()); 
+               before(grammarAccess.getLocalReactionTriggerAccess().getStateReactionStateReactionParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleStateReaction_in_rule__LocalReactionTrigger__TriggersAssignment_121821);
+            pushFollow(FOLLOW_ruleStateReaction_in_rule__LocalReactionTrigger__StateReactionAssignment_121821);
             ruleStateReaction();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLocalReactionTriggerAccess().getTriggersStateReactionParserRuleCall_1_0()); 
+               after(grammarAccess.getLocalReactionTriggerAccess().getStateReactionStateReactionParserRuleCall_1_0()); 
             }
 
             }
@@ -30927,7 +30927,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__LocalReactionTrigger__TriggersAssignment_1"
+    // $ANTLR end "rule__LocalReactionTrigger__StateReactionAssignment_1"
 
 
     // $ANTLR start "rule__LocalReactionTrigger__IsImmediateAssignment_2_1"
@@ -31024,9 +31024,9 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__LocalReactionTrigger__DelayAssignment_2_2"
 
 
-    // $ANTLR start "rule__LocalReactionTrigger__TriggersAssignment_2_3_0"
-    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:10782:1: rule__LocalReactionTrigger__TriggersAssignment_2_3_0 : ( ruleRegularEventSpec ) ;
-    public final void rule__LocalReactionTrigger__TriggersAssignment_2_3_0() throws RecognitionException {
+    // $ANTLR start "rule__LocalReactionTrigger__TriggerAssignment_2_3_0"
+    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:10782:1: rule__LocalReactionTrigger__TriggerAssignment_2_3_0 : ( ruleRegularEventSpec ) ;
+    public final void rule__LocalReactionTrigger__TriggerAssignment_2_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -31038,15 +31038,15 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:10788:1: ruleRegularEventSpec
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLocalReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_2_3_0_0()); 
+               before(grammarAccess.getLocalReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_2_3_0_0()); 
             }
-            pushFollow(FOLLOW_ruleRegularEventSpec_in_rule__LocalReactionTrigger__TriggersAssignment_2_3_021927);
+            pushFollow(FOLLOW_ruleRegularEventSpec_in_rule__LocalReactionTrigger__TriggerAssignment_2_3_021927);
             ruleRegularEventSpec();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLocalReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_2_3_0_0()); 
+               after(grammarAccess.getLocalReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_2_3_0_0()); 
             }
 
             }
@@ -31066,7 +31066,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__LocalReactionTrigger__TriggersAssignment_2_3_0"
+    // $ANTLR end "rule__LocalReactionTrigger__TriggerAssignment_2_3_0"
 
 
     // $ANTLR start "rule__LocalReactionTrigger__GuardExpressionAssignment_2_3_1_1"
@@ -31208,9 +31208,9 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__ReactionTrigger__DelayAssignment_2"
 
 
-    // $ANTLR start "rule__ReactionTrigger__TriggersAssignment_3_0"
-    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:10850:1: rule__ReactionTrigger__TriggersAssignment_3_0 : ( ruleRegularEventSpec ) ;
-    public final void rule__ReactionTrigger__TriggersAssignment_3_0() throws RecognitionException {
+    // $ANTLR start "rule__ReactionTrigger__TriggerAssignment_3_0"
+    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:10850:1: rule__ReactionTrigger__TriggerAssignment_3_0 : ( ruleRegularEventSpec ) ;
+    public final void rule__ReactionTrigger__TriggerAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -31222,15 +31222,15 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:10856:1: ruleRegularEventSpec
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_3_0_0()); 
+               before(grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_3_0_0()); 
             }
-            pushFollow(FOLLOW_ruleRegularEventSpec_in_rule__ReactionTrigger__TriggersAssignment_3_022064);
+            pushFollow(FOLLOW_ruleRegularEventSpec_in_rule__ReactionTrigger__TriggerAssignment_3_022064);
             ruleRegularEventSpec();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_3_0_0()); 
+               after(grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_3_0_0()); 
             }
 
             }
@@ -31250,7 +31250,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__ReactionTrigger__TriggersAssignment_3_0"
+    // $ANTLR end "rule__ReactionTrigger__TriggerAssignment_3_0"
 
 
     // $ANTLR start "rule__ReactionTrigger__GuardExpressionAssignment_3_1_1"
@@ -34663,12 +34663,12 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_ruleReactionTrigger_in_rule__LocalReaction__TriggerAlternatives_0_04579 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleReactionEffect_in_rule__LocalReaction__EffectAlternatives_1_1_04611 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSuspendEffect_in_rule__LocalReaction__EffectAlternatives_1_1_04628 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LocalReactionTrigger__TriggersAssignment_2_3_0_in_rule__LocalReactionTrigger__Alternatives_2_34660 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LocalReactionTrigger__TriggerAssignment_2_3_0_in_rule__LocalReactionTrigger__Alternatives_2_34660 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group_2_3_1__0_in_rule__LocalReactionTrigger__Alternatives_2_34678 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEntry_in_rule__StateReaction__Alternatives4711 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleInside_in_rule__StateReaction__Alternatives4728 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExit_in_rule__StateReaction__Alternatives4745 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ReactionTrigger__TriggersAssignment_3_0_in_rule__ReactionTrigger__Alternatives_34777 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ReactionTrigger__TriggerAssignment_3_0_in_rule__ReactionTrigger__Alternatives_34777 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ReactionTrigger__Group_3_1__0_in_rule__ReactionTrigger__Alternatives_34795 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePrimitiveValueExpression_in_rule__PrimaryExpression__Alternatives4828 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFeatureCall_in_rule__PrimaryExpression__Alternatives4845 = new BitSet(new long[]{0x0000000000000002L});
@@ -34846,7 +34846,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group__1_in_rule__LocalReactionTrigger__Group__08870 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group__1__Impl_in_rule__LocalReactionTrigger__Group__18928 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group__2_in_rule__LocalReactionTrigger__Group__18931 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LocalReactionTrigger__TriggersAssignment_1_in_rule__LocalReactionTrigger__Group__1__Impl8958 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LocalReactionTrigger__StateReactionAssignment_1_in_rule__LocalReactionTrigger__Group__1__Impl8958 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group__2__Impl_in_rule__LocalReactionTrigger__Group__28988 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group_2__0_in_rule__LocalReactionTrigger__Group__2__Impl9015 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group_2__0__Impl_in_rule__LocalReactionTrigger__Group_2__09052 = new BitSet(new long[]{0x0000000000000030L,0x0000002000004000L});
@@ -35347,14 +35347,14 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_ruleCombineOperator_in_rule__VariableDefinition__VarCombineOperatorAssignment_7_121724 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReaction__TriggerAlternatives_0_0_in_rule__LocalReaction__TriggerAssignment_021755 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReaction__EffectAlternatives_1_1_0_in_rule__LocalReaction__EffectAssignment_1_121788 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStateReaction_in_rule__LocalReactionTrigger__TriggersAssignment_121821 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStateReaction_in_rule__LocalReactionTrigger__StateReactionAssignment_121821 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_101_in_rule__LocalReactionTrigger__IsImmediateAssignment_2_121857 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_INT_in_rule__LocalReactionTrigger__DelayAssignment_2_221896 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRegularEventSpec_in_rule__LocalReactionTrigger__TriggersAssignment_2_3_021927 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleRegularEventSpec_in_rule__LocalReactionTrigger__TriggerAssignment_2_3_021927 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__LocalReactionTrigger__GuardExpressionAssignment_2_3_1_121958 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_101_in_rule__ReactionTrigger__IsImmediateAssignment_121994 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_INT_in_rule__ReactionTrigger__DelayAssignment_222033 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRegularEventSpec_in_rule__ReactionTrigger__TriggersAssignment_3_022064 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleRegularEventSpec_in_rule__ReactionTrigger__TriggerAssignment_3_022064 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__ReactionTrigger__GuardExpressionAssignment_3_1_122095 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__ReactionEffect__ActionsAssignment_122126 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__ReactionEffect__ActionsAssignment_2_122157 = new BitSet(new long[]{0x0000000000000002L});

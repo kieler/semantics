@@ -170,14 +170,14 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDefinitionAccess().getVarCombineOperatorAssignment_7_1(), "rule__VariableDefinition__VarCombineOperatorAssignment_7_1");
 					put(grammarAccess.getLocalReactionAccess().getTriggerAssignment_0(), "rule__LocalReaction__TriggerAssignment_0");
 					put(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_1(), "rule__LocalReaction__EffectAssignment_1_1");
-					put(grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_1(), "rule__LocalReactionTrigger__TriggersAssignment_1");
+					put(grammarAccess.getLocalReactionTriggerAccess().getStateReactionAssignment_1(), "rule__LocalReactionTrigger__StateReactionAssignment_1");
 					put(grammarAccess.getLocalReactionTriggerAccess().getIsImmediateAssignment_2_1(), "rule__LocalReactionTrigger__IsImmediateAssignment_2_1");
 					put(grammarAccess.getLocalReactionTriggerAccess().getDelayAssignment_2_2(), "rule__LocalReactionTrigger__DelayAssignment_2_2");
-					put(grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_2_3_0(), "rule__LocalReactionTrigger__TriggersAssignment_2_3_0");
+					put(grammarAccess.getLocalReactionTriggerAccess().getTriggerAssignment_2_3_0(), "rule__LocalReactionTrigger__TriggerAssignment_2_3_0");
 					put(grammarAccess.getLocalReactionTriggerAccess().getGuardExpressionAssignment_2_3_1_1(), "rule__LocalReactionTrigger__GuardExpressionAssignment_2_3_1_1");
 					put(grammarAccess.getReactionTriggerAccess().getIsImmediateAssignment_1(), "rule__ReactionTrigger__IsImmediateAssignment_1");
 					put(grammarAccess.getReactionTriggerAccess().getDelayAssignment_2(), "rule__ReactionTrigger__DelayAssignment_2");
-					put(grammarAccess.getReactionTriggerAccess().getTriggersAssignment_3_0(), "rule__ReactionTrigger__TriggersAssignment_3_0");
+					put(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3_0(), "rule__ReactionTrigger__TriggerAssignment_3_0");
 					put(grammarAccess.getReactionTriggerAccess().getGuardExpressionAssignment_3_1_1(), "rule__ReactionTrigger__GuardExpressionAssignment_3_1_1");
 					put(grammarAccess.getReactionEffectAccess().getActionsAssignment_1(), "rule__ReactionEffect__ActionsAssignment_1");
 					put(grammarAccess.getReactionEffectAccess().getActionsAssignment_2_1(), "rule__ReactionEffect__ActionsAssignment_2_1");

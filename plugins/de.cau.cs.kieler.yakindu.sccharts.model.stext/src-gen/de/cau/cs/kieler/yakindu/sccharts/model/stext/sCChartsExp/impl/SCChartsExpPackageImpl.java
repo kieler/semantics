@@ -404,7 +404,7 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReactionTrigger_Triggers()
+  public EReference getReactionTrigger_StateReaction()
   {
     return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(0);
   }
@@ -434,9 +434,19 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReactionTrigger_GuardExpression()
+  public EReference getReactionTrigger_Trigger()
   {
     return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReactionTrigger_GuardExpression()
+  {
+    return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -558,9 +568,10 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     suspendEffectEClass = createEClass(SUSPEND_EFFECT);
 
     reactionTriggerEClass = createEClass(REACTION_TRIGGER);
-    createEReference(reactionTriggerEClass, REACTION_TRIGGER__TRIGGERS);
+    createEReference(reactionTriggerEClass, REACTION_TRIGGER__STATE_REACTION);
     createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__IS_IMMEDIATE);
     createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__DELAY);
+    createEReference(reactionTriggerEClass, REACTION_TRIGGER__TRIGGER);
     createEReference(reactionTriggerEClass, REACTION_TRIGGER__GUARD_EXPRESSION);
 
     reactionEffectEClass = createEClass(REACTION_EFFECT);
@@ -651,9 +662,10 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     initEClass(suspendEffectEClass, SuspendEffect.class, "SuspendEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(reactionTriggerEClass, ReactionTrigger.class, "ReactionTrigger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getReactionTrigger_Triggers(), ecorePackage.getEObject(), null, "triggers", null, 0, -1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReactionTrigger_StateReaction(), this.getStateReaction(), null, "stateReaction", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReactionTrigger_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReactionTrigger_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReactionTrigger_Trigger(), theStextPackage.getRegularEventSpec(), null, "trigger", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getReactionTrigger_GuardExpression(), theStextPackage.getExpression(), null, "guardExpression", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(reactionEffectEClass, ReactionEffect.class, "ReactionEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

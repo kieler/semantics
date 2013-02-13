@@ -8,6 +8,7 @@ public class SyncRegionFigure extends RegionFigure {
 	 */
 	@Override
 	protected void addNameLabel() {
+		super.addNameLabel();
 	}
 
 }
