@@ -27,6 +27,12 @@ public class RegionLineModifier implements IStyleModifier {
             KShapeLayout layout = node.getData(KShapeLayout.class);
 
             KNode parent = node.getParent();
+
+            if (parent == null) {
+                // an emergency exit for case something really weird happend.
+                return false;
+            }
+            
             KShapeLayout parentlayout = parent.getData(KShapeLayout.class);
 
             if (r.getPoints().size() < 2) {

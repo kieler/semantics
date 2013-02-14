@@ -15,5 +15,13 @@
             id="de.cau.cs.kieler.synccharts.klighd.diagramSynthese">
       </transformation>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.core.kivi.combinations">
+      <combination
+            active="false"
+            class="de.cau.cs.kieler.synccharts.klighd.SyncChartsShowDiagramCombination"
+            name="Show SyncCharts Diagrams with KLighD">
+      </combination>
+   </extension>
 
 </plugin>

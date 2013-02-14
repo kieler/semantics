@@ -1,0 +1,57 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+package de.cau.cs.kieler.synccharts.klighd
+
+import de.cau.cs.kieler.core.kivi.AbstractCombination
+import de.cau.cs.kieler.core.model.triggers.PartTrigger
+import de.cau.cs.kieler.core.model.triggers.SelectionTrigger
+import org.eclipse.core.resources.IFile
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
+
+class SyncChartsShowDiagramCombination extends AbstractCombination {
+    
+    private static val ResourceSet resSet = new ResourceSetImpl(); 
+    /**
+     * The 'execute()' method, see doc of {@link AbstractCombination}.
+     */    
+    def public void execute(PartTrigger$EditorState es, SelectionTrigger$SelectionState selectionState
+        //, KlighdSelectionTrigger$KlighdSelectionState klighdSelectionState
+        ) {
+        
+        if (this.latestState() == es) {
+           //inputPath = es.getProperty(PartTrigger::EDITOR_INPUT_PATH) as IPath;
+           return; // do only react on selectionState
+        }
+                
+        val selection = selectionState.selectedObjects;
+        if (!selection.nullOrEmpty) {
+              if (selection.size == 1 && typeof(IFile).isInstance(selection.get(0))) {
+                  val IFile file = selection.get(0) as IFile;
+                  val path = file.fullPath.toPortableString;
+                  
+                  if (!path.endsWith("kixs") && !path.endsWith("kits")) {
+                      return;
+                  }
+                  
+                  val resource = resSet.getResource(URI::createPlatformResourceURI(path, false), true);
+                  val eObject = resource?.contents?.head
+                  
+                  this.schedule(new KlighdDiagramEffect("volatile.synccharts.outline", eObject));
+              }
+        }
+    }    
+}

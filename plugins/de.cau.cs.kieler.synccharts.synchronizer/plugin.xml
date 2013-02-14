@@ -16,7 +16,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="de.cau.cs.kieler"
+            categoryId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
             defaultHandler="de.cau.cs.kieler.synccharts.synchronizer.SyncroActivationHandler"
             id="de.cau.cs.kieler.synccharts.synchronizer.Activate"
             name="ActiveSynchronization">
