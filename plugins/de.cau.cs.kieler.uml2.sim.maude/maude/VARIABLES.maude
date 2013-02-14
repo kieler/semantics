@@ -56,22 +56,18 @@ endfm
 *** red assign 17 to vID "a" in (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) .
 *** red assign eval vID "c" - vID "b" with (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) to vID "a" in (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) .
 
-
-
-
 fmod ACTION is
     protecting VARIABLES .
     sort Action .
 
-    op assignAct _ := _ : VariableID Expression -> Action .
+    op _ := _ : VariableID Expression -> Action .
     op noac : -> Action .
     op absAct _ : String -> Action .
     
 
 endfm
-red vID "a" .
-red (1).Expression .
-red assignAct vID "a" := 1 .
+
+*** red vID "a" := 1 .
 *** red noac .
 *** red absAct "bla" .
 
@@ -80,7 +76,7 @@ view Action from TRIV to ACTION is
 endv
 
 
-fmod ACTIONSSYNTAX is 
+fmod ACTIONS is 
   including LIST{Action} * (sort List{Action} to Actions, sort NeList{Action} to NeActions) .
 
   
@@ -92,90 +88,64 @@ fmod ACTIONSSYNTAX is
     
 endfm
 
+load /cygdrive/c/Users/Jens/phd-workspace/maude-Variables/VERTSSYNTAX
 
-
-***(
-
-
-
-
-
-
-****************************************************************
-*** ToDos in diesem File
-*** - Kommentare
-*** - gatherActions siehe unten
-****************************************************************
-
-fmod VARIABLE is
-  including INT .
-  including STRING .
-  sort Variable .
-  sort VarID .
-  op Var-_ : String -> VarID [ctor] .
+fmod GUARD is
+  including VERTSSYNTAX .
+  including VARIABLES .
   
-  op (_->_) : VarID Int -> Variable .
-     
-endfm
-
-fmod ACTION is
-  protecting STRING .
-  sorts Action .
   
-  *** op skip : -> Action [ctor] .
-  op noac : -> Action .
-  op ac:_ : String -> Action [ctor] .
-endfm
-
-view Action from TRIV to ACTION is
-  sort Elt to Action . 
-endv
-
-view Variable from TRIV to VARIABLE is
-  sort Elt to Variable . 
-endv
-
-
-fmod ACTIONSSYNTAX is 
-  including ACTION .
-  including VARIABLE .
-  including LIST{Action} * (sort List{Action} to Actions, sort NeList{Action} to NeActions) .
-  including SET{Variable} * (sort Set{Variable} to Variables, sort NeSet{Variable} to NeVariables) .
+***  subsort Guard < Bool .
+  sorts Guard .
   
-  op seq_ : Actions -> Action .
-  op par_ : Actions -> Action .
-  
-  sort Expression .
-  subsort VarID < Expression .
-  subsort Int < Expression .
-    
-  vars int1 int2 : Int .
   vars exp1 exp2 : Expression .
-  var varid : VarID .
-  var variable : Variable .
-  var variables : Variables .
+  vars agd bgd : Guard .
   
-  op _:=_ : VarID Expression -> Action . 
-  
-  op -_ : Expression -> Expression [ditto] .
-  op _+_ : Expression Expression -> Expression 
-  [assoc comm prec 33
-         special (id-hook ACU_NumberOpSymbol (+)
-                  op-hook succSymbol (s_ : Nat ~> NzNat)
-                  op-hook minusSymbol (-_ : NzNat ~> Int))] .  
-  op evalEXP__ : Expression Variables -> Expression .
-  eq evalEXP (exp1 + varid) ((varid -> int2), variables) = evalEXP (exp1 + int2) ((varid -> int2), variables) .  
-  eq evalEXP int1 variables = int1 .  
-  
-  op evalAction__ : Action Variables -> Variables .
-  eq evalAction (varid := exp1) ((varid -> int2), variables) = 
-    (
-    (varid -> (evalEXP exp1 ((varid -> int2), variables))), 
-     variables) .
-  
-endfm
-*** red (((Var- "y")-> 7), ((Var- "x")-> 9))  .
-*** red (evalEXP (Var- "x" + Var- "y")  (((Var- "y")-> 7), ((Var- "x")-> 9)))  .
-*** red (evalAction (Var- "x" := (Var- "x" + Var- "y"))  (((Var- "y")-> 7), ((Var- "x")-> 9)))  .
+  op _>GD_ : Expression Expression -> Guard .
+  op _<GD_ : Expression Expression -> Guard .
+  eq exp1 <GD exp2 = exp2 >GD exp1 .
+  op _==GD_ : Expression Expression -> Guard .
+  eq exp1 ==GD exp2 = exp2 >GD exp1 andGD exp2 <GD exp1 .
+       
+  op trueGD : -> Guard [ctor] .
+  op falseGD : -> Guard .
+  eq falseGD = notGD trueGD . 
 
-)***
+  op inStates_ : Verts -> Guard .
+  op choiceelse : -> Guard .
+  op notGD_ : Guard -> Guard . 
+  op _andGD_ : Guard Guard -> Guard .
+  op _orGD_ : Guard Guard -> Guard .
+  eq agd orGD bgd = notGD ( (notGD agd) andGD (notGD bgd)) .
+  op _=>GD_ : Guard Guard -> Guard .
+  eq agd =>GD bgd = notGD agd orGD bgd .
+endfm
+
+***red vID "a" >GD (1).Int .
+***red choiceelse .
+***red vID "a" ==GD vID "b" .
+***red (vID "a" ==GD vID "b") orGD vID "a" >GD (1).Int .
+
+
+fmod EVALGUARD is
+  including ACTION .
+  including GUARD .
+  including VERTSSYNTAX .
+  
+  
+  var gd1 gd2 : Guard .
+  var exp1 exp2 : Expression .
+  var valuation : Variables .
+  var verts1 verts2 : Verts .
+  
+  op evalGD___ : Guard Verts Variables -> Bool .
+  eq evalGD inStates verts1 verts2 valuation = verts1 subset verts2 .
+  eq evalGD notGD gd1 verts1 valuation = not evalGD gd1 verts1 valuation .
+  eq evalGD gd1 andGD gd2 verts1 valuation = evalGD gd1 verts1 valuation and evalGD gd2 verts1 valuation .
+  eq evalGD exp1 >GD exp2 verts1 valuation = (eval exp1 with valuation) > (eval exp2 with valuation) .  
+endfm
+   
+***red evalGD vID "a" >GD (1).Int (empty).Verts NatVar(vID "a",0) .
+***red evalGD vID "a" >GD (1).Int (empty).Verts NatVar(vID "a",0) .
+***red evalGD inStates (root(R "0"), root(R "0"): C "1") (root(R "0"), root(R "0"): C "1", root(R "0"): C "2") NatVar(vID "a",0) .
+***red evalGD vID "a" <GD (1).Int andGD inStates (root(R "0"), root(R "0"): C "1") (root(R "0"), root(R "0"): C "1", root(R "0"): C "2") NatVar(vID "a",0) .
