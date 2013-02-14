@@ -226,7 +226,7 @@ public class SCExecution {
 
             StringBuffer compileBuf = new StringBuffer();
             for (String filePath : usedfilePaths) {
-                compileBuf.append(" " + filePath);
+                compileBuf.append(" " + "\"" + filePath + "\"");
                 File currentFile = new File(filePath);
                 sourceFileSize += currentFile.length();
             }
@@ -235,7 +235,7 @@ public class SCExecution {
 
             // If Cycle counting activated include the header
             if (this.cycleCount) {
-                compile += " " + bundleLocation + "cycle.h ";
+                compile += " " +  "\"" + bundleLocation + "cycle.h\" ";
             }
 
             compile += " "
@@ -245,8 +245,10 @@ public class SCExecution {
                     // + "sim_data.c "
                     // + outPath
                     // + "misc.c "
-                    + bundleLocation + "sc.c " + bundleLocation + "cJSON.c " + " -I "
-                    + bundleLocation + " " + "-o " + outputPath + getExecutableName()
+                    +    "\"" + bundleLocation + "sc.c\" " +  "\"" + bundleLocation + "cJSON.c\" " 
+                    + " -I "
+                    +  bundleLocation + " " + "-o " +  "\"" + outputPath + getExecutableName() 
+                    +  "\""  
                     // -m32 = 32 bit compatibility mode to prevent compiler errors on
                     // 64bit machines/architectures.
                     // + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
