@@ -87,11 +87,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
             }
             
             node.data += factory.createKRectangle() => [
-                it.styles += factory.createKInvisibility();
-                it.foreground = factory.createKForeground() =>[
-                    it.color = "white".color;
-                    it.alpha = 0;
-                ];
+                it.invisible = true;
                 it.addVerticalLine(LEFT, 2) => [
                     it.foreground = "gray".color;
                     it.lineStyle = LineStyle::DASH;
@@ -127,8 +123,9 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
                 ] else figure
              ) => [
                 it.setGridPlacement(1);
-                it.children += factory.createKText => [
+                it.children += factory.createKText().putToLookUpWith(s) => [
                     it.text = s.label;
+                    it.background = "white".color;
                     it.setGridPlacementData().setMaxCellHeight(40).from(LEFT, 15, 0, TOP, 10, 0).to(RIGHT, 15, 0, BOTTOM, 10, 0);
                 ];
                 if (!s.signals.empty) {
@@ -148,7 +145,6 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
                         }
                         it.children += factory.createKRectangle() => [
                             it.invisible = true;
-                            // it.foreground = "red".color;
                         ];
                     ];
                 }
@@ -161,9 +157,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
                     
                     //add childArea itself
                     it.children += factory.createKChildArea() => [
-                        it.setGridPlacementData()
-                        .from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                        
+                        it.setGridPlacementData() //.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                     ];
                 }
             ];
@@ -214,7 +208,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
             line.children += it;
             it.lineWidth = 1;
             it.background = "red".color
-            it.setDecoratorPlacementData(7, 7, 3, 0, true);
+            it.setDecoratorPlacementData(7, 7, 3, 0, false);
         ];
     }
     
