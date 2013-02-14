@@ -16,20 +16,20 @@
       <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="org.eclipse.ui.category.edit"
+            categoryId="de.cau.cs.kieler.validation"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.ValidateActionHandler"
             id="de.cau.cs.kieler.core.model.validate"
             name="Validate">
       </command>
       <command
-            categoryId="org.eclipse.ui.category.edit"
+            categoryId="de.cau.cs.kieler.validation"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.RemoveMarkerHandler"
             description="Remove the visible problem markers in the current diagram, e.g. to make a proper screenshot."
             id="de.cau.cs.kieler.core.model.removeMarkers"
             name="Remove Problem Markers">
       </command>
       <command
-            categoryId="org.eclipse.ui.category.file"
+            categoryId="de.cau.cs.kieler.synccharts"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.ConvertModelHandler"
             id="de.cau.cs.kieler.core.model.convert"
             name="Convert to Textual">
@@ -40,7 +40,7 @@
          </commandParameter>
       </command>
             <command
-            categoryId="org.eclipse.ui.category.edit"
+            categoryId="de.cau.cs.kieler.synccharts"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.ZoomToFitHandler"
             description="Zoom so that the content fits the whole canvas"
             id="de.cau.cs.kieler.core.model.zoom"
@@ -58,7 +58,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="toolbar:de.cau.cs.kieler">
+            locationURI="toolbar:de.cau.cs.kieler.validation">
          <command
                commandId="de.cau.cs.kieler.core.model.validate"
                icon="icons/validate.gif"
@@ -76,7 +76,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
+            locationURI="popup:de.cau.cs.kieler.validation">
         <command
               commandId="de.cau.cs.kieler.core.model.removeMarkers"
               id="de.cau.cs.kieler.core.model.removeMarkers"
@@ -122,6 +122,16 @@
       <startup
             class="de.cau.cs.kieler.core.model.util.ModelErrorHandler">
       </startup>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="de.cau.cs.kieler.validation"
+               label="KIELER Validation">
+         </toolbar>
+      </menuContribution>
    </extension>
 
 </plugin>
