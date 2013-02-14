@@ -78,14 +78,14 @@
       </commandParameter>
 	  </command>
          <command
-            categoryId="de.cau.cs.kieler"
+            categoryId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
             defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.commands.InitSyncchartsDiagramHandler"
             description="Reinitialize the diagram for the selected kixs file overwriting the olds kids file."
             id="de.cau.cs.kieler.synccharts.ui.reinitDiagram"
             name="Reinitialize and save synccharts diagram">
       </command>
          <command
-               categoryId="de.cau.cs.kieler"
+               categoryId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
                defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.ExpandMacroStatesCommand"
                description="Expand reference-macrostates"
                id="de.cau.cs.kieler.core.ui.expandMacroStates"

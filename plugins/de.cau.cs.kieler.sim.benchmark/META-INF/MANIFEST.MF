@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Benchmark
+Bundle-Name: KIELER Simulation Benchmarking
 Bundle-SymbolicName: de.cau.cs.kieler.sim.benchmark;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

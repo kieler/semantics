@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: SC
+Bundle-Name: KIELER SC
 Bundle-SymbolicName: de.cau.cs.kieler.sc
 Bundle-Version: 0.3.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sc.SCPlugin
