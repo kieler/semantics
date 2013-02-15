@@ -3,6 +3,7 @@ package de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.PolygonDecoration;
+import org.eclipse.draw2d.PolylineDecoration;
 import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
 
@@ -91,6 +92,7 @@ public abstract class TransitionDecorator {
 								(int) (-bounds.width * WIDTH_RATIO), 0),
 						bounds.getCenter().getTranslated(
 								(int) (bounds.width * WIDTH_RATIO), 0));
+				((RotatableDecoration) getChildren().get(0)).paint(graphics);
 				graphics.popState();
 			}
 		};
@@ -102,28 +104,26 @@ public abstract class TransitionDecorator {
 		historyDecorationPoints.addPoint(-HISTORY_SIZE, -HISTORY_SIZE);
 		historyDecoration.setTemplate(historyDecorationPoints);
 		historyDecoration.setScale(HISTORY_SCALE, HISTORY_SCALE);
+		historyDecoration.add(createTransitionTargetDecoration());
 		return historyDecoration;
 	}
 
 	public static RotatableDecoration createTransitionTargetDecoration() {
-		// PolylineDecoration df = new PolylineDecoration();
-		// df.setFill(true);
-		// df.setFillXOR(false);
-		// df.setOutline(true);
-		// df.setOutlineXOR(false);
-		// df.setLineWidth(1);
-		// df.setLineStyle(Graphics.LINE_SOLID);
-		// PointList pl = new PointList();
-		// pl.addPoint(-1, 1);
-		// pl.addPoint(0, 0);
-		// pl.addPoint(-1, -1);
-		// df.setTemplate(pl);
-		// df.setScale(7, 3);
-		// return df;
 		PolygonDecoration df = new PolygonDecoration();
 		df.setFill(true);
-		df.setLineWidth(1);
+		df.setLineWidth(15);
 		df.setTemplate(PolygonDecoration.TRIANGLE_TIP);
 		return df;
+	}
+	
+	public static RotatableDecoration createCompositeTargetDecoration() {
+		CircleDecoration cd = new CircleDecoration(){
+			protected void outlineShape(final Graphics graphics) {
+				super.outlineShape(graphics);
+				((CircleDecoration) getChildren().get(0)).outlineShape(graphics);
+			}
+		};
+		cd.add(createHistoryTargetDecoration());
+		return cd;
 	}
 }

@@ -106,20 +106,6 @@ public abstract class TransitionDecorator {
 	}
 
 	public static RotatableDecoration createTransitionTargetDecoration() {
-		// PolylineDecoration df = new PolylineDecoration();
-		// df.setFill(true);
-		// df.setFillXOR(false);
-		// df.setOutline(true);
-		// df.setOutlineXOR(false);
-		// df.setLineWidth(1);
-		// df.setLineStyle(Graphics.LINE_SOLID);
-		// PointList pl = new PointList();
-		// pl.addPoint(-1, 1);
-		// pl.addPoint(0, 0);
-		// pl.addPoint(-1, -1);
-		// df.setTemplate(pl);
-		// df.setScale(7, 3);
-		// return df;
 		PolygonDecoration df = new PolygonDecoration();
 		df.setFill(true);
 		df.setLineWidth(1);
