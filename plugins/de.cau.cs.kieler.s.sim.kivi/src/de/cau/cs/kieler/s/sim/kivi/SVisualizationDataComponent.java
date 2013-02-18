@@ -24,7 +24,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.JSONObjectXtextVisualizat
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 yellow KI-28
  */
-public class DataComponent extends JSONObjectXtextVisualizationDataComponent {
+public class SVisualizationDataComponent extends JSONObjectXtextVisualizationDataComponent {
 
     /**
      * {@inheritDoc}

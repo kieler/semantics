@@ -128,9 +128,17 @@ class S2SCC {
     int valSigInt[_SC_SIG_MAX];
     int valSigIntPre[_SC_SIG_MAX];
     
+    // order in which emits occur
+    int emitCount = 0;
+    int sigOrder[_SC_SIG_MAX];
+    // priority with witch emits occur
+    int sigPrio[_SC_SIG_MAX];
     
     #define EMIT_SCC(name) \
     presentSigInt[name] = 1; \
+    sigOrder[name] = emitCount++; \
+    sigPrio[name] = _cid;\
+    
 
     #define EMIT_VAL_SCC(name, value, combine, initial) \
     if (presentSigInt[name] != 1) { \
@@ -138,6 +146,8 @@ class S2SCC {
     } \
     presentSigInt[name] = 1; \
     valSigInt[name] = combine(valSigInt[name],  (int)value); \
+    sigOrder[name] = emitCount++; \
+    sigPrio[name] = _cid;\
     
     #define COMBINE_ADD(val1, val2) \
     (val1 + val2) \
@@ -178,10 +188,10 @@ class S2SCC {
    // Generate signal constants.
    def sSignalConstants(Program program) {
        '''typedef enum {«FOR signal : program.getSignals() SEPARATOR ",
- "»sig_«signal.name»«ENDFOR»} signaltype;
+ "»«signal.name»«ENDFOR»} signaltype;
        
        const char *s2signame[] = {«FOR signal : program.getSignals() SEPARATOR ", 
-"»"sig_«signal.name»"«ENDFOR»};'''
+"»"«signal.name»"«ENDFOR»};'''
    }
    
    // Generate simple reset.
@@ -203,7 +213,7 @@ class S2SCC {
        '''
     void callOutputs() {
     «FOR signal : program.getSignals().filter(e|e.isOutput)»
-        OUTPUT_«signal.name»(PRESENT_SCC(sig_«signal.name»));
+        OUTPUT_«signal.name»(PRESENT_SCC(«signal.name»));
     «ENDFOR»
         }
        '''
@@ -215,9 +225,9 @@ class S2SCC {
        '''
     void resetSignals() {
     «FOR signal : program.getSignals()»
-      presentSigIntPre[sig_«signal.name»] = presentSigInt[sig_«signal.name»];
-      presentSigInt[sig_«signal.name»] = 0;
-      valSigIntPre[sig_«signal.name»] = valSigInt[sig_«signal.name»];
+      presentSigIntPre[«signal.name»] = presentSigInt[«signal.name»];
+      presentSigInt[«signal.name»] = 0;
+      valSigIntPre[«signal.name»] = valSigInt[«signal.name»];
       «/*Do not reset valSigInt here. The value needs to stay until it
        * is changed by another emission!
        */»
@@ -233,10 +243,10 @@ class S2SCC {
        '''
     void totalResetSignals() {
     «FOR signal : program.getSignals()»
-      presentSigInt[sig_«signal.name»] = 0;
-      presentSigIntPre[sig_«signal.name»] = 0;
-      valSigInt[sig_«signal.name»] = «signal.combineOperator.initialValue»;
-      valSigIntPre[sig_«signal.name»] = «signal.combineOperator.initialValue»;
+      presentSigInt[«signal.name»] = 0;
+      presentSigIntPre[«signal.name»] = 0;
+      valSigInt[«signal.name»] = «signal.combineOperator.initialValue»;
+      valSigIntPre[«signal.name»] = «signal.combineOperator.initialValue»;
     «ENDFOR»
     }
        '''
@@ -279,6 +289,7 @@ void setInputs(){
         RESET();
         totalResetSignals();
         setInputs();
+        emitCount = 0;
         tick();
         while(1) {
             callOutputs();
@@ -289,6 +300,7 @@ void setInputs(){
             resetSignals();
             output = cJSON_CreateObject();
             setInputs();
+            emitCount = 0;
             tick();
         }
     }
@@ -324,8 +336,10 @@ void setInputs(){
         value = cJSON_CreateObject();
         cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
     «IF signal.type == ValueType::INT»
-cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»)));
+cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
     «ENDIF»
+        cJSON_AddItemToObject(value, "order", cJSON_CreateNumber(sigOrder[«signal.name»]));
+        cJSON_AddItemToObject(value, "prio", cJSON_CreateNumber(sigPrio[«signal.name»]));
         cJSON_AddItemToObject(output, "«signal.name»", value);
         //printf("«signal.name»:%d\n", status);
         }
@@ -344,10 +358,10 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
             if (present != NULL && present->type) {
                 if (value != NULL) {
                     // Emit with given value
-                    EMIT_VAL_SCC(sig_«signal.name», value->valueint, +,  «signal.combineOperator.initialValue»);
+                    EMIT_VAL_SCC(«signal.name», value->valueint, +,  «signal.combineOperator.initialValue»);
                 } else {
                     // Emit with initial value because no value was given
-                    EMIT_VAL_SCC(sig_«signal.name», «signal.combineOperator.initialValue», +,  «signal.combineOperator.initialValue»);
+                    EMIT_VAL_SCC(«signal.name», «signal.combineOperator.initialValue», +,  «signal.combineOperator.initialValue»);
                 }        
             }
         }   
@@ -461,19 +475,19 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    // by resetting local signals when the state is re-entered.
    // Also reset the value of valued signals (test 139).
    def dispatch expand(LocalSignal signalInstruction) {
-       '''presentSigInt[sig_«signalInstruction.signal.name»] = 0;
-          valSigInt[sig_«signalInstruction.signal.name»] = «signalInstruction.signal.combineOperator.initialValue»;'''   
+       '''presentSigInt[«signalInstruction.signal.name»] = 0;
+          valSigInt[«signalInstruction.signal.name»] = «signalInstruction.signal.combineOperator.initialValue»;'''   
    }
    
    // Expand an EMIT instruction.
    def dispatch expand(Emit emitInstruction) {
        if (emitInstruction.value != null) {
-           '''EMIT_VAL_SCC(sig_«emitInstruction.signal.name», «emitInstruction.value.expand»,
+           '''EMIT_VAL_SCC(«emitInstruction.signal.name», «emitInstruction.value.expand»,
                «emitInstruction.signal.combineOperator.macro», 
                «emitInstruction.signal.combineOperator.initialValue»);'''
        }
        else {
-           '''EMIT_SCC(sig_«emitInstruction.signal.name»);'''
+           '''EMIT_SCC(«emitInstruction.signal.name»);'''
        }
    }   
    
@@ -616,11 +630,11 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
     
    // Expand a signal.
    def dispatch expand(Signal signal) {
-        '''PRESENT_SCC(sig_«signal.name»)'''
+        '''PRESENT_SCC(«signal.name»)'''
    }
    // Expand a signal within a value reference
    def dispatch expand_val(Signal signal) {
-        '''sig_«signal.name»'''
+        '''«signal.name»'''
    }
    def dispatch expand_val(ValuedObjectReference valuedObjectReference) {
         '''«valuedObjectReference.valuedObject.expand_val»'''

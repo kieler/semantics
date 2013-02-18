@@ -191,6 +191,23 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         return scExecution;
     }
 
+    // // -------------------------------------------------------------------------
+    //
+    // public String[] getNamesInOrder(String rawJSONArrayString, String delemiterString,
+    // String cutOffString) {
+    // String[] array = rawJSONArrayString.split(delemiterString);
+    //
+    // for (int c = 0; c < array.length; c++) {
+    // int i = array[c].indexOf(cutOffString);
+    // if (i > 0) {
+    // array[c] = array[c].substring(0, i);
+    // }
+    // array[c] = delemiterString + array[c];
+    // }
+    //
+    // return array;
+    // }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -201,8 +218,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         JSONObject returnObj = new JSONObject();
 
         // Collect active statements
-        String activeStatements = "";
-        StringBuffer activeStatementsBuf = new StringBuffer();
+        String activeStatements;
+        LinkedList<DebugData> activeStatementsList = new LinkedList<DebugData>();
 
         if (scExecution == null || !scExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
@@ -229,15 +246,21 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
             if (receivedMessage != null) {
                 JSONObject sSignalOutput = new JSONObject(receivedMessage);
+//                String[] sSignalOutputNameArray = getNamesInOrder(receivedMessage,
+//                        SSimSCPlugin.AUXILIARY_VARIABLE_TAG, "\"");
                 JSONArray sSignalOutputArray = sSignalOutput.names();
+
+                System.out.println(receivedMessage.toString());
 
                 if (sSignalOutputArray != null) {
                     // First add auxiliary signals
                     for (int i = 0; i < sSignalOutputArray.length(); i++) {
-                        String sSignalOutputName = sSignalOutputArray.getString(i);
-                        if (sSignalOutput.get(sSignalOutputName) instanceof JSONObject) {
-                            boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput
-                                    .getJSONObject(sSignalOutputName));
+                        String sSignalOutputName = (String) sSignalOutputArray.get(i);
+                        if (sSignalOutput.has(sSignalOutputName) 
+                            && (sSignalOutput.get(sSignalOutputName) instanceof JSONObject)) {
+                            JSONObject sSignal = sSignalOutput
+                                    .getJSONObject(sSignalOutputName);
+                            boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignal);
 
                             // Test if the output variable is an auxiliary signal
                             // that is only there to mark the current S statement
@@ -250,14 +273,18 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                                     String statementWithoutAuxiliaryVariableTag = sSignalOutputName
                                             .substring(SSimSCPlugin.AUXILIARY_VARIABLE_TAG.length());
 
-                                    // Insert a "," if not the first statement
-                                    if (activeStatementsBuf.length() != 0) {
-                                        activeStatementsBuf.append(",");
+                                    DebugData debugData = new DebugData();
+                                    debugData.name = statementWithoutAuxiliaryVariableTag;
+                                    debugData.order =-1;
+                                    debugData.prio = -1;
+                                    if (sSignal.has("order")) {
+                                        debugData.order = sSignal.getInt("order");
                                     }
-
-                                    activeStatementsBuf
-                                            .append(statementWithoutAuxiliaryVariableTag);
-
+                                    if (sSignal.has("prio")) {
+                                        debugData.prio = sSignal.getInt("prio");
+                                    }
+                                    activeStatementsList.add(debugData);
+                                    
                                 } catch (Exception e) {
                                     // ignore error
                                     e.printStackTrace();
@@ -265,6 +292,21 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
                             }
                         }
+                    }
+                }
+                
+                // Sort activeStatements and build string
+                Collections.sort(activeStatementsList);
+                StringBuffer activeStatementsBuf = new StringBuffer();
+                for (DebugData activeStatement : activeStatementsList) {
+                    if (activeStatementsBuf.length() != 0) {
+                        activeStatementsBuf.append(",");
+                    }
+                    activeStatementsBuf.append(activeStatement.name);
+                    if (activeStatement.prio > -1) {
+                        activeStatementsBuf.append("(");
+                        activeStatementsBuf.append(activeStatement.prio);
+                        activeStatementsBuf.append(")");
                     }
                 }
                 activeStatements = activeStatementsBuf.toString();
@@ -617,6 +659,23 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             out.println(text);
         } else {
             scConsole.clearConsole();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    class DebugData implements Comparable<DebugData> {
+        public String name;
+        public int prio;
+        public int order;
+
+        public int compareTo(DebugData compareObject) {
+            if (order < compareObject.order)
+                return -1;
+            else if (order == compareObject.order)
+                return 0;
+            else
+                return 1;
         }
     }
 

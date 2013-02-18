@@ -25,6 +25,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.internal.UISynchronizer;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.parser.IParseResult;
@@ -52,39 +53,55 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
         JSONObjectSimulationDataComponent {
 
     /** The Xtext editor. */
-    private XtextEditor xtextEditor;
+    protected XtextEditor xtextEditor;
 
     /** The model semantic resource editor. */
-    private Resource semanticResource;
+    protected Resource semanticResource;
 
     /** The model root of the corresponding Xtext editor. */
-    private EObject modelRoot;
+    protected EObject modelRoot;
 
     /** The active (and selected) statements, needed to undo. */
-    private LinkedList<EObject> activeStatements = new LinkedList<EObject>();
+    protected HashMap<EObject, String> statementPrio = new HashMap<EObject, String>();
+
+    /** The active (and selected) statements, needed to undo. */
+    protected LinkedList<EObject> activeStatements = new LinkedList<EObject>();
+
+    /** The active (and selected) statements, needed to undo. */
+    protected LinkedList<EObject> activeStatements2 = new LinkedList<EObject>();
 
     /** The error statements, needed to undo. */
-    private LinkedList<EObject> errorStatements = new LinkedList<EObject>();
+    protected LinkedList<EObject> errorStatements = new LinkedList<EObject>();
 
     /** The recover text style range map to recover original style. */
-    private Hashtable<Integer, StyleRange> recoverStyleRangeMap = new Hashtable<Integer, StyleRange>();
+    protected Hashtable<Integer, StyleRange> recoverStyleRangeMap = new Hashtable<Integer, StyleRange>();
 
     /** The Constant COLOR_HIGH. */
-    private static final int COLOR_HIGH = 255;
+    protected static final int COLOR_HIGH = 255;
 
     /** The Constant COLOR_MED. */
-    private static final int COLOR_MED = 180;
+    protected static final int COLOR_MED = 180;
 
     /** The default highlight background color. */
-    private static final RGB DEFAULT_HIGHLIGHT_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
+    protected static final RGB DEFAULT_HIGHLIGHT_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
             COLOR_MED); // light red
 
+    /** The default highlight background color. */
+    protected static final RGB DEFAULT_HIGHLIGHT_BACKGROUND_COLOR2 = new RGB(COLOR_MED, COLOR_HIGH,
+            COLOR_MED); // light green
+
     /** The default error background color. */
-    private static final RGB DEFAULT_ERROR_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
+    protected static final RGB DEFAULT_ERROR_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
             COLOR_HIGH); // light magenta
 
     /** The Constant SLEEP_TIME for the thread to sleep. */
-    private static final int SLEEP_TIME = 1;
+    protected static final int SLEEP_TIME = 1;
+
+    /**
+     * The highlighted memory to remember which eobject is highlighted in which color, null == not
+     * highlighted.
+     */
+    protected Hashtable<EObject, RGB> highlighted = new Hashtable<EObject, RGB>();
 
     /**
      * The highlight background color is used internally for setting a specific background color and
@@ -115,6 +132,18 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      */
     protected RGB getHighlightBackgroundColor() {
         return DEFAULT_HIGHLIGHT_BACKGROUND_COLOR;
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Gets the highlight background color. Derived classes may override this method to provide a
+     * different color.
+     * 
+     * @return the highlight background color
+     */
+    protected RGB getHighlightBackgroundColor2() {
+        return DEFAULT_HIGHLIGHT_BACKGROUND_COLOR2;
     }
 
     // -----------------------------------------------------------------------------
@@ -186,7 +215,15 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
         for (EObject statement : activeStatements) {
             try {
                 // null == original background
-                setXtextSelection(statement, null);
+                setXtextSelection(statement, null, false);
+            } catch (KiemInitializationException e) {
+                // Hide any errors
+            }
+        }
+        for (EObject statement : activeStatements2) {
+            try {
+                // null == original background
+                setXtextSelection(statement, null, false);
             } catch (KiemInitializationException e) {
                 // Hide any errors
             }
@@ -194,13 +231,15 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
         for (EObject statement : errorStatements) {
             try {
                 // null == original background
-                setXtextSelection(statement, null);
+                setXtextSelection(statement, null, false);
             } catch (KiemInitializationException e) {
                 // Hide any errors
             }
         }
+        highlighted.clear();
         eObjectMap.clear();
         activeStatements.clear();
+        activeStatements2.clear();
         errorStatements.clear();
         recoverStyleRangeMap.clear();
         semanticResource = null;
@@ -320,9 +359,20 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
 
                 // Select statements for highlighting
                 for (String activeStatementID : activeStatementsArray) {
+                    String prio = null;
+                    if (activeStatementID.contains("(") && activeStatementID.contains(")")) {
+                        // find out optional prio (given in parentheses)
+                        prio = activeStatementID.substring(activeStatementID.indexOf("(") + 1,
+                                activeStatementID.lastIndexOf(")"));
+                        activeStatementID = activeStatementID.substring(0,
+                                activeStatementID.indexOf("("));
+                    }
                     EObject activeStatement = this.getEObject(activeStatementID);
                     if (activeStatement != null) {
                         newActiveStatements.add(activeStatement);
+                        if (prio != null) {
+                            statementPrio.put(activeStatement, prio);
+                        }
                     }
                 }
 
@@ -338,20 +388,113 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     // -----------------------------------------------------------------------------
 
     /**
+     * Refresh the textual view and highlighting of active and error statements.
+     * 
+     * @param newActiveStatements
+     *            the new active statements
+     * @param newActiveStatements2
+     *            the new active statements2
+     * @param newErrorStatements
+     *            the new error statements
+     * @throws KiemExecutionException
+     *             the kiem execution exception
+     */
+    public void refreshView(final LinkedList<EObject> newActiveStatements,
+            final LinkedList<EObject> newActiveStatements2,
+            final LinkedList<EObject> newErrorStatements, final boolean async)
+            throws KiemExecutionException {
+        LinkedList<EObject> newActiveErrorStatements = new LinkedList<EObject>();
+        newActiveErrorStatements.addAll(newActiveStatements);
+        newActiveErrorStatements.addAll(newActiveStatements2);
+        newActiveErrorStatements.addAll(newErrorStatements);
+
+        // Undo Highlighting
+        // Highlight the active statements
+        LinkedList<EObject> oldActiveErrorStatements = new LinkedList<EObject>();
+        oldActiveErrorStatements.addAll(activeStatements);
+        oldActiveErrorStatements.addAll(activeStatements2);
+        oldActiveErrorStatements.addAll(errorStatements);
+        for (EObject statement : oldActiveErrorStatements) {
+            // remove highlighting only if not again to highlight
+            if (!newActiveErrorStatements.contains(statement)) {
+                try {
+                    if (highlighted.contains(statement)) {
+                        highlighted.remove(statement);
+                    }
+                    setXtextSelection(statement, null, async);
+                } catch (KiemInitializationException e) {
+                    throw new KiemExecutionException("No active " + getLanguageName()
+                            + " editor for statement visualization.", false, false, true, e);
+                }
+            }
+        }
+
+        // New active statements
+        activeStatements = newActiveStatements;
+        errorStatements = newErrorStatements;
+
+        // Highlight the active statements
+        for (EObject statement : newActiveErrorStatements) {
+            // highlight only if not highlighted before
+            try {
+                // give preference to error coloring
+                if (errorStatements.contains(statement)) {
+                    if (highlighted.get(statement) != this.getErrorBackgroundColor()) {
+                        setXtextSelection(statement, this.getErrorBackgroundColor(), async);
+                    }
+                } else {
+                    if (activeStatements.contains(statement)) {
+                        if (highlighted.get(statement) != this.getHighlightBackgroundColor()) {
+                            setXtextSelection(statement, this.getHighlightBackgroundColor(), async);
+                        }
+                    } else {
+                        if (highlighted.get(statement) != this.getHighlightBackgroundColor2()) {
+                            setXtextSelection(statement, this.getHighlightBackgroundColor2(), async);
+                        }
+                    }
+                }
+            } catch (KiemInitializationException e) {
+                throw new KiemExecutionException("No active " + this.getLanguageName()
+                        + " editor for statement visualization.", false, false, true, e);
+            }
+        }
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Gets the statement name.
+     * 
+     * @return the statement name
+     */
+    public final String getStatementName() {
+        return this.getProperties()[KIEM_PROPRTY_STATEMENTNAME + KIEM_PROPERTY_DIFF].getValue();
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Gets the error statement name.
+     * 
+     * @return the error statement name
+     */
+    public final String getErrorStatementName() {
+        return this.getProperties()[KIEM_PROPRTY_ERRORSTATEMENTNAME + KIEM_PROPERTY_DIFF]
+                .getValue();
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public final JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
-        String statementName = this.getProperties()[KIEM_PROPRTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
-                .getValue();
-        String errorStatementName = this.getProperties()[KIEM_PROPRTY_ERRORSTATEMENTNAME
-                + KIEM_PROPERTY_DIFF].getValue();
+        String statementName = getStatementName();
+        String errorStatementName = getErrorStatementName();
 
         LinkedList<EObject> newActiveStatements = getActiveStatements(jSONObject, statementName);
         LinkedList<EObject> newErrorStatements = getActiveStatements(jSONObject, errorStatementName);
-        LinkedList<EObject> newActiveErrorStatements = new LinkedList<EObject>();
-        newActiveErrorStatements.addAll(newActiveStatements);
-        newActiveErrorStatements.addAll(newErrorStatements);
 
         // Silent repeat
         try {
@@ -364,50 +507,8 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                     "Fail silent recovery from user editor change failed.", false, e);
         }
 
-        // Undo Highlighting
-        // Highlight the active statements
-        LinkedList<EObject> oldActiveErrorStatements = new LinkedList<EObject>();
-        oldActiveErrorStatements.addAll(activeStatements);
-        oldActiveErrorStatements.addAll(errorStatements);
-        for (EObject statement : oldActiveErrorStatements) {
-            // remove highlighting only if not again to highlight
-            if (!newActiveErrorStatements.contains(statement)) {
-                try {
-                    setXtextSelection(statement, null);
-                } catch (KiemInitializationException e) {
-                    throw new KiemExecutionException("No active " + getLanguageName()
-                            + " editor for statement visualization.", false, false, true, e);
-                }
-            }
-        }
-
-        // New active statements
-        LinkedList<EObject> oldActiveStatements = activeStatements;
-        LinkedList<EObject> oldErrorStatements = errorStatements;
-        activeStatements = newActiveStatements;
-        errorStatements = newErrorStatements;
-
-        // Highlight the active statements
-        for (EObject statement : newActiveErrorStatements) {
-            // highlight only if not highlighted before
-            if (!oldActiveErrorStatements.contains(statement)
-                    || (oldActiveStatements.contains(statement)
-                    && newErrorStatements.contains(statement))
-                    || (oldErrorStatements.contains(statement)
-                    && newActiveStatements.contains(statement))) {
-                try {
-                    // give preference to error coloring
-                    if (errorStatements.contains(statement)) {
-                        setXtextSelection(statement, this.getErrorBackgroundColor());
-                    } else {
-                        setXtextSelection(statement, this.getHighlightBackgroundColor());
-                    }
-                } catch (KiemInitializationException e) {
-                    throw new KiemExecutionException("No active " + this.getLanguageName()
-                            + " editor for statement visualization.", false, false, true, e);
-                }
-            }
-        }
+        // Repaint
+        refreshView(newActiveStatements, new LinkedList<EObject>(), newErrorStatements, true);
 
         // This is just an observer component
         return null;
@@ -439,9 +540,10 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      *             the kiem initialization exception
      */
     private void setXtextSelection(final EObject semanticElement,
-            final RGB specificBackgroundColorParam) throws KiemInitializationException {
+            final RGB specificBackgroundColorParam, final boolean async)
+            throws KiemInitializationException {
         this.specificBackgroundColor = specificBackgroundColorParam;
-        setXtextSelection(semanticElement);
+        setXtextSelection(semanticElement, async);
     }
 
     // -----------------------------------------------------------------------------
@@ -485,7 +587,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      * @throws KiemInitializationException
      *             the kiem initialization exception
      */
-    private void setXtextSelection(final EObject semanticElement)
+    private void setXtextSelection(final EObject semanticElement, final boolean async)
             throws KiemInitializationException {
         Resource localSemanticResource = this.semanticResource;
         if (localSemanticResource == null) {
@@ -498,67 +600,88 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
 
         if (xtextNode != null) {
             selectionDone = false;
-            Display.getDefault().asyncExec(new Runnable() {
-                public void run() {
-                    XtextEditor localXtextEditor;
-                    localXtextEditor = xtextEditor;
 
-                    // getOffset() and getLength() are trimming white spaces
-                    int offset = xtextNode.getOffset();
-
-                    // Find the next leaf node element (the actual Statement of the language)
-                    // and get its length
-                    int length = NodeModelUtils.findLeafNodeAtOffset(xtextNode, offset).getLength();
-
-                    if (localXtextEditor.getInternalSourceViewer() == null) {
-                        // Editor might be closed
-                        return;
+            if (async) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    public void run() {
                     }
-
-                    localXtextEditor.getInternalSourceViewer().setRangeIndication(offset, length,
-                            true);
-                    localXtextEditor.getInternalSourceViewer().revealRange(offset, length);
-
-                    StyleRange styleRange = null;
-                    // if any background color is set, then use this
-                    if (specificBackgroundColor != null) {
-                        // Save the current style before
-                        StyleRange backupStyleRange = localXtextEditor.getInternalSourceViewer()
-                                .getTextWidget().getStyleRangeAtOffset(offset);
-                        if (backupStyleRange != null) {
-                            recoverStyleRangeMap.put(offset, backupStyleRange);
-                            Color highlightColor = new Color(Display.getCurrent(),
-                                    specificBackgroundColor);
-                            styleRange = new StyleRange(offset, length,
-                                    backupStyleRange.foreground, highlightColor);
-                        }
-                    } else {
-                        // Recover the old style
-                        StyleRange recoverStyleRange = recoverStyleRangeMap.get(offset);
-                        if (recoverStyleRange != null) {
-                            styleRange = new StyleRange(offset, length,
-                                    recoverStyleRange.foreground, recoverStyleRange.background,
-                                    recoverStyleRange.fontStyle);
-                            recoverStyleRangeMap.remove(offset);
-                        }
+                });
+                while (!selectionDone) {
+                    try {
+                        Thread.sleep(SLEEP_TIME);
+                    } catch (InterruptedException e) {
+                        // No error behavior
                     }
-
-                    if (styleRange != null) {
-                        localXtextEditor.getInternalSourceViewer().getTextWidget()
-                                .setStyleRange(styleRange);
-                    }
-
-                    selectionDone = true;
                 }
-            });
-            while (!selectionDone) {
-                try {
-                    Thread.sleep(SLEEP_TIME);
-                } catch (InterruptedException e) {
-                    // No error behavior
-                }
+            } else {
+                doSelection();
             }
         }
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Do the selection either synchronously (in UI thread) or asynchronously (not from UI thread).
+     */
+    private void doSelection() {
+        XtextEditor localXtextEditor;
+        localXtextEditor = xtextEditor;
+
+        // getOffset() and getLength() are trimming white spaces
+        int offset = xtextNode.getOffset();
+
+        // Find the next leaf node element (the actual Statement of the language)
+        // and get its length
+        if (NodeModelUtils.findLeafNodeAtOffset(xtextNode, offset) == null) {
+            selectionDone = true;
+            // Editor might be closed
+            return;
+        }
+        int length = 0;
+        try {
+            length = NodeModelUtils.findLeafNodeAtOffset(xtextNode, offset).getLength();
+        } catch (Exception e) {
+            selectionDone = true;
+            // Editor might be closed
+            return;
+        }
+        if (localXtextEditor.getInternalSourceViewer() == null) {
+            selectionDone = true;
+            // Editor might be closed
+            return;
+        }
+
+        localXtextEditor.getInternalSourceViewer().setRangeIndication(offset, length, true);
+        localXtextEditor.getInternalSourceViewer().revealRange(offset, length);
+
+        StyleRange styleRange = null;
+        // if any background color is set, then use this
+        if (specificBackgroundColor != null) {
+            // Save the current style before
+            StyleRange backupStyleRange = localXtextEditor.getInternalSourceViewer()
+                    .getTextWidget().getStyleRangeAtOffset(offset);
+            if (backupStyleRange != null) {
+                recoverStyleRangeMap.put(offset, backupStyleRange);
+                Color highlightColor = new Color(Display.getCurrent(), specificBackgroundColor);
+                styleRange = new StyleRange(offset, length, backupStyleRange.foreground,
+                        highlightColor);
+            }
+        } else {
+            // Recover the old style
+            StyleRange recoverStyleRange = recoverStyleRangeMap.get(offset);
+            if (recoverStyleRange != null) {
+                styleRange = new StyleRange(offset, length, recoverStyleRange.foreground,
+                        recoverStyleRange.background, recoverStyleRange.fontStyle);
+                recoverStyleRangeMap.remove(offset);
+            }
+        }
+
+        if (styleRange != null) {
+            localXtextEditor.getInternalSourceViewer().getTextWidget().setStyleRange(styleRange);
+        }
+
+        selectionDone = true;
     }
 
     // -------------------------------------------------------------------------
