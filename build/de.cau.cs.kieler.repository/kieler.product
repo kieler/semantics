@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="0.7.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="0.8.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.cau.cs.kieler.core.product/images/about.png"/>
       <text>
-         KIELER - a research project on enhancing the model-based design of complex systems.
+         KIELER - Kiel Integrated Environment for Layout (Eclipse Rich Client)
+A research project on enhancing the model-based design of complex systems
 
+
+For more information, visit our website:
 http://www.informatik.uni-kiel.de/rtsys/kieler/
 
-Copyright 2012 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group.
+Copyright 2012 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group
       </text>
    </aboutInfo>
 
@@ -44,9 +47,9 @@ openFile</programArgsMac>
 
    <splash
       location="de.cau.cs.kieler.core.product"
-      startupProgressRect="5,275,445,15"
-      startupMessageRect="7,252,445,20"
-      startupForegroundColor="000000" />
+      startupProgressRect="19,301,207,15"
+      startupMessageRect="10,200,0,0"
+      startupForegroundColor="FFFFFF" />
    <launcher name="kieler">
       <linux icon="/de.cau.cs.kieler.core.product/icons/foerde-logo-64.xpm"/>
       <macosx icon="/de.cau.cs.kieler.core.product/icons/foerde-logo.icns"/>
@@ -62,7 +65,6 @@ openFile</programArgsMac>
             winExtraLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp"/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>
@@ -164,18 +166,18 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </plugins>
 
    <features>
-      <feature id="de.cau.cs.kieler.dependencies.feature" version="0.4.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.dependencies.feature" version="0.5.0.qualifier"/>
       <feature id="net.ogdf.bin.feature" version="2.0.0.qualifier"/>
       <feature id="org.ptolemy.feature" version="8.1.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kiml.gmf.feature" version="0.7.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kwebs.client.jaxws.feature" version="0.1.1.qualifier"/>
-      <feature id="de.cau.cs.kieler.synccharts.feature" version="0.7.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kaom.feature" version="0.5.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.keg.feature" version="0.5.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.klots.feature" version="0.2.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kiml.graphviz.feature" version="0.7.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kiml.ogdf.feature" version="0.5.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.esterel.feature" version="0.1.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.kiml.gmf.feature" version="0.8.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.kwebs.client.jaxws.feature" version="0.1.2.qualifier"/>
+      <feature id="de.cau.cs.kieler.synccharts.feature" version="0.8.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.kaom.feature" version="0.6.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.keg.feature" version="0.6.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.klots.feature" version="0.3.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.kiml.graphviz.feature" version="0.7.1.qualifier"/>
+      <feature id="de.cau.cs.kieler.kiml.ogdf.feature" version="0.5.1.qualifier"/>
+      <feature id="de.cau.cs.kieler.esterel.feature" version="0.2.0.qualifier"/>
    </features>
 
    <configurations>

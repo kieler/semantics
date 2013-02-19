@@ -35,7 +35,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="de.cau.cs.kieler"
+            categoryId="org.eclipse.ui.category.edit"
             defaultHandler="de.cau.cs.kieler.kvid.visual.complex.DisplayNodeHandler"
             id="de.cau.cs.kieler.kvid.addDisplayNodeCommand"
             name="Add Display Node">

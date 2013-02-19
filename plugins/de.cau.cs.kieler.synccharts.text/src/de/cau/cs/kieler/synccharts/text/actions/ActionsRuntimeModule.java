@@ -2,6 +2,7 @@ package de.cau.cs.kieler.synccharts.text.actions;
 
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
+import org.eclipse.xtext.service.SingletonBinding;
 
 import de.cau.cs.kieler.synccharts.text.actions.formatting.ActionsTransientValueService;
 import de.cau.cs.kieler.synccharts.text.actions.formatting.ActionsValueConverter;
@@ -31,5 +32,12 @@ public class ActionsRuntimeModule extends de.cau.cs.kieler.synccharts.text.actio
     public Class<? extends IValueConverterService> bindIValueConverterService() {
         return ActionsValueConverter.class;
     }
-    
+
+    // contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
+    @SingletonBinding
+    public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
+            return de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider.class;
+    }
+
+
 }

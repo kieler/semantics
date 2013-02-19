@@ -1,3 +1,106 @@
+fmod VARIABLE is 
+    sort Variable .
+endfm
+
+view Variable from TRIV to VARIABLE is
+    sort Elt to Variable .
+endv
+
+fmod VARIABLES is
+    including SET{Variable} * (sort Set{Variable} to Variables, sort NeSet{Variable} to NeVariables) .
+	
+	protecting STRING .
+	protecting INT .
+	
+	sort Expression .
+	sort VariableID .
+	subsort VariableID < Expression .
+	subsort Int < Expression .
+	
+	op vID_ : String -> VariableID .
+	
+	var variableID1 variableID2 : VariableID .
+	var variableValue1 variableValue2 : Int . 
+	var natVar : Variable .
+	var variables : Variables . 
+	var str : String .
+	var varID1 varID2 : VariableID .
+	var exp : Expression .
+	
+	op NatVar(_,_) : VariableID Int -> Variable .
+	
+	op assign _ to _ in _ : Int VariableID Variables -> Variables .
+	eq assign variableValue1 to variableID1 in (NatVar(variableID1 , variableValue2), variables) = (NatVar(variableID1 , variableValue1), variables) .
+	    
+    op _ + _ : Expression Expression -> Expression [ditto] .
+    op _ - _ : Expression Expression -> Expression [ditto] .
+    
+    *** this definiton has to be here because it is used for the evaluation of actions and guards 
+    op eval _ with _ : Expression Variables -> Int .
+    eq eval variableValue1 with variables = variableValue1 .
+    eq eval varID1 with (NatVar(varID1 , variableValue1) , variables) = variableValue1 .
+    eq eval varID1 + exp with (NatVar(varID1 , variableValue1), variables) = variableValue1 + (eval exp with (NatVar(varID1 , variableValue1), variables)) .
+    eq eval varID1 - exp with (NatVar(varID1 , variableValue1), variables) = variableValue1 - (eval exp with (NatVar(varID1 , variableValue1), variables)) .
+
+endfm
+ 
+*** red NatVar(vID "a",0) .
+*** red NatVar(vID "a",0), NatVar (vID "b",2)  .
+*** red vID "a" .
+*** red vID "a" + vID "b" .
+*** red eval vID "a" with NatVar(vID "a",0) .
+*** red eval vID "a" + (vID "b" + vID "c") with (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) .
+*** red eval vID "c" with (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) .
+*** red eval vID "b" with (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) .
+*** red eval vID "c" - vID "b" with (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) .
+*** red assign 17 to vID "a" in (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) .
+*** red assign eval vID "c" - vID "b" with (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) to vID "a" in (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) .
+
+
+
+
+fmod ACTION is
+    protecting VARIABLES .
+    sort Action .
+
+    op assignAct _ := _ : VariableID Expression -> Action .
+    op noac : -> Action .
+    op absAct _ : String -> Action .
+    
+
+endfm
+red vID "a" .
+red (1).Expression .
+red assignAct vID "a" := 1 .
+*** red noac .
+*** red absAct "bla" .
+
+view Action from TRIV to ACTION is
+    sort Elt to Action .
+endv
+
+
+fmod ACTIONSSYNTAX is 
+  including LIST{Action} * (sort List{Action} to Actions, sort NeList{Action} to NeActions) .
+
+  
+  vars actions1 actions2 actions3 : Actions .
+  var action : Action .
+  
+  op seq_ : Actions -> Action .
+  op par_ : Actions -> Action .
+    
+endfm
+
+
+
+***(
+
+
+
+
+
+
 ****************************************************************
 *** ToDos in diesem File
 *** - Kommentare
@@ -75,3 +178,4 @@ endfm
 *** red (evalEXP (Var- "x" + Var- "y")  (((Var- "y")-> 7), ((Var- "x")-> 9)))  .
 *** red (evalAction (Var- "x" := (Var- "x" + Var- "y"))  (((Var- "y")-> 7), ((Var- "x")-> 9)))  .
 
+)***

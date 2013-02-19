@@ -6,7 +6,7 @@
     <signals name="C" isOutput="true"/>
     <signals name="D" isOutput="true"/>
     <signals name="E" isOutput="true"/>
-    <signals name="T"/>
+    <signals name="T" isOutput="true"/>
     <signals name="haltTrap39"/>
     <regions id="R0">
       <states id="Initial" label="Initial" isInitial="true">

@@ -63,7 +63,8 @@ public class XtextEditorHighlightEffect extends AbstractEffect {
     public void execute() {
 
         // determine the workbench resource path of 'element's definition document
-        final IPath path = new Path(this.element.eResource().getURI().toPlatformString(false));
+        //  the boolean param 'true' forces the URI to properly convert space in file/folder names
+        final IPath path = new Path(this.element.eResource().getURI().toPlatformString(true));
         final IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {

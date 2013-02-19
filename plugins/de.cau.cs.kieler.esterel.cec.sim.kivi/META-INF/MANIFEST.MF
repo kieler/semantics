@@ -4,7 +4,7 @@ Bundle-Name: KIELER Esterel Kivi CEC Simulation Visualization
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec.sim.kivi;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.cec.sim.kivi.EsterelCECSimKiviPlugin
-Bundle-Vendor: Christian-Albrechs-Universität zu Kiel
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem,
