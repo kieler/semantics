@@ -1,63 +1,93 @@
 package de.cau.cs.kieler.synccharts.klighd;
 
-import org.eclipse.xtext.EcoreUtil2;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.KInvisibility;
 import de.cau.cs.kieler.core.krendering.KLeftPosition;
 import de.cau.cs.kieler.core.krendering.KPolyline;
 import de.cau.cs.kieler.core.krendering.KPosition;
-import de.cau.cs.kieler.core.krendering.KStyle;
+import de.cau.cs.kieler.core.krendering.KRenderingPackage;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.klighd.IStyleModifier;
 import de.cau.cs.kieler.klighd.StyleModificationContext;
+import de.cau.cs.kieler.klighd.util.ModelingUtil;
 
+/**
+ * This modifier realizes the conditional visibility of the region separation lines.
+ * 
+ * @author chsch
+ */
 public class RegionLineModifier implements IStyleModifier {
 
     /**
-     * 
-     * {@inheritDoc}
+     * {@inheritDoc}.<br>
+     * <br>
+     * This modifier realizes the conditional visibility of the region separation lines.
      */
     public boolean modify(StyleModificationContext context) {
-        KStyle toBeModified = context.getStyle();
-        if (toBeModified instanceof KInvisibility) {
-            KInvisibility v = (KInvisibility) toBeModified;
-            KPolyline r = (KPolyline) v.eContainer();
+        if (!KRenderingPackage.eINSTANCE.getKInvisibility().isInstance(context.getStyle())) {
+            return false;
+        }
+        KInvisibility style = (KInvisibility) context.getStyle();
+        KPolyline polyline = (KPolyline) style.eContainer();
 
-            KNode node = EcoreUtil2.getContainerOfType(v, KNode.class);
-            KShapeLayout layout = node.getData(KShapeLayout.class);
+        KNode regionNode = ModelingUtil.eContainerOfType(style, KNode.class);
+        KShapeLayout layout = regionNode.getData(KShapeLayout.class);
 
-            KNode parent = node.getParent();
+        KNode parent = regionNode.getParent();
+        if (parent == null) {
+            // an emergency exit in case something really weird happened.
+            return false;
+        }
+        // KShapeLayout parentlayout = parent.getData(KShapeLayout.class);
 
-            if (parent == null) {
-                // an emergency exit for case something really weird happend.
-                return false;
-            }
-            
-            KShapeLayout parentlayout = parent.getData(KShapeLayout.class);
-
-            if (r.getPoints().size() < 2) {
-                // cannot determine direction of border, so no possibility to set visibility
-                return false;
-            } else {
-                KPosition start = r.getPoints().get(0);
-                KPosition end = r.getPoints().get(r.getPoints().size() - 1);
-
-                if (isRightOf(end, start, parentlayout.getWidth())) {
-                    // horizontal line
-                    if (layout.getYpos() > 10) {
-                        v.setInvisible(false);
-                    }
-                } else {
-                    // vertical line
-                    if (layout.getXpos() > 10) {
-                        v.setInvisible(false);
-                    }
+        if (polyline.getPoints().size() != 2) {
+            // cannot determine direction of border, so no possibility to set visibility
+            return false;
+        }
+        
+        // KPosition start = polyline.getPoints().get(0);
+        // KPosition end = polyline.getPoints().get(polyline.getPoints().size() - 1);
+        // if (isRightOf(end, start, parentlayout.getWidth())) {
+        
+        // chsch: simpler implementation
+        if (isHorizontal(polyline)) {
+            // horizontal line
+            if (layout.getYpos() > 20) {
+                // in case the Y component of the region's position is bigger than 20
+                //  we assume there must be another one in north of 'regionNode'
+                //  (20 is chosen to respect potential border spacing)
+                if (style.isInvisible()) {
+                    style.setInvisible(false);
                 }
-                return true;
+            } else {
+                if (!style.isInvisible()) {
+                    style.setInvisible(true);
+                }
             }
-
-        } 
-        return false;
+        } else {
+            // vertical line
+            if (layout.getXpos() > 20) {
+                // in case the X component of the region's position is bigger than 20
+                //  we assume there must be another one in west of 'regionNode'
+                //  (20 is chosen to respect potential border spacing)
+                if (style.isInvisible()) {
+                    style.setInvisible(false);
+                }
+            } else {
+                if (!style.isInvisible()) {
+                    style.setInvisible(true);
+                }
+            }
+        }
+        return true;
+    }
+        
+    private Boolean isHorizontal(KPolyline line) {
+        // within this method we advantage of the concrete line definition in the
+        // SyncChartsDiagramSynthesis!
+        KPosition first = line.getPoints().get(0);
+        KPosition second = line.getPoints().get(1);        
+        return first.getY().eClass().equals(second.getY().eClass());
     }
 
     /**
@@ -69,6 +99,7 @@ public class RegionLineModifier implements IStyleModifier {
      *            the reference position
      * @return true if p1 is right of p2, false otherwise
      */
+    @SuppressWarnings("unused")
     private Boolean isRightOf(KPosition p1, KPosition p2, float parentWidth) {
         float absoluteX1 = 0.0f;
         float absoluteX2 = 0.0f;
@@ -86,5 +117,5 @@ public class RegionLineModifier implements IStyleModifier {
         }
 
         return absoluteX1 > absoluteX2;
-    }
+    }    
 }
