@@ -18,7 +18,7 @@ Workflow {
 // registerGeneratedEPackage = "org.eclipse.xtext.common.types.TypesPackage"
 		registerGeneratedEPackage = "org.yakindu.sct.model.stext.stext.StextPackage"
 		registerGenModelFile = "platform:/resource/org.yakindu.sct.model.stext/model/SText.genmodel"
-				registerGeneratedEPackage = "org.yakindu.sct.model.sgraph.SGraphPackage"
+		registerGeneratedEPackage = "org.yakindu.sct.model.sgraph.SGraphPackage"
 		registerGenModelFile = "platform:/resource/org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel"
 	}
 
@@ -68,8 +68,8 @@ Workflow {
 			}
 
 			// scoping and exporting API
-			// fragment = scoping.ImportURIScopingFragment {}
-			// fragment = exporting.SimpleNamesFragment {}
+//			 fragment = scoping.ImportURIScopingFragment {}
+//			 fragment = exporting.SimpleNamesFragment {}
 
 			// scoping and exporting API 
 			fragment = scoping.ImportNamespacesScopingFragment {}
@@ -77,10 +77,10 @@ Workflow {
 			fragment = builder.BuilderIntegrationFragment {}
 
 			// generator API
-			fragment = generator.GeneratorFragment {
-				generateMwe = true
-				generateJavaMain = true
-			}
+			//			fragment = generator.GeneratorFragment {
+			//				generateMwe = true
+			//				generateJavaMain = true
+			//			}
 
 			// formatter API 
 			fragment = formatting.FormatterFragment {}
@@ -110,11 +110,11 @@ Workflow {
 			//		modelFileExtension = file.extensions
 			// }
 
-			// provides the necessary bindings for java types integration
-			fragment = types.TypesGeneratorFragment {}
+						// provides the necessary bindings for java types integration
+						fragment = types.TypesGeneratorFragment {}
 
 			// generates the required bindings only if the grammar inherits from Xbase
-			fragment = xbase.XbaseGeneratorFragment {}
+			//			fragment = xbase.XbaseGeneratorFragment {}
 
 			// provides a preference page for template proposals 
 			fragment = templates.CodetemplatesGeneratorFragment {}

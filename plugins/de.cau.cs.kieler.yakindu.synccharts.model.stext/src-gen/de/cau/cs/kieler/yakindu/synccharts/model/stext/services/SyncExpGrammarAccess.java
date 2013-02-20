@@ -375,7 +375,7 @@ public class SyncExpGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} triggers+=StateReaction ("&&" isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "["
+	//	{ReactionTrigger} stateReaction=StateReaction ("&&" isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "["
 	//
 	//	guardExpression=Expression "]")?)?;
 	public SCChartsExpGrammarAccess.LocalReactionTriggerElements getLocalReactionTriggerAccess() {
@@ -436,7 +436,7 @@ public class SyncExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//ReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "[" guardExpression=Expression "]");
+	//	{ReactionTrigger} isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "[" guardExpression=Expression "]");
 	public SCChartsExpGrammarAccess.ReactionTriggerElements getReactionTriggerAccess() {
 		return gaSCChartsExp.getReactionTriggerAccess();
 	}

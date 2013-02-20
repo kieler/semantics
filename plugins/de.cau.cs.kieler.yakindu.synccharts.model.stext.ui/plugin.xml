@@ -144,7 +144,7 @@
 		</parser>-->
 		<parser
 			class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.yakindu.sct.model.stext.resource.factory.StextResourceFactory"
-			type="syncexp">
+			type="ysc">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">

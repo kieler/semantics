@@ -3,7 +3,6 @@ package de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.PolygonDecoration;
-import org.eclipse.draw2d.PolylineDecoration;
 import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
 
@@ -104,14 +103,13 @@ public abstract class TransitionDecorator {
 		historyDecorationPoints.addPoint(-HISTORY_SIZE, -HISTORY_SIZE);
 		historyDecoration.setTemplate(historyDecorationPoints);
 		historyDecoration.setScale(HISTORY_SCALE, HISTORY_SCALE);
-		historyDecoration.add(createTransitionTargetDecoration());
 		return historyDecoration;
 	}
 
 	public static RotatableDecoration createTransitionTargetDecoration() {
 		PolygonDecoration df = new PolygonDecoration();
 		df.setFill(true);
-		df.setLineWidth(15);
+		df.setLineWidth(1);
 		df.setTemplate(PolygonDecoration.TRIANGLE_TIP);
 		return df;
 	}

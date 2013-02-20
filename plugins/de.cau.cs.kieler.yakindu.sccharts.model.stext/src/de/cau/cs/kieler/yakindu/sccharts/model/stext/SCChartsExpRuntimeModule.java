@@ -5,17 +5,17 @@ package de.cau.cs.kieler.yakindu.sccharts.model.stext;
 
 import org.eclipse.xtext.linking.ILinker;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
-import org.yakindu.base.types.ITypeSystemAccess;
-import org.yakindu.base.types.impl.BaseTypeSystemAccessImpl;
+import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.yakindu.base.types.ITypeSystem;
 import org.yakindu.sct.model.sgraph.resource.SCTLinker;
+import org.yakindu.sct.model.sgraph.resource.provider.SCTResourceDescriptionStrategy;
 import org.yakindu.sct.model.stext.conversion.StextValueConverterService;
 import org.yakindu.sct.model.stext.naming.StextNameProvider;
 import org.yakindu.sct.model.stext.scoping.STextGlobalScopeProvider;
+import org.yakindu.sct.model.stext.types.ISTextTypeInferrer;
+import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem;
 
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.validation.ISCCTypeInferrer;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.validation.SCCTypeInferrer;
-
-//import org.yakindu.sct.model.stext.scoping.NamespaceLocalScopeResolver;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.types.SCCTypeInferrer;
 
 /**
  * Use this class to register components to be used at runtime / without the
@@ -43,13 +43,15 @@ public class SCChartsExpRuntimeModule extends AbstractSCChartsExpRuntimeModule {
 		return StextValueConverterService.class;
 	}
 
-	public Class<? extends ITypeSystemAccess> bindITypeSystemAccess() {
-		return BaseTypeSystemAccessImpl.class;
+	public Class<? extends ITypeSystem> bindITypeSystem() {
+		return STextDefaulTypeSystem.class;
 	}
 
-	public Class<? extends ISCCTypeInferrer> bindITypeInferrer() {
-		// return TypeInferrer.class;
+	public Class<? extends IDefaultResourceDescriptionStrategy> bindIDefaultResourceDescriptionStrategy() {
+		return SCTResourceDescriptionStrategy.class;
+	}
+
+	public Class<? extends ISTextTypeInferrer> bindISTextTypeInferrer() {
 		return SCCTypeInferrer.class;
 	}
-
 }

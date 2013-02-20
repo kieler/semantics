@@ -6927,13 +6927,13 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocalReactionTrigger__Alternatives_2_3"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2305:1: rule__LocalReactionTrigger__Alternatives_2_3 : ( ( ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 ) ) | ( ( rule__LocalReactionTrigger__Group_2_3_1__0 ) ) );
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2305:1: rule__LocalReactionTrigger__Alternatives_2_3 : ( ( ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 ) ) | ( ( rule__LocalReactionTrigger__Group_2_3_1__0 ) ) );
     public final void rule__LocalReactionTrigger__Alternatives_2_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2309:1: ( ( ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 ) ) | ( ( rule__LocalReactionTrigger__Group_2_3_1__0 ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2309:1: ( ( ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 ) ) | ( ( rule__LocalReactionTrigger__Group_2_3_1__0 ) ) )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -6952,19 +6952,19 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
             }
             switch (alt5) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2310:1: ( ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2310:1: ( ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 ) )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2310:1: ( ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2311:1: ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2310:1: ( ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2311:1: ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_2_3_0()); 
+                       before(grammarAccess.getLocalReactionTriggerAccess().getTriggerAssignment_2_3_0()); 
                     }
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2312:1: ( rule__LocalReactionTrigger__TriggersAssignment_2_3_0 )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2312:2: rule__LocalReactionTrigger__TriggersAssignment_2_3_0
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2312:1: ( rule__LocalReactionTrigger__TriggerAssignment_2_3_0 )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2312:2: rule__LocalReactionTrigger__TriggerAssignment_2_3_0
                     {
-                    pushFollow(FOLLOW_rule__LocalReactionTrigger__TriggersAssignment_2_3_0_in_rule__LocalReactionTrigger__Alternatives_2_34835);
-                    rule__LocalReactionTrigger__TriggersAssignment_2_3_0();
+                    pushFollow(FOLLOW_rule__LocalReactionTrigger__TriggerAssignment_2_3_0_in_rule__LocalReactionTrigger__Alternatives_2_34835);
+                    rule__LocalReactionTrigger__TriggerAssignment_2_3_0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -6972,7 +6972,7 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_2_3_0()); 
+                       after(grammarAccess.getLocalReactionTriggerAccess().getTriggerAssignment_2_3_0()); 
                     }
 
                     }
@@ -7147,13 +7147,13 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReactionTrigger__Alternatives_3"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2355:1: rule__ReactionTrigger__Alternatives_3 : ( ( ( rule__ReactionTrigger__TriggersAssignment_3_0 ) ) | ( ( rule__ReactionTrigger__Group_3_1__0 ) ) );
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2355:1: rule__ReactionTrigger__Alternatives_3 : ( ( ( rule__ReactionTrigger__TriggerAssignment_3_0 ) ) | ( ( rule__ReactionTrigger__Group_3_1__0 ) ) );
     public final void rule__ReactionTrigger__Alternatives_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2359:1: ( ( ( rule__ReactionTrigger__TriggersAssignment_3_0 ) ) | ( ( rule__ReactionTrigger__Group_3_1__0 ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2359:1: ( ( ( rule__ReactionTrigger__TriggerAssignment_3_0 ) ) | ( ( rule__ReactionTrigger__Group_3_1__0 ) ) )
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -7172,19 +7172,19 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
             }
             switch (alt7) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2360:1: ( ( rule__ReactionTrigger__TriggersAssignment_3_0 ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2360:1: ( ( rule__ReactionTrigger__TriggerAssignment_3_0 ) )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2360:1: ( ( rule__ReactionTrigger__TriggersAssignment_3_0 ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2361:1: ( rule__ReactionTrigger__TriggersAssignment_3_0 )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2360:1: ( ( rule__ReactionTrigger__TriggerAssignment_3_0 ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2361:1: ( rule__ReactionTrigger__TriggerAssignment_3_0 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getReactionTriggerAccess().getTriggersAssignment_3_0()); 
+                       before(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3_0()); 
                     }
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2362:1: ( rule__ReactionTrigger__TriggersAssignment_3_0 )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2362:2: rule__ReactionTrigger__TriggersAssignment_3_0
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2362:1: ( rule__ReactionTrigger__TriggerAssignment_3_0 )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:2362:2: rule__ReactionTrigger__TriggerAssignment_3_0
                     {
-                    pushFollow(FOLLOW_rule__ReactionTrigger__TriggersAssignment_3_0_in_rule__ReactionTrigger__Alternatives_34952);
-                    rule__ReactionTrigger__TriggersAssignment_3_0();
+                    pushFollow(FOLLOW_rule__ReactionTrigger__TriggerAssignment_3_0_in_rule__ReactionTrigger__Alternatives_34952);
+                    rule__ReactionTrigger__TriggerAssignment_3_0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -7192,7 +7192,7 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getReactionTriggerAccess().getTriggersAssignment_3_0()); 
+                       after(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3_0()); 
                     }
 
                     }
@@ -13494,26 +13494,26 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LocalReactionTrigger__Group__1__Impl"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4319:1: rule__LocalReactionTrigger__Group__1__Impl : ( ( rule__LocalReactionTrigger__TriggersAssignment_1 ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4319:1: rule__LocalReactionTrigger__Group__1__Impl : ( ( rule__LocalReactionTrigger__StateReactionAssignment_1 ) ) ;
     public final void rule__LocalReactionTrigger__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4323:1: ( ( ( rule__LocalReactionTrigger__TriggersAssignment_1 ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4324:1: ( ( rule__LocalReactionTrigger__TriggersAssignment_1 ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4323:1: ( ( ( rule__LocalReactionTrigger__StateReactionAssignment_1 ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4324:1: ( ( rule__LocalReactionTrigger__StateReactionAssignment_1 ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4324:1: ( ( rule__LocalReactionTrigger__TriggersAssignment_1 ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4325:1: ( rule__LocalReactionTrigger__TriggersAssignment_1 )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4324:1: ( ( rule__LocalReactionTrigger__StateReactionAssignment_1 ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4325:1: ( rule__LocalReactionTrigger__StateReactionAssignment_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_1()); 
+               before(grammarAccess.getLocalReactionTriggerAccess().getStateReactionAssignment_1()); 
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4326:1: ( rule__LocalReactionTrigger__TriggersAssignment_1 )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4326:2: rule__LocalReactionTrigger__TriggersAssignment_1
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4326:1: ( rule__LocalReactionTrigger__StateReactionAssignment_1 )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:4326:2: rule__LocalReactionTrigger__StateReactionAssignment_1
             {
-            pushFollow(FOLLOW_rule__LocalReactionTrigger__TriggersAssignment_1_in_rule__LocalReactionTrigger__Group__1__Impl9279);
-            rule__LocalReactionTrigger__TriggersAssignment_1();
+            pushFollow(FOLLOW_rule__LocalReactionTrigger__StateReactionAssignment_1_in_rule__LocalReactionTrigger__Group__1__Impl9279);
+            rule__LocalReactionTrigger__StateReactionAssignment_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -13521,7 +13521,7 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_1()); 
+               after(grammarAccess.getLocalReactionTriggerAccess().getStateReactionAssignment_1()); 
             }
 
             }
@@ -31716,9 +31716,9 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__LocalReaction__EffectAssignment_1_1"
 
 
-    // $ANTLR start "rule__LocalReactionTrigger__TriggersAssignment_1"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:11036:1: rule__LocalReactionTrigger__TriggersAssignment_1 : ( ruleStateReaction ) ;
-    public final void rule__LocalReactionTrigger__TriggersAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__LocalReactionTrigger__StateReactionAssignment_1"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:11036:1: rule__LocalReactionTrigger__StateReactionAssignment_1 : ( ruleStateReaction ) ;
+    public final void rule__LocalReactionTrigger__StateReactionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -31730,15 +31730,15 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:11042:1: ruleStateReaction
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLocalReactionTriggerAccess().getTriggersStateReactionParserRuleCall_1_0()); 
+               before(grammarAccess.getLocalReactionTriggerAccess().getStateReactionStateReactionParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleStateReaction_in_rule__LocalReactionTrigger__TriggersAssignment_122437);
+            pushFollow(FOLLOW_ruleStateReaction_in_rule__LocalReactionTrigger__StateReactionAssignment_122437);
             ruleStateReaction();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLocalReactionTriggerAccess().getTriggersStateReactionParserRuleCall_1_0()); 
+               after(grammarAccess.getLocalReactionTriggerAccess().getStateReactionStateReactionParserRuleCall_1_0()); 
             }
 
             }
@@ -31758,7 +31758,7 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__LocalReactionTrigger__TriggersAssignment_1"
+    // $ANTLR end "rule__LocalReactionTrigger__StateReactionAssignment_1"
 
 
     // $ANTLR start "rule__LocalReactionTrigger__IsImmediateAssignment_2_1"
@@ -31855,9 +31855,9 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__LocalReactionTrigger__DelayAssignment_2_2"
 
 
-    // $ANTLR start "rule__LocalReactionTrigger__TriggersAssignment_2_3_0"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:11089:1: rule__LocalReactionTrigger__TriggersAssignment_2_3_0 : ( ruleRegularEventSpec ) ;
-    public final void rule__LocalReactionTrigger__TriggersAssignment_2_3_0() throws RecognitionException {
+    // $ANTLR start "rule__LocalReactionTrigger__TriggerAssignment_2_3_0"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:11089:1: rule__LocalReactionTrigger__TriggerAssignment_2_3_0 : ( ruleRegularEventSpec ) ;
+    public final void rule__LocalReactionTrigger__TriggerAssignment_2_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -31869,15 +31869,15 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:11095:1: ruleRegularEventSpec
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLocalReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_2_3_0_0()); 
+               before(grammarAccess.getLocalReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_2_3_0_0()); 
             }
-            pushFollow(FOLLOW_ruleRegularEventSpec_in_rule__LocalReactionTrigger__TriggersAssignment_2_3_022543);
+            pushFollow(FOLLOW_ruleRegularEventSpec_in_rule__LocalReactionTrigger__TriggerAssignment_2_3_022543);
             ruleRegularEventSpec();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLocalReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_2_3_0_0()); 
+               after(grammarAccess.getLocalReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_2_3_0_0()); 
             }
 
             }
@@ -31897,7 +31897,7 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__LocalReactionTrigger__TriggersAssignment_2_3_0"
+    // $ANTLR end "rule__LocalReactionTrigger__TriggerAssignment_2_3_0"
 
 
     // $ANTLR start "rule__LocalReactionTrigger__GuardExpressionAssignment_2_3_1_1"
@@ -32039,9 +32039,9 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ReactionTrigger__DelayAssignment_2"
 
 
-    // $ANTLR start "rule__ReactionTrigger__TriggersAssignment_3_0"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:11157:1: rule__ReactionTrigger__TriggersAssignment_3_0 : ( ruleRegularEventSpec ) ;
-    public final void rule__ReactionTrigger__TriggersAssignment_3_0() throws RecognitionException {
+    // $ANTLR start "rule__ReactionTrigger__TriggerAssignment_3_0"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:11157:1: rule__ReactionTrigger__TriggerAssignment_3_0 : ( ruleRegularEventSpec ) ;
+    public final void rule__ReactionTrigger__TriggerAssignment_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -32053,15 +32053,15 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/ui/contentassist/antlr/internal/InternalSyncExp.g:11163:1: ruleRegularEventSpec
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_3_0_0()); 
+               before(grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_3_0_0()); 
             }
-            pushFollow(FOLLOW_ruleRegularEventSpec_in_rule__ReactionTrigger__TriggersAssignment_3_022680);
+            pushFollow(FOLLOW_ruleRegularEventSpec_in_rule__ReactionTrigger__TriggerAssignment_3_022680);
             ruleRegularEventSpec();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_3_0_0()); 
+               after(grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_3_0_0()); 
             }
 
             }
@@ -32081,7 +32081,7 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ReactionTrigger__TriggersAssignment_3_0"
+    // $ANTLR end "rule__ReactionTrigger__TriggerAssignment_3_0"
 
 
     // $ANTLR start "rule__ReactionTrigger__GuardExpressionAssignment_3_1_1"
@@ -35546,12 +35546,12 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleReactionTrigger_in_rule__LocalReaction__TriggerAlternatives_0_04754 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleReactionEffect_in_rule__LocalReaction__EffectAlternatives_1_1_04786 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSuspendEffect_in_rule__LocalReaction__EffectAlternatives_1_1_04803 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LocalReactionTrigger__TriggersAssignment_2_3_0_in_rule__LocalReactionTrigger__Alternatives_2_34835 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LocalReactionTrigger__TriggerAssignment_2_3_0_in_rule__LocalReactionTrigger__Alternatives_2_34835 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group_2_3_1__0_in_rule__LocalReactionTrigger__Alternatives_2_34853 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEntry_in_rule__StateReaction__Alternatives4886 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleInside_in_rule__StateReaction__Alternatives4903 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExit_in_rule__StateReaction__Alternatives4920 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ReactionTrigger__TriggersAssignment_3_0_in_rule__ReactionTrigger__Alternatives_34952 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ReactionTrigger__TriggerAssignment_3_0_in_rule__ReactionTrigger__Alternatives_34952 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ReactionTrigger__Group_3_1__0_in_rule__ReactionTrigger__Alternatives_34970 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStatechartRoot_in_rule__DefRoot__Alternatives5003 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStateRoot_in_rule__DefRoot__Alternatives5020 = new BitSet(new long[]{0x0000000000000002L});
@@ -35734,7 +35734,7 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group__1_in_rule__LocalReactionTrigger__Group__09191 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group__1__Impl_in_rule__LocalReactionTrigger__Group__19249 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group__2_in_rule__LocalReactionTrigger__Group__19252 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LocalReactionTrigger__TriggersAssignment_1_in_rule__LocalReactionTrigger__Group__1__Impl9279 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LocalReactionTrigger__StateReactionAssignment_1_in_rule__LocalReactionTrigger__Group__1__Impl9279 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group__2__Impl_in_rule__LocalReactionTrigger__Group__29309 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group_2__0_in_rule__LocalReactionTrigger__Group__2__Impl9336 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReactionTrigger__Group_2__0__Impl_in_rule__LocalReactionTrigger__Group_2__09373 = new BitSet(new long[]{0x0000000000000030L,0x0000002000008000L});
@@ -36248,14 +36248,14 @@ public class InternalSyncExpParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__StateScope__DeclarationsAlternatives_1_0_in_rule__StateScope__DeclarationsAssignment_122338 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReaction__TriggerAlternatives_0_0_in_rule__LocalReaction__TriggerAssignment_022371 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__LocalReaction__EffectAlternatives_1_1_0_in_rule__LocalReaction__EffectAssignment_1_122404 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStateReaction_in_rule__LocalReactionTrigger__TriggersAssignment_122437 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStateReaction_in_rule__LocalReactionTrigger__StateReactionAssignment_122437 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_101_in_rule__LocalReactionTrigger__IsImmediateAssignment_2_122473 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_INT_in_rule__LocalReactionTrigger__DelayAssignment_2_222512 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRegularEventSpec_in_rule__LocalReactionTrigger__TriggersAssignment_2_3_022543 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleRegularEventSpec_in_rule__LocalReactionTrigger__TriggerAssignment_2_3_022543 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__LocalReactionTrigger__GuardExpressionAssignment_2_3_1_122574 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_101_in_rule__ReactionTrigger__IsImmediateAssignment_122610 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_INT_in_rule__ReactionTrigger__DelayAssignment_222649 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRegularEventSpec_in_rule__ReactionTrigger__TriggersAssignment_3_022680 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleRegularEventSpec_in_rule__ReactionTrigger__TriggerAssignment_3_022680 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__ReactionTrigger__GuardExpressionAssignment_3_1_122711 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__ReactionEffect__ActionsAssignment_122742 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__ReactionEffect__ActionsAssignment_2_122773 = new BitSet(new long[]{0x0000000000000002L});

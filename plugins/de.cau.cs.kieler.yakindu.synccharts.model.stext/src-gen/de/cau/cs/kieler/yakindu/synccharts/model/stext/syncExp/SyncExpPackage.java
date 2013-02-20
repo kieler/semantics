@@ -178,15 +178,6 @@ public interface SyncExpPackage extends EPackage
   int VARIABLE_DEFINITION__IS_STATIC = SCChartsExpPackage.VARIABLE_DEFINITION__IS_STATIC;
 
   /**
-   * The feature id for the '<em><b>Var Initial Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__VAR_INITIAL_VALUE = SCChartsExpPackage.VARIABLE_DEFINITION__VAR_INITIAL_VALUE;
-
-  /**
    * The feature id for the '<em><b>Var Combine Operator</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -196,13 +187,22 @@ public interface SyncExpPackage extends EPackage
   int VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = SCChartsExpPackage.VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR;
 
   /**
+   * The feature id for the '<em><b>Var Initial Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__VAR_INITIAL_VALUE = SCChartsExpPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
+
+  /**
    * The number of structural features of the '<em>Variable Definition</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION_FEATURE_COUNT = SCChartsExpPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
+  int VARIABLE_DEFINITION_FEATURE_COUNT = SCChartsExpPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncExp.impl.EventDefinitionImpl <em>Event Definition</em>}' class.
@@ -297,6 +297,17 @@ public interface SyncExpPackage extends EPackage
    * @generated
    */
   EClass getVariableDefinition();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncExp.VariableDefinition#getVarInitialValue <em>Var Initial Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Var Initial Value</em>'.
+   * @see de.cau.cs.kieler.yakindu.synccharts.model.stext.syncExp.VariableDefinition#getVarInitialValue()
+   * @see #getVariableDefinition()
+   * @generated
+   */
+  EReference getVariableDefinition_VarInitialValue();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncExp.EventDefinition <em>Event Definition</em>}'.
@@ -405,6 +416,14 @@ public interface SyncExpPackage extends EPackage
      * @generated
      */
     EClass VARIABLE_DEFINITION = eINSTANCE.getVariableDefinition();
+
+    /**
+     * The meta object literal for the '<em><b>Var Initial Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VARIABLE_DEFINITION__VAR_INITIAL_VALUE = eINSTANCE.getVariableDefinition_VarInitialValue();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncExp.impl.EventDefinitionImpl <em>Event Definition</em>}' class.

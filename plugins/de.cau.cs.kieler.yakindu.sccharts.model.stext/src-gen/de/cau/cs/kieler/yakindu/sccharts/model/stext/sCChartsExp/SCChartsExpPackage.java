@@ -282,6 +282,15 @@ public interface SCChartsExpPackage extends EPackage
   int LOCAL_REACTION__EFFECT = StextPackage.LOCAL_REACTION__EFFECT;
 
   /**
+   * The feature id for the '<em><b>Properties</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_REACTION__PROPERTIES = StextPackage.LOCAL_REACTION__PROPERTIES;
+
+  /**
    * The number of structural features of the '<em>Local Reaction</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

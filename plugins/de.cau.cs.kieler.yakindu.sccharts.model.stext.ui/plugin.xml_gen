@@ -174,37 +174,6 @@
         <persistent value="true"/>
     </extension>
 
-   <extension
-         point="org.eclipse.xtext.builder.participant">
-      <participant
-            class="de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.SCChartsExpExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
-      </participant>
-   </extension>
-   <extension
-            point="org.eclipse.ui.preferencePages">
-        <page
-            category="de.cau.cs.kieler.yakindu.sccharts.model.stext.SCChartsExp"
-            class="de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.SCChartsExpExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="de.cau.cs.kieler.yakindu.sccharts.model.stext.SCChartsExp.compiler.preferencePage"
-            name="Compiler">
-            <keywordReference id="de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.keyword_SCChartsExp"/>
-        </page>
-    </extension>
-    <extension
-            point="org.eclipse.ui.propertyPages">
-        <page
-            category="de.cau.cs.kieler.yakindu.sccharts.model.stext.SCChartsExp"
-            class="de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.SCChartsExpExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="de.cau.cs.kieler.yakindu.sccharts.model.stext.SCChartsExp.compiler.propertyPage"
-            name="Compiler">
-            <keywordReference id="de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.keyword_SCChartsExp"/>
-            <enabledWhen>
-	            <adapt type="org.eclipse.core.resources.IProject"/>
-			</enabledWhen>
-	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
-        </page>
-    </extension>
-
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">

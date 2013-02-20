@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.cs.kieler.yakindu.synccharts.model.stext.ui
-Bundle-Vendor: My Company
-Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.yakindu.synccharts.model.stext.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.yakindu.synccharts.model.stext;visibility:=reexport,
@@ -16,13 +16,15 @@ Require-Bundle: de.cau.cs.kieler.yakindu.synccharts.model.stext;visibility:=reex
  org.eclipse.xtext.common.types.ui,
  org.eclipse.xtext.ui.codetemplates.ui,
  org.yakindu.sct.model.stext;bundle-version="2.0.0",
- de.cau.cs.kieler.yakindu.sccharts.model.stext;bundle-version="1.0.0"
+ de.cau.cs.kieler.yakindu.sccharts.model.stext;bundle-version="0.1.0"
 Import-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist,
  org.apache.log4j,
  org.yakindu.sct.model.stext.resource.factory,
  org.yakindu.sct.model.stext.ui.contentassist
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.contentassist,
+Export-Package: de.cau.cs.kieler.yakindu.synccharts.model.stext.ui,
+ de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.contentassist,
  de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.contentassist.antlr,
+ de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.contentassist.antlr.internal,
  de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.internal
 Bundle-Activator: de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.internal.SyncExpActivator

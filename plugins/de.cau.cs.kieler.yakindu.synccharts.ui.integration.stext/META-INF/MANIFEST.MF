@@ -6,7 +6,7 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.yakindu.synccharts.ui.integration.stext.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
- de.cau.cs.kieler.yakindu.synccharts.model.text.ui;bundle-version="0.1.0"
+ de.cau.cs.kieler.yakindu.synccharts.model.stext.ui;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

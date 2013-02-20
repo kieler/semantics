@@ -4,6 +4,7 @@ import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.PaletteStack;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.osgi.framework.FrameworkUtil;
 import org.yakindu.sct.ui.editor.providers.DefaultSCTPaletteFactory;
 
 public class KielerPaletteFactory extends DefaultSCTPaletteFactory {
@@ -71,7 +72,7 @@ public class KielerPaletteFactory extends DefaultSCTPaletteFactory {
 	}
 
 	protected ImageDescriptor findIcon(String iconPath) {
-		return null;
+		return super.getImageDescriptor(iconPath, FrameworkUtil.getBundle(this.getClass()).getBundleContext().getBundle());
 	}
 
 }

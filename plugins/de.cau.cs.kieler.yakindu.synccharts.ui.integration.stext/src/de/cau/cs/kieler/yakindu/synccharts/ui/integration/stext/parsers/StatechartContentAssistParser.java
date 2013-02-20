@@ -6,15 +6,15 @@ import org.antlr.runtime.RecognitionException;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.FollowElement;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.AbstractInternalContentAssistParser;
 
-import de.cau.cs.kieler.yakindu.synccharts.model.text.ui.contentassist.antlr.internal.InternalSyncTextParser;
-import de.cau.cs.kieler.yakindu.synccharts.model.text.ui.contentassist.antlr.SyncTextParser;
+import de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.contentassist.antlr.SyncExpParser;
+import de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.contentassist.antlr.internal.InternalSyncExpParser;
 
-public class StatechartContentAssistParser extends SyncTextParser {
+public class StatechartContentAssistParser extends SyncExpParser {
 	@Override
 	protected Collection<FollowElement> getFollowElements(
 			AbstractInternalContentAssistParser parser) {
 		try {
-			InternalSyncTextParser typedParser = (InternalSyncTextParser) parser;
+			InternalSyncExpParser typedParser = (InternalSyncExpParser) parser;
 			typedParser.entryRuleStatechartSpecification();
 			return typedParser.getFollowElements();
 		} catch (RecognitionException ex) {

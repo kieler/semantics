@@ -1667,13 +1667,13 @@ protected class SuspendEffect_SuspendKeyword_1 extends KeywordToken  {
  *
  * LocalReactionTrigger returns sgraph::Trigger:
  * 
- * 	{ReactionTrigger} triggers+=StateReaction ("&&" isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "["
+ * 	{ReactionTrigger} stateReaction=StateReaction ("&&" isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "["
  * 
  * 	guardExpression=Expression "]")?)?;
  *
  **/
 
-// {ReactionTrigger} triggers+=StateReaction ("&&" isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "["
+// {ReactionTrigger} stateReaction=StateReaction ("&&" isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "["
 // 
 // guardExpression=Expression "]")?)?
 protected class LocalReactionTrigger_Group extends GroupToken {
@@ -1691,7 +1691,7 @@ protected class LocalReactionTrigger_Group extends GroupToken {
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
 			case 0: return new LocalReactionTrigger_Group_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new LocalReactionTrigger_TriggersAssignment_1(lastRuleCallOrigin, this, 1, inst);
+			case 1: return new LocalReactionTrigger_StateReactionAssignment_1(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
 	}
@@ -1731,16 +1731,16 @@ protected class LocalReactionTrigger_ReactionTriggerAction_0 extends ActionToken
 	}
 }
 
-// triggers+=StateReaction
-protected class LocalReactionTrigger_TriggersAssignment_1 extends AssignmentToken  {
+// stateReaction=StateReaction
+protected class LocalReactionTrigger_StateReactionAssignment_1 extends AssignmentToken  {
 	
-	public LocalReactionTrigger_TriggersAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public LocalReactionTrigger_StateReactionAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_1();
+		return grammarAccess.getLocalReactionTriggerAccess().getStateReactionAssignment_1();
 	}
 
     @Override
@@ -1753,13 +1753,13 @@ protected class LocalReactionTrigger_TriggersAssignment_1 extends AssignmentToke
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("triggers",true)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("triggers");
+		if((value = eObjectConsumer.getConsumable("stateReaction",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("stateReaction");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getStateReactionRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getLocalReactionTriggerAccess().getTriggersStateReactionParserRuleCall_1_0(); 
+				element = grammarAccess.getLocalReactionTriggerAccess().getStateReactionStateReactionParserRuleCall_1_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -1777,7 +1777,7 @@ protected class LocalReactionTrigger_TriggersAssignment_1 extends AssignmentToke
 	}	
 }
 
-// ("&&" isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "[" guardExpression=Expression "]")?)?
+// ("&&" isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "[" guardExpression=Expression "]")?)?
 protected class LocalReactionTrigger_Group_2 extends GroupToken {
 	
 	public LocalReactionTrigger_Group_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1816,7 +1816,7 @@ protected class LocalReactionTrigger_AmpersandAmpersandKeyword_2_0 extends Keywo
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new LocalReactionTrigger_TriggersAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new LocalReactionTrigger_StateReactionAssignment_1(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -1892,7 +1892,7 @@ protected class LocalReactionTrigger_DelayAssignment_2_2 extends AssignmentToken
 
 }
 
-// (triggers+=RegularEventSpec | "[" guardExpression=Expression "]")?
+// (trigger=RegularEventSpec | "[" guardExpression=Expression "]")?
 protected class LocalReactionTrigger_Alternatives_2_3 extends AlternativesToken {
 
 	public LocalReactionTrigger_Alternatives_2_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1907,7 +1907,7 @@ protected class LocalReactionTrigger_Alternatives_2_3 extends AlternativesToken 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new LocalReactionTrigger_TriggersAssignment_2_3_0(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new LocalReactionTrigger_TriggerAssignment_2_3_0(lastRuleCallOrigin, this, 0, inst);
 			case 1: return new LocalReactionTrigger_Group_2_3_1(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
@@ -1915,16 +1915,16 @@ protected class LocalReactionTrigger_Alternatives_2_3 extends AlternativesToken 
 
 }
 
-// triggers+=RegularEventSpec
-protected class LocalReactionTrigger_TriggersAssignment_2_3_0 extends AssignmentToken  {
+// trigger=RegularEventSpec
+protected class LocalReactionTrigger_TriggerAssignment_2_3_0 extends AssignmentToken  {
 	
-	public LocalReactionTrigger_TriggersAssignment_2_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public LocalReactionTrigger_TriggerAssignment_2_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getLocalReactionTriggerAccess().getTriggersAssignment_2_3_0();
+		return grammarAccess.getLocalReactionTriggerAccess().getTriggerAssignment_2_3_0();
 	}
 
     @Override
@@ -1937,13 +1937,13 @@ protected class LocalReactionTrigger_TriggersAssignment_2_3_0 extends Assignment
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("triggers",true)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("triggers");
+		if((value = eObjectConsumer.getConsumable("trigger",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("trigger");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getRegularEventSpecRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getLocalReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_2_3_0_0(); 
+				element = grammarAccess.getLocalReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_2_3_0_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -2512,11 +2512,11 @@ protected class Exit_ExitKeyword_1 extends KeywordToken  {
  * 
  * ReactionTrigger returns sgraph::Trigger:
  * 
- * 	{ReactionTrigger} isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "[" guardExpression=Expression "]");
+ * 	{ReactionTrigger} isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "[" guardExpression=Expression "]");
  *
  **/
 
-// {ReactionTrigger} isImmediate?="#"? delay=INT? (triggers+=RegularEventSpec | "[" guardExpression=Expression "]")
+// {ReactionTrigger} isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "[" guardExpression=Expression "]")
 protected class ReactionTrigger_Group extends GroupToken {
 	
 	public ReactionTrigger_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2640,7 +2640,7 @@ protected class ReactionTrigger_DelayAssignment_2 extends AssignmentToken  {
 
 }
 
-// triggers+=RegularEventSpec | "[" guardExpression=Expression "]"
+// trigger=RegularEventSpec | "[" guardExpression=Expression "]"
 protected class ReactionTrigger_Alternatives_3 extends AlternativesToken {
 
 	public ReactionTrigger_Alternatives_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2655,7 +2655,7 @@ protected class ReactionTrigger_Alternatives_3 extends AlternativesToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ReactionTrigger_TriggersAssignment_3_0(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new ReactionTrigger_TriggerAssignment_3_0(lastRuleCallOrigin, this, 0, inst);
 			case 1: return new ReactionTrigger_Group_3_1(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
@@ -2663,16 +2663,16 @@ protected class ReactionTrigger_Alternatives_3 extends AlternativesToken {
 
 }
 
-// triggers+=RegularEventSpec
-protected class ReactionTrigger_TriggersAssignment_3_0 extends AssignmentToken  {
+// trigger=RegularEventSpec
+protected class ReactionTrigger_TriggerAssignment_3_0 extends AssignmentToken  {
 	
-	public ReactionTrigger_TriggersAssignment_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_TriggerAssignment_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getTriggersAssignment_3_0();
+		return grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3_0();
 	}
 
     @Override
@@ -2685,13 +2685,13 @@ protected class ReactionTrigger_TriggersAssignment_3_0 extends AssignmentToken  
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("triggers",true)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("triggers");
+		if((value = eObjectConsumer.getConsumable("trigger",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("trigger");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getRegularEventSpecRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getReactionTriggerAccess().getTriggersRegularEventSpecParserRuleCall_3_0_0(); 
+				element = grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_3_0_0(); 
 				consumed = obj;
 				return param;
 			}

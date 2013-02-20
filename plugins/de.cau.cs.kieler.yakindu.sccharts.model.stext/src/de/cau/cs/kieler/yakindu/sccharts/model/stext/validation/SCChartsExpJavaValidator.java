@@ -7,11 +7,8 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.eclipse.xtext.validation.ComposedChecks;
-import org.yakindu.base.types.ITypeSystemAccess;
 import org.yakindu.base.types.Operation;
 import org.yakindu.base.types.Property;
-import org.yakindu.base.types.Type;
-import org.yakindu.sct.model.sgraph.Statement;
 import org.yakindu.sct.model.sgraph.validation.SCTResourceValidator;
 import org.yakindu.sct.model.stext.stext.AssignmentExpression;
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression;
@@ -19,18 +16,16 @@ import org.yakindu.sct.model.stext.stext.EventRaisingExpression;
 import org.yakindu.sct.model.stext.stext.Expression;
 import org.yakindu.sct.model.stext.stext.FeatureCall;
 import org.yakindu.sct.model.stext.stext.StextPackage;
-import org.yakindu.sct.model.stext.stext.VariableDefinition;
+import org.yakindu.sct.model.stext.types.ISTextTypeInferrer;
+import org.yakindu.sct.model.stext.types.ISTextTypeSystem;
 import org.yakindu.sct.model.stext.validation.STextJavaValidator;
-import org.yakindu.sct.model.stext.validation.TypeCheckException;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.PreValueExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionEffect;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage;
 import de.cau.cs.kieler.yakindu.sgraph.validator.SyncGraphJavaValidator;
 
@@ -42,45 +37,45 @@ public class SCChartsExpJavaValidator extends STextJavaValidator {
 	public static final String PRE_ASSIGNMENT = "Can not assign a value to a pre operator";
 
 	@Inject
-	private ISCCTypeInferrer sccInferrer;
+	private ISTextTypeInferrer sccInferrer;
 	@Inject
-	private ITypeSystemAccess tsAccess;
+	private ISTextTypeSystem tsAccess;
 	@Inject
 	private IQualifiedNameProvider nameProvider;
 
 	/**
 	 * Check the Trigger and GuardExpression
 	 */
-	@Check(CheckType.FAST)
-	public void checkGuardHasBooleanExpression(ReactionTrigger trigger) {
-		try {
-			//
-			if (trigger.getGuardExpression() != null) {
-				if(trigger.getGuardExpression() instanceof AssignmentExpression){
-					error(GUARD_EXPRESSION,
-							SCChartsExpPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
-				}else{
-				Type type = sccInferrer.getType(trigger.getGuardExpression());
-				if (!tsAccess.isBoolean(type)) {
-					error(GUARD_EXPRESSION,
-							SCChartsExpPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
-				}
-				}
-			}else if (trigger.getTrigger() != null) {
-				if (!(((ElementReferenceExpression) trigger.getTrigger()
-						.getEvent()).getReference() instanceof EventDefinition)) {
-					Type type1 = sccInferrer.getType(trigger.getTrigger()
-							.getEvent());
-					if (!tsAccess.isBoolean(type1)) {
-						error(TRIGGER_EXPRESSION,
-								SCChartsExpPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
-					}
-				}
-			}
-		} catch (TypeCheckException ex) {
-			// This is handled by checkExpression
-		}
-	}
+//	@Check(CheckType.FAST)
+//	public void checkGuardHasBooleanExpression(ReactionTrigger trigger) {
+//		try {
+//			//
+//			if (trigger.getGuardExpression() != null) {
+//				if(trigger.getGuardExpression() instanceof AssignmentExpression){
+//					error(GUARD_EXPRESSION,
+//							SCChartsExpPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
+//				}else{
+//				Type type = sccInferrer.getType(trigger.getGuardExpression());
+//				if (!tsAccess.isBoolean(type)) {
+//					error(GUARD_EXPRESSION,
+//							SCChartsExpPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
+//				}
+//				}
+//			}else if (trigger.getTrigger() != null) {
+//				if (!(((ElementReferenceExpression) trigger.getTrigger()
+//						.getEvent()).getReference() instanceof EventDefinition)) {
+//					Type type1 = sccInferrer.getType(trigger.getTrigger()
+//							.getEvent());
+//					if (!tsAccess.isBoolean(type1)) {
+//						error(TRIGGER_EXPRESSION,
+//								SCChartsExpPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
+//					}
+//				}
+//			}
+//		} catch (TypeCheckException ex) {
+//			// This is handled by checkExpression
+//		}
+//	}
 
 	/**
 	 * Only Expressions that produce an effect should be used as actions.
@@ -169,37 +164,37 @@ public class SCChartsExpJavaValidator extends STextJavaValidator {
 	 * object
 	 */
 
-	@Check(CheckType.FAST)
-	public void checkVariableDefinitionInitialValue(
-			VariableDefinition definition) {
-		Type varType = definition.getType();
-		if (definition.getInitialValue() == null)
-			return;
-		try {
-			Type valType = sccInferrer.getType(definition.getInitialValue());
-			Type combine = tsAccess.combine(valType, varType);
-			if (combine == null || !tsAccess.isAssignable(varType, valType)) {
-				error("Can not assign a value of type '" + valType.getName()
-						+ "' to a variable of type '" + varType + "'",
-						StextPackage.Literals.VARIABLE_DEFINITION__INITIAL_VALUE);
-			}
-		} catch (Exception e) {
-			error(e.getMessage(), null);
-		}
-	}
+//	@Check(CheckType.FAST)
+//	public void checkVariableDefinitionInitialValue(
+//			VariableDefinition definition) {
+//		Type varType = definition.getType();
+//		if (definition.getInitialValue() == null)
+//			return;
+//		try {
+//			Type valType = sccInferrer.getType(definition.getInitialValue());
+//			Type combine = tsAccess.combine(valType, varType);
+//			if (combine == null || !tsAccess.isAssignable(varType, valType)) {
+//				error("Can not assign a value of type '" + valType.getName()
+//						+ "' to a variable of type '" + varType + "'",
+//						StextPackage.Literals.VARIABLE_DEFINITION__INITIAL_VALUE);
+//			}
+//		} catch (Exception e) {
+//			error(e.getMessage(), null);
+//		}
+//	}
 
-	@Check(CheckType.FAST)
-	public void checkExpression(final Statement statement) {
-		try {
-			sccInferrer.getType(statement);
-		} catch (TypeCheckException e) {
-			error(e.getMessage(), null);
-		} catch (IllegalArgumentException e) {
-			// This happens, when the expression is not completed for Unhandled
-			// parameter types: [null]
-			// We can safely ignore this exception
-		}
-	}
+//	@Check(CheckType.FAST)
+//	public void checkExpression(final Statement statement) {
+//		try {
+//			sccInferrer.getType(statement);
+//		} catch (TypeCheckException e) {
+//			error(e.getMessage(), null);
+//		} catch (IllegalArgumentException e) {
+//			// This happens, when the expression is not completed for Unhandled
+//			// parameter types: [null]
+//			// We can safely ignore this exception
+//		}
+//	}
 
 	@Check(CheckType.FAST)
 	public void checkAssignmentExpression(final AssignmentExpression exp) {

@@ -141,6 +141,16 @@ public class SyncExpPackageImpl extends EPackageImpl implements SyncExpPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getVariableDefinition_VarInitialValue()
+  {
+    return (EReference)variableDefinitionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getEventDefinition()
   {
     return eventDefinitionEClass;
@@ -229,6 +239,7 @@ public class SyncExpPackageImpl extends EPackageImpl implements SyncExpPackage
     signalDefinitionEClass = createEClass(SIGNAL_DEFINITION);
 
     variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
+    createEReference(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_INITIAL_VALUE);
 
     eventDefinitionEClass = createEClass(EVENT_DEFINITION);
     createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__IS_INPUT);
@@ -264,8 +275,8 @@ public class SyncExpPackageImpl extends EPackageImpl implements SyncExpPackage
 
     // Obtain other dependent packages
     SCChartsExpPackage theSCChartsExpPackage = (SCChartsExpPackage)EPackage.Registry.INSTANCE.getEPackage(SCChartsExpPackage.eNS_URI);
-    TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
     StextPackage theStextPackage = (StextPackage)EPackage.Registry.INSTANCE.getEPackage(StextPackage.eNS_URI);
+    TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
     // Create type parameters
 
@@ -280,6 +291,7 @@ public class SyncExpPackageImpl extends EPackageImpl implements SyncExpPackage
     initEClass(signalDefinitionEClass, SignalDefinition.class, "SignalDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVariableDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(eventDefinitionEClass, EventDefinition.class, "EventDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getEventDefinition_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

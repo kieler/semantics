@@ -10,7 +10,9 @@
   <genPackages prefix="SyncExp" basePackage="de.cau.cs.kieler.yakindu.synccharts.model.stext"
       disposableProviderFactory="true" ecorePackage="SyncExp.ecore#/">
     <genClasses ecoreClass="SyncExp.ecore#//SignalDefinition"/>
-    <genClasses ecoreClass="SyncExp.ecore#//VariableDefinition"/>
+    <genClasses ecoreClass="SyncExp.ecore#//VariableDefinition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SyncExp.ecore#//VariableDefinition/varInitialValue"/>
+    </genClasses>
     <genClasses ecoreClass="SyncExp.ecore#//EventDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SyncExp.ecore#//EventDefinition/isInput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SyncExp.ecore#//EventDefinition/isOutput"/>
