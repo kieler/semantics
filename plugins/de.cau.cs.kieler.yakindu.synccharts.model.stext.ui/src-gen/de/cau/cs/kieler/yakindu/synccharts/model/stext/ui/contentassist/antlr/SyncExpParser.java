@@ -54,6 +54,7 @@ public class SyncExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReactionAccess().getAlternatives(), "rule__Reaction__Alternatives");
 					put(grammarAccess.getStextTriggerAccess().getAlternatives(), "rule__StextTrigger__Alternatives");
 					put(grammarAccess.getDefaultTriggerAccess().getAlternatives_1(), "rule__DefaultTrigger__Alternatives_1");
+					put(grammarAccess.getTransitionPropertyAccess().getAlternatives(), "rule__TransitionProperty__Alternatives");
 					put(grammarAccess.getEventSpecAccess().getAlternatives(), "rule__EventSpec__Alternatives");
 					put(grammarAccess.getBuiltinEventSpecAccess().getAlternatives(), "rule__BuiltinEventSpec__Alternatives");
 					put(grammarAccess.getAlwaysEventAccess().getAlternatives_1(), "rule__AlwaysEvent__Alternatives_1");
@@ -110,7 +111,10 @@ public class SyncExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFQNAccess().getGroup_1(), "rule__FQN__Group_1__0");
 					put(grammarAccess.getTransitionReactionAccess().getGroup(), "rule__TransitionReaction__Group__0");
 					put(grammarAccess.getTransitionReactionAccess().getGroup_2(), "rule__TransitionReaction__Group_2__0");
+					put(grammarAccess.getTransitionReactionAccess().getGroup_3(), "rule__TransitionReaction__Group_3__0");
 					put(grammarAccess.getDefaultTriggerAccess().getGroup(), "rule__DefaultTrigger__Group__0");
+					put(grammarAccess.getEntryPointSpecAccess().getGroup(), "rule__EntryPointSpec__Group__0");
+					put(grammarAccess.getExitPointSpecAccess().getGroup(), "rule__ExitPointSpec__Group__0");
 					put(grammarAccess.getTimeEventSpecAccess().getGroup(), "rule__TimeEventSpec__Group__0");
 					put(grammarAccess.getEntryEventAccess().getGroup(), "rule__EntryEvent__Group__0");
 					put(grammarAccess.getExitEventAccess().getGroup(), "rule__ExitEvent__Group__0");
@@ -206,6 +210,9 @@ public class SyncExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParameterAccess().getTypeAssignment_2(), "rule__Parameter__TypeAssignment_2");
 					put(grammarAccess.getTransitionReactionAccess().getTriggerAssignment_1(), "rule__TransitionReaction__TriggerAssignment_1");
 					put(grammarAccess.getTransitionReactionAccess().getEffectAssignment_2_1(), "rule__TransitionReaction__EffectAssignment_2_1");
+					put(grammarAccess.getTransitionReactionAccess().getPropertiesAssignment_3_1(), "rule__TransitionReaction__PropertiesAssignment_3_1");
+					put(grammarAccess.getEntryPointSpecAccess().getEntrypointAssignment_1(), "rule__EntryPointSpec__EntrypointAssignment_1");
+					put(grammarAccess.getExitPointSpecAccess().getExitpointAssignment_0(), "rule__ExitPointSpec__ExitpointAssignment_0");
 					put(grammarAccess.getRegularEventSpecAccess().getEventAssignment(), "rule__RegularEventSpec__EventAssignment");
 					put(grammarAccess.getTimeEventSpecAccess().getTypeAssignment_0(), "rule__TimeEventSpec__TypeAssignment_0");
 					put(grammarAccess.getTimeEventSpecAccess().getValueAssignment_1(), "rule__TimeEventSpec__ValueAssignment_1");

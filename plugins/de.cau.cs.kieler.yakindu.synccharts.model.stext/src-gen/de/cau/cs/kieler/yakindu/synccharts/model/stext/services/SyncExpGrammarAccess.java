@@ -851,10 +851,9 @@ public class SyncExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getReactionAccess().getRule();
 	}
 
-	//// ('#' properties=ReactionProperties)?;
-	// TransitionReaction:
+	//TransitionReaction:
 	//
-	//	{TransitionReaction} trigger=StextTrigger? ("/" effect=ReactionEffect)?;
+	//	{TransitionReaction} trigger=StextTrigger? ("/" effect=ReactionEffect)? ("#" properties+=TransitionProperty*)?;
 	public STextGrammarAccess.TransitionReactionElements getTransitionReactionAccess() {
 		return gaSCChartsExp.getTransitionReactionAccess();
 	}
@@ -885,22 +884,40 @@ public class SyncExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getDefaultTriggerAccess().getRule();
 	}
 
-	////ReactionProperties:
-	// //	{ReactionProperties} (properties+=ReactionProperty)*;
-	// //
-	// //ReactionProperty:
+	//TransitionProperty returns sgraph::ReactionProperty:
 	//
+	//	EntryPointSpec | ExitPointSpec;
+	public STextGrammarAccess.TransitionPropertyElements getTransitionPropertyAccess() {
+		return gaSCChartsExp.getTransitionPropertyAccess();
+	}
+	
+	public ParserRule getTransitionPropertyRule() {
+		return getTransitionPropertyAccess().getRule();
+	}
+
+	//EntryPointSpec:
 	//
-	////	EntryPointSpec | ExitPointSpec;
-	// //
-	// //EntryPointSpec:
-	// //	'>' entrypoint=[Entrypoint|FQN];
-	// //
-	// //ExitPointSpec:
+	//	">" entrypoint=ID;
+	public STextGrammarAccess.EntryPointSpecElements getEntryPointSpecAccess() {
+		return gaSCChartsExp.getEntryPointSpecAccess();
+	}
+	
+	public ParserRule getEntryPointSpecRule() {
+		return getEntryPointSpecAccess().getRule();
+	}
+
+	//ExitPointSpec:
 	//
-	//
-	////	exitpoint=[Exitpoint|FQN] '>';
-	// EventSpec:
+	//	exitpoint=ID ">";
+	public STextGrammarAccess.ExitPointSpecElements getExitPointSpecAccess() {
+		return gaSCChartsExp.getExitPointSpecAccess();
+	}
+	
+	public ParserRule getExitPointSpecRule() {
+		return getExitPointSpecAccess().getRule();
+	}
+
+	//EventSpec:
 	//
 	//	RegularEventSpec | TimeEventSpec | BuiltinEventSpec;
 	public STextGrammarAccess.EventSpecElements getEventSpecAccess() {
@@ -945,10 +962,6 @@ public class SyncExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getTimeEventTypeAccess().getRule();
 	}
 
-	////TODO: Group OnCycleEvent and AlwaysEvent, maybe replace it by a DoEvent
-	// // | DefaultEvent | OnCycleEvent ;
-	//
-	//
 	//BuiltinEventSpec:
 	//
 	//	EntryEvent | ExitEvent | AlwaysEvent;
@@ -982,9 +995,7 @@ public class SyncExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getExitEventAccess().getRule();
 	}
 
-	////OnCycleEvent:
-	// //	{OnCycleEvent} 'oncycle'; 
-	// AlwaysEvent:
+	//AlwaysEvent:
 	//
 	//	{AlwaysEvent} ("always" | "oncycle");
 	public STextGrammarAccess.AlwaysEventElements getAlwaysEventAccess() {
@@ -995,14 +1006,9 @@ public class SyncExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getAlwaysEventAccess().getRule();
 	}
 
-	////DefaultEvent:
-	// //	{DefaultEvent} ('default' | 'else')
-	// //;
-	// // ****************
-	// // Expression Grammar
-	//
-	//
 	//// ****************
+	// // Expression Grammar
+	// // ****************
 	// EventRaisingExpression returns Expression:
 	//
 	//	{EventRaisingExpression} "raise" event=FeatureCall (":" value=Expression)?;
