@@ -180,7 +180,7 @@ public class SInstructionsView extends ViewPart {
                                             .getDataComponent();
                                     instructionViewDataComponent.selectMicroTick(activeStatement);
                                     try {
-                                        instructionViewDataComponent.refreshViewSync();
+                                        instructionViewDataComponent.refreshView();
                                     } catch (KiemExecutionException e) {
                                         e.printStackTrace();
                                     }

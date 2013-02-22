@@ -15,7 +15,7 @@ package de.cau.cs.kieler.s.sim.kivi;
 
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.JSONObjectXtextVisualizationDataComponent;
+import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.StateErrorXtextVisualizationDataComponent;
 
 /**
  * The DataComponent for visualizing S statements during simulation.
@@ -24,12 +24,11 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.JSONObjectXtextVisualizat
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 yellow KI-28
  */
-public class SVisualizationDataComponent extends JSONObjectXtextVisualizationDataComponent {
+public class SVisualizationDataComponent extends StateErrorXtextVisualizationDataComponent {
 
     /**
      * {@inheritDoc}
      */
-    @Override
     protected String getXtextEditorId() {
         return SSimKiviPlugin.S_EDITOR_ID;
     }
@@ -39,7 +38,6 @@ public class SVisualizationDataComponent extends JSONObjectXtextVisualizationDat
     /**
      * {@inheritDoc}
      */
-    @Override
     protected String getLanguageName() {
         return "S";
     }
