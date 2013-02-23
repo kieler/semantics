@@ -38,12 +38,9 @@ public class KielerModule extends SCTModule {
 	
 	@Override
 	protected Class<? extends IGraphicalEditPart> getStateNameEditPart() {
-		// TODO Auto-generated method stub
 		return SyncStateNameEditPart.class;
 	}
 	
-	
-
 	@Override
 	protected Class<? extends IMetaModelTypeFactory> getMetaModelTypeFactory() {
 		return KielerMetaModelTypeFactory.class;

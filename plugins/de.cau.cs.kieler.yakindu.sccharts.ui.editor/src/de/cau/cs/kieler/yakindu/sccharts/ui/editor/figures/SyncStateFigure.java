@@ -17,15 +17,6 @@ public class SyncStateFigure extends StateFigure {
 	private boolean isDoubleLineBorder = false;
 	private boolean isThickBorder = false;
 
-	public SyncStateFigure() {
-		GridLayout layout = new GridLayout(1, false);
-		this.setLayoutManager(layout);
-		this.setCornerDimensions(new Dimension(15, 15));
-		this.setLineWidth(getBorderWidth());
-		this.setOutline(true);
-		createContents();
-	}
-
 	protected void outlineShape(final Graphics graphics) {
 		// if the isDoubleLineBorder is true, draw a second rectangle.
 		if (isDoubleLineBorder) {
