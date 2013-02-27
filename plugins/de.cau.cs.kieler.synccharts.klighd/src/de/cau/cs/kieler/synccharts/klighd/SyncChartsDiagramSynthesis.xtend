@@ -10,6 +10,7 @@ import de.cau.cs.kieler.core.krendering.KPolygon
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.KRendering
+import de.cau.cs.kieler.core.krendering.KTrigger
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
@@ -77,8 +78,10 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
             node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT);
             node.addLayoutParam(LayoutOptions::SPACING, 40f);
+            if (r.states.size > 1) {
+                // node.addLayoutParam(KlighdConstants::EXPAND, false);
+            }
             node.transferAnnotationsOf(r);
-            node.setNodeSize(30, 30);
             
             for (s : r.states) node.children += s.transform;
                         
@@ -88,17 +91,27 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
             
             node.data += factory.createKRectangle() => [
                 it.invisible = true;
-                it.addVerticalLine(LEFT, 2) => [
-                    it.foreground = "gray".color;
+                // it.invisible = false;
+                it.foreground = "red".color;
+                it.children += factory.createKText => [
+                    it.foreground = "gray".color
+                    it.text = "Region:";
+                    it.setPointPlacementData(createKPosition(LEFT, 1, 0, TOP, 0, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+                    // it.actions +=
+                    factory.createKExpandAction() => [
+                        it.trigger = KTrigger::DOUBLECLICK;
+                        it.id = KlighdConstants::ACTION_COLLAPSE_EXPAND; 
+                    ];
+                ];
+                it.addVerticalLine(LEFT, 1) => [
                     it.lineStyle = LineStyle::DASH;
-                    it.lineWidth = 2;
+                    it.lineWidth = 1;
                     it.invisible = true;
                     it.invisible.functionId = "de.cau.cs.kieler.synccharts.klighd.regionLineModifier";
                 ];
-                it.addHorizontalLine(TOP, 2) => [
-                    it.foreground = "gray".color;
+                it.addHorizontalLine(TOP, 1) => [
                     it.lineStyle = LineStyle::DASH;
-                    it.lineWidth = 2;
+                    it.lineWidth = 1;
                     it.invisible = true;
                     it.invisible.functionId = "de.cau.cs.kieler.synccharts.klighd.regionLineModifier";
                 ];
@@ -115,18 +128,21 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
             node.addLayoutParam(LayoutOptions::SPACING, 0f);
             node.transferAnnotationsOf(s);
 
-            val figure = node.addRoundedRectangle(30, 30, if (s.isInitial) 4 else 2);
+            val figure = node.addRoundedRectangle(30, 30, if (s.isInitial) 4 else 1);
             (
-                if (s.isFinal) figure.setCornerSize(40f, 40f).addRoundedRectangle(30, 30) => [
+                if (s.isFinal) figure.addRoundedRectangle(30, 30) => [
                     it.styleRef = figure;
-                    it.setAreaPlacementData().from(LEFT, 5, 0, TOP, 5, 0).to(RIGHT, 5, 0, BOTTOM, 5, 0);
+                    val offset = figure.lineWidthValue + 2;
+                    figure.setCornerSize(offset + 34f, offset + 34f)
+                    it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
                 ] else figure
              ) => [
                 it.setGridPlacement(1);
                 it.children += factory.createKText().putToLookUpWith(s) => [
+                    val vSpace = 8 + figure.lineWidthValue;
                     it.text = s.label;
                     it.background = "white".color;
-                    it.setGridPlacementData().setMaxCellHeight(40).from(LEFT, 15, 0, TOP, 10, 0).to(RIGHT, 15, 0, BOTTOM, 10, 0);
+                    it.setGridPlacementData().setMaxCellHeight(40).from(LEFT, 15, 0, TOP, vSpace, 0).to(RIGHT, 15, 0, BOTTOM, vSpace, 0);
                 ];
                 if (!s.signals.empty) {
                     it.children += factory.createKRectangle => [
@@ -151,11 +167,10 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
                 
                 if (!s.regions.empty) {
                     it.addHorizontalLine(1) => [
-                        it.lineWidth = 2;
+                        it.lineWidth = 1;
                         it.setGridPlacementData().maxCellHeight = 1;
                     ];
                     
-                    //add childArea itself
                     it.children += factory.createKChildArea() => [
                         it.setGridPlacementData() //.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                     ];
@@ -197,9 +212,9 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
             t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
                 label, 11, KlighdConstants::DEFAULT_FONT_NAME
             );
-            t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel("<" + String::valueOf(
+            t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
                 if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)
-            ) + ">", 11, KlighdConstants::DEFAULT_FONT_NAME); 
+            ), 11, KlighdConstants::DEFAULT_FONT_NAME); 
         ];
     }
     

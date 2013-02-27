@@ -58,7 +58,14 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="toolbar:de.cau.cs.kieler">
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="de.cau.cs.kieler.validation"
+               label="KIELER Validation">
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:de.cau.cs.kieler.validation">
          <command
                commandId="de.cau.cs.kieler.core.model.validate"
                icon="icons/validate.gif"
@@ -74,31 +81,12 @@
                </with>
             </visibleWhen>
          </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
-        <command
-              commandId="de.cau.cs.kieler.core.model.removeMarkers"
-              id="de.cau.cs.kieler.core.model.removeMarkers"
-              label="Remove Problem Markers"
-              mnemonic="r"
-              style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeEditor">
-                  <test
-                        property="de.cau.cs.kieler.core.model.editorTester">
-                  </test>
-               </with>
-            </visibleWhen>
-        </command>
-        <command
-               commandId="de.cau.cs.kieler.core.model.zoom"
-               label="Zoom to Fit"
-               mnemonic="z"
-               style="push"
-               tooltip="Zoom the current diagram such that all contents fit into the current view.">
+         <command
+               commandId="de.cau.cs.kieler.core.model.removeMarkers"
+               id="de.cau.cs.kieler.core.model.removeMarkers"
+               label="Remove Problem Markers"
+               mnemonic="r"
+               style="push">
             <visibleWhen
                   checkEnabled="false">
                <with
