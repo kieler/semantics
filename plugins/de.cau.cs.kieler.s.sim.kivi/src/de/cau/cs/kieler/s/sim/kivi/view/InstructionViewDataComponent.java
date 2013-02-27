@@ -85,6 +85,26 @@ public class InstructionViewDataComponent extends SVisualizationDataComponent {
                 found = true;
             }
         }
+        
+        // Update the selection
+        updateMicroTickSelection();
+    }
+
+    // -----------------------------------------------------------------------------
+    
+    /**
+     * Update micro tick selection.
+     */
+    public void updateMicroTickSelection() {
+        for (EObject statement : lastComputedSelection.keySet()) {
+            if (executedActiveStatements.contains(statement)) {
+                // Update the color to green (executed) in this case
+                lastComputedSelection.put(statement, DEFAULT_EXECUTED_BACKGROUND_COLOR);
+            } else {
+                lastComputedSelection.put(statement, super.DEFAULT_HIGHLIGHT_BACKGROUND_COLOR);
+            }
+        }
+        
     }
 
     // -----------------------------------------------------------------------------
@@ -135,7 +155,7 @@ public class InstructionViewDataComponent extends SVisualizationDataComponent {
         rebuildInstructionList(getActiveStatements());
 
         // Do NOT refresh the xtext editor at this time
-        // super.refreshView(newSelection, async);
+        super.refreshView(newSelection, async);
     }
 
     // -----------------------------------------------------------------------------

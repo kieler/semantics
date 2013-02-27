@@ -59,13 +59,13 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     private EObject modelRoot;
 
     /** The recover text style range map to recover original style. */
-    private Hashtable<Integer, StyleRange> recoverStyleRangeMap = new Hashtable<Integer, StyleRange>();
+    private HashMap<Integer, StyleRange> recoverStyleRangeMap = new HashMap<Integer, StyleRange>();
 
     /**
      * The highlighted memory to remember which eobject is highlighted in which color, null == not
      * highlighted.
      */
-    private Hashtable<EObject, RGB> currentSelection = new Hashtable<EObject, RGB>();
+    private HashMap<EObject, RGB> currentSelection = new HashMap<EObject, RGB>();
 
     /** The Constant COLOR_MED. */
     protected static final int COLOR_HIGH = 255;
@@ -273,8 +273,13 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
             RGB highlightColor = newSelection.get(statement);
             // highlight only if not highlighted before
             // give preference to error coloring
-            if (!currentSelection.contains(statement)
-                    || (currentSelection.get(statement) != highlightColor)) {
+            
+            boolean contains = currentSelection.containsKey(statement);
+            RGB  currentColor = currentSelection.get(statement);
+            RGB  newColor     = highlightColor;
+            
+            if (!contains
+                    || (!currentColor.equals(newColor))) {
                 diffSelection.put(statement, highlightColor);
             }
         }

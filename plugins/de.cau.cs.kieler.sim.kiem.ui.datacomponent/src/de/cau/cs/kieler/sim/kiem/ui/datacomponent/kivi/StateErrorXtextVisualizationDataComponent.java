@@ -246,12 +246,15 @@ public abstract class StateErrorXtextVisualizationDataComponent extends
      */
     public HashMap<EObject, RGB> computeSelection(final JSONObject jSONObject) {
         HashMap<EObject, RGB> newSelection = new HashMap<EObject, RGB>();
+        activeStatements.clear();
+        errorStatements.clear();
 
         try {
             LinkedList<EObject> statements = getActiveStatements(jSONObject,
                     this.getProperties()[KIEM_PROPRTY_STATEMENTNAME+KIEM_PROPERTY_DIFF].getValue());
             for (EObject statement : statements) {
                 newSelection.put(statement, DEFAULT_HIGHLIGHT_BACKGROUND_COLOR);
+                activeStatements.add(statement);
             }
         } catch (KiemExecutionException e) {
             e.printStackTrace();
@@ -263,6 +266,7 @@ public abstract class StateErrorXtextVisualizationDataComponent extends
                     this.getProperties()[KIEM_PROPRTY_ERRORSTATEMENTNAME+KIEM_PROPERTY_DIFF].getValue());
             for (EObject statement : statements) {
                 newSelection.put(statement, DEFAULT_ERROR_BACKGROUND_COLOR);
+                errorStatements.add(statement);
             }
         } catch (KiemExecutionException e) {
             e.printStackTrace();
