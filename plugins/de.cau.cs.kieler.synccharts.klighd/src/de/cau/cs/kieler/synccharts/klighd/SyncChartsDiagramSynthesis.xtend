@@ -96,7 +96,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
                 it.children += factory.createKText => [
                     it.foreground = "gray".color
                     it.text = "Region:";
-                    it.setPointPlacementData(createKPosition(LEFT, 1, 0, TOP, 0, 0), H_LEFT, V_TOP, 10, 10);
+                    it.setPointPlacementData(createKPosition(LEFT, 1, 0, TOP, 0, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     // it.actions +=
                     factory.createKExpandAction() => [
                         it.trigger = KTrigger::DOUBLECLICK;
