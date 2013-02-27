@@ -305,7 +305,7 @@ unsigned long _longBit;
 
 #if _SC_ID_MAX < _setPartSize          // Is one _setPartType big enough?
 # define selectCid()   _SC_ERROR_DETECT_NONE_ACTIVE \
-  _BitScanReverse(active, _cid)
+  _BitScanReverse((long)active, _cid)
 #else
 # define selectCid() {				\
     for (_i = _idsetSize - 1; ; _i--) {		\
