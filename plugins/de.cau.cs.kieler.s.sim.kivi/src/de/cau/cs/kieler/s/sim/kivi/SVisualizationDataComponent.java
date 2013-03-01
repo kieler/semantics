@@ -13,12 +13,10 @@
  */
 package de.cau.cs.kieler.s.sim.kivi;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.swt.graphics.RGB;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.sim.instructions.InstructionsViewPlugin;

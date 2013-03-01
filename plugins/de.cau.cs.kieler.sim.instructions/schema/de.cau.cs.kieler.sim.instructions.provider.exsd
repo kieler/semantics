@@ -20,6 +20,13 @@
          <sequence minOccurs="0" maxOccurs="1">
             <element ref="provider"/>
          </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

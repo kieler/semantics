@@ -21,18 +21,9 @@
       </executionFile>
    </extension>
    <extension
-         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
-      <content
-            class="de.cau.cs.kieler.s.sim.kivi.view.InstructionViewDataComponent"
-            id="de.cau.cs.kieler.s.sim.kivi.view"
-            name="S Instruction View">
-      </content>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.sim.instructions.provider">
       <provider
             class="de.cau.cs.kieler.s.sim.kivi.SInstructionsDataProvider">
       </provider>
    </extension>
-
 </plugin>
