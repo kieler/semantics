@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.s.sim.kivi.view;
+package de.cau.cs.kieler.sim.instructions;
 
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -22,8 +22,10 @@ import org.eclipse.swt.graphics.Image;
  * entry within the SJ instructions view.
  * 
  * @author cmot
+ * @kieler.design proposed 2013-02-28
+ * @kieler.rating proposed 2013-02-28 yellow
  */
-public class SInstructionsDataLabelProvider implements ITableLabelProvider {
+public class InstructionsDataLabelProvider implements ITableLabelProvider {
 
     /** The Constant COLUMN_0. */
     private static final int COLUMN_0 = 0;
@@ -37,28 +39,28 @@ public class SInstructionsDataLabelProvider implements ITableLabelProvider {
     /** The Constant COLUMN_3. */
     private static final int COLUMN_3 = 3;
 
-
+    //-------------------------------------------------------------------------
     
     /**
      * {@inheritDoc}
      */
     public String getColumnText(final Object element, final int columnIndex) {
-        SInstructionsData sjInstructionsData = (SInstructionsData) element;
+        InstructionsData instructionsData = (InstructionsData) element;
         switch (columnIndex) {
         case COLUMN_0: // NOT_VISIBLE_COLUMN
             return "";
         case COLUMN_1: // INSTRUCTION_NAME_COLUMN
-            return sjInstructionsData.getName();
+            return instructionsData.getName();
         case COLUMN_2: // LABEL_COLUMN
-            return sjInstructionsData.getLabel();
+            return instructionsData.getLabel();
         case COLUMN_3: // PRIO_COLUMN
-            return new Integer(sjInstructionsData.getPrio()).toString();
+            return new Integer(instructionsData.getPrio()).toString();
         default:
             throw new IndexOutOfBoundsException("columnIndex out of bounds (3)");
         }
     }
 
-
+    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -68,7 +70,7 @@ public class SInstructionsDataLabelProvider implements ITableLabelProvider {
         return null;
     }
 
-
+    //-------------------------------------------------------------------------
     
     /**
      * {@inheritDoc}
@@ -77,7 +79,7 @@ public class SInstructionsDataLabelProvider implements ITableLabelProvider {
         // noop
     }
 
-
+    //-------------------------------------------------------------------------
     
     /**
      * {@inheritDoc}
@@ -86,7 +88,7 @@ public class SInstructionsDataLabelProvider implements ITableLabelProvider {
         // noop
     }
 
-
+    //-------------------------------------------------------------------------
     
     /**
      * {@inheritDoc}
@@ -95,7 +97,7 @@ public class SInstructionsDataLabelProvider implements ITableLabelProvider {
         return false;
     }
 
-
+    //-------------------------------------------------------------------------
     
     /**
      * {@inheritDoc}
@@ -104,4 +106,5 @@ public class SInstructionsDataLabelProvider implements ITableLabelProvider {
         // noop
     }
 
+    //-------------------------------------------------------------------------
 }

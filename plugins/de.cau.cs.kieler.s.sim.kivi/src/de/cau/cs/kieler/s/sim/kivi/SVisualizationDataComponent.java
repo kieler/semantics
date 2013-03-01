@@ -13,8 +13,17 @@
  */
 package de.cau.cs.kieler.s.sim.kivi;
 
-import org.eclipse.emf.ecore.EObject;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.graphics.RGB;
+import org.json.JSONObject;
+
+import de.cau.cs.kieler.sim.instructions.InstructionsViewPlugin;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.StateErrorXtextVisualizationDataComponent;
 
 /**
@@ -26,6 +35,11 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.StateErrorXtextVisualizat
  */
 public class SVisualizationDataComponent extends StateErrorXtextVisualizationDataComponent {
 
+    /** The active (and selected) statements that are already executed in the selected micro tick. */
+    private LinkedList<EObject> executedStatements = new LinkedList<EObject>();
+    
+    // -----------------------------------------------------------------------------
+    
     /**
      * {@inheritDoc}
      */
@@ -58,4 +72,50 @@ public class SVisualizationDataComponent extends StateErrorXtextVisualizationDat
 
     // -----------------------------------------------------------------------------
     
+    /**
+     * Gets the executed statements.
+     *
+     * @return the executed statements
+     */
+    public List<EObject> getExecutedStatements() {
+        return executedStatements;
+    }
+    
+    // -----------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
+        JSONObject nullReturnValue = super.doStep(jSONObject);
+        
+        // Reset Executed Statements
+        if (this.executedStatements.size() > 0) {
+            this.executedStatements.clear();
+        }
+
+        
+        // Trigger an update of the InstructionsView
+        InstructionsViewPlugin.getDefault().refresh();
+        
+        // This is just an observer component, should be null
+        return nullReturnValue;
+    }
+    
+    // -----------------------------------------------------------------------------
+
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void wrapup() throws KiemInitializationException {
+        super.wrapup();
+        
+        // Trigger an update of the InstructionsView
+        InstructionsViewPlugin.getDefault().refresh();
+    }
+    
+    // -----------------------------------------------------------------------------
+
 }

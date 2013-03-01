@@ -65,7 +65,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      * The highlighted memory to remember which eobject is highlighted in which color, null == not
      * highlighted.
      */
-    private HashMap<EObject, RGB> currentSelection = new HashMap<EObject, RGB>();
+    private HashMap<EObject, RGB> currentHighlighted = new HashMap<EObject, RGB>();
 
     /** The Constant COLOR_MED. */
     protected static final int COLOR_HIGH = 255;
@@ -80,6 +80,19 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      * Instantiates a new data component.
      */
     public JSONObjectXtextVisualizationDataComponent() {
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Gets a copy of the current highlighted statements map.
+     * 
+     * @return the current highlighted
+     */
+    public HashMap<EObject, RGB> getCurrentHighlighted() {
+        HashMap<EObject, RGB> currentSelectionCopy = new HashMap<EObject, RGB>();
+        currentSelectionCopy.putAll(this.currentHighlighted);
+        return currentSelectionCopy;
     }
 
     // -----------------------------------------------------------------------------
@@ -117,13 +130,13 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     // -----------------------------------------------------------------------------
 
     /**
-     * Compute a new selection based on the simulator output given in jSONObject.
+     * Compute a new set of highlighted EObjects based on the simulator output given in jSONObject.
      * 
      * @param jSONObject
      *            the j son object
      * @return the hash map
      */
-    abstract HashMap<EObject, RGB> computeSelection(final JSONObject jSONObject);
+    abstract HashMap<EObject, RGB> computeHighligthed(final JSONObject jSONObject);
 
     // -----------------------------------------------------------------------------
 
@@ -147,9 +160,10 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     public void wrapup() throws KiemInitializationException {
         // Undo Highlighting
         try {
-            refreshView(new HashMap<EObject, RGB>(), true);
+            refreshView(new HashMap<EObject, RGB>(), false, false);
         } catch (Exception e) {
             // Cannot occur here because called asynchronously
+            e.printStackTrace();
         }
         eObjectMap.clear();
         recoverStyleRangeMap.clear();
@@ -245,23 +259,42 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     // -----------------------------------------------------------------------------
 
     /**
+     * Refresh view with the current selection.
+     * 
+     * @param async
+     *            the async
+     * @param calledFromGuiThread
+     *            the called from gui thread
+     * @throws KiemExecutionException
+     *             the kiem execution exception
+     */
+    public void refreshView(final boolean async, final boolean calledFromGuiThread)
+            throws KiemExecutionException {
+        refreshView(currentHighlighted, async, calledFromGuiThread);
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
      * Refresh the textual view and highlighting of active and error statements.
      * 
      * @param newSelection
      *            the new selection
      * @param async
      *            the async
+     * @param calledFromGuiThread
+     *            the called from gui thread
      * @throws KiemExecutionException
      *             the kiem execution exception
      */
-    public void refreshView(final HashMap<EObject, RGB> newSelection, final boolean async)
-            throws KiemExecutionException {
+    public void refreshView(final HashMap<EObject, RGB> newSelection, final boolean async,
+            final boolean calledFromGuiThread) throws KiemExecutionException {
 
         final HashMap<EObject, RGB> diffSelection = new HashMap<EObject, RGB>();
 
         // Undo Highlighting
         // Highlight the active statements
-        for (EObject statement : currentSelection.keySet()) {
+        for (EObject statement : currentHighlighted.keySet()) {
             // remove highlighting only if not again to highlight
             if (!newSelection.containsKey(statement)) {
                 diffSelection.put(statement, CLEAR_SELECTION);
@@ -273,20 +306,19 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
             RGB highlightColor = newSelection.get(statement);
             // highlight only if not highlighted before
             // give preference to error coloring
-            
-            boolean contains = currentSelection.containsKey(statement);
-            RGB  currentColor = currentSelection.get(statement);
-            RGB  newColor     = highlightColor;
-            
-            if (!contains
-                    || (!currentColor.equals(newColor))) {
+
+            boolean contains = currentHighlighted.containsKey(statement);
+            RGB currentColor = currentHighlighted.get(statement);
+            RGB newColor = highlightColor;
+
+            if (!contains || (!currentColor.equals(newColor))) {
                 diffSelection.put(statement, highlightColor);
             }
         }
 
         // Apply diff selection
-        if (async) {
-            applyDiffSelectionAsync(diffSelection);
+        if (async || !calledFromGuiThread) {
+            applyDiffSelectionAsync(diffSelection, async);
         } else {
             applyDiffSelection(diffSelection);
         }
@@ -302,20 +334,30 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      *            the diff selection
      * @param async
      *            the async
-     * @throws KiemExecutionException
-     *             the kiem execution exception
      */
-    private void applyDiffSelectionAsync(final HashMap<EObject, RGB> diffSelection) {
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                try {
-                    applyDiffSelection(diffSelection);
-                } catch (KiemExecutionException e) {
-                    // Report error
+    private void applyDiffSelectionAsync(final HashMap<EObject, RGB> diffSelection,
+            final boolean async) {
+        if (async) {
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    try {
+                        applyDiffSelection(diffSelection);
+                    } catch (KiemExecutionException e) {
+                        // Report error
+                    }
                 }
-            }
-        });
-
+            });
+        } else {
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    try {
+                        applyDiffSelection(diffSelection);
+                    } catch (KiemExecutionException e) {
+                        // Report error
+                    }
+                }
+            });
+        }
     }
 
     // -----------------------------------------------------------------------------
@@ -335,15 +377,18 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
             RGB highlightColor = diffSelection.get(statement);
             try {
                 if (highlightColor == CLEAR_SELECTION) {
-                    if (currentSelection.containsKey(statement)) {
-                        currentSelection.remove(statement);
+                    if (currentHighlighted.containsKey(statement)) {
+                        currentHighlighted.remove(statement);
                     }
+                    System.out.println("CLEAR " + statement.toString());
                     setXtextSelection(statement, null);
                 } else {
-                    currentSelection.put(statement, highlightColor);
+                    currentHighlighted.put(statement, highlightColor);
                     setXtextSelection(statement, highlightColor);
+                    System.out.println("SET " + statement.toString());
                 }
             } catch (KiemInitializationException e) {
+                e.printStackTrace();
                 throw new KiemExecutionException("No active " + this.getLanguageName()
                         + " editor for statement visualization.", false, false, true, e);
             }
@@ -358,7 +403,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     @Override
     public JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
         // Compute the new selection
-        HashMap<EObject, RGB> newSelection = computeSelection(jSONObject);
+        HashMap<EObject, RGB> newSelection = computeHighligthed(jSONObject);
 
         // Silent repeat
         try {
@@ -372,7 +417,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
         }
 
         // Refresh highlighting
-        refreshView(newSelection, true);
+        refreshView(newSelection, true, false);
 
         // This is just an observer component
         return null;
@@ -490,7 +535,10 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
             StyleRange backupStyleRange = localXtextEditor.getInternalSourceViewer()
                     .getTextWidget().getStyleRangeAtOffset(offset);
             if (backupStyleRange != null) {
-                recoverStyleRangeMap.put(offset, backupStyleRange);
+                // Only if there not already exists a backup/recovery style
+                if (!recoverStyleRangeMap.containsKey(offset)) {
+                    recoverStyleRangeMap.put(offset, backupStyleRange);
+                }
                 Color highlightColor = new Color(Display.getCurrent(), specificBackgroundColor);
                 styleRange = new StyleRange(offset, length, backupStyleRange.foreground,
                         highlightColor);

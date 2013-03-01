@@ -52,11 +52,11 @@ public abstract class StateErrorXtextVisualizationDataComponent extends
     protected static final int COLOR_MED = 180;
 
     /** The default highlight background color. */
-    protected static final RGB DEFAULT_HIGHLIGHT_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
+    public static final RGB DEFAULT_HIGHLIGHT_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
             COLOR_MED); // light red
 
     /** The default error background color. */
-    protected static final RGB DEFAULT_ERROR_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
+    public static final RGB DEFAULT_ERROR_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
             COLOR_HIGH); // light magenta
 
     // KIEM property constants
@@ -238,20 +238,21 @@ public abstract class StateErrorXtextVisualizationDataComponent extends
     // -----------------------------------------------------------------------------
 
     /**
-     * Compute selection.
+     * Compute highlighted EObjects.
      * 
      * @param jSONObject
      *            the j son object
      * @return the hash map
      */
-    public HashMap<EObject, RGB> computeSelection(final JSONObject jSONObject) {
+    public HashMap<EObject, RGB> computeHighligthed(final JSONObject jSONObject) {
         HashMap<EObject, RGB> newSelection = new HashMap<EObject, RGB>();
         activeStatements.clear();
         errorStatements.clear();
 
         try {
             LinkedList<EObject> statements = getActiveStatements(jSONObject,
-                    this.getProperties()[KIEM_PROPRTY_STATEMENTNAME+KIEM_PROPERTY_DIFF].getValue());
+                    this.getProperties()[KIEM_PROPRTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
+                            .getValue());
             for (EObject statement : statements) {
                 newSelection.put(statement, DEFAULT_HIGHLIGHT_BACKGROUND_COLOR);
                 activeStatements.add(statement);
@@ -263,7 +264,8 @@ public abstract class StateErrorXtextVisualizationDataComponent extends
         // Give priority to error statements (they possibly override active statements
         try {
             LinkedList<EObject> statements = getActiveStatements(jSONObject,
-                    this.getProperties()[KIEM_PROPRTY_ERRORSTATEMENTNAME+KIEM_PROPERTY_DIFF].getValue());
+                    this.getProperties()[KIEM_PROPRTY_ERRORSTATEMENTNAME + KIEM_PROPERTY_DIFF]
+                            .getValue());
             for (EObject statement : statements) {
                 newSelection.put(statement, DEFAULT_ERROR_BACKGROUND_COLOR);
                 errorStatements.add(statement);
@@ -301,7 +303,7 @@ public abstract class StateErrorXtextVisualizationDataComponent extends
     public HashMap<EObject, String> getStatementPrio() {
         return statementPrio;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -311,7 +313,7 @@ public abstract class StateErrorXtextVisualizationDataComponent extends
      */
     public LinkedList<EObject> getActiveStatements() {
         return activeStatements;
-    }    
+    }
 
     // -------------------------------------------------------------------------
 
@@ -322,9 +324,8 @@ public abstract class StateErrorXtextVisualizationDataComponent extends
      */
     public LinkedList<EObject> getErrorStatements() {
         return errorStatements;
-    }    
+    }
 
     // -------------------------------------------------------------------------
-    
-}
 
+}
