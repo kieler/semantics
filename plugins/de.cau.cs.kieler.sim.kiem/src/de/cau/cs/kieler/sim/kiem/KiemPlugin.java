@@ -1744,8 +1744,10 @@ public class KiemPlugin extends AbstractUIPlugin {
     /**
      * Resets a re-run request after the last one has been served. Do not call
      * from outside. This is used internally only.
+     *
+     * @param cancelReinitializer the cancel reinitializer
      */
-    public void resetRequestReRun(boolean cancelReinitializer) {
+    public void resetRequestReRun(final boolean cancelReinitializer) {
         if (executionReinitializer != null && cancelReinitializer) {
             executionReinitializer.cancel();
         }
