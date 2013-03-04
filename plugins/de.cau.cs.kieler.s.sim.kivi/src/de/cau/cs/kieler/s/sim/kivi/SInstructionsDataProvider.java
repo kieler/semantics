@@ -36,6 +36,8 @@ import de.cau.cs.kieler.s.s.Trans;
  * View.
  * 
  * @author cmot
+ * @kieler.design 2013-02-28 proposed cmot
+ * @kieler.rating 2013-02-28 proposed yellow 
  */
 public class SInstructionsDataProvider implements IInstructionsDataProvider {
 
@@ -145,8 +147,6 @@ public class SInstructionsDataProvider implements IInstructionsDataProvider {
      * {@inheritDoc}
      */
     public void selectStatement(final EObject selectedStatement) {
-        System.out.println(">>> new selected item = " + selectedStatement.toString());
-
         LinkedList<EObject> allStatements = new LinkedList<EObject>();
         allStatements.addAll(getVisualizationDataComponent().getActiveStatements());
 
@@ -182,7 +182,8 @@ public class SInstructionsDataProvider implements IInstructionsDataProvider {
                 }
             }
             // Trigger a refresh of the xtext editor markers
-            getVisualizationDataComponent().refreshView(newSelection, true, true);
+            getVisualizationDataComponent()
+                    .refreshView(newSelection, true, true, selectedStatement);
         } catch (Exception e) {
             // ignore errors
             e.printStackTrace();
