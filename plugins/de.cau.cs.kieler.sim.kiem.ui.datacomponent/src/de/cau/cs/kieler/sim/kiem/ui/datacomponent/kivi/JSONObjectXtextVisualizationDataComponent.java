@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
@@ -160,7 +159,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     public void wrapup() throws KiemInitializationException {
         // Undo Highlighting
         try {
-            refreshView(new HashMap<EObject, RGB>(), false, false);
+            refreshView(new HashMap<EObject, RGB>(), false, false, null);
         } catch (Exception e) {
             // Cannot occur here because called asynchronously
             e.printStackTrace();
@@ -267,10 +266,12 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      *            the called from gui thread
      * @throws KiemExecutionException
      *             the kiem execution exception
+     * @param scrollToObject
+     *            the object to scroll to (or null if no such object)
      */
-    public void refreshView(final boolean async, final boolean calledFromGuiThread)
-            throws KiemExecutionException {
-        refreshView(currentHighlighted, async, calledFromGuiThread);
+    public void refreshView(final boolean async, final boolean calledFromGuiThread,
+            final EObject scrollToObject) throws KiemExecutionException {
+        refreshView(currentHighlighted, async, calledFromGuiThread, scrollToObject);
     }
 
     // -----------------------------------------------------------------------------
@@ -284,11 +285,14 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      *            the async
      * @param calledFromGuiThread
      *            the called from gui thread
+     * @param scrollToObject
+     *            the object to scroll to (or null if no such object)
      * @throws KiemExecutionException
      *             the kiem execution exception
      */
     public void refreshView(final HashMap<EObject, RGB> newSelection, final boolean async,
-            final boolean calledFromGuiThread) throws KiemExecutionException {
+            final boolean calledFromGuiThread, final EObject scrollToObject)
+            throws KiemExecutionException {
 
         final HashMap<EObject, RGB> diffSelection = new HashMap<EObject, RGB>();
 
@@ -318,9 +322,9 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
 
         // Apply diff selection
         if (async || !calledFromGuiThread) {
-            applyDiffSelectionAsync(diffSelection, async);
+            applyDiffSelectionAsync(diffSelection, scrollToObject, async);
         } else {
-            applyDiffSelection(diffSelection);
+            applyDiffSelection(diffSelection, scrollToObject);
         }
     }
 
@@ -332,16 +336,18 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      * 
      * @param diffSelection
      *            the diff selection
+     * @param scrollToObject
+     *            the object to scroll to (or null if no such object)
      * @param async
      *            the async
      */
     private void applyDiffSelectionAsync(final HashMap<EObject, RGB> diffSelection,
-            final boolean async) {
+            final EObject scrollToObject, final boolean async) {
         if (async) {
             Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
                     try {
-                        applyDiffSelection(diffSelection);
+                        applyDiffSelection(diffSelection, scrollToObject);
                     } catch (KiemExecutionException e) {
                         // Report error
                     }
@@ -351,7 +357,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     try {
-                        applyDiffSelection(diffSelection);
+                        applyDiffSelection(diffSelection, scrollToObject);
                     } catch (KiemExecutionException e) {
                         // Report error
                     }
@@ -368,11 +374,13 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      * 
      * @param diffSelection
      *            the diff selection
+     * @param scrollToObject
+     *            the object to scroll to (or null if no such object)
      * @throws KiemExecutionException
      *             the kiem execution exception
      */
-    private void applyDiffSelection(final HashMap<EObject, RGB> diffSelection)
-            throws KiemExecutionException {
+    private void applyDiffSelection(final HashMap<EObject, RGB> diffSelection,
+            final EObject scrollToObject) throws KiemExecutionException {
         for (EObject statement : diffSelection.keySet()) {
             RGB highlightColor = diffSelection.get(statement);
             try {
@@ -380,13 +388,21 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                     if (currentHighlighted.containsKey(statement)) {
                         currentHighlighted.remove(statement);
                     }
-                    System.out.println("CLEAR " + statement.toString());
                     setXtextSelection(statement, null);
                 } else {
                     currentHighlighted.put(statement, highlightColor);
                     setXtextSelection(statement, highlightColor);
-                    System.out.println("SET " + statement.toString());
                 }
+            } catch (KiemInitializationException e) {
+                e.printStackTrace();
+                throw new KiemExecutionException("No active " + this.getLanguageName()
+                        + " editor for statement visualization.", false, false, true, e);
+            }
+        }
+        // Finally scroll to an EObject if this is not null
+        if (scrollToObject != null && currentHighlighted.containsKey(scrollToObject)) {
+            try {
+                setXtextSelection(scrollToObject, currentHighlighted.get(scrollToObject));
             } catch (KiemInitializationException e) {
                 e.printStackTrace();
                 throw new KiemExecutionException("No active " + this.getLanguageName()
@@ -417,7 +433,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
         }
 
         // Refresh highlighting
-        refreshView(newSelection, true, false);
+        refreshView(newSelection, true, false, null);
 
         // This is just an observer component
         return null;

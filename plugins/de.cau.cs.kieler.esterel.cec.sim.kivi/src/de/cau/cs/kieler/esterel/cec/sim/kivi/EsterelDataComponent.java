@@ -13,14 +13,9 @@
  */
 package de.cau.cs.kieler.esterel.cec.sim.kivi;
 
-import java.util.HashMap;
-
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.swt.graphics.RGB;
-import org.json.JSONObject;
 
 import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin;
-import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.JSONObjectXtextVisualizationDataComponent;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.StateErrorXtextVisualizationDataComponent;
 
 /**
