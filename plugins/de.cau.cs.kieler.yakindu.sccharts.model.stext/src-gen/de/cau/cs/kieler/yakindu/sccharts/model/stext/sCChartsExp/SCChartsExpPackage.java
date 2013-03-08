@@ -2,15 +2,11 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp;
 
+import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-
-import org.yakindu.sct.model.sgraph.SGraphPackage;
-
-import org.yakindu.sct.model.stext.stext.StextPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -62,52 +58,6 @@ public interface SCChartsExpPackage extends EPackage
   SCChartsExpPackage eINSTANCE = de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.StateScopeImpl <em>State Scope</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.StateScopeImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getStateScope()
-   * @generated
-   */
-  int STATE_SCOPE = 0;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SCOPE__DECLARATIONS = SGraphPackage.SCOPE__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SCOPE__EVENTS = SGraphPackage.SCOPE__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SCOPE__VARIABLES = SGraphPackage.SCOPE__VARIABLES;
-
-  /**
-   * The number of structural features of the '<em>State Scope</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_SCOPE_FEATURE_COUNT = SGraphPackage.SCOPE_FEATURE_COUNT + 0;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SignalDefinitionImpl <em>Signal Definition</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -115,7 +65,7 @@ public interface SCChartsExpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getSignalDefinition()
    * @generated
    */
-  int SIGNAL_DEFINITION = 1;
+  int SIGNAL_DEFINITION = 0;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -124,7 +74,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SIGNAL_DEFINITION__NAME = SGraphPackage.EVENT__NAME;
+  int SIGNAL_DEFINITION__NAME = SynctextPackage.SIGNAL_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Signal Definition</em>' class.
@@ -133,7 +83,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SIGNAL_DEFINITION_FEATURE_COUNT = SGraphPackage.EVENT_FEATURE_COUNT + 0;
+  int SIGNAL_DEFINITION_FEATURE_COUNT = SynctextPackage.SIGNAL_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
@@ -143,7 +93,7 @@ public interface SCChartsExpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getVariableDefinition()
    * @generated
    */
-  int VARIABLE_DEFINITION = 2;
+  int VARIABLE_DEFINITION = 1;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -152,7 +102,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__NAME = StextPackage.VARIABLE_DEFINITION__NAME;
+  int VARIABLE_DEFINITION__NAME = SynctextPackage.VARIABLE_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -161,7 +111,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__TYPE = StextPackage.VARIABLE_DEFINITION__TYPE;
+  int VARIABLE_DEFINITION__TYPE = SynctextPackage.VARIABLE_DEFINITION__TYPE;
 
   /**
    * The feature id for the '<em><b>Owning Type</b></em>' container reference.
@@ -170,7 +120,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__OWNING_TYPE = StextPackage.VARIABLE_DEFINITION__OWNING_TYPE;
+  int VARIABLE_DEFINITION__OWNING_TYPE = SynctextPackage.VARIABLE_DEFINITION__OWNING_TYPE;
 
   /**
    * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -179,7 +129,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__READONLY = StextPackage.VARIABLE_DEFINITION__READONLY;
+  int VARIABLE_DEFINITION__READONLY = SynctextPackage.VARIABLE_DEFINITION__READONLY;
 
   /**
    * The feature id for the '<em><b>External</b></em>' attribute.
@@ -188,7 +138,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__EXTERNAL = StextPackage.VARIABLE_DEFINITION__EXTERNAL;
+  int VARIABLE_DEFINITION__EXTERNAL = SynctextPackage.VARIABLE_DEFINITION__EXTERNAL;
 
   /**
    * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
@@ -197,7 +147,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__INITIAL_VALUE = StextPackage.VARIABLE_DEFINITION__INITIAL_VALUE;
+  int VARIABLE_DEFINITION__INITIAL_VALUE = SynctextPackage.VARIABLE_DEFINITION__INITIAL_VALUE;
 
   /**
    * The feature id for the '<em><b>Is Input</b></em>' attribute.
@@ -206,7 +156,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__IS_INPUT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
+  int VARIABLE_DEFINITION__IS_INPUT = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Is Output</b></em>' attribute.
@@ -215,7 +165,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__IS_OUTPUT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 1;
+  int VARIABLE_DEFINITION__IS_OUTPUT = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -224,7 +174,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__IS_STATIC = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 2;
+  int VARIABLE_DEFINITION__IS_STATIC = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Var Combine Operator</b></em>' attribute.
@@ -233,7 +183,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 3;
+  int VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Variable Definition</em>' class.
@@ -242,184 +192,7 @@ public interface SCChartsExpPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION_FEATURE_COUNT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 4;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.LocalReactionImpl <em>Local Reaction</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.LocalReactionImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getLocalReaction()
-   * @generated
-   */
-  int LOCAL_REACTION = 3;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LOCAL_REACTION__NAME = StextPackage.LOCAL_REACTION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LOCAL_REACTION__TRIGGER = StextPackage.LOCAL_REACTION__TRIGGER;
-
-  /**
-   * The feature id for the '<em><b>Effect</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LOCAL_REACTION__EFFECT = StextPackage.LOCAL_REACTION__EFFECT;
-
-  /**
-   * The feature id for the '<em><b>Properties</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LOCAL_REACTION__PROPERTIES = StextPackage.LOCAL_REACTION__PROPERTIES;
-
-  /**
-   * The number of structural features of the '<em>Local Reaction</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LOCAL_REACTION_FEATURE_COUNT = StextPackage.LOCAL_REACTION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.StateReactionImpl <em>State Reaction</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.StateReactionImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getStateReaction()
-   * @generated
-   */
-  int STATE_REACTION = 4;
-
-  /**
-   * The number of structural features of the '<em>State Reaction</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_REACTION_FEATURE_COUNT = 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.EntryImpl <em>Entry</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.EntryImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getEntry()
-   * @generated
-   */
-  int ENTRY = 5;
-
-  /**
-   * The number of structural features of the '<em>Entry</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTRY_FEATURE_COUNT = STATE_REACTION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.InsideImpl <em>Inside</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.InsideImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getInside()
-   * @generated
-   */
-  int INSIDE = 6;
-
-  /**
-   * The number of structural features of the '<em>Inside</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSIDE_FEATURE_COUNT = STATE_REACTION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ExitImpl <em>Exit</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ExitImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getExit()
-   * @generated
-   */
-  int EXIT = 7;
-
-  /**
-   * The number of structural features of the '<em>Exit</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXIT_FEATURE_COUNT = STATE_REACTION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SimpleScopeImpl <em>Simple Scope</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SimpleScopeImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getSimpleScope()
-   * @generated
-   */
-  int SIMPLE_SCOPE = 8;
-
-  /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIMPLE_SCOPE__DECLARATIONS = STATE_SCOPE__DECLARATIONS;
-
-  /**
-   * The feature id for the '<em><b>Events</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIMPLE_SCOPE__EVENTS = STATE_SCOPE__EVENTS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIMPLE_SCOPE__VARIABLES = STATE_SCOPE__VARIABLES;
-
-  /**
-   * The number of structural features of the '<em>Simple Scope</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIMPLE_SCOPE_FEATURE_COUNT = STATE_SCOPE_FEATURE_COUNT + 0;
+  int VARIABLE_DEFINITION_FEATURE_COUNT = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.EventDefinitionImpl <em>Event Definition</em>}' class.
@@ -429,7 +202,7 @@ public interface SCChartsExpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getEventDefinition()
    * @generated
    */
-  int EVENT_DEFINITION = 9;
+  int EVENT_DEFINITION = 2;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -467,175 +240,6 @@ public interface SCChartsExpPackage extends EPackage
    */
   int EVENT_DEFINITION_FEATURE_COUNT = SIGNAL_DEFINITION_FEATURE_COUNT + 2;
 
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SuspendEffectImpl <em>Suspend Effect</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SuspendEffectImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getSuspendEffect()
-   * @generated
-   */
-  int SUSPEND_EFFECT = 10;
-
-  /**
-   * The number of structural features of the '<em>Suspend Effect</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND_EFFECT_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionTriggerImpl <em>Reaction Trigger</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionTriggerImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getReactionTrigger()
-   * @generated
-   */
-  int REACTION_TRIGGER = 11;
-
-  /**
-   * The feature id for the '<em><b>State Reaction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_TRIGGER__STATE_REACTION = SGraphPackage.TRIGGER_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_TRIGGER__IS_IMMEDIATE = SGraphPackage.TRIGGER_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Delay</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_TRIGGER__DELAY = SGraphPackage.TRIGGER_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_TRIGGER__TRIGGER = SGraphPackage.TRIGGER_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Guard Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_TRIGGER__GUARD_EXPRESSION = SGraphPackage.TRIGGER_FEATURE_COUNT + 4;
-
-  /**
-   * The number of structural features of the '<em>Reaction Trigger</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_TRIGGER_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 5;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionEffectImpl <em>Reaction Effect</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionEffectImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getReactionEffect()
-   * @generated
-   */
-  int REACTION_EFFECT = 12;
-
-  /**
-   * The feature id for the '<em><b>Actions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_EFFECT__ACTIONS = SGraphPackage.EFFECT_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Reaction Effect</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_EFFECT_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.PreValueExpressionImpl <em>Pre Value Expression</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.PreValueExpressionImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getPreValueExpression()
-   * @generated
-   */
-  int PRE_VALUE_EXPRESSION = 13;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRE_VALUE_EXPRESSION__VALUE = StextPackage.EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Pre Value Expression</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRE_VALUE_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.CombineOperator <em>Combine Operator</em>}' enum.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.CombineOperator
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getCombineOperator()
-   * @generated
-   */
-  int COMBINE_OPERATOR = 14;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VarDirection <em>Var Direction</em>}' enum.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VarDirection
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getVarDirection()
-   * @generated
-   */
-  int VAR_DIRECTION = 15;
-
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.StateScope <em>State Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>State Scope</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.StateScope
-   * @generated
-   */
-  EClass getStateScope();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SignalDefinition <em>Signal Definition</em>}'.
@@ -702,66 +306,6 @@ public interface SCChartsExpPackage extends EPackage
   EAttribute getVariableDefinition_VarCombineOperator();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.LocalReaction <em>Local Reaction</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Local Reaction</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.LocalReaction
-   * @generated
-   */
-  EClass getLocalReaction();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.StateReaction <em>State Reaction</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>State Reaction</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.StateReaction
-   * @generated
-   */
-  EClass getStateReaction();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Entry <em>Entry</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Entry</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Entry
-   * @generated
-   */
-  EClass getEntry();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Inside <em>Inside</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Inside</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Inside
-   * @generated
-   */
-  EClass getInside();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Exit <em>Exit</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Exit</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Exit
-   * @generated
-   */
-  EClass getExit();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SimpleScope <em>Simple Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Simple Scope</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SimpleScope
-   * @generated
-   */
-  EClass getSimpleScope();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition <em>Event Definition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -794,143 +338,6 @@ public interface SCChartsExpPackage extends EPackage
   EAttribute getEventDefinition_IsOutput();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SuspendEffect <em>Suspend Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Suspend Effect</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SuspendEffect
-   * @generated
-   */
-  EClass getSuspendEffect();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger <em>Reaction Trigger</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Reaction Trigger</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger
-   * @generated
-   */
-  EClass getReactionTrigger();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getStateReaction <em>State Reaction</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>State Reaction</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getStateReaction()
-   * @see #getReactionTrigger()
-   * @generated
-   */
-  EReference getReactionTrigger_StateReaction();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Immediate</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#isIsImmediate()
-   * @see #getReactionTrigger()
-   * @generated
-   */
-  EAttribute getReactionTrigger_IsImmediate();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getDelay <em>Delay</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Delay</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getDelay()
-   * @see #getReactionTrigger()
-   * @generated
-   */
-  EAttribute getReactionTrigger_Delay();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getTrigger <em>Trigger</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Trigger</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getTrigger()
-   * @see #getReactionTrigger()
-   * @generated
-   */
-  EReference getReactionTrigger_Trigger();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Guard Expression</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger#getGuardExpression()
-   * @see #getReactionTrigger()
-   * @generated
-   */
-  EReference getReactionTrigger_GuardExpression();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionEffect <em>Reaction Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Reaction Effect</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionEffect
-   * @generated
-   */
-  EClass getReactionEffect();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionEffect#getActions <em>Actions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Actions</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionEffect#getActions()
-   * @see #getReactionEffect()
-   * @generated
-   */
-  EReference getReactionEffect_Actions();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.PreValueExpression <em>Pre Value Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Pre Value Expression</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.PreValueExpression
-   * @generated
-   */
-  EClass getPreValueExpression();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.PreValueExpression#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.PreValueExpression#getValue()
-   * @see #getPreValueExpression()
-   * @generated
-   */
-  EReference getPreValueExpression_Value();
-
-  /**
-   * Returns the meta object for enum '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.CombineOperator <em>Combine Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Combine Operator</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.CombineOperator
-   * @generated
-   */
-  EEnum getCombineOperator();
-
-  /**
-   * Returns the meta object for enum '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VarDirection <em>Var Direction</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Var Direction</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VarDirection
-   * @generated
-   */
-  EEnum getVarDirection();
-
-  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -953,16 +360,6 @@ public interface SCChartsExpPackage extends EPackage
    */
   interface Literals
   {
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.StateScopeImpl <em>State Scope</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.StateScopeImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getStateScope()
-     * @generated
-     */
-    EClass STATE_SCOPE = eINSTANCE.getStateScope();
-
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SignalDefinitionImpl <em>Signal Definition</em>}' class.
      * <!-- begin-user-doc -->
@@ -1016,66 +413,6 @@ public interface SCChartsExpPackage extends EPackage
     EAttribute VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = eINSTANCE.getVariableDefinition_VarCombineOperator();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.LocalReactionImpl <em>Local Reaction</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.LocalReactionImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getLocalReaction()
-     * @generated
-     */
-    EClass LOCAL_REACTION = eINSTANCE.getLocalReaction();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.StateReactionImpl <em>State Reaction</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.StateReactionImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getStateReaction()
-     * @generated
-     */
-    EClass STATE_REACTION = eINSTANCE.getStateReaction();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.EntryImpl <em>Entry</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.EntryImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getEntry()
-     * @generated
-     */
-    EClass ENTRY = eINSTANCE.getEntry();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.InsideImpl <em>Inside</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.InsideImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getInside()
-     * @generated
-     */
-    EClass INSIDE = eINSTANCE.getInside();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ExitImpl <em>Exit</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ExitImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getExit()
-     * @generated
-     */
-    EClass EXIT = eINSTANCE.getExit();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SimpleScopeImpl <em>Simple Scope</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SimpleScopeImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getSimpleScope()
-     * @generated
-     */
-    EClass SIMPLE_SCOPE = eINSTANCE.getSimpleScope();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.EventDefinitionImpl <em>Event Definition</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1100,122 +437,6 @@ public interface SCChartsExpPackage extends EPackage
      * @generated
      */
     EAttribute EVENT_DEFINITION__IS_OUTPUT = eINSTANCE.getEventDefinition_IsOutput();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SuspendEffectImpl <em>Suspend Effect</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SuspendEffectImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getSuspendEffect()
-     * @generated
-     */
-    EClass SUSPEND_EFFECT = eINSTANCE.getSuspendEffect();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionTriggerImpl <em>Reaction Trigger</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionTriggerImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getReactionTrigger()
-     * @generated
-     */
-    EClass REACTION_TRIGGER = eINSTANCE.getReactionTrigger();
-
-    /**
-     * The meta object literal for the '<em><b>State Reaction</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference REACTION_TRIGGER__STATE_REACTION = eINSTANCE.getReactionTrigger_StateReaction();
-
-    /**
-     * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute REACTION_TRIGGER__IS_IMMEDIATE = eINSTANCE.getReactionTrigger_IsImmediate();
-
-    /**
-     * The meta object literal for the '<em><b>Delay</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute REACTION_TRIGGER__DELAY = eINSTANCE.getReactionTrigger_Delay();
-
-    /**
-     * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference REACTION_TRIGGER__TRIGGER = eINSTANCE.getReactionTrigger_Trigger();
-
-    /**
-     * The meta object literal for the '<em><b>Guard Expression</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference REACTION_TRIGGER__GUARD_EXPRESSION = eINSTANCE.getReactionTrigger_GuardExpression();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionEffectImpl <em>Reaction Effect</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.ReactionEffectImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getReactionEffect()
-     * @generated
-     */
-    EClass REACTION_EFFECT = eINSTANCE.getReactionEffect();
-
-    /**
-     * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference REACTION_EFFECT__ACTIONS = eINSTANCE.getReactionEffect_Actions();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.PreValueExpressionImpl <em>Pre Value Expression</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.PreValueExpressionImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getPreValueExpression()
-     * @generated
-     */
-    EClass PRE_VALUE_EXPRESSION = eINSTANCE.getPreValueExpression();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PRE_VALUE_EXPRESSION__VALUE = eINSTANCE.getPreValueExpression_Value();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.CombineOperator <em>Combine Operator</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.CombineOperator
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getCombineOperator()
-     * @generated
-     */
-    EEnum COMBINE_OPERATOR = eINSTANCE.getCombineOperator();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VarDirection <em>Var Direction</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VarDirection
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getVarDirection()
-     * @generated
-     */
-    EEnum VAR_DIRECTION = eINSTANCE.getVarDirection();
 
   }
 

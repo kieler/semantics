@@ -2,7 +2,8 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.CombineOperator;
+import de.cau.cs.kieler.yakindu.model.stext.synctext.CombineOperator;
+
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition;
 
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class VariableDefinitionImpl extends org.yakindu.sct.model.stext.stext.impl.VariableDefinitionImpl implements VariableDefinition
+public class VariableDefinitionImpl extends de.cau.cs.kieler.yakindu.model.stext.synctext.impl.VariableDefinitionImpl implements VariableDefinition
 {
   /**
    * The default value of the '{@link #isIsInput() <em>Is Input</em>}' attribute.

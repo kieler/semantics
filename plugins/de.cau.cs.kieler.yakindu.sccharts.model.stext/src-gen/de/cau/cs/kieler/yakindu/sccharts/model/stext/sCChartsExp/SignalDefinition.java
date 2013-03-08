@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp;
 
-import org.yakindu.sct.model.sgraph.Event;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +13,6 @@ import org.yakindu.sct.model.sgraph.Event;
  * @model
  * @generated
  */
-public interface SignalDefinition extends Event
+public interface SignalDefinition extends de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition
 {
 } // SignalDefinition

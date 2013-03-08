@@ -6,8 +6,8 @@
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http://kieler.cs.cau.de/yakindu/synccharts/stext/" 
-       class = "de.cau.cs.kieler.yakindu.synccharts.model.stext.syncExp.SyncExpPackage"
-       genModel = "de/cau/cs/kieler/yakindu/synccharts/model/stext/SyncExp.genmodel" /> 
+       class = "de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.SyncChartstextPackage"
+       genModel = "de/cau/cs/kieler/yakindu/synccharts/model/stext/SyncChartstext.genmodel" /> 
 	
   </extension>
 

@@ -12,14 +12,10 @@ var runtimeProject = "../${projectName}"
 Workflow {
 	bean = StandaloneSetup {
 		scanClassPath = true
-		platformUri = "${runtimeProject}/.."// registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
-// registerGenModelFile = "platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel"
-// registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
-// registerGeneratedEPackage = "org.eclipse.xtext.common.types.TypesPackage"
-		registerGeneratedEPackage = "org.yakindu.sct.model.stext.stext.StextPackage"
-		registerGenModelFile = "platform:/resource/org.yakindu.sct.model.stext/model/SText.genmodel"
-		registerGeneratedEPackage = "org.yakindu.sct.model.sgraph.SGraphPackage"
-		registerGenModelFile = "platform:/resource/org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel"
+		platformUri = "${runtimeProject}/.."
+			registerGeneratedEPackage = "de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage"
+		registerGenModelFile =
+		"platform:/resource/de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/Synctext.genmodel"
 	}
 
 	component = DirectoryCleaner {
@@ -32,8 +28,7 @@ Workflow {
 
 	component = Generator {
 		pathRtProject = runtimeProject
-		pathUiProject = "${runtimeProject}.ui"
-		pathTestProject = "${runtimeProject}.tests"
+		pathUiProject = "${runtimeProject}.ui"//		pathTestProject = "${runtimeProject}.tests"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
 		language = {
@@ -68,8 +63,8 @@ Workflow {
 			}
 
 			// scoping and exporting API
-//			 fragment = scoping.ImportURIScopingFragment {}
-//			 fragment = exporting.SimpleNamesFragment {}
+			//			 fragment = scoping.ImportURIScopingFragment {}
+			//			 fragment = exporting.SimpleNamesFragment {}
 
 			// scoping and exporting API 
 			fragment = scoping.ImportNamespacesScopingFragment {}
@@ -102,7 +97,7 @@ Workflow {
 			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {}
 
 			// generates junit test support classes into Generator#pathTestProject
-			fragment = junit.Junit4Fragment {}
+			//			fragment = junit.Junit4Fragment {}
 
 			// project wizard (optional) 
 			// fragment = projectWizard.SimpleProjectWizardFragment {
@@ -110,8 +105,8 @@ Workflow {
 			//		modelFileExtension = file.extensions
 			// }
 
-						// provides the necessary bindings for java types integration
-						fragment = types.TypesGeneratorFragment {}
+			// provides the necessary bindings for java types integration
+			fragment = types.TypesGeneratorFragment {}
 
 			// generates the required bindings only if the grammar inherits from Xbase
 			//			fragment = xbase.XbaseGeneratorFragment {}

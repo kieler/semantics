@@ -6,42 +6,42 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
-            extensions="syncexp"
-            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp"
-            name="SyncExp Editor">
+            extensions="syncchartstext"
+            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext"
+            name="SyncChartstext Editor">
         </editor>
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.Editor.opened">
+                    definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.validate">
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.validate">
          <activeWhen>
             <reference
-                    definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.Editor.opened">
+                    definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.Editor.opened">
             </reference>
          </activeWhen>
       </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.Editor.opened">
+        <definition id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp" 
+                        value="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -50,33 +50,33 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp"
-            name="SyncExp">
-            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncExp"/>
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext"
+            name="SyncChartstext">
+            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncChartstext"/>
         </page>
         <page
-            category="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp"
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.coloring"
+            category="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext"
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.coloring"
             name="Syntax Coloring">
-            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncExp"/>
+            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncChartstext"/>
         </page>
         <page
-            category="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp"
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.templates"
+            category="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext"
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.templates"
             name="Templates">
-            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncExp"/>
+            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncChartstext"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp"
-            name="SyncExp">
-            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncExp"/>
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext"
+            name="SyncChartstext">
+            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncChartstext"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -86,14 +86,14 @@
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncExp"
-            label="SyncExp"/>
+            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncChartstext"
+            label="SyncChartstext"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.validate"
+            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.validate"
             name="Validate">
       </command>
     </extension>
@@ -101,12 +101,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.validate"
+                 commandId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.Editor.opened">
+                    definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -116,7 +116,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.Editor.opened">
+                	<reference definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -124,11 +124,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.Editor.opened">
+                    definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -139,36 +139,36 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="syncexp">
+			class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="syncchartstext">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-            uriExtension="syncexp">
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="syncchartstext">
         </resourceServiceProvider>
     </extension>
 
 
-    <!-- marker definitions for de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp -->
+    <!-- marker definitions for de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext -->
     <extension
-            id="syncexp.check.fast"
-            name="SyncExp Problem"
+            id="syncchartstext.check.fast"
+            name="SyncChartstext Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.fast"/>
         <persistent value="true"/>
     </extension>
     <extension
-            id="syncexp.check.normal"
-            name="SyncExp Problem"
+            id="syncchartstext.check.normal"
+            name="SyncChartstext Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.normal"/>
         <persistent value="true"/>
     </extension>
     <extension
-            id="syncexp.check.expensive"
-            name="SyncExp Problem"
+            id="syncchartstext.check.expensive"
+            name="SyncChartstext Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.expensive"/>
         <persistent value="true"/>
@@ -177,27 +177,27 @@
    <extension
          point="org.eclipse.xtext.builder.participant">
       <participant
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
       </participant>
    </extension>
    <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            category="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp"
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.compiler.preferencePage"
+            category="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext"
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.compiler.preferencePage"
             name="Compiler">
-            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncExp"/>
+            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncChartstext"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            category="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp"
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.compiler.propertyPage"
+            category="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext"
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.compiler.propertyPage"
             name="Compiler">
-            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncExp"/>
+            <keywordReference id="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.keyword_SyncChartstext"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -209,11 +209,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.Editor.opened">
+					definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -233,33 +233,33 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp.Editor.opened"/>
+					<reference definitionId="de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncExp -->
+    <!-- quickfix marker resolution generator for de.cau.cs.kieler.yakindu.synccharts.model.stext.SyncChartstext -->
     <extension
             point="org.eclipse.ui.ide.markerResolution">
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.syncexp.check.fast">
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.syncchartstext.check.fast">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.syncexp.check.normal">
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.syncchartstext.check.normal">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncExpExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.syncexp.check.expensive">
+            class="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.SyncChartstextExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.syncchartstext.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">

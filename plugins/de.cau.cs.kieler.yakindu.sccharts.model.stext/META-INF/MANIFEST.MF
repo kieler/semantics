@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.antlr.runtime,
  org.eclipse.xtext.common.types,
  de.cau.cs.kieler.yakindu.sgraph;bundle-version="0.1.0",
- org.eclipse.core.runtime;bundle-version="3.8.0"
+ org.eclipse.core.runtime;bundle-version="3.8.0",
+ de.cau.cs.kieler.yakindu.model.stext;bundle-version="0.1.0"
 Import-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext.validation,
  de.itemis.xtext.utils.jface.viewers,
  org.apache.log4j,
@@ -36,6 +37,5 @@ Export-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.util,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.scoping,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.services,
- de.cau.cs.kieler.yakindu.sccharts.model.stext.types,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.validation
 

@@ -40,7 +40,6 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateScopeAccess().getDeclarationsAlternatives_1_0(), "rule__StateScope__DeclarationsAlternatives_1_0");
 					put(grammarAccess.getLocalReactionAccess().getTriggerAlternatives_0_0(), "rule__LocalReaction__TriggerAlternatives_0_0");
 					put(grammarAccess.getLocalReactionAccess().getEffectAlternatives_1_1_0(), "rule__LocalReaction__EffectAlternatives_1_1_0");
-					put(grammarAccess.getLocalReactionTriggerAccess().getAlternatives_2_3(), "rule__LocalReactionTrigger__Alternatives_2_3");
 					put(grammarAccess.getStateReactionAccess().getAlternatives(), "rule__StateReaction__Alternatives");
 					put(grammarAccess.getReactionTriggerAccess().getAlternatives_3(), "rule__ReactionTrigger__Alternatives_3");
 					put(grammarAccess.getPrimaryExpressionAccess().getAlternatives(), "rule__PrimaryExpression__Alternatives");
@@ -62,7 +61,6 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNumericalUnaryExpressionAccess().getAlternatives(), "rule__NumericalUnaryExpression__Alternatives");
 					put(grammarAccess.getLiteralAccess().getAlternatives(), "rule__Literal__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
-					put(grammarAccess.getVarDirectionAccess().getAlternatives(), "rule__VarDirection__Alternatives");
 					put(grammarAccess.getDirectionAccess().getAlternatives(), "rule__Direction__Alternatives");
 					put(grammarAccess.getTimeEventTypeAccess().getAlternatives(), "rule__TimeEventType__Alternatives");
 					put(grammarAccess.getAssignmentOperatorAccess().getAlternatives(), "rule__AssignmentOperator__Alternatives");
@@ -72,17 +70,16 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUnaryOperatorAccess().getAlternatives(), "rule__UnaryOperator__Alternatives");
 					put(grammarAccess.getRelationalOperatorAccess().getAlternatives(), "rule__RelationalOperator__Alternatives");
 					put(grammarAccess.getTimeUnitAccess().getAlternatives(), "rule__TimeUnit__Alternatives");
-					put(grammarAccess.getStateScopeAccess().getGroup(), "rule__StateScope__Group__0");
 					put(grammarAccess.getSignalDefinitionAccess().getGroup(), "rule__SignalDefinition__Group__0");
 					put(grammarAccess.getVariableDefinitionAccess().getGroup(), "rule__VariableDefinition__Group__0");
 					put(grammarAccess.getVariableDefinitionAccess().getGroup_6(), "rule__VariableDefinition__Group_6__0");
 					put(grammarAccess.getVariableDefinitionAccess().getGroup_7(), "rule__VariableDefinition__Group_7__0");
+					put(grammarAccess.getStateScopeAccess().getGroup(), "rule__StateScope__Group__0");
 					put(grammarAccess.getLocalReactionAccess().getGroup(), "rule__LocalReaction__Group__0");
 					put(grammarAccess.getLocalReactionAccess().getGroup_1(), "rule__LocalReaction__Group_1__0");
 					put(grammarAccess.getSuspendEffectAccess().getGroup(), "rule__SuspendEffect__Group__0");
 					put(grammarAccess.getLocalReactionTriggerAccess().getGroup(), "rule__LocalReactionTrigger__Group__0");
 					put(grammarAccess.getLocalReactionTriggerAccess().getGroup_2(), "rule__LocalReactionTrigger__Group_2__0");
-					put(grammarAccess.getLocalReactionTriggerAccess().getGroup_2_3_1(), "rule__LocalReactionTrigger__Group_2_3_1__0");
 					put(grammarAccess.getEntryAccess().getGroup(), "rule__Entry__Group__0");
 					put(grammarAccess.getInsideAccess().getGroup(), "rule__Inside__Group__0");
 					put(grammarAccess.getExitAccess().getGroup(), "rule__Exit__Group__0");
@@ -161,7 +158,6 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRealLiteralAccess().getGroup(), "rule__RealLiteral__Group__0");
 					put(grammarAccess.getHexLiteralAccess().getGroup(), "rule__HexLiteral__Group__0");
 					put(grammarAccess.getStringLiteralAccess().getGroup(), "rule__StringLiteral__Group__0");
-					put(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1(), "rule__StateScope__DeclarationsAssignment_1");
 					put(grammarAccess.getSignalDefinitionAccess().getIsInputAssignment_1(), "rule__SignalDefinition__IsInputAssignment_1");
 					put(grammarAccess.getSignalDefinitionAccess().getIsOutputAssignment_2(), "rule__SignalDefinition__IsOutputAssignment_2");
 					put(grammarAccess.getSignalDefinitionAccess().getNameAssignment_4(), "rule__SignalDefinition__NameAssignment_4");
@@ -172,13 +168,11 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDefinitionAccess().getNameAssignment_5(), "rule__VariableDefinition__NameAssignment_5");
 					put(grammarAccess.getVariableDefinitionAccess().getInitialValueAssignment_6_1(), "rule__VariableDefinition__InitialValueAssignment_6_1");
 					put(grammarAccess.getVariableDefinitionAccess().getVarCombineOperatorAssignment_7_1(), "rule__VariableDefinition__VarCombineOperatorAssignment_7_1");
+					put(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1(), "rule__StateScope__DeclarationsAssignment_1");
 					put(grammarAccess.getLocalReactionAccess().getTriggerAssignment_0(), "rule__LocalReaction__TriggerAssignment_0");
 					put(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_1(), "rule__LocalReaction__EffectAssignment_1_1");
 					put(grammarAccess.getLocalReactionTriggerAccess().getStateReactionAssignment_1(), "rule__LocalReactionTrigger__StateReactionAssignment_1");
-					put(grammarAccess.getLocalReactionTriggerAccess().getIsImmediateAssignment_2_1(), "rule__LocalReactionTrigger__IsImmediateAssignment_2_1");
-					put(grammarAccess.getLocalReactionTriggerAccess().getDelayAssignment_2_2(), "rule__LocalReactionTrigger__DelayAssignment_2_2");
-					put(grammarAccess.getLocalReactionTriggerAccess().getTriggerAssignment_2_3_0(), "rule__LocalReactionTrigger__TriggerAssignment_2_3_0");
-					put(grammarAccess.getLocalReactionTriggerAccess().getGuardExpressionAssignment_2_3_1_1(), "rule__LocalReactionTrigger__GuardExpressionAssignment_2_3_1_1");
+					put(grammarAccess.getLocalReactionTriggerAccess().getReactionTriggerAssignment_2_1(), "rule__LocalReactionTrigger__ReactionTriggerAssignment_2_1");
 					put(grammarAccess.getReactionTriggerAccess().getIsImmediateAssignment_1(), "rule__ReactionTrigger__IsImmediateAssignment_1");
 					put(grammarAccess.getReactionTriggerAccess().getDelayAssignment_2(), "rule__ReactionTrigger__DelayAssignment_2");
 					put(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3_0(), "rule__ReactionTrigger__TriggerAssignment_3_0");
@@ -264,7 +258,7 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
 			de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist.antlr.internal.InternalSCChartsExpParser typedParser = (de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist.antlr.internal.InternalSCChartsExpParser) parser;
-			typedParser.entryRuleStateScope();
+			typedParser.entryRuleSignalDefinition();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);

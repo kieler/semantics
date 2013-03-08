@@ -18,15 +18,8 @@ import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypedElement;
 
 import org.yakindu.sct.model.sgraph.Declaration;
-import org.yakindu.sct.model.sgraph.Effect;
 import org.yakindu.sct.model.sgraph.Event;
-import org.yakindu.sct.model.sgraph.Reaction;
-import org.yakindu.sct.model.sgraph.Scope;
-import org.yakindu.sct.model.sgraph.Statement;
-import org.yakindu.sct.model.sgraph.Trigger;
 import org.yakindu.sct.model.sgraph.Variable;
-
-import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
  * <!-- begin-user-doc -->
@@ -92,11 +85,6 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
     new SCChartsExpSwitch<Adapter>()
     {
       @Override
-      public Adapter caseStateScope(StateScope object)
-      {
-        return createStateScopeAdapter();
-      }
-      @Override
       public Adapter caseSignalDefinition(SignalDefinition object)
       {
         return createSignalDefinitionAdapter();
@@ -107,64 +95,9 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
         return createVariableDefinitionAdapter();
       }
       @Override
-      public Adapter caseLocalReaction(LocalReaction object)
-      {
-        return createLocalReactionAdapter();
-      }
-      @Override
-      public Adapter caseStateReaction(StateReaction object)
-      {
-        return createStateReactionAdapter();
-      }
-      @Override
-      public Adapter caseEntry(Entry object)
-      {
-        return createEntryAdapter();
-      }
-      @Override
-      public Adapter caseInside(Inside object)
-      {
-        return createInsideAdapter();
-      }
-      @Override
-      public Adapter caseExit(Exit object)
-      {
-        return createExitAdapter();
-      }
-      @Override
-      public Adapter caseSimpleScope(SimpleScope object)
-      {
-        return createSimpleScopeAdapter();
-      }
-      @Override
       public Adapter caseEventDefinition(EventDefinition object)
       {
         return createEventDefinitionAdapter();
-      }
-      @Override
-      public Adapter caseSuspendEffect(SuspendEffect object)
-      {
-        return createSuspendEffectAdapter();
-      }
-      @Override
-      public Adapter caseReactionTrigger(ReactionTrigger object)
-      {
-        return createReactionTriggerAdapter();
-      }
-      @Override
-      public Adapter caseReactionEffect(ReactionEffect object)
-      {
-        return createReactionEffectAdapter();
-      }
-      @Override
-      public Adapter casePreValueExpression(PreValueExpression object)
-      {
-        return createPreValueExpressionAdapter();
-      }
-      @Override
-      public Adapter caseScope(Scope object)
-      {
-        return createScopeAdapter();
       }
       @Override
       public Adapter caseNamedElement(NamedElement object)
@@ -180,6 +113,11 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
       public Adapter caseEvent(Event object)
       {
         return createEventAdapter();
+      }
+      @Override
+      public Adapter caseSynctext_SignalDefinition(de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition object)
+      {
+        return createSynctext_SignalDefinitionAdapter();
       }
       @Override
       public Adapter caseVariable(Variable object)
@@ -207,34 +145,9 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
         return createStext_VariableDefinitionAdapter();
       }
       @Override
-      public Adapter caseReaction(Reaction object)
+      public Adapter caseSynctext_VariableDefinition(de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition object)
       {
-        return createReactionAdapter();
-      }
-      @Override
-      public Adapter caseStext_LocalReaction(org.yakindu.sct.model.stext.stext.LocalReaction object)
-      {
-        return createStext_LocalReactionAdapter();
-      }
-      @Override
-      public Adapter caseEffect(Effect object)
-      {
-        return createEffectAdapter();
-      }
-      @Override
-      public Adapter caseTrigger(Trigger object)
-      {
-        return createTriggerAdapter();
-      }
-      @Override
-      public Adapter caseStatement(Statement object)
-      {
-        return createStatementAdapter();
-      }
-      @Override
-      public Adapter caseExpression(Expression object)
-      {
-        return createExpressionAdapter();
+        return createSynctext_VariableDefinitionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -257,21 +170,6 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
     return modelSwitch.doSwitch((EObject)target);
   }
 
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.StateScope <em>State Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.StateScope
-   * @generated
-   */
-  public Adapter createStateScopeAdapter()
-  {
-    return null;
-  }
 
   /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SignalDefinition <em>Signal Definition</em>}'.
@@ -304,96 +202,6 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.LocalReaction <em>Local Reaction</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.LocalReaction
-   * @generated
-   */
-  public Adapter createLocalReactionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.StateReaction <em>State Reaction</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.StateReaction
-   * @generated
-   */
-  public Adapter createStateReactionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Entry <em>Entry</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Entry
-   * @generated
-   */
-  public Adapter createEntryAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Inside <em>Inside</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Inside
-   * @generated
-   */
-  public Adapter createInsideAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Exit <em>Exit</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Exit
-   * @generated
-   */
-  public Adapter createExitAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SimpleScope <em>Simple Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SimpleScope
-   * @generated
-   */
-  public Adapter createSimpleScopeAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition <em>Event Definition</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -404,81 +212,6 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEventDefinitionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SuspendEffect <em>Suspend Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SuspendEffect
-   * @generated
-   */
-  public Adapter createSuspendEffectAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger <em>Reaction Trigger</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionTrigger
-   * @generated
-   */
-  public Adapter createReactionTriggerAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionEffect <em>Reaction Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.ReactionEffect
-   * @generated
-   */
-  public Adapter createReactionEffectAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.PreValueExpression <em>Pre Value Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.PreValueExpression
-   * @generated
-   */
-  public Adapter createPreValueExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Scope <em>Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Scope
-   * @generated
-   */
-  public Adapter createScopeAdapter()
   {
     return null;
   }
@@ -524,6 +257,21 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEventAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition <em>Signal Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition
+   * @generated
+   */
+  public Adapter createSynctext_SignalDefinitionAdapter()
   {
     return null;
   }
@@ -604,91 +352,16 @@ public class SCChartsExpAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Reaction <em>Reaction</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition <em>Variable Definition</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Reaction
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition
    * @generated
    */
-  public Adapter createReactionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.LocalReaction <em>Local Reaction</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.stext.stext.LocalReaction
-   * @generated
-   */
-  public Adapter createStext_LocalReactionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Effect <em>Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Effect
-   * @generated
-   */
-  public Adapter createEffectAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Trigger <em>Trigger</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Trigger
-   * @generated
-   */
-  public Adapter createTriggerAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Statement <em>Statement</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Statement
-   * @generated
-   */
-  public Adapter createStatementAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.Expression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.stext.stext.Expression
-   * @generated
-   */
-  public Adapter createExpressionAdapter()
+  public Adapter createSynctext_VariableDefinitionAdapter()
   {
     return null;
   }

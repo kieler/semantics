@@ -45,7 +45,7 @@ import de.cau.cs.kieler.yakindu.sccharts.model.stext.services.SCChartsExpGrammar
     
     @Override
     protected String getFirstRuleName() {
-    	return "StateScope";	
+    	return "SignalDefinition";	
    	}
    	
    	@Override
@@ -60,129 +60,6 @@ import de.cau.cs.kieler.yakindu.sccharts.model.stext.services.SCChartsExpGrammar
         appendSkippedTokens();
     } 
 }
-
-
-
-
-// Entry rule entryRuleStateScope
-entryRuleStateScope returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getStateScopeRule()); }
-	 iv_ruleStateScope=ruleStateScope 
-	 { $current=$iv_ruleStateScope.current; } 
-	 EOF 
-;
-
-// Rule StateScope
-ruleStateScope returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getStateScopeAccess().getSimpleScopeAction_0(),
-            $current);
-    }
-)(
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsVariableDeclarationParserRuleCall_1_0_0()); 
-	    }
-		lv_declarations_1_1=ruleVariableDeclaration		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
-	        }
-       		add(
-       			$current, 
-       			"declarations",
-        		lv_declarations_1_1, 
-        		"VariableDeclaration");
-	        afterParserOrEnumRuleCall();
-	    }
-
-    |		{ 
-	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsSignalDeclarationParserRuleCall_1_0_1()); 
-	    }
-		lv_declarations_1_2=ruleSignalDeclaration		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
-	        }
-       		add(
-       			$current, 
-       			"declarations",
-        		lv_declarations_1_2, 
-        		"SignalDeclaration");
-	        afterParserOrEnumRuleCall();
-	    }
-
-    |		{ 
-	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsOperationDeclarationParserRuleCall_1_0_2()); 
-	    }
-		lv_declarations_1_3=ruleOperationDeclaration		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
-	        }
-       		add(
-       			$current, 
-       			"declarations",
-        		lv_declarations_1_3, 
-        		"OperationDeclaration");
-	        afterParserOrEnumRuleCall();
-	    }
-
-    |		{ 
-	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsLocalReactionParserRuleCall_1_0_3()); 
-	    }
-		lv_declarations_1_4=ruleLocalReaction		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
-	        }
-       		add(
-       			$current, 
-       			"declarations",
-        		lv_declarations_1_4, 
-        		"LocalReaction");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-
-)
-)*)
-;
-
-
-
-
-
-// Entry rule entryRuleSignalDeclaration
-entryRuleSignalDeclaration returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getSignalDeclarationRule()); }
-	 iv_ruleSignalDeclaration=ruleSignalDeclaration 
-	 { $current=$iv_ruleSignalDeclaration.current; } 
-	 EOF 
-;
-
-// Rule SignalDeclaration
-ruleSignalDeclaration returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-
-    { 
-        newCompositeNode(grammarAccess.getSignalDeclarationAccess().getSignalDefinitionParserRuleCall()); 
-    }
-    this_SignalDefinition_0=ruleSignalDefinition
-    { 
-        $current = $this_SignalDefinition_0.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-;
-
 
 
 
@@ -423,6 +300,129 @@ ruleVariableDefinition returns [EObject current=null]
 
 
 
+// Entry rule entryRuleStateScope
+entryRuleStateScope returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getStateScopeRule()); }
+	 iv_ruleStateScope=ruleStateScope 
+	 { $current=$iv_ruleStateScope.current; } 
+	 EOF 
+;
+
+// Rule StateScope
+ruleStateScope returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getStateScopeAccess().getSimpleScopeAction_0(),
+            $current);
+    }
+)(
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsVariableDeclarationParserRuleCall_1_0_0()); 
+	    }
+		lv_declarations_1_1=ruleVariableDeclaration		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
+	        }
+       		add(
+       			$current, 
+       			"declarations",
+        		lv_declarations_1_1, 
+        		"VariableDeclaration");
+	        afterParserOrEnumRuleCall();
+	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsSignalDeclarationParserRuleCall_1_0_1()); 
+	    }
+		lv_declarations_1_2=ruleSignalDeclaration		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
+	        }
+       		add(
+       			$current, 
+       			"declarations",
+        		lv_declarations_1_2, 
+        		"SignalDeclaration");
+	        afterParserOrEnumRuleCall();
+	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsOperationDeclarationParserRuleCall_1_0_2()); 
+	    }
+		lv_declarations_1_3=ruleOperationDeclaration		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
+	        }
+       		add(
+       			$current, 
+       			"declarations",
+        		lv_declarations_1_3, 
+        		"OperationDeclaration");
+	        afterParserOrEnumRuleCall();
+	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsLocalReactionParserRuleCall_1_0_3()); 
+	    }
+		lv_declarations_1_4=ruleLocalReaction		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
+	        }
+       		add(
+       			$current, 
+       			"declarations",
+        		lv_declarations_1_4, 
+        		"LocalReaction");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+
+)
+)*)
+;
+
+
+
+
+
+// Entry rule entryRuleSignalDeclaration
+entryRuleSignalDeclaration returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getSignalDeclarationRule()); }
+	 iv_ruleSignalDeclaration=ruleSignalDeclaration 
+	 { $current=$iv_ruleSignalDeclaration.current; } 
+	 EOF 
+;
+
+// Rule SignalDeclaration
+ruleSignalDeclaration returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+
+    { 
+        newCompositeNode(grammarAccess.getSignalDeclarationAccess().getSignalDefinitionParserRuleCall()); 
+    }
+    this_SignalDefinition_0=ruleSignalDefinition
+    { 
+        $current = $this_SignalDefinition_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+;
+
+
+
+
+
 // Entry rule entryRuleLocalReaction
 entryRuleLocalReaction returns [EObject current=null] 
 	:
@@ -599,83 +599,23 @@ ruleLocalReactionTrigger returns [EObject current=null]
     }
 (
 (
-		lv_isImmediate_3_0=	'#' 
-    {
-        newLeafNode(lv_isImmediate_3_0, grammarAccess.getLocalReactionTriggerAccess().getIsImmediateNumberSignKeyword_2_1_0());
-    }
- 
-	    {
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLocalReactionTriggerRule());
-	        }
-       		setWithLastConsumed($current, "isImmediate", true, "#");
-	    }
-
-)
-)?(
-(
-		lv_delay_4_0=RULE_INT
-		{
-			newLeafNode(lv_delay_4_0, grammarAccess.getLocalReactionTriggerAccess().getDelayINTTerminalRuleCall_2_2_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLocalReactionTriggerRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"delay",
-        		lv_delay_4_0, 
-        		"INT");
-	    }
-
-)
-)?((
-(
 		{ 
-	        newCompositeNode(grammarAccess.getLocalReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_2_3_0_0()); 
+	        newCompositeNode(grammarAccess.getLocalReactionTriggerAccess().getReactionTriggerReactionTriggerParserRuleCall_2_1_0()); 
 	    }
-		lv_trigger_5_0=ruleRegularEventSpec		{
+		lv_reactionTrigger_3_0=ruleReactionTrigger		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLocalReactionTriggerRule());
 	        }
        		set(
        			$current, 
-       			"trigger",
-        		lv_trigger_5_0, 
-        		"RegularEventSpec");
+       			"reactionTrigger",
+        		lv_reactionTrigger_3_0, 
+        		"ReactionTrigger");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)
-    |(	otherlv_6='[' 
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getLocalReactionTriggerAccess().getLeftSquareBracketKeyword_2_3_1_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLocalReactionTriggerAccess().getGuardExpressionExpressionParserRuleCall_2_3_1_1_0()); 
-	    }
-		lv_guardExpression_7_0=ruleExpression		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLocalReactionTriggerRule());
-	        }
-       		set(
-       			$current, 
-       			"guardExpression",
-        		lv_guardExpression_7_0, 
-        		"Expression");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)	otherlv_8=']' 
-    {
-    	newLeafNode(otherlv_8, grammarAccess.getLocalReactionTriggerAccess().getRightSquareBracketKeyword_2_3_1_2());
-    }
-))?)?)
+)?)?)
 ;
 
 
@@ -1059,6 +999,16 @@ rulePrimaryExpression returns [EObject current=null]
     this_ParenthesizedExpression_4=ruleParenthesizedExpression
     { 
         $current = $this_ParenthesizedExpression_4.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getEventValueReferenceExpressionParserRuleCall_5()); 
+    }
+    this_EventValueReferenceExpression_5=ruleEventValueReferenceExpression
+    { 
+        $current = $this_EventValueReferenceExpression_5.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -3992,6 +3942,61 @@ ruleElementReferenceExpression returns [EObject current=null]
 
 
 
+// Entry rule entryRuleEventValueReferenceExpression
+entryRuleEventValueReferenceExpression returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getEventValueReferenceExpressionRule()); }
+	 iv_ruleEventValueReferenceExpression=ruleEventValueReferenceExpression 
+	 { $current=$iv_ruleEventValueReferenceExpression.current; } 
+	 EOF 
+;
+
+// Rule EventValueReferenceExpression
+ruleEventValueReferenceExpression returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getEventValueReferenceExpressionAccess().getEventValueReferenceExpressionAction_0(),
+            $current);
+    }
+)	otherlv_1='valueof' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getEventValueReferenceExpressionAccess().getValueofKeyword_1());
+    }
+	otherlv_2='(' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getEventValueReferenceExpressionAccess().getLeftParenthesisKeyword_2());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getEventValueReferenceExpressionAccess().getValueFeatureCallParserRuleCall_3_0()); 
+	    }
+		lv_value_3_0=ruleFeatureCall		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEventValueReferenceExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"value",
+        		lv_value_3_0, 
+        		"FeatureCall");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_4=')' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getEventValueReferenceExpressionAccess().getRightParenthesisKeyword_4());
+    }
+)
+;
+
+
+
 
 
 // Entry rule entryRuleActiveStateReferenceExpression
@@ -4448,8 +4453,6 @@ ruleCombineOperator returns [Enumerator current=null]
         newLeafNode(enumLiteral_7, grammarAccess.getCombineOperatorAccess().getHOSTEnumLiteralDeclaration_7()); 
     }
 ));
-
-
 
 
 

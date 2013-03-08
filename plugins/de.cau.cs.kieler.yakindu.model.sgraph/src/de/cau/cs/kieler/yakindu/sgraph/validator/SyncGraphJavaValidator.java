@@ -44,7 +44,7 @@ public class SyncGraphJavaValidator extends SGraphJavaValidator {
 			+ "termination has to contain at least one final state in every parallel region.";
 	private static final String NORMAL_TERMINATION_SIMPLESTATE = "Simple states may not have a normal termination transition";
 	private static final String STRONGABORT_ON_SIMPLESTATE = "Strong aborts on simple states don't make sense.";
-	private static final String INTER_LEVEL_TRANSITIONS = "Inter-level transitions are not forbiden!\nOnly"
+	private static final String INTER_LEVEL_TRANSITIONS = "Inter-level transitions are not forbidden!\nOnly"
 			+ " use transitions between states in the same region!\nYou"
 			+ " can use final states and normal termination transitions to emulate inter-level transition behavior.";
 	private static final String ISSUE_CHOICE_MORE_INCOMING_TRANSITIONS = "At least one of the transitions will never be taken.";

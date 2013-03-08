@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp;
 
+import de.cau.cs.kieler.yakindu.model.stext.synctext.CombineOperator;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +23,7 @@ package de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp;
  * @model
  * @generated
  */
-public interface VariableDefinition extends org.yakindu.sct.model.stext.stext.VariableDefinition
+public interface VariableDefinition extends de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition
 {
   /**
    * Returns the value of the '<em><b>Is Input</b></em>' attribute.
@@ -104,7 +105,7 @@ public interface VariableDefinition extends org.yakindu.sct.model.stext.stext.Va
 
   /**
    * Returns the value of the '<em><b>Var Combine Operator</b></em>' attribute.
-   * The literals are from the enumeration {@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.CombineOperator}.
+   * The literals are from the enumeration {@link de.cau.cs.kieler.yakindu.model.stext.synctext.CombineOperator}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Var Combine Operator</em>' attribute isn't clear,
@@ -112,7 +113,7 @@ public interface VariableDefinition extends org.yakindu.sct.model.stext.stext.Va
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Var Combine Operator</em>' attribute.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.CombineOperator
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.CombineOperator
    * @see #setVarCombineOperator(CombineOperator)
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage#getVariableDefinition_VarCombineOperator()
    * @model
@@ -125,7 +126,7 @@ public interface VariableDefinition extends org.yakindu.sct.model.stext.stext.Va
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Var Combine Operator</em>' attribute.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.CombineOperator
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.CombineOperator
    * @see #getVarCombineOperator()
    * @generated
    */

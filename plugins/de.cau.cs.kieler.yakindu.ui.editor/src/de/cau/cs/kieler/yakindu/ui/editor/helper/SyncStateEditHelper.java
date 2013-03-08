@@ -10,7 +10,7 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
 import org.yakindu.sct.ui.editor.edithelper.StateEditHelper;
 
 import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
-import de.cau.cs.kieler.yakindu.ui.editor.factory.KielerMetaModelTypeFactory;
+import de.cau.cs.kieler.yakindu.ui.editor.factory.SyncMetaModelTypeFactory;
 
 public class SyncStateEditHelper extends StateEditHelper {
 	@Override
@@ -20,9 +20,9 @@ public class SyncStateEditHelper extends StateEditHelper {
 
 		ElementTypeRegistry registry = ElementTypeRegistry.getInstance();
 		IElementType initialState = registry
-				.getType(KielerMetaModelTypeFactory.SYNC_INITIAL_STATE_ID);
+				.getType(SyncMetaModelTypeFactory.SYNC_INITIAL_STATE_ID);
 		IElementType finalState = registry
-				.getType(KielerMetaModelTypeFactory.SYNC_FINAL_STATE_ID);
+				.getType(SyncMetaModelTypeFactory.SYNC_FINAL_STATE_ID);
 
 		if (initialState.equals(req.getTypeToConfigure())) {
 			result.add(new SetValueCommand(new SetRequest(req
@@ -35,4 +35,5 @@ public class SyncStateEditHelper extends StateEditHelper {
 		}
 		return result;
 	}
+	
 }

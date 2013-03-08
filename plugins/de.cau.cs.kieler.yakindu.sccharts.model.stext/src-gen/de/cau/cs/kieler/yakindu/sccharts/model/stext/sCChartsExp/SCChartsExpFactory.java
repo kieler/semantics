@@ -23,15 +23,6 @@ public interface SCChartsExpFactory extends EFactory
   SCChartsExpFactory eINSTANCE = de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>State Scope</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>State Scope</em>'.
-   * @generated
-   */
-  StateScope createStateScope();
-
-  /**
    * Returns a new object of class '<em>Signal Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -50,60 +41,6 @@ public interface SCChartsExpFactory extends EFactory
   VariableDefinition createVariableDefinition();
 
   /**
-   * Returns a new object of class '<em>Local Reaction</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Local Reaction</em>'.
-   * @generated
-   */
-  LocalReaction createLocalReaction();
-
-  /**
-   * Returns a new object of class '<em>State Reaction</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>State Reaction</em>'.
-   * @generated
-   */
-  StateReaction createStateReaction();
-
-  /**
-   * Returns a new object of class '<em>Entry</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Entry</em>'.
-   * @generated
-   */
-  Entry createEntry();
-
-  /**
-   * Returns a new object of class '<em>Inside</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Inside</em>'.
-   * @generated
-   */
-  Inside createInside();
-
-  /**
-   * Returns a new object of class '<em>Exit</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Exit</em>'.
-   * @generated
-   */
-  Exit createExit();
-
-  /**
-   * Returns a new object of class '<em>Simple Scope</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Simple Scope</em>'.
-   * @generated
-   */
-  SimpleScope createSimpleScope();
-
-  /**
    * Returns a new object of class '<em>Event Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -111,42 +48,6 @@ public interface SCChartsExpFactory extends EFactory
    * @generated
    */
   EventDefinition createEventDefinition();
-
-  /**
-   * Returns a new object of class '<em>Suspend Effect</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Suspend Effect</em>'.
-   * @generated
-   */
-  SuspendEffect createSuspendEffect();
-
-  /**
-   * Returns a new object of class '<em>Reaction Trigger</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Reaction Trigger</em>'.
-   * @generated
-   */
-  ReactionTrigger createReactionTrigger();
-
-  /**
-   * Returns a new object of class '<em>Reaction Effect</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Reaction Effect</em>'.
-   * @generated
-   */
-  ReactionEffect createReactionEffect();
-
-  /**
-   * Returns a new object of class '<em>Pre Value Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Pre Value Expression</em>'.
-   * @generated
-   */
-  PreValueExpression createPreValueExpression();
 
   /**
    * Returns the package supported by this factory.

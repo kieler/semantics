@@ -43,7 +43,7 @@
     <extension
          point="org.eclipse.gmf.runtime.diagram.ui.paletteProviders">
       <paletteProvider
-            class="de.cau.cs.kieler.yakindu.ui.editor.factory.KielerPaletteFactory:org.yakindu.sct.ui.editor.providers.SCTPaletteProvider">
+            class="de.cau.cs.kieler.yakindu.synccharts.ui.editor.factory.SyncChartsExecutableExtensionFactory:org.yakindu.sct.ui.editor.providers.SCTPaletteProvider">
              <Priority
                name="Highest">
          </Priority>
@@ -164,7 +164,7 @@
    <extension
          point="org.eclipse.gmf.runtime.emf.ui.modelingAssistantProviders">
       <modelingAssistantProvider
-            class="de.cau.cs.kieler.yakindu.synccharts.ui.editor.factory.SyncChartsExecutableExtensionFactory:de.cau.cs.kieler.yakindu.ui.editor.assistent.KielerModelingAssistantProvider">
+            class="de.cau.cs.kieler.yakindu.synccharts.ui.editor.factory.SyncChartsExecutableExtensionFactory:de.cau.cs.kieler.yakindu.synccharts.ui.editor.assistent.SyncChartsModelingAssistantProvider">
          <Priority
                name="Medium">
          </Priority>
@@ -172,7 +172,6 @@
    </extension>
    
 
-   
    <!-- EditPart Provider -->
    <extension
          point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders">
@@ -184,7 +183,74 @@
       </editpartProvider>
    </extension>
     
+    
+    
+    <!-- Layout options -->
+    <extension
+         point="de.cau.cs.kieler.kiml.layoutInfo">
+      <option
+            class="org.yakindu.sct.model.sgraph.Region"
+            option="de.cau.cs.kieler.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.stateMachine">
+      </option>
+      <option
+            class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
+            option="de.cau.cs.kieler.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.boxes">
+      </option>
+      <option
+            class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
+            option="de.cau.cs.kieler.spacing"
+            value="1.0">
+      </option>
+      <option
+            class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
+            option="de.cau.cs.kieler.borderSpacing"
+            value="1.0">
+      </option>
+      <option
+            class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
+            option="de.cau.cs.kieler.sizeConstraint"
+            value="[MINIMUM_SIZE, DEFAULT_MINIMUM_SIZE]">
+      </option>
+      <option
+            class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
+            option="de.cau.cs.kieler.expandNodes"
+            value="true">
+      </option>
+      <option
+            class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
+            option="de.cau.cs.kieler.interactive"
+            value="true">
+      </option>
+      <option
+            class="org.yakindu.sct.model.sgraph.Region"
+            option="de.cau.cs.kieler.borderSpacing"
+            value="5.0">
+      </option>
+      <option
+            class="org.yakindu.sct.model.sgraph.Region"
+            option="de.cau.cs.kieler.direction"
+            value="RIGHT">
+      </option>
+      <semanticOption
+            class="org.yakindu.sct.model.sgraph.Scope"
+            config="de.cau.cs.kieler.synccharts.diagram.custom.HVLayoutConfig">
+      </semanticOption>
+      <semanticOption
+            class="org.yakindu.sct.model.sgraph.Reaction"
+            config="de.cau.cs.kieler.synccharts.diagram.custom.ActionLayoutConfig">
+      </semanticOption>
+      <semanticOption
+            class="org.yakindu.sct.model.sgraph.Scope"
+            config="de.cau.cs.kieler.synccharts.diagram.custom.AnnotationsLayoutConfig">
+      </semanticOption>
+      <semanticOption
+            class="org.yakindu.sct.model.sgraph.Reaction"
+            config="de.cau.cs.kieler.synccharts.diagram.custom.AnnotationsLayoutConfig">
+      </semanticOption>
+   </extension>
 </plugin>
+    
 
 	
-

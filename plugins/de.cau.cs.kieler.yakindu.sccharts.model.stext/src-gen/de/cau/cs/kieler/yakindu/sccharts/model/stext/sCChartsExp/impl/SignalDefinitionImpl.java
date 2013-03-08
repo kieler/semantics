@@ -7,8 +7,6 @@ import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SignalDefinitio
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.yakindu.sct.model.sgraph.impl.EventImpl;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Signal Definition</b></em>'.
@@ -18,7 +16,7 @@ import org.yakindu.sct.model.sgraph.impl.EventImpl;
  *
  * @generated
  */
-public class SignalDefinitionImpl extends EventImpl implements SignalDefinition
+public class SignalDefinitionImpl extends de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SignalDefinitionImpl implements SignalDefinition
 {
   /**
    * <!-- begin-user-doc -->

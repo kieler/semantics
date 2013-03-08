@@ -6,25 +6,9 @@
     modelName="SCChartsExp" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.yakindu.sccharts.model.stext.edit"
     editorPluginID="de.cau.cs.kieler.yakindu.sccharts.model.stext.editor" runtimeVersion="2.9"
-    usedGenPackages="../../../../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../../../../org.yakindu.base.types/model/types.genmodel#//types ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
+    usedGenPackages="../../../../../../../../../../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/Synctext.genmodel#//synctext ../../../../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../../../../org.yakindu.base.types/model/types.genmodel#//types ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
   <genPackages prefix="SCChartsExp" basePackage="de.cau.cs.kieler.yakindu.sccharts.model.stext"
       disposableProviderFactory="true" ecorePackage="SCChartsExp.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SCChartsExp.ecore#//CombineOperator">
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//CombineOperator/NONE"/>
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//CombineOperator/ADD"/>
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//CombineOperator/MULT"/>
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//CombineOperator/MAX"/>
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//CombineOperator/MIN"/>
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//CombineOperator/OR"/>
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//CombineOperator/AND"/>
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//CombineOperator/HOST"/>
-    </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SCChartsExp.ecore#//VarDirection">
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//VarDirection/INOUT"/>
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//VarDirection/IN"/>
-      <genEnumLiterals ecoreEnumLiteral="SCChartsExp.ecore#//VarDirection/OUT"/>
-    </genEnums>
-    <genClasses ecoreClass="SCChartsExp.ecore#//StateScope"/>
     <genClasses ecoreClass="SCChartsExp.ecore#//SignalDefinition"/>
     <genClasses ecoreClass="SCChartsExp.ecore#//VariableDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isInput"/>
@@ -32,29 +16,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isStatic"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/varCombineOperator"/>
     </genClasses>
-    <genClasses ecoreClass="SCChartsExp.ecore#//LocalReaction"/>
-    <genClasses ecoreClass="SCChartsExp.ecore#//StateReaction"/>
-    <genClasses ecoreClass="SCChartsExp.ecore#//Entry"/>
-    <genClasses ecoreClass="SCChartsExp.ecore#//Inside"/>
-    <genClasses ecoreClass="SCChartsExp.ecore#//Exit"/>
-    <genClasses ecoreClass="SCChartsExp.ecore#//SimpleScope"/>
     <genClasses ecoreClass="SCChartsExp.ecore#//EventDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//EventDefinition/isInput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//EventDefinition/isOutput"/>
-    </genClasses>
-    <genClasses ecoreClass="SCChartsExp.ecore#//SuspendEffect"/>
-    <genClasses ecoreClass="SCChartsExp.ecore#//ReactionTrigger">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionTrigger/stateReaction"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//ReactionTrigger/isImmediate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//ReactionTrigger/delay"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionTrigger/trigger"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionTrigger/guardExpression"/>
-    </genClasses>
-    <genClasses ecoreClass="SCChartsExp.ecore#//ReactionEffect">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//ReactionEffect/actions"/>
-    </genClasses>
-    <genClasses ecoreClass="SCChartsExp.ecore#//PreValueExpression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCChartsExp.ecore#//PreValueExpression/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

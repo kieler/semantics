@@ -13,7 +13,7 @@ import org.yakindu.sct.ui.editor.edithelper.TransitionEditHelper;
 
 import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
 import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType;
-import de.cau.cs.kieler.yakindu.ui.editor.factory.KielerMetaModelTypeFactory;
+import de.cau.cs.kieler.yakindu.ui.editor.factory.SyncMetaModelTypeFactory;
 
 public class SyncTransitionEditHelper extends TransitionEditHelper {
 
@@ -28,11 +28,11 @@ public class SyncTransitionEditHelper extends TransitionEditHelper {
 
 		ElementTypeRegistry registry = ElementTypeRegistry.getInstance();
 		IElementType normalTransition = registry
-				.getType(KielerMetaModelTypeFactory.NORMAL_TRANSITION_ID);
+				.getType(SyncMetaModelTypeFactory.NORMAL_TRANSITION_ID);
 		IElementType weakTransition = registry
-				.getType(KielerMetaModelTypeFactory.WEAK_TRANSITION_ID);
+				.getType(SyncMetaModelTypeFactory.WEAK_TRANSITION_ID);
 		IElementType strongTransition = registry
-				.getType(KielerMetaModelTypeFactory.STRONG_TRANSITION_ID);
+				.getType(SyncMetaModelTypeFactory.STRONG_TRANSITION_ID);
 
 		if (normalTransition.equals(req.getTypeToConfigure())) {
 			result.add(new SetValueCommand(

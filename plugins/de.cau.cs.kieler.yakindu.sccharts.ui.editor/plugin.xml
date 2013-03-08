@@ -13,7 +13,7 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerExecutableExtensionFactory:org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor"
+            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.SCCExecutableExtensionFactory:org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor"
             contributorClass="org.yakindu.sct.ui.editor.editor.StatechartDiagramActionbarContributor"
             default="true"
             extensions="scc"
@@ -31,7 +31,7 @@
      <category id="KIELER" name="KIELER"/>
       <wizard
             category="KIELER"
-            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerExecutableExtensionFactory:org.yakindu.sct.ui.editor.wizards.CreationWizard"
+            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.SCCExecutableExtensionFactory:org.yakindu.sct.ui.editor.wizards.CreationWizard"
             icon="icons/obj16/SyncCharts-Pictogram-16.png"
             id="de.cau.cs.kieler.yakindu.sccharts.ui.editor.KielerWizard"
             name="KIELER SCCharts Model"
@@ -43,7 +43,7 @@
     <extension
          point="org.eclipse.gmf.runtime.diagram.ui.paletteProviders">
       <paletteProvider
-            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerExecutableExtensionFactory:org.yakindu.sct.ui.editor.providers.SCTPaletteProvider">
+            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.SCCExecutableExtensionFactory:org.yakindu.sct.ui.editor.providers.SCTPaletteProvider">
              <Priority
                name="Highest">
          </Priority>
@@ -106,8 +106,8 @@
          <propertySection
             id="property.section.domain.state" 
             tab="property.tab.domain"
-            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.propertysheets.SyncStatePropertySection">
-           <input type="de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts.SyncStateEditPart"/>
+            class="de.cau.cs.kieler.yakindu.ui.editor.propertysheets.SyncStatePropertySection">
+           <input type="de.cau.cs.kieler.yakindu.ui.editor.parts.SyncStateEditPart"/>
            <input type="org.yakindu.sct.ui.editor.editparts.StateNameEditPart"/>
            <input type="org.yakindu.sct.ui.editor.editparts.StateTextCompartmentEditPart"/>
            <input type="org.yakindu.sct.ui.editor.editparts.StateTextCompartmentExpressionEditPart"/>
@@ -116,8 +116,8 @@
          <propertySection
             id="property.section.domain.transition" 
             tab="property.tab.domain"
-            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.propertysheets.SyncTransitionPropertySection">
-            <input type="de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts.SyncTransitionEditPart"/>
+            class="de.cau.cs.kieler.yakindu.ui.editor.propertysheets.SyncTransitionPropertySection">
+            <input type="de.cau.cs.kieler.yakindu.ui.editor.parts.SyncTransitionEditPart"/>
             <input type="org.yakindu.sct.ui.editor.editparts.TransitionExpressionEditPart"/>
          </propertySection>
             <!-- Region model section -->         
@@ -165,7 +165,7 @@
    <extension
          point="org.eclipse.gmf.runtime.emf.ui.modelingAssistantProviders">
       <modelingAssistantProvider
-            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerExecutableExtensionFactory:de.cau.cs.kieler.yakindu.sccharts.ui.editor.assistent.KielerModelingAssistantProvider">
+            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.SCCExecutableExtensionFactory:de.cau.cs.kieler.yakindu.sccharts.ui.editor.assistent.SCCModelingAssistantProvider">
          <Priority
                name="Medium">
          </Priority>
@@ -178,14 +178,15 @@
    <extension
          point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders">
       <editpartProvider
-            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.KielerExecutableExtensionFactory:org.yakindu.sct.ui.editor.editor.guice.InjectableEditPartFactory">
+            class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.factory.SCCExecutableExtensionFactory:org.yakindu.sct.ui.editor.editor.guice.InjectableEditPartFactory">
          <Priority
                name="High">
          </Priority>
       </editpartProvider>
    </extension>
-    
-    
+   
+   
+    <!-- Layout options -->
     <extension
          point="de.cau.cs.kieler.kiml.layoutInfo">
       <option

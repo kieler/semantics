@@ -1,23 +1,14 @@
 grammar de.cau.cs.kieler.yakindu.sccharts.model.stext.SCChartsExp
-with org.yakindu.sct.model.stext.SText
+with de.cau.cs.kieler.yakindu.model.stext.Synctext
 
 generate sCChartsExp "http://kieler.cs.cau.de/yakindu/sccharts/stext/"
 
+import "http://kieler.cs.cau.de/yakindu/stext/" as synctext
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://www.yakindu.org/sct/statechart/SText" as stext
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 
-/*********************************** INTERFACE DECLARATION **************************************** */
-////defines the possible scopes for a state
-StateScope:
-	{SimpleScope} declarations+=(VariableDeclaration | SignalDeclaration| OperationDeclaration | LocalReaction)*;
-
-/************************************************/
-/*			 Signal Definition				*/
-/************************************************/
-SignalDeclaration returns sgraph::Event:
-	SignalDefinition;
 
 SignalDefinition:
 	{EventDefinition} (isInput?='input')? (isOutput?='output')? 'signal' name=ID ';';
@@ -31,65 +22,3 @@ SignalDefinition:
 VariableDefinition:
 	{VariableDefinition} (isInput?='input')? (isOutput?='output')? (isStatic?='static')? type=[types::Type|FQN] name=ID
 	('=' initialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';
-
-/************************************************/
-/*			 	LocalReactionScope					*/
-/************************************************/
-LocalReaction:
-	(trigger=(LocalReactionTrigger | ReactionTrigger))? ('/' effect=(ReactionEffect | SuspendEffect)) ';';
-
-SuspendEffect returns sgraph::Effect:
-	{SuspendEffect} 'Suspend';
-
-LocalReactionTrigger returns sgraph::Trigger:
-	{ReactionTrigger} stateReaction=StateReaction ('&&' (isImmediate?='#')? (delay=INT)? ((trigger=RegularEventSpec)
-	| ('[' guardExpression=Expression ']'))?)?;
-
-StateReaction:
-	Entry | Inside | Exit;
-
-Entry:
-	{Entry} 'Entry';
-
-Inside:
-	{Inside} 'During';
-
-Exit:
-	{Exit} 'Exit';
-
-/******************************************** TRANSITION ***************************************** */
-// The ReactionTrigger is a Trigger and has an Expression, 
-// an optional delay and isImmediate option represented with a '#'
-ReactionTrigger returns sgraph::Trigger:
-	{ReactionTrigger} (isImmediate?='#')? (delay=INT)? ((trigger=RegularEventSpec)
-	| ('[' guardExpression=Expression ']'));
-
-	// The ReactionEffect is an Effect. 
-ReactionEffect returns sgraph::Effect:
-	{ReactionEffect} actions+=Expression (=> ',' actions+=Expression)*; // (';')?;
-
-/***************************************** Expressions ******************************************* */
-// Override the stext::PrimaryExpression
-// remove the ActiveStateReferenceExpression and the EventValueReferenceExpression
-// and add PreValueExpressionreturns that returns the value of a variable in the previous tick. 
-PrimaryExpression returns stext::Expression:
-	PrimitiveValueExpression
-	| FeatureCall
-	| ActiveStateReferenceExpression
-	| PreValueExpression
-	| ParenthesizedExpression
-//	| EventValueReferenceExpression
-	//	| '(' Expression ')'
-;
-
-//todo: pre(x) should return the same type of x
-PreValueExpression returns stext::Expression:
-	{PreValueExpression} 'pre' '(' value=FeatureCall ')';
-
-/***************************************** COMBINE OPERATORS ************************************* */
-enum CombineOperator returns CombineOperator:
-	NONE="'none'" | ADD="'+'" | MULT="'*'" | MAX="'max'" |
-	MIN="'min'" | OR="'or'" | AND="'and'" | HOST="'host'";
-
-enum VarDirection:
-	INOUT='inputoutput' | IN='input' | OUT='output';
