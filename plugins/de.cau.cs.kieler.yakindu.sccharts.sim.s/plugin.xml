@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.category"
+            name="SCCharts">
+      </category>
+      <command
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.category"
+            id="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCChartsTransformation"
+            name="SCChartsTransformation">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.yakindu.sccharts.sim.s.ui.SCChartsCommandHandler"
+            commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCChartsTransformation">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCChartsTransformation"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+6">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="de.cau.cs.kieler.yakindu.sccharts.sim.s.menus.SCCharts"
+               label="SCCharts"
+               mnemonic="M">
+            <command
+                  commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCChartsTransformation"
+                  id="Transform SCChart"
+                  mnemonic="S">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCChartsTransformation">
+            <command
+                  commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCChartsTransformation"
+                  icon="icons/sample.gif"
+                  id="Transform SCChart"
+                  tooltip="Say hello world">
+            </command>
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.sim.s.transformations">
+         <command
+               commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCChartsTransformation"
+               label="Test Transformation"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="de.cau.cs.kieler.yakindu.sccharts.sim.s.transformations"
+               label="Transform SCCharts"
+               mnemonic="T">
+            <separator
+                  name="de.cau.cs.kieler.core.ui.separator1"
+                  visible="true">
+            </separator>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>
