@@ -54,7 +54,7 @@ public class InstructionsDataLabelProvider implements ITableLabelProvider {
         case COLUMN_2: // LABEL_COLUMN
             return instructionsData.getLabel();
         case COLUMN_3: // PRIO_COLUMN
-            return new Integer(instructionsData.getPrio()).toString();
+            return instructionsData.getPrio();
         default:
             throw new IndexOutOfBoundsException("columnIndex out of bounds (3)");
         }

@@ -10,7 +10,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  de.cau.cs.kieler.sim.kiem.config,
- org.eclipse.xtend2.lib;bundle-version="2.2.1",
  de.cau.cs.kieler.s,
  de.cau.cs.kieler.core.kexpressions,
  org.eclipse.emf;bundle-version="2.6.0",
@@ -20,7 +19,7 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.annotations,
  de.cau.cs.kieler.s.sc,
  de.cau.cs.kieler.sc,
- org.eclipse.xtend.util.stdlib;bundle-version="1.2.0"
+ de.cau.cs.kieler.s.sim;bundle-version="0.1.0";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.s.sim.sc

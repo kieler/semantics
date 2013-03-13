@@ -30,7 +30,7 @@ import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
-import de.cau.cs.kieler.s.sim.sc.SSCSimulationDataComponent;
+import de.cau.cs.kieler.s.sim.sc.SSCSimDataComponent;
 import de.cau.cs.kieler.sc.SCExecution;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -84,7 +84,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
-    private SSCSimulationDataComponent sSCSimDataComponent = new SSCSimulationDataComponent();
+    private SSCSimDataComponent sSCSimDataComponent = new SSCSimDataComponent();
 
     // -------------------------------------------------------------------------
 

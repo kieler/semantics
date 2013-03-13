@@ -97,6 +97,7 @@ public class S2SCPlugin extends AbstractUIPlugin {
 
         // Calculate/Estimate the buffer size
         String bufferSize = estimateBufferSize(program);
+        String outputFile2 = outputFile;
         
         String ccode;
         if (alternativeSyntax) {
@@ -111,7 +112,7 @@ public class S2SCPlugin extends AbstractUIPlugin {
         }
 
         // Write out c program
-        FileWriter fileWriter = new FileWriter(outputFile);
+        FileWriter fileWriter = new FileWriter(outputFile2);
         if (fileWriter != null) {
             BufferedWriter out = new BufferedWriter(fileWriter);
             if (out != null) {
@@ -160,4 +161,5 @@ public class S2SCPlugin extends AbstractUIPlugin {
         return plugin;
     }
 
+    // -----------------------------------------------------------------------------
 }
