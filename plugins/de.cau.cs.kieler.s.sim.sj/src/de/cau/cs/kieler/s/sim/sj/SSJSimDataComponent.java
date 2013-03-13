@@ -42,8 +42,9 @@ import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sim.SSimPlugin;
+import de.cau.cs.kieler.s.sj.S2SJPlugin;
 import de.cau.cs.kieler.s.sim.xtend.S2Simulation;
-import de.cau.cs.kieler.sc.SCExecution;
+import de.cau.cs.kieler.sjl.SJExecution;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -53,7 +54,6 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
-// TODO: Auto-generated Javadoc
 /**
  * The SimulationDataComponent for simulating S code with and without visualization.
  * 
@@ -70,8 +70,8 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
     /** The S program is the considered model to simulate. */
     private Program myModel = null;
 
-    /** The SC execution object for concurrent execution. */
-    private SCExecution scExecution = null;
+    /** The SJ execution object for concurrent execution. */
+    private SJExecution sjExecution = null;
 
     /** The list of output signals including the ones used for the visualization. */
     private LinkedList<String> outputSignalList = null;
@@ -187,8 +187,8 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
      * 
      * @return the sC execution
      */
-    public SCExecution getSCExecution() {
-        return scExecution;
+    public SJExecution getSJExecution() {
+        return sjExecution;
     }
 
     // -------------------------------------------------------------------------
@@ -204,25 +204,25 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
         String activeStatements = "";
         StringBuffer activeStatementsBuf = new StringBuffer();
 
-        if (scExecution == null || !scExecution.isStarted()) {
+        if (sjExecution == null || !sjExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
             String out = jSONObject.toString();
-            scExecution.getInterfaceToExecution().write(out + "\n");
-            scExecution.getInterfaceToExecution().flush();
-            while (scExecution.getInterfaceError().ready()) {
+            sjExecution.getInterfaceToExecution().write(out + "\n");
+            sjExecution.getInterfaceToExecution().flush();
+            while (sjExecution.getInterfaceError().ready()) {
                 // Error output, if any
-                System.out.print(scExecution.getInterfaceError().read());
+                System.out.print(sjExecution.getInterfaceError().read());
             }
 
-            String receivedMessage = scExecution.getInterfaceFromExecution().readLine();
+            String receivedMessage = sjExecution.getInterfaceFromExecution().readLine();
 
             if (debugConsole) {
                 printConsole("==============| TICK " + computedTick++ + " |==============");
                 while (!receivedMessage.startsWith("{\"")) {
                     printConsole(receivedMessage);
-                    receivedMessage = scExecution.getInterfaceFromExecution().readLine();
+                    receivedMessage = sjExecution.getInterfaceFromExecution().readLine();
                 }
                 printConsole("\n");
             }
@@ -244,11 +244,11 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                             // in full_simulation mode of the simulator.
                             //
                             // These auxiliary signals must be encapsulated in a state variable.
-                            if (sSignalOutputName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)
+                            if (sSignalOutputName.startsWith(SSimPlugin.AUXILIARY_VARIABLE_TAG)
                                     && sSignalIsPresent) {
                                 try {
                                     String statementWithoutAuxiliaryVariableTag = sSignalOutputName
-                                            .substring(SSimSCPlugin.AUXILIARY_VARIABLE_TAG.length());
+                                            .substring(SSimPlugin.AUXILIARY_VARIABLE_TAG.length());
 
                                     // Insert a "," if not the first statement
                                     if (activeStatementsBuf.length() != 0) {
@@ -270,16 +270,16 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                 activeStatements = activeStatementsBuf.toString();
 
                 if (this.benchmark) {
-                    if (sSignalOutput.has(SCExecution.BENCHMARK_SIGNAL_CYCLES)) {
-                        Object bench = sSignalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
-
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_SOURCE,
-                                this.scExecution.getSourceFileSize());
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_EXECUTABLE,
-                                this.scExecution.getExecutableFileSize());
-
-                    }
+                    // if (sSignalOutput.has(SJExecution.BENCHMARK_SIGNAL_CYCLES)) {
+                    // Object bench = sSignalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
+                    // returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
+                    //
+                    // returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_SOURCE,
+                    // this.sjExecution.getSourceFileSize());
+                    // returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_EXECUTABLE,
+                    // this.sjExecution.getExecutableFileSize());
+                    //
+                    // }
                 }
 
                 // Then add normal output signals
@@ -319,10 +319,10 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            scExecution.stopExecution(false);
+            sjExecution.stopExecution(false);
         } catch (JSONException e) {
             e.printStackTrace();
-            scExecution.stopExecution(false);
+            sjExecution.stopExecution(false);
         }
 
         return returnObj;
@@ -382,9 +382,9 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
     public void wrapup() throws KiemInitializationException {
         computedTick = 1;
         clearConsole();
-        if (scExecution != null) {
+        if (sjExecution != null) {
             // Do not delete the executable, maybe it can be used again
-            scExecution.stopExecution(false);
+            sjExecution.stopExecution(false);
         }
     }
 
@@ -493,16 +493,14 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder,
-                    alternativeSyntax);
+            S2SJPlugin.generateSJCode(transformedProgram, scOutputString, outputFolder);
 
             // Compile
-            scExecution = new SCExecution(outputFolder, benchmark);
+            sjExecution = new SJExecution(outputFolder, benchmark);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(scOutputString);
-            scExecution.setDebug(debugConsole);
-            scExecution.setScl(scl);
-            scExecution.compile(generatedSCFiles, modelName);
+            sjExecution.setDebug(debugConsole);
+            sjExecution.compile(generatedSCFiles, modelName);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
@@ -524,9 +522,9 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
 
         // start execution of compiled program
-        if (scExecution.isCompiled()) {
+        if (sjExecution.isCompiled()) {
             try {
-                scExecution.startExecution();
+                sjExecution.startExecution();
             } catch (IOException e) {
                 throw new KiemInitializationException(
                         "S program could not be started sucessfully.\n\n", true, e);
@@ -536,7 +534,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     true, null);
         }
 
-        if (!scExecution.isStarted()) {
+        if (!sjExecution.isStarted()) {
             throw new KiemInitializationException(
                     "Error running S program. Compiled simulation does not exist.\n", true, null);
         }
@@ -552,7 +550,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     }
                     if (signal.isIsOutput()) {
                         String signalName = signal.getName();
-                        if (!signalName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
+                        if (!signalName.startsWith(SSimPlugin.AUXILIARY_VARIABLE_TAG)) {
                             res.accumulate(signalName, JSONSignalValues.newValue(false));
                             outputSignalList.add(signalName);
                         }
