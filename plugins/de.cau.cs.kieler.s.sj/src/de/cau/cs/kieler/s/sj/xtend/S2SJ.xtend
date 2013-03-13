@@ -54,7 +54,7 @@ import java.util.List
 class S2SJ { 
     
     // General method to create the c simulation interface.
-    def transform (Program program, String outputFolder, String bufferSize) {
+    def transform (Program program, String outputFolder) {
        '''
 «/* Generate the C header */»
        «sjHeader(outputFolder, program)»

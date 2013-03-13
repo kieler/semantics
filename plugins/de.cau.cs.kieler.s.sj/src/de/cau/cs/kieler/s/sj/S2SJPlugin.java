@@ -104,7 +104,7 @@ public class S2SJPlugin extends AbstractUIPlugin {
         String ccode;
         S2SJ s2SJ = new S2SJ();
         outputFile2.replace(".c", ".java");
-        ccode = s2SJ.transform(program, outputFolder, bufferSize).toString();
+        ccode = s2SJ.transform(program, outputFolder).toString();
 
         // Write out c program
         FileWriter fileWriter = new FileWriter(outputFile2);
