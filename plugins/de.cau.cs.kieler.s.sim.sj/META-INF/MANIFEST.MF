@@ -6,14 +6,14 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.s.sim.sj.SSimSJPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.core.runtime,
- de.cau.cs.kieler.sim.kiem;bundle-version="0.6.1",
- de.cau.cs.kieler.sim.kiem.ui.datacomponent;bundle-version="0.4.1",
+ de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  com.google.inject;bundle-version="3.0.0",
- de.cau.cs.kieler.s.sim;bundle-version="0.1.0",
- de.cau.cs.kieler.core.kexpressions;bundle-version="0.4.1",
- de.cau.cs.kieler.s;bundle-version="0.3.1",
- de.cau.cs.kieler.sim.signals;bundle-version="0.1.1",
- de.cau.cs.kieler.sjl;bundle-version="1.0.0",
- de.cau.cs.kieler.s.sj;bundle-version="0.1.0"
+ de.cau.cs.kieler.s.sim,
+ de.cau.cs.kieler.core.kexpressions,
+ de.cau.cs.kieler.s,
+ de.cau.cs.kieler.sim.signals,
+ de.cau.cs.kieler.sjl,
+ de.cau.cs.kieler.s.sj
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
