@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/s_sj_no_visualization.execution">
+         <editor
+               id="de.cau.cs.kieler.s.S"
+               name="KIELER S Editor"
+               priority="6">
+         </editor>
+      </executionFile>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.s.sim.sj.SSJSimDataComponent"
+            id="de.cau.cs.kieler.s.sim.sj"
+            name="S Simulator (SJ)">
+      </content>
+   </extension>
+
+</plugin>
