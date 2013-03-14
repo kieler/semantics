@@ -17,9 +17,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.LinkedList;
@@ -30,6 +28,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.sim.kiem.util.AbstractExecution;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
@@ -39,7 +38,7 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow cmot
  */
-public class SCExecution {
+public class SCExecution extends AbstractExecution {
 
     /** The Constant COMPILER_DEFAULT. */
     private static final String COMPILER_DEFAULT = "gcc";
@@ -56,143 +55,54 @@ public class SCExecution {
     /** The Constant BENCHMARK_SIGNAL. */
     public static final String BENCHMARK_SIGNAL_EXECUTABLE = "benchExecutable";
 
-    /** The execution process. */
-    private Process executionProcess = null;
-
-    /** The execution interface to sc. */
-    private PrintWriter executionInterfaceToSC;
-
-    /** The execution interface from sc. */
-    private BufferedReader executionInterfaceFromSC;
-
-    /** The execution interface error. */
-    private BufferedReader executionInterfaceError;
-
-    /** The compile error. */
-    private String compileError;
-
-    /** The output path. */
-    private String outputPath;
-
-    /** The compiled. */
-    private boolean compiled;
-
-    /** The started. */
-    private boolean started;
-
-    /** The cyclecount flag. */
-    private boolean cycleCount;
-
-    /** The source file size. */
-    private long sourceFileSize;
-
-    /** The executable file size. */
-    private long executableFileSize;
-
-    /** The accumulated cycles since last reset. */
-    private int cycles;
-
-    /** The compiler. */
-    private String compiler;
-
-    /** The executable name. */
-    private String executableName;
-    
     /** The path for sc. */
     private static final String SC_PATH = "sc";
-    
+
     /** The path to scl. */
-    private static final String SCL_PATH = "scl"; 
+    private static final String SCL_PATH = "scl";
+
+    /** The scl. */
+    private boolean scl;
 
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new SCExecution with a random outputPath.
-     * 
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     */
-    public SCExecution() throws IOException {
-        setCompiler(COMPILER_DEFAULT);
-        setCompiled(false);
-        setStarted(false);
-        cycleCount = false;
-        setOutputPath(KiemUtil.generateRandomTempOutputFolder());
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Instantiates a new SCExecution with a concrete outputPath.
+     * Instantiates a new sC execution.
      * 
      * @param outputPath
      *            the output path
+     * @param cycleCountOrTime
+     *            the cycle count or time
      */
-    public SCExecution(final String outputPath) {
-        setCompiler(COMPILER_DEFAULT);
-        setCompiled(false);
-        setStarted(false);
-        cycleCount = false;
-        setOutputPath(outputPath);
+    public SCExecution(final String outputPath, final boolean cycleCountOrTime) {
+        super(outputPath, cycleCountOrTime);
+
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new SCExecution with a concrete outputPath.
-     * 
-     * @param outputPath
-     *            the output path
-     * @param cycleCount
-     *            the cycle count flag if measuring should be turned on
+     * {@inheritDoc}
      */
-    public SCExecution(final String outputPath, final boolean cycleCount) {
-        setCompiler(COMPILER_DEFAULT);
-        setCompiled(false);
-        setStarted(false);
-        this.cycleCount = cycleCount;
-        setOutputPath(outputPath);
+    @Override
+    public String setCompilerDefault() {
+        return COMPILER_DEFAULT;
     }
 
     // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
 
     /**
-     * Compile the filePaths SC files together with the bundled SC core files within the given
-     * outputPath folder. The executable will be randomly named and can later be started after a
-     * successful compilation.
-     *
-     * @param filePaths the file paths
-     * @param debug additional debug output before the signal output
-     * @param scl a flag indicating that SC light (scl) should be used instead of (standard) SC
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws InterruptedException the interrupted exception
+     * {@inheritDoc}
      */
-    public void compile(final List<String> filePaths, final boolean debug, final boolean scl)
-            throws IOException, InterruptedException {
-
-        List<String> usedfilePaths = filePaths;
-
-        if (this.cycleCount) {
-            List<String> filePathsCycleCounter = new LinkedList<String>();
-            for (String filePath : filePaths) {
-                filePathsCycleCounter.add(addCycleCounterCode(filePath));
-            }
-            usedfilePaths = filePathsCycleCounter;
-        }
-
-        // reset successful compiled flag
-        setCompiled(false);
-        // choose a random name for the compiled executable
-        setExecutableName(EXECUTABLE_PREFIX + KiemUtil.randomString());
-
+    @Override
+    public String buildCompileCommandLine(final List<String> filePaths) {
         // building path to bundle
         Bundle bundle = Platform.getBundle(SCPlugin.PLUGIN_ID);
 
         URL url = null;
         try {
             // the SC path is the path to the needed SC c files
-            if (scl) {
+            if (this.isScl()) {
                 url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SCL_PATH), null));
             } else {
                 url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SC_PATH), null));
@@ -200,9 +110,9 @@ public class SCExecution {
         } catch (IOException e2) {
             e2.printStackTrace();
         }
-        if (url == null) {
-            return;
-        }
+        // if (url == null) {
+        // return;
+        // }
         String bundleLocation = url.getFile();
 
         // Windows vs. Linux: Exchange possibly wrong slash/backslash
@@ -210,194 +120,112 @@ public class SCExecution {
         if (bundleLocation.startsWith("\\")) {
             bundleLocation = bundleLocation.substring(1);
         }
-        for (String filePath : usedfilePaths) {
+        for (String filePath : filePaths) {
             filePath = filePath.replaceAll("[/\\\\]+", "\\" + File.separator);
             if (filePath.startsWith("\\")) {
                 filePath = filePath.substring(1);
             }
         }
 
-        try {
-            String compile = compiler;
+        String compile = this.getCompiler();
 
-            // Measure source file size
-            sourceFileSize = 0;
-            executableFileSize = 0;
-
-            StringBuffer compileBuf = new StringBuffer();
-            for (String filePath : usedfilePaths) {
-                compileBuf.append(" " + filePath);
-                File currentFile = new File(filePath);
-                sourceFileSize += currentFile.length();
-            }
-
-            compile += compileBuf.toString();
-
-            // If Cycle counting activated include the header
-            if (this.cycleCount) {
-                compile += " " +  bundleLocation + "cycle.h ";
-            }
-
-//            compile += " "
-//                    // + outPath
-//                    // + "sim.c "
-//                    // + outPath
-//                    // + "sim_data.c "
-//                    // + outPath
-//                    // + "misc.c "
-//                    +    "\"" + bundleLocation + "sc.c\" " +  "\"" + bundleLocation + "cJSON.c\" " 
-//                    + " -I "
-//                    +  bundleLocation + " " + "-o " +  "\"" + outputPath + getExecutableName() 
-//                    +  "\""  
-//                    // -m32 = 32 bit compatibility mode to prevent compiler errors on
-//                    // 64bit machines/architectures.
-//                    // + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
-//                    + " -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
-
-            compile += " "
-                    // + outPath
-                    // + "sim.c "
-                    // + outPath
-                    // + "sim_data.c "
-                    // + outPath
-                    // + "misc.c "
-                    +     bundleLocation + "sc.c " +  bundleLocation + "cJSON.c " 
-                    + " -I "
-                    +  bundleLocation + " " + "-o " +  outputPath + getExecutableName() 
-                    // -m32 = 32 bit compatibility mode to prevent compiler errors on
-                    // 64bit machines/architectures.
-                    // + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
-                    + " -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
-            
-            // If debugging AND if no cycle counting, then provide a trace for the
-            // SC debug console
-            if (!debug || cycleCount) {
-                compile += " -D_SC_NOTRACE ";
-            }
-
-            // -D_SC_SUPPRESS_ERROR_DETECT
-            // cmot: removed this option for now because of strange error
-            // in causality-test @ #define _checkEMIT(s) in sc-generic.h
-            // EMAIL to rvh on 16. Jul 2012
-
-            /*
-             * -m32"; REMOVED due to error with surefire on 64bit machine:
-             * 
-             * In file included from /usr/include/string.h:27:0, build 11-Jun-2012 11:42:26 from
-             * /var
-             * /atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler
-             * .s.
-             * sim.sc.test/target/work/data/test-s/05-simpletransition-inputoutput-communication.c
-             * :16: build 11-Jun-2012 11:42:26 /usr/include/features.h:323:26: fatal error:
-             * bits/predefs.h: No such file or directory build 11-Jun-2012 11:42:26 compilation
-             * terminated. build 11-Jun-2012 11:42:26 In file included from
-             * /usr/include/string.h:27:0, build 11-Jun-2012 11:42:26 from
-             * /var/atlassian/bamboo-data
-             * /xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler
-             * .s.sim.sc.test/target/work
-             * /configuration/org.eclipse.osgi/bundles/67/1/.cp/sc/sc.c:14: build 11-Jun-2012
-             * 11:42:26 /usr/include/features.h:323:26: fatal error: bits/predefs.h: No such file or
-             * directory build 11-Jun-2012 11:42:26 compilation terminated. build 11-Jun-2012
-             * 11:42:26 In file included from /usr/include/string.h:27:0, build 11-Jun-2012 11:42:26
-             * from
-             * /var/atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.
-             * kieler
-             * .s.sim.sc.test/target/work/configuration/org.eclipse.osgi/bundles/67/1/.cp/sc/cJSON
-             * .c:26: build 11-Jun-2012 11:42:26 /usr/include/features.h:323:26: fatal error:
-             * bits/predefs.h: No such file or directory build 11-Jun-2012 11:42:26 compilation
-             * terminated.
-             */
-            System.out.println(compile);
-            executionProcess = Runtime.getRuntime().exec(compile);
-
-            InputStream stderr = executionProcess.getErrorStream();
-            InputStreamReader isr = new InputStreamReader(stderr);
-            BufferedReader br = new BufferedReader(isr);
-            String line = null;
-            setCompileError("");
-            while ((line = br.readLine()) != null) {
-                setCompileError(getCompileError() + "\n" + line);
-            }
-            br.close();
-
-            // TODO: -D_SC_SUPPRESS_ERROR_DETECT: error messages detecting
-            // (use own buffer)
-            int exitValue = executionProcess.waitFor();
-
-            // Test if compiled file exists
-            File file = new File(outputPath + getExecutableName());
-            if (!file.exists()) {
-                if (exitValue != 0) {
-                    throw new IOException("Could not compile the generated C code (" + exitValue
-                            + ").\nCheck that the path to your Workspace/Eclipse"
-                            + " installation does not contain any white spaces.\n\n"
-                            + getCompileError());
-                }
-            }
-
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            if (executionProcess != null) {
-                executionProcess.destroy();
-            }
-            throw e;
-
-        } catch (InterruptedException e) {
-            System.err.println(e.getMessage());
-            if (executionProcess != null) {
-                executionProcess.destroy();
-            }
-            throw e;
+        StringBuffer compileBuf = new StringBuffer();
+        for (String filePath : filePaths) {
+            compileBuf.append(" " + filePath);
         }
 
-        // set successful compiled flag
-        setCompiled(true);
+        compile += compileBuf.toString();
+
+        // If Cycle counting activated include the header
+        if (this.isCycleCountOrTime()) {
+            compile += " " + bundleLocation + "cycle.h ";
+        }
+
+        compile += " "
+                // + outPath
+                // + "sim.c "
+                // + outPath
+                // + "sim_data.c "
+                // + outPath
+                // + "misc.c "
+                + bundleLocation + "sc.c " + bundleLocation + "cJSON.c " + " -I " + bundleLocation
+                + " " + "-o " + this.getOutputPath() + getExecutableName()
+                // -m32 = 32 bit compatibility mode to prevent compiler errors on
+                // 64bit machines/architectures.
+                // + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+                + " -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+
+        // If debugging AND if no cycle counting, then provide a trace for the
+        // SC debug console
+        if (!this.isDebug() || this.isCycleCountOrTime()) {
+            compile += " -D_SC_NOTRACE ";
+        }
+
+        // -D_SC_SUPPRESS_ERROR_DETECT
+        // cmot: removed this option for now because of strange error
+        // in causality-test @ #define _checkEMIT(s) in sc-generic.h
+        // EMAIL to rvh on 16. Jul 2012
+
+        /*
+         * -m32"; REMOVED due to error with surefire on 64bit machine:
+         * 
+         * In file included from /usr/include/string.h:27:0, build 11-Jun-2012 11:42:26 from /var
+         * /atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler .s.
+         * sim.sc.test/target/work/data/test-s/05-simpletransition-inputoutput-communication.c :16:
+         * build 11-Jun-2012 11:42:26 /usr/include/features.h:323:26: fatal error: bits/predefs.h:
+         * No such file or directory build 11-Jun-2012 11:42:26 compilation terminated. build
+         * 11-Jun-2012 11:42:26 In file included from /usr/include/string.h:27:0, build 11-Jun-2012
+         * 11:42:26 from /var/atlassian/bamboo-data
+         * /xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler .s.sim.sc.test/target/work
+         * /configuration/org.eclipse.osgi/bundles/67/1/.cp/sc/sc.c:14: build 11-Jun-2012 11:42:26
+         * /usr/include/features.h:323:26: fatal error: bits/predefs.h: No such file or directory
+         * build 11-Jun-2012 11:42:26 compilation terminated. build 11-Jun-2012 11:42:26 In file
+         * included from /usr/include/string.h:27:0, build 11-Jun-2012 11:42:26 from
+         * /var/atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs. kieler
+         * .s.sim.sc.test/target/work/configuration/org.eclipse.osgi/bundles/67/1/.cp/sc/cJSON
+         * .c:26: build 11-Jun-2012 11:42:26 /usr/include/features.h:323:26: fatal error:
+         * bits/predefs.h: No such file or directory build 11-Jun-2012 11:42:26 compilation
+         * terminated.
+         */
+        return compile;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Start execution and start the execution process.
-     * 
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     * {@inheritDoc}
      */
-    public void startExecution() throws IOException {
-        // reset successful started flag
-        setStarted(false);
+    public String generateExecutableName(final List<String> filePaths, final String modelName) {
+        // choose a random name for the compiled executable
+        return EXECUTABLE_PREFIX + KiemUtil.randomString();
+    }
 
-        // if the sc code was not successfully compiled yet, do not try to
-        // execute it
-        if (!compiled) {
-            throw new IOException("SC code was not compiled yet.");
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String filesPreProcessing(final String filePath) {
+        try {
+            return addCycleCounterCode(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return null;
+    }
 
-        File file = new File(outputPath + getExecutableName());
-        if (file.exists()) {
-            executableFileSize = file.length();
-        } else {
-            // The Windows case
-            file = new File(outputPath + getExecutableName() + ".exe");
-            if (file.exists()) {
-                executableFileSize = file.length();
-            }
-        }
+    // -------------------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String buildExecutionCommandLine() {
         // start compiled sc code
-        String executable = outputPath + getExecutableName() + " ";
+        String executable = this.getOutputPath() + getExecutableName() + " ";
         // executable = "C:\\Users\\delphino\\AppData\\Local\\Temp\\SC.exe";
-
-        executionProcess = Runtime.getRuntime().exec(executable);
-
-        setExecutionInterfaceToSC(new PrintWriter(new OutputStreamWriter(
-                executionProcess.getOutputStream())));
-        setExecutionInterfaceFromSC(new BufferedReader(new InputStreamReader(
-                executionProcess.getInputStream())));
-        setExecutionInterfaceError(new BufferedReader(new InputStreamReader(
-                executionProcess.getErrorStream())));
-
-        // set successful started flag
-        setStarted(true);
+        return executable;
     }
 
     // -------------------------------------------------------------------------
@@ -481,291 +309,28 @@ public class SCExecution {
     }
 
     // -------------------------------------------------------------------------
+
     /**
-     * Stop execution and destroy the execution process.
+     * Sets the scl option (to use scl instead of sc).
      * 
-     * @param tryToDelete
-     *            the try to delete
+     * @param scl
+     *            the scl option to set
      */
-    public void stopExecution(final boolean tryToDelete) {
-        // reset successful started flag
-        setStarted(false);
-
-        // close streams
-        getExecutionInterfaceToSC().close();
-        try {
-            getExecutionInterfaceFromSC().close();
-        } catch (IOException e) {
-            // ignore errors
-        }
-        try {
-            getExecutionInterfaceError().close();
-        } catch (IOException e) {
-            // ignore errors
-        }
-
-        // destroy process
-        executionProcess.destroy();
-
-        if (tryToDelete) {
-            // (try to) delete temp folder
-            File folder = new File(outputPath);
-            if (folder.getAbsolutePath().contains(System.getProperty("java.io.tmpdir"))) {
-                KiemUtil.deleteFolder(folder);
-            }
-        }
+    public void setScl(final boolean scl) {
+        this.scl = scl;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the executable name.
+     * Checks if the scl option is set.
      * 
-     * @param executableName
-     *            the new executable name
+     * @return the scl option
      */
-    public void setExecutableName(final String executableName) {
-        this.executableName = executableName;
+    public boolean isScl() {
+        return scl;
     }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the executable name.
-     * 
-     * @return the executable name
-     */
-    public String getExecutableName() {
-        return executableName;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the compiler.
-     * 
-     * @return the compiler
-     */
-    public String getCompiler() {
-        return compiler;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the compiler.
-     * 
-     * @param compiler
-     *            the new compiler
-     */
-    public void setCompiler(final String compiler) {
-        this.compiler = compiler;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the output path.
-     * 
-     * @return the output path
-     */
-    public String getOutputPath() {
-        return outputPath;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the output path.
-     * 
-     * @param outputPath
-     *            the new output path
-     */
-    public void setOutputPath(final String outputPath) {
-        this.outputPath = outputPath;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the execution interface to sc.
-     * 
-     * @return the execution interface to sc
-     */
-    public PrintWriter getExecutionInterfaceToSC() {
-        return executionInterfaceToSC;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the execution interface to sc.
-     * 
-     * @param toSC
-     *            the new execution interface to sc
-     */
-    private void setExecutionInterfaceToSC(final PrintWriter toSC) {
-        this.executionInterfaceToSC = toSC;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the execution interface from sc.
-     * 
-     * @return the execution interface from sc
-     */
-    public BufferedReader getExecutionInterfaceFromSC() {
-        return executionInterfaceFromSC;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the execution interface from sc.
-     * 
-     * @param fromSC
-     *            the new execution interface from sc
-     */
-    private void setExecutionInterfaceFromSC(final BufferedReader fromSC) {
-        this.executionInterfaceFromSC = fromSC;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the execution interface error.
-     * 
-     * @return the execution interface error
-     */
-    public BufferedReader getExecutionInterfaceError() {
-        return executionInterfaceError;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the execution interface error.
-     * 
-     * @param error
-     *            the new execution interface error
-     */
-    private void setExecutionInterfaceError(final BufferedReader error) {
-        this.executionInterfaceError = error;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the compile error.
-     * 
-     * @return the compile error
-     */
-    public String getCompileError() {
-        return compileError;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the compile error.
-     * 
-     * @param compileError
-     *            the new compile error
-     */
-    private void setCompileError(final String compileError) {
-        this.compileError = compileError;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Checks if is started.
-     * 
-     * @return true, if is started
-     */
-    public boolean isStarted() {
-        return started;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the started.
-     * 
-     * @param started
-     *            the new started
-     */
-    private void setStarted(final boolean started) {
-        this.started = started;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Checks if is compiled.
-     * 
-     * @return true, if is compiled
-     */
-    public boolean isCompiled() {
-        return compiled;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the compiled.
-     * 
-     * @param compiled
-     *            the new compiled
-     */
-    private void setCompiled(final boolean compiled) {
-        this.compiled = compiled;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the current accumulated differential cycles. These are measured before and after each
-     * tick() computation iff measuring is set to true.
-     * 
-     * @return the cycles
-     */
-    public int getCycles() {
-        return cycles;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Reset the cycle counter for cycle counting measurement.
-     * 
-     */
-    public void resetCycles() {
-        this.cycles = 0;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the source file size.
-     * 
-     * @return the source file size
-     */
-    public long getSourceFileSize() {
-        return sourceFileSize;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the executable file size.
-     * 
-     * @return the executable file size
-     */
-    public long getExecutableFileSize() {
-        return executableFileSize;
-    }
-
-    // -------------------------------------------------------------------------
 }

@@ -16,6 +16,7 @@ package de.cau.cs.kieler.s.sim.sc;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -42,7 +43,8 @@ import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
-import de.cau.cs.kieler.s.sim.sc.xtend.S2Simulation;
+import de.cau.cs.kieler.s.sim.SSimPlugin;
+import de.cau.cs.kieler.s.sim.xtend.S2Simulation;
 import de.cau.cs.kieler.sc.SCExecution;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -61,7 +63,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 yellow KI-28
  */
-public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponent implements
+public class SSCSimDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
 
     /** The constant name of the SC console. */
@@ -203,26 +205,27 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         // Collect active statements
         String activeStatements = "";
         StringBuffer activeStatementsBuf = new StringBuffer();
+        List<DebugData> activeStatementList = new LinkedList<DebugData>();
 
         if (scExecution == null || !scExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
             String out = jSONObject.toString();
-            scExecution.getExecutionInterfaceToSC().write(out + "\n");
-            scExecution.getExecutionInterfaceToSC().flush();
-            while (scExecution.getExecutionInterfaceError().ready()) {
+            scExecution.getInterfaceToExecution().write(out + "\n");
+            scExecution.getInterfaceToExecution().flush();
+            while (scExecution.getInterfaceError().ready()) {
                 // Error output, if any
-                System.out.print(scExecution.getExecutionInterfaceError().read());
+                System.out.print(scExecution.getInterfaceError().read());
             }
 
-            String receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
+            String receivedMessage = scExecution.getInterfaceFromExecution().readLine();
 
             if (debugConsole) {
                 printConsole("==============| TICK " + computedTick++ + " |==============");
                 while (!receivedMessage.startsWith("{\"")) {
                     printConsole(receivedMessage);
-                    receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
+                    receivedMessage = scExecution.getInterfaceFromExecution().readLine();
                 }
                 printConsole("\n");
             }
@@ -236,9 +239,12 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                     for (int i = 0; i < sSignalOutputArray.length(); i++) {
                         String sSignalOutputName = sSignalOutputArray.getString(i);
                         if (sSignalOutput.get(sSignalOutputName) instanceof JSONObject) {
-                            boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput
-                                    .getJSONObject(sSignalOutputName));
-
+                            
+                            JSONObject sSignal = sSignalOutput
+                                    .getJSONObject(sSignalOutputName);
+                            
+                            boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignal);
+                            
                             // Test if the output variable is an auxiliary signal
                             // that is only there to mark the current S statement
                             // in full_simulation mode of the simulator.
@@ -250,13 +256,21 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                                     String statementWithoutAuxiliaryVariableTag = sSignalOutputName
                                             .substring(SSimSCPlugin.AUXILIARY_VARIABLE_TAG.length());
 
-                                    // Insert a "," if not the first statement
-                                    if (activeStatementsBuf.length() != 0) {
-                                        activeStatementsBuf.append(",");
+                                    int prio = -1;
+                                    if (sSignal.has("prio")) {
+                                        prio = sSignal.getInt("prio");
                                     }
 
-                                    activeStatementsBuf
-                                            .append(statementWithoutAuxiliaryVariableTag);
+                                    int order = -1;
+                                    if (sSignal.has("order")) {
+                                        order = sSignal.getInt("order");
+                                    }
+                                    
+                                    DebugData activeStatement = new DebugData();
+                                    activeStatement.name = statementWithoutAuxiliaryVariableTag;
+                                    activeStatement.prio = prio;
+                                    activeStatement.order = order;
+                                    activeStatementList.add(activeStatement);
 
                                 } catch (Exception e) {
                                     // ignore error
@@ -266,6 +280,19 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                             }
                         }
                     }
+                }
+                
+
+                // Sort statements according to their "order"
+                Collections.sort(activeStatementList);
+                // Serialize activeStatementList to activeStatements String
+                for (DebugData activeStatement: activeStatementList) {
+                    // Insert a "," if not the first statement
+                    if (activeStatementsBuf.length() != 0) {
+                        activeStatementsBuf.append(",");
+                    }
+                    activeStatementsBuf
+                            .append(activeStatement.name + "(" + activeStatement.prio + ")");
                 }
                 activeStatements = activeStatementsBuf.toString();
 
@@ -474,7 +501,9 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             // Calculate output path for SC-m2t
             scOutput = URI.createURI(input.toString());
             scOutput = scOutput.trimFragment();
-            scOutput = scOutput.trimFileExtension().appendFileExtension("c");
+            scOutput = scOutput.trimFileExtension();
+            String modelName = scOutput.lastSegment();
+            scOutput = scOutput.appendFileExtension("c");
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
@@ -498,7 +527,9 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             scExecution = new SCExecution(outputFolder, benchmark);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(scOutputString);
-            scExecution.compile(generatedSCFiles, debugConsole, scl);
+            scExecution.setDebug(debugConsole);
+            scExecution.setScl(scl);
+            scExecution.compile(generatedSCFiles, modelName);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
@@ -599,7 +630,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         IConsoleManager conMan = plugin.getConsoleManager();
         IConsole[] existing = conMan.getConsoles();
         for (int i = 0; i < existing.length; i++) {
-            if (SSCSimulationDataComponent.SCCONSOLENAME.equals(existing[i].getName())) {
+            if (SSCSimDataComponent.SCCONSOLENAME.equals(existing[i].getName())) {
                 scConsole = (MessageConsole) existing[i];
                 found = true;
                 break;
@@ -607,7 +638,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         }
         if (!found) {
             // if no console found, so create a new one
-            scConsole = new MessageConsole(SSCSimulationDataComponent.SCCONSOLENAME, null);
+            scConsole = new MessageConsole(SSCSimDataComponent.SCCONSOLENAME, null);
             conMan.addConsoles(new IConsole[] { scConsole });
         }
 
@@ -617,6 +648,26 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             out.println(text);
         } else {
             scConsole.clearConsole();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    
+    protected class DebugData implements Comparable<DebugData> {
+        public String name;
+        public int prio;
+        public int order;
+
+        public DebugData() {
+        }
+        
+        public int compareTo(DebugData compareObject) {
+            if (order < compareObject.order)
+                return -1;
+            else if (order == compareObject.order)
+                return 0;
+            else
+                return 1;
         }
     }
 

@@ -16,7 +16,7 @@ package de.cau.cs.kieler.esterel.cec.sim.kivi;
 import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin;
-import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.JSONObjectXtextVisualizationDataComponent;
+import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.StateErrorXtextVisualizationDataComponent;
 
 /**
  * The DataComponent for visualizing Esterel simulation.
@@ -25,7 +25,9 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.JSONObjectXtextVisualizat
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
-public class DataComponent extends JSONObjectXtextVisualizationDataComponent {
+public class EsterelDataComponent extends StateErrorXtextVisualizationDataComponent {
+
+    // -----------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -60,5 +62,4 @@ public class DataComponent extends JSONObjectXtextVisualizationDataComponent {
     }    
 
     // -----------------------------------------------------------------------------
-
 }

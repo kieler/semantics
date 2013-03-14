@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Sj
+Bundle-SymbolicName: de.cau.cs.kieler.s.sim.sj;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.s.sim.sj.SSimSJPlugin
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.eclipse.core.runtime,
+ de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent,
+ com.google.inject;bundle-version="3.0.0",
+ de.cau.cs.kieler.s.sim,
+ de.cau.cs.kieler.core.kexpressions,
+ de.cau.cs.kieler.s,
+ de.cau.cs.kieler.sim.signals,
+ de.cau.cs.kieler.sjl,
+ de.cau.cs.kieler.s.sj
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy

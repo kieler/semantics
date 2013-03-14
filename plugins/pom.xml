@@ -125,6 +125,7 @@
     <module>de.cau.cs.kieler.sim.benchmark</module>
     <module>de.cau.cs.kieler.sim.eso</module>
     <module>de.cau.cs.kieler.sim.eso.ui</module>
+    <module>de.cau.cs.kieler.sim.instructions</module>
     <module>de.cau.cs.kieler.sim.kart</module>
     <module>de.cau.cs.kieler.sim.kart.ui</module>
     <module>de.cau.cs.kieler.sim.kiem</module>
