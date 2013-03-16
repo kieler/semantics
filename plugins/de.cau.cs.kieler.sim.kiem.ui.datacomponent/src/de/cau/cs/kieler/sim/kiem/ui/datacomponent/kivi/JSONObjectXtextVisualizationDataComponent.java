@@ -14,8 +14,7 @@
 package de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi;
 
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -32,12 +31,10 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 /**
@@ -60,42 +57,21 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     /** The model root of the corresponding Xtext editor. */
     private EObject modelRoot;
 
-    /** The active (and selected) statements, needed to undo. */
-    private LinkedList<EObject> activeStatements = new LinkedList<EObject>();
-
-    /** The error statements, needed to undo. */
-    private LinkedList<EObject> errorStatements = new LinkedList<EObject>();
-
     /** The recover text style range map to recover original style. */
-    private Hashtable<Integer, StyleRange> recoverStyleRangeMap = new Hashtable<Integer, StyleRange>();
-
-    /** The Constant COLOR_HIGH. */
-    private static final int COLOR_HIGH = 255;
-
-    /** The Constant COLOR_MED. */
-    private static final int COLOR_MED = 180;
-
-    /** The default highlight background color. */
-    private static final RGB DEFAULT_HIGHLIGHT_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
-            COLOR_MED); // light red
-
-    /** The default error background color. */
-    private static final RGB DEFAULT_ERROR_BACKGROUND_COLOR = new RGB(COLOR_HIGH, COLOR_MED,
-            COLOR_HIGH); // light magenta
-
-    /** The Constant SLEEP_TIME for the thread to sleep. */
-    private static final int SLEEP_TIME = 1;
+    private HashMap<Integer, StyleRange> recoverStyleRangeMap = new HashMap<Integer, StyleRange>();
 
     /**
-     * The highlight background color is used internally for setting a specific background color and
-     * set NULL for original.
+     * The highlighted memory to remember which eobject is highlighted in which color, null == not
+     * highlighted.
      */
-    private RGB specificBackgroundColor = null;
+    private HashMap<EObject, RGB> currentHighlighted = new HashMap<EObject, RGB>();
 
-    // KIEM property constants
-    private static final int KIEM_PROPERTY_NUMMAX = 2;
-    private static final int KIEM_PROPRTY_STATEMENTNAME = 0;
-    private static final int KIEM_PROPRTY_ERRORSTATEMENTNAME = 1;
+    /** The Constant COLOR_MED. */
+    protected static final int COLOR_HIGH = 255;
+
+    /** The Constant CLEAR for clearing a selection. */
+    protected static final RGB CLEAR_SELECTION = null; // new RGB(COLOR_HIGH, COLOR_HIGH,
+                                                       // COLOR_HIGH); // white
 
     // -----------------------------------------------------------------------------
 
@@ -108,25 +84,14 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     // -----------------------------------------------------------------------------
 
     /**
-     * Gets the highlight background color. Derived classes may override this method to provide a
-     * different color.
+     * Gets a copy of the current highlighted statements map.
      * 
-     * @return the highlight background color
+     * @return the current highlighted
      */
-    protected RGB getHighlightBackgroundColor() {
-        return DEFAULT_HIGHLIGHT_BACKGROUND_COLOR;
-    }
-
-    // -----------------------------------------------------------------------------
-
-    /**
-     * Gets the error background color. Derived classes may override this method to provide a
-     * different color.
-     * 
-     * @return the error background color
-     */
-    protected RGB getErrorBackgroundColor() {
-        return DEFAULT_ERROR_BACKGROUND_COLOR;
+    public HashMap<EObject, RGB> getCurrentHighlighted() {
+        HashMap<EObject, RGB> currentSelectionCopy = new HashMap<EObject, RGB>();
+        currentSelectionCopy.putAll(this.currentHighlighted);
+        return currentSelectionCopy;
     }
 
     // -----------------------------------------------------------------------------
@@ -164,6 +129,17 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     // -----------------------------------------------------------------------------
 
     /**
+     * Compute a new set of highlighted EObjects based on the simulator output given in jSONObject.
+     * 
+     * @param jSONObject
+     *            the j son object
+     * @return the hash map
+     */
+    abstract HashMap<EObject, RGB> computeHighligthed(final JSONObject jSONObject);
+
+    // -----------------------------------------------------------------------------
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -182,31 +158,17 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      */
     public void wrapup() throws KiemInitializationException {
         // Undo Highlighting
-        // Highlight the active statements
-        for (EObject statement : activeStatements) {
-            try {
-                // null == original background
-                setXtextSelection(statement, null);
-            } catch (KiemInitializationException e) {
-                // Hide any errors
-            }
-        }
-        for (EObject statement : errorStatements) {
-            try {
-                // null == original background
-                setXtextSelection(statement, null);
-            } catch (KiemInitializationException e) {
-                // Hide any errors
-            }
+        try {
+            refreshView(new HashMap<EObject, RGB>(), false, false, null);
+        } catch (Exception e) {
+            // Cannot occur here because called asynchronously
+            e.printStackTrace();
         }
         eObjectMap.clear();
-        activeStatements.clear();
-        errorStatements.clear();
         recoverStyleRangeMap.clear();
         semanticResource = null;
         modelRoot = null;
         xtextEditor = null;
-        specificBackgroundColor = null;
     }
 
     // -----------------------------------------------------------------------------
@@ -242,7 +204,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      *            the EObject ID
      * @return the EObject
      */
-    private EObject getEObject(final String eObjectID) {
+    protected EObject getEObject(final String eObjectID) {
         if ((eObjectID == null) || eObjectID.equals("")) {
             return null;
         } else if (eObjectMap.containsKey(eObjectID)) {
@@ -296,43 +258,157 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     // -----------------------------------------------------------------------------
 
     /**
-     * Gets the active S statements.
+     * Refresh view with the current selection.
      * 
-     * @param jSONObject
-     *            the j son object
-     * @param signalName
-     *            the signal name
-     * @return the statements
+     * @param async
+     *            the async
+     * @param calledFromGuiThread
+     *            the called from gui thread
+     * @throws KiemExecutionException
+     *             the kiem execution exception
+     * @param scrollToObject
+     *            the object to scroll to (or null if no such object)
+     */
+    public void refreshView(final boolean async, final boolean calledFromGuiThread,
+            final EObject scrollToObject) throws KiemExecutionException {
+        refreshView(currentHighlighted, async, calledFromGuiThread, scrollToObject);
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Refresh the textual view and highlighting of active and error statements.
+     * 
+     * @param newSelection
+     *            the new selection
+     * @param async
+     *            the async
+     * @param calledFromGuiThread
+     *            the called from gui thread
+     * @param scrollToObject
+     *            the object to scroll to (or null if no such object)
      * @throws KiemExecutionException
      *             the kiem execution exception
      */
-    protected final LinkedList<EObject> getActiveStatements(final JSONObject jSONObject,
-            final String signalName) throws KiemExecutionException {
+    public void refreshView(final HashMap<EObject, RGB> newSelection, final boolean async,
+            final boolean calledFromGuiThread, final EObject scrollToObject)
+            throws KiemExecutionException {
 
-        LinkedList<EObject> newActiveStatements = new LinkedList<EObject>();
+        final HashMap<EObject, RGB> diffSelection = new HashMap<EObject, RGB>();
 
-        if (jSONObject.has(signalName)) {
-            // Now extract the statements separated by a colon
-            try {
-                String activeStatementsString = jSONObject.getString(signalName);
-
-                String[] activeStatementsArray = activeStatementsString.split(",");
-
-                // Select statements for highlighting
-                for (String activeStatementID : activeStatementsArray) {
-                    EObject activeStatement = this.getEObject(activeStatementID);
-                    if (activeStatement != null) {
-                        newActiveStatements.add(activeStatement);
-                    }
-                }
-
-            } catch (JSONException e) {
-                throw new KiemExecutionException("Cannot parse statement data variable of active "
-                        + getLanguageName() + " statements for visualization.", false, false, true,
-                        e);
+        // Undo Highlighting
+        // Highlight the active statements
+        for (EObject statement : currentHighlighted.keySet()) {
+            // remove highlighting only if not again to highlight
+            if (!newSelection.containsKey(statement)) {
+                diffSelection.put(statement, CLEAR_SELECTION);
             }
         }
-        return newActiveStatements;
+
+        // Highlight the active statements
+        for (EObject statement : newSelection.keySet()) {
+            RGB highlightColor = newSelection.get(statement);
+            // highlight only if not highlighted before
+            // give preference to error coloring
+
+            boolean contains = currentHighlighted.containsKey(statement);
+            RGB currentColor = currentHighlighted.get(statement);
+            RGB newColor = highlightColor;
+
+            if (!contains || (!currentColor.equals(newColor))) {
+                diffSelection.put(statement, highlightColor);
+            }
+        }
+
+        // Apply diff selection
+        if (async || !calledFromGuiThread) {
+            applyDiffSelectionAsync(diffSelection, scrollToObject, async);
+        } else {
+            applyDiffSelection(diffSelection, scrollToObject);
+        }
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Apply the differential selection including clears and new highlighting all at once if
+     * possible.
+     * 
+     * @param diffSelection
+     *            the diff selection
+     * @param scrollToObject
+     *            the object to scroll to (or null if no such object)
+     * @param async
+     *            the async
+     */
+    private void applyDiffSelectionAsync(final HashMap<EObject, RGB> diffSelection,
+            final EObject scrollToObject, final boolean async) {
+        if (async) {
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    try {
+                        applyDiffSelection(diffSelection, scrollToObject);
+                    } catch (KiemExecutionException e) {
+                        // Report error
+                    }
+                }
+            });
+        } else {
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    try {
+                        applyDiffSelection(diffSelection, scrollToObject);
+                    } catch (KiemExecutionException e) {
+                        // Report error
+                    }
+                }
+            });
+        }
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Apply the differential selection including clears and new highlighting all at once if
+     * possible.
+     * 
+     * @param diffSelection
+     *            the diff selection
+     * @param scrollToObject
+     *            the object to scroll to (or null if no such object)
+     * @throws KiemExecutionException
+     *             the kiem execution exception
+     */
+    private void applyDiffSelection(final HashMap<EObject, RGB> diffSelection,
+            final EObject scrollToObject) throws KiemExecutionException {
+        for (EObject statement : diffSelection.keySet()) {
+            RGB highlightColor = diffSelection.get(statement);
+            try {
+                if (highlightColor == CLEAR_SELECTION) {
+                    if (currentHighlighted.containsKey(statement)) {
+                        currentHighlighted.remove(statement);
+                    }
+                    setXtextSelection(statement, null);
+                } else {
+                    currentHighlighted.put(statement, highlightColor);
+                    setXtextSelection(statement, highlightColor);
+                }
+            } catch (KiemInitializationException e) {
+                e.printStackTrace();
+                throw new KiemExecutionException("No active " + this.getLanguageName()
+                        + " editor for statement visualization.", false, false, true, e);
+            }
+        }
+        // Finally scroll to an EObject if this is not null
+        if (scrollToObject != null && currentHighlighted.containsKey(scrollToObject)) {
+            try {
+                setXtextSelection(scrollToObject, currentHighlighted.get(scrollToObject));
+            } catch (KiemInitializationException e) {
+                e.printStackTrace();
+                throw new KiemExecutionException("No active " + this.getLanguageName()
+                        + " editor for statement visualization.", false, false, true, e);
+            }
+        }
     }
 
     // -----------------------------------------------------------------------------
@@ -341,21 +417,13 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      * {@inheritDoc}
      */
     @Override
-    public final JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
-        String statementName = this.getProperties()[KIEM_PROPRTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
-                .getValue();
-        String errorStatementName = this.getProperties()[KIEM_PROPRTY_ERRORSTATEMENTNAME
-                + KIEM_PROPERTY_DIFF].getValue();
-
-        LinkedList<EObject> newActiveStatements = getActiveStatements(jSONObject, statementName);
-        LinkedList<EObject> newErrorStatements = getActiveStatements(jSONObject, errorStatementName);
-        LinkedList<EObject> newActiveErrorStatements = new LinkedList<EObject>();
-        newActiveErrorStatements.addAll(newActiveStatements);
-        newActiveErrorStatements.addAll(newErrorStatements);
+    public JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
+        // Compute the new selection
+        HashMap<EObject, RGB> newSelection = computeHighligthed(jSONObject);
 
         // Silent repeat
         try {
-            if (failSilentRecoveryFromUserEditorChange(newActiveStatements)) {
+            if (failSilentRecoveryFromUserEditorChange(newSelection.keySet())) {
                 // silently repeat
                 return doStep(jSONObject);
             }
@@ -364,50 +432,8 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                     "Fail silent recovery from user editor change failed.", false, e);
         }
 
-        // Undo Highlighting
-        // Highlight the active statements
-        LinkedList<EObject> oldActiveErrorStatements = new LinkedList<EObject>();
-        oldActiveErrorStatements.addAll(activeStatements);
-        oldActiveErrorStatements.addAll(errorStatements);
-        for (EObject statement : oldActiveErrorStatements) {
-            // remove highlighting only if not again to highlight
-            if (!newActiveErrorStatements.contains(statement)) {
-                try {
-                    setXtextSelection(statement, null);
-                } catch (KiemInitializationException e) {
-                    throw new KiemExecutionException("No active " + getLanguageName()
-                            + " editor for statement visualization.", false, false, true, e);
-                }
-            }
-        }
-
-        // New active statements
-        LinkedList<EObject> oldActiveStatements = activeStatements;
-        LinkedList<EObject> oldErrorStatements = errorStatements;
-        activeStatements = newActiveStatements;
-        errorStatements = newErrorStatements;
-
-        // Highlight the active statements
-        for (EObject statement : newActiveErrorStatements) {
-            // highlight only if not highlighted before
-            if (!oldActiveErrorStatements.contains(statement)
-                    || (oldActiveStatements.contains(statement)
-                    && newErrorStatements.contains(statement))
-                    || (oldErrorStatements.contains(statement)
-                    && newActiveStatements.contains(statement))) {
-                try {
-                    // give preference to error coloring
-                    if (errorStatements.contains(statement)) {
-                        setXtextSelection(statement, this.getErrorBackgroundColor());
-                    } else {
-                        setXtextSelection(statement, this.getHighlightBackgroundColor());
-                    }
-                } catch (KiemInitializationException e) {
-                    throw new KiemExecutionException("No active " + this.getLanguageName()
-                            + " editor for statement visualization.", false, false, true, e);
-                }
-            }
-        }
+        // Refresh highlighting
+        refreshView(newSelection, true, false, null);
 
         // This is just an observer component
         return null;
@@ -429,24 +455,6 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     // -----------------------------------------------------------------------------
 
     /**
-     * Sets the xtext selection to have a specific background color.
-     * 
-     * @param semanticElement
-     *            the semantic element
-     * @param specificBackgroundColorParam
-     *            the specific background color param
-     * @throws KiemInitializationException
-     *             the kiem initialization exception
-     */
-    private void setXtextSelection(final EObject semanticElement,
-            final RGB specificBackgroundColorParam) throws KiemInitializationException {
-        this.specificBackgroundColor = specificBackgroundColorParam;
-        setXtextSelection(semanticElement);
-    }
-
-    // -----------------------------------------------------------------------------
-
-    /**
      * Fail silent recovery from user editor change. If the user edits text in the editor during
      * visualization, the highlighting is invalidated but the next time he clicks on step (and has
      * focused the right editor) the refreshed editor input is used for visualization.
@@ -454,10 +462,10 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
      * @throws KiemInitializationException
      *             the kiem initialization exception
      */
-    private boolean failSilentRecoveryFromUserEditorChange(
-            final LinkedList<EObject> activeStatementsParam) throws KiemInitializationException {
+    private boolean failSilentRecoveryFromUserEditorChange(final Set<EObject> activeStatements)
+            throws KiemInitializationException {
 
-        for (EObject statement : activeStatementsParam) {
+        for (EObject statement : activeStatements) {
             String semanticElementFragment = semanticResource.getURIFragment(statement);
             if (semanticElementFragment.equals("/-1")) {
                 initialize();
@@ -474,18 +482,17 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     /** The Xtext node. */
     private ICompositeNode xtextNode;
 
-    /** The selection done. */
-    private boolean selectionDone;
-
     /**
      * Sets the Xtext selection to have the last used background color.
      * 
      * @param semanticElement
      *            the new Xtext selection
+     * @param specificBackgroundColor
+     *            the specific background color
      * @throws KiemInitializationException
      *             the kiem initialization exception
      */
-    private void setXtextSelection(final EObject semanticElement)
+    private void setXtextSelection(final EObject semanticElement, final RGB specificBackgroundColor)
             throws KiemInitializationException {
         Resource localSemanticResource = this.semanticResource;
         if (localSemanticResource == null) {
@@ -497,67 +504,73 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
         xtextNode = NodeModelUtils.findActualNodeFor(semanticElementInDocument);
 
         if (xtextNode != null) {
-            selectionDone = false;
-            Display.getDefault().asyncExec(new Runnable() {
-                public void run() {
-                    XtextEditor localXtextEditor;
-                    localXtextEditor = xtextEditor;
+            doSelection(specificBackgroundColor);
+        }
+    }
 
-                    // getOffset() and getLength() are trimming white spaces
-                    int offset = xtextNode.getOffset();
+    // -----------------------------------------------------------------------------
 
-                    // Find the next leaf node element (the actual Statement of the language)
-                    // and get its length
-                    int length = NodeModelUtils.findLeafNodeAtOffset(xtextNode, offset).getLength();
+    /**
+     * Do the selection either synchronously (in UI thread) or asynchronously (not from UI thread).
+     * 
+     * @param specificBackgroundColor
+     *            the specific background color
+     */
+    private void doSelection(final RGB specificBackgroundColor) {
+        XtextEditor localXtextEditor;
+        localXtextEditor = xtextEditor;
 
-                    if (localXtextEditor.getInternalSourceViewer() == null) {
-                        // Editor might be closed
-                        return;
-                    }
+        // getOffset() and getLength() are trimming white spaces
+        int offset = xtextNode.getOffset();
 
-                    localXtextEditor.getInternalSourceViewer().setRangeIndication(offset, length,
-                            true);
-                    localXtextEditor.getInternalSourceViewer().revealRange(offset, length);
+        // Find the next leaf node element (the actual Statement of the language)
+        // and get its length
+        if (NodeModelUtils.findLeafNodeAtOffset(xtextNode, offset) == null) {
+            // Editor might be closed
+            return;
+        }
+        int length = 0;
+        try {
+            length = NodeModelUtils.findLeafNodeAtOffset(xtextNode, offset).getLength();
+        } catch (Exception e) {
+            // Editor might be closed
+            return;
+        }
+        if (localXtextEditor.getInternalSourceViewer() == null) {
+            // Editor might be closed
+            return;
+        }
 
-                    StyleRange styleRange = null;
-                    // if any background color is set, then use this
-                    if (specificBackgroundColor != null) {
-                        // Save the current style before
-                        StyleRange backupStyleRange = localXtextEditor.getInternalSourceViewer()
-                                .getTextWidget().getStyleRangeAtOffset(offset);
-                        if (backupStyleRange != null) {
-                            recoverStyleRangeMap.put(offset, backupStyleRange);
-                            Color highlightColor = new Color(Display.getCurrent(),
-                                    specificBackgroundColor);
-                            styleRange = new StyleRange(offset, length,
-                                    backupStyleRange.foreground, highlightColor);
-                        }
-                    } else {
-                        // Recover the old style
-                        StyleRange recoverStyleRange = recoverStyleRangeMap.get(offset);
-                        if (recoverStyleRange != null) {
-                            styleRange = new StyleRange(offset, length,
-                                    recoverStyleRange.foreground, recoverStyleRange.background,
-                                    recoverStyleRange.fontStyle);
-                            recoverStyleRangeMap.remove(offset);
-                        }
-                    }
+        localXtextEditor.getInternalSourceViewer().setRangeIndication(offset, length, true);
+        localXtextEditor.getInternalSourceViewer().revealRange(offset, length);
 
-                    if (styleRange != null) {
-                        localXtextEditor.getInternalSourceViewer().getTextWidget()
-                                .setStyleRange(styleRange);
-                    }
-
-                    selectionDone = true;
+        StyleRange styleRange = null;
+        // if any background color is set, then use this
+        if (specificBackgroundColor != null) {
+            // Save the current style before
+            StyleRange backupStyleRange = localXtextEditor.getInternalSourceViewer()
+                    .getTextWidget().getStyleRangeAtOffset(offset);
+            if (backupStyleRange != null) {
+                // Only if there not already exists a backup/recovery style
+                if (!recoverStyleRangeMap.containsKey(offset)) {
+                    recoverStyleRangeMap.put(offset, backupStyleRange);
                 }
-            });
-            while (!selectionDone) {
-                try {
-                    Thread.sleep(SLEEP_TIME);
-                } catch (InterruptedException e) {
-                    // No error behavior
-                }
+                Color highlightColor = new Color(Display.getCurrent(), specificBackgroundColor);
+                styleRange = new StyleRange(offset, length, backupStyleRange.foreground,
+                        highlightColor);
             }
+        } else {
+            // Recover the old style
+            StyleRange recoverStyleRange = recoverStyleRangeMap.get(offset);
+            if (recoverStyleRange != null) {
+                styleRange = new StyleRange(offset, length, recoverStyleRange.foreground,
+                        recoverStyleRange.background, recoverStyleRange.fontStyle);
+                recoverStyleRangeMap.remove(offset);
+            }
+        }
+
+        if (styleRange != null) {
+            localXtextEditor.getInternalSourceViewer().getTextWidget().setStyleRange(styleRange);
         }
     }
 
@@ -597,21 +610,6 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
     }
 
     // -----------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[KIEM_PROPERTY_NUMMAX];
-        properties[KIEM_PROPRTY_STATEMENTNAME] = new KiemProperty("Statement Name", "statement");
-        properties[KIEM_PROPRTY_ERRORSTATEMENTNAME] = new KiemProperty("Error Statement Name",
-                "errorStatement");
-
-        return properties;
-    }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Gets the root model program.

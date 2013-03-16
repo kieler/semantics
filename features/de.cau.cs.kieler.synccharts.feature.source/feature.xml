@@ -440,21 +440,28 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.kart"
+         id="de.cau.cs.kieler.sim.instructions.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="de.cau.cs.kieler.sim.kart.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.kart.ui"
+         id="de.cau.cs.kieler.sim.kart.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.benchmark"
+         id="de.cau.cs.kieler.sim.benchmark.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

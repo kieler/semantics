@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.s.sim.sc.xtend
+package de.cau.cs.kieler.s.sim.xtend
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValueType
@@ -33,7 +33,7 @@ import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.s.s.HostCodeInstruction
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 
-import de.cau.cs.kieler.s.sim.sc.SSimSCPlugin
+import de.cau.cs.kieler.s.sim.SSimPlugin
 import de.cau.cs.kieler.s.s.LocalSignal
 
 /**
@@ -56,7 +56,7 @@ class S2Simulation {
     
          // General method to create the enriched S simulation code.
          def Program transform2Simulation (Program program) {
-         var AUXILIARY_VARIABLE_TAG = SSimSCPlugin::AUXILIARY_VARIABLE_TAG
+         var AUXILIARY_VARIABLE_TAG = SSimPlugin::AUXILIARY_VARIABLE_TAG
                
          // Clone the complete S program 
          var target = CloningExtensions::clone(program) as Program;
