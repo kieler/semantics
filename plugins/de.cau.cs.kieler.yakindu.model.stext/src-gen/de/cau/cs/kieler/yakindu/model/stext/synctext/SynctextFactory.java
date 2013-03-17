@@ -50,6 +50,15 @@ public interface SynctextFactory extends EFactory
   VariableDefinition createVariableDefinition();
 
   /**
+   * Returns a new object of class '<em>Operation Definition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Operation Definition</em>'.
+   * @generated
+   */
+  OperationDefinition createOperationDefinition();
+
+  /**
    * Returns a new object of class '<em>Local Reaction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

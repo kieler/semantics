@@ -29,7 +29,6 @@ Import-Package: de.cau.cs.kieler.core,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.util,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.scoping,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.services,
- de.cau.cs.kieler.yakindu.sccharts.model.stext.types,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.ui,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist.antlr,
@@ -64,4 +63,4 @@ Import-Package: de.cau.cs.kieler.core,
  org.yakindu.sct.ui.editor.editor,
  org.yakindu.sct.ui.editor.editparts,
  org.yakindu.sct.ui.editor.providers
-
+Export-Package: de.cau.cs.kieler.yakindu.sccharts.sim.s.ui

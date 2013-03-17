@@ -18,7 +18,6 @@ import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypedElement;
 
 import org.yakindu.sct.model.sgraph.Declaration;
-import org.yakindu.sct.model.sgraph.Event;
 import org.yakindu.sct.model.sgraph.Variable;
 
 /**
@@ -85,19 +84,9 @@ public class SyncChartstextAdapterFactory extends AdapterFactoryImpl
     new SyncChartstextSwitch<Adapter>()
     {
       @Override
-      public Adapter caseSignalDefinition(SignalDefinition object)
-      {
-        return createSignalDefinitionAdapter();
-      }
-      @Override
       public Adapter caseVariableDefinition(VariableDefinition object)
       {
         return createVariableDefinitionAdapter();
-      }
-      @Override
-      public Adapter caseEventDefinition(EventDefinition object)
-      {
-        return createEventDefinitionAdapter();
       }
       @Override
       public Adapter caseNamedElement(NamedElement object)
@@ -108,16 +97,6 @@ public class SyncChartstextAdapterFactory extends AdapterFactoryImpl
       public Adapter caseDeclaration(Declaration object)
       {
         return createDeclarationAdapter();
-      }
-      @Override
-      public Adapter caseEvent(Event object)
-      {
-        return createEventAdapter();
-      }
-      @Override
-      public Adapter caseSynctext_SignalDefinition(de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition object)
-      {
-        return createSynctext_SignalDefinitionAdapter();
       }
       @Override
       public Adapter caseVariable(Variable object)
@@ -172,21 +151,6 @@ public class SyncChartstextAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.SignalDefinition <em>Signal Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.SignalDefinition
-   * @generated
-   */
-  public Adapter createSignalDefinitionAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition <em>Variable Definition</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -197,21 +161,6 @@ public class SyncChartstextAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVariableDefinitionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.EventDefinition <em>Event Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.EventDefinition
-   * @generated
-   */
-  public Adapter createEventDefinitionAdapter()
   {
     return null;
   }
@@ -242,36 +191,6 @@ public class SyncChartstextAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDeclarationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Event <em>Event</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Event
-   * @generated
-   */
-  public Adapter createEventAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition <em>Signal Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition
-   * @generated
-   */
-  public Adapter createSynctext_SignalDefinitionAdapter()
   {
     return null;
   }

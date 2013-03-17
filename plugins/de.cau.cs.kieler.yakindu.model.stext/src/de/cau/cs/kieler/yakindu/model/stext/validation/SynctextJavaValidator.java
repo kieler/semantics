@@ -7,9 +7,9 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.eclipse.xtext.validation.ComposedChecks;
+import org.yakindu.base.types.ITypeSystem.InferenceResult;
 import org.yakindu.base.types.Operation;
 import org.yakindu.base.types.Property;
-import org.yakindu.base.types.ITypeSystem.InferenceResult;
 import org.yakindu.sct.model.sgraph.validation.SCTResourceValidator;
 import org.yakindu.sct.model.stext.stext.AssignmentExpression;
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression;
@@ -20,6 +20,7 @@ import org.yakindu.sct.model.stext.stext.StextPackage;
 import org.yakindu.sct.model.stext.types.ISTextTypeInferrer;
 import org.yakindu.sct.model.stext.types.ISTextTypeSystem;
 import org.yakindu.sct.model.stext.validation.STextJavaValidator;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
@@ -149,16 +150,16 @@ public class SynctextJavaValidator extends STextJavaValidator {
 	 * 
 	 */
 	protected void checkElementReferenceEffect(ElementReferenceExpression refExp) {
-		if (!(refExp.getReference() instanceof Operation)) {
-			if (refExp.getReference() instanceof Property) {
-				error("Access to property '"
-						+ nameProvider.getFullyQualifiedName(refExp
-								.getReference()) + "' has no effect.",
-						refExp,
-						StextPackage.Literals.ELEMENT_REFERENCE_EXPRESSION__REFERENCE,
-						INSIGNIFICANT_INDEX, FEATURE_CALL_HAS_NO_EFFECT);
-			}
-		}
+//		if (!(refExp.getReference() instanceof Operation)) {
+//			if (refExp.getReference() instanceof Property) {
+//				error("Access blo to property '"
+//						+ nameProvider.getFullyQualifiedName(refExp
+//								.getReference()) + "' has no effect.",
+//						refExp,
+//						StextPackage.Literals.ELEMENT_REFERENCE_EXPRESSION__REFERENCE,
+//						INSIGNIFICANT_INDEX, FEATURE_CALL_HAS_NO_EFFECT);
+//			}
+//		}
 	}
 
 	/**
@@ -239,5 +240,18 @@ public class SynctextJavaValidator extends STextJavaValidator {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Disable the Wrong Number of arguments error
+	 *
+	 */
+	@Override
+	@Check(CheckType.FAST)
+	public void checkOperationArguments_FeatureCall(final FeatureCall call) {
+	}
+	@Override
+	@Check(CheckType.FAST)
+	public void checkOperationArguments_TypedElementReferenceExpression(final ElementReferenceExpression call) {
+		
+	}
 }

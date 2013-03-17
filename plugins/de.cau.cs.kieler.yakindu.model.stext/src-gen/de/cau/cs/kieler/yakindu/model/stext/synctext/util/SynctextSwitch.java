@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.util.Switch;
 import org.yakindu.base.base.NamedElement;
 
 import org.yakindu.base.types.Feature;
+import org.yakindu.base.types.Operation;
 import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypedElement;
 
@@ -118,6 +119,19 @@ public class SynctextSwitch<T> extends Switch<T>
         if (result == null) result = caseFeature(variableDefinition);
         if (result == null) result = caseNamedElement(variableDefinition);
         if (result == null) result = caseTypedElement(variableDefinition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SynctextPackage.OPERATION_DEFINITION:
+      {
+        OperationDefinition operationDefinition = (OperationDefinition)theEObject;
+        T result = caseOperationDefinition(operationDefinition);
+        if (result == null) result = caseStext_OperationDefinition(operationDefinition);
+        if (result == null) result = caseDeclaration(operationDefinition);
+        if (result == null) result = caseOperation(operationDefinition);
+        if (result == null) result = caseFeature(operationDefinition);
+        if (result == null) result = caseNamedElement(operationDefinition);
+        if (result == null) result = caseTypedElement(operationDefinition);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -264,6 +278,22 @@ public class SynctextSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseVariableDefinition(VariableDefinition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Operation Definition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Operation Definition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOperationDefinition(OperationDefinition object)
   {
     return null;
   }
@@ -584,6 +614,38 @@ public class SynctextSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseStext_VariableDefinition(org.yakindu.sct.model.stext.stext.VariableDefinition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Operation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Operation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOperation(Operation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Operation Definition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Operation Definition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStext_OperationDefinition(org.yakindu.sct.model.stext.stext.OperationDefinition object)
   {
     return null;
   }

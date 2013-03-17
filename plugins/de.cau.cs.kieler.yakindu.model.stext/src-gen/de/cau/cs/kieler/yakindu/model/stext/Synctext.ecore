@@ -4,6 +4,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="StateScope" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Scope"/>
   <eClassifiers xsi:type="ecore:EClass" name="SignalDefinition" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Event"/>
   <eClassifiers xsi:type="ecore:EClass" name="VariableDefinition" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//VariableDefinition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OperationDefinition" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//OperationDefinition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="functionType" eType="ecore:EClass ../../../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="paramType" eType="ecore:EClass ../../../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocalReaction" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//LocalReaction"/>
   <eClassifiers xsi:type="ecore:EClass" name="StateReaction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Entry" eSuperTypes="#//StateReaction"/>
@@ -20,7 +24,14 @@
     <eLiterals name="HOST" value="7" literal="'host'"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SimpleScope" eSuperTypes="#//StateScope"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EventDefinition" eSuperTypes="#//SignalDefinition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EventDefinition" eSuperTypes="#//SignalDefinition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOutput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass ../../../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="varInitialValue" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="varCombineOperator" eType="#//CombineOperator"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SuspendEffect" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"/>
   <eClassifiers xsi:type="ecore:EClass" name="ReactionTrigger" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger">
     <eStructuralFeatures xsi:type="ecore:EReference" name="stateReaction" eType="#//StateReaction"

@@ -9,6 +9,7 @@ import org.yakindu.sct.ui.editor.wizards.IDiagramInitializer;
 import de.cau.cs.kieler.yakindu.ui.editor.factory.SyncDiagramInitializer;
 import de.cau.cs.kieler.yakindu.ui.editor.factory.SyncMetaModelTypeFactory;
 import de.cau.cs.kieler.yakindu.ui.editor.factory.SyncPaletteFactory;
+import de.cau.cs.kieler.yakindu.ui.editor.parts.SyncRegionEditPart;
 import de.cau.cs.kieler.yakindu.ui.editor.parts.SyncRegionNameEditPart;
 import de.cau.cs.kieler.yakindu.ui.editor.parts.SyncStateEditPart;
 import de.cau.cs.kieler.yakindu.ui.editor.parts.SyncStateNameEditPart;
@@ -29,6 +30,11 @@ public class SyncModule extends SCTModule {
 	 protected Class<? extends IGraphicalEditPart> getRegionNameEditPart() {
 	 return SyncRegionNameEditPart.class;
 	 }
+	 
+	 @Override
+	protected Class<? extends IGraphicalEditPart> getRegionEditPart() {
+		return SyncRegionEditPart.class;
+	}
 	
 	 @Override
 	 protected Class<? extends IGraphicalEditPart> getStateNameEditPart() {

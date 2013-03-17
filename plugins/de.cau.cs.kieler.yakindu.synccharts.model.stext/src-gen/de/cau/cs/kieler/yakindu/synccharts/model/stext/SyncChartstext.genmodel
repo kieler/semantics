@@ -9,17 +9,9 @@
     usedGenPackages="../../../../../../../../../../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/Synctext.genmodel#//synctext ../../../../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../../../../org.yakindu.base.types/model/types.genmodel#//types ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
   <genPackages prefix="SyncChartstext" basePackage="de.cau.cs.kieler.yakindu.synccharts.model.stext"
       disposableProviderFactory="true" ecorePackage="SyncChartstext.ecore#/">
-    <genClasses ecoreClass="SyncChartstext.ecore#//SignalDefinition"/>
     <genClasses ecoreClass="SyncChartstext.ecore#//VariableDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SyncChartstext.ecore#//VariableDefinition/isStatic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SyncChartstext.ecore#//VariableDefinition/varInitialValue"/>
-    </genClasses>
-    <genClasses ecoreClass="SyncChartstext.ecore#//EventDefinition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SyncChartstext.ecore#//EventDefinition/isInput"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SyncChartstext.ecore#//EventDefinition/isOutput"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SyncChartstext.ecore#//EventDefinition/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SyncChartstext.ecore#//EventDefinition/varInitialValue"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SyncChartstext.ecore#//EventDefinition/varCombineOperator"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

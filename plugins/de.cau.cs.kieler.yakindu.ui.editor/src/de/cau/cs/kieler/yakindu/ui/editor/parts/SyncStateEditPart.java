@@ -9,7 +9,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.yakindu.sct.ui.editor.editor.figures.StateFigure;
-import org.yakindu.sct.ui.editor.editor.figures.utils.MapModeUtils;
 import org.yakindu.sct.ui.editor.editparts.StateEditPart;
 
 import com.google.inject.Inject;
@@ -17,6 +16,7 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState;
 import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
 import de.cau.cs.kieler.yakindu.ui.editor.figures.SyncStateFigure;
+import de.cau.cs.kieler.yakindu.ui.editor.figures.utils.SyncMapModeUtils;
 
 /**
  * Implement the Initial and Final state EditParts
@@ -28,9 +28,6 @@ public class SyncStateEditPart extends StateEditPart {
 
 	@Inject
 	private SyncStateFigure primaryShape;
-
-	private boolean isInitialState = false;
-	private boolean isFinalState = false;
 
 	public SyncStateFigure getPrimaryShape() {
 		return primaryShape;
@@ -51,7 +48,6 @@ public class SyncStateEditPart extends StateEditPart {
 						- (insets.right + insets.left), getBounds().height
 						- (insets.bottom + insets.top));
 			}
-
 		};
 		figure.setLayoutManager(new StackLayout());
 		figure.setMinimumSize(getDefaultSize());
@@ -60,7 +56,7 @@ public class SyncStateEditPart extends StateEditPart {
 	}
 
 	private Dimension getDefaultSize() {
-		return MapModeUtils.getDefaultSizeDimension(getMapMode());
+		return SyncMapModeUtils.getDefaultSizeDimension(getMapMode());
 	}
 
 	@Override
@@ -82,11 +78,8 @@ public class SyncStateEditPart extends StateEditPart {
 	private void updateStateType() {
 		EObject element = resolveSemanticElement();
 		if (element instanceof SyncState) {
-			isInitialState = ((SyncState) element).isIsInitial();
-			isFinalState = ((SyncState) element).isIsFinal();
-			getPrimaryShape().setThickBorder(isInitialState);
-			getPrimaryShape().setDoubleLineBorder(isFinalState);
+			getPrimaryShape().setThickBorder(((SyncState) element).isIsInitial());
+			getPrimaryShape().setDoubleLineBorder(((SyncState) element).isIsFinal());
 		}
-
 	}
 }

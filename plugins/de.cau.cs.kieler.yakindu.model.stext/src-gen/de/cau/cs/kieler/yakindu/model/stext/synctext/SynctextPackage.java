@@ -209,6 +209,79 @@ public interface SynctextPackage extends EPackage
   int VARIABLE_DEFINITION_FEATURE_COUNT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.OperationDefinitionImpl <em>Operation Definition</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.OperationDefinitionImpl
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getOperationDefinition()
+   * @generated
+   */
+  int OPERATION_DEFINITION = 3;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATION_DEFINITION__NAME = StextPackage.OPERATION_DEFINITION__NAME;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATION_DEFINITION__TYPE = StextPackage.OPERATION_DEFINITION__TYPE;
+
+  /**
+   * The feature id for the '<em><b>Owning Type</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATION_DEFINITION__OWNING_TYPE = StextPackage.OPERATION_DEFINITION__OWNING_TYPE;
+
+  /**
+   * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATION_DEFINITION__PARAMETERS = StextPackage.OPERATION_DEFINITION__PARAMETERS;
+
+  /**
+   * The feature id for the '<em><b>Function Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATION_DEFINITION__FUNCTION_TYPE = StextPackage.OPERATION_DEFINITION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Param Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATION_DEFINITION__PARAM_TYPE = StextPackage.OPERATION_DEFINITION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Operation Definition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATION_DEFINITION_FEATURE_COUNT = StextPackage.OPERATION_DEFINITION_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.LocalReactionImpl <em>Local Reaction</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -216,7 +289,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getLocalReaction()
    * @generated
    */
-  int LOCAL_REACTION = 3;
+  int LOCAL_REACTION = 4;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -271,7 +344,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getStateReaction()
    * @generated
    */
-  int STATE_REACTION = 4;
+  int STATE_REACTION = 5;
 
   /**
    * The number of structural features of the '<em>State Reaction</em>' class.
@@ -290,7 +363,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getEntry()
    * @generated
    */
-  int ENTRY = 5;
+  int ENTRY = 6;
 
   /**
    * The number of structural features of the '<em>Entry</em>' class.
@@ -309,7 +382,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getInside()
    * @generated
    */
-  int INSIDE = 6;
+  int INSIDE = 7;
 
   /**
    * The number of structural features of the '<em>Inside</em>' class.
@@ -328,7 +401,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getExit()
    * @generated
    */
-  int EXIT = 7;
+  int EXIT = 8;
 
   /**
    * The number of structural features of the '<em>Exit</em>' class.
@@ -347,7 +420,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getSimpleScope()
    * @generated
    */
-  int SIMPLE_SCOPE = 8;
+  int SIMPLE_SCOPE = 9;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -393,7 +466,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getEventDefinition()
    * @generated
    */
-  int EVENT_DEFINITION = 9;
+  int EVENT_DEFINITION = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -405,13 +478,58 @@ public interface SynctextPackage extends EPackage
   int EVENT_DEFINITION__NAME = SIGNAL_DEFINITION__NAME;
 
   /**
+   * The feature id for the '<em><b>Is Input</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT_DEFINITION__IS_INPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Is Output</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT_DEFINITION__IS_OUTPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT_DEFINITION__TYPE = SIGNAL_DEFINITION_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Var Initial Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT_DEFINITION__VAR_INITIAL_VALUE = SIGNAL_DEFINITION_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Var Combine Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT_DEFINITION__VAR_COMBINE_OPERATOR = SIGNAL_DEFINITION_FEATURE_COUNT + 4;
+
+  /**
    * The number of structural features of the '<em>Event Definition</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT_DEFINITION_FEATURE_COUNT = SIGNAL_DEFINITION_FEATURE_COUNT + 0;
+  int EVENT_DEFINITION_FEATURE_COUNT = SIGNAL_DEFINITION_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SuspendEffectImpl <em>Suspend Effect</em>}' class.
@@ -421,7 +539,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getSuspendEffect()
    * @generated
    */
-  int SUSPEND_EFFECT = 10;
+  int SUSPEND_EFFECT = 11;
 
   /**
    * The number of structural features of the '<em>Suspend Effect</em>' class.
@@ -440,7 +558,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getReactionTrigger()
    * @generated
    */
-  int REACTION_TRIGGER = 11;
+  int REACTION_TRIGGER = 12;
 
   /**
    * The feature id for the '<em><b>State Reaction</b></em>' containment reference.
@@ -513,7 +631,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getReactionEffect()
    * @generated
    */
-  int REACTION_EFFECT = 12;
+  int REACTION_EFFECT = 13;
 
   /**
    * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -541,7 +659,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getPreValueExpression()
    * @generated
    */
-  int PRE_VALUE_EXPRESSION = 13;
+  int PRE_VALUE_EXPRESSION = 14;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -569,7 +687,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getCombineOperator()
    * @generated
    */
-  int COMBINE_OPERATOR = 14;
+  int COMBINE_OPERATOR = 15;
 
 
   /**
@@ -601,6 +719,38 @@ public interface SynctextPackage extends EPackage
    * @generated
    */
   EClass getVariableDefinition();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition <em>Operation Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Operation Definition</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition
+   * @generated
+   */
+  EClass getOperationDefinition();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition#getFunctionType <em>Function Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Function Type</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition#getFunctionType()
+   * @see #getOperationDefinition()
+   * @generated
+   */
+  EReference getOperationDefinition_FunctionType();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition#getParamType <em>Param Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Param Type</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition#getParamType()
+   * @see #getOperationDefinition()
+   * @generated
+   */
+  EReference getOperationDefinition_ParamType();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.LocalReaction <em>Local Reaction</em>}'.
@@ -671,6 +821,61 @@ public interface SynctextPackage extends EPackage
    * @generated
    */
   EClass getEventDefinition();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsInput <em>Is Input</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Input</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsInput()
+   * @see #getEventDefinition()
+   * @generated
+   */
+  EAttribute getEventDefinition_IsInput();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsOutput <em>Is Output</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Output</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsOutput()
+   * @see #getEventDefinition()
+   * @generated
+   */
+  EAttribute getEventDefinition_IsOutput();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Type</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#getType()
+   * @see #getEventDefinition()
+   * @generated
+   */
+  EReference getEventDefinition_Type();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#getVarInitialValue <em>Var Initial Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Var Initial Value</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#getVarInitialValue()
+   * @see #getEventDefinition()
+   * @generated
+   */
+  EReference getEventDefinition_VarInitialValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#getVarCombineOperator <em>Var Combine Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Var Combine Operator</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#getVarCombineOperator()
+   * @see #getEventDefinition()
+   * @generated
+   */
+  EAttribute getEventDefinition_VarCombineOperator();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.SuspendEffect <em>Suspend Effect</em>}'.
@@ -864,6 +1069,32 @@ public interface SynctextPackage extends EPackage
     EClass VARIABLE_DEFINITION = eINSTANCE.getVariableDefinition();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.OperationDefinitionImpl <em>Operation Definition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.OperationDefinitionImpl
+     * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getOperationDefinition()
+     * @generated
+     */
+    EClass OPERATION_DEFINITION = eINSTANCE.getOperationDefinition();
+
+    /**
+     * The meta object literal for the '<em><b>Function Type</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference OPERATION_DEFINITION__FUNCTION_TYPE = eINSTANCE.getOperationDefinition_FunctionType();
+
+    /**
+     * The meta object literal for the '<em><b>Param Type</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference OPERATION_DEFINITION__PARAM_TYPE = eINSTANCE.getOperationDefinition_ParamType();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.LocalReactionImpl <em>Local Reaction</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -932,6 +1163,46 @@ public interface SynctextPackage extends EPackage
      * @generated
      */
     EClass EVENT_DEFINITION = eINSTANCE.getEventDefinition();
+
+    /**
+     * The meta object literal for the '<em><b>Is Input</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EVENT_DEFINITION__IS_INPUT = eINSTANCE.getEventDefinition_IsInput();
+
+    /**
+     * The meta object literal for the '<em><b>Is Output</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EVENT_DEFINITION__IS_OUTPUT = eINSTANCE.getEventDefinition_IsOutput();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EVENT_DEFINITION__TYPE = eINSTANCE.getEventDefinition_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Var Initial Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EVENT_DEFINITION__VAR_INITIAL_VALUE = eINSTANCE.getEventDefinition_VarInitialValue();
+
+    /**
+     * The meta object literal for the '<em><b>Var Combine Operator</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EVENT_DEFINITION__VAR_COMBINE_OPERATOR = eINSTANCE.getEventDefinition_VarCombineOperator();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SuspendEffectImpl <em>Suspend Effect</em>}' class.

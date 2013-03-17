@@ -58,34 +58,6 @@ public interface SCChartsExpPackage extends EPackage
   SCChartsExpPackage eINSTANCE = de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SignalDefinitionImpl <em>Signal Definition</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SignalDefinitionImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getSignalDefinition()
-   * @generated
-   */
-  int SIGNAL_DEFINITION = 0;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL_DEFINITION__NAME = SynctextPackage.SIGNAL_DEFINITION__NAME;
-
-  /**
-   * The number of structural features of the '<em>Signal Definition</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL_DEFINITION_FEATURE_COUNT = SynctextPackage.SIGNAL_DEFINITION_FEATURE_COUNT + 0;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -93,7 +65,7 @@ public interface SCChartsExpPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getVariableDefinition()
    * @generated
    */
-  int VARIABLE_DEFINITION = 1;
+  int VARIABLE_DEFINITION = 0;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -194,62 +166,6 @@ public interface SCChartsExpPackage extends EPackage
    */
   int VARIABLE_DEFINITION_FEATURE_COUNT = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 4;
 
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.EventDefinitionImpl <em>Event Definition</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.EventDefinitionImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getEventDefinition()
-   * @generated
-   */
-  int EVENT_DEFINITION = 2;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EVENT_DEFINITION__NAME = SIGNAL_DEFINITION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Is Input</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EVENT_DEFINITION__IS_INPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Is Output</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EVENT_DEFINITION__IS_OUTPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Event Definition</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EVENT_DEFINITION_FEATURE_COUNT = SIGNAL_DEFINITION_FEATURE_COUNT + 2;
-
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SignalDefinition <em>Signal Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Signal Definition</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SignalDefinition
-   * @generated
-   */
-  EClass getSignalDefinition();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition <em>Variable Definition</em>}'.
@@ -306,38 +222,6 @@ public interface SCChartsExpPackage extends EPackage
   EAttribute getVariableDefinition_VarCombineOperator();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition <em>Event Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Event Definition</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition
-   * @generated
-   */
-  EClass getEventDefinition();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition#isIsInput <em>Is Input</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Input</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition#isIsInput()
-   * @see #getEventDefinition()
-   * @generated
-   */
-  EAttribute getEventDefinition_IsInput();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition#isIsOutput <em>Is Output</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Output</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition#isIsOutput()
-   * @see #getEventDefinition()
-   * @generated
-   */
-  EAttribute getEventDefinition_IsOutput();
-
-  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -360,16 +244,6 @@ public interface SCChartsExpPackage extends EPackage
    */
   interface Literals
   {
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SignalDefinitionImpl <em>Signal Definition</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SignalDefinitionImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getSignalDefinition()
-     * @generated
-     */
-    EClass SIGNAL_DEFINITION = eINSTANCE.getSignalDefinition();
-
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
      * <!-- begin-user-doc -->
@@ -411,32 +285,6 @@ public interface SCChartsExpPackage extends EPackage
      * @generated
      */
     EAttribute VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = eINSTANCE.getVariableDefinition_VarCombineOperator();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.EventDefinitionImpl <em>Event Definition</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.EventDefinitionImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getEventDefinition()
-     * @generated
-     */
-    EClass EVENT_DEFINITION = eINSTANCE.getEventDefinition();
-
-    /**
-     * The meta object literal for the '<em><b>Is Input</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EVENT_DEFINITION__IS_INPUT = eINSTANCE.getEventDefinition_IsInput();
-
-    /**
-     * The meta object literal for the '<em><b>Is Output</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EVENT_DEFINITION__IS_OUTPUT = eINSTANCE.getEventDefinition_IsOutput();
 
   }
 

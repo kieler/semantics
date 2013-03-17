@@ -25,7 +25,7 @@ public class SyncChartstextParser extends org.eclipse.xtext.parser.antlr.Abstrac
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "SignalDefinition";
+		return "VariableDefinition";
 	}
 	
 	public SyncChartstextGrammarAccess getGrammarAccess() {

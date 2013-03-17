@@ -22,13 +22,23 @@
     <genClasses ecoreClass="Synctext.ecore#//StateScope"/>
     <genClasses ecoreClass="Synctext.ecore#//SignalDefinition"/>
     <genClasses ecoreClass="Synctext.ecore#//VariableDefinition"/>
+    <genClasses ecoreClass="Synctext.ecore#//OperationDefinition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Synctext.ecore#//OperationDefinition/functionType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Synctext.ecore#//OperationDefinition/paramType"/>
+    </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//LocalReaction"/>
     <genClasses ecoreClass="Synctext.ecore#//StateReaction"/>
     <genClasses ecoreClass="Synctext.ecore#//Entry"/>
     <genClasses ecoreClass="Synctext.ecore#//Inside"/>
     <genClasses ecoreClass="Synctext.ecore#//Exit"/>
     <genClasses ecoreClass="Synctext.ecore#//SimpleScope"/>
-    <genClasses ecoreClass="Synctext.ecore#//EventDefinition"/>
+    <genClasses ecoreClass="Synctext.ecore#//EventDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/isInput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/isOutput"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventDefinition/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventDefinition/varInitialValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/varCombineOperator"/>
+    </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//SuspendEffect"/>
     <genClasses ecoreClass="Synctext.ecore#//ReactionTrigger">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//ReactionTrigger/stateReaction"/>

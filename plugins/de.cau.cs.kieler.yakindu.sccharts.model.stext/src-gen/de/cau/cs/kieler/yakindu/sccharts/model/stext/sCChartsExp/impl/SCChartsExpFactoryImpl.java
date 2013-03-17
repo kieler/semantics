@@ -64,23 +64,10 @@ public class SCChartsExpFactoryImpl extends EFactoryImpl implements SCChartsExpF
   {
     switch (eClass.getClassifierID())
     {
-      case SCChartsExpPackage.SIGNAL_DEFINITION: return createSignalDefinition();
       case SCChartsExpPackage.VARIABLE_DEFINITION: return createVariableDefinition();
-      case SCChartsExpPackage.EVENT_DEFINITION: return createEventDefinition();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SignalDefinition createSignalDefinition()
-  {
-    SignalDefinitionImpl signalDefinition = new SignalDefinitionImpl();
-    return signalDefinition;
   }
 
   /**
@@ -92,17 +79,6 @@ public class SCChartsExpFactoryImpl extends EFactoryImpl implements SCChartsExpF
   {
     VariableDefinitionImpl variableDefinition = new VariableDefinitionImpl();
     return variableDefinition;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EventDefinition createEventDefinition()
-  {
-    EventDefinitionImpl eventDefinition = new EventDefinitionImpl();
-    return eventDefinition;
   }
 
   /**

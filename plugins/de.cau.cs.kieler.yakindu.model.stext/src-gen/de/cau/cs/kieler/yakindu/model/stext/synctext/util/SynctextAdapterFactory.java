@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.yakindu.base.base.NamedElement;
 
 import org.yakindu.base.types.Feature;
+import org.yakindu.base.types.Operation;
 import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypedElement;
 
@@ -105,6 +106,11 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
       public Adapter caseVariableDefinition(VariableDefinition object)
       {
         return createVariableDefinitionAdapter();
+      }
+      @Override
+      public Adapter caseOperationDefinition(OperationDefinition object)
+      {
+        return createOperationDefinitionAdapter();
       }
       @Override
       public Adapter caseLocalReaction(LocalReaction object)
@@ -207,6 +213,16 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
         return createStext_VariableDefinitionAdapter();
       }
       @Override
+      public Adapter caseOperation(Operation object)
+      {
+        return createOperationAdapter();
+      }
+      @Override
+      public Adapter caseStext_OperationDefinition(org.yakindu.sct.model.stext.stext.OperationDefinition object)
+      {
+        return createStext_OperationDefinitionAdapter();
+      }
+      @Override
       public Adapter caseReaction(Reaction object)
       {
         return createReactionAdapter();
@@ -299,6 +315,21 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVariableDefinitionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition <em>Operation Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition
+   * @generated
+   */
+  public Adapter createOperationDefinitionAdapter()
   {
     return null;
   }
@@ -599,6 +630,36 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createStext_VariableDefinitionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.base.types.Operation <em>Operation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.base.types.Operation
+   * @generated
+   */
+  public Adapter createOperationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.OperationDefinition <em>Operation Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.sct.model.stext.stext.OperationDefinition
+   * @generated
+   */
+  public Adapter createStext_OperationDefinitionAdapter()
   {
     return null;
   }

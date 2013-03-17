@@ -16,7 +16,6 @@ import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypedElement;
 
 import org.yakindu.sct.model.sgraph.Declaration;
-import org.yakindu.sct.model.sgraph.Event;
 import org.yakindu.sct.model.sgraph.Variable;
 
 /**
@@ -82,17 +81,6 @@ public class SyncChartstextSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case SyncChartstextPackage.SIGNAL_DEFINITION:
-      {
-        SignalDefinition signalDefinition = (SignalDefinition)theEObject;
-        T result = caseSignalDefinition(signalDefinition);
-        if (result == null) result = caseSynctext_SignalDefinition(signalDefinition);
-        if (result == null) result = caseEvent(signalDefinition);
-        if (result == null) result = caseDeclaration(signalDefinition);
-        if (result == null) result = caseNamedElement(signalDefinition);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SyncChartstextPackage.VARIABLE_DEFINITION:
       {
         VariableDefinition variableDefinition = (VariableDefinition)theEObject;
@@ -108,36 +96,8 @@ public class SyncChartstextSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SyncChartstextPackage.EVENT_DEFINITION:
-      {
-        EventDefinition eventDefinition = (EventDefinition)theEObject;
-        T result = caseEventDefinition(eventDefinition);
-        if (result == null) result = caseSignalDefinition(eventDefinition);
-        if (result == null) result = caseSynctext_SignalDefinition(eventDefinition);
-        if (result == null) result = caseEvent(eventDefinition);
-        if (result == null) result = caseDeclaration(eventDefinition);
-        if (result == null) result = caseNamedElement(eventDefinition);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       default: return defaultCase(theEObject);
     }
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal Definition</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal Definition</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSignalDefinition(SignalDefinition object)
-  {
-    return null;
   }
 
   /**
@@ -152,22 +112,6 @@ public class SyncChartstextSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseVariableDefinition(VariableDefinition object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Event Definition</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Event Definition</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEventDefinition(EventDefinition object)
   {
     return null;
   }
@@ -200,38 +144,6 @@ public class SyncChartstextSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseDeclaration(Declaration object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Event</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Event</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEvent(Event object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal Definition</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal Definition</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSynctext_SignalDefinition(de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition object)
   {
     return null;
   }

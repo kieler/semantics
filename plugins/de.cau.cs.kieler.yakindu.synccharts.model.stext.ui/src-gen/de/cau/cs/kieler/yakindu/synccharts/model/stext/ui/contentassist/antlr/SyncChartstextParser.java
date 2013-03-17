@@ -70,13 +70,14 @@ public class SyncChartstextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUnaryOperatorAccess().getAlternatives(), "rule__UnaryOperator__Alternatives");
 					put(grammarAccess.getRelationalOperatorAccess().getAlternatives(), "rule__RelationalOperator__Alternatives");
 					put(grammarAccess.getTimeUnitAccess().getAlternatives(), "rule__TimeUnit__Alternatives");
+					put(grammarAccess.getVariableDefinitionAccess().getGroup(), "rule__VariableDefinition__Group__0");
+					put(grammarAccess.getVariableDefinitionAccess().getGroup_4(), "rule__VariableDefinition__Group_4__0");
+					put(grammarAccess.getStateScopeAccess().getGroup(), "rule__StateScope__Group__0");
 					put(grammarAccess.getSignalDefinitionAccess().getGroup(), "rule__SignalDefinition__Group__0");
 					put(grammarAccess.getSignalDefinitionAccess().getGroup_5(), "rule__SignalDefinition__Group_5__0");
 					put(grammarAccess.getSignalDefinitionAccess().getGroup_5_2(), "rule__SignalDefinition__Group_5_2__0");
 					put(grammarAccess.getSignalDefinitionAccess().getGroup_5_3(), "rule__SignalDefinition__Group_5_3__0");
-					put(grammarAccess.getVariableDefinitionAccess().getGroup(), "rule__VariableDefinition__Group__0");
-					put(grammarAccess.getVariableDefinitionAccess().getGroup_4(), "rule__VariableDefinition__Group_4__0");
-					put(grammarAccess.getStateScopeAccess().getGroup(), "rule__StateScope__Group__0");
+					put(grammarAccess.getOperationDefinitionAccess().getGroup(), "rule__OperationDefinition__Group__0");
 					put(grammarAccess.getLocalReactionAccess().getGroup(), "rule__LocalReaction__Group__0");
 					put(grammarAccess.getLocalReactionAccess().getGroup_1(), "rule__LocalReaction__Group_1__0");
 					put(grammarAccess.getSuspendEffectAccess().getGroup(), "rule__SuspendEffect__Group__0");
@@ -99,10 +100,6 @@ public class SyncChartstextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getInternalScopeAccess().getGroup(), "rule__InternalScope__Group__0");
 					put(grammarAccess.getEventDefinitionAccess().getGroup(), "rule__EventDefinition__Group__0");
 					put(grammarAccess.getEventDefinitionAccess().getGroup_3(), "rule__EventDefinition__Group_3__0");
-					put(grammarAccess.getOperationDefinitionAccess().getGroup(), "rule__OperationDefinition__Group__0");
-					put(grammarAccess.getOperationDefinitionAccess().getGroup_4(), "rule__OperationDefinition__Group_4__0");
-					put(grammarAccess.getOperationDefinitionAccess().getGroup_4_1(), "rule__OperationDefinition__Group_4_1__0");
-					put(grammarAccess.getOperationDefinitionAccess().getGroup_6(), "rule__OperationDefinition__Group_6__0");
 					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 					put(grammarAccess.getFQNAccess().getGroup(), "rule__FQN__Group__0");
 					put(grammarAccess.getFQNAccess().getGroup_1(), "rule__FQN__Group_1__0");
@@ -160,17 +157,20 @@ public class SyncChartstextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRealLiteralAccess().getGroup(), "rule__RealLiteral__Group__0");
 					put(grammarAccess.getHexLiteralAccess().getGroup(), "rule__HexLiteral__Group__0");
 					put(grammarAccess.getStringLiteralAccess().getGroup(), "rule__StringLiteral__Group__0");
+					put(grammarAccess.getVariableDefinitionAccess().getIsStaticAssignment_1(), "rule__VariableDefinition__IsStaticAssignment_1");
+					put(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_2(), "rule__VariableDefinition__TypeAssignment_2");
+					put(grammarAccess.getVariableDefinitionAccess().getNameAssignment_3(), "rule__VariableDefinition__NameAssignment_3");
+					put(grammarAccess.getVariableDefinitionAccess().getVarInitialValueAssignment_4_1(), "rule__VariableDefinition__VarInitialValueAssignment_4_1");
+					put(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1(), "rule__StateScope__DeclarationsAssignment_1");
 					put(grammarAccess.getSignalDefinitionAccess().getIsInputAssignment_1(), "rule__SignalDefinition__IsInputAssignment_1");
 					put(grammarAccess.getSignalDefinitionAccess().getIsOutputAssignment_2(), "rule__SignalDefinition__IsOutputAssignment_2");
 					put(grammarAccess.getSignalDefinitionAccess().getNameAssignment_4(), "rule__SignalDefinition__NameAssignment_4");
 					put(grammarAccess.getSignalDefinitionAccess().getTypeAssignment_5_1(), "rule__SignalDefinition__TypeAssignment_5_1");
 					put(grammarAccess.getSignalDefinitionAccess().getVarInitialValueAssignment_5_2_1(), "rule__SignalDefinition__VarInitialValueAssignment_5_2_1");
 					put(grammarAccess.getSignalDefinitionAccess().getVarCombineOperatorAssignment_5_3_1(), "rule__SignalDefinition__VarCombineOperatorAssignment_5_3_1");
-					put(grammarAccess.getVariableDefinitionAccess().getIsStaticAssignment_1(), "rule__VariableDefinition__IsStaticAssignment_1");
-					put(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_2(), "rule__VariableDefinition__TypeAssignment_2");
-					put(grammarAccess.getVariableDefinitionAccess().getNameAssignment_3(), "rule__VariableDefinition__NameAssignment_3");
-					put(grammarAccess.getVariableDefinitionAccess().getVarInitialValueAssignment_4_1(), "rule__VariableDefinition__VarInitialValueAssignment_4_1");
-					put(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1(), "rule__StateScope__DeclarationsAssignment_1");
+					put(grammarAccess.getOperationDefinitionAccess().getFunctionTypeAssignment_2(), "rule__OperationDefinition__FunctionTypeAssignment_2");
+					put(grammarAccess.getOperationDefinitionAccess().getNameAssignment_3(), "rule__OperationDefinition__NameAssignment_3");
+					put(grammarAccess.getOperationDefinitionAccess().getParamTypeAssignment_5(), "rule__OperationDefinition__ParamTypeAssignment_5");
 					put(grammarAccess.getLocalReactionAccess().getTriggerAssignment_0(), "rule__LocalReaction__TriggerAssignment_0");
 					put(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_1(), "rule__LocalReaction__EffectAssignment_1_1");
 					put(grammarAccess.getLocalReactionTriggerAccess().getStateReactionAssignment_1(), "rule__LocalReactionTrigger__StateReactionAssignment_1");
@@ -196,10 +196,6 @@ public class SyncChartstextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEventDefinitionAccess().getDirectionAssignment_0(), "rule__EventDefinition__DirectionAssignment_0");
 					put(grammarAccess.getEventDefinitionAccess().getNameAssignment_2(), "rule__EventDefinition__NameAssignment_2");
 					put(grammarAccess.getEventDefinitionAccess().getTypeAssignment_3_1(), "rule__EventDefinition__TypeAssignment_3_1");
-					put(grammarAccess.getOperationDefinitionAccess().getNameAssignment_2(), "rule__OperationDefinition__NameAssignment_2");
-					put(grammarAccess.getOperationDefinitionAccess().getParametersAssignment_4_0(), "rule__OperationDefinition__ParametersAssignment_4_0");
-					put(grammarAccess.getOperationDefinitionAccess().getParametersAssignment_4_1_1(), "rule__OperationDefinition__ParametersAssignment_4_1_1");
-					put(grammarAccess.getOperationDefinitionAccess().getTypeAssignment_6_1(), "rule__OperationDefinition__TypeAssignment_6_1");
 					put(grammarAccess.getParameterAccess().getNameAssignment_0(), "rule__Parameter__NameAssignment_0");
 					put(grammarAccess.getParameterAccess().getTypeAssignment_2(), "rule__Parameter__TypeAssignment_2");
 					put(grammarAccess.getTransitionReactionAccess().getTriggerAssignment_1(), "rule__TransitionReaction__TriggerAssignment_1");
@@ -260,7 +256,7 @@ public class SyncChartstextParser extends AbstractContentAssistParser {
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
 			de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.contentassist.antlr.internal.InternalSyncChartstextParser typedParser = (de.cau.cs.kieler.yakindu.synccharts.model.stext.ui.contentassist.antlr.internal.InternalSyncChartstextParser) parser;
-			typedParser.entryRuleSignalDefinition();
+			typedParser.entryRuleVariableDefinition();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);

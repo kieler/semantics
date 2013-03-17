@@ -4,10 +4,8 @@ package de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl;
 
 import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage;
 
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.EventDefinition;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFactory;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SignalDefinition;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -29,21 +27,7 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass signalDefinitionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass variableDefinitionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass eventDefinitionEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -116,16 +100,6 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSignalDefinition()
-  {
-    return signalDefinitionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getVariableDefinition()
   {
     return variableDefinitionEClass;
@@ -176,36 +150,6 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getEventDefinition()
-  {
-    return eventDefinitionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getEventDefinition_IsInput()
-  {
-    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getEventDefinition_IsOutput()
-  {
-    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public SCChartsExpFactory getSCChartsExpFactory()
   {
     return (SCChartsExpFactory)getEFactoryInstance();
@@ -231,17 +175,11 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     isCreated = true;
 
     // Create classes and their features
-    signalDefinitionEClass = createEClass(SIGNAL_DEFINITION);
-
     variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_INPUT);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_OUTPUT);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_STATIC);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR);
-
-    eventDefinitionEClass = createEClass(EVENT_DEFINITION);
-    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__IS_INPUT);
-    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__IS_OUTPUT);
   }
 
   /**
@@ -276,22 +214,14 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    signalDefinitionEClass.getESuperTypes().add(theSynctextPackage.getSignalDefinition());
     variableDefinitionEClass.getESuperTypes().add(theSynctextPackage.getVariableDefinition());
-    eventDefinitionEClass.getESuperTypes().add(this.getSignalDefinition());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(signalDefinitionEClass, SignalDefinition.class, "SignalDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
     initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVariableDefinition_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDefinition_VarCombineOperator(), theSynctextPackage.getCombineOperator(), "varCombineOperator", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(eventDefinitionEClass, EventDefinition.class, "EventDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getEventDefinition_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getEventDefinition_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

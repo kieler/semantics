@@ -68,6 +68,7 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
       case SynctextPackage.STATE_SCOPE: return createStateScope();
       case SynctextPackage.SIGNAL_DEFINITION: return createSignalDefinition();
       case SynctextPackage.VARIABLE_DEFINITION: return createVariableDefinition();
+      case SynctextPackage.OPERATION_DEFINITION: return createOperationDefinition();
       case SynctextPackage.LOCAL_REACTION: return createLocalReaction();
       case SynctextPackage.STATE_REACTION: return createStateReaction();
       case SynctextPackage.ENTRY: return createEntry();
@@ -149,6 +150,17 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
   {
     VariableDefinitionImpl variableDefinition = new VariableDefinitionImpl();
     return variableDefinition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public OperationDefinition createOperationDefinition()
+  {
+    OperationDefinitionImpl operationDefinition = new OperationDefinitionImpl();
+    return operationDefinition;
   }
 
   /**

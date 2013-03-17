@@ -125,8 +125,8 @@
             id="property.section.domain.region" 
             tab="property.tab.domain"
             class="org.yakindu.sct.ui.editor.propertysheets.RegionPropertySection">
-            <input type="org.yakindu.sct.ui.editor.editparts.RegionEditPart"/>-->
-            <!--<input type="de.cau.cs.kieler.yakindu.sccharts.ui.editor.parts.SyncRegionEditPart"/>-->
+            <!--<input type="org.yakindu.sct.ui.editor.editparts.RegionEditPart"/>-->
+            <input type="de.cau.cs.kieler.yakindu.ui.editor.parts.SyncRegionEditPart"/>
          </propertySection>
             <!-- Choice model section -->         
          <propertySection
@@ -227,7 +227,7 @@
       <option
             class="org.yakindu.sct.model.sgraph.Region"
             option="de.cau.cs.kieler.borderSpacing"
-            value="5.0">
+            value="7.0">
       </option>
       <option
             class="org.yakindu.sct.model.sgraph.Region"

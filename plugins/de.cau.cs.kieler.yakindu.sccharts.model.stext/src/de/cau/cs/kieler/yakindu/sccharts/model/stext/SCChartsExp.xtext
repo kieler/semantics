@@ -10,9 +10,6 @@ import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 
 
-SignalDefinition:
-	{EventDefinition} (isInput?='input')? (isOutput?='output')? 'signal' name=ID ';';
-
 /************************************************/
 /*			 Variable Definition				*/
 /************************************************/

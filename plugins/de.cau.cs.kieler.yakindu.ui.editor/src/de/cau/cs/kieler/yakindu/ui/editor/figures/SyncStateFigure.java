@@ -1,7 +1,22 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.yakindu.ui.editor.figures;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.GridLayout;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.yakindu.sct.ui.editor.editor.figures.StateFigure;
 import org.yakindu.sct.ui.editor.preferences.StatechartColorConstants;
@@ -15,15 +30,15 @@ public class SyncStateFigure extends StateFigure {
 	private boolean isDoubleLineBorder = false;
 	private boolean isThickBorder = false;
 
-//	public SyncStateFigure() {
-//		GridLayout layout = new GridLayout(1, false);
-//		this.setLayoutManager(layout);
-//		this.setCornerDimensions(new Dimension(15, 15));
-//		this.setLineWidth(getBorderWidth());
-//		this.setOutline(true);
-//		createContents();
-//	}
+	public SyncStateFigure() {
+		// reduce white spaces
+		((GridLayout) this.getLayoutManager()).verticalSpacing=-1;
+	}
 
+	/**
+	 * Override to create a double border lined State when a final state
+	 */
+	@Override
 	protected void outlineShape(final Graphics graphics) {
 		// if the isDoubleLineBorder is true, draw a second rectangle.
 		if (isDoubleLineBorder) {
@@ -50,6 +65,15 @@ public class SyncStateFigure extends StateFigure {
 			setForegroundColor(StatechartColorConstants.STATE_LINE_COLOR);
 			super.outlineShape(graphics);
 		}
+	}
+
+	/**
+	 * Override to change the State preferred height
+	 */
+	@Override
+	public Dimension getPreferredSize(int wHint, int hHint) {
+		Dimension result = super.getPreferredSize(wHint, hHint);
+		return new Dimension(result.width + BLUR_SHADOW_WIDTH, 0);
 	}
 
 	/**

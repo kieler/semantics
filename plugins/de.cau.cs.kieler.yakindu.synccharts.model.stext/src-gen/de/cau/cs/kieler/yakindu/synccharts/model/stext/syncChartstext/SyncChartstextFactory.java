@@ -23,15 +23,6 @@ public interface SyncChartstextFactory extends EFactory
   SyncChartstextFactory eINSTANCE = de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.impl.SyncChartstextFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Signal Definition</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Signal Definition</em>'.
-   * @generated
-   */
-  SignalDefinition createSignalDefinition();
-
-  /**
    * Returns a new object of class '<em>Variable Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -39,15 +30,6 @@ public interface SyncChartstextFactory extends EFactory
    * @generated
    */
   VariableDefinition createVariableDefinition();
-
-  /**
-   * Returns a new object of class '<em>Event Definition</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Event Definition</em>'.
-   * @generated
-   */
-  EventDefinition createEventDefinition();
 
   /**
    * Returns the package supported by this factory.

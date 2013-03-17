@@ -125,7 +125,7 @@
             id="property.section.domain.region" 
             tab="property.tab.domain"
             class="org.yakindu.sct.ui.editor.propertysheets.RegionPropertySection">
-           <input type="org.yakindu.sct.ui.editor.editparts.RegionEditPart"/>
+           <input type="de.cau.cs.kieler.yakindu.ui.editor.parts.SyncRegionEditPart"/>
          </propertySection>
             <!-- Choice model section -->         
          <propertySection

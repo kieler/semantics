@@ -64,23 +64,10 @@ public class SyncChartstextFactoryImpl extends EFactoryImpl implements SyncChart
   {
     switch (eClass.getClassifierID())
     {
-      case SyncChartstextPackage.SIGNAL_DEFINITION: return createSignalDefinition();
       case SyncChartstextPackage.VARIABLE_DEFINITION: return createVariableDefinition();
-      case SyncChartstextPackage.EVENT_DEFINITION: return createEventDefinition();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SignalDefinition createSignalDefinition()
-  {
-    SignalDefinitionImpl signalDefinition = new SignalDefinitionImpl();
-    return signalDefinition;
   }
 
   /**
@@ -92,17 +79,6 @@ public class SyncChartstextFactoryImpl extends EFactoryImpl implements SyncChart
   {
     VariableDefinitionImpl variableDefinition = new VariableDefinitionImpl();
     return variableDefinition;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EventDefinition createEventDefinition()
-  {
-    EventDefinitionImpl eventDefinition = new EventDefinitionImpl();
-    return eventDefinition;
   }
 
   /**

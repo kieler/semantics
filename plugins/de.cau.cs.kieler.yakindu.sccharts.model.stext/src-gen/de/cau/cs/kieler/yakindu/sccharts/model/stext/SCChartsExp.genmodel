@@ -9,16 +9,11 @@
     usedGenPackages="../../../../../../../../../../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/Synctext.genmodel#//synctext ../../../../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../../../../org.yakindu.base.types/model/types.genmodel#//types ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
   <genPackages prefix="SCChartsExp" basePackage="de.cau.cs.kieler.yakindu.sccharts.model.stext"
       disposableProviderFactory="true" ecorePackage="SCChartsExp.ecore#/">
-    <genClasses ecoreClass="SCChartsExp.ecore#//SignalDefinition"/>
     <genClasses ecoreClass="SCChartsExp.ecore#//VariableDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isInput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isOutput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/isStatic"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//VariableDefinition/varCombineOperator"/>
-    </genClasses>
-    <genClasses ecoreClass="SCChartsExp.ecore#//EventDefinition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//EventDefinition/isInput"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCChartsExp.ecore#//EventDefinition/isOutput"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

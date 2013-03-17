@@ -20,113 +20,6 @@ import org.yakindu.sct.model.stext.services.STextGrammarAccess;
 public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class SignalDefinitionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SignalDefinition");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cEventDefinitionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cIsInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsInputInputKeyword_1_0 = (Keyword)cIsInputAssignment_1.eContents().get(0);
-		private final Assignment cIsOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cIsOutputOutputKeyword_2_0 = (Keyword)cIsOutputAssignment_2.eContents().get(0);
-		private final Keyword cSignalKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cNameIDTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cColonKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cTypeAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final CrossReference cTypeTypeCrossReference_5_1_0 = (CrossReference)cTypeAssignment_5_1.eContents().get(0);
-		private final RuleCall cTypeTypeFQNParserRuleCall_5_1_0_1 = (RuleCall)cTypeTypeCrossReference_5_1_0.eContents().get(1);
-		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
-		private final Keyword cEqualsSignKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
-		private final Assignment cVarInitialValueAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
-		private final RuleCall cVarInitialValueExpressionParserRuleCall_5_2_1_0 = (RuleCall)cVarInitialValueAssignment_5_2_1.eContents().get(0);
-		private final Group cGroup_5_3 = (Group)cGroup_5.eContents().get(3);
-		private final Keyword cWithKeyword_5_3_0 = (Keyword)cGroup_5_3.eContents().get(0);
-		private final Assignment cVarCombineOperatorAssignment_5_3_1 = (Assignment)cGroup_5_3.eContents().get(1);
-		private final RuleCall cVarCombineOperatorCombineOperatorEnumRuleCall_5_3_1_0 = (RuleCall)cVarCombineOperatorAssignment_5_3_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
-		
-		/// ******************************************** / / *			 Signal Definition						* /
-		//
-		/// ******************************************** / SignalDefinition:
-		//
-		//	{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
-		//
-		//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";";
-		public ParserRule getRule() { return rule; }
-
-		//{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
-		//
-		//varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";"
-		public Group getGroup() { return cGroup; }
-
-		//{EventDefinition}
-		public Action getEventDefinitionAction_0() { return cEventDefinitionAction_0; }
-
-		//isInput?="input"?
-		public Assignment getIsInputAssignment_1() { return cIsInputAssignment_1; }
-
-		//"input"
-		public Keyword getIsInputInputKeyword_1_0() { return cIsInputInputKeyword_1_0; }
-
-		//isOutput?="output"?
-		public Assignment getIsOutputAssignment_2() { return cIsOutputAssignment_2; }
-
-		//"output"
-		public Keyword getIsOutputOutputKeyword_2_0() { return cIsOutputOutputKeyword_2_0; }
-
-		//"signal"
-		public Keyword getSignalKeyword_3() { return cSignalKeyword_3; }
-
-		//name=ID
-		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_4_0() { return cNameIDTerminalRuleCall_4_0; }
-
-		//(":" type=[types::Type|FQN] ("=" varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)?
-		public Group getGroup_5() { return cGroup_5; }
-
-		//":"
-		public Keyword getColonKeyword_5_0() { return cColonKeyword_5_0; }
-
-		//type=[types::Type|FQN]
-		public Assignment getTypeAssignment_5_1() { return cTypeAssignment_5_1; }
-
-		//[types::Type|FQN]
-		public CrossReference getTypeTypeCrossReference_5_1_0() { return cTypeTypeCrossReference_5_1_0; }
-
-		//FQN
-		public RuleCall getTypeTypeFQNParserRuleCall_5_1_0_1() { return cTypeTypeFQNParserRuleCall_5_1_0_1; }
-
-		//("=" varInitialValue=Expression)?
-		public Group getGroup_5_2() { return cGroup_5_2; }
-
-		//"="
-		public Keyword getEqualsSignKeyword_5_2_0() { return cEqualsSignKeyword_5_2_0; }
-
-		//varInitialValue=Expression
-		public Assignment getVarInitialValueAssignment_5_2_1() { return cVarInitialValueAssignment_5_2_1; }
-
-		//Expression
-		public RuleCall getVarInitialValueExpressionParserRuleCall_5_2_1_0() { return cVarInitialValueExpressionParserRuleCall_5_2_1_0; }
-
-		//("with" varCombineOperator=CombineOperator)?
-		public Group getGroup_5_3() { return cGroup_5_3; }
-
-		//"with"
-		public Keyword getWithKeyword_5_3_0() { return cWithKeyword_5_3_0; }
-
-		//varCombineOperator=CombineOperator
-		public Assignment getVarCombineOperatorAssignment_5_3_1() { return cVarCombineOperatorAssignment_5_3_1; }
-
-		//CombineOperator
-		public RuleCall getVarCombineOperatorCombineOperatorEnumRuleCall_5_3_1_0() { return cVarCombineOperatorCombineOperatorEnumRuleCall_5_3_1_0; }
-
-		//";"
-		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
-	}
-
 	public class VariableDefinitionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableDefinition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -201,7 +94,6 @@ public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	private SignalDefinitionElements pSignalDefinition;
 	private VariableDefinitionElements pVariableDefinition;
 	
 	private final Grammar grammar;
@@ -242,21 +134,6 @@ public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	/// ******************************************** / / *			 Signal Definition						* /
-	//
-	/// ******************************************** / SignalDefinition:
-	//
-	//	{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
-	//
-	//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";";
-	public SignalDefinitionElements getSignalDefinitionAccess() {
-		return (pSignalDefinition != null) ? pSignalDefinition : (pSignalDefinition = new SignalDefinitionElements());
-	}
-	
-	public ParserRule getSignalDefinitionRule() {
-		return getSignalDefinitionAccess().getRule();
-	}
-
 	/// ************************************************ / / *			 Variable Definition							* /
 	//
 	/// ************************************************ / // Override the Synctext VariableDefinition rule
@@ -300,6 +177,30 @@ public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSignalDeclarationRule() {
 		return getSignalDeclarationAccess().getRule();
+	}
+
+	//SignalDefinition:
+	//
+	//	{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+	//
+	//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";";
+	public SynctextGrammarAccess.SignalDefinitionElements getSignalDefinitionAccess() {
+		return gaSynctext.getSignalDefinitionAccess();
+	}
+	
+	public ParserRule getSignalDefinitionRule() {
+		return getSignalDefinitionAccess().getRule();
+	}
+
+	//OperationDefinition:
+	//
+	//	{OperationDefinition} "extern" functionType=[types::Type|FQN] name=XID "(" paramType=[types::Type|FQN] ")" ";";
+	public SynctextGrammarAccess.OperationDefinitionElements getOperationDefinitionAccess() {
+		return gaSynctext.getOperationDefinitionAccess();
+	}
+	
+	public ParserRule getOperationDefinitionRule() {
+		return getOperationDefinitionAccess().getRule();
 	}
 
 	/// ************************************************ / / *			 	LocalReactionScope					* /
@@ -739,19 +640,6 @@ public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getOperationFeatureRule() {
 		return getOperationFeatureAccess().getRule();
-	}
-
-	//OperationDefinition:
-	//
-	//	{OperationDefinition} "operation" name=XID "(" (parameters+=Parameter ("," parameters+=Parameter)*)? ")" (":"
-	//
-	//	type=[types::Type|FQN])?;
-	public STextGrammarAccess.OperationDefinitionElements getOperationDefinitionAccess() {
-		return gaSynctext.getOperationDefinitionAccess();
-	}
-	
-	public ParserRule getOperationDefinitionRule() {
-		return getOperationDefinitionAccess().getRule();
 	}
 
 	//Parameter returns types::Parameter:

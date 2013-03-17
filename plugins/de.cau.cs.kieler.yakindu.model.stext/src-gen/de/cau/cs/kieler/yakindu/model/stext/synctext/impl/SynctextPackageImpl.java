@@ -8,6 +8,7 @@ import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.Exit;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.Inside;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.LocalReaction;
+import de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.PreValueExpression;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger;
@@ -27,6 +28,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
+import org.yakindu.base.types.TypesPackage;
 
 import org.yakindu.sct.model.sgraph.SGraphPackage;
 
@@ -60,6 +63,13 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * @generated
    */
   private EClass variableDefinitionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass operationDefinitionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -246,6 +256,36 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getOperationDefinition()
+  {
+    return operationDefinitionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getOperationDefinition_FunctionType()
+  {
+    return (EReference)operationDefinitionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getOperationDefinition_ParamType()
+  {
+    return (EReference)operationDefinitionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getLocalReaction()
   {
     return localReactionEClass;
@@ -309,6 +349,56 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
   public EClass getEventDefinition()
   {
     return eventDefinitionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEventDefinition_IsInput()
+  {
+    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEventDefinition_IsOutput()
+  {
+    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEventDefinition_Type()
+  {
+    return (EReference)eventDefinitionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEventDefinition_VarInitialValue()
+  {
+    return (EReference)eventDefinitionEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEventDefinition_VarCombineOperator()
+  {
+    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -477,6 +567,10 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
 
     variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
 
+    operationDefinitionEClass = createEClass(OPERATION_DEFINITION);
+    createEReference(operationDefinitionEClass, OPERATION_DEFINITION__FUNCTION_TYPE);
+    createEReference(operationDefinitionEClass, OPERATION_DEFINITION__PARAM_TYPE);
+
     localReactionEClass = createEClass(LOCAL_REACTION);
 
     stateReactionEClass = createEClass(STATE_REACTION);
@@ -490,6 +584,11 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     simpleScopeEClass = createEClass(SIMPLE_SCOPE);
 
     eventDefinitionEClass = createEClass(EVENT_DEFINITION);
+    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__IS_INPUT);
+    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__IS_OUTPUT);
+    createEReference(eventDefinitionEClass, EVENT_DEFINITION__TYPE);
+    createEReference(eventDefinitionEClass, EVENT_DEFINITION__VAR_INITIAL_VALUE);
+    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__VAR_COMBINE_OPERATOR);
 
     suspendEffectEClass = createEClass(SUSPEND_EFFECT);
 
@@ -538,6 +637,7 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     // Obtain other dependent packages
     SGraphPackage theSGraphPackage = (SGraphPackage)EPackage.Registry.INSTANCE.getEPackage(SGraphPackage.eNS_URI);
     StextPackage theStextPackage = (StextPackage)EPackage.Registry.INSTANCE.getEPackage(StextPackage.eNS_URI);
+    TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
     // Create type parameters
 
@@ -547,6 +647,7 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     stateScopeEClass.getESuperTypes().add(theSGraphPackage.getScope());
     signalDefinitionEClass.getESuperTypes().add(theSGraphPackage.getEvent());
     variableDefinitionEClass.getESuperTypes().add(theStextPackage.getVariableDefinition());
+    operationDefinitionEClass.getESuperTypes().add(theStextPackage.getOperationDefinition());
     localReactionEClass.getESuperTypes().add(theStextPackage.getLocalReaction());
     entryEClass.getESuperTypes().add(this.getStateReaction());
     insideEClass.getESuperTypes().add(this.getStateReaction());
@@ -565,6 +666,10 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
 
     initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(operationDefinitionEClass, OperationDefinition.class, "OperationDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getOperationDefinition_FunctionType(), theTypesPackage.getType(), null, "functionType", null, 0, 1, OperationDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOperationDefinition_ParamType(), theTypesPackage.getType(), null, "paramType", null, 0, 1, OperationDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(localReactionEClass, LocalReaction.class, "LocalReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(stateReactionEClass, StateReaction.class, "StateReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -578,6 +683,11 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     initEClass(simpleScopeEClass, SimpleScope.class, "SimpleScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(eventDefinitionEClass, EventDefinition.class, "EventDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEventDefinition_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEventDefinition_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEventDefinition_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEventDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEventDefinition_VarCombineOperator(), this.getCombineOperator(), "varCombineOperator", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(suspendEffectEClass, SuspendEffect.class, "SuspendEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

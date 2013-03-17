@@ -39,9 +39,9 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
 
 	private static NotificationFilter modelFilter = NotificationFilter
 			.createNotifierTypeFilter(SyncgraphPackage.eINSTANCE.getSyncState())
-//			.or(NotificationFilter
-//					.createNotifierTypeFilter(SyncgraphPackage.eINSTANCE
-//							.getSyncTransition()))
+			.or(NotificationFilter
+					.createNotifierTypeFilter(SyncgraphPackage.eINSTANCE
+							.getSyncTransition()))
 			.or(NotificationFilter
 					.createNotifierTypeFilter(SGraphPackage.eINSTANCE
 							.getRegion())

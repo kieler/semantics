@@ -17,9 +17,11 @@ StateScope:
 /************************************************/
 SignalDeclaration returns sgraph::Event:
 	SignalDefinition;
-// A dummy SignalDefinition declaration, which will be override by an other grammar 
 SignalDefinition:
-	{EventDefinition}  'signal' name=ID ';';
+	{EventDefinition} (isInput?='input')? (isOutput?='output')? 'signal'
+	name=ID (':' type=[types::Type|FQN]
+	('=' varInitialValue=Expression)?
+	('with' varCombineOperator=CombineOperator)?)? ';';
 
 /************************************************/
 /*			 Variable Definition				*/
@@ -27,6 +29,11 @@ SignalDefinition:
 // A dummy VariableDefinition declaration, which will be override by an other grammar 
 VariableDefinition:
 	{VariableDefinition} 'variable' name=ID ';';
+	
+	
+OperationDefinition:
+	{OperationDefinition} 'extern'  functionType=[types::Type|FQN] name=XID '(' paramType=[types::Type|FQN] ')' ';';
+	
 
 /************************************************/
 /*			 	LocalReactionScope					*/

@@ -4,8 +4,6 @@ package de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.impl;
 
 import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage;
 
-import de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.EventDefinition;
-import de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.SignalDefinition;
 import de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.SyncChartstextFactory;
 import de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.SyncChartstextPackage;
 import de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition;
@@ -16,8 +14,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import org.yakindu.base.types.TypesPackage;
 
 import org.yakindu.sct.model.stext.stext.StextPackage;
 
@@ -34,21 +30,7 @@ public class SyncChartstextPackageImpl extends EPackageImpl implements SyncChart
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass signalDefinitionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass variableDefinitionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass eventDefinitionEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -121,16 +103,6 @@ public class SyncChartstextPackageImpl extends EPackageImpl implements SyncChart
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSignalDefinition()
-  {
-    return signalDefinitionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getVariableDefinition()
   {
     return variableDefinitionEClass;
@@ -154,66 +126,6 @@ public class SyncChartstextPackageImpl extends EPackageImpl implements SyncChart
   public EReference getVariableDefinition_VarInitialValue()
   {
     return (EReference)variableDefinitionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getEventDefinition()
-  {
-    return eventDefinitionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getEventDefinition_IsInput()
-  {
-    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getEventDefinition_IsOutput()
-  {
-    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEventDefinition_Type()
-  {
-    return (EReference)eventDefinitionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEventDefinition_VarInitialValue()
-  {
-    return (EReference)eventDefinitionEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getEventDefinition_VarCombineOperator()
-  {
-    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -246,18 +158,9 @@ public class SyncChartstextPackageImpl extends EPackageImpl implements SyncChart
     isCreated = true;
 
     // Create classes and their features
-    signalDefinitionEClass = createEClass(SIGNAL_DEFINITION);
-
     variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
     createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_STATIC);
     createEReference(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_INITIAL_VALUE);
-
-    eventDefinitionEClass = createEClass(EVENT_DEFINITION);
-    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__IS_INPUT);
-    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__IS_OUTPUT);
-    createEReference(eventDefinitionEClass, EVENT_DEFINITION__TYPE);
-    createEReference(eventDefinitionEClass, EVENT_DEFINITION__VAR_INITIAL_VALUE);
-    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__VAR_COMBINE_OPERATOR);
   }
 
   /**
@@ -287,30 +190,18 @@ public class SyncChartstextPackageImpl extends EPackageImpl implements SyncChart
     // Obtain other dependent packages
     SynctextPackage theSynctextPackage = (SynctextPackage)EPackage.Registry.INSTANCE.getEPackage(SynctextPackage.eNS_URI);
     StextPackage theStextPackage = (StextPackage)EPackage.Registry.INSTANCE.getEPackage(StextPackage.eNS_URI);
-    TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
     // Create type parameters
 
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    signalDefinitionEClass.getESuperTypes().add(theSynctextPackage.getSignalDefinition());
     variableDefinitionEClass.getESuperTypes().add(theSynctextPackage.getVariableDefinition());
-    eventDefinitionEClass.getESuperTypes().add(this.getSignalDefinition());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(signalDefinitionEClass, SignalDefinition.class, "SignalDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
     initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVariableDefinition_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVariableDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(eventDefinitionEClass, EventDefinition.class, "EventDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getEventDefinition_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getEventDefinition_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEventDefinition_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEventDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getEventDefinition_VarCombineOperator(), theSynctextPackage.getCombineOperator(), "varCombineOperator", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);
