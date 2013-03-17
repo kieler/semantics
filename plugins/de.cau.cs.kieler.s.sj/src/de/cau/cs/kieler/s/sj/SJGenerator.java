@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.s.sc;
+package de.cau.cs.kieler.s.sj;
 
 import java.io.IOException;
 
@@ -32,17 +32,19 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.sj.xtend.AuxiliaryStates;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
- * Generate SC Code from a an S file using new Xtend language.
+ * Generate SJ Code from a an S file using new Xtend language.
+ * 
  * 
  * @author cmot
- * @kieler.design 2012-11-26 proposed cmot
- * @kieler.rating 2012-11-26 proposed yellow
+ * @kieler.design 2013-03-10 proposed cmot
+ * @kieler.rating 2013-03-10 proposed yellow
  */
 @SuppressWarnings("restriction")
-public class SCGenerator implements IHandler {
+public class SJGenerator implements IHandler {
 
     /**
      * {@inheritDoc}
@@ -77,22 +79,18 @@ public class SCGenerator implements IHandler {
             // Load S Program
             Program program =  (Program) KiemUtil.loadEObjectFromModelFile(modelFilePath);
             
-            // Calculate output path for SC-m2t
+            // Calculate output path for SJ-m2t
             URI input = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
             URI scOutput = URI.createURI("");
             scOutput = URI.createURI(input.toString());
             scOutput = scOutput.trimFragment();
-            scOutput = scOutput.trimFileExtension().appendFileExtension("c");
+            scOutput = scOutput.trimFileExtension().appendFileExtension("java");
             
-            // Do not use the alternative syntax
-            boolean alternativeSyntax = false;
-            
-            // Generate SC Code
-            IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
-            IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
-            String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SCPlugin.generateSCCode(program, scOutputString, scOutputPath.toString(), 
-                            alternativeSyntax);                    
+            // Generate SJ Code
+            IPath sjOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
+            IFile sjOutputFile = KiemUtil.convertIPathToIFile(sjOutputPath);
+            String sjOutputString = KiemUtil.getAbsoluteFilePath(sjOutputFile);
+            S2SJPlugin.generateSJCode(program, sjOutputString, sjOutputPath.toString());                    
 
         } catch (IOException e) {
             throw new ExecutionException("Cannot read input file.");

@@ -23,6 +23,7 @@ import org.osgi.framework.BundleContext;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.sj.xtend.AuxiliaryStates;
 import de.cau.cs.kieler.s.sj.xtend.S2SJ;
 
 /**
@@ -98,13 +99,15 @@ public class S2SJPlugin extends AbstractUIPlugin {
     public static void generateSJCode(final Program program, final String outputFile,
             final String outputFolder) throws IOException {
 
-        // Calculate/Estimate the buffer size
+        // Pre-transformation, add auxiliary states
+        AuxiliaryStates auxiliaryStates = new AuxiliaryStates();
+        Program transformedProgram = auxiliaryStates.transform2Simulation(program);
+        
         String outputFile2 = outputFile;
-
         String ccode;
         S2SJ s2SJ = new S2SJ();
         outputFile2.replace(".c", ".java");
-        ccode = s2SJ.transform(program, outputFolder).toString();
+        ccode = s2SJ.transform(transformedProgram, outputFolder).toString();
 
         // Write out c program
         FileWriter fileWriter = new FileWriter(outputFile2);
