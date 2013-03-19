@@ -7,9 +7,9 @@ generate scg "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg"
 
 Instruction:
     Assignment | Conditional | Label | Goto | Parallel | Pause
-    (';' secondInstructions = Instruction)?
     'priority' priority=INT
     ('dependency' dependencies += Instruction)* 
+    (';' secondInstructions = Instruction)?
 ;
 
 Assignment returns SCLExpression:

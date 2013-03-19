@@ -29,28 +29,28 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cParallelParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
 		private final RuleCall cPauseParserRuleCall_5_0 = (RuleCall)cGroup_5.eContents().get(0);
-		private final Group cGroup_5_1 = (Group)cGroup_5.eContents().get(1);
-		private final Keyword cSemicolonKeyword_5_1_0 = (Keyword)cGroup_5_1.eContents().get(0);
-		private final Assignment cSecondInstructionsAssignment_5_1_1 = (Assignment)cGroup_5_1.eContents().get(1);
-		private final RuleCall cSecondInstructionsInstructionParserRuleCall_5_1_1_0 = (RuleCall)cSecondInstructionsAssignment_5_1_1.eContents().get(0);
-		private final Keyword cPriorityKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
-		private final Assignment cPriorityAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
-		private final RuleCall cPriorityINTTerminalRuleCall_5_3_0 = (RuleCall)cPriorityAssignment_5_3.eContents().get(0);
+		private final Keyword cPriorityKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Assignment cPriorityAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cPriorityINTTerminalRuleCall_5_2_0 = (RuleCall)cPriorityAssignment_5_2.eContents().get(0);
+		private final Group cGroup_5_3 = (Group)cGroup_5.eContents().get(3);
+		private final Keyword cDependencyKeyword_5_3_0 = (Keyword)cGroup_5_3.eContents().get(0);
+		private final Assignment cDependenciesAssignment_5_3_1 = (Assignment)cGroup_5_3.eContents().get(1);
+		private final RuleCall cDependenciesInstructionParserRuleCall_5_3_1_0 = (RuleCall)cDependenciesAssignment_5_3_1.eContents().get(0);
 		private final Group cGroup_5_4 = (Group)cGroup_5.eContents().get(4);
-		private final Keyword cDependencyKeyword_5_4_0 = (Keyword)cGroup_5_4.eContents().get(0);
-		private final Assignment cDependenciesAssignment_5_4_1 = (Assignment)cGroup_5_4.eContents().get(1);
-		private final RuleCall cDependenciesInstructionParserRuleCall_5_4_1_0 = (RuleCall)cDependenciesAssignment_5_4_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5_4_0 = (Keyword)cGroup_5_4.eContents().get(0);
+		private final Assignment cSecondInstructionsAssignment_5_4_1 = (Assignment)cGroup_5_4.eContents().get(1);
+		private final RuleCall cSecondInstructionsInstructionParserRuleCall_5_4_1_0 = (RuleCall)cSecondInstructionsAssignment_5_4_1.eContents().get(0);
 		
 		//Instruction:
 		//
-		//	Assignment | Conditional | Label | Goto | Parallel | Pause (";" secondInstructions=Instruction)? "priority"
+		//	Assignment | Conditional | Label | Goto | Parallel | Pause "priority" priority=INT ("dependency"
 		//
-		//	priority=INT ("dependency" dependencies+=Instruction)*;
+		//	dependencies+=Instruction)* (";" secondInstructions=Instruction)?;
 		public ParserRule getRule() { return rule; }
 
-		//Assignment | Conditional | Label | Goto | Parallel | Pause (";" secondInstructions=Instruction)? "priority" priority=INT
+		//Assignment | Conditional | Label | Goto | Parallel | Pause "priority" priority=INT ("dependency"
 		//
-		//("dependency" dependencies+=Instruction)*
+		//dependencies+=Instruction)* (";" secondInstructions=Instruction)?
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Assignment
@@ -68,44 +68,44 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 		//Parallel
 		public RuleCall getParallelParserRuleCall_4() { return cParallelParserRuleCall_4; }
 
-		//Pause (";" secondInstructions=Instruction)? "priority" priority=INT ("dependency" dependencies+=Instruction)*
+		//Pause "priority" priority=INT ("dependency" dependencies+=Instruction)* (";" secondInstructions=Instruction)?
 		public Group getGroup_5() { return cGroup_5; }
 
 		//Pause
 		public RuleCall getPauseParserRuleCall_5_0() { return cPauseParserRuleCall_5_0; }
 
-		//(";" secondInstructions=Instruction)?
-		public Group getGroup_5_1() { return cGroup_5_1; }
-
-		//";"
-		public Keyword getSemicolonKeyword_5_1_0() { return cSemicolonKeyword_5_1_0; }
-
-		//secondInstructions=Instruction
-		public Assignment getSecondInstructionsAssignment_5_1_1() { return cSecondInstructionsAssignment_5_1_1; }
-
-		//Instruction
-		public RuleCall getSecondInstructionsInstructionParserRuleCall_5_1_1_0() { return cSecondInstructionsInstructionParserRuleCall_5_1_1_0; }
-
 		//"priority"
-		public Keyword getPriorityKeyword_5_2() { return cPriorityKeyword_5_2; }
+		public Keyword getPriorityKeyword_5_1() { return cPriorityKeyword_5_1; }
 
 		//priority=INT
-		public Assignment getPriorityAssignment_5_3() { return cPriorityAssignment_5_3; }
+		public Assignment getPriorityAssignment_5_2() { return cPriorityAssignment_5_2; }
 
 		//INT
-		public RuleCall getPriorityINTTerminalRuleCall_5_3_0() { return cPriorityINTTerminalRuleCall_5_3_0; }
+		public RuleCall getPriorityINTTerminalRuleCall_5_2_0() { return cPriorityINTTerminalRuleCall_5_2_0; }
 
 		//("dependency" dependencies+=Instruction)*
-		public Group getGroup_5_4() { return cGroup_5_4; }
+		public Group getGroup_5_3() { return cGroup_5_3; }
 
 		//"dependency"
-		public Keyword getDependencyKeyword_5_4_0() { return cDependencyKeyword_5_4_0; }
+		public Keyword getDependencyKeyword_5_3_0() { return cDependencyKeyword_5_3_0; }
 
 		//dependencies+=Instruction
-		public Assignment getDependenciesAssignment_5_4_1() { return cDependenciesAssignment_5_4_1; }
+		public Assignment getDependenciesAssignment_5_3_1() { return cDependenciesAssignment_5_3_1; }
 
 		//Instruction
-		public RuleCall getDependenciesInstructionParserRuleCall_5_4_1_0() { return cDependenciesInstructionParserRuleCall_5_4_1_0; }
+		public RuleCall getDependenciesInstructionParserRuleCall_5_3_1_0() { return cDependenciesInstructionParserRuleCall_5_3_1_0; }
+
+		//(";" secondInstructions=Instruction)?
+		public Group getGroup_5_4() { return cGroup_5_4; }
+
+		//";"
+		public Keyword getSemicolonKeyword_5_4_0() { return cSemicolonKeyword_5_4_0; }
+
+		//secondInstructions=Instruction
+		public Assignment getSecondInstructionsAssignment_5_4_1() { return cSecondInstructionsAssignment_5_4_1; }
+
+		//Instruction
+		public RuleCall getSecondInstructionsInstructionParserRuleCall_5_4_1_0() { return cSecondInstructionsInstructionParserRuleCall_5_4_1_0; }
 	}
 
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
@@ -305,9 +305,9 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Instruction:
 	//
-	//	Assignment | Conditional | Label | Goto | Parallel | Pause (";" secondInstructions=Instruction)? "priority"
+	//	Assignment | Conditional | Label | Goto | Parallel | Pause "priority" priority=INT ("dependency"
 	//
-	//	priority=INT ("dependency" dependencies+=Instruction)*;
+	//	dependencies+=Instruction)* (";" secondInstructions=Instruction)?;
 	public InstructionElements getInstructionAccess() {
 		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
 	}

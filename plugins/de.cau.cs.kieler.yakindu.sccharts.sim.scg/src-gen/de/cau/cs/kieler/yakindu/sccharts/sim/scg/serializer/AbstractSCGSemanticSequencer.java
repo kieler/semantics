@@ -127,7 +127,7 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 	
 	/**
 	 * Constraint:
-	 *     (secondInstructions=Instruction? priority=INT dependencies+=Instruction*)
+	 *     (priority=INT dependencies+=Instruction* secondInstructions=Instruction?)
 	 */
 	protected void sequence_Instruction(EObject context, Instruction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -72,7 +72,7 @@ public abstract class AbstractSCGSyntacticSequencer extends AbstractSyntacticSeq
 
 	/**
 	 * Syntax:
-	 *     'output' | 'input'
+	 *     'input' | 'output'
 	 */
 	protected void emit_Variable_InputKeyword_0_0_or_OutputKeyword_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

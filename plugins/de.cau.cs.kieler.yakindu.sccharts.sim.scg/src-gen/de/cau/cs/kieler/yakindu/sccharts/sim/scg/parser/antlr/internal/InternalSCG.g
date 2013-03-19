@@ -159,37 +159,15 @@ rulePause
     { 
         afterParserOrEnumRuleCall();
     }
-(	otherlv_6=';' 
+	otherlv_6='priority' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getInstructionAccess().getSemicolonKeyword_5_1_0());
+    	newLeafNode(otherlv_6, grammarAccess.getInstructionAccess().getPriorityKeyword_5_1());
     }
 (
 (
-		{ 
-	        newCompositeNode(grammarAccess.getInstructionAccess().getSecondInstructionsInstructionParserRuleCall_5_1_1_0()); 
-	    }
-		lv_secondInstructions_7_0=ruleInstruction		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getInstructionRule());
-	        }
-       		set(
-       			$current, 
-       			"secondInstructions",
-        		lv_secondInstructions_7_0, 
-        		"Instruction");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))?	otherlv_8='priority' 
-    {
-    	newLeafNode(otherlv_8, grammarAccess.getInstructionAccess().getPriorityKeyword_5_2());
-    }
-(
-(
-		lv_priority_9_0=RULE_INT
+		lv_priority_7_0=RULE_INT
 		{
-			newLeafNode(lv_priority_9_0, grammarAccess.getInstructionAccess().getPriorityINTTerminalRuleCall_5_3_0()); 
+			newLeafNode(lv_priority_7_0, grammarAccess.getInstructionAccess().getPriorityINTTerminalRuleCall_5_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -198,34 +176,56 @@ rulePause
        		setWithLastConsumed(
        			$current, 
        			"priority",
-        		lv_priority_9_0, 
+        		lv_priority_7_0, 
         		"INT");
 	    }
 
 )
-)(	otherlv_10='dependency' 
+)(	otherlv_8='dependency' 
     {
-    	newLeafNode(otherlv_10, grammarAccess.getInstructionAccess().getDependencyKeyword_5_4_0());
+    	newLeafNode(otherlv_8, grammarAccess.getInstructionAccess().getDependencyKeyword_5_3_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getInstructionAccess().getDependenciesInstructionParserRuleCall_5_4_1_0()); 
+	        newCompositeNode(grammarAccess.getInstructionAccess().getDependenciesInstructionParserRuleCall_5_3_1_0()); 
 	    }
-		lv_dependencies_11_0=ruleInstruction		{
+		lv_dependencies_9_0=ruleInstruction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getInstructionRule());
 	        }
        		add(
        			$current, 
        			"dependencies",
-        		lv_dependencies_11_0, 
+        		lv_dependencies_9_0, 
         		"Instruction");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))*))
+))*(	otherlv_10=';' 
+    {
+    	newLeafNode(otherlv_10, grammarAccess.getInstructionAccess().getSemicolonKeyword_5_4_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getInstructionAccess().getSecondInstructionsInstructionParserRuleCall_5_4_1_0()); 
+	    }
+		lv_secondInstructions_11_0=ruleInstruction		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getInstructionRule());
+	        }
+       		set(
+       			$current, 
+       			"secondInstructions",
+        		lv_secondInstructions_11_0, 
+        		"Instruction");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?))
 ;
 
 
