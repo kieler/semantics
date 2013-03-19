@@ -28,7 +28,7 @@ public class SCLStandaloneSetupGenerated implements ISetup {
 	
 	public void register(Injector injector) {
 	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl")) {
-		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl", de.cau.cs.kieler.yakindu.sccharts.sim.scl.s.SPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl", de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage.eINSTANCE);
 	}
 
 		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);

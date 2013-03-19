@@ -2,26 +2,23 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.serializer;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.s.Conditional;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.s.Goto;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.s.Instruction;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.s.Label;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.s.Parallel;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.s.Program;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.s.SCLExpression;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.s.SPackage;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.services.SCLGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
 import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 import org.yakindu.sct.model.stext.stext.StextPackage;
 import org.yakindu.sct.model.stext.stext.VariableDefinition;
 
@@ -32,49 +29,50 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	private SCLGrammarAccess grammarAccess;
 	
 	public void createSequence(EObject context, EObject semanticObject) {
-		if(semanticObject.eClass().getEPackage() == SPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case SPackage.CONDITIONAL:
+		if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case SclPackage.CONDITIONAL:
 				if(context == grammarAccess.getConditionalRule() ||
 				   context == grammarAccess.getInstructionRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
 					return; 
 				}
 				else break;
-			case SPackage.GOTO:
+			case SclPackage.GOTO:
 				if(context == grammarAccess.getGotoRule() ||
 				   context == grammarAccess.getInstructionRule()) {
 					sequence_Goto(context, (Goto) semanticObject); 
 					return; 
 				}
 				else break;
-			case SPackage.INSTRUCTION:
+			case SclPackage.INSTRUCTION:
 				if(context == grammarAccess.getInstructionRule()) {
 					sequence_Instruction(context, (Instruction) semanticObject); 
 					return; 
 				}
 				else break;
-			case SPackage.LABEL:
+			case SclPackage.LABEL:
 				if(context == grammarAccess.getInstructionRule() ||
 				   context == grammarAccess.getLabelRule()) {
 					sequence_Label(context, (Label) semanticObject); 
 					return; 
 				}
 				else break;
-			case SPackage.PARALLEL:
+			case SclPackage.PARALLEL:
 				if(context == grammarAccess.getInstructionRule() ||
 				   context == grammarAccess.getParallelRule()) {
 					sequence_Parallel(context, (Parallel) semanticObject); 
 					return; 
 				}
 				else break;
-			case SPackage.PROGRAM:
+			case SclPackage.PROGRAM:
 				if(context == grammarAccess.getProgramRule()) {
 					sequence_Program(context, (Program) semanticObject); 
 					return; 
 				}
 				else break;
-			case SPackage.SCL_EXPRESSION:
-				if(context == grammarAccess.getAssignmentRule()) {
+			case SclPackage.SCL_EXPRESSION:
+				if(context == grammarAccess.getAssignmentRule() ||
+				   context == grammarAccess.getInstructionRule()) {
 					sequence_Assignment(context, (SCLExpression) semanticObject); 
 					return; 
 				}
@@ -100,14 +98,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	 *     assignment=STRING
 	 */
 	protected void sequence_Assignment(EObject context, SCLExpression semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SPackage.Literals.SCL_EXPRESSION__ASSIGNMENT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SPackage.Literals.SCL_EXPRESSION__ASSIGNMENT));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getAssignmentAccess().getAssignmentSTRINGTerminalRuleCall_0(), semanticObject.getAssignment());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -131,7 +122,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (instruction=Assignment | secondinstructions=Instruction?)
+	 *     secondInstructions=Instruction?
 	 */
 	protected void sequence_Instruction(EObject context, Instruction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -149,7 +140,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (firstinstruction=Instruction secondinstruction=Instruction)
+	 *     (firstInstruction=Instruction secondInstruction=Instruction)
 	 */
 	protected void sequence_Parallel(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

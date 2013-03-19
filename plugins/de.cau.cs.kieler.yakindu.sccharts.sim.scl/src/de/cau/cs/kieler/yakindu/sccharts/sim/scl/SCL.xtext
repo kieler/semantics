@@ -8,7 +8,7 @@ import "http://www.yakindu.org/sct/statechart/SText" as stext
 import "http://kieler.cs.cau.de/yakindu/stext/" as synctext
 import "http://kieler.cs.cau.de/yakindu/sccharts/stext/" as scchartsexp
 
-generate s "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl"
+generate scl "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl"
 
 
 Program :
@@ -20,7 +20,7 @@ Program :
 ;
 
 Variable returns stext::VariableDefinition:
-    ('input'|'output') type=[types::Type] (name=STRING)
+    ('input'|'output') type=[types::Type] (name=STRING)';'
 ;
 
 SCLExpression returns stext::Expression:
@@ -29,8 +29,8 @@ SCLExpression returns stext::Expression:
 ;
 
 Instruction:
-    instruction = Assignment | Conditional | Label | Goto | Parallel | Pause
-    (';' secondinstructions = Instruction)? 
+    Assignment | Conditional | Label | Goto | Parallel | Pause
+    (';' secondInstructions = Instruction)? 
 ;
 
 Assignment returns SCLExpression:
@@ -53,9 +53,9 @@ Goto:
 
 Parallel:
     'fork'
-        firstinstruction = Instruction
+        firstInstruction = Instruction
     'par'
-        secondinstruction = Instruction
+        secondInstruction = Instruction
     'join'
 ;
 
