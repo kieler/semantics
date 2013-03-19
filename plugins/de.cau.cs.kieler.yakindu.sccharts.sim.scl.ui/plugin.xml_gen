@@ -21,7 +21,7 @@
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.s.S.Editor.opened">
+                    definitionId="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -30,7 +30,7 @@
             commandId="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.validate">
          <activeWhen>
             <reference
-                    definitionId="de.cau.cs.kieler.s.S.Editor.opened">
+                    definitionId="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.Editor.opened">
             </reference>
          </activeWhen>
       </handler>
@@ -41,7 +41,7 @@
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="de.cau.cs.kieler.s.S" 
+                        value="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -50,24 +50,37 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-              class="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.SCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-              id="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL"
-              name="SCL">
-            <keywordReference id="de.cau.cs.kieler.s.ui.keyword_S"/>
+            class="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.SCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL"
+            name="SCL">
+            <keywordReference id="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.keyword_SCL"/>
         </page>
         <page
             category="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL"
             class="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.SCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
             id="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.coloring"
             name="Syntax Coloring">
-            <keywordReference id="de.cau.cs.kieler.s.ui.keyword_S"/>
+            <keywordReference id="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.keyword_SCL"/>
         </page>
         <page
             category="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL"
             class="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.SCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
             id="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.templates"
             name="Templates">
-            <keywordReference id="de.cau.cs.kieler.s.ui.keyword_S"/>
+            <keywordReference id="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.keyword_SCL"/>
+        </page>
+    </extension>
+    <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.SCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL"
+            name="SCL">
+            <keywordReference id="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.keyword_SCL"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
         </page>
     </extension>
     <extension
@@ -88,12 +101,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="de.cau.cs.kieler.s.S.validate"
+                 commandId="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="de.cau.cs.kieler.s.S.Editor.opened">
+                    definitionId="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -103,7 +116,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.cau.cs.kieler.s.S.Editor.opened">
+                	<reference definitionId="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -115,7 +128,7 @@
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.s.S.Editor.opened">
+                    definitionId="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -138,7 +151,28 @@
     </extension>
 
 
-
+    <!-- marker definitions for de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL -->
+    <extension
+            id="scl.check.fast"
+            name="SCL Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="scl.check.normal"
+            name="SCL Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.normal"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="scl.check.expensive"
+            name="SCL Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.expensive"/>
+        <persistent value="true"/>
+    </extension>
 
 	<!-- Quick Outline -->
 	<extension
@@ -148,7 +182,7 @@
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="de.cau.cs.kieler.s.S.Editor.opened">
+					definitionId="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -168,17 +202,38 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.cau.cs.kieler.s.S.Editor.opened"/>
+					<reference definitionId="de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-   <!-- quickfix marker resolution generator -->
-   <extension
-         point="org.eclipse.ui.ide.markerResolution">
-      <markerResolutionGenerator
-            class="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.SCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
-      </markerResolutionGenerator>
-   </extension>
+    <!-- quickfix marker resolution generator for de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL -->
+    <extension
+            point="org.eclipse.ui.ide.markerResolution">
+        <markerResolutionGenerator
+            class="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.SCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.scl.check.fast">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.SCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.scl.check.normal">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.SCLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.yakindu.sccharts.sim.scl.ui.scl.check.expensive">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+    </extension>
 
 </plugin>
