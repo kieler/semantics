@@ -70,6 +70,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
       case ScgPackage.LABEL: return createLabel();
       case ScgPackage.GOTO: return createGoto();
       case ScgPackage.PARALLEL: return createParallel();
+      case ScgPackage.PAUSE: return createPause();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -139,6 +140,17 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
   {
     ParallelImpl parallel = new ParallelImpl();
     return parallel;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Pause createPause()
+  {
+    PauseImpl pause = new PauseImpl();
+    return pause;
   }
 
   /**

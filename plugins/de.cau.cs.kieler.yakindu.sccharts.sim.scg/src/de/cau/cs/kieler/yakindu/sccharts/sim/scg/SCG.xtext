@@ -37,3 +37,7 @@ Parallel:
         secondInstruction = Instruction
     'join'
 ;
+
+Pause:
+    pause = 'pause'
+;

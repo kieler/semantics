@@ -155,8 +155,9 @@ ruleInstruction returns [EObject current=null]
     { 
         newCompositeNode(grammarAccess.getInstructionAccess().getPauseParserRuleCall_5_0()); 
     }
-rulePause
+    this_Pause_5=rulePause
     { 
+        $current = $this_Pause_5.current; 
         afterParserOrEnumRuleCall();
     }
 	otherlv_6='priority' 
@@ -495,6 +496,42 @@ ruleParallel returns [EObject current=null]
 
 
 
+// Entry rule entryRulePause
+entryRulePause returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getPauseRule()); }
+	 iv_rulePause=rulePause 
+	 { $current=$iv_rulePause.current; } 
+	 EOF 
+;
+
+// Rule Pause
+rulePause returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		lv_pause_0_0=	'pause' 
+    {
+        newLeafNode(lv_pause_0_0, grammarAccess.getPauseAccess().getPausePauseKeyword_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPauseRule());
+	        }
+       		setWithLastConsumed($current, "pause", lv_pause_0_0, "pause");
+	    }
+
+)
+)
+;
+
+
+
+
+
 
 
 // Entry rule entryRuleVariable
@@ -594,33 +631,6 @@ ruleSCLExpression returns [EObject current=null]
     }
 )
 ;
-
-
-
-
-
-// Entry rule entryRulePause
-entryRulePause returns [String current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getPauseRule()); } 
-	 iv_rulePause=rulePause 
-	 { $current=$iv_rulePause.current.getText(); }  
-	 EOF 
-;
-
-// Rule Pause
-rulePause returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-
-	kw='pause' 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getPauseAccess().getPauseKeyword()); 
-    }
-
-    ;
 
 
 

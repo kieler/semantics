@@ -272,12 +272,12 @@ ruleInstruction returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+((
 	{ 
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getAssignmentParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getAssignmentParserRuleCall_0_0()); 
     }
     this_Assignment_0=ruleAssignment
     { 
@@ -290,7 +290,7 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getConditionalParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getConditionalParserRuleCall_0_1()); 
     }
     this_Conditional_1=ruleConditional
     { 
@@ -303,7 +303,7 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getLabelParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getLabelParserRuleCall_0_2()); 
     }
     this_Label_2=ruleLabel
     { 
@@ -316,7 +316,7 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getGotoParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getGotoParserRuleCall_0_3()); 
     }
     this_Goto_3=ruleGoto
     { 
@@ -329,7 +329,7 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getParallelParserRuleCall_4()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getParallelParserRuleCall_0_4()); 
     }
     this_Parallel_4=ruleParallel
     { 
@@ -337,40 +337,41 @@ ruleInstruction returns [EObject current=null]
         afterParserOrEnumRuleCall();
     }
 
-    |(
+    |
 	{ 
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getPauseParserRuleCall_5_0()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getPauseParserRuleCall_0_5()); 
     }
-rulePause
+    this_Pause_5=rulePause
     { 
+        $current = $this_Pause_5.current; 
         afterParserOrEnumRuleCall();
     }
-(	otherlv_6=';' 
+)(	otherlv_6=';' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getInstructionAccess().getSemicolonKeyword_5_1_0());
+    	newLeafNode(otherlv_6, grammarAccess.getInstructionAccess().getSemicolonKeyword_1_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getInstructionAccess().getSecondInstructionsInstructionParserRuleCall_5_1_1_0()); 
+	        newCompositeNode(grammarAccess.getInstructionAccess().getNextInstructionInstructionParserRuleCall_1_1_0()); 
 	    }
-		lv_secondInstructions_7_0=ruleInstruction		{
+		lv_nextInstruction_7_0=ruleInstruction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getInstructionRule());
 	        }
        		set(
        			$current, 
-       			"secondInstructions",
-        		lv_secondInstructions_7_0, 
+       			"nextInstruction",
+        		lv_nextInstruction_7_0, 
         		"Instruction");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))?))
+))?)
 ;
 
 
@@ -592,16 +593,16 @@ ruleParallel returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getParallelAccess().getFirstInstructionInstructionParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getParallelAccess().getFirstThreadInstructionParserRuleCall_1_0()); 
 	    }
-		lv_firstInstruction_1_0=ruleInstruction		{
+		lv_firstThread_1_0=ruleInstruction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getParallelRule());
 	        }
        		set(
        			$current, 
-       			"firstInstruction",
-        		lv_firstInstruction_1_0, 
+       			"firstThread",
+        		lv_firstThread_1_0, 
         		"Instruction");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -614,16 +615,16 @@ ruleParallel returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getParallelAccess().getSecondInstructionInstructionParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getParallelAccess().getSecondThreadInstructionParserRuleCall_3_0()); 
 	    }
-		lv_secondInstruction_3_0=ruleInstruction		{
+		lv_secondThread_3_0=ruleInstruction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getParallelRule());
 	        }
        		set(
        			$current, 
-       			"secondInstruction",
-        		lv_secondInstruction_3_0, 
+       			"secondThread",
+        		lv_secondThread_3_0, 
         		"Instruction");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -641,27 +642,36 @@ ruleParallel returns [EObject current=null]
 
 
 // Entry rule entryRulePause
-entryRulePause returns [String current=null] 
+entryRulePause returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getPauseRule()); } 
+	{ newCompositeNode(grammarAccess.getPauseRule()); }
 	 iv_rulePause=rulePause 
-	 { $current=$iv_rulePause.current.getText(); }  
+	 { $current=$iv_rulePause.current; } 
 	 EOF 
 ;
 
 // Rule Pause
-rulePause returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+rulePause returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-
-	kw='pause' 
+(
+(
+		lv_pause_0_0=	'pause' 
     {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getPauseAccess().getPauseKeyword()); 
+        newLeafNode(lv_pause_0_0, grammarAccess.getPauseAccess().getPausePauseKeyword_0());
     }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPauseRule());
+	        }
+       		setWithLastConsumed($current, "pause", lv_pause_0_0, "pause");
+	    }
 
-    ;
+)
+)
+;
 
 
 

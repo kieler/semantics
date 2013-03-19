@@ -7,6 +7,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclFactory;
@@ -77,6 +78,13 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * @generated
    */
   private EClass parallelEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass pauseEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -199,7 +207,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getInstruction_SecondInstructions()
+  public EReference getInstruction_NextInstruction()
   {
     return (EReference)instructionEClass.getEStructuralFeatures().get(0);
   }
@@ -309,7 +317,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getParallel_FirstInstruction()
+  public EReference getParallel_FirstThread()
   {
     return (EReference)parallelEClass.getEStructuralFeatures().get(0);
   }
@@ -319,9 +327,29 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getParallel_SecondInstruction()
+  public EReference getParallel_SecondThread()
   {
     return (EReference)parallelEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPause()
+  {
+    return pauseEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPause_Pause()
+  {
+    return (EAttribute)pauseEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -360,7 +388,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEReference(programEClass, PROGRAM__INSTRUCTION);
 
     instructionEClass = createEClass(INSTRUCTION);
-    createEReference(instructionEClass, INSTRUCTION__SECOND_INSTRUCTIONS);
+    createEReference(instructionEClass, INSTRUCTION__NEXT_INSTRUCTION);
 
     sclExpressionEClass = createEClass(SCL_EXPRESSION);
     createEAttribute(sclExpressionEClass, SCL_EXPRESSION__ASSIGNMENT);
@@ -376,8 +404,11 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEAttribute(gotoEClass, GOTO__NAME);
 
     parallelEClass = createEClass(PARALLEL);
-    createEReference(parallelEClass, PARALLEL__FIRST_INSTRUCTION);
-    createEReference(parallelEClass, PARALLEL__SECOND_INSTRUCTION);
+    createEReference(parallelEClass, PARALLEL__FIRST_THREAD);
+    createEReference(parallelEClass, PARALLEL__SECOND_THREAD);
+
+    pauseEClass = createEClass(PAUSE);
+    createEAttribute(pauseEClass, PAUSE__PAUSE);
   }
 
   /**
@@ -418,6 +449,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     labelEClass.getESuperTypes().add(this.getInstruction());
     gotoEClass.getESuperTypes().add(this.getInstruction());
     parallelEClass.getESuperTypes().add(this.getInstruction());
+    pauseEClass.getESuperTypes().add(this.getInstruction());
 
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -426,7 +458,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEReference(getProgram_Instruction(), this.getInstruction(), null, "instruction", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInstruction_SecondInstructions(), this.getInstruction(), null, "secondInstructions", null, 0, 1, Instruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInstruction_NextInstruction(), this.getInstruction(), null, "nextInstruction", null, 0, 1, Instruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sclExpressionEClass, SCLExpression.class, "SCLExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSCLExpression_Assignment(), ecorePackage.getEString(), "assignment", null, 0, 1, SCLExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -442,8 +474,11 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEAttribute(getGoto_Name(), ecorePackage.getEString(), "name", null, 0, 1, Goto.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(parallelEClass, Parallel.class, "Parallel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getParallel_FirstInstruction(), this.getInstruction(), null, "firstInstruction", null, 0, 1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getParallel_SecondInstruction(), this.getInstruction(), null, "secondInstruction", null, 0, 1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getParallel_FirstThread(), this.getInstruction(), null, "firstThread", null, 0, 1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getParallel_SecondThread(), this.getInstruction(), null, "secondThread", null, 0, 1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPause_Pause(), ecorePackage.getEString(), "pause", null, 0, 1, Pause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

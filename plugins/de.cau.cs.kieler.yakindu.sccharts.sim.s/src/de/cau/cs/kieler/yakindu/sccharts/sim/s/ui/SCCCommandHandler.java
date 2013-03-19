@@ -7,6 +7,7 @@ import org.yakindu.sct.ui.editor.DiagramActivator;
 
 import org.yakindu.sct.model.sgraph.Statechart;
 import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCCToCoreTransformation;
+import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.CoreToSCLTransformation;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -15,14 +16,14 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCCToCoreTransformation;
  * @see org.eclipse.core.commands.AbstractHandler
  */
 @SuppressWarnings("restriction")
-public class SCChartsCommandHandler extends SCChartsGenericFileCommandHandler {
+public class SCCCommandHandler extends SCChartsGenericFileCommandHandler {
 
-	public static final String SCCTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCChartsTransformation";
+	public static final String SCCTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCCToCoreTransformation";
 
 	/**
 	 * The constructor.
 	 */
-	public SCChartsCommandHandler() {
+	public SCCCommandHandler() {
 	}
 
 	public String ModelHandlerFileExtension() {
@@ -51,15 +52,15 @@ public class SCChartsCommandHandler extends SCChartsGenericFileCommandHandler {
 
 	public EObject SCChartsDoTransformation(EObject modelObject,
 			String commandString) {
-		System.out.println("scc core transformation: " + commandString);
 		if (commandString.equals(SCCTRANSFORMATIONCOMMAND)) {
+	                System.out.println("scc core transformation: " + commandString);
 			EObject transformed = (new SCCToCoreTransformation())
 					.transformSCCAborts((Statechart) modelObject);
 			transformed = (new SCCToCoreTransformation())
 					.transformSCCConditional((Statechart) transformed);
 			return transformed;
 		}
-
+                
 		return null;
 	}
 

@@ -283,10 +283,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:22:7: ( 'input' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:22:9: 'input'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:22:7: ( 'pause' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:22:9: 'pause'
             {
-            match("input"); 
+            match("pause"); 
 
 
             }
@@ -304,10 +304,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:23:7: ( 'output' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:23:9: 'output'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:23:7: ( 'input' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:23:9: 'input'
             {
-            match("output"); 
+            match("input"); 
 
 
             }
@@ -325,10 +325,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:24:7: ( 'pause' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:24:9: 'pause'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:24:7: ( 'output' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:24:9: 'output'
             {
-            match("pause"); 
+            match("output"); 
 
 
             }
@@ -346,10 +346,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:629:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:629:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:639:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:639:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:629:11: ( '^' )?
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:639:11: ( '^' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -358,7 +358,7 @@ public class InternalSCGLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:629:11: '^'
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:639:11: '^'
                     {
                     match('^'); 
 
@@ -376,7 +376,7 @@ public class InternalSCGLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:629:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:639:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -425,10 +425,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:631:10: ( ( '0' .. '9' )+ )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:631:12: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:641:10: ( ( '0' .. '9' )+ )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:641:12: ( '0' .. '9' )+
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:631:12: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:641:12: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -442,7 +442,7 @@ public class InternalSCGLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:631:13: '0' .. '9'
+            	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:641:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -474,10 +474,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -495,10 +495,10 @@ public class InternalSCGLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop4:
                     do {
                         int alt4=3;
@@ -514,7 +514,7 @@ public class InternalSCGLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -530,7 +530,7 @@ public class InternalSCGLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:66: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -555,10 +555,10 @@ public class InternalSCGLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -574,7 +574,7 @@ public class InternalSCGLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -590,7 +590,7 @@ public class InternalSCGLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:633:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:643:137: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -633,12 +633,12 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:635:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:635:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:645:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:645:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:635:24: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:645:24: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -663,7 +663,7 @@ public class InternalSCGLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:635:52: .
+            	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:645:52: .
             	    {
             	    matchAny(); 
 
@@ -693,12 +693,12 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:637:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:637:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:647:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:647:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:637:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:647:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -711,7 +711,7 @@ public class InternalSCGLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:637:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:647:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -731,7 +731,7 @@ public class InternalSCGLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:637:40: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:647:40: ( ( '\\r' )? '\\n' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -740,9 +740,9 @@ public class InternalSCGLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:637:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:647:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:637:41: ( '\\r' )?
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:647:41: ( '\\r' )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -751,7 +751,7 @@ public class InternalSCGLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:637:41: '\\r'
+                            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:647:41: '\\r'
                             {
                             match('\r'); 
 
@@ -783,10 +783,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:639:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:639:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:649:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:649:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:639:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:649:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt11=0;
             loop11:
             do {
@@ -840,8 +840,8 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:641:16: ( . )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:641:18: .
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:651:16: ( . )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:651:18: .
             {
             matchAny(); 
 
@@ -1044,7 +1044,7 @@ public class InternalSCGLexer extends Lexer {
         "\3\uffff\1\3\11\uffff\1\17\1\20\3\uffff\1\24\1\25\2\uffff\1\17"+
         "\1\uffff\1\3\11\uffff\1\20\1\21\1\22\1\23\1\24\4\uffff\1\4\11\uffff"+
         "\1\12\4\uffff\1\6\11\uffff\1\5\1\uffff\1\10\1\11\1\13\2\uffff\1"+
-        "\16\1\uffff\1\14\1\7\3\uffff\1\15\2\uffff\1\1\2\uffff\1\2";
+        "\14\1\uffff\1\15\1\7\3\uffff\1\16\2\uffff\1\1\2\uffff\1\2";
     static final String DFA12_specialS =
         "\1\1\16\uffff\1\0\1\2\110\uffff}>";
     static final String[] DFA12_transitionS = {

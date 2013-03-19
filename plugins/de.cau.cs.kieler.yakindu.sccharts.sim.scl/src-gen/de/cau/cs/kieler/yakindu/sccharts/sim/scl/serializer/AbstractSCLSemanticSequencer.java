@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
@@ -31,36 +31,52 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case SclPackage.CONDITIONAL:
-				if(context == grammarAccess.getConditionalRule() ||
-				   context == grammarAccess.getInstructionRule()) {
+				if(context == grammarAccess.getConditionalRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getInstructionRule()) {
+					sequence_Conditional_Instruction(context, (Conditional) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.GOTO:
-				if(context == grammarAccess.getGotoRule() ||
-				   context == grammarAccess.getInstructionRule()) {
+				if(context == grammarAccess.getGotoRule()) {
 					sequence_Goto(context, (Goto) semanticObject); 
 					return; 
 				}
-				else break;
-			case SclPackage.INSTRUCTION:
-				if(context == grammarAccess.getInstructionRule()) {
-					sequence_Instruction(context, (Instruction) semanticObject); 
+				else if(context == grammarAccess.getInstructionRule()) {
+					sequence_Goto_Instruction(context, (Goto) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.LABEL:
-				if(context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getLabelRule()) {
+				if(context == grammarAccess.getInstructionRule()) {
+					sequence_Instruction_Label(context, (Label) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getLabelRule()) {
 					sequence_Label(context, (Label) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.PARALLEL:
-				if(context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getParallelRule()) {
+				if(context == grammarAccess.getInstructionRule()) {
+					sequence_Instruction_Parallel(context, (Parallel) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getParallelRule()) {
 					sequence_Parallel(context, (Parallel) semanticObject); 
+					return; 
+				}
+				else break;
+			case SclPackage.PAUSE:
+				if(context == grammarAccess.getInstructionRule()) {
+					sequence_Instruction_Pause(context, (Pause) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getPauseRule()) {
+					sequence_Pause(context, (Pause) semanticObject); 
 					return; 
 				}
 				else break;
@@ -71,8 +87,11 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 				}
 				else break;
 			case SclPackage.SCL_EXPRESSION:
-				if(context == grammarAccess.getAssignmentRule() ||
-				   context == grammarAccess.getInstructionRule()) {
+				if(context == grammarAccess.getInstructionRule()) {
+					sequence_Assignment_Instruction(context, (SCLExpression) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getAssignmentRule()) {
 					sequence_Assignment(context, (SCLExpression) semanticObject); 
 					return; 
 				}
@@ -95,6 +114,15 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
+	 *     (assignment=STRING nextInstruction=Instruction?)
+	 */
+	protected void sequence_Assignment_Instruction(EObject context, SCLExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     assignment=STRING
 	 */
 	protected void sequence_Assignment(EObject context, SCLExpression semanticObject) {
@@ -113,6 +141,15 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
+	 *     (expression=SCLExpression instructions=Instruction nextInstruction=Instruction?)
+	 */
+	protected void sequence_Conditional_Instruction(EObject context, Conditional semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     name=ID
 	 */
 	protected void sequence_Goto(EObject context, Goto semanticObject) {
@@ -122,9 +159,36 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     secondInstructions=Instruction?
+	 *     (name=ID nextInstruction=Instruction?)
 	 */
-	protected void sequence_Instruction(EObject context, Instruction semanticObject) {
+	protected void sequence_Goto_Instruction(EObject context, Goto semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (instruction=Instruction nextInstruction=Instruction?)
+	 */
+	protected void sequence_Instruction_Label(EObject context, Label semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (firstThread=Instruction secondThread=Instruction nextInstruction=Instruction?)
+	 */
+	protected void sequence_Instruction_Parallel(EObject context, Parallel semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (pause='pause' nextInstruction=Instruction?)
+	 */
+	protected void sequence_Instruction_Pause(EObject context, Pause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -140,9 +204,18 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (firstInstruction=Instruction secondInstruction=Instruction)
+	 *     (firstThread=Instruction secondThread=Instruction)
 	 */
 	protected void sequence_Parallel(EObject context, Parallel semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     pause='pause'
+	 */
+	protected void sequence_Pause(EObject context, Pause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

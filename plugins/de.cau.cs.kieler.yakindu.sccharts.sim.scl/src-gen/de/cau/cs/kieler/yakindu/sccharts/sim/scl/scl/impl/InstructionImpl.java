@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionImpl#getSecondInstructions <em>Second Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionImpl#getNextInstruction <em>Next Instruction</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,14 +30,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class InstructionImpl extends MinimalEObjectImpl.Container implements Instruction
 {
   /**
-   * The cached value of the '{@link #getSecondInstructions() <em>Second Instructions</em>}' containment reference.
+   * The cached value of the '{@link #getNextInstruction() <em>Next Instruction</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSecondInstructions()
+   * @see #getNextInstruction()
    * @generated
    * @ordered
    */
-  protected Instruction secondInstructions;
+  protected Instruction nextInstruction;
 
   /**
    * <!-- begin-user-doc -->
@@ -65,9 +65,9 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
    * <!-- end-user-doc -->
    * @generated
    */
-  public Instruction getSecondInstructions()
+  public Instruction getNextInstruction()
   {
-    return secondInstructions;
+    return nextInstruction;
   }
 
   /**
@@ -75,13 +75,13 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetSecondInstructions(Instruction newSecondInstructions, NotificationChain msgs)
+  public NotificationChain basicSetNextInstruction(Instruction newNextInstruction, NotificationChain msgs)
   {
-    Instruction oldSecondInstructions = secondInstructions;
-    secondInstructions = newSecondInstructions;
+    Instruction oldNextInstruction = nextInstruction;
+    nextInstruction = newNextInstruction;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.INSTRUCTION__SECOND_INSTRUCTIONS, oldSecondInstructions, newSecondInstructions);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.INSTRUCTION__NEXT_INSTRUCTION, oldNextInstruction, newNextInstruction);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -92,20 +92,20 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSecondInstructions(Instruction newSecondInstructions)
+  public void setNextInstruction(Instruction newNextInstruction)
   {
-    if (newSecondInstructions != secondInstructions)
+    if (newNextInstruction != nextInstruction)
     {
       NotificationChain msgs = null;
-      if (secondInstructions != null)
-        msgs = ((InternalEObject)secondInstructions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.INSTRUCTION__SECOND_INSTRUCTIONS, null, msgs);
-      if (newSecondInstructions != null)
-        msgs = ((InternalEObject)newSecondInstructions).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.INSTRUCTION__SECOND_INSTRUCTIONS, null, msgs);
-      msgs = basicSetSecondInstructions(newSecondInstructions, msgs);
+      if (nextInstruction != null)
+        msgs = ((InternalEObject)nextInstruction).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.INSTRUCTION__NEXT_INSTRUCTION, null, msgs);
+      if (newNextInstruction != null)
+        msgs = ((InternalEObject)newNextInstruction).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.INSTRUCTION__NEXT_INSTRUCTION, null, msgs);
+      msgs = basicSetNextInstruction(newNextInstruction, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.INSTRUCTION__SECOND_INSTRUCTIONS, newSecondInstructions, newSecondInstructions));
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.INSTRUCTION__NEXT_INSTRUCTION, newNextInstruction, newNextInstruction));
   }
 
   /**
@@ -118,8 +118,8 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
   {
     switch (featureID)
     {
-      case SclPackage.INSTRUCTION__SECOND_INSTRUCTIONS:
-        return basicSetSecondInstructions(null, msgs);
+      case SclPackage.INSTRUCTION__NEXT_INSTRUCTION:
+        return basicSetNextInstruction(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -134,8 +134,8 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
   {
     switch (featureID)
     {
-      case SclPackage.INSTRUCTION__SECOND_INSTRUCTIONS:
-        return getSecondInstructions();
+      case SclPackage.INSTRUCTION__NEXT_INSTRUCTION:
+        return getNextInstruction();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -150,8 +150,8 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
   {
     switch (featureID)
     {
-      case SclPackage.INSTRUCTION__SECOND_INSTRUCTIONS:
-        setSecondInstructions((Instruction)newValue);
+      case SclPackage.INSTRUCTION__NEXT_INSTRUCTION:
+        setNextInstruction((Instruction)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -167,8 +167,8 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
   {
     switch (featureID)
     {
-      case SclPackage.INSTRUCTION__SECOND_INSTRUCTIONS:
-        setSecondInstructions((Instruction)null);
+      case SclPackage.INSTRUCTION__NEXT_INSTRUCTION:
+        setNextInstruction((Instruction)null);
         return;
     }
     super.eUnset(featureID);
@@ -184,8 +184,8 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
   {
     switch (featureID)
     {
-      case SclPackage.INSTRUCTION__SECOND_INSTRUCTIONS:
-        return secondInstructions != null;
+      case SclPackage.INSTRUCTION__NEXT_INSTRUCTION:
+        return nextInstruction != null;
     }
     return super.eIsSet(featureID);
   }

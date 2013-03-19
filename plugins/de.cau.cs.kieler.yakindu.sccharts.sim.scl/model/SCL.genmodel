@@ -15,7 +15,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Program/instruction"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Instruction">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Instruction/secondInstructions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Instruction/nextInstruction"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//SCLExpression">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//SCLExpression/assignment"/>
@@ -31,8 +31,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Goto/name"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel/firstInstruction"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel/secondInstruction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel/firstThread"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel/secondThread"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Pause">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Pause/pause"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction#getSecondInstructions <em>Second Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction#getNextInstruction <em>Next Instruction</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,29 +23,29 @@ import org.eclipse.emf.ecore.EObject;
 public interface Instruction extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Second Instructions</b></em>' containment reference.
+   * Returns the value of the '<em><b>Next Instruction</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Second Instructions</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Next Instruction</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Second Instructions</em>' containment reference.
-   * @see #setSecondInstructions(Instruction)
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getInstruction_SecondInstructions()
+   * @return the value of the '<em>Next Instruction</em>' containment reference.
+   * @see #setNextInstruction(Instruction)
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getInstruction_NextInstruction()
    * @model containment="true"
    * @generated
    */
-  Instruction getSecondInstructions();
+  Instruction getNextInstruction();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction#getSecondInstructions <em>Second Instructions</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction#getNextInstruction <em>Next Instruction</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Second Instructions</em>' containment reference.
-   * @see #getSecondInstructions()
+   * @param value the new value of the '<em>Next Instruction</em>' containment reference.
+   * @see #getNextInstruction()
    * @generated
    */
-  void setSecondInstructions(Instruction value);
+  void setNextInstruction(Instruction value);
 
 } // Instruction

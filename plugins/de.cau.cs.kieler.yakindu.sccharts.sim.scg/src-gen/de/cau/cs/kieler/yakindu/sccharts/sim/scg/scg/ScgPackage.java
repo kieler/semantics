@@ -69,31 +69,13 @@ public interface ScgPackage extends EPackage
   int INSTRUCTION = 0;
 
   /**
-   * The feature id for the '<em><b>Second Instructions</b></em>' containment reference.
+   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTION__SECOND_INSTRUCTIONS = SclPackage.INSTRUCTION__SECOND_INSTRUCTIONS;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION__PRIORITY = SclPackage.INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION__DEPENDENCIES = SclPackage.INSTRUCTION_FEATURE_COUNT + 1;
+  int INSTRUCTION__NEXT_INSTRUCTION = SclPackage.INSTRUCTION__NEXT_INSTRUCTION;
 
   /**
    * The number of structural features of the '<em>Instruction</em>' class.
@@ -102,7 +84,7 @@ public interface ScgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INSTRUCTION_FEATURE_COUNT = SclPackage.INSTRUCTION_FEATURE_COUNT + 2;
+  int INSTRUCTION_FEATURE_COUNT = SclPackage.INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.SCLExpressionImpl <em>SCL Expression</em>}' class.
@@ -115,31 +97,13 @@ public interface ScgPackage extends EPackage
   int SCL_EXPRESSION = 1;
 
   /**
-   * The feature id for the '<em><b>Second Instructions</b></em>' containment reference.
+   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCL_EXPRESSION__SECOND_INSTRUCTIONS = INSTRUCTION__SECOND_INSTRUCTIONS;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCL_EXPRESSION__PRIORITY = INSTRUCTION__PRIORITY;
-
-  /**
-   * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCL_EXPRESSION__DEPENDENCIES = INSTRUCTION__DEPENDENCIES;
+  int SCL_EXPRESSION__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
 
   /**
    * The feature id for the '<em><b>Assignment</b></em>' attribute.
@@ -170,31 +134,13 @@ public interface ScgPackage extends EPackage
   int CONDITIONAL = 2;
 
   /**
-   * The feature id for the '<em><b>Second Instructions</b></em>' containment reference.
+   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONDITIONAL__SECOND_INSTRUCTIONS = INSTRUCTION__SECOND_INSTRUCTIONS;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITIONAL__PRIORITY = INSTRUCTION__PRIORITY;
-
-  /**
-   * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITIONAL__DEPENDENCIES = INSTRUCTION__DEPENDENCIES;
+  int CONDITIONAL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -234,31 +180,13 @@ public interface ScgPackage extends EPackage
   int LABEL = 3;
 
   /**
-   * The feature id for the '<em><b>Second Instructions</b></em>' containment reference.
+   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LABEL__SECOND_INSTRUCTIONS = INSTRUCTION__SECOND_INSTRUCTIONS;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LABEL__PRIORITY = INSTRUCTION__PRIORITY;
-
-  /**
-   * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LABEL__DEPENDENCIES = INSTRUCTION__DEPENDENCIES;
+  int LABEL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
 
   /**
    * The feature id for the '<em><b>Instruction</b></em>' containment reference.
@@ -289,31 +217,13 @@ public interface ScgPackage extends EPackage
   int GOTO = 4;
 
   /**
-   * The feature id for the '<em><b>Second Instructions</b></em>' containment reference.
+   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GOTO__SECOND_INSTRUCTIONS = INSTRUCTION__SECOND_INSTRUCTIONS;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GOTO__PRIORITY = INSTRUCTION__PRIORITY;
-
-  /**
-   * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GOTO__DEPENDENCIES = INSTRUCTION__DEPENDENCIES;
+  int GOTO__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -344,31 +254,31 @@ public interface ScgPackage extends EPackage
   int PARALLEL = 5;
 
   /**
-   * The feature id for the '<em><b>Second Instructions</b></em>' containment reference.
+   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARALLEL__SECOND_INSTRUCTIONS = INSTRUCTION__SECOND_INSTRUCTIONS;
+  int PARALLEL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
 
   /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * The feature id for the '<em><b>First Thread</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARALLEL__PRIORITY = INSTRUCTION__PRIORITY;
+  int PARALLEL__FIRST_THREAD = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
+   * The feature id for the '<em><b>Second Thread</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARALLEL__DEPENDENCIES = INSTRUCTION__DEPENDENCIES;
+  int PARALLEL__SECOND_THREAD = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>First Instruction</b></em>' containment reference.
@@ -377,7 +287,7 @@ public interface ScgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARALLEL__FIRST_INSTRUCTION = INSTRUCTION_FEATURE_COUNT + 0;
+  int PARALLEL__FIRST_INSTRUCTION = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Second Instruction</b></em>' containment reference.
@@ -386,7 +296,7 @@ public interface ScgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARALLEL__SECOND_INSTRUCTION = INSTRUCTION_FEATURE_COUNT + 1;
+  int PARALLEL__SECOND_INSTRUCTION = INSTRUCTION_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Parallel</em>' class.
@@ -395,7 +305,71 @@ public interface ScgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARALLEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+  int PARALLEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 4;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl <em>Pause</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getPause()
+   * @generated
+   */
+  int PAUSE = 6;
+
+  /**
+   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PAUSE__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
+
+  /**
+   * The feature id for the '<em><b>Pause</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PAUSE__PAUSE = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PAUSE__PRIORITY = INSTRUCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PAUSE__DEPENDENCIES = INSTRUCTION_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Second Instructions</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PAUSE__SECOND_INSTRUCTIONS = INSTRUCTION_FEATURE_COUNT + 3;
+
+  /**
+   * The number of structural features of the '<em>Pause</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PAUSE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 4;
 
 
   /**
@@ -407,28 +381,6 @@ public interface ScgPackage extends EPackage
    * @generated
    */
   EClass getInstruction();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction#getPriority <em>Priority</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Priority</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction#getPriority()
-   * @see #getInstruction()
-   * @generated
-   */
-  EAttribute getInstruction_Priority();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction#getDependencies <em>Dependencies</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Dependencies</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction#getDependencies()
-   * @see #getInstruction()
-   * @generated
-   */
-  EReference getInstruction_Dependencies();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.SCLExpression <em>SCL Expression</em>}'.
@@ -481,6 +433,71 @@ public interface ScgPackage extends EPackage
   EClass getParallel();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel#getFirstInstruction <em>First Instruction</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>First Instruction</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel#getFirstInstruction()
+   * @see #getParallel()
+   * @generated
+   */
+  EReference getParallel_FirstInstruction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel#getSecondInstruction <em>Second Instruction</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Second Instruction</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel#getSecondInstruction()
+   * @see #getParallel()
+   * @generated
+   */
+  EReference getParallel_SecondInstruction();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause <em>Pause</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Pause</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause
+   * @generated
+   */
+  EClass getPause();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getPriority <em>Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Priority</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getPriority()
+   * @see #getPause()
+   * @generated
+   */
+  EAttribute getPause_Priority();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getDependencies <em>Dependencies</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Dependencies</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getDependencies()
+   * @see #getPause()
+   * @generated
+   */
+  EReference getPause_Dependencies();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getSecondInstructions <em>Second Instructions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Second Instructions</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getSecondInstructions()
+   * @see #getPause()
+   * @generated
+   */
+  EReference getPause_SecondInstructions();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -512,22 +529,6 @@ public interface ScgPackage extends EPackage
      * @generated
      */
     EClass INSTRUCTION = eINSTANCE.getInstruction();
-
-    /**
-     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute INSTRUCTION__PRIORITY = eINSTANCE.getInstruction_Priority();
-
-    /**
-     * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference INSTRUCTION__DEPENDENCIES = eINSTANCE.getInstruction_Dependencies();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.SCLExpressionImpl <em>SCL Expression</em>}' class.
@@ -578,6 +579,56 @@ public interface ScgPackage extends EPackage
      * @generated
      */
     EClass PARALLEL = eINSTANCE.getParallel();
+
+    /**
+     * The meta object literal for the '<em><b>First Instruction</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PARALLEL__FIRST_INSTRUCTION = eINSTANCE.getParallel_FirstInstruction();
+
+    /**
+     * The meta object literal for the '<em><b>Second Instruction</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PARALLEL__SECOND_INSTRUCTION = eINSTANCE.getParallel_SecondInstruction();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl <em>Pause</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getPause()
+     * @generated
+     */
+    EClass PAUSE = eINSTANCE.getPause();
+
+    /**
+     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PAUSE__PRIORITY = eINSTANCE.getPause_Priority();
+
+    /**
+     * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PAUSE__DEPENDENCIES = eINSTANCE.getPause_Dependencies();
+
+    /**
+     * The meta object literal for the '<em><b>Second Instructions</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PAUSE__SECOND_INSTRUCTIONS = eINSTANCE.getPause_SecondInstructions();
 
   }
 

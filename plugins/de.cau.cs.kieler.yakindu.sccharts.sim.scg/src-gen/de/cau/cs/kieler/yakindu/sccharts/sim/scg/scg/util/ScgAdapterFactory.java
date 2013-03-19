@@ -109,6 +109,11 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
         return createParallelAdapter();
       }
       @Override
+      public Adapter casePause(Pause object)
+      {
+        return createPauseAdapter();
+      }
+      @Override
       public Adapter caseScl_Instruction(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction object)
       {
         return createScl_InstructionAdapter();
@@ -147,6 +152,11 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
       public Adapter caseScl_Parallel(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel object)
       {
         return createScl_ParallelAdapter();
+      }
+      @Override
+      public Adapter caseScl_Pause(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause object)
+      {
+        return createScl_PauseAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -256,6 +266,21 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createParallelAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause <em>Pause</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause
+   * @generated
+   */
+  public Adapter createPauseAdapter()
   {
     return null;
   }
@@ -376,6 +401,21 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScl_ParallelAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause <em>Pause</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
+   * @generated
+   */
+  public Adapter createScl_PauseAdapter()
   {
     return null;
   }

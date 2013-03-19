@@ -114,6 +114,11 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createParallelAdapter();
       }
       @Override
+      public Adapter casePause(Pause object)
+      {
+        return createPauseAdapter();
+      }
+      @Override
       public Adapter caseStatement(Statement object)
       {
         return createStatementAdapter();
@@ -246,6 +251,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createParallelAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause <em>Pause</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
+   * @generated
+   */
+  public Adapter createPauseAdapter()
   {
     return null;
   }

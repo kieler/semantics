@@ -23,6 +23,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl#getFirstThread <em>First Thread</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl#getSecondThread <em>Second Thread</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl#getFirstInstruction <em>First Instruction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl#getSecondInstruction <em>Second Instruction</em>}</li>
  * </ul>
@@ -33,6 +35,26 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class ParallelImpl extends InstructionImpl implements Parallel
 {
   /**
+   * The cached value of the '{@link #getFirstThread() <em>First Thread</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFirstThread()
+   * @generated
+   * @ordered
+   */
+  protected Instruction firstThread;
+
+  /**
+   * The cached value of the '{@link #getSecondThread() <em>Second Thread</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSecondThread()
+   * @generated
+   * @ordered
+   */
+  protected Instruction secondThread;
+
+  /**
    * The cached value of the '{@link #getFirstInstruction() <em>First Instruction</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -40,7 +62,7 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * @generated
    * @ordered
    */
-  protected Instruction firstInstruction;
+  protected de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction firstInstruction;
 
   /**
    * The cached value of the '{@link #getSecondInstruction() <em>Second Instruction</em>}' containment reference.
@@ -50,7 +72,7 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * @generated
    * @ordered
    */
-  protected Instruction secondInstruction;
+  protected de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction secondInstruction;
 
   /**
    * <!-- begin-user-doc -->
@@ -78,7 +100,103 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
-  public Instruction getFirstInstruction()
+  public Instruction getFirstThread()
+  {
+    return firstThread;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetFirstThread(Instruction newFirstThread, NotificationChain msgs)
+  {
+    Instruction oldFirstThread = firstThread;
+    firstThread = newFirstThread;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.PARALLEL__FIRST_THREAD, oldFirstThread, newFirstThread);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setFirstThread(Instruction newFirstThread)
+  {
+    if (newFirstThread != firstThread)
+    {
+      NotificationChain msgs = null;
+      if (firstThread != null)
+        msgs = ((InternalEObject)firstThread).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.PARALLEL__FIRST_THREAD, null, msgs);
+      if (newFirstThread != null)
+        msgs = ((InternalEObject)newFirstThread).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.PARALLEL__FIRST_THREAD, null, msgs);
+      msgs = basicSetFirstThread(newFirstThread, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.PARALLEL__FIRST_THREAD, newFirstThread, newFirstThread));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Instruction getSecondThread()
+  {
+    return secondThread;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetSecondThread(Instruction newSecondThread, NotificationChain msgs)
+  {
+    Instruction oldSecondThread = secondThread;
+    secondThread = newSecondThread;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.PARALLEL__SECOND_THREAD, oldSecondThread, newSecondThread);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSecondThread(Instruction newSecondThread)
+  {
+    if (newSecondThread != secondThread)
+    {
+      NotificationChain msgs = null;
+      if (secondThread != null)
+        msgs = ((InternalEObject)secondThread).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.PARALLEL__SECOND_THREAD, null, msgs);
+      if (newSecondThread != null)
+        msgs = ((InternalEObject)newSecondThread).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.PARALLEL__SECOND_THREAD, null, msgs);
+      msgs = basicSetSecondThread(newSecondThread, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.PARALLEL__SECOND_THREAD, newSecondThread, newSecondThread));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction getFirstInstruction()
   {
     return firstInstruction;
   }
@@ -88,9 +206,9 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetFirstInstruction(Instruction newFirstInstruction, NotificationChain msgs)
+  public NotificationChain basicSetFirstInstruction(de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction newFirstInstruction, NotificationChain msgs)
   {
-    Instruction oldFirstInstruction = firstInstruction;
+    de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction oldFirstInstruction = firstInstruction;
     firstInstruction = newFirstInstruction;
     if (eNotificationRequired())
     {
@@ -105,7 +223,7 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFirstInstruction(Instruction newFirstInstruction)
+  public void setFirstInstruction(de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction newFirstInstruction)
   {
     if (newFirstInstruction != firstInstruction)
     {
@@ -126,7 +244,7 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
-  public Instruction getSecondInstruction()
+  public de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction getSecondInstruction()
   {
     return secondInstruction;
   }
@@ -136,9 +254,9 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetSecondInstruction(Instruction newSecondInstruction, NotificationChain msgs)
+  public NotificationChain basicSetSecondInstruction(de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction newSecondInstruction, NotificationChain msgs)
   {
-    Instruction oldSecondInstruction = secondInstruction;
+    de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction oldSecondInstruction = secondInstruction;
     secondInstruction = newSecondInstruction;
     if (eNotificationRequired())
     {
@@ -153,7 +271,7 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSecondInstruction(Instruction newSecondInstruction)
+  public void setSecondInstruction(de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction newSecondInstruction)
   {
     if (newSecondInstruction != secondInstruction)
     {
@@ -179,6 +297,10 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
+      case ScgPackage.PARALLEL__FIRST_THREAD:
+        return basicSetFirstThread(null, msgs);
+      case ScgPackage.PARALLEL__SECOND_THREAD:
+        return basicSetSecondThread(null, msgs);
       case ScgPackage.PARALLEL__FIRST_INSTRUCTION:
         return basicSetFirstInstruction(null, msgs);
       case ScgPackage.PARALLEL__SECOND_INSTRUCTION:
@@ -197,6 +319,10 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
+      case ScgPackage.PARALLEL__FIRST_THREAD:
+        return getFirstThread();
+      case ScgPackage.PARALLEL__SECOND_THREAD:
+        return getSecondThread();
       case ScgPackage.PARALLEL__FIRST_INSTRUCTION:
         return getFirstInstruction();
       case ScgPackage.PARALLEL__SECOND_INSTRUCTION:
@@ -215,11 +341,17 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
+      case ScgPackage.PARALLEL__FIRST_THREAD:
+        setFirstThread((Instruction)newValue);
+        return;
+      case ScgPackage.PARALLEL__SECOND_THREAD:
+        setSecondThread((Instruction)newValue);
+        return;
       case ScgPackage.PARALLEL__FIRST_INSTRUCTION:
-        setFirstInstruction((Instruction)newValue);
+        setFirstInstruction((de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction)newValue);
         return;
       case ScgPackage.PARALLEL__SECOND_INSTRUCTION:
-        setSecondInstruction((Instruction)newValue);
+        setSecondInstruction((de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -235,11 +367,17 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
+      case ScgPackage.PARALLEL__FIRST_THREAD:
+        setFirstThread((Instruction)null);
+        return;
+      case ScgPackage.PARALLEL__SECOND_THREAD:
+        setSecondThread((Instruction)null);
+        return;
       case ScgPackage.PARALLEL__FIRST_INSTRUCTION:
-        setFirstInstruction((Instruction)null);
+        setFirstInstruction((de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction)null);
         return;
       case ScgPackage.PARALLEL__SECOND_INSTRUCTION:
-        setSecondInstruction((Instruction)null);
+        setSecondInstruction((de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction)null);
         return;
     }
     super.eUnset(featureID);
@@ -255,6 +393,10 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
+      case ScgPackage.PARALLEL__FIRST_THREAD:
+        return firstThread != null;
+      case ScgPackage.PARALLEL__SECOND_THREAD:
+        return secondThread != null;
       case ScgPackage.PARALLEL__FIRST_INSTRUCTION:
         return firstInstruction != null;
       case ScgPackage.PARALLEL__SECOND_INSTRUCTION:
@@ -275,8 +417,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
     {
       switch (derivedFeatureID)
       {
-        case ScgPackage.PARALLEL__FIRST_INSTRUCTION: return SclPackage.PARALLEL__FIRST_INSTRUCTION;
-        case ScgPackage.PARALLEL__SECOND_INSTRUCTION: return SclPackage.PARALLEL__SECOND_INSTRUCTION;
+        case ScgPackage.PARALLEL__FIRST_THREAD: return SclPackage.PARALLEL__FIRST_THREAD;
+        case ScgPackage.PARALLEL__SECOND_THREAD: return SclPackage.PARALLEL__SECOND_THREAD;
         default: return -1;
       }
     }
@@ -295,8 +437,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
     {
       switch (baseFeatureID)
       {
-        case SclPackage.PARALLEL__FIRST_INSTRUCTION: return ScgPackage.PARALLEL__FIRST_INSTRUCTION;
-        case SclPackage.PARALLEL__SECOND_INSTRUCTION: return ScgPackage.PARALLEL__SECOND_INSTRUCTION;
+        case SclPackage.PARALLEL__FIRST_THREAD: return ScgPackage.PARALLEL__FIRST_THREAD;
+        case SclPackage.PARALLEL__SECOND_THREAD: return ScgPackage.PARALLEL__SECOND_THREAD;
         default: return -1;
       }
     }

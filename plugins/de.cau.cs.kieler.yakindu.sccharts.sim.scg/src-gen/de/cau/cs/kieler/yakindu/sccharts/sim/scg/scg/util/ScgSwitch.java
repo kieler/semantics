@@ -136,6 +136,16 @@ public class ScgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case ScgPackage.PAUSE:
+      {
+        Pause pause = (Pause)theEObject;
+        T result = casePause(pause);
+        if (result == null) result = caseInstruction(pause);
+        if (result == null) result = caseScl_Pause(pause);
+        if (result == null) result = caseScl_Instruction(pause);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -232,6 +242,22 @@ public class ScgSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseParallel(Parallel object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Pause</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Pause</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePause(Pause object)
   {
     return null;
   }
@@ -360,6 +386,22 @@ public class ScgSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseScl_Parallel(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Pause</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Pause</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScl_Pause(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause object)
   {
     return null;
   }

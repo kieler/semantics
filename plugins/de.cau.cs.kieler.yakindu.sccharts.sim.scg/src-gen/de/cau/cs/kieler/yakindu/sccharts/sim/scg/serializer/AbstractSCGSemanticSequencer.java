@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Goto;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.SCLExpression;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.services.SCGGrammarAccess;
@@ -45,12 +45,6 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 					return; 
 				}
 				else break;
-			case ScgPackage.INSTRUCTION:
-				if(context == grammarAccess.getInstructionRule()) {
-					sequence_Instruction(context, (Instruction) semanticObject); 
-					return; 
-				}
-				else break;
 			case ScgPackage.LABEL:
 				if(context == grammarAccess.getInstructionRule() ||
 				   context == grammarAccess.getLabelRule()) {
@@ -62,6 +56,16 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 				if(context == grammarAccess.getInstructionRule() ||
 				   context == grammarAccess.getParallelRule()) {
 					sequence_Parallel(context, (Parallel) semanticObject); 
+					return; 
+				}
+				else break;
+			case ScgPackage.PAUSE:
+				if(context == grammarAccess.getInstructionRule()) {
+					sequence_Instruction_Pause(context, (Pause) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getPauseRule()) {
+					sequence_Pause(context, (Pause) semanticObject); 
 					return; 
 				}
 				else break;
@@ -127,9 +131,9 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 	
 	/**
 	 * Constraint:
-	 *     (priority=INT dependencies+=Instruction* secondInstructions=Instruction?)
+	 *     (pause='pause' priority=INT dependencies+=Instruction* secondInstructions=Instruction?)
 	 */
-	protected void sequence_Instruction(EObject context, Instruction semanticObject) {
+	protected void sequence_Instruction_Pause(EObject context, Pause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -148,6 +152,15 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 	 *     (firstInstruction=Instruction secondInstruction=Instruction)
 	 */
 	protected void sequence_Parallel(EObject context, Parallel semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     pause='pause'
+	 */
+	protected void sequence_Pause(EObject context, Pause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

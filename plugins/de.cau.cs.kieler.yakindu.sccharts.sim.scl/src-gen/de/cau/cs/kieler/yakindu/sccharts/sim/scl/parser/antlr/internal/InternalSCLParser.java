@@ -641,7 +641,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInstruction"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:271:1: ruleInstruction returns [EObject current=null] : (this_Assignment_0= ruleAssignment | this_Conditional_1= ruleConditional | this_Label_2= ruleLabel | this_Goto_3= ruleGoto | this_Parallel_4= ruleParallel | ( rulePause (otherlv_6= ';' ( (lv_secondInstructions_7_0= ruleInstruction ) ) )? ) ) ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:271:1: ruleInstruction returns [EObject current=null] : ( (this_Assignment_0= ruleAssignment | this_Conditional_1= ruleConditional | this_Label_2= ruleLabel | this_Goto_3= ruleGoto | this_Parallel_4= ruleParallel | this_Pause_5= rulePause ) (otherlv_6= ';' ( (lv_nextInstruction_7_0= ruleInstruction ) ) )? ) ;
     public final EObject ruleInstruction() throws RecognitionException {
         EObject current = null;
 
@@ -656,57 +656,62 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
         EObject this_Parallel_4 = null;
 
-        EObject lv_secondInstructions_7_0 = null;
+        EObject this_Pause_5 = null;
+
+        EObject lv_nextInstruction_7_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:274:28: ( (this_Assignment_0= ruleAssignment | this_Conditional_1= ruleConditional | this_Label_2= ruleLabel | this_Goto_3= ruleGoto | this_Parallel_4= ruleParallel | ( rulePause (otherlv_6= ';' ( (lv_secondInstructions_7_0= ruleInstruction ) ) )? ) ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:275:1: (this_Assignment_0= ruleAssignment | this_Conditional_1= ruleConditional | this_Label_2= ruleLabel | this_Goto_3= ruleGoto | this_Parallel_4= ruleParallel | ( rulePause (otherlv_6= ';' ( (lv_secondInstructions_7_0= ruleInstruction ) ) )? ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:274:28: ( ( (this_Assignment_0= ruleAssignment | this_Conditional_1= ruleConditional | this_Label_2= ruleLabel | this_Goto_3= ruleGoto | this_Parallel_4= ruleParallel | this_Pause_5= rulePause ) (otherlv_6= ';' ( (lv_nextInstruction_7_0= ruleInstruction ) ) )? ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:275:1: ( (this_Assignment_0= ruleAssignment | this_Conditional_1= ruleConditional | this_Label_2= ruleLabel | this_Goto_3= ruleGoto | this_Parallel_4= ruleParallel | this_Pause_5= rulePause ) (otherlv_6= ';' ( (lv_nextInstruction_7_0= ruleInstruction ) ) )? )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:275:1: (this_Assignment_0= ruleAssignment | this_Conditional_1= ruleConditional | this_Label_2= ruleLabel | this_Goto_3= ruleGoto | this_Parallel_4= ruleParallel | ( rulePause (otherlv_6= ';' ( (lv_secondInstructions_7_0= ruleInstruction ) ) )? ) )
-            int alt4=6;
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:275:1: ( (this_Assignment_0= ruleAssignment | this_Conditional_1= ruleConditional | this_Label_2= ruleLabel | this_Goto_3= ruleGoto | this_Parallel_4= ruleParallel | this_Pause_5= rulePause ) (otherlv_6= ';' ( (lv_nextInstruction_7_0= ruleInstruction ) ) )? )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:275:2: (this_Assignment_0= ruleAssignment | this_Conditional_1= ruleConditional | this_Label_2= ruleLabel | this_Goto_3= ruleGoto | this_Parallel_4= ruleParallel | this_Pause_5= rulePause ) (otherlv_6= ';' ( (lv_nextInstruction_7_0= ruleInstruction ) ) )?
+            {
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:275:2: (this_Assignment_0= ruleAssignment | this_Conditional_1= ruleConditional | this_Label_2= ruleLabel | this_Goto_3= ruleGoto | this_Parallel_4= ruleParallel | this_Pause_5= rulePause )
+            int alt3=6;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt4=1;
+                alt3=1;
                 }
                 break;
             case 17:
                 {
-                alt4=2;
+                alt3=2;
                 }
                 break;
             case 20:
                 {
-                alt4=3;
+                alt3=3;
                 }
                 break;
             case 21:
                 {
-                alt4=4;
+                alt3=4;
                 }
                 break;
             case 22:
                 {
-                alt4=5;
+                alt3=5;
                 }
                 break;
             case 25:
                 {
-                alt4=6;
+                alt3=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 4, 0, input);
+                    new NoViableAltException("", 3, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt4) {
+            switch (alt3) {
                 case 1 :
                     // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:276:2: this_Assignment_0= ruleAssignment
                     {
@@ -717,10 +722,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getInstructionAccess().getAssignmentParserRuleCall_0()); 
+                              newCompositeNode(grammarAccess.getInstructionAccess().getAssignmentParserRuleCall_0_0()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleAssignment_in_ruleInstruction567);
+                    pushFollow(FOLLOW_ruleAssignment_in_ruleInstruction568);
                     this_Assignment_0=ruleAssignment();
 
                     state._fsp--;
@@ -744,10 +749,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getInstructionAccess().getConditionalParserRuleCall_1()); 
+                              newCompositeNode(grammarAccess.getInstructionAccess().getConditionalParserRuleCall_0_1()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleConditional_in_ruleInstruction597);
+                    pushFollow(FOLLOW_ruleConditional_in_ruleInstruction598);
                     this_Conditional_1=ruleConditional();
 
                     state._fsp--;
@@ -771,10 +776,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getInstructionAccess().getLabelParserRuleCall_2()); 
+                              newCompositeNode(grammarAccess.getInstructionAccess().getLabelParserRuleCall_0_2()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleLabel_in_ruleInstruction627);
+                    pushFollow(FOLLOW_ruleLabel_in_ruleInstruction628);
                     this_Label_2=ruleLabel();
 
                     state._fsp--;
@@ -798,10 +803,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getInstructionAccess().getGotoParserRuleCall_3()); 
+                              newCompositeNode(grammarAccess.getInstructionAccess().getGotoParserRuleCall_0_3()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleGoto_in_ruleInstruction657);
+                    pushFollow(FOLLOW_ruleGoto_in_ruleInstruction658);
                     this_Goto_3=ruleGoto();
 
                     state._fsp--;
@@ -825,10 +830,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getInstructionAccess().getParallelParserRuleCall_4()); 
+                              newCompositeNode(grammarAccess.getInstructionAccess().getParallelParserRuleCall_0_4()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleParallel_in_ruleInstruction687);
+                    pushFollow(FOLLOW_ruleParallel_in_ruleInstruction688);
                     this_Parallel_4=ruleParallel();
 
                     state._fsp--;
@@ -843,10 +848,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:340:6: ( rulePause (otherlv_6= ';' ( (lv_secondInstructions_7_0= ruleInstruction ) ) )? )
-                    {
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:340:6: ( rulePause (otherlv_6= ';' ( (lv_secondInstructions_7_0= ruleInstruction ) ) )? )
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:341:2: rulePause (otherlv_6= ';' ( (lv_secondInstructions_7_0= ruleInstruction ) ) )?
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:341:2: this_Pause_5= rulePause
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -855,74 +857,76 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getInstructionAccess().getPauseParserRuleCall_5_0()); 
+                              newCompositeNode(grammarAccess.getInstructionAccess().getPauseParserRuleCall_0_5()); 
                           
                     }
-                    pushFollow(FOLLOW_rulePause_in_ruleInstruction712);
-                    rulePause();
+                    pushFollow(FOLLOW_rulePause_in_ruleInstruction718);
+                    this_Pause_5=rulePause();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
                        
+                              current = this_Pause_5; 
                               afterParserOrEnumRuleCall();
                           
                     }
-                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:351:1: (otherlv_6= ';' ( (lv_secondInstructions_7_0= ruleInstruction ) ) )?
-                    int alt3=2;
-                    int LA3_0 = input.LA(1);
 
-                    if ( (LA3_0==16) ) {
-                        alt3=1;
                     }
-                    switch (alt3) {
-                        case 1 :
-                            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:351:3: otherlv_6= ';' ( (lv_secondInstructions_7_0= ruleInstruction ) )
-                            {
-                            otherlv_6=(Token)match(input,16,FOLLOW_16_in_ruleInstruction724); if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
+                    break;
 
-                                  	newLeafNode(otherlv_6, grammarAccess.getInstructionAccess().getSemicolonKeyword_5_1_0());
-                                  
-                            }
-                            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:355:1: ( (lv_secondInstructions_7_0= ruleInstruction ) )
-                            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:356:1: (lv_secondInstructions_7_0= ruleInstruction )
-                            {
-                            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:356:1: (lv_secondInstructions_7_0= ruleInstruction )
-                            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:357:3: lv_secondInstructions_7_0= ruleInstruction
-                            {
-                            if ( state.backtracking==0 ) {
-                               
-                              	        newCompositeNode(grammarAccess.getInstructionAccess().getSecondInstructionsInstructionParserRuleCall_5_1_1_0()); 
-                              	    
-                            }
-                            pushFollow(FOLLOW_ruleInstruction_in_ruleInstruction745);
-                            lv_secondInstructions_7_0=ruleInstruction();
+            }
 
-                            state._fsp--;
-                            if (state.failed) return current;
-                            if ( state.backtracking==0 ) {
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:352:2: (otherlv_6= ';' ( (lv_nextInstruction_7_0= ruleInstruction ) ) )?
+            int alt4=2;
+            int LA4_0 = input.LA(1);
 
-                              	        if (current==null) {
-                              	            current = createModelElementForParent(grammarAccess.getInstructionRule());
-                              	        }
-                                     		set(
-                                     			current, 
-                                     			"secondInstructions",
-                                      		lv_secondInstructions_7_0, 
-                                      		"Instruction");
-                              	        afterParserOrEnumRuleCall();
-                              	    
-                            }
+            if ( (LA4_0==16) ) {
+                int LA4_1 = input.LA(2);
 
-                            }
+                if ( (synpred8_InternalSCL()) ) {
+                    alt4=1;
+                }
+            }
+            switch (alt4) {
+                case 1 :
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:352:4: otherlv_6= ';' ( (lv_nextInstruction_7_0= ruleInstruction ) )
+                    {
+                    otherlv_6=(Token)match(input,16,FOLLOW_16_in_ruleInstruction731); if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
+                          	newLeafNode(otherlv_6, grammarAccess.getInstructionAccess().getSemicolonKeyword_1_0());
+                          
+                    }
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:356:1: ( (lv_nextInstruction_7_0= ruleInstruction ) )
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:357:1: (lv_nextInstruction_7_0= ruleInstruction )
+                    {
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:357:1: (lv_nextInstruction_7_0= ruleInstruction )
+                    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:358:3: lv_nextInstruction_7_0= ruleInstruction
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                      	        newCompositeNode(grammarAccess.getInstructionAccess().getNextInstructionInstructionParserRuleCall_1_1_0()); 
+                      	    
+                    }
+                    pushFollow(FOLLOW_ruleInstruction_in_ruleInstruction752);
+                    lv_nextInstruction_7_0=ruleInstruction();
 
-                            }
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
 
-
-                            }
-                            break;
+                      	        if (current==null) {
+                      	            current = createModelElementForParent(grammarAccess.getInstructionRule());
+                      	        }
+                             		set(
+                             			current, 
+                             			"nextInstruction",
+                              		lv_nextInstruction_7_0, 
+                              		"Instruction");
+                      	        afterParserOrEnumRuleCall();
+                      	    
+                    }
 
                     }
 
@@ -932,6 +936,9 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
                     break;
+
+            }
+
 
             }
 
@@ -955,7 +962,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAssignment"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:381:1: entryRuleAssignment returns [EObject current=null] : iv_ruleAssignment= ruleAssignment EOF ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:382:1: entryRuleAssignment returns [EObject current=null] : iv_ruleAssignment= ruleAssignment EOF ;
     public final EObject entryRuleAssignment() throws RecognitionException {
         EObject current = null;
 
@@ -963,13 +970,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:382:2: (iv_ruleAssignment= ruleAssignment EOF )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:383:2: iv_ruleAssignment= ruleAssignment EOF
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:383:2: (iv_ruleAssignment= ruleAssignment EOF )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:384:2: iv_ruleAssignment= ruleAssignment EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAssignmentRule()); 
             }
-            pushFollow(FOLLOW_ruleAssignment_in_entryRuleAssignment784);
+            pushFollow(FOLLOW_ruleAssignment_in_entryRuleAssignment790);
             iv_ruleAssignment=ruleAssignment();
 
             state._fsp--;
@@ -977,7 +984,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleAssignment; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleAssignment794); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleAssignment800); if (state.failed) return current;
 
             }
 
@@ -995,7 +1002,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAssignment"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:390:1: ruleAssignment returns [EObject current=null] : ( (lv_assignment_0_0= RULE_STRING ) ) ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:391:1: ruleAssignment returns [EObject current=null] : ( (lv_assignment_0_0= RULE_STRING ) ) ;
     public final EObject ruleAssignment() throws RecognitionException {
         EObject current = null;
 
@@ -1004,16 +1011,16 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:393:28: ( ( (lv_assignment_0_0= RULE_STRING ) ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:394:1: ( (lv_assignment_0_0= RULE_STRING ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:394:28: ( ( (lv_assignment_0_0= RULE_STRING ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:395:1: ( (lv_assignment_0_0= RULE_STRING ) )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:394:1: ( (lv_assignment_0_0= RULE_STRING ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:395:1: (lv_assignment_0_0= RULE_STRING )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:395:1: ( (lv_assignment_0_0= RULE_STRING ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:396:1: (lv_assignment_0_0= RULE_STRING )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:395:1: (lv_assignment_0_0= RULE_STRING )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:396:3: lv_assignment_0_0= RULE_STRING
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:396:1: (lv_assignment_0_0= RULE_STRING )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:397:3: lv_assignment_0_0= RULE_STRING
             {
-            lv_assignment_0_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleAssignment835); if (state.failed) return current;
+            lv_assignment_0_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleAssignment841); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(lv_assignment_0_0, grammarAccess.getAssignmentAccess().getAssignmentSTRINGTerminalRuleCall_0()); 
@@ -1057,7 +1064,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleConditional"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:420:1: entryRuleConditional returns [EObject current=null] : iv_ruleConditional= ruleConditional EOF ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:421:1: entryRuleConditional returns [EObject current=null] : iv_ruleConditional= ruleConditional EOF ;
     public final EObject entryRuleConditional() throws RecognitionException {
         EObject current = null;
 
@@ -1065,13 +1072,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:421:2: (iv_ruleConditional= ruleConditional EOF )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:422:2: iv_ruleConditional= ruleConditional EOF
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:422:2: (iv_ruleConditional= ruleConditional EOF )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:423:2: iv_ruleConditional= ruleConditional EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getConditionalRule()); 
             }
-            pushFollow(FOLLOW_ruleConditional_in_entryRuleConditional875);
+            pushFollow(FOLLOW_ruleConditional_in_entryRuleConditional881);
             iv_ruleConditional=ruleConditional();
 
             state._fsp--;
@@ -1079,7 +1086,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleConditional; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleConditional885); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleConditional891); if (state.failed) return current;
 
             }
 
@@ -1097,7 +1104,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditional"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:429:1: ruleConditional returns [EObject current=null] : (otherlv_0= 'if' ( (lv_expression_1_0= ruleSCLExpression ) ) otherlv_2= 'then' ( (lv_instructions_3_0= ruleInstruction ) ) otherlv_4= 'end' ) ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:430:1: ruleConditional returns [EObject current=null] : (otherlv_0= 'if' ( (lv_expression_1_0= ruleSCLExpression ) ) otherlv_2= 'then' ( (lv_instructions_3_0= ruleInstruction ) ) otherlv_4= 'end' ) ;
     public final EObject ruleConditional() throws RecognitionException {
         EObject current = null;
 
@@ -1112,30 +1119,30 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:432:28: ( (otherlv_0= 'if' ( (lv_expression_1_0= ruleSCLExpression ) ) otherlv_2= 'then' ( (lv_instructions_3_0= ruleInstruction ) ) otherlv_4= 'end' ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:433:1: (otherlv_0= 'if' ( (lv_expression_1_0= ruleSCLExpression ) ) otherlv_2= 'then' ( (lv_instructions_3_0= ruleInstruction ) ) otherlv_4= 'end' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:433:28: ( (otherlv_0= 'if' ( (lv_expression_1_0= ruleSCLExpression ) ) otherlv_2= 'then' ( (lv_instructions_3_0= ruleInstruction ) ) otherlv_4= 'end' ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:434:1: (otherlv_0= 'if' ( (lv_expression_1_0= ruleSCLExpression ) ) otherlv_2= 'then' ( (lv_instructions_3_0= ruleInstruction ) ) otherlv_4= 'end' )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:433:1: (otherlv_0= 'if' ( (lv_expression_1_0= ruleSCLExpression ) ) otherlv_2= 'then' ( (lv_instructions_3_0= ruleInstruction ) ) otherlv_4= 'end' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:433:3: otherlv_0= 'if' ( (lv_expression_1_0= ruleSCLExpression ) ) otherlv_2= 'then' ( (lv_instructions_3_0= ruleInstruction ) ) otherlv_4= 'end'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:434:1: (otherlv_0= 'if' ( (lv_expression_1_0= ruleSCLExpression ) ) otherlv_2= 'then' ( (lv_instructions_3_0= ruleInstruction ) ) otherlv_4= 'end' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:434:3: otherlv_0= 'if' ( (lv_expression_1_0= ruleSCLExpression ) ) otherlv_2= 'then' ( (lv_instructions_3_0= ruleInstruction ) ) otherlv_4= 'end'
             {
-            otherlv_0=(Token)match(input,17,FOLLOW_17_in_ruleConditional922); if (state.failed) return current;
+            otherlv_0=(Token)match(input,17,FOLLOW_17_in_ruleConditional928); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getConditionalAccess().getIfKeyword_0());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:437:1: ( (lv_expression_1_0= ruleSCLExpression ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:438:1: (lv_expression_1_0= ruleSCLExpression )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:438:1: ( (lv_expression_1_0= ruleSCLExpression ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:439:1: (lv_expression_1_0= ruleSCLExpression )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:438:1: (lv_expression_1_0= ruleSCLExpression )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:439:3: lv_expression_1_0= ruleSCLExpression
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:439:1: (lv_expression_1_0= ruleSCLExpression )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:440:3: lv_expression_1_0= ruleSCLExpression
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getConditionalAccess().getExpressionSCLExpressionParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleSCLExpression_in_ruleConditional943);
+            pushFollow(FOLLOW_ruleSCLExpression_in_ruleConditional949);
             lv_expression_1_0=ruleSCLExpression();
 
             state._fsp--;
@@ -1159,24 +1166,24 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,18,FOLLOW_18_in_ruleConditional955); if (state.failed) return current;
+            otherlv_2=(Token)match(input,18,FOLLOW_18_in_ruleConditional961); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getConditionalAccess().getThenKeyword_2());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:459:1: ( (lv_instructions_3_0= ruleInstruction ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:460:1: (lv_instructions_3_0= ruleInstruction )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:460:1: ( (lv_instructions_3_0= ruleInstruction ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:461:1: (lv_instructions_3_0= ruleInstruction )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:460:1: (lv_instructions_3_0= ruleInstruction )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:461:3: lv_instructions_3_0= ruleInstruction
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:461:1: (lv_instructions_3_0= ruleInstruction )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:462:3: lv_instructions_3_0= ruleInstruction
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getConditionalAccess().getInstructionsInstructionParserRuleCall_3_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleInstruction_in_ruleConditional976);
+            pushFollow(FOLLOW_ruleInstruction_in_ruleConditional982);
             lv_instructions_3_0=ruleInstruction();
 
             state._fsp--;
@@ -1200,7 +1207,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,19,FOLLOW_19_in_ruleConditional988); if (state.failed) return current;
+            otherlv_4=(Token)match(input,19,FOLLOW_19_in_ruleConditional994); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getConditionalAccess().getEndKeyword_4());
@@ -1229,7 +1236,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLabel"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:489:1: entryRuleLabel returns [EObject current=null] : iv_ruleLabel= ruleLabel EOF ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:490:1: entryRuleLabel returns [EObject current=null] : iv_ruleLabel= ruleLabel EOF ;
     public final EObject entryRuleLabel() throws RecognitionException {
         EObject current = null;
 
@@ -1237,13 +1244,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:490:2: (iv_ruleLabel= ruleLabel EOF )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:491:2: iv_ruleLabel= ruleLabel EOF
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:491:2: (iv_ruleLabel= ruleLabel EOF )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:492:2: iv_ruleLabel= ruleLabel EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getLabelRule()); 
             }
-            pushFollow(FOLLOW_ruleLabel_in_entryRuleLabel1024);
+            pushFollow(FOLLOW_ruleLabel_in_entryRuleLabel1030);
             iv_ruleLabel=ruleLabel();
 
             state._fsp--;
@@ -1251,7 +1258,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleLabel; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleLabel1034); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleLabel1040); if (state.failed) return current;
 
             }
 
@@ -1269,7 +1276,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLabel"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:498:1: ruleLabel returns [EObject current=null] : (otherlv_0= 'label:' ( (lv_instruction_1_0= ruleInstruction ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:499:1: ruleLabel returns [EObject current=null] : (otherlv_0= 'label:' ( (lv_instruction_1_0= ruleInstruction ) ) ) ;
     public final EObject ruleLabel() throws RecognitionException {
         EObject current = null;
 
@@ -1280,30 +1287,30 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:501:28: ( (otherlv_0= 'label:' ( (lv_instruction_1_0= ruleInstruction ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:502:1: (otherlv_0= 'label:' ( (lv_instruction_1_0= ruleInstruction ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:502:28: ( (otherlv_0= 'label:' ( (lv_instruction_1_0= ruleInstruction ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:503:1: (otherlv_0= 'label:' ( (lv_instruction_1_0= ruleInstruction ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:502:1: (otherlv_0= 'label:' ( (lv_instruction_1_0= ruleInstruction ) ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:502:3: otherlv_0= 'label:' ( (lv_instruction_1_0= ruleInstruction ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:503:1: (otherlv_0= 'label:' ( (lv_instruction_1_0= ruleInstruction ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:503:3: otherlv_0= 'label:' ( (lv_instruction_1_0= ruleInstruction ) )
             {
-            otherlv_0=(Token)match(input,20,FOLLOW_20_in_ruleLabel1071); if (state.failed) return current;
+            otherlv_0=(Token)match(input,20,FOLLOW_20_in_ruleLabel1077); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getLabelAccess().getLabelKeyword_0());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:506:1: ( (lv_instruction_1_0= ruleInstruction ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:507:1: (lv_instruction_1_0= ruleInstruction )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:507:1: ( (lv_instruction_1_0= ruleInstruction ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:508:1: (lv_instruction_1_0= ruleInstruction )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:507:1: (lv_instruction_1_0= ruleInstruction )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:508:3: lv_instruction_1_0= ruleInstruction
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:508:1: (lv_instruction_1_0= ruleInstruction )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:509:3: lv_instruction_1_0= ruleInstruction
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getLabelAccess().getInstructionInstructionParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleInstruction_in_ruleLabel1092);
+            pushFollow(FOLLOW_ruleInstruction_in_ruleLabel1098);
             lv_instruction_1_0=ruleInstruction();
 
             state._fsp--;
@@ -1350,7 +1357,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleGoto"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:532:1: entryRuleGoto returns [EObject current=null] : iv_ruleGoto= ruleGoto EOF ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:533:1: entryRuleGoto returns [EObject current=null] : iv_ruleGoto= ruleGoto EOF ;
     public final EObject entryRuleGoto() throws RecognitionException {
         EObject current = null;
 
@@ -1358,13 +1365,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:533:2: (iv_ruleGoto= ruleGoto EOF )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:534:2: iv_ruleGoto= ruleGoto EOF
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:534:2: (iv_ruleGoto= ruleGoto EOF )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:535:2: iv_ruleGoto= ruleGoto EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getGotoRule()); 
             }
-            pushFollow(FOLLOW_ruleGoto_in_entryRuleGoto1128);
+            pushFollow(FOLLOW_ruleGoto_in_entryRuleGoto1134);
             iv_ruleGoto=ruleGoto();
 
             state._fsp--;
@@ -1372,7 +1379,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleGoto; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleGoto1138); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleGoto1144); if (state.failed) return current;
 
             }
 
@@ -1390,7 +1397,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGoto"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:541:1: ruleGoto returns [EObject current=null] : (otherlv_0= 'goto' ( (lv_name_1_0= RULE_ID ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:542:1: ruleGoto returns [EObject current=null] : (otherlv_0= 'goto' ( (lv_name_1_0= RULE_ID ) ) ) ;
     public final EObject ruleGoto() throws RecognitionException {
         EObject current = null;
 
@@ -1400,25 +1407,25 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:544:28: ( (otherlv_0= 'goto' ( (lv_name_1_0= RULE_ID ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:545:1: (otherlv_0= 'goto' ( (lv_name_1_0= RULE_ID ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:545:28: ( (otherlv_0= 'goto' ( (lv_name_1_0= RULE_ID ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:546:1: (otherlv_0= 'goto' ( (lv_name_1_0= RULE_ID ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:545:1: (otherlv_0= 'goto' ( (lv_name_1_0= RULE_ID ) ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:545:3: otherlv_0= 'goto' ( (lv_name_1_0= RULE_ID ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:546:1: (otherlv_0= 'goto' ( (lv_name_1_0= RULE_ID ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:546:3: otherlv_0= 'goto' ( (lv_name_1_0= RULE_ID ) )
             {
-            otherlv_0=(Token)match(input,21,FOLLOW_21_in_ruleGoto1175); if (state.failed) return current;
+            otherlv_0=(Token)match(input,21,FOLLOW_21_in_ruleGoto1181); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getGotoAccess().getGotoKeyword_0());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:549:1: ( (lv_name_1_0= RULE_ID ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:550:1: (lv_name_1_0= RULE_ID )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:550:1: ( (lv_name_1_0= RULE_ID ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:551:1: (lv_name_1_0= RULE_ID )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:550:1: (lv_name_1_0= RULE_ID )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:551:3: lv_name_1_0= RULE_ID
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:551:1: (lv_name_1_0= RULE_ID )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:552:3: lv_name_1_0= RULE_ID
             {
-            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleGoto1192); if (state.failed) return current;
+            lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleGoto1198); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(lv_name_1_0, grammarAccess.getGotoAccess().getNameIDTerminalRuleCall_1_0()); 
@@ -1465,7 +1472,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleParallel"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:575:1: entryRuleParallel returns [EObject current=null] : iv_ruleParallel= ruleParallel EOF ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:576:1: entryRuleParallel returns [EObject current=null] : iv_ruleParallel= ruleParallel EOF ;
     public final EObject entryRuleParallel() throws RecognitionException {
         EObject current = null;
 
@@ -1473,13 +1480,13 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:576:2: (iv_ruleParallel= ruleParallel EOF )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:577:2: iv_ruleParallel= ruleParallel EOF
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:577:2: (iv_ruleParallel= ruleParallel EOF )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:578:2: iv_ruleParallel= ruleParallel EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getParallelRule()); 
             }
-            pushFollow(FOLLOW_ruleParallel_in_entryRuleParallel1233);
+            pushFollow(FOLLOW_ruleParallel_in_entryRuleParallel1239);
             iv_ruleParallel=ruleParallel();
 
             state._fsp--;
@@ -1487,7 +1494,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleParallel; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleParallel1243); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleParallel1249); if (state.failed) return current;
 
             }
 
@@ -1505,46 +1512,46 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParallel"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:584:1: ruleParallel returns [EObject current=null] : (otherlv_0= 'fork' ( (lv_firstInstruction_1_0= ruleInstruction ) ) otherlv_2= 'par' ( (lv_secondInstruction_3_0= ruleInstruction ) ) otherlv_4= 'join' ) ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:585:1: ruleParallel returns [EObject current=null] : (otherlv_0= 'fork' ( (lv_firstThread_1_0= ruleInstruction ) ) otherlv_2= 'par' ( (lv_secondThread_3_0= ruleInstruction ) ) otherlv_4= 'join' ) ;
     public final EObject ruleParallel() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
-        EObject lv_firstInstruction_1_0 = null;
+        EObject lv_firstThread_1_0 = null;
 
-        EObject lv_secondInstruction_3_0 = null;
+        EObject lv_secondThread_3_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:587:28: ( (otherlv_0= 'fork' ( (lv_firstInstruction_1_0= ruleInstruction ) ) otherlv_2= 'par' ( (lv_secondInstruction_3_0= ruleInstruction ) ) otherlv_4= 'join' ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:588:1: (otherlv_0= 'fork' ( (lv_firstInstruction_1_0= ruleInstruction ) ) otherlv_2= 'par' ( (lv_secondInstruction_3_0= ruleInstruction ) ) otherlv_4= 'join' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:588:28: ( (otherlv_0= 'fork' ( (lv_firstThread_1_0= ruleInstruction ) ) otherlv_2= 'par' ( (lv_secondThread_3_0= ruleInstruction ) ) otherlv_4= 'join' ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:589:1: (otherlv_0= 'fork' ( (lv_firstThread_1_0= ruleInstruction ) ) otherlv_2= 'par' ( (lv_secondThread_3_0= ruleInstruction ) ) otherlv_4= 'join' )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:588:1: (otherlv_0= 'fork' ( (lv_firstInstruction_1_0= ruleInstruction ) ) otherlv_2= 'par' ( (lv_secondInstruction_3_0= ruleInstruction ) ) otherlv_4= 'join' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:588:3: otherlv_0= 'fork' ( (lv_firstInstruction_1_0= ruleInstruction ) ) otherlv_2= 'par' ( (lv_secondInstruction_3_0= ruleInstruction ) ) otherlv_4= 'join'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:589:1: (otherlv_0= 'fork' ( (lv_firstThread_1_0= ruleInstruction ) ) otherlv_2= 'par' ( (lv_secondThread_3_0= ruleInstruction ) ) otherlv_4= 'join' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:589:3: otherlv_0= 'fork' ( (lv_firstThread_1_0= ruleInstruction ) ) otherlv_2= 'par' ( (lv_secondThread_3_0= ruleInstruction ) ) otherlv_4= 'join'
             {
-            otherlv_0=(Token)match(input,22,FOLLOW_22_in_ruleParallel1280); if (state.failed) return current;
+            otherlv_0=(Token)match(input,22,FOLLOW_22_in_ruleParallel1286); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getParallelAccess().getForkKeyword_0());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:592:1: ( (lv_firstInstruction_1_0= ruleInstruction ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:593:1: (lv_firstInstruction_1_0= ruleInstruction )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:593:1: ( (lv_firstThread_1_0= ruleInstruction ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:594:1: (lv_firstThread_1_0= ruleInstruction )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:593:1: (lv_firstInstruction_1_0= ruleInstruction )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:594:3: lv_firstInstruction_1_0= ruleInstruction
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:594:1: (lv_firstThread_1_0= ruleInstruction )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:595:3: lv_firstThread_1_0= ruleInstruction
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getParallelAccess().getFirstInstructionInstructionParserRuleCall_1_0()); 
+              	        newCompositeNode(grammarAccess.getParallelAccess().getFirstThreadInstructionParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleInstruction_in_ruleParallel1301);
-            lv_firstInstruction_1_0=ruleInstruction();
+            pushFollow(FOLLOW_ruleInstruction_in_ruleParallel1307);
+            lv_firstThread_1_0=ruleInstruction();
 
             state._fsp--;
             if (state.failed) return current;
@@ -1555,8 +1562,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"firstInstruction",
-                      		lv_firstInstruction_1_0, 
+                     			"firstThread",
+                      		lv_firstThread_1_0, 
                       		"Instruction");
               	        afterParserOrEnumRuleCall();
               	    
@@ -1567,25 +1574,25 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,23,FOLLOW_23_in_ruleParallel1313); if (state.failed) return current;
+            otherlv_2=(Token)match(input,23,FOLLOW_23_in_ruleParallel1319); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getParallelAccess().getParKeyword_2());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:614:1: ( (lv_secondInstruction_3_0= ruleInstruction ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:615:1: (lv_secondInstruction_3_0= ruleInstruction )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:615:1: ( (lv_secondThread_3_0= ruleInstruction ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:616:1: (lv_secondThread_3_0= ruleInstruction )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:615:1: (lv_secondInstruction_3_0= ruleInstruction )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:616:3: lv_secondInstruction_3_0= ruleInstruction
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:616:1: (lv_secondThread_3_0= ruleInstruction )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:617:3: lv_secondThread_3_0= ruleInstruction
             {
             if ( state.backtracking==0 ) {
                
-              	        newCompositeNode(grammarAccess.getParallelAccess().getSecondInstructionInstructionParserRuleCall_3_0()); 
+              	        newCompositeNode(grammarAccess.getParallelAccess().getSecondThreadInstructionParserRuleCall_3_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleInstruction_in_ruleParallel1334);
-            lv_secondInstruction_3_0=ruleInstruction();
+            pushFollow(FOLLOW_ruleInstruction_in_ruleParallel1340);
+            lv_secondThread_3_0=ruleInstruction();
 
             state._fsp--;
             if (state.failed) return current;
@@ -1596,8 +1603,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
               	        }
                      		set(
                      			current, 
-                     			"secondInstruction",
-                      		lv_secondInstruction_3_0, 
+                     			"secondThread",
+                      		lv_secondThread_3_0, 
                       		"Instruction");
               	        afterParserOrEnumRuleCall();
               	    
@@ -1608,7 +1615,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,24,FOLLOW_24_in_ruleParallel1346); if (state.failed) return current;
+            otherlv_4=(Token)match(input,24,FOLLOW_24_in_ruleParallel1352); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getParallelAccess().getJoinKeyword_4());
@@ -1637,29 +1644,29 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePause"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:644:1: entryRulePause returns [String current=null] : iv_rulePause= rulePause EOF ;
-    public final String entryRulePause() throws RecognitionException {
-        String current = null;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:645:1: entryRulePause returns [EObject current=null] : iv_rulePause= rulePause EOF ;
+    public final EObject entryRulePause() throws RecognitionException {
+        EObject current = null;
 
-        AntlrDatatypeRuleToken iv_rulePause = null;
+        EObject iv_rulePause = null;
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:645:2: (iv_rulePause= rulePause EOF )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:646:2: iv_rulePause= rulePause EOF
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:646:2: (iv_rulePause= rulePause EOF )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:647:2: iv_rulePause= rulePause EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPauseRule()); 
             }
-            pushFollow(FOLLOW_rulePause_in_entryRulePause1383);
+            pushFollow(FOLLOW_rulePause_in_entryRulePause1388);
             iv_rulePause=rulePause();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_rulePause.getText(); 
+               current =iv_rulePause; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRulePause1394); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRulePause1398); if (state.failed) return current;
 
             }
 
@@ -1677,25 +1684,44 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePause"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:653:1: rulePause returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= 'pause' ;
-    public final AntlrDatatypeRuleToken rulePause() throws RecognitionException {
-        AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:654:1: rulePause returns [EObject current=null] : ( (lv_pause_0_0= 'pause' ) ) ;
+    public final EObject rulePause() throws RecognitionException {
+        EObject current = null;
 
-        Token kw=null;
+        Token lv_pause_0_0=null;
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:656:28: (kw= 'pause' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:658:2: kw= 'pause'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:657:28: ( ( (lv_pause_0_0= 'pause' ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:658:1: ( (lv_pause_0_0= 'pause' ) )
             {
-            kw=(Token)match(input,25,FOLLOW_25_in_rulePause1431); if (state.failed) return current;
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:658:1: ( (lv_pause_0_0= 'pause' ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:659:1: (lv_pause_0_0= 'pause' )
+            {
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:659:1: (lv_pause_0_0= 'pause' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:660:3: lv_pause_0_0= 'pause'
+            {
+            lv_pause_0_0=(Token)match(input,25,FOLLOW_25_in_rulePause1440); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                      current.merge(kw);
-                      newLeafNode(kw, grammarAccess.getPauseAccess().getPauseKeyword()); 
+                      newLeafNode(lv_pause_0_0, grammarAccess.getPauseAccess().getPausePauseKeyword_0());
                   
             }
+            if ( state.backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = createModelElement(grammarAccess.getPauseRule());
+              	        }
+                     		setWithLastConsumed(current, "pause", lv_pause_0_0, "pause");
+              	    
+            }
+
+            }
+
+
+            }
+
 
             }
 
@@ -1714,7 +1740,59 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end "rulePause"
 
+    // $ANTLR start synpred8_InternalSCL
+    public final void synpred8_InternalSCL_fragment() throws RecognitionException {   
+        Token otherlv_6=null;
+        EObject lv_nextInstruction_7_0 = null;
+
+
+        // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:352:4: (otherlv_6= ';' ( (lv_nextInstruction_7_0= ruleInstruction ) ) )
+        // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:352:4: otherlv_6= ';' ( (lv_nextInstruction_7_0= ruleInstruction ) )
+        {
+        otherlv_6=(Token)match(input,16,FOLLOW_16_in_synpred8_InternalSCL731); if (state.failed) return ;
+        // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:356:1: ( (lv_nextInstruction_7_0= ruleInstruction ) )
+        // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:357:1: (lv_nextInstruction_7_0= ruleInstruction )
+        {
+        // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:357:1: (lv_nextInstruction_7_0= ruleInstruction )
+        // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:358:3: lv_nextInstruction_7_0= ruleInstruction
+        {
+        if ( state.backtracking==0 ) {
+           
+          	        newCompositeNode(grammarAccess.getInstructionAccess().getNextInstructionInstructionParserRuleCall_1_1_0()); 
+          	    
+        }
+        pushFollow(FOLLOW_ruleInstruction_in_synpred8_InternalSCL752);
+        lv_nextInstruction_7_0=ruleInstruction();
+
+        state._fsp--;
+        if (state.failed) return ;
+
+        }
+
+
+        }
+
+
+        }
+    }
+    // $ANTLR end synpred8_InternalSCL
+
     // Delegated rules
+
+    public final boolean synpred8_InternalSCL() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred8_InternalSCL_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
 
 
  
@@ -1739,41 +1817,43 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_RULE_STRING_in_ruleSCLExpression472 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleInstruction_in_entryRuleInstruction507 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleInstruction517 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAssignment_in_ruleInstruction567 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleConditional_in_ruleInstruction597 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLabel_in_ruleInstruction627 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleGoto_in_ruleInstruction657 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleParallel_in_ruleInstruction687 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePause_in_ruleInstruction712 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_16_in_ruleInstruction724 = new BitSet(new long[]{0x0000000002720020L});
-    public static final BitSet FOLLOW_ruleInstruction_in_ruleInstruction745 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAssignment_in_entryRuleAssignment784 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleAssignment794 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleAssignment835 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleConditional_in_entryRuleConditional875 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleConditional885 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_ruleConditional922 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleSCLExpression_in_ruleConditional943 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_ruleConditional955 = new BitSet(new long[]{0x0000000002720020L});
-    public static final BitSet FOLLOW_ruleInstruction_in_ruleConditional976 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_19_in_ruleConditional988 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLabel_in_entryRuleLabel1024 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleLabel1034 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_20_in_ruleLabel1071 = new BitSet(new long[]{0x0000000002720020L});
-    public static final BitSet FOLLOW_ruleInstruction_in_ruleLabel1092 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleGoto_in_entryRuleGoto1128 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleGoto1138 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_ruleGoto1175 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleGoto1192 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleParallel_in_entryRuleParallel1233 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleParallel1243 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_ruleParallel1280 = new BitSet(new long[]{0x0000000002720020L});
-    public static final BitSet FOLLOW_ruleInstruction_in_ruleParallel1301 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ruleParallel1313 = new BitSet(new long[]{0x0000000002720020L});
-    public static final BitSet FOLLOW_ruleInstruction_in_ruleParallel1334 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_ruleParallel1346 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePause_in_entryRulePause1383 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePause1394 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_25_in_rulePause1431 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAssignment_in_ruleInstruction568 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_ruleConditional_in_ruleInstruction598 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_ruleLabel_in_ruleInstruction628 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_ruleGoto_in_ruleInstruction658 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_ruleParallel_in_ruleInstruction688 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_rulePause_in_ruleInstruction718 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_16_in_ruleInstruction731 = new BitSet(new long[]{0x0000000002720020L});
+    public static final BitSet FOLLOW_ruleInstruction_in_ruleInstruction752 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAssignment_in_entryRuleAssignment790 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleAssignment800 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleAssignment841 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleConditional_in_entryRuleConditional881 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleConditional891 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_ruleConditional928 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_ruleSCLExpression_in_ruleConditional949 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_ruleConditional961 = new BitSet(new long[]{0x0000000002720020L});
+    public static final BitSet FOLLOW_ruleInstruction_in_ruleConditional982 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_19_in_ruleConditional994 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLabel_in_entryRuleLabel1030 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleLabel1040 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_20_in_ruleLabel1077 = new BitSet(new long[]{0x0000000002720020L});
+    public static final BitSet FOLLOW_ruleInstruction_in_ruleLabel1098 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleGoto_in_entryRuleGoto1134 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleGoto1144 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_21_in_ruleGoto1181 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleGoto1198 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleParallel_in_entryRuleParallel1239 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleParallel1249 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_22_in_ruleParallel1286 = new BitSet(new long[]{0x0000000002720020L});
+    public static final BitSet FOLLOW_ruleInstruction_in_ruleParallel1307 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_ruleParallel1319 = new BitSet(new long[]{0x0000000002720020L});
+    public static final BitSet FOLLOW_ruleInstruction_in_ruleParallel1340 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_24_in_ruleParallel1352 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePause_in_entryRulePause1388 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePause1398 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_25_in_rulePause1440 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_synpred8_InternalSCL731 = new BitSet(new long[]{0x0000000002720020L});
+    public static final BitSet FOLLOW_ruleInstruction_in_synpred8_InternalSCL752 = new BitSet(new long[]{0x0000000000000002L});
 
 }

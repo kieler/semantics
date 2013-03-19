@@ -86,6 +86,15 @@ public interface SclFactory extends EFactory
   Parallel createParallel();
 
   /**
+   * Returns a new object of class '<em>Pause</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Pause</em>'.
+   * @generated
+   */
+  Pause createPause();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

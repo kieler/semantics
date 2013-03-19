@@ -28,22 +28,9 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if(ruleCall.getRule() == grammarAccess.getPauseRule())
-			return getPauseToken(semanticObject, ruleCall, node);
-		else if(ruleCall.getRule() == grammarAccess.getSTRINGRule())
+		if(ruleCall.getRule() == grammarAccess.getSTRINGRule())
 			return getSTRINGToken(semanticObject, ruleCall, node);
 		return "";
-	}
-	
-	/**
-	 * Pause:
-	 *     'pause'
-	 * ;
-	 */
-	protected String getPauseToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "pause";
 	}
 	
 	/**
@@ -72,7 +59,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 
 	/**
 	 * Syntax:
-	 *     'input' | 'output'
+	 *     'output' | 'input'
 	 */
 	protected void emit_Variable_InputKeyword_0_0_or_OutputKeyword_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

@@ -256,6 +256,23 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 		//"join"
 		public Keyword getJoinKeyword_4() { return cJoinKeyword_4; }
 	}
+
+	public class PauseElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Pause");
+		private final Assignment cPauseAssignment = (Assignment)rule.eContents().get(1);
+		private final Keyword cPausePauseKeyword_0 = (Keyword)cPauseAssignment.eContents().get(0);
+		
+		//Pause:
+		//
+		//	pause="pause";
+		public ParserRule getRule() { return rule; }
+
+		//pause="pause"
+		public Assignment getPauseAssignment() { return cPauseAssignment; }
+
+		//"pause"
+		public Keyword getPausePauseKeyword_0() { return cPausePauseKeyword_0; }
+	}
 	
 	
 	private InstructionElements pInstruction;
@@ -264,6 +281,7 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 	private LabelElements pLabel;
 	private GotoElements pGoto;
 	private ParallelElements pParallel;
+	private PauseElements pPause;
 	
 	private final Grammar grammar;
 
@@ -371,6 +389,17 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 		return getParallelAccess().getRule();
 	}
 
+	//Pause:
+	//
+	//	pause="pause";
+	public PauseElements getPauseAccess() {
+		return (pPause != null) ? pPause : (pPause = new PauseElements());
+	}
+	
+	public ParserRule getPauseRule() {
+		return getPauseAccess().getRule();
+	}
+
 	//Program:
 	//
 	//	"module" name=ID variables+=Variable? "{" instruction=Instruction "}";
@@ -402,17 +431,6 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSCLExpressionRule() {
 		return getSCLExpressionAccess().getRule();
-	}
-
-	//Pause:
-	//
-	//	"pause";
-	public SCLGrammarAccess.PauseElements getPauseAccess() {
-		return gaSCL.getPauseAccess();
-	}
-	
-	public ParserRule getPauseRule() {
-		return getPauseAccess().getRule();
 	}
 
 	//terminal ID:

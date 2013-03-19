@@ -29,8 +29,9 @@ SCLExpression returns stext::Expression:
 ;
 
 Instruction:
-    Assignment | Conditional | Label | Goto | Parallel | Pause
-    (';' secondInstructions = Instruction)? 
+    (Assignment | Conditional | Label | Goto | Parallel | Pause) (';' 
+    nextInstruction = Instruction
+    )? 
 ;
 
 Assignment returns SCLExpression:
@@ -53,12 +54,12 @@ Goto:
 
 Parallel:
     'fork'
-        firstInstruction = Instruction
+        firstThread = Instruction
     'par'
-        secondInstruction = Instruction
+        secondThread = Instruction
     'join'
 ;
 
 Pause:
-    'pause'
+    pause = 'pause'
 ;
