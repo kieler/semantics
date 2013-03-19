@@ -6,7 +6,7 @@ import org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor;
 import org.yakindu.sct.ui.editor.DiagramActivator;
 
 import org.yakindu.sct.model.sgraph.Statechart;
-import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCChartsTransformation;
+import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCCToCoreTransformation;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -53,9 +53,9 @@ public class SCChartsCommandHandler extends SCChartsGenericFileCommandHandler {
 			String commandString) {
 		System.out.println("scc core transformation: " + commandString);
 		if (commandString.equals(SCCTRANSFORMATIONCOMMAND)) {
-			EObject transformed = (new SCChartsTransformation())
+			EObject transformed = (new SCCToCoreTransformation())
 					.transformSCCAborts((Statechart) modelObject);
-			transformed = (new SCChartsTransformation())
+			transformed = (new SCCToCoreTransformation())
 					.transformSCCConditional((Statechart) transformed);
 			return transformed;
 		}
