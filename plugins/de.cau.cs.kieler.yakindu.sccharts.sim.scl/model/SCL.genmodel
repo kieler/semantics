@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen"
+    editDirectory="/de.cau.cs.kieler.yakindu.sccharts.sim.scl.edit/src" editorDirectory="/de.cau.cs.kieler.yakindu.sccharts.sim.scl.editor/src"
+    modelPluginID="de.cau.cs.kieler.yakindu.sccharts.sim.scl" forceOverwrite="true"
+    modelName="SCL" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.yakindu.sccharts.sim.scl.edit"
+    editorPluginID="de.cau.cs.kieler.yakindu.sccharts.sim.scl.editor" runtimeVersion="2.8"
+    usedGenPackages="platform:/resource/org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph platform:/resource/org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
+  <genPackages prefix="S" basePackage="de.cau.cs.kieler.yakindu.sccharts.sim.scl"
+      disposableProviderFactory="true" ecorePackage="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#/">
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Program">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Program/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Program/variables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Program/instruction"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Instruction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Instruction/instruction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Instruction/secondinstructions"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//SCLExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//SCLExpression/assignment"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Conditional">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Conditional/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Conditional/instructions"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Label"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Goto">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Goto/name"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel/firstinstruction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel/secondinstruction"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

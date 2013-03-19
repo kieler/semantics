@@ -1,0 +1,64 @@
+grammar de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL with org.eclipse.xtext.common.Terminals
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
+import "http://www.yakindu.org/base/types/2.0.0" as types
+import "http://www.yakindu.org/base/base/2.0.0" as base
+import "http://www.yakindu.org/sct/statechart/SText" as stext
+import "http://kieler.cs.cau.de/yakindu/stext/" as synctext
+import "http://kieler.cs.cau.de/yakindu/sccharts/stext/" as scchartsexp
+
+generate s "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl"
+
+
+Program :
+	'module' name = ID
+	((variables+=Variable)*)?
+	'{'
+	   instruction = Instruction
+	'}'
+;
+
+Variable returns stext::VariableDefinition:
+    ('input'|'output') type=[types::Type] (name=STRING)
+;
+
+SCLExpression returns stext::Expression:
+    {SCLExpression}
+    STRING
+;
+
+Instruction:
+    instruction = Assignment | Conditional | Label | Goto | Parallel | Pause
+    (';' secondinstructions = Instruction)? 
+;
+
+Assignment returns SCLExpression:
+    assignment=STRING
+;
+
+Conditional:
+    'if' expression = SCLExpression 'then'
+        instructions = Instruction
+    'end'
+;
+
+Label:
+    'label:' instruction = Instruction
+;
+
+Goto:
+    'goto' name = ID 
+;
+
+Parallel:
+    'fork'
+        firstinstruction = Instruction
+    'par'
+        secondinstruction = Instruction
+    'join'
+;
+
+Pause:
+    'pause'
+;

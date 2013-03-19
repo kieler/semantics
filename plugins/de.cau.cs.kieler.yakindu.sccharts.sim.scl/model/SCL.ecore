@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="s" nsURI="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl"
+    nsPrefix="s">
+  <eClassifiers xsi:type="ecore:EClass" name="Program">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
+        eType="ecore:EClass ../../org.yakindu.sct.model.stext/model/SText.ecore#//VariableDefinition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instruction" eType="#//Instruction"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instruction" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secondinstructions" eType="#//Instruction"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SCLExpression" eSuperTypes="../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assignment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" eType="#//Instruction"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="#//Instruction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Goto" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="firstinstruction" eType="#//Instruction"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secondinstruction" eType="#//Instruction"
+        containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>
