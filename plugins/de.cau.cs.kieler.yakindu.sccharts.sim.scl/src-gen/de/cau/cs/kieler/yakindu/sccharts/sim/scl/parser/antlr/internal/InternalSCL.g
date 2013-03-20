@@ -506,19 +506,19 @@ ruleLabel returns [EObject current=null]
     }
 (
 (
-		{ 
-	        newCompositeNode(grammarAccess.getLabelAccess().getInstructionInstructionParserRuleCall_1_0()); 
-	    }
-		lv_instruction_1_0=ruleInstruction		{
+		lv_name_1_0=RULE_ID
+		{
+			newLeafNode(lv_name_1_0, grammarAccess.getLabelAccess().getNameIDTerminalRuleCall_1_0()); 
+		}
+		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLabelRule());
+	            $current = createModelElement(grammarAccess.getLabelRule());
 	        }
-       		set(
+       		setWithLastConsumed(
        			$current, 
-       			"instruction",
-        		lv_instruction_1_0, 
-        		"Instruction");
-	        afterParserOrEnumRuleCall();
+       			"name",
+        		lv_name_1_0, 
+        		"ID");
 	    }
 
 )
@@ -590,49 +590,49 @@ ruleParallel returns [EObject current=null]
     {
     	newLeafNode(otherlv_0, grammarAccess.getParallelAccess().getForkKeyword_0());
     }
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getParallelAccess().getFirstThreadInstructionParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getParallelAccess().getThreadsInstructionParserRuleCall_1_0_0()); 
 	    }
-		lv_firstThread_1_0=ruleInstruction		{
+		lv_threads_1_0=ruleInstruction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getParallelRule());
 	        }
-       		set(
+       		add(
        			$current, 
-       			"firstThread",
-        		lv_firstThread_1_0, 
+       			"threads",
+        		lv_threads_1_0, 
         		"Instruction");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_2='par' 
+)(	otherlv_2='par' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getParallelAccess().getParKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getParallelAccess().getParKeyword_1_1_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getParallelAccess().getSecondThreadInstructionParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getParallelAccess().getThreadsInstructionParserRuleCall_1_1_1_0()); 
 	    }
-		lv_secondThread_3_0=ruleInstruction		{
+		lv_threads_3_0=ruleInstruction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getParallelRule());
 	        }
-       		set(
+       		add(
        			$current, 
-       			"secondThread",
-        		lv_secondThread_3_0, 
+       			"threads",
+        		lv_threads_3_0, 
         		"Instruction");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_4='join' 
+))+)	otherlv_4='join' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getParallelAccess().getJoinKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getParallelAccess().getJoinKeyword_2());
     }
 )
 ;

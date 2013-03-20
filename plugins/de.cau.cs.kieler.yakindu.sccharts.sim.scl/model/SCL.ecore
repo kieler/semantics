@@ -24,17 +24,14 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="#//Instruction">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="instruction" eType="#//Instruction"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Goto" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Instruction">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="firstThread" eType="#//Instruction"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="secondThread" eType="#//Instruction"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="threads" upperBound="-1"
+        eType="#//Instruction" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

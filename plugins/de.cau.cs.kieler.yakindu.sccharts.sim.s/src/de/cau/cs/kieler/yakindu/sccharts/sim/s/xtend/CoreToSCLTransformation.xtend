@@ -33,6 +33,10 @@ import org.yakindu.sct.model.sgraph.Choice
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclFactory;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 
 class CoreToSCLTransformation {
  
@@ -43,323 +47,99 @@ class CoreToSCLTransformation {
     // Transforming SCC Aborts.
     def Program transformCoreToSCL(Statechart rootStatechart) {
         var targetProgram = SclFactory::eINSTANCE.createProgram();
-        var instruction   = SclFactory::eINSTANCE.createInstruction();
-        var pause         = SclFactory::eINSTANCE.createPause();
-        pause.setPause("delay");
        
         targetProgram.setName(rootStatechart.getName());
-        targetProgram.setInstruction(pause);
         
         val Region mainRegion = rootStatechart.regions.get(0);
-       
+        var instruction = transformCoreRegion(mainRegion);
+        
+        targetProgram.setInstruction(instruction);
+     
         targetProgram;
     }
+
+    def Instruction addInstruction(Instruction instruction, Instruction next) {
+        var Instruction target;
+        if (instruction == null) {
+            target = next;
+        } else {
+            instruction.nextInstruction = next;
+            target = instruction.nextInstruction;
+        }
+        target;
+    }
         
-    
-    
-    // Traverse all states 
-    def void transformCoreRegion(SyncState state, Statechart targetRootStatechart) {
-        
-        if (state.isComposite && state.outgoingTransitions.size() > 0) {
-            // Remember all outgoing transitions
-//            val originalOutgoingTransitions = ImmutableList::copyOf(state.outgoingTransitions as EList<SyncTransition>);
-//			val EList<SyncTransition>syncList = state.outgoingTransitions as EList<SyncTransition>;
-            val originalOutgoingTransitionsRaw = ImmutableList::copyOf(state.outgoingTransitions);
-            var List<SyncTransition> originalOutgoingTransitions = new ArrayList();
-            for (raw : originalOutgoingTransitionsRaw) {
-            	originalOutgoingTransitions.add(0, raw as SyncTransition);
-            }
-            val outgoingStrongTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.getType == TransitionType::STRONGABORT));
-            val outgoingWeakTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::WEAKABORT));
-            val normalTerminationExists = originalOutgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0;
-            // Remember all regions
-            val originalRegions = ImmutableList::copyOf(state.regions);
-            
-            
-            // For a hierarchical state:
-            // 1. for each existing region, create a new Aborted-auxiliary state
-            // 2. create a watcher region
-            
-            // 2. Watcher region
-            // Add a Pre and NotPre state
-	            val runState = SyncgraphFactory::eINSTANCE.createSyncState();
-    	        runState.setName("Run");
-        	    runState.setIsInitial(true);
-	            val abortState = SyncgraphFactory::eINSTANCE.createSyncState();
-    	        abortState.setName("Abort");             
-        	    abortState.setIsFinal(true);
-            	val watcherRegion = SGraphFactory::eINSTANCE.createRegion();
-            	watcherRegion.getVertices.add(runState as State);
-            	watcherRegion.getVertices.add(abortState as State);
-//            	val watcherTransition = SyncgraphFactory::eINSTANCE.createSyncTransition();
-//            	watcherTransition.setTarget(abortState);
-//            	watcherTransition.setPriority(1);
-//            	watcherTransition.setType(TransitionType::WEAKABORT);
-//            	runState.outgoingTransitions.add(watcherTransition);
-            	
-            val needWatcherRegion = (originalOutgoingTransitions.filter(e | e.type != TransitionType::NORMALTERMINATION).size > 0);
-            if (needWatcherRegion) {
-                state.regions.add(watcherRegion);
-            }
-            
-            // Add a conditional node outside of the state and connect it with
-            // a normal termination transition
+    def Instruction transformCoreRegion(Region region) {
+//        val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState)));
+//        val initialState = states.filter(e | e.isInitial == true);
 
-             val conditionalState = SGraphFactory::eINSTANCE.createChoice();
-			state.getParentRegion.getVertices.add(conditionalState);
-            val normalTerminationTransition = SyncgraphFactory::eINSTANCE.createSyncTransition();
-                normalTerminationTransition.setTarget(conditionalState);
-                normalTerminationTransition.setPriority(1);
-                normalTerminationTransition.setType(TransitionType::NORMALTERMINATION);
-                state.outgoingTransitions.add(normalTerminationTransition);            
-   
-   
-   
-   
-                        
-            // Create complex triggers to be filled with auxiliary signals (sorted strong or weak)                        
-            
-//            transitionAddSignal(normalTerminationTransition, 'S');
-            
-            // For every transition 
-            for (transition : originalOutgoingTransitions) {
-                // Add transition to watcher region
-                // ONLY iff this is not a normal termination
-                if (transition.type != TransitionType::NORMALTERMINATION) {
-                    // Create a signal 
-//                    val transitionSignal = StextFactory::eINSTANCE.createEventDefinition();
-//                    val transitionSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-//                    val transitionSignalReference = StextFactory::eINSTANCE.createValuedObjectReference()
-//                        transitionSignalReference.setValuedObject(transitionSignal);
-//                    val transitionSignalRef = StextFactory::eINSTANCE.createTransitionReaction();
-//                  	val eventLiteral = StextFactory::eINSTANCE.createStringLiteral;
-                    if (transition.type == TransitionType::STRONGABORT) {
-//                    	eventLiteral.setValue("_" + state.getName + "_S" + transition.priority); 
-//                        transitionSignal.setEvent("_" + state.id + "_S" + transition.priority);
-//                        strongTriggerOperatorExpression.subExpressions.add(transitionSignalReference.copy);
-                    } else {
-//                    	eventLiteral.setValue("_" + state.getName + "_S" + transition.priority); 
-//                        transitionSignal.setName("_" + state.id + "_W" + transition.priority);
-//                        weakTriggerOperatorExpression.subExpressions.add(transitionSignalReference.copy);
-                    }                    
-//                    transitionSignal.setIsInput(false);
-//                    transitionSignal.setIsOutput(false);
-//                    state.parentRegion.parentState.signals.add(transitionSignal);
-//					if (state.getParentRegion.getComposite as SyncState).getScopes.size == 0) {
-//					(state.getParentRegion.getComposite as SyncState).getScopes.add(StextFactory::eINSTANCE.createInternalScope());					
-//					}
-//					(state.getParentRegion.getComposite as SyncState).getScopes.get(0).getEvents.add(transitionSignal);
-                                    
-                    val watcherTransition =  SyncgraphFactory::eINSTANCE.createSyncTransition();
-                    watcherTransition.setTarget(abortState);
-                    runState.outgoingTransitions.add(watcherTransition);
-                    // Move trigger from original transition to watcher transition
-//                    watcherTransition.setTrigger(transition.trigger.copy);
-                    // Watcher transition gets the same priority / immediate / delay
-                    watcherTransition.setPriority(transition.priority);
-//                    watcherTransition.setIsImmediate(transition.isImmediate);
-//                    watcherTransition.setDelay(transition.delay);
-                    // Watcher transition emits the auxiliary signal
-//                    val transitionSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
-//                        transitionSignalEmission.setSignal(transitionSignal);
-//                    watcherTransition.effects.add(transitionSignalEmission);
-                    // Change trigger of original transition to transitionSignalReference
-//                    transition.setTrigger(transitionSignalReference.copy);
-//                    val transitionSignalEmission = StextFactory::eINSTANCE.createReactionEffect();
-//                        transitionSignalEmission.getActions.add(eventLiteral as Expression);
-//                    watcherTransition.setEffect(transitionSignalEmission);
-//                    transition.setTrigger(transitionSignalReference.copy);
-                }
-                
-                // Move original transition from state to conditionalState
-                // and remove strong, normal termination attributes
-                // put immediate attribute
-                conditionalState.outgoingTransitions.add(transition);
-                transition.setType(TransitionType::WEAKABORT);
-//                transition.setIsImmediate(true); 
-            }
-            
-            // Simplify triggers (if they only consist of one signal reference)
-/*            if (strongTriggerOperatorExpression.subExpressions.size == 1) {
-                strongTrigger = strongTriggerOperatorExpression.subExpressions.get(0);
-            }
-            if (weakTriggerOperatorExpression.subExpressions.size == 1) {
-                weakTrigger = weakTriggerOperatorExpression.subExpressions.get(0);
-            }
-            // Hotfix for SyncCharts
-            if (strongTrigger instanceof OperatorExpression) {
-                strongTrigger = (strongTrigger as OperatorExpression).fixForOperatorExpressionLists;
-            }
-            if (weakTrigger instanceof OperatorExpression) {
-                weakTrigger = (weakTrigger as OperatorExpression).fixForOperatorExpressionLists;
-            }
-*/
+//        var regionStates = region.eAllContents().toIterable().filter(typeof(SyncState)).toList();
+        var regionStates = region.getVertices().filter(typeof(SyncState));
 
-            
-            // Create an Aborted state for every region
-             
-            for (region : originalRegions) {
-                // Remember all outgoing transitions
-                val regionStatesRaw = ImmutableList::copyOf(region.getVertices);
-                var List<SyncState> regionStates = new ArrayList<SyncState>();
-                for (raw : regionStatesRaw) {
-                	regionStates.add(0, raw as SyncState);
-                }
-                
-                val abortedState = SyncgraphFactory::eINSTANCE.createSyncState();
-//                abortedState.setId("_Aborted" + state.hashCode);
-                abortedState.setName("_Aborted");             
-                abortedState.setIsFinal(true);
-                val needAbortedState = ((outgoingStrongTransitions.size > 0 || 
-                                         outgoingWeakTransitions.size > 0
-                                        ) && (regionStates.filter(e | !e.isIsFinal).size > 0));
-                if (needAbortedState) {
-                       region.getVertices.add(abortedState);
-                }
-                // Do not add the state here, only add the state iff there are any transitions
-                // ending up in this _Aborted state (within the if-for-constructs below)
-                
-                // For every inner state, connect with a weak and a strong transition
-                if (outgoingStrongTransitions.size > 0) {
-                    for (regionState : regionStates) {
-                        // If the state is a final state do NOT connect it with the _Aborted state
-                        if (!regionState.isIsFinal) {
-                            // Create a transition ending up in _Aborted
-                            val strongAbortTransition =  SyncgraphFactory::eINSTANCE.createSyncTransition();
-                            strongAbortTransition.setTarget(abortedState);
-//                            strongAbortTransition.setIsImmediate(true);
-                            // Now add all strong abort watcher signals as a trigger
-//                            strongAbortTransition.setTrigger(strongTrigger.copy);
-                            // Set the highest priority
-                            strongAbortTransition.setPriority(1);
-                            for (regionStateOutgoingTransition : regionState.outgoingTransitions) {
-                                regionStateOutgoingTransition.setPriority(regionStateOutgoingTransition.priority + 1);
-                            }
-                            // Add transition
-                            regionState.outgoingTransitions.add(0, strongAbortTransition);
-                        }
-                    }
-                }
-                
-                if (outgoingWeakTransitions.size > 0) {
-                    for (regionState : regionStates) {
-                        // If the state is a final state do NOT connect it with the _Aborted state
-                        if (!regionState.isIsFinal) {
-                            // Create a transition ending up in _Aborted
-                            val weakAbortTransition =  SyncgraphFactory::eINSTANCE.createSyncTransition();
-                            weakAbortTransition.setTarget(abortedState);
-//                            weakAbortTransition.setIsImmediate(true);
-                            // Now add all weak abort watcher signals as a trigger
-//                            weakAbortTransition.setTrigger(weakTrigger.copy);
-                            // Set the lowest priority
-//                            weakAbortTransition.setPriority(regionState.maxPriority + 1);
-                            // Add transition
-                            regionState.outgoingTransitions.add(weakAbortTransition);
-                        }
-                    }
-                }
-                                 
-            }
-            
-            // Optimization: If a normal termination is outgoing then the following 
-            // transformation is necessary to be able to abort the watcher in case
-            // of triggering the normal termination.
-             if (normalTerminationExists) {
-                // If there is at least one such transition then whe need an "_Exit" signal
-//                val exitSignal = KExpressionsFactory::eINSTANCE.createSignal();
-//                val exitSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-//                    exitSignalReference.setValuedObject(exitSignal);
-//                exitSignal.setName("_Term_" + state.id);
-//                state.signals.add(exitSignal);
-                // Add a watcher transition from Run to Abort triggered by _Exit
-                val watcherTransition =  SyncgraphFactory::eINSTANCE.createSyncTransition();
-                watcherTransition.setTarget(abortState);
-                runState.outgoingTransitions.add(watcherTransition);
-//                watcherTransition.setTrigger(exitSignalReference);
-//                watcherTransition.setPriority(runState.maxPriority + 1);
-//                watcherTransition.setIsImmediate(true);
-//                watcherTransition.setDelay(0);
-                              
-                val mainRegion = SGraphFactory::eINSTANCE.createRegion();
-//                mainRegion.setId("Body" + state.hashCode);
-                val mainState = SyncgraphFactory::eINSTANCE.createSyncState();
-//                mainState.setId("Main" + state.hashCode);
-                mainState.setName("Main");
-                mainState.setIsInitial(true);
-                val termState = SyncgraphFactory::eINSTANCE.createSyncState();
-//                termState.setId("Term" + state.hashCode);
-                termState.setName("Term");
-                termState.setIsFinal(true);
-                // Move all inner regions of the state to the mainState
-                val regions = ImmutableList::copyOf(state.regions);
-                for (region : regions) {
-                    mainState.regions.add(region);
-//                    if (region.id.nullOrEmpty) {
-//                        region.setId("R" + region.hashCode);
-//                    }
-                }
-                mainRegion.getVertices.add(mainState);
-                mainRegion.getVertices.add(termState);
-                state.regions.add(mainRegion);
-                // Create a transition from Main to Term
-                val transition = SyncgraphFactory::eINSTANCE.createSyncTransition();
-                transition.setTarget(termState);
-                transition.setPriority(1);
-                transition.setType(TransitionType::NORMALTERMINATION);
-                mainState.outgoingTransitions.add(transition);            
-//                val exitSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
-//                exitSignalEmission.setSignal(exitSignal);
-//                transition.effects.add(exitSignalEmission);
-                
-                // Move the watcher region outside the mainState
-                state.regions.add(watcherRegion);
-            }
-
-            
-             
+        var Instruction instruction = null;
+        var Instruction rootInstruction = null;
+        for(state : regionStates) {
+            instruction = addInstruction(instruction, transformCoreState(state));
+            if (rootInstruction == null) { rootInstruction = instruction; }
         }
         
+        rootInstruction;
     }
- 
- 
- 
-    //-------------------------------------------------------------------------------
-    //--      S C C -  C O N D I T I O N A L -  T R A N S F O R M A T I O N        --
-    //-------------------------------------------------------------------------------
     
-    def Statechart transformSCCConditional(Statechart rootStatechart) {
-        // Clone the complete SyncCharts region 
-        val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
-        var targetStates = targetRootStatechart.eAllContents().toIterable().filter(typeof(Choice)).toList();
-
-        for(targetState : ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
-            targetState.transformSCCConditional(targetRootStatechart);
-        }
+    def Instruction transformCoreState(SyncState state) {
+        var Instruction instruction = null;
+        var Instruction rootInstruction = null;  
         
-        targetRootStatechart;
-    }
-    
-    // Traverse all states 
-    def void transformSCCConditional(Choice choice, Statechart targetRootStatechart) {
-              
-                var region = choice.eContainer() as Region; 
-                
-                val choiceReplacement = SyncgraphFactory::eINSTANCE.createSyncState();
-                val incomingRedirect  = ImmutableList::copyOf(choice.incomingTransitions)
-                val outgoingRedirect  = ImmutableList::copyOf(choice.outgoingTransitions)
-                choiceReplacement.setName("");
-                region.getVertices().add(choiceReplacement);
-                for (transition : incomingRedirect) {
-                    transition.setTarget(choiceReplacement);
-                }
-                for (transition : outgoingRedirect) {
-                    transition.setSource(choiceReplacement);
-                }
-                    
-                region.getVertices.remove(choice);
+        val originalOutgoingTransitionsRaw = ImmutableList::copyOf(state.outgoingTransitions);
+        var List<SyncTransition> originalOutgoingTransitions = new ArrayList();
+        for (raw : originalOutgoingTransitionsRaw) {
+            originalOutgoingTransitions.add(0, raw as SyncTransition);
+        }
+        val outgoingWeakTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::WEAKABORT));
+        val normalTerminationTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION));
+
+        var label = SclFactory::eINSTANCE.createLabel();
+        label.setName('S' + state.hashCode.toString() + state.getName());
+        instruction = addInstruction(instruction, label);     
+        if (rootInstruction == null) { rootInstruction = instruction; }
+        
+        if (state.isComposite()) {
             
+            if (state.getRegions().size<2) {
+                var regionInstruction =  transformCoreRegion(state.getRegions().get(0));
+                instruction = addInstruction(instruction, regionInstruction);     
+                if (rootInstruction == null) { rootInstruction = instruction; }
+            } else {
+                var parallel = SclFactory::eINSTANCE.createParallel();
+                for(stateRegion : state.getRegions()) {
+                    parallel.getThreads().add(transformCoreRegion(stateRegion));
+                }
+                instruction = addInstruction(instruction, parallel);     
+                if (rootInstruction == null) { rootInstruction = instruction; }
+            }
+            
+            for(transition : normalTerminationTransitions) {
+                var goto = SclFactory::eINSTANCE.createGoto();
+                goto.setName("a" + transition.getTarget().hashCode.toString());
+//                (instruction as Goto).setName(transition.getTarget().getName());                
+                instruction = addInstruction(instruction, goto);     
+                if (rootInstruction == null) { rootInstruction = instruction; }
+            }
+             
+        } else {
+        
+            for(transition : outgoingWeakTransitions) {
+                var goto = SclFactory::eINSTANCE.createGoto();
+                goto.setName("b" + transition.getTarget().hashCode.toString());
+//                (instruction as Goto).setName(transition.getTarget().getName());
+                instruction = addInstruction(instruction, goto);     
+                if (rootInstruction == null) { rootInstruction = instruction; }
+            }
+        
+        }
+       
+        rootInstruction;        
     }
-  
-    
+ 
+ 
 }

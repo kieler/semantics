@@ -6,13 +6,17 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,8 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ParallelImpl#getFirstThread <em>First Thread</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ParallelImpl#getSecondThread <em>Second Thread</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ParallelImpl#getThreads <em>Threads</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,24 +34,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class ParallelImpl extends InstructionImpl implements Parallel
 {
   /**
-   * The cached value of the '{@link #getFirstThread() <em>First Thread</em>}' containment reference.
+   * The cached value of the '{@link #getThreads() <em>Threads</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFirstThread()
+   * @see #getThreads()
    * @generated
    * @ordered
    */
-  protected Instruction firstThread;
-
-  /**
-   * The cached value of the '{@link #getSecondThread() <em>Second Thread</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSecondThread()
-   * @generated
-   * @ordered
-   */
-  protected Instruction secondThread;
+  protected EList<Instruction> threads;
 
   /**
    * <!-- begin-user-doc -->
@@ -76,95 +69,13 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
-  public Instruction getFirstThread()
+  public EList<Instruction> getThreads()
   {
-    return firstThread;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetFirstThread(Instruction newFirstThread, NotificationChain msgs)
-  {
-    Instruction oldFirstThread = firstThread;
-    firstThread = newFirstThread;
-    if (eNotificationRequired())
+    if (threads == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.PARALLEL__FIRST_THREAD, oldFirstThread, newFirstThread);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      threads = new EObjectContainmentEList<Instruction>(Instruction.class, this, SclPackage.PARALLEL__THREADS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setFirstThread(Instruction newFirstThread)
-  {
-    if (newFirstThread != firstThread)
-    {
-      NotificationChain msgs = null;
-      if (firstThread != null)
-        msgs = ((InternalEObject)firstThread).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.PARALLEL__FIRST_THREAD, null, msgs);
-      if (newFirstThread != null)
-        msgs = ((InternalEObject)newFirstThread).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.PARALLEL__FIRST_THREAD, null, msgs);
-      msgs = basicSetFirstThread(newFirstThread, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.PARALLEL__FIRST_THREAD, newFirstThread, newFirstThread));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Instruction getSecondThread()
-  {
-    return secondThread;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetSecondThread(Instruction newSecondThread, NotificationChain msgs)
-  {
-    Instruction oldSecondThread = secondThread;
-    secondThread = newSecondThread;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.PARALLEL__SECOND_THREAD, oldSecondThread, newSecondThread);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setSecondThread(Instruction newSecondThread)
-  {
-    if (newSecondThread != secondThread)
-    {
-      NotificationChain msgs = null;
-      if (secondThread != null)
-        msgs = ((InternalEObject)secondThread).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.PARALLEL__SECOND_THREAD, null, msgs);
-      if (newSecondThread != null)
-        msgs = ((InternalEObject)newSecondThread).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.PARALLEL__SECOND_THREAD, null, msgs);
-      msgs = basicSetSecondThread(newSecondThread, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.PARALLEL__SECOND_THREAD, newSecondThread, newSecondThread));
+    return threads;
   }
 
   /**
@@ -177,10 +88,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
-      case SclPackage.PARALLEL__FIRST_THREAD:
-        return basicSetFirstThread(null, msgs);
-      case SclPackage.PARALLEL__SECOND_THREAD:
-        return basicSetSecondThread(null, msgs);
+      case SclPackage.PARALLEL__THREADS:
+        return ((InternalEList<?>)getThreads()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -195,10 +104,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
-      case SclPackage.PARALLEL__FIRST_THREAD:
-        return getFirstThread();
-      case SclPackage.PARALLEL__SECOND_THREAD:
-        return getSecondThread();
+      case SclPackage.PARALLEL__THREADS:
+        return getThreads();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -208,16 +115,15 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case SclPackage.PARALLEL__FIRST_THREAD:
-        setFirstThread((Instruction)newValue);
-        return;
-      case SclPackage.PARALLEL__SECOND_THREAD:
-        setSecondThread((Instruction)newValue);
+      case SclPackage.PARALLEL__THREADS:
+        getThreads().clear();
+        getThreads().addAll((Collection<? extends Instruction>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -233,11 +139,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
-      case SclPackage.PARALLEL__FIRST_THREAD:
-        setFirstThread((Instruction)null);
-        return;
-      case SclPackage.PARALLEL__SECOND_THREAD:
-        setSecondThread((Instruction)null);
+      case SclPackage.PARALLEL__THREADS:
+        getThreads().clear();
         return;
     }
     super.eUnset(featureID);
@@ -253,10 +156,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
-      case SclPackage.PARALLEL__FIRST_THREAD:
-        return firstThread != null;
-      case SclPackage.PARALLEL__SECOND_THREAD:
-        return secondThread != null;
+      case SclPackage.PARALLEL__THREADS:
+        return threads != null && !threads.isEmpty();
     }
     return super.eIsSet(featureID);
   }

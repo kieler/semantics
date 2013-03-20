@@ -168,7 +168,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (instruction=Instruction nextInstruction=Instruction?)
+	 *     (name=ID nextInstruction=Instruction?)
 	 */
 	protected void sequence_Instruction_Label(EObject context, Label semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -177,7 +177,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (firstThread=Instruction secondThread=Instruction nextInstruction=Instruction?)
+	 *     (threads+=Instruction threads+=Instruction+ nextInstruction=Instruction?)
 	 */
 	protected void sequence_Instruction_Parallel(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -195,7 +195,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     instruction=Instruction
+	 *     name=ID
 	 */
 	protected void sequence_Label(EObject context, Label semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -204,7 +204,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (firstThread=Instruction secondThread=Instruction)
+	 *     (threads+=Instruction threads+=Instruction+)
 	 */
 	protected void sequence_Parallel(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

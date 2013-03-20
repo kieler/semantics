@@ -189,13 +189,13 @@ public interface ScgPackage extends EPackage
   int LABEL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
 
   /**
-   * The feature id for the '<em><b>Instruction</b></em>' containment reference.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LABEL__INSTRUCTION = INSTRUCTION_FEATURE_COUNT + 0;
+  int LABEL__NAME = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Label</em>' class.
@@ -263,40 +263,13 @@ public interface ScgPackage extends EPackage
   int PARALLEL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
 
   /**
-   * The feature id for the '<em><b>First Thread</b></em>' containment reference.
+   * The feature id for the '<em><b>Threads</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARALLEL__FIRST_THREAD = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Second Thread</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL__SECOND_THREAD = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>First Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL__FIRST_INSTRUCTION = INSTRUCTION_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Second Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL__SECOND_INSTRUCTION = INSTRUCTION_FEATURE_COUNT + 3;
+  int PARALLEL__THREADS = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Parallel</em>' class.
@@ -305,7 +278,7 @@ public interface ScgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARALLEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 4;
+  int PARALLEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl <em>Pause</em>}' class.
@@ -433,28 +406,6 @@ public interface ScgPackage extends EPackage
   EClass getParallel();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel#getFirstInstruction <em>First Instruction</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>First Instruction</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel#getFirstInstruction()
-   * @see #getParallel()
-   * @generated
-   */
-  EReference getParallel_FirstInstruction();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel#getSecondInstruction <em>Second Instruction</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Second Instruction</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel#getSecondInstruction()
-   * @see #getParallel()
-   * @generated
-   */
-  EReference getParallel_SecondInstruction();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause <em>Pause</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -579,22 +530,6 @@ public interface ScgPackage extends EPackage
      * @generated
      */
     EClass PARALLEL = eINSTANCE.getParallel();
-
-    /**
-     * The meta object literal for the '<em><b>First Instruction</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PARALLEL__FIRST_INSTRUCTION = eINSTANCE.getParallel_FirstInstruction();
-
-    /**
-     * The meta object literal for the '<em><b>Second Instruction</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PARALLEL__SECOND_INSTRUCTION = eINSTANCE.getParallel_SecondInstruction();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl <em>Pause</em>}' class.

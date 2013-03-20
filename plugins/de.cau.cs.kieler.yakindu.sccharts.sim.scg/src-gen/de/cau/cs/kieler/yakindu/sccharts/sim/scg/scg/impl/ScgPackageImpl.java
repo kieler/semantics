@@ -209,26 +209,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getParallel_FirstInstruction()
-  {
-    return (EReference)parallelEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getParallel_SecondInstruction()
-  {
-    return (EReference)parallelEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getPause()
   {
     return pauseEClass;
@@ -305,8 +285,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
     gotoEClass = createEClass(GOTO);
 
     parallelEClass = createEClass(PARALLEL);
-    createEReference(parallelEClass, PARALLEL__FIRST_INSTRUCTION);
-    createEReference(parallelEClass, PARALLEL__SECOND_INSTRUCTION);
 
     pauseEClass = createEClass(PAUSE);
     createEAttribute(pauseEClass, PAUSE__PRIORITY);
@@ -372,8 +350,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
     initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(parallelEClass, Parallel.class, "Parallel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getParallel_FirstInstruction(), this.getInstruction(), null, "firstInstruction", null, 0, 1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getParallel_SecondInstruction(), this.getInstruction(), null, "secondInstruction", null, 0, 1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPause_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Pause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

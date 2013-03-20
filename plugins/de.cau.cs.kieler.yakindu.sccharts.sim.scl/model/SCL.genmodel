@@ -25,14 +25,13 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Conditional/instructions"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Label">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Label/instruction"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Label/name"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Goto">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Goto/name"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel/firstThread"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel/secondThread"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel/threads"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Pause">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Pause/pause"/>

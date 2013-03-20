@@ -235,13 +235,13 @@ public interface SclPackage extends EPackage
   int LABEL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
 
   /**
-   * The feature id for the '<em><b>Instruction</b></em>' containment reference.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LABEL__INSTRUCTION = INSTRUCTION_FEATURE_COUNT + 0;
+  int LABEL__NAME = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Label</em>' class.
@@ -309,22 +309,13 @@ public interface SclPackage extends EPackage
   int PARALLEL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
 
   /**
-   * The feature id for the '<em><b>First Thread</b></em>' containment reference.
+   * The feature id for the '<em><b>Threads</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARALLEL__FIRST_THREAD = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Second Thread</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL__SECOND_THREAD = INSTRUCTION_FEATURE_COUNT + 1;
+  int PARALLEL__THREADS = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Parallel</em>' class.
@@ -333,7 +324,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARALLEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+  int PARALLEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.PauseImpl <em>Pause</em>}' class.
@@ -501,15 +492,15 @@ public interface SclPackage extends EPackage
   EClass getLabel();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getInstruction <em>Instruction</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Instruction</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getInstruction()
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getName()
    * @see #getLabel()
    * @generated
    */
-  EReference getLabel_Instruction();
+  EAttribute getLabel_Name();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto <em>Goto</em>}'.
@@ -543,26 +534,15 @@ public interface SclPackage extends EPackage
   EClass getParallel();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getFirstThread <em>First Thread</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getThreads <em>Threads</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>First Thread</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getFirstThread()
+   * @return the meta object for the containment reference list '<em>Threads</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getThreads()
    * @see #getParallel()
    * @generated
    */
-  EReference getParallel_FirstThread();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getSecondThread <em>Second Thread</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Second Thread</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getSecondThread()
-   * @see #getParallel()
-   * @generated
-   */
-  EReference getParallel_SecondThread();
+  EReference getParallel_Threads();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause <em>Pause</em>}'.
@@ -715,12 +695,12 @@ public interface SclPackage extends EPackage
     EClass LABEL = eINSTANCE.getLabel();
 
     /**
-     * The meta object literal for the '<em><b>Instruction</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LABEL__INSTRUCTION = eINSTANCE.getLabel_Instruction();
+    EAttribute LABEL__NAME = eINSTANCE.getLabel_Name();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.GotoImpl <em>Goto</em>}' class.
@@ -751,20 +731,12 @@ public interface SclPackage extends EPackage
     EClass PARALLEL = eINSTANCE.getParallel();
 
     /**
-     * The meta object literal for the '<em><b>First Thread</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Threads</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PARALLEL__FIRST_THREAD = eINSTANCE.getParallel_FirstThread();
-
-    /**
-     * The meta object literal for the '<em><b>Second Thread</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PARALLEL__SECOND_THREAD = eINSTANCE.getParallel_SecondThread();
+    EReference PARALLEL__THREADS = eINSTANCE.getParallel_Threads();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.PauseImpl <em>Pause</em>}' class.

@@ -7,12 +7,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Conditional"/>
   <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Label"/>
   <eClassifiers xsi:type="ecore:EClass" name="Goto" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Goto"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="firstInstruction" eType="#//Instruction"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="secondInstruction" eType="#//Instruction"
-        containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel"/>
   <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Pause">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"

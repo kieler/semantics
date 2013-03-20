@@ -140,7 +140,7 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 	
 	/**
 	 * Constraint:
-	 *     instruction=Instruction
+	 *     name=ID
 	 */
 	protected void sequence_Label(EObject context, Label semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -149,7 +149,7 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 	
 	/**
 	 * Constraint:
-	 *     (firstInstruction=Instruction secondInstruction=Instruction)
+	 *     (threads+=Instruction threads+=Instruction+)
 	 */
 	protected void sequence_Parallel(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

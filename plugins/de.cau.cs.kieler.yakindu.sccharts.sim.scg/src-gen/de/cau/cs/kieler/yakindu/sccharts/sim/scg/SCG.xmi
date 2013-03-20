@@ -68,8 +68,8 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="label:"/>
-        <elements xsi:type="xtext:Assignment" feature="instruction" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
         </elements>
       </alternatives>
     </rules>
@@ -90,12 +90,16 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="fork"/>
-        <elements xsi:type="xtext:Assignment" feature="firstInstruction" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="par"/>
-        <elements xsi:type="xtext:Assignment" feature="secondInstruction" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Assignment" feature="threads" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="+">
+            <elements xsi:type="xtext:Keyword" value="par"/>
+            <elements xsi:type="xtext:Assignment" feature="threads" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+            </elements>
+          </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="join"/>
       </alternatives>
@@ -240,8 +244,8 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="label:"/>
-        <elements xsi:type="xtext:Assignment" feature="instruction" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
         </elements>
       </alternatives>
     </rules>
@@ -262,12 +266,16 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="fork"/>
-        <elements xsi:type="xtext:Assignment" feature="firstThread" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="par"/>
-        <elements xsi:type="xtext:Assignment" feature="secondThread" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Assignment" feature="threads" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="+">
+            <elements xsi:type="xtext:Keyword" value="par"/>
+            <elements xsi:type="xtext:Assignment" feature="threads" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+            </elements>
+          </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="join"/>
       </alternatives>

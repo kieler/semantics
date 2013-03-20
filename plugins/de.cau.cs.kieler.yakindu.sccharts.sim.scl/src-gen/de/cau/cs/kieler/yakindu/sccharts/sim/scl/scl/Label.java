@@ -11,7 +11,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getInstruction <em>Instruction</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -22,29 +22,29 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 public interface Label extends Instruction
 {
   /**
-   * Returns the value of the '<em><b>Instruction</b></em>' containment reference.
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Instruction</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Name</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Instruction</em>' containment reference.
-   * @see #setInstruction(Instruction)
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getLabel_Instruction()
-   * @model containment="true"
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getLabel_Name()
+   * @model
    * @generated
    */
-  Instruction getInstruction();
+  String getName();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getInstruction <em>Instruction</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Instruction</em>' containment reference.
-   * @see #getInstruction()
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
    * @generated
    */
-  void setInstruction(Instruction value);
+  void setName(String value);
 
 } // Label

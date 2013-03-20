@@ -23,7 +23,7 @@ Conditional:
 ;
 
 Label:
-    'label:' instruction = Instruction
+    'label:' name = ID
 ;
 
 Goto:
@@ -32,9 +32,9 @@ Goto:
 
 Parallel:
     'fork'
-        firstInstruction = Instruction
-    'par'
-        secondInstruction = Instruction
+    (    threads += Instruction
+    ('par'
+         threads += Instruction)+)
     'join'
 ;
 

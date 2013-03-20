@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -11,8 +12,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getFirstThread <em>First Thread</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getSecondThread <em>Second Thread</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getThreads <em>Threads</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,55 +23,19 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 public interface Parallel extends Instruction
 {
   /**
-   * Returns the value of the '<em><b>First Thread</b></em>' containment reference.
+   * Returns the value of the '<em><b>Threads</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>First Thread</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Threads</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>First Thread</em>' containment reference.
-   * @see #setFirstThread(Instruction)
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getParallel_FirstThread()
+   * @return the value of the '<em>Threads</em>' containment reference list.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getParallel_Threads()
    * @model containment="true"
    * @generated
    */
-  Instruction getFirstThread();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getFirstThread <em>First Thread</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>First Thread</em>' containment reference.
-   * @see #getFirstThread()
-   * @generated
-   */
-  void setFirstThread(Instruction value);
-
-  /**
-   * Returns the value of the '<em><b>Second Thread</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Second Thread</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Second Thread</em>' containment reference.
-   * @see #setSecondThread(Instruction)
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getParallel_SecondThread()
-   * @model containment="true"
-   * @generated
-   */
-  Instruction getSecondThread();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel#getSecondThread <em>Second Thread</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Second Thread</em>' containment reference.
-   * @see #getSecondThread()
-   * @generated
-   */
-  void setSecondThread(Instruction value);
+  EList<Instruction> getThreads();
 
 } // Parallel

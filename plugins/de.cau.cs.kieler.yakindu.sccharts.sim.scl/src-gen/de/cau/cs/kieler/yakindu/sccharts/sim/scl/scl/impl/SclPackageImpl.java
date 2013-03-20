@@ -277,9 +277,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getLabel_Instruction()
+  public EAttribute getLabel_Name()
   {
-    return (EReference)labelEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)labelEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -317,19 +317,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getParallel_FirstThread()
+  public EReference getParallel_Threads()
   {
     return (EReference)parallelEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getParallel_SecondThread()
-  {
-    return (EReference)parallelEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -398,14 +388,13 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEReference(conditionalEClass, CONDITIONAL__INSTRUCTIONS);
 
     labelEClass = createEClass(LABEL);
-    createEReference(labelEClass, LABEL__INSTRUCTION);
+    createEAttribute(labelEClass, LABEL__NAME);
 
     gotoEClass = createEClass(GOTO);
     createEAttribute(gotoEClass, GOTO__NAME);
 
     parallelEClass = createEClass(PARALLEL);
-    createEReference(parallelEClass, PARALLEL__FIRST_THREAD);
-    createEReference(parallelEClass, PARALLEL__SECOND_THREAD);
+    createEReference(parallelEClass, PARALLEL__THREADS);
 
     pauseEClass = createEClass(PAUSE);
     createEAttribute(pauseEClass, PAUSE__PAUSE);
@@ -468,14 +457,13 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEReference(getConditional_Instructions(), this.getInstruction(), null, "instructions", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLabel_Instruction(), this.getInstruction(), null, "instruction", null, 0, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getLabel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGoto_Name(), ecorePackage.getEString(), "name", null, 0, 1, Goto.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(parallelEClass, Parallel.class, "Parallel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getParallel_FirstThread(), this.getInstruction(), null, "firstThread", null, 0, 1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getParallel_SecondThread(), this.getInstruction(), null, "secondThread", null, 0, 1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getParallel_Threads(), this.getInstruction(), null, "threads", null, 0, -1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPause_Pause(), ecorePackage.getEString(), "pause", null, 0, 1, Pause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
