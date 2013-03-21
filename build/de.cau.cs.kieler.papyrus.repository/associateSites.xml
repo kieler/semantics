@@ -1,5 +1,0 @@
-<associateSites>
-    <associateSite label="Juno" url="http://download.eclipse.org/releases/juno" />
-    <associateSite label="KIELER" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/" />
-    <associateSite label="Papyrus" url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/maintenance/juno" />
-</associateSites>
