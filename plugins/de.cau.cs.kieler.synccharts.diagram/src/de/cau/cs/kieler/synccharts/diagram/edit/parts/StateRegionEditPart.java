@@ -279,7 +279,8 @@ public class StateRegionEditPart extends ShapeNodeEditPart {
             fFigureRegionIdFigure.setText("");
             fFigureRegionIdFigure.setForegroundColor(ColorConstants.gray);
 
-            fFigureRegionIdFigure.setFont(FFIGUREREGIONIDFIGURE_FONT);
+
+            //fFigureRegionIdFigure.setFont(FFIGUREREGIONIDFIGURE_FONT);
 
             fFigureRegionIdFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(0), getMapMode()
                     .DPtoLP(2), getMapMode().DPtoLP(0), getMapMode().DPtoLP(2)));
