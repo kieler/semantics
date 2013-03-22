@@ -155,7 +155,7 @@ public class TransitionEditPart extends AdvancedRenderingConnectionEditPart impl
             fFigureTransitionPriorityFigure = new WrappingLabel();
             fFigureTransitionPriorityFigure.setText("");
 
-            fFigureTransitionPriorityFigure.setFont(FFIGURETRANSITIONPRIORITYFIGURE_FONT);
+            //fFigureTransitionPriorityFigure.setFont(FFIGURETRANSITIONPRIORITYFIGURE_FONT);
 
             this.add(fFigureTransitionPriorityFigure);
 
