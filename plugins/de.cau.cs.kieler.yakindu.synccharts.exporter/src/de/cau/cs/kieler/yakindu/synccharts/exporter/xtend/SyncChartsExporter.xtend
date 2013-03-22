@@ -7,7 +7,10 @@ import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState
 import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
+import org.yakindu.sct.model.sgraph.Choice
 import org.yakindu.sct.model.sgraph.Statechart
+import org.yakindu.sct.model.sgraph.Transition
+import de.cau.cs.kieler.synccharts.StateType
 
 class SyncChartsExporter {
 	
@@ -21,7 +24,7 @@ class SyncChartsExporter {
     	// The root State
     	val targetRootState = SyncchartsFactory::eINSTANCE.createState()
     	targetRootState.setLabel(sourceRootStatechart.name)
-    	targetRootState.setId(sourceRootStatechart.name)
+    	targetRootState.setId("_main_state")
     	transform(targetRootState,  sourceRootStatechart.regions.get(0).vertices.get(0).eContents)
     	targetRootRegion.states.add(targetRootState)
         targetRootRegion
@@ -33,7 +36,7 @@ class SyncChartsExporter {
 		for (r:regions){
 			val org.yakindu.sct.model.sgraph.Region region = r as org.yakindu.sct.model.sgraph.Region
 			val targetRegion = SyncchartsFactory::eINSTANCE.createRegion();
-			targetRegion.setId(region.name)
+			targetRegion.setId("_" + region.name)
 			targetRegion.setLabel(region.name)
 			transform(targetRegion,region)
 			targetState.regions.add(targetRegion)
@@ -44,23 +47,43 @@ class SyncChartsExporter {
  	*	Transform States inside a Region 
  	*/
 	def transform(Region targetRegion, org.yakindu.sct.model.sgraph.Region region){
+		targetRegion.setId("_" + region.name)
+		targetRegion.setLabel(region.name)
 		val vertices = region.vertices
 		for(vertex:vertices){
 			if(vertex instanceof SyncState){
 				val SyncState state = vertex as SyncState
 				val targetState = SyncchartsFactory::eINSTANCE.createState;
-				targetState.id = state.name
-				targetState.label = state.name
-				targetState.isInitial = state.isInitial
-				targetState.isFinal = state.isFinal
+				transform(targetState,state)
 				transformTransition(targetState,state.outgoingTransitions)
 				targetRegion.states.add(targetState)
+			}else if(vertex instanceof Choice){
+				val Choice choice = vertex as Choice
+				val targetChoice = SyncchartsFactory::eINSTANCE.createState
+				targetChoice.setType(StateType::CONDITIONAL)
+				targetChoice.id = "_" + choice.name
 			}
 		}
 	}
     
+       /**
+    * Transform regions inside a State
+    */
+	def transform(State targetState, SyncState state) {
+		targetState.id = "_" + state.name
+		targetState.label = state.name
+		targetState.isInitial = state.isInitial
+		targetState.isFinal = state.isFinal
+		for (r:state.regions){
+			val org.yakindu.sct.model.sgraph.Region region = r as org.yakindu.sct.model.sgraph.Region
+			val targetRegion = SyncchartsFactory::eINSTANCE.createRegion();
+			transform(targetRegion,region)
+			targetState.regions.add(targetRegion)
+		}
+	}
+    
     /**
-     *  Transform transitions inside a state
+     v*  Transform transitions inside a state
      */
     def transformTransition(State targetState, EList<org.yakindu.sct.model.sgraph.Transition> transitions){
     	for(t:transitions){
