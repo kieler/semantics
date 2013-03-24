@@ -87,13 +87,13 @@ public interface SclPackage extends EPackage
   int PROGRAM__VARIABLES = 1;
 
   /**
-   * The feature id for the '<em><b>Instruction</b></em>' containment reference.
+   * The feature id for the '<em><b>Program</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__INSTRUCTION = 2;
+  int PROGRAM__PROGRAM = 2;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -115,105 +115,41 @@ public interface SclPackage extends EPackage
   int INSTRUCTION = 1;
 
   /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION__NEXT_INSTRUCTION = 0;
-
-  /**
    * The number of structural features of the '<em>Instruction</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTION_FEATURE_COUNT = 1;
+  int INSTRUCTION_FEATURE_COUNT = 0;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SCLExpressionImpl <em>SCL Expression</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSetImpl <em>Instruction Set</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SCLExpressionImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getSCLExpression()
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSetImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionSet()
    * @generated
    */
-  int SCL_EXPRESSION = 2;
+  int INSTRUCTION_SET = 2;
 
   /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCL_EXPRESSION__NEXT_INSTRUCTION = StextPackage.EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Assignment</b></em>' attribute.
+   * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCL_EXPRESSION__ASSIGNMENT = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
+  int INSTRUCTION_SET__INSTRUCTIONS = 0;
 
   /**
-   * The number of structural features of the '<em>SCL Expression</em>' class.
+   * The number of structural features of the '<em>Instruction Set</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCL_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getConditional()
-   * @generated
-   */
-  int CONDITIONAL = 3;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITIONAL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
-
-  /**
-   * The feature id for the '<em><b>Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITIONAL__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Instructions</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITIONAL__INSTRUCTIONS = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Conditional</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+  int INSTRUCTION_SET_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LabelImpl <em>Label</em>}' class.
@@ -223,16 +159,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getLabel()
    * @generated
    */
-  int LABEL = 4;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LABEL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
+  int LABEL = 3;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -253,6 +180,71 @@ public interface SclPackage extends EPackage
   int LABEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SCLExpressionImpl <em>SCL Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SCLExpressionImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getSCLExpression()
+   * @generated
+   */
+  int SCL_EXPRESSION = 4;
+
+  /**
+   * The feature id for the '<em><b>Assignment</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCL_EXPRESSION__ASSIGNMENT = StextPackage.EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>SCL Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCL_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getConditional()
+   * @generated
+   */
+  int CONDITIONAL = 5;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Conditional</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL__CONDITIONAL = INSTRUCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Conditional</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.GotoImpl <em>Goto</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -260,16 +252,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getGoto()
    * @generated
    */
-  int GOTO = 5;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GOTO__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
+  int GOTO = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -297,16 +280,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 6;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
+  int PARALLEL = 7;
 
   /**
    * The feature id for the '<em><b>Threads</b></em>' containment reference list.
@@ -334,16 +308,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 7;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PAUSE__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
+  int PAUSE = 8;
 
   /**
    * The feature id for the '<em><b>Pause</b></em>' attribute.
@@ -397,15 +362,15 @@ public interface SclPackage extends EPackage
   EReference getProgram_Variables();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getInstruction <em>Instruction</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getProgram <em>Program</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Instruction</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getInstruction()
+   * @return the meta object for the containment reference '<em>Program</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getProgram()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_Instruction();
+  EReference getProgram_Program();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction <em>Instruction</em>}'.
@@ -418,15 +383,46 @@ public interface SclPackage extends EPackage
   EClass getInstruction();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction#getNextInstruction <em>Next Instruction</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet <em>Instruction Set</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Next Instruction</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction#getNextInstruction()
-   * @see #getInstruction()
+   * @return the meta object for class '<em>Instruction Set</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
    * @generated
    */
-  EReference getInstruction_NextInstruction();
+  EClass getInstructionSet();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet#getInstructions <em>Instructions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Instructions</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet#getInstructions()
+   * @see #getInstructionSet()
+   * @generated
+   */
+  EReference getInstructionSet_Instructions();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label <em>Label</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Label</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
+   * @generated
+   */
+  EClass getLabel();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getName()
+   * @see #getLabel()
+   * @generated
+   */
+  EAttribute getLabel_Name();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression <em>SCL Expression</em>}'.
@@ -471,36 +467,15 @@ public interface SclPackage extends EPackage
   EReference getConditional_Expression();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getInstructions <em>Instructions</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getConditional <em>Conditional</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Instructions</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getInstructions()
+   * @return the meta object for the containment reference '<em>Conditional</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getConditional()
    * @see #getConditional()
    * @generated
    */
-  EReference getConditional_Instructions();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label <em>Label</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Label</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
-   * @generated
-   */
-  EClass getLabel();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label#getName()
-   * @see #getLabel()
-   * @generated
-   */
-  EAttribute getLabel_Name();
+  EReference getConditional_Conditional();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto <em>Goto</em>}'.
@@ -615,12 +590,12 @@ public interface SclPackage extends EPackage
     EReference PROGRAM__VARIABLES = eINSTANCE.getProgram_Variables();
 
     /**
-     * The meta object literal for the '<em><b>Instruction</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Program</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__INSTRUCTION = eINSTANCE.getProgram_Instruction();
+    EReference PROGRAM__PROGRAM = eINSTANCE.getProgram_Program();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionImpl <em>Instruction</em>}' class.
@@ -633,12 +608,40 @@ public interface SclPackage extends EPackage
     EClass INSTRUCTION = eINSTANCE.getInstruction();
 
     /**
-     * The meta object literal for the '<em><b>Next Instruction</b></em>' containment reference feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSetImpl <em>Instruction Set</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSetImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionSet()
+     * @generated
+     */
+    EClass INSTRUCTION_SET = eINSTANCE.getInstructionSet();
+
+    /**
+     * The meta object literal for the '<em><b>Instructions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference INSTRUCTION__NEXT_INSTRUCTION = eINSTANCE.getInstruction_NextInstruction();
+    EReference INSTRUCTION_SET__INSTRUCTIONS = eINSTANCE.getInstructionSet_Instructions();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LabelImpl <em>Label</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LabelImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getLabel()
+     * @generated
+     */
+    EClass LABEL = eINSTANCE.getLabel();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LABEL__NAME = eINSTANCE.getLabel_Name();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SCLExpressionImpl <em>SCL Expression</em>}' class.
@@ -677,30 +680,12 @@ public interface SclPackage extends EPackage
     EReference CONDITIONAL__EXPRESSION = eINSTANCE.getConditional_Expression();
 
     /**
-     * The meta object literal for the '<em><b>Instructions</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Conditional</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CONDITIONAL__INSTRUCTIONS = eINSTANCE.getConditional_Instructions();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LabelImpl <em>Label</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LabelImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getLabel()
-     * @generated
-     */
-    EClass LABEL = eINSTANCE.getLabel();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute LABEL__NAME = eINSTANCE.getLabel_Name();
+    EReference CONDITIONAL__CONDITIONAL = eINSTANCE.getConditional_Conditional();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.GotoImpl <em>Goto</em>}' class.

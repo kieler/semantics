@@ -84,6 +84,22 @@ public class ScgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case ScgPackage.INSTRUCTION_SET:
+      {
+        InstructionSet instructionSet = (InstructionSet)theEObject;
+        T result = caseInstructionSet(instructionSet);
+        if (result == null) result = caseScl_InstructionSet(instructionSet);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case ScgPackage.LABEL:
+      {
+        Label label = (Label)theEObject;
+        T result = caseLabel(label);
+        if (result == null) result = caseScl_Label(label);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case ScgPackage.SCL_EXPRESSION:
       {
         SCLExpression sclExpression = (SCLExpression)theEObject;
@@ -103,16 +119,6 @@ public class ScgSwitch<T> extends Switch<T>
         if (result == null) result = caseInstruction(conditional);
         if (result == null) result = caseScl_Conditional(conditional);
         if (result == null) result = caseScl_Instruction(conditional);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case ScgPackage.LABEL:
-      {
-        Label label = (Label)theEObject;
-        T result = caseLabel(label);
-        if (result == null) result = caseInstruction(label);
-        if (result == null) result = caseScl_Label(label);
-        if (result == null) result = caseScl_Instruction(label);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -167,6 +173,38 @@ public class ScgSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Instruction Set</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Instruction Set</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInstructionSet(InstructionSet object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Label</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Label</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLabel(Label object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>SCL Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -194,22 +232,6 @@ public class ScgSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseConditional(Conditional object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Label</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Label</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseLabel(Label object)
   {
     return null;
   }
@@ -279,6 +301,38 @@ public class ScgSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Instruction Set</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Instruction Set</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScl_InstructionSet(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Label</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Label</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScl_Label(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Statement</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -338,22 +392,6 @@ public class ScgSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseScl_Conditional(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Label</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Label</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseScl_Label(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label object)
   {
     return null;
   }

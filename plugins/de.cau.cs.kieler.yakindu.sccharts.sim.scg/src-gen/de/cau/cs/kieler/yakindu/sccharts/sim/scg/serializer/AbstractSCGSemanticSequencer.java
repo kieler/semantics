@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Goto;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause;
@@ -15,11 +16,14 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.serializer.SCLSemanticSequencer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
 import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
 import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
+import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 import org.yakindu.sct.model.stext.stext.StextPackage;
 import org.yakindu.sct.model.stext.stext.VariableDefinition;
 
@@ -45,9 +49,14 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 					return; 
 				}
 				else break;
+			case ScgPackage.INSTRUCTION_SET:
+				if(context == grammarAccess.getInstructionSetRule()) {
+					sequence_InstructionSet(context, (InstructionSet) semanticObject); 
+					return; 
+				}
+				else break;
 			case ScgPackage.LABEL:
-				if(context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getLabelRule()) {
+				if(context == grammarAccess.getLabelRule()) {
 					sequence_Label(context, (Label) semanticObject); 
 					return; 
 				}
@@ -107,16 +116,33 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 	 *     assignment=STRING
 	 */
 	protected void sequence_Assignment(EObject context, SCLExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.SCL_EXPRESSION__ASSIGNMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.SCL_EXPRESSION__ASSIGNMENT));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getAssignmentAccess().getAssignmentSTRINGTerminalRuleCall_0(), semanticObject.getAssignment());
+		feeder.finish();
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (expression=SCLExpression instructions=Instruction)
+	 *     (expression=SCLExpression conditional=InstructionSet)
 	 */
 	protected void sequence_Conditional(EObject context, Conditional semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.CONDITIONAL__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.CONDITIONAL__EXPRESSION));
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.CONDITIONAL__CONDITIONAL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.CONDITIONAL__CONDITIONAL));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getConditionalAccess().getExpressionSCLExpressionParserRuleCall_1_0(), semanticObject.getExpression());
+		feeder.accept(grammarAccess.getConditionalAccess().getConditionalInstructionSetParserRuleCall_3_0(), semanticObject.getConditional());
+		feeder.finish();
 	}
 	
 	
@@ -125,13 +151,29 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 	 *     name=ID
 	 */
 	protected void sequence_Goto(EObject context, Goto semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.GOTO__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.GOTO__NAME));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getGotoAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     instructions+=Instruction+
+	 */
+	protected void sequence_InstructionSet(EObject context, InstructionSet semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (pause='pause' priority=INT dependencies+=Instruction* secondInstructions=Instruction?)
+	 *     (pause='pause' priority=INT dependencies+=Instruction*)
 	 */
 	protected void sequence_Instruction_Pause(EObject context, Pause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -143,13 +185,20 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 	 *     name=ID
 	 */
 	protected void sequence_Label(EObject context, Label semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.LABEL__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.LABEL__NAME));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getLabelAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (threads+=Instruction threads+=Instruction+)
+	 *     (threads+=InstructionSet threads+=InstructionSet+)
 	 */
 	protected void sequence_Parallel(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -13,7 +13,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getInstructions <em>Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getConditional <em>Conditional</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,29 +50,29 @@ public interface Conditional extends Instruction
   void setExpression(Expression value);
 
   /**
-   * Returns the value of the '<em><b>Instructions</b></em>' containment reference.
+   * Returns the value of the '<em><b>Conditional</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Instructions</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Conditional</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Instructions</em>' containment reference.
-   * @see #setInstructions(Instruction)
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getConditional_Instructions()
+   * @return the value of the '<em>Conditional</em>' containment reference.
+   * @see #setConditional(InstructionSet)
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getConditional_Conditional()
    * @model containment="true"
    * @generated
    */
-  Instruction getInstructions();
+  InstructionSet getConditional();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getInstructions <em>Instructions</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getConditional <em>Conditional</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Instructions</em>' containment reference.
-   * @see #getInstructions()
+   * @param value the new value of the '<em>Conditional</em>' containment reference.
+   * @see #getConditional()
    * @generated
    */
-  void setInstructions(Instruction value);
+  void setConditional(InstructionSet value);
 
 } // Conditional

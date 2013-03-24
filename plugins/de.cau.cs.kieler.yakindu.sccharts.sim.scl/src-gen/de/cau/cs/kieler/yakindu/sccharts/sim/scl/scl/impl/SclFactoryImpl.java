@@ -66,9 +66,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
     {
       case SclPackage.PROGRAM: return createProgram();
       case SclPackage.INSTRUCTION: return createInstruction();
+      case SclPackage.INSTRUCTION_SET: return createInstructionSet();
+      case SclPackage.LABEL: return createLabel();
       case SclPackage.SCL_EXPRESSION: return createSCLExpression();
       case SclPackage.CONDITIONAL: return createConditional();
-      case SclPackage.LABEL: return createLabel();
       case SclPackage.GOTO: return createGoto();
       case SclPackage.PARALLEL: return createParallel();
       case SclPackage.PAUSE: return createPause();
@@ -104,6 +105,28 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public InstructionSet createInstructionSet()
+  {
+    InstructionSetImpl instructionSet = new InstructionSetImpl();
+    return instructionSet;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Label createLabel()
+  {
+    LabelImpl label = new LabelImpl();
+    return label;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public SCLExpression createSCLExpression()
   {
     SCLExpressionImpl sclExpression = new SCLExpressionImpl();
@@ -119,17 +142,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     ConditionalImpl conditional = new ConditionalImpl();
     return conditional;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Label createLabel()
-  {
-    LabelImpl label = new LabelImpl();
-    return label;
   }
 
   /**

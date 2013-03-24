@@ -5,7 +5,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage;
 
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -26,7 +26,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ConditionalImpl#getInstructions <em>Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ConditionalImpl#getConditional <em>Conditional</em>}</li>
  * </ul>
  * </p>
  *
@@ -45,14 +45,14 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
   protected Expression expression;
 
   /**
-   * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference.
+   * The cached value of the '{@link #getConditional() <em>Conditional</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInstructions()
+   * @see #getConditional()
    * @generated
    * @ordered
    */
-  protected Instruction instructions;
+  protected InstructionSet conditional;
 
   /**
    * <!-- begin-user-doc -->
@@ -128,9 +128,9 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public Instruction getInstructions()
+  public InstructionSet getConditional()
   {
-    return instructions;
+    return conditional;
   }
 
   /**
@@ -138,13 +138,13 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetInstructions(Instruction newInstructions, NotificationChain msgs)
+  public NotificationChain basicSetConditional(InstructionSet newConditional, NotificationChain msgs)
   {
-    Instruction oldInstructions = instructions;
-    instructions = newInstructions;
+    InstructionSet oldConditional = conditional;
+    conditional = newConditional;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__INSTRUCTIONS, oldInstructions, newInstructions);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__CONDITIONAL, oldConditional, newConditional);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -155,20 +155,20 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setInstructions(Instruction newInstructions)
+  public void setConditional(InstructionSet newConditional)
   {
-    if (newInstructions != instructions)
+    if (newConditional != conditional)
     {
       NotificationChain msgs = null;
-      if (instructions != null)
-        msgs = ((InternalEObject)instructions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__INSTRUCTIONS, null, msgs);
-      if (newInstructions != null)
-        msgs = ((InternalEObject)newInstructions).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__INSTRUCTIONS, null, msgs);
-      msgs = basicSetInstructions(newInstructions, msgs);
+      if (conditional != null)
+        msgs = ((InternalEObject)conditional).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__CONDITIONAL, null, msgs);
+      if (newConditional != null)
+        msgs = ((InternalEObject)newConditional).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__CONDITIONAL, null, msgs);
+      msgs = basicSetConditional(newConditional, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__INSTRUCTIONS, newInstructions, newInstructions));
+      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__CONDITIONAL, newConditional, newConditional));
   }
 
   /**
@@ -183,8 +183,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     {
       case ScgPackage.CONDITIONAL__EXPRESSION:
         return basicSetExpression(null, msgs);
-      case ScgPackage.CONDITIONAL__INSTRUCTIONS:
-        return basicSetInstructions(null, msgs);
+      case ScgPackage.CONDITIONAL__CONDITIONAL:
+        return basicSetConditional(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -201,8 +201,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     {
       case ScgPackage.CONDITIONAL__EXPRESSION:
         return getExpression();
-      case ScgPackage.CONDITIONAL__INSTRUCTIONS:
-        return getInstructions();
+      case ScgPackage.CONDITIONAL__CONDITIONAL:
+        return getConditional();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -220,8 +220,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case ScgPackage.CONDITIONAL__EXPRESSION:
         setExpression((Expression)newValue);
         return;
-      case ScgPackage.CONDITIONAL__INSTRUCTIONS:
-        setInstructions((Instruction)newValue);
+      case ScgPackage.CONDITIONAL__CONDITIONAL:
+        setConditional((InstructionSet)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -240,8 +240,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case ScgPackage.CONDITIONAL__EXPRESSION:
         setExpression((Expression)null);
         return;
-      case ScgPackage.CONDITIONAL__INSTRUCTIONS:
-        setInstructions((Instruction)null);
+      case ScgPackage.CONDITIONAL__CONDITIONAL:
+        setConditional((InstructionSet)null);
         return;
     }
     super.eUnset(featureID);
@@ -259,8 +259,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     {
       case ScgPackage.CONDITIONAL__EXPRESSION:
         return expression != null;
-      case ScgPackage.CONDITIONAL__INSTRUCTIONS:
-        return instructions != null;
+      case ScgPackage.CONDITIONAL__CONDITIONAL:
+        return conditional != null;
     }
     return super.eIsSet(featureID);
   }
@@ -278,7 +278,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       switch (derivedFeatureID)
       {
         case ScgPackage.CONDITIONAL__EXPRESSION: return SclPackage.CONDITIONAL__EXPRESSION;
-        case ScgPackage.CONDITIONAL__INSTRUCTIONS: return SclPackage.CONDITIONAL__INSTRUCTIONS;
+        case ScgPackage.CONDITIONAL__CONDITIONAL: return SclPackage.CONDITIONAL__CONDITIONAL;
         default: return -1;
       }
     }
@@ -298,7 +298,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       switch (baseFeatureID)
       {
         case SclPackage.CONDITIONAL__EXPRESSION: return ScgPackage.CONDITIONAL__EXPRESSION;
-        case SclPackage.CONDITIONAL__INSTRUCTIONS: return ScgPackage.CONDITIONAL__INSTRUCTIONS;
+        case SclPackage.CONDITIONAL__CONDITIONAL: return ScgPackage.CONDITIONAL__CONDITIONAL;
         default: return -1;
       }
     }

@@ -41,6 +41,24 @@ public interface SclFactory extends EFactory
   Instruction createInstruction();
 
   /**
+   * Returns a new object of class '<em>Instruction Set</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instruction Set</em>'.
+   * @generated
+   */
+  InstructionSet createInstructionSet();
+
+  /**
+   * Returns a new object of class '<em>Label</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Label</em>'.
+   * @generated
+   */
+  Label createLabel();
+
+  /**
    * Returns a new object of class '<em>SCL Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -57,15 +75,6 @@ public interface SclFactory extends EFactory
    * @generated
    */
   Conditional createConditional();
-
-  /**
-   * Returns a new object of class '<em>Label</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Label</em>'.
-   * @generated
-   */
-  Label createLabel();
 
   /**
    * Returns a new object of class '<em>Goto</em>'.

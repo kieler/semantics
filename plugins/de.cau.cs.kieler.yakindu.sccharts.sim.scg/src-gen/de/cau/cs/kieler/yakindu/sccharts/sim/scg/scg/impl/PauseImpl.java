@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl#getPause <em>Pause</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl#getDependencies <em>Dependencies</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl#getSecondInstructions <em>Second Instructions</em>}</li>
  * </ul>
  * </p>
  *
@@ -90,16 +89,6 @@ public class PauseImpl extends InstructionImpl implements Pause
    * @ordered
    */
   protected EList<Instruction> dependencies;
-
-  /**
-   * The cached value of the '{@link #getSecondInstructions() <em>Second Instructions</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSecondInstructions()
-   * @generated
-   * @ordered
-   */
-  protected Instruction secondInstructions;
 
   /**
    * <!-- begin-user-doc -->
@@ -187,54 +176,6 @@ public class PauseImpl extends InstructionImpl implements Pause
    * <!-- end-user-doc -->
    * @generated
    */
-  public Instruction getSecondInstructions()
-  {
-    return secondInstructions;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetSecondInstructions(Instruction newSecondInstructions, NotificationChain msgs)
-  {
-    Instruction oldSecondInstructions = secondInstructions;
-    secondInstructions = newSecondInstructions;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.PAUSE__SECOND_INSTRUCTIONS, oldSecondInstructions, newSecondInstructions);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setSecondInstructions(Instruction newSecondInstructions)
-  {
-    if (newSecondInstructions != secondInstructions)
-    {
-      NotificationChain msgs = null;
-      if (secondInstructions != null)
-        msgs = ((InternalEObject)secondInstructions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.PAUSE__SECOND_INSTRUCTIONS, null, msgs);
-      if (newSecondInstructions != null)
-        msgs = ((InternalEObject)newSecondInstructions).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.PAUSE__SECOND_INSTRUCTIONS, null, msgs);
-      msgs = basicSetSecondInstructions(newSecondInstructions, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.PAUSE__SECOND_INSTRUCTIONS, newSecondInstructions, newSecondInstructions));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -242,8 +183,6 @@ public class PauseImpl extends InstructionImpl implements Pause
     {
       case ScgPackage.PAUSE__DEPENDENCIES:
         return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
-      case ScgPackage.PAUSE__SECOND_INSTRUCTIONS:
-        return basicSetSecondInstructions(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -264,8 +203,6 @@ public class PauseImpl extends InstructionImpl implements Pause
         return getPriority();
       case ScgPackage.PAUSE__DEPENDENCIES:
         return getDependencies();
-      case ScgPackage.PAUSE__SECOND_INSTRUCTIONS:
-        return getSecondInstructions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -291,9 +228,6 @@ public class PauseImpl extends InstructionImpl implements Pause
         getDependencies().clear();
         getDependencies().addAll((Collection<? extends Instruction>)newValue);
         return;
-      case ScgPackage.PAUSE__SECOND_INSTRUCTIONS:
-        setSecondInstructions((Instruction)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -317,9 +251,6 @@ public class PauseImpl extends InstructionImpl implements Pause
       case ScgPackage.PAUSE__DEPENDENCIES:
         getDependencies().clear();
         return;
-      case ScgPackage.PAUSE__SECOND_INSTRUCTIONS:
-        setSecondInstructions((Instruction)null);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -340,8 +271,6 @@ public class PauseImpl extends InstructionImpl implements Pause
         return priority != PRIORITY_EDEFAULT;
       case ScgPackage.PAUSE__DEPENDENCIES:
         return dependencies != null && !dependencies.isEmpty();
-      case ScgPackage.PAUSE__SECOND_INSTRUCTIONS:
-        return secondInstructions != null;
     }
     return super.eIsSet(featureID);
   }

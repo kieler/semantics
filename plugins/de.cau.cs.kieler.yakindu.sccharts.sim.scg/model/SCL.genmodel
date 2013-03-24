@@ -10,15 +10,15 @@
   <genPackages prefix="Scg" basePackage="de.cau.cs.kieler.yakindu.sccharts.sim.scg"
       disposableProviderFactory="true" ecorePackage="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#/">
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Instruction"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//InstructionSet"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Label"/>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//SCLExpression"/>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Conditional"/>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Label"/>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Goto"/>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Parallel"/>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Pause">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Pause/priority"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Pause/dependencies"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Pause/secondInstructions"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

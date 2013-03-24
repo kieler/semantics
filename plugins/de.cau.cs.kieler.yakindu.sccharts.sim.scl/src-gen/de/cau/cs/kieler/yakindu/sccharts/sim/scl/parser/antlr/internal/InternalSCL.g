@@ -130,17 +130,17 @@ ruleProgram returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getInstructionInstructionParserRuleCall_4_0()); 
+	        newCompositeNode(grammarAccess.getProgramAccess().getProgramInstructionSetParserRuleCall_4_0()); 
 	    }
-		lv_instruction_4_0=ruleInstruction		{
+		lv_program_4_0=ruleInstructionSet		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProgramRule());
 	        }
        		set(
        			$current, 
-       			"instruction",
-        		lv_instruction_4_0, 
-        		"Instruction");
+       			"program",
+        		lv_program_4_0, 
+        		"InstructionSet");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -303,11 +303,11 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getLabelParserRuleCall_0_2()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getGotoParserRuleCall_0_2()); 
     }
-    this_Label_2=ruleLabel
+    this_Goto_2=ruleGoto
     { 
-        $current = $this_Label_2.current; 
+        $current = $this_Goto_2.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -316,11 +316,11 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getGotoParserRuleCall_0_3()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getParallelParserRuleCall_0_3()); 
     }
-    this_Goto_3=ruleGoto
+    this_Parallel_3=ruleParallel
     { 
-        $current = $this_Goto_3.current; 
+        $current = $this_Parallel_3.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -329,11 +329,11 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getParallelParserRuleCall_0_4()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getPauseParserRuleCall_0_4()); 
     }
-    this_Parallel_4=ruleParallel
+    this_Pause_4=rulePause
     { 
-        $current = $this_Parallel_4.current; 
+        $current = $this_Pause_4.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -342,36 +342,100 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getPauseParserRuleCall_0_5()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getLabelParserRuleCall_0_5()); 
     }
-    this_Pause_5=rulePause
+    this_Label_5=ruleLabel
     { 
-        $current = $this_Pause_5.current; 
+        $current = $this_Label_5.current; 
         afterParserOrEnumRuleCall();
     }
-)(	otherlv_6=';' 
+)	otherlv_6=';' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getInstructionAccess().getSemicolonKeyword_1_0());
+    	newLeafNode(otherlv_6, grammarAccess.getInstructionAccess().getSemicolonKeyword_1());
     }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleInstructionSet
+entryRuleInstructionSet returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getInstructionSetRule()); }
+	 iv_ruleInstructionSet=ruleInstructionSet 
+	 { $current=$iv_ruleInstructionSet.current; } 
+	 EOF 
+;
+
+// Rule InstructionSet
+ruleInstructionSet returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getInstructionAccess().getNextInstructionInstructionParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getInstructionSetAccess().getInstructionsInstructionParserRuleCall_0()); 
 	    }
-		lv_nextInstruction_7_0=ruleInstruction		{
+		lv_instructions_0_0=ruleInstruction		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getInstructionRule());
+	            $current = createModelElementForParent(grammarAccess.getInstructionSetRule());
 	        }
-       		set(
+       		add(
        			$current, 
-       			"nextInstruction",
-        		lv_nextInstruction_7_0, 
+       			"instructions",
+        		lv_instructions_0_0, 
         		"Instruction");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))?)
+)+
+;
+
+
+
+
+
+// Entry rule entryRuleLabel
+entryRuleLabel returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getLabelRule()); }
+	 iv_ruleLabel=ruleLabel 
+	 { $current=$iv_ruleLabel.current; } 
+	 EOF 
+;
+
+// Rule Label
+ruleLabel returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='label:' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getLabelAccess().getLabelKeyword_0());
+    }
+(
+(
+		lv_name_1_0=RULE_ID
+		{
+			newLeafNode(lv_name_1_0, grammarAccess.getLabelAccess().getNameIDTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getLabelRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"name",
+        		lv_name_1_0, 
+        		"ID");
+	    }
+
+)
+))
 ;
 
 
@@ -460,17 +524,17 @@ ruleConditional returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConditionalAccess().getInstructionsInstructionParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getConditionalAccess().getConditionalInstructionSetParserRuleCall_3_0()); 
 	    }
-		lv_instructions_3_0=ruleInstruction		{
+		lv_conditional_3_0=ruleInstructionSet		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConditionalRule());
 	        }
        		set(
        			$current, 
-       			"instructions",
-        		lv_instructions_3_0, 
-        		"Instruction");
+       			"conditional",
+        		lv_conditional_3_0, 
+        		"InstructionSet");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -480,49 +544,6 @@ ruleConditional returns [EObject current=null]
     	newLeafNode(otherlv_4, grammarAccess.getConditionalAccess().getEndKeyword_4());
     }
 )
-;
-
-
-
-
-
-// Entry rule entryRuleLabel
-entryRuleLabel returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getLabelRule()); }
-	 iv_ruleLabel=ruleLabel 
-	 { $current=$iv_ruleLabel.current; } 
-	 EOF 
-;
-
-// Rule Label
-ruleLabel returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(	otherlv_0='label:' 
-    {
-    	newLeafNode(otherlv_0, grammarAccess.getLabelAccess().getLabelKeyword_0());
-    }
-(
-(
-		lv_name_1_0=RULE_ID
-		{
-			newLeafNode(lv_name_1_0, grammarAccess.getLabelAccess().getNameIDTerminalRuleCall_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getLabelRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"name",
-        		lv_name_1_0, 
-        		"ID");
-	    }
-
-)
-))
 ;
 
 
@@ -593,9 +614,9 @@ ruleParallel returns [EObject current=null]
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getParallelAccess().getThreadsInstructionParserRuleCall_1_0_0()); 
+	        newCompositeNode(grammarAccess.getParallelAccess().getThreadsInstructionSetParserRuleCall_1_0_0()); 
 	    }
-		lv_threads_1_0=ruleInstruction		{
+		lv_threads_1_0=ruleInstructionSet		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getParallelRule());
 	        }
@@ -603,7 +624,7 @@ ruleParallel returns [EObject current=null]
        			$current, 
        			"threads",
         		lv_threads_1_0, 
-        		"Instruction");
+        		"InstructionSet");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -615,9 +636,9 @@ ruleParallel returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getParallelAccess().getThreadsInstructionParserRuleCall_1_1_1_0()); 
+	        newCompositeNode(grammarAccess.getParallelAccess().getThreadsInstructionSetParserRuleCall_1_1_1_0()); 
 	    }
-		lv_threads_3_0=ruleInstruction		{
+		lv_threads_3_0=ruleInstructionSet		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getParallelRule());
 	        }
@@ -625,7 +646,7 @@ ruleParallel returns [EObject current=null]
        			$current, 
        			"threads",
         		lv_threads_3_0, 
-        		"Instruction");
+        		"InstructionSet");
 	        afterParserOrEnumRuleCall();
 	    }
 

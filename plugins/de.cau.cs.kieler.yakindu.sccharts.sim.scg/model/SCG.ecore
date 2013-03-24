@@ -3,16 +3,15 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scg" nsURI="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg"
     nsPrefix="scg">
   <eClassifiers xsi:type="ecore:EClass" name="Instruction" eSuperTypes="../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Instruction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InstructionSet" eSuperTypes="../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//InstructionSet"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Label"/>
   <eClassifiers xsi:type="ecore:EClass" name="SCLExpression" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//SCLExpression"/>
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Conditional"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Label"/>
   <eClassifiers xsi:type="ecore:EClass" name="Goto" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Goto"/>
   <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel"/>
   <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Pause">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
         eType="#//Instruction" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="secondInstructions" eType="#//Instruction"
-        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

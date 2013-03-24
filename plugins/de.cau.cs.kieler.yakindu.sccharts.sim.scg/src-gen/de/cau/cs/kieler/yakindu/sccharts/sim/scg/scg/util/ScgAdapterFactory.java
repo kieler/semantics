@@ -84,6 +84,16 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
         return createInstructionAdapter();
       }
       @Override
+      public Adapter caseInstructionSet(InstructionSet object)
+      {
+        return createInstructionSetAdapter();
+      }
+      @Override
+      public Adapter caseLabel(Label object)
+      {
+        return createLabelAdapter();
+      }
+      @Override
       public Adapter caseSCLExpression(SCLExpression object)
       {
         return createSCLExpressionAdapter();
@@ -92,11 +102,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
       public Adapter caseConditional(Conditional object)
       {
         return createConditionalAdapter();
-      }
-      @Override
-      public Adapter caseLabel(Label object)
-      {
-        return createLabelAdapter();
       }
       @Override
       public Adapter caseGoto(Goto object)
@@ -119,6 +124,16 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
         return createScl_InstructionAdapter();
       }
       @Override
+      public Adapter caseScl_InstructionSet(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet object)
+      {
+        return createScl_InstructionSetAdapter();
+      }
+      @Override
+      public Adapter caseScl_Label(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label object)
+      {
+        return createScl_LabelAdapter();
+      }
+      @Override
       public Adapter caseStatement(Statement object)
       {
         return createStatementAdapter();
@@ -137,11 +152,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
       public Adapter caseScl_Conditional(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional object)
       {
         return createScl_ConditionalAdapter();
-      }
-      @Override
-      public Adapter caseScl_Label(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label object)
-      {
-        return createScl_LabelAdapter();
       }
       @Override
       public Adapter caseScl_Goto(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto object)
@@ -196,6 +206,36 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet <em>Instruction Set</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet
+   * @generated
+   */
+  public Adapter createInstructionSetAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label <em>Label</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label
+   * @generated
+   */
+  public Adapter createLabelAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.SCLExpression <em>SCL Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -221,21 +261,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createConditionalAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label <em>Label</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label
-   * @generated
-   */
-  public Adapter createLabelAdapter()
   {
     return null;
   }
@@ -301,6 +326,36 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet <em>Instruction Set</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
+   * @generated
+   */
+  public Adapter createScl_InstructionSetAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label <em>Label</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
+   * @generated
+   */
+  public Adapter createScl_LabelAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Statement <em>Statement</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -356,21 +411,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScl_ConditionalAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label <em>Label</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
-   * @generated
-   */
-  public Adapter createScl_LabelAdapter()
   {
     return null;
   }

@@ -18,7 +18,7 @@ import org.yakindu.sct.model.stext.stext.VariableDefinition;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getVariables <em>Variables</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getInstruction <em>Instruction</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getProgram <em>Program</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,29 +71,29 @@ public interface Program extends EObject
   EList<VariableDefinition> getVariables();
 
   /**
-   * Returns the value of the '<em><b>Instruction</b></em>' containment reference.
+   * Returns the value of the '<em><b>Program</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Instruction</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Program</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Instruction</em>' containment reference.
-   * @see #setInstruction(Instruction)
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getProgram_Instruction()
+   * @return the value of the '<em>Program</em>' containment reference.
+   * @see #setProgram(InstructionSet)
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getProgram_Program()
    * @model containment="true"
    * @generated
    */
-  Instruction getInstruction();
+  InstructionSet getProgram();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getInstruction <em>Instruction</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getProgram <em>Program</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Instruction</em>' containment reference.
-   * @see #getInstruction()
+   * @param value the new value of the '<em>Program</em>' containment reference.
+   * @see #getProgram()
    * @generated
    */
-  void setInstruction(Instruction value);
+  void setProgram(InstructionSet value);
 
 } // Program

@@ -37,6 +37,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
 
 class CoreToSCLTransformation {
  
@@ -50,45 +51,32 @@ class CoreToSCLTransformation {
        
         targetProgram.setName(rootStatechart.getName());
         
-        val Region mainRegion = rootStatechart.regions.get(0);
-        var instruction = transformCoreRegion(mainRegion);
-        
-        targetProgram.setInstruction(instruction);
+        val Region mainRegion = (rootStatechart.regions.get(0).vertices.get(0) as SyncState).regions.get(0);
+        targetProgram.program = transformCoreRegion(mainRegion);
+
+//        for (instruction : instructions.instructions) {
+//            targetProgram.program.instructions.add(instruction);
+//        }
      
         targetProgram;
     }
 
-    def Instruction addInstruction(Instruction instruction, Instruction next) {
-        var Instruction target;
-        if (instruction == null) {
-            target = next;
-        } else {
-            instruction.nextInstruction = next;
-            target = instruction.nextInstruction;
-        }
-        target;
-    }
-        
-    def Instruction transformCoreRegion(Region region) {
-//        val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState)));
-//        val initialState = states.filter(e | e.isInitial == true);
+    def InstructionSet transformCoreRegion(Region region) {
+        var InstructionSet iSet = SclFactory::eINSTANCE.createInstructionSet();
+        val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState)));
+//        val initialState = states.filter(e | e.isInitial == true).head() as SyncState;
 
-//        var regionStates = region.eAllContents().toIterable().filter(typeof(SyncState)).toList();
-        var regionStates = region.getVertices().filter(typeof(SyncState));
-
-        var Instruction instruction = null;
-        var Instruction rootInstruction = null;
-        for(state : regionStates) {
-            instruction = addInstruction(instruction, transformCoreState(state));
-            if (rootInstruction == null) { rootInstruction = instruction; }
+//        var stateInstructions = transformCoreState(initialState);
+        for (state : states) {
+            val stateInstructions = transformCoreState(state);
+            iSet.instructions.addAll(stateInstructions.instructions);
         }
         
-        rootInstruction;
+        iSet;
     }
     
-    def Instruction transformCoreState(SyncState state) {
-        var Instruction instruction = null;
-        var Instruction rootInstruction = null;  
+    def InstructionSet transformCoreState(SyncState state) {
+        var InstructionSet iSet = SclFactory::eINSTANCE.createInstructionSet();
         
         val originalOutgoingTransitionsRaw = ImmutableList::copyOf(state.outgoingTransitions);
         var List<SyncTransition> originalOutgoingTransitions = new ArrayList();
@@ -100,45 +88,57 @@ class CoreToSCLTransformation {
 
         var label = SclFactory::eINSTANCE.createLabel();
         label.setName('S' + state.hashCode.toString() + state.getName());
-        instruction = addInstruction(instruction, label);     
-        if (rootInstruction == null) { rootInstruction = instruction; }
+        iSet.instructions.add(label)
         
-        if (state.isComposite()) {
+/*         if (state.isComposite()) {
             
             if (state.getRegions().size<2) {
-                var regionInstruction =  transformCoreRegion(state.getRegions().get(0));
-                instruction = addInstruction(instruction, regionInstruction);     
-                if (rootInstruction == null) { rootInstruction = instruction; }
+                var regionInstructions =  transformCoreRegion(state.getRegions().get(0));
+                for (instruction : regionInstructions.instructions) {
+                    iSet.instructions.add(instruction);
+                }
             } else {
                 var parallel = SclFactory::eINSTANCE.createParallel();
                 for(stateRegion : state.getRegions()) {
-                    parallel.getThreads().add(transformCoreRegion(stateRegion));
+                    var regionInstructions = transformCoreRegion(stateRegion);
+                    var InstructionSet instSet = SclFactory::eINSTANCE.createInstructionSet();
+                    for (instruction : regionInstructions.instructions) {
+                        instSet.instructions.add(instruction);
+                    }
+                    parallel.getThreads().add(instSet);
                 }
-                instruction = addInstruction(instruction, parallel);     
-                if (rootInstruction == null) { rootInstruction = instruction; }
             }
             
-            for(transition : normalTerminationTransitions) {
-                var goto = SclFactory::eINSTANCE.createGoto();
-                goto.setName("a" + transition.getTarget().hashCode.toString());
+//            for(transition : normalTerminationTransitions) {
+//                var goto = SclFactory::eINSTANCE.createGoto();
+//                goto.setName("a" + transition.getTarget().hashCode.toString());
 //                (instruction as Goto).setName(transition.getTarget().getName());                
-                instruction = addInstruction(instruction, goto);     
-                if (rootInstruction == null) { rootInstruction = instruction; }
-            }
+//                instruction = addInstruction(instruction, goto);     
+//                if (rootInstruction == null) { rootInstruction = instruction; }
+//            }
              
         } else {
         
-            for(transition : outgoingWeakTransitions) {
-                var goto = SclFactory::eINSTANCE.createGoto();
-                goto.setName("b" + transition.getTarget().hashCode.toString());
-//                (instruction as Goto).setName(transition.getTarget().getName());
-                instruction = addInstruction(instruction, goto);     
-                if (rootInstruction == null) { rootInstruction = instruction; }
-            }
+            var pause = SclFactory::eINSTANCE.createPause();
+            pause.setPause("pause");
+            iSet.instructions.add(pause);
         
         }
        
-        rootInstruction;        
+        */
+        
+        var pause = SclFactory::eINSTANCE.createPause();
+        pause.setPause("pause");
+        iSet.instructions.add(pause);
+
+        for(transition : outgoingWeakTransitions) {
+            var goto = SclFactory::eINSTANCE.createGoto();
+            val targetState = transition.target as SyncState; 
+            goto.setName('S' + targetState.hashCode.toString() + targetState.getName());
+            iSet.instructions.add(goto);
+        }
+       
+        iSet;        
     }
  
  

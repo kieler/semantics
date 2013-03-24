@@ -89,6 +89,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createInstructionAdapter();
       }
       @Override
+      public Adapter caseInstructionSet(InstructionSet object)
+      {
+        return createInstructionSetAdapter();
+      }
+      @Override
+      public Adapter caseLabel(Label object)
+      {
+        return createLabelAdapter();
+      }
+      @Override
       public Adapter caseSCLExpression(SCLExpression object)
       {
         return createSCLExpressionAdapter();
@@ -97,11 +107,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
       public Adapter caseConditional(Conditional object)
       {
         return createConditionalAdapter();
-      }
-      @Override
-      public Adapter caseLabel(Label object)
-      {
-        return createLabelAdapter();
       }
       @Override
       public Adapter caseGoto(Goto object)
@@ -181,6 +186,36 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet <em>Instruction Set</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
+   * @generated
+   */
+  public Adapter createInstructionSetAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label <em>Label</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
+   * @generated
+   */
+  public Adapter createLabelAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression <em>SCL Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -206,21 +241,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createConditionalAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label <em>Label</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
-   * @generated
-   */
-  public Adapter createLabelAdapter()
   {
     return null;
   }

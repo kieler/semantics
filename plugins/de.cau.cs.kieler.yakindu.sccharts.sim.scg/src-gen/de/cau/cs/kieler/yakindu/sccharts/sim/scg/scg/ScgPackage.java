@@ -69,15 +69,6 @@ public interface ScgPackage extends EPackage
   int INSTRUCTION = 0;
 
   /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION__NEXT_INSTRUCTION = SclPackage.INSTRUCTION__NEXT_INSTRUCTION;
-
-  /**
    * The number of structural features of the '<em>Instruction</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -87,6 +78,62 @@ public interface ScgPackage extends EPackage
   int INSTRUCTION_FEATURE_COUNT = SclPackage.INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl <em>Instruction Set</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionSet()
+   * @generated
+   */
+  int INSTRUCTION_SET = 1;
+
+  /**
+   * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INSTRUCTION_SET__INSTRUCTIONS = SclPackage.INSTRUCTION_SET__INSTRUCTIONS;
+
+  /**
+   * The number of structural features of the '<em>Instruction Set</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INSTRUCTION_SET_FEATURE_COUNT = SclPackage.INSTRUCTION_SET_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl <em>Label</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getLabel()
+   * @generated
+   */
+  int LABEL = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LABEL__NAME = SclPackage.LABEL__NAME;
+
+  /**
+   * The number of structural features of the '<em>Label</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LABEL_FEATURE_COUNT = SclPackage.LABEL_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.SCLExpressionImpl <em>SCL Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -94,16 +141,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getSCLExpression()
    * @generated
    */
-  int SCL_EXPRESSION = 1;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCL_EXPRESSION__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
+  int SCL_EXPRESSION = 3;
 
   /**
    * The feature id for the '<em><b>Assignment</b></em>' attribute.
@@ -131,16 +169,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getConditional()
    * @generated
    */
-  int CONDITIONAL = 2;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITIONAL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
+  int CONDITIONAL = 4;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -152,13 +181,13 @@ public interface ScgPackage extends EPackage
   int CONDITIONAL__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Instructions</b></em>' containment reference.
+   * The feature id for the '<em><b>Conditional</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONDITIONAL__INSTRUCTIONS = INSTRUCTION_FEATURE_COUNT + 1;
+  int CONDITIONAL__CONDITIONAL = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Conditional</em>' class.
@@ -170,43 +199,6 @@ public interface ScgPackage extends EPackage
   int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl <em>Label</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getLabel()
-   * @generated
-   */
-  int LABEL = 3;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LABEL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LABEL__NAME = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Label</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LABEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.GotoImpl <em>Goto</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -214,16 +206,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getGoto()
    * @generated
    */
-  int GOTO = 4;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GOTO__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
+  int GOTO = 5;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -251,16 +234,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 5;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
+  int PARALLEL = 6;
 
   /**
    * The feature id for the '<em><b>Threads</b></em>' containment reference list.
@@ -288,16 +262,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 6;
-
-  /**
-   * The feature id for the '<em><b>Next Instruction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PAUSE__NEXT_INSTRUCTION = INSTRUCTION__NEXT_INSTRUCTION;
+  int PAUSE = 7;
 
   /**
    * The feature id for the '<em><b>Pause</b></em>' attribute.
@@ -327,22 +292,13 @@ public interface ScgPackage extends EPackage
   int PAUSE__DEPENDENCIES = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Second Instructions</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PAUSE__SECOND_INSTRUCTIONS = INSTRUCTION_FEATURE_COUNT + 3;
-
-  /**
    * The number of structural features of the '<em>Pause</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PAUSE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 4;
+  int PAUSE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
 
 
   /**
@@ -354,6 +310,26 @@ public interface ScgPackage extends EPackage
    * @generated
    */
   EClass getInstruction();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet <em>Instruction Set</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Instruction Set</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet
+   * @generated
+   */
+  EClass getInstructionSet();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label <em>Label</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Label</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label
+   * @generated
+   */
+  EClass getLabel();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.SCLExpression <em>SCL Expression</em>}'.
@@ -374,16 +350,6 @@ public interface ScgPackage extends EPackage
    * @generated
    */
   EClass getConditional();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label <em>Label</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Label</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label
-   * @generated
-   */
-  EClass getLabel();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Goto <em>Goto</em>}'.
@@ -438,17 +404,6 @@ public interface ScgPackage extends EPackage
   EReference getPause_Dependencies();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getSecondInstructions <em>Second Instructions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Second Instructions</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getSecondInstructions()
-   * @see #getPause()
-   * @generated
-   */
-  EReference getPause_SecondInstructions();
-
-  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -482,6 +437,26 @@ public interface ScgPackage extends EPackage
     EClass INSTRUCTION = eINSTANCE.getInstruction();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl <em>Instruction Set</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionSet()
+     * @generated
+     */
+    EClass INSTRUCTION_SET = eINSTANCE.getInstructionSet();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl <em>Label</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getLabel()
+     * @generated
+     */
+    EClass LABEL = eINSTANCE.getLabel();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.SCLExpressionImpl <em>SCL Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -500,16 +475,6 @@ public interface ScgPackage extends EPackage
      * @generated
      */
     EClass CONDITIONAL = eINSTANCE.getConditional();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl <em>Label</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getLabel()
-     * @generated
-     */
-    EClass LABEL = eINSTANCE.getLabel();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.GotoImpl <em>Goto</em>}' class.
@@ -556,14 +521,6 @@ public interface ScgPackage extends EPackage
      * @generated
      */
     EReference PAUSE__DEPENDENCIES = eINSTANCE.getPause_Dependencies();
-
-    /**
-     * The meta object literal for the '<em><b>Second Instructions</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PAUSE__SECOND_INSTRUCTIONS = eINSTANCE.getPause_SecondInstructions();
 
   }
 

@@ -5,6 +5,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause;
@@ -41,6 +42,20 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass instructionSetEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass labelEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass sclExpressionEClass = null;
 
   /**
@@ -49,13 +64,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
    * @generated
    */
   private EClass conditionalEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass labelEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -159,6 +167,26 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getInstructionSet()
+  {
+    return instructionSetEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLabel()
+  {
+    return labelEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getSCLExpression()
   {
     return sclExpressionEClass;
@@ -172,16 +200,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
   public EClass getConditional()
   {
     return conditionalEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getLabel()
-  {
-    return labelEClass;
   }
 
   /**
@@ -239,16 +257,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPause_SecondInstructions()
-  {
-    return (EReference)pauseEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public ScgFactory getScgFactory()
   {
     return (ScgFactory)getEFactoryInstance();
@@ -276,11 +284,13 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
     // Create classes and their features
     instructionEClass = createEClass(INSTRUCTION);
 
+    instructionSetEClass = createEClass(INSTRUCTION_SET);
+
+    labelEClass = createEClass(LABEL);
+
     sclExpressionEClass = createEClass(SCL_EXPRESSION);
 
     conditionalEClass = createEClass(CONDITIONAL);
-
-    labelEClass = createEClass(LABEL);
 
     gotoEClass = createEClass(GOTO);
 
@@ -289,7 +299,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
     pauseEClass = createEClass(PAUSE);
     createEAttribute(pauseEClass, PAUSE__PRIORITY);
     createEReference(pauseEClass, PAUSE__DEPENDENCIES);
-    createEReference(pauseEClass, PAUSE__SECOND_INSTRUCTIONS);
   }
 
   /**
@@ -325,12 +334,12 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
 
     // Add supertypes to classes
     instructionEClass.getESuperTypes().add(theSclPackage.getInstruction());
+    instructionSetEClass.getESuperTypes().add(theSclPackage.getInstructionSet());
+    labelEClass.getESuperTypes().add(theSclPackage.getLabel());
     sclExpressionEClass.getESuperTypes().add(this.getInstruction());
     sclExpressionEClass.getESuperTypes().add(theSclPackage.getSCLExpression());
     conditionalEClass.getESuperTypes().add(this.getInstruction());
     conditionalEClass.getESuperTypes().add(theSclPackage.getConditional());
-    labelEClass.getESuperTypes().add(this.getInstruction());
-    labelEClass.getESuperTypes().add(theSclPackage.getLabel());
     gotoEClass.getESuperTypes().add(this.getInstruction());
     gotoEClass.getESuperTypes().add(theSclPackage.getGoto());
     parallelEClass.getESuperTypes().add(this.getInstruction());
@@ -341,11 +350,13 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
     // Initialize classes and features; add operations and parameters
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(instructionSetEClass, InstructionSet.class, "InstructionSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
     initEClass(sclExpressionEClass, SCLExpression.class, "SCLExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -354,7 +365,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPause_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Pause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPause_Dependencies(), this.getInstruction(), null, "dependencies", null, 0, -1, Pause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPause_SecondInstructions(), this.getInstruction(), null, "secondInstructions", null, 0, 1, Pause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

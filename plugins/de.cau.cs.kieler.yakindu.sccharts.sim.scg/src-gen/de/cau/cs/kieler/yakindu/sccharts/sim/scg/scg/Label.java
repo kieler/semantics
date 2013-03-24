@@ -13,6 +13,6 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg;
  * @model
  * @generated
  */
-public interface Label extends Instruction, de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
+public interface Label extends de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
 {
 } // Label

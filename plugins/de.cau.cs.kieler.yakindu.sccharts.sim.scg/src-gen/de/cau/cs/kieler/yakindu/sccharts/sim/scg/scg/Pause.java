@@ -14,7 +14,6 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getDependencies <em>Dependencies</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getSecondInstructions <em>Second Instructions</em>}</li>
  * </ul>
  * </p>
  *
@@ -65,31 +64,5 @@ public interface Pause extends Instruction, de.cau.cs.kieler.yakindu.sccharts.si
    * @generated
    */
   EList<Instruction> getDependencies();
-
-  /**
-   * Returns the value of the '<em><b>Second Instructions</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Second Instructions</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Second Instructions</em>' containment reference.
-   * @see #setSecondInstructions(Instruction)
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage#getPause_SecondInstructions()
-   * @model containment="true"
-   * @generated
-   */
-  Instruction getSecondInstructions();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getSecondInstructions <em>Second Instructions</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Second Instructions</em>' containment reference.
-   * @see #getSecondInstructions()
-   * @generated
-   */
-  void setSecondInstructions(Instruction value);
 
 } // Pause

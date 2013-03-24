@@ -15,7 +15,7 @@ Program :
 	'module' name = ID
 	((variables+=Variable)*)?
 	'{'
-	   instruction = Instruction
+	   program = InstructionSet
 	'}'
 ;
 
@@ -29,37 +29,44 @@ SCLExpression returns stext::Expression:
 ;
 
 Instruction:
-    (Assignment | Conditional | Label | Goto | Parallel | Pause) (';' 
-    nextInstruction = Instruction
-    )? 
+    (Assignment | Conditional | Goto | Parallel | Pause | Label)';' 
 ;
 
-Assignment returns SCLExpression:
-    assignment=STRING
-;
-
-Conditional:
-    'if' expression = SCLExpression 'then'
-        instructions = Instruction
-    'end'
+InstructionSet:
+    (instructions += Instruction)+ 
 ;
 
 Label:
     'label:' name = ID
 ;
 
+Assignment returns SCLExpression:
+//    {Label}
+    assignment=STRING
+;
+
+Conditional:
+//    {Label}
+    'if' expression = SCLExpression 'then'
+        conditional = InstructionSet
+    'end'
+;
+
 Goto:
+//    {Label}
     'goto' name = ID 
 ;
 
 Parallel:
+//    {Label}
     'fork'
-    (    threads += Instruction
+    (    threads += InstructionSet
     ('par'
-         threads += Instruction)+)
+         threads += InstructionSet)+)
     'join'
 ;
 
 Pause:
+//    {Label}
     pause = 'pause'
 ;

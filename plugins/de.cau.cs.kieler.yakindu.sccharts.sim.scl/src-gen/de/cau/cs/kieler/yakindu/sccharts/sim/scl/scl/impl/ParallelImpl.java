@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
@@ -41,7 +41,7 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * @generated
    * @ordered
    */
-  protected EList<Instruction> threads;
+  protected EList<InstructionSet> threads;
 
   /**
    * <!-- begin-user-doc -->
@@ -69,11 +69,11 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Instruction> getThreads()
+  public EList<InstructionSet> getThreads()
   {
     if (threads == null)
     {
-      threads = new EObjectContainmentEList<Instruction>(Instruction.class, this, SclPackage.PARALLEL__THREADS);
+      threads = new EObjectContainmentEList<InstructionSet>(InstructionSet.class, this, SclPackage.PARALLEL__THREADS);
     }
     return threads;
   }
@@ -123,7 +123,7 @@ public class ParallelImpl extends InstructionImpl implements Parallel
     {
       case SclPackage.PARALLEL__THREADS:
         getThreads().clear();
-        getThreads().addAll((Collection<? extends Instruction>)newValue);
+        getThreads().addAll((Collection<? extends InstructionSet>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
