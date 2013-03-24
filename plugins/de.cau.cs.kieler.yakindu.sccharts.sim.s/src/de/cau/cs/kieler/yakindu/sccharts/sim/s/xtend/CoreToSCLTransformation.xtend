@@ -90,53 +90,43 @@ class CoreToSCLTransformation {
         label.setName('S' + state.hashCode.toString() + state.getName());
         iSet.instructions.add(label)
         
-/*         if (state.isComposite()) {
+         if (state.isComposite()) {
             
             if (state.getRegions().size<2) {
                 var regionInstructions =  transformCoreRegion(state.getRegions().get(0));
-                for (instruction : regionInstructions.instructions) {
-                    iSet.instructions.add(instruction);
-                }
+                iSet.instructions.addAll(regionInstructions.instructions);
             } else {
                 var parallel = SclFactory::eINSTANCE.createParallel();
                 for(stateRegion : state.getRegions()) {
                     var regionInstructions = transformCoreRegion(stateRegion);
-                    var InstructionSet instSet = SclFactory::eINSTANCE.createInstructionSet();
-                    for (instruction : regionInstructions.instructions) {
-                        instSet.instructions.add(instruction);
-                    }
-                    parallel.getThreads().add(instSet);
+                    parallel.getThreads().add(regionInstructions);
                 }
+                iSet.instructions.add(parallel);
             }
             
-//            for(transition : normalTerminationTransitions) {
-//                var goto = SclFactory::eINSTANCE.createGoto();
-//                goto.setName("a" + transition.getTarget().hashCode.toString());
-//                (instruction as Goto).setName(transition.getTarget().getName());                
-//                instruction = addInstruction(instruction, goto);     
-//                if (rootInstruction == null) { rootInstruction = instruction; }
-//            }
+            for(transition : normalTerminationTransitions) {
+              var goto = SclFactory::eINSTANCE.createGoto();
+              val targetState = transition.target as SyncState; 
+              goto.setName('N_S' + targetState.hashCode.toString() + targetState.getName());
+              iSet.instructions.add(goto);
+            }
              
         } else {
         
-            var pause = SclFactory::eINSTANCE.createPause();
-            pause.setPause("pause");
-            iSet.instructions.add(pause);
+          var pause = SclFactory::eINSTANCE.createPause();
+          pause.setPause("pause");
+          iSet.instructions.add(pause);
+
+          for(transition : outgoingWeakTransitions) {
+              var goto = SclFactory::eINSTANCE.createGoto();
+              val targetState = transition.target as SyncState; 
+              goto.setName('W_S' + targetState.hashCode.toString() + targetState.getName());
+              iSet.instructions.add(goto);
+          }
         
         }
        
-        */
         
-        var pause = SclFactory::eINSTANCE.createPause();
-        pause.setPause("pause");
-        iSet.instructions.add(pause);
-
-        for(transition : outgoingWeakTransitions) {
-            var goto = SclFactory::eINSTANCE.createGoto();
-            val targetState = transition.target as SyncState; 
-            goto.setName('S' + targetState.hashCode.toString() + targetState.getName());
-            iSet.instructions.add(goto);
-        }
        
         iSet;        
     }
