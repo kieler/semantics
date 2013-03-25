@@ -311,22 +311,13 @@ public interface SclPackage extends EPackage
   int PAUSE = 8;
 
   /**
-   * The feature id for the '<em><b>Pause</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PAUSE__PAUSE = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
    * The number of structural features of the '<em>Pause</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PAUSE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+  int PAUSE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.CommentImpl <em>Comment</em>}' class.
@@ -558,17 +549,6 @@ public interface SclPackage extends EPackage
   EClass getPause();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause#getPause <em>Pause</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Pause</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause#getPause()
-   * @see #getPause()
-   * @generated
-   */
-  EAttribute getPause_Pause();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment <em>Comment</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -781,14 +761,6 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EClass PAUSE = eINSTANCE.getPause();
-
-    /**
-     * The meta object literal for the '<em><b>Pause</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PAUSE__PAUSE = eINSTANCE.getPause_Pause();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.CommentImpl <em>Comment</em>}' class.

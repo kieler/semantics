@@ -177,8 +177,13 @@
       <type metamodel="/0/@metamodelDeclarations.7">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//Pause"/>
       </type>
-      <alternatives xsi:type="xtext:Assignment" feature="pause" operator="=">
-        <terminal xsi:type="xtext:Keyword" value="pause"/>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="pause"/>
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.7">
+            <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//Pause"/>
+          </type>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Comment">

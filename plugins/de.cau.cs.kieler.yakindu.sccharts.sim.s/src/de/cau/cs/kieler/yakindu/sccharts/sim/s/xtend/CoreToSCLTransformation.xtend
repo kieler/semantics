@@ -66,7 +66,7 @@ class CoreToSCLTransformation {
         val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState)));
 //        val initialState = states.filter(e | e.isInitial == true).head() as SyncState;
 
-        if (region.getName()!=null) {
+        if (region.getName() != null) {
             var comment = SclFactory::eINSTANCE.createComment();
             comment.setComment(region.getName());
             iSet.instructions.add(comment);
@@ -120,14 +120,30 @@ class CoreToSCLTransformation {
         } else {
         
           var pause = SclFactory::eINSTANCE.createPause();
-          pause.setPause("pause");
           iSet.instructions.add(pause);
 
           for(transition : outgoingWeakTransitions) {
               var goto = SclFactory::eINSTANCE.createGoto();
               val targetState = transition.target as SyncState; 
               goto.setName('W_S' + targetState.hashCode.toString() + targetState.getName());
-              iSet.instructions.add(goto);
+              
+              var reaction = StextFactory::eINSTANCE.createTransitionReaction();
+              var transRoot = StextFactory::eINSTANCE.createTransitionRoot();
+              var sExp = StextFactory::eINSTANCE.createExpression();
+              var transSpec = StextFactory::eINSTANCE.createTransitionSpecification();
+              
+              
+              val trigger = transition.getTrigger() as ReactionTrigger;
+              
+              var condition = SclFactory::eINSTANCE.createConditional();
+              var cSet = SclFactory::eINSTANCE.createInstructionSet();
+//              transition.
+              var exp = trigger.guardExpression;
+              cSet.instructions.add(goto);
+              condition.setExpression(exp);
+              condition.setConditional(cSet);              
+              
+              iSet.instructions.add(condition);
           }
         
         }

@@ -66,9 +66,10 @@ Parallel:
     'join'
 ;
 
+
 Pause:
 //    {Label}
-    pause = 'pause'
+    'pause' {Pause}
 ;
 
 Comment:

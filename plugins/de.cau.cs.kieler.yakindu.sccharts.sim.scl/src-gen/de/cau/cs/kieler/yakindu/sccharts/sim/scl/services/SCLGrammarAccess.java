@@ -381,21 +381,27 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class PauseElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Pause");
-		private final Assignment cPauseAssignment = (Assignment)rule.eContents().get(1);
-		private final Keyword cPausePauseKeyword_0 = (Keyword)cPauseAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cPauseKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Action cPauseAction_1 = (Action)cGroup.eContents().get(1);
 		
 		//Pause: //    {Label}
 		//
-		//	pause="pause";
+		//	"pause" {Pause};
 		public ParserRule getRule() { return rule; }
 
 		////    {Label}
 		//
-		//pause="pause"
-		public Assignment getPauseAssignment() { return cPauseAssignment; }
+		//"pause" {Pause}
+		public Group getGroup() { return cGroup; }
 
+		////    {Label}
+		//
 		//"pause"
-		public Keyword getPausePauseKeyword_0() { return cPausePauseKeyword_0; }
+		public Keyword getPauseKeyword_0() { return cPauseKeyword_0; }
+
+		//{Pause}
+		public Action getPauseAction_1() { return cPauseAction_1; }
 	}
 
 	public class CommentElements extends AbstractParserRuleElementFinder {
@@ -587,7 +593,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Pause: //    {Label}
 	//
-	//	pause="pause";
+	//	"pause" {Pause};
 	public PauseElements getPauseAccess() {
 		return (pPause != null) ? pPause : (pPause = new PauseElements());
 	}

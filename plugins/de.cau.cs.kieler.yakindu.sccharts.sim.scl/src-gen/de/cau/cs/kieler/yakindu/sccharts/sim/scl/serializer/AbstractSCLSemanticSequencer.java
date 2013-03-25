@@ -214,17 +214,10 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     pause='pause'
+	 *     {Pause}
 	 */
 	protected void sequence_Pause(EObject context, Pause semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.PAUSE__PAUSE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.PAUSE__PAUSE));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getPauseAccess().getPausePauseKeyword_0(), semanticObject.getPause());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

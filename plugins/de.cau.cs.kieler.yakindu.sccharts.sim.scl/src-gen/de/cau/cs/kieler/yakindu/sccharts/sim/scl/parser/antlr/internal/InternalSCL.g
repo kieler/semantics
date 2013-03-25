@@ -694,22 +694,20 @@ rulePause returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
-(
-		lv_pause_0_0=	'pause' 
+(	otherlv_0='pause' 
     {
-        newLeafNode(lv_pause_0_0, grammarAccess.getPauseAccess().getPausePauseKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getPauseAccess().getPauseKeyword_0());
     }
- 
-	    {
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getPauseRule());
-	        }
-       		setWithLastConsumed($current, "pause", lv_pause_0_0, "pause");
-	    }
-
-)
-)
+(
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getPauseAccess().getPauseAction_1(),
+            $current);
+    }
+))
 ;
 
 

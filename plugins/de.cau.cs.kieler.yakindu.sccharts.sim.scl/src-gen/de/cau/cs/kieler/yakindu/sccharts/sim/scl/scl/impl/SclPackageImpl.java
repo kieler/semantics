@@ -363,16 +363,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPause_Pause()
-  {
-    return (EAttribute)pauseEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getComment()
   {
     return commentEClass;
@@ -445,7 +435,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEReference(parallelEClass, PARALLEL__THREADS);
 
     pauseEClass = createEClass(PAUSE);
-    createEAttribute(pauseEClass, PAUSE__PAUSE);
 
     commentEClass = createEClass(COMMENT);
     createEAttribute(commentEClass, COMMENT__COMMENT);
@@ -519,7 +508,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEReference(getParallel_Threads(), this.getInstructionSet(), null, "threads", null, 0, -1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPause_Pause(), ecorePackage.getEString(), "pause", null, 0, 1, Pause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getComment_Comment(), ecorePackage.getEString(), "comment", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

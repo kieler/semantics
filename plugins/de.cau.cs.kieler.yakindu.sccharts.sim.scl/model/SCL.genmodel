@@ -34,9 +34,7 @@
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel/threads"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Pause">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Pause/pause"/>
-    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Pause"/>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Comment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Comment/comment"/>
     </genClasses>
