@@ -148,17 +148,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cParallelParserRuleCall_0_3 = (RuleCall)cAlternatives_0.eContents().get(3);
 		private final RuleCall cPauseParserRuleCall_0_4 = (RuleCall)cAlternatives_0.eContents().get(4);
 		private final RuleCall cLabelParserRuleCall_0_5 = (RuleCall)cAlternatives_0.eContents().get(5);
+		private final RuleCall cCommentParserRuleCall_0_6 = (RuleCall)cAlternatives_0.eContents().get(6);
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//Instruction:
 		//
-		//	(Assignment | Conditional | Goto | Parallel | Pause | Label) ";";
+		//	(Assignment | Conditional | Goto | Parallel | Pause | Label | Comment) ";";
 		public ParserRule getRule() { return rule; }
 
-		//(Assignment | Conditional | Goto | Parallel | Pause | Label) ";"
+		//(Assignment | Conditional | Goto | Parallel | Pause | Label | Comment) ";"
 		public Group getGroup() { return cGroup; }
 
-		//Assignment | Conditional | Goto | Parallel | Pause | Label
+		//Assignment | Conditional | Goto | Parallel | Pause | Label | Comment
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//Assignment
@@ -178,6 +179,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Label
 		public RuleCall getLabelParserRuleCall_0_5() { return cLabelParserRuleCall_0_5; }
+
+		//Comment
+		public RuleCall getCommentParserRuleCall_0_6() { return cCommentParserRuleCall_0_6; }
 
 		//";"
 		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
@@ -389,6 +393,31 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"pause"
 		public Keyword getPausePauseKeyword_0() { return cPausePauseKeyword_0; }
 	}
+
+	public class CommentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Comment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cSolidusSolidusKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cCommentAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cCommentSTRINGTerminalRuleCall_1_0 = (RuleCall)cCommentAssignment_1.eContents().get(0);
+		
+		//Comment:
+		//
+		//	"//" comment=STRING;
+		public ParserRule getRule() { return rule; }
+
+		//"//" comment=STRING
+		public Group getGroup() { return cGroup; }
+
+		//"//"
+		public Keyword getSolidusSolidusKeyword_0() { return cSolidusSolidusKeyword_0; }
+
+		//comment=STRING
+		public Assignment getCommentAssignment_1() { return cCommentAssignment_1; }
+
+		//STRING
+		public RuleCall getCommentSTRINGTerminalRuleCall_1_0() { return cCommentSTRINGTerminalRuleCall_1_0; }
+	}
 	
 	
 	private ProgramElements pProgram;
@@ -402,6 +431,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	private GotoElements pGoto;
 	private ParallelElements pParallel;
 	private PauseElements pPause;
+	private CommentElements pComment;
 	
 	private final Grammar grammar;
 
@@ -476,7 +506,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Instruction:
 	//
-	//	(Assignment | Conditional | Goto | Parallel | Pause | Label) ";";
+	//	(Assignment | Conditional | Goto | Parallel | Pause | Label | Comment) ";";
 	public InstructionElements getInstructionAccess() {
 		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
 	}
@@ -560,6 +590,17 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getPauseRule() {
 		return getPauseAccess().getRule();
+	}
+
+	//Comment:
+	//
+	//	"//" comment=STRING;
+	public CommentElements getCommentAccess() {
+		return (pComment != null) ? pComment : (pComment = new CommentElements());
+	}
+	
+	public ParserRule getCommentRule() {
+		return getCommentAccess().getRule();
 	}
 
 	//terminal ID:

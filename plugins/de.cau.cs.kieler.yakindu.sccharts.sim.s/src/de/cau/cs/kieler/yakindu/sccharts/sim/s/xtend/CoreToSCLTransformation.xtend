@@ -66,6 +66,12 @@ class CoreToSCLTransformation {
         val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState)));
 //        val initialState = states.filter(e | e.isInitial == true).head() as SyncState;
 
+        if (region.getName()!=null) {
+            var comment = SclFactory::eINSTANCE.createComment();
+            comment.setComment(region.getName());
+            iSet.instructions.add(comment);
+        }
+
 //        var stateInstructions = transformCoreState(initialState);
         for (state : states) {
             val stateInstructions = transformCoreState(state);

@@ -2,6 +2,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.serializer;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
@@ -34,6 +35,13 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case SclPackage.COMMENT:
+				if(context == grammarAccess.getCommentRule() ||
+				   context == grammarAccess.getInstructionRule()) {
+					sequence_Comment(context, (Comment) semanticObject); 
+					return; 
+				}
+				else break;
 			case SclPackage.CONDITIONAL:
 				if(context == grammarAccess.getConditionalRule() ||
 				   context == grammarAccess.getInstructionRule()) {
@@ -116,6 +124,22 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getAssignmentAccess().getAssignmentSTRINGTerminalRuleCall_0(), semanticObject.getAssignment());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     comment=STRING
+	 */
+	protected void sequence_Comment(EObject context, Comment semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.COMMENT__COMMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.COMMENT__COMMENT));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getCommentAccess().getCommentSTRINGTerminalRuleCall_1_0(), semanticObject.getComment());
 		feeder.finish();
 	}
 	

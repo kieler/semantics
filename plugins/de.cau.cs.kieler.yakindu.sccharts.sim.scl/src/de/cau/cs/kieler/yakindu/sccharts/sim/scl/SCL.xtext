@@ -29,7 +29,7 @@ SCLExpression returns stext::Expression:
 ;
 
 Instruction:
-    (Assignment | Conditional | Goto | Parallel | Pause | Label)';' 
+    (Assignment | Conditional | Goto | Parallel | Pause | Label | Comment)';' 
 ;
 
 InstructionSet:
@@ -69,4 +69,8 @@ Parallel:
 Pause:
 //    {Label}
     pause = 'pause'
+;
+
+Comment:
+    '//' comment = STRING
 ;

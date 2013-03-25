@@ -23,5 +23,32 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
 //		c.setLinewrap(0, 1, 2).before(getGrammarAccess().getSL_COMMENTRule());
 //		c.setLinewrap(0, 1, 2).before(getGrammarAccess().getML_COMMENTRule());
 //		c.setLinewrap(0, 1, 1).after(getGrammarAccess().getML_COMMENTRule());
+	    
+	    de.cau.cs.kieler.yakindu.sccharts.sim.scl.services.SCLGrammarAccess f = 
+	            (de.cau.cs.kieler.yakindu.sccharts.sim.scl.services.SCLGrammarAccess) getGrammarAccess();
+	        
+	    // Program
+//	    c.setLinewrap(1).after(f.getProgramAccess().getModuleKeyword_0());
+            c.setLinewrap(1).after(f.getProgramAccess().getNameAssignment_1());
+	    c.setLinewrap(1).after(f.getProgramAccess().getLeftCurlyBracketKeyword_3());
+            c.setLinewrap(1).after(f.getProgramAccess().getRightCurlyBracketKeyword_5());
+            c.setIndentation(f.getProgramAccess().getLeftCurlyBracketKeyword_3(), 
+                             f.getProgramAccess().getRightCurlyBracketKeyword_5());
+	    
+            // Instructions
+            c.setNoSpace().before(f.getInstructionAccess().getSemicolonKeyword_1());
+            c.setLinewrap(1).after(f.getInstructionAccess().getSemicolonKeyword_1());
+	    
+            // Parallel
+            c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());
+            c.setLinewrap(1).after(f.getParallelAccess().getParKeyword_1_1_0());
+            c.setLinewrap(1).after(f.getParallelAccess().getJoinKeyword_2());
+            c.setIndentation(f.getParallelAccess().getForkKeyword_0(), 
+                             f.getParallelAccess().getParKeyword_1_1_0());
+            c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
+                             f.getParallelAccess().getJoinKeyword_2());
+            
+            // Comment
+            c.setLinewrap(1).after(f.getCommentRule());
 	}
 }

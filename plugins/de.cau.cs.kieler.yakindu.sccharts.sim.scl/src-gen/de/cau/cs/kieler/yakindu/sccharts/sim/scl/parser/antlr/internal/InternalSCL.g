@@ -349,9 +349,22 @@ ruleInstruction returns [EObject current=null]
         $current = $this_Label_5.current; 
         afterParserOrEnumRuleCall();
     }
-)	otherlv_6=';' 
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getInstructionAccess().getCommentParserRuleCall_0_6()); 
+    }
+    this_Comment_6=ruleComment
+    { 
+        $current = $this_Comment_6.current; 
+        afterParserOrEnumRuleCall();
+    }
+)	otherlv_7=';' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getInstructionAccess().getSemicolonKeyword_1());
+    	newLeafNode(otherlv_7, grammarAccess.getInstructionAccess().getSemicolonKeyword_1());
     }
 )
 ;
@@ -692,6 +705,49 @@ rulePause returns [EObject current=null]
 
 )
 )
+;
+
+
+
+
+
+// Entry rule entryRuleComment
+entryRuleComment returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getCommentRule()); }
+	 iv_ruleComment=ruleComment 
+	 { $current=$iv_ruleComment.current; } 
+	 EOF 
+;
+
+// Rule Comment
+ruleComment returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='//' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getCommentAccess().getSolidusSolidusKeyword_0());
+    }
+(
+(
+		lv_comment_1_0=RULE_STRING
+		{
+			newLeafNode(lv_comment_1_0, grammarAccess.getCommentAccess().getCommentSTRINGTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getCommentRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"comment",
+        		lv_comment_1_0, 
+        		"STRING");
+	    }
+
+)
+))
 ;
 
 

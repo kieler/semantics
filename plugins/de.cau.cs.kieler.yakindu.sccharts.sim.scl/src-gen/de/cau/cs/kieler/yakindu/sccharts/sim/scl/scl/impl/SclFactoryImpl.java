@@ -73,6 +73,7 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
       case SclPackage.GOTO: return createGoto();
       case SclPackage.PARALLEL: return createParallel();
       case SclPackage.PAUSE: return createPause();
+      case SclPackage.COMMENT: return createComment();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -175,6 +176,17 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     PauseImpl pause = new PauseImpl();
     return pause;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Comment createComment()
+  {
+    CommentImpl comment = new CommentImpl();
+    return comment;
   }
 
   /**
