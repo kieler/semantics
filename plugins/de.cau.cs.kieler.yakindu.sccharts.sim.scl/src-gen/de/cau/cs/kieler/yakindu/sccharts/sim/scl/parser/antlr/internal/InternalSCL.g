@@ -349,22 +349,9 @@ ruleInstruction returns [EObject current=null]
         $current = $this_Label_5.current; 
         afterParserOrEnumRuleCall();
     }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getCommentParserRuleCall_0_6()); 
-    }
-    this_Comment_6=ruleComment
-    { 
-        $current = $this_Comment_6.current; 
-        afterParserOrEnumRuleCall();
-    }
-)	otherlv_7=';' 
+)	otherlv_6=';' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getInstructionAccess().getSemicolonKeyword_1());
+    	newLeafNode(otherlv_6, grammarAccess.getInstructionAccess().getSemicolonKeyword_1());
     }
 )
 ;
@@ -389,20 +376,38 @@ ruleInstructionSet returns [EObject current=null]
     @after { leaveRule(); }:
 (
 (
+(
 		{ 
-	        newCompositeNode(grammarAccess.getInstructionSetAccess().getInstructionsInstructionParserRuleCall_0()); 
+	        newCompositeNode(grammarAccess.getInstructionSetAccess().getInstructionsInstructionParserRuleCall_0_0()); 
 	    }
-		lv_instructions_0_0=ruleInstruction		{
+		lv_instructions_0_1=ruleInstruction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getInstructionSetRule());
 	        }
        		add(
        			$current, 
        			"instructions",
-        		lv_instructions_0_0, 
+        		lv_instructions_0_1, 
         		"Instruction");
 	        afterParserOrEnumRuleCall();
 	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getInstructionSetAccess().getInstructionsCommentParserRuleCall_0_1()); 
+	    }
+		lv_instructions_0_2=ruleComment		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getInstructionSetRule());
+	        }
+       		add(
+       			$current, 
+       			"instructions",
+        		lv_instructions_0_2, 
+        		"Comment");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 
 )
 )+

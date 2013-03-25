@@ -36,8 +36,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case SclPackage.COMMENT:
-				if(context == grammarAccess.getCommentRule() ||
-				   context == grammarAccess.getInstructionRule()) {
+				if(context == grammarAccess.getCommentRule()) {
 					sequence_Comment(context, (Comment) semanticObject); 
 					return; 
 				}
@@ -181,7 +180,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     instructions+=Instruction+
+	 *     (instructions+=Instruction | instructions+=Comment)+
 	 */
 	protected void sequence_InstructionSet(EObject context, InstructionSet semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -151,7 +151,6 @@ public class SclSwitch<T> extends Switch<T>
       {
         Comment comment = (Comment)theEObject;
         T result = caseComment(comment);
-        if (result == null) result = caseInstruction(comment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }

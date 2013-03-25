@@ -29,11 +29,11 @@ SCLExpression returns stext::Expression:
 ;
 
 Instruction:
-    (Assignment | Conditional | Goto | Parallel | Pause | Label | Comment)';' 
+    (Assignment | Conditional | Goto | Parallel | Pause | Label)';' 
 ;
 
 InstructionSet:
-    (instructions += Instruction)+ 
+    (instructions += (Instruction | Comment))+ 
 ;
 
 Label:

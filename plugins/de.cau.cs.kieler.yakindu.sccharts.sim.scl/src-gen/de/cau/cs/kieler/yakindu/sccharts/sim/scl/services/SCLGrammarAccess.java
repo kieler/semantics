@@ -148,18 +148,17 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cParallelParserRuleCall_0_3 = (RuleCall)cAlternatives_0.eContents().get(3);
 		private final RuleCall cPauseParserRuleCall_0_4 = (RuleCall)cAlternatives_0.eContents().get(4);
 		private final RuleCall cLabelParserRuleCall_0_5 = (RuleCall)cAlternatives_0.eContents().get(5);
-		private final RuleCall cCommentParserRuleCall_0_6 = (RuleCall)cAlternatives_0.eContents().get(6);
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//Instruction:
 		//
-		//	(Assignment | Conditional | Goto | Parallel | Pause | Label | Comment) ";";
+		//	(Assignment | Conditional | Goto | Parallel | Pause | Label) ";";
 		public ParserRule getRule() { return rule; }
 
-		//(Assignment | Conditional | Goto | Parallel | Pause | Label | Comment) ";"
+		//(Assignment | Conditional | Goto | Parallel | Pause | Label) ";"
 		public Group getGroup() { return cGroup; }
 
-		//Assignment | Conditional | Goto | Parallel | Pause | Label | Comment
+		//Assignment | Conditional | Goto | Parallel | Pause | Label
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//Assignment
@@ -180,9 +179,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//Label
 		public RuleCall getLabelParserRuleCall_0_5() { return cLabelParserRuleCall_0_5; }
 
-		//Comment
-		public RuleCall getCommentParserRuleCall_0_6() { return cCommentParserRuleCall_0_6; }
-
 		//";"
 		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
 	}
@@ -190,18 +186,26 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	public class InstructionSetElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionSet");
 		private final Assignment cInstructionsAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cInstructionsInstructionParserRuleCall_0 = (RuleCall)cInstructionsAssignment.eContents().get(0);
+		private final Alternatives cInstructionsAlternatives_0 = (Alternatives)cInstructionsAssignment.eContents().get(0);
+		private final RuleCall cInstructionsInstructionParserRuleCall_0_0 = (RuleCall)cInstructionsAlternatives_0.eContents().get(0);
+		private final RuleCall cInstructionsCommentParserRuleCall_0_1 = (RuleCall)cInstructionsAlternatives_0.eContents().get(1);
 		
 		//InstructionSet:
 		//
-		//	instructions+=Instruction+;
+		//	instructions+=(Instruction | Comment)+;
 		public ParserRule getRule() { return rule; }
 
-		//instructions+=Instruction+
+		//instructions+=(Instruction | Comment)+
 		public Assignment getInstructionsAssignment() { return cInstructionsAssignment; }
 
+		//Instruction | Comment
+		public Alternatives getInstructionsAlternatives_0() { return cInstructionsAlternatives_0; }
+
 		//Instruction
-		public RuleCall getInstructionsInstructionParserRuleCall_0() { return cInstructionsInstructionParserRuleCall_0; }
+		public RuleCall getInstructionsInstructionParserRuleCall_0_0() { return cInstructionsInstructionParserRuleCall_0_0; }
+
+		//Comment
+		public RuleCall getInstructionsCommentParserRuleCall_0_1() { return cInstructionsCommentParserRuleCall_0_1; }
 	}
 
 	public class LabelElements extends AbstractParserRuleElementFinder {
@@ -506,7 +510,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Instruction:
 	//
-	//	(Assignment | Conditional | Goto | Parallel | Pause | Label | Comment) ";";
+	//	(Assignment | Conditional | Goto | Parallel | Pause | Label) ";";
 	public InstructionElements getInstructionAccess() {
 		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
 	}
@@ -517,7 +521,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//InstructionSet:
 	//
-	//	instructions+=Instruction+;
+	//	instructions+=(Instruction | Comment)+;
 	public InstructionSetElements getInstructionSetAccess() {
 		return (pInstructionSet != null) ? pInstructionSet : (pInstructionSet = new InstructionSetElements());
 	}

@@ -345,7 +345,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__COMMENT = INSTRUCTION_FEATURE_COUNT + 0;
+  int COMMENT__COMMENT = 0;
 
   /**
    * The number of structural features of the '<em>Comment</em>' class.
@@ -354,7 +354,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+  int COMMENT_FEATURE_COUNT = 1;
 
 
   /**
