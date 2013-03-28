@@ -42,8 +42,13 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 
 class SCLHelper {
+    
+    // ======================================================================================================
+    // ==                       B A S I C   M E T A M O D E L   E X T E N S I O N                          ==
+    // ======================================================================================================
     
     def void Debug(String debugString) { System::out.println(debugString) }
  
@@ -60,14 +65,80 @@ class SCLHelper {
     def SCL() { SclFactory::eINSTANCE }
     
     
+    // ======================================================================================================
+    // ==                       C R E A T E   M E T A M O D E L   E X T E N S I O N                        ==
+    // ======================================================================================================
+    
+    def Goto createSCLGoto(String targetLabelName)
+    {
+        var goto = SCL.createGoto();
+        goto.setName(targetLabelName);
+        goto;
+    }
+    
     def Comment createSCLComment(String commentString) {
         var comment = SCL.createComment();
-        comment.setComment(commentString);
+        comment.setComment('// '+commentString);
         comment;
     }
     
+    def Label createSCLLabel(String labelName) {
+        var label = SCL.createLabel();
+        label.setName(labelName);
+        label;
+    }
+    
+    def Scope createSCLScope(String labelName) {
+        var scope = SCL.createScope();
+        if (!labelName.nullOrEmpty) {
+            var label = createSCLLabel(labelName);
+            scope.setLabel(label);
+        }
+        scope;
+    }
     
     
+    // ======================================================================================================
+    // ==                I N S T R U C T I O N    M E T A M O D E L   E X T E N S I O N                    ==
+    // ======================================================================================================
+    
+    def void addInstruction(InstructionSet iSet, Instruction instruction) {
+        iSet.instructions.add(instruction);
+    }
+    
+    def void addInstruction(Scope sSet, Instruction comment) {
+        sSet.instructions.add(comment);    
+    }
+
+    def void addInstruction(InstructionSet iSet, Comment instruction) {
+        iSet.instructions.add(instruction);
+    }
+    
+    def void addInstruction(Scope sSet, Comment comment) {
+        sSet.instructions.add(comment);    
+    }
+    
+    
+    // ======================================================================================================
+    // ==                       S C O P E   M E T A M O D E L   E X T E N S I O N                          ==
+    // ======================================================================================================
+    
+    def InstructionSet scopeToInstructionSet(Scope scope) {
+        var iSet = SCL.createInstructionSet();
+        val label = scope.getLabel();
+        if (label!=null) {
+            iSet.instructions.add(label.copy);
+        }
+        for(instruction : scope.instructions) {
+            iSet.instructions.add(instruction.copy);
+        }
+        iSet;
+    }
+    
+    
+    // ======================================================================================================
+    // ==                    ID  &  N A M I N G   M E T A M O D E L   E X T E N S I O N                    ==
+    // ======================================================================================================
     
     def void distributeStateIDs(Statechart statechart) {
         var states = statechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();

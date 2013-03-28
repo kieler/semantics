@@ -60,21 +60,19 @@ class CoreToSCLTransformation {
         targetProgram.setName(rootStatechart.getName());
         
         val Region mainRegion = (rootStatechart.regions.get(0).vertices.get(0) as SyncState).regions.get(0);
-//        targetProgram.program = SCL.createInstructionSet();
-        targetProgram.program = transformCoreRegion(mainRegion);
+        targetProgram.program = SCL.createInstructionSet();
+        targetProgram.program.instructions.addAll(transformCoreRegion(mainRegion).instructions);
 
         targetProgram;
     }
 
     def Scope transformCoreRegion(Region region) {
-        var iSet = SclFactory::eINSTANCE.createSimpleScope();
+        var iSet = SclFactory::eINSTANCE.createScope();
         val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState)));
 //        val initialState = states.filter(e | e.isInitial == true).head() as SyncState;
 
         if (region.getName() != null) {
-            var comment = SclFactory::eINSTANCE.createComment();
-            comment.setComment(region.getName());
-            iSet.instructions.add(comment);
+            iSet.instructions.add(createSCLComment(region.getName()));
         }
 
         for (state : states) {
@@ -89,7 +87,8 @@ class CoreToSCLTransformation {
     }
     
     def Scope transformCoreState(SyncState state) {
-        var iSet = SclFactory::eINSTANCE.createBlockScope();
+        var iSet = SclFactory::eINSTANCE.createScope();
+        val stateID = state.getHierarchicalName("");
         
         val originalOutgoingTransitionsRaw = ImmutableList::copyOf(state.outgoingTransitions);
         var List<SyncTransition> originalOutgoingTransitions = new ArrayList();
@@ -99,15 +98,13 @@ class CoreToSCLTransformation {
         val outgoingWeakTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::WEAKABORT));
         val normalTerminationTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION));
 
-        var label = SclFactory::eINSTANCE.createLabel();
-        label.setName('S' + state.hashCode.toString() + state.getName());
-//        iSet.instructions.add(label)
-        iSet.setLabel(label);
+        iSet.setLabel(createSCLLabel(stateID));
+        iSet.addInstruction(createSCLComment("-- Begin of state "+state.getName()+" --"));
         
-        var local = SCL.createLocalVariable();
-        local.setType('Integer');
-        local.setName('test');
-        iSet.variables.add(local);
+ //       var local = SCL.createLocalVariable();
+//        local.setType('Integer');
+//        local.setName('test');
+//        iSet.variables.add(local);
         
          if (state.isComposite()) {
             
@@ -118,7 +115,7 @@ class CoreToSCLTransformation {
                 var parallel = SclFactory::eINSTANCE.createParallel();
                 for(stateRegion : state.getRegions()) {
                     var regionInstructions = transformCoreRegion(stateRegion);
-                    parallel.getThreads().add(regionInstructions);
+                    parallel.getThreads().addAll(regionInstructions.scopeToInstructionSet);
                 }
                 iSet.instructions.add(parallel);
             }
@@ -132,36 +129,38 @@ class CoreToSCLTransformation {
              
         } else {
         
-          var pause = SclFactory::eINSTANCE.createPause();
-          iSet.instructions.add(pause);
+            var pause = SclFactory::eINSTANCE.createPause();
+            iSet.instructions.add(pause);
 
-          for(transition : outgoingWeakTransitions) {
-              var goto = SclFactory::eINSTANCE.createGoto();
-              val targetState = transition.target as SyncState; 
-              goto.setName('W_S' + targetState.hashCode.toString() + targetState.getName());
+            var boolean bDefaultTransition = false;
+            var Goto defaultTransition;
+            for(transition : outgoingWeakTransitions) {
+                var goto = SclFactory::eINSTANCE.createGoto();
+                val targetState = transition.target as SyncState; 
+                goto.setName(targetState.getHierarchicalName(""));
               
-              var reaction = StextFactory::eINSTANCE.createTransitionReaction();
-              var transRoot = StextFactory::eINSTANCE.createTransitionRoot();
-              var sExp = StextFactory::eINSTANCE.createExpression();
-              var transSpec = StextFactory::eINSTANCE.createTransitionSpecification();
-              
-              
-              val trigger = transition.getTrigger() as ReactionTrigger;
-              
-//              var condition = SclFactory::eINSTANCE.createConditional();
-              var cSet = SclFactory::eINSTANCE.createInstructionSet();
-//              transition.
-//              var exp = trigger.guardExpression;
-              cSet.instructions.add(goto);
-//              condition.setExpression(exp);
-//              condition.setConditional(cSet);              
-              
-              iSet.instructions.add(goto);
-          }
+                if (transition.getSpecification().nullOrEmpty) {
+                    defaultTransition = goto.copy;
+                    bDefaultTransition = true;                  
+                } else {
+                    var condition = SclFactory::eINSTANCE.createConditional();
+                    condition.setExpression("'" + transition.getSpecification() + "'");
+                    condition.conditional = goto;   
+                
+                    iSet.instructions.add(condition);
+                }
+                            
+            }
+            
+            if (bDefaultTransition) {
+                iSet.instructions.add(defaultTransition);
+            } else {
+                iSet.instructions.add(createSCLGoto(stateID));
+            }
         
         }
        
-        
+        iSet.addInstruction(createSCLComment("-- End of state "+state.getName()+" --"));
        
         iSet;        
     }

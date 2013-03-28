@@ -148,7 +148,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     comment=STRING
+	 *     comment=SL_COMMENT
 	 */
 	protected void sequence_Comment(EObject context, Comment semanticObject) {
 		if(errorAcceptor != null) {
@@ -157,7 +157,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getCommentAccess().getCommentSTRINGTerminalRuleCall_1_0(), semanticObject.getComment());
+		feeder.accept(grammarAccess.getCommentAccess().getCommentSL_COMMENTTerminalRuleCall_0(), semanticObject.getComment());
 		feeder.finish();
 	}
 	

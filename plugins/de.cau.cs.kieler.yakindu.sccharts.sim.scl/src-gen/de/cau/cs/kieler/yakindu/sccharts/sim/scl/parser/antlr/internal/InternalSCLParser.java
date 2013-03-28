@@ -22,10 +22,9 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'module'", "'{'", "'}'", "'input'", "'output'", "';'", "'local'", "'label:'", "'if'", "'then'", "'goto'", "'fork'", "'par'", "'join'", "'pause'", "'//'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_SL_COMMENT", "RULE_INT", "RULE_ML_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'module'", "'{'", "'}'", "'input'", "'output'", "';'", "'local'", "'label:'", "'if'", "'then'", "'goto'", "'fork'", "'par'", "'join'", "'pause'"
     };
     public static final int RULE_ID=4;
-    public static final int T__26=26;
     public static final int T__25=25;
     public static final int T__24=24;
     public static final int T__23=23;
@@ -33,9 +32,9 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final int RULE_ANY_OTHER=10;
     public static final int T__21=21;
     public static final int T__20=20;
-    public static final int RULE_SL_COMMENT=8;
+    public static final int RULE_SL_COMMENT=6;
     public static final int EOF=-1;
-    public static final int RULE_ML_COMMENT=7;
+    public static final int RULE_ML_COMMENT=8;
     public static final int T__19=19;
     public static final int RULE_STRING=5;
     public static final int T__16=16;
@@ -46,7 +45,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final int T__11=11;
     public static final int T__14=14;
     public static final int T__13=13;
-    public static final int RULE_INT=6;
+    public static final int RULE_INT=7;
     public static final int RULE_WS=9;
 
     // delegates
@@ -1090,7 +1089,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( (LA4_0==RULE_STRING||LA4_0==12||(LA4_0>=18 && LA4_0<=19)||(LA4_0>=21 && LA4_0<=22)||(LA4_0>=25 && LA4_0<=26)) ) {
+                if ( ((LA4_0>=RULE_STRING && LA4_0<=RULE_SL_COMMENT)||LA4_0==12||(LA4_0>=18 && LA4_0<=19)||(LA4_0>=21 && LA4_0<=22)||LA4_0==25) ) {
                     alt4=1;
                 }
 
@@ -1224,7 +1223,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             if ( (LA5_0==RULE_STRING||LA5_0==12||(LA5_0>=18 && LA5_0<=19)||(LA5_0>=21 && LA5_0<=22)||LA5_0==25) ) {
                 alt5=1;
             }
-            else if ( (LA5_0==26) ) {
+            else if ( (LA5_0==RULE_SL_COMMENT) ) {
                 alt5=2;
             }
             else {
@@ -1486,7 +1485,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==RULE_STRING||LA8_0==12||(LA8_0>=18 && LA8_0<=19)||(LA8_0>=21 && LA8_0<=22)||(LA8_0>=25 && LA8_0<=26)) ) {
+                if ( ((LA8_0>=RULE_STRING && LA8_0<=RULE_SL_COMMENT)||LA8_0==12||(LA8_0>=18 && LA8_0<=19)||(LA8_0>=21 && LA8_0<=22)||LA8_0==25) ) {
                     alt8=1;
                 }
 
@@ -2414,38 +2413,28 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleComment"
-    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:906:1: ruleComment returns [EObject current=null] : (otherlv_0= '//' ( (lv_comment_1_0= RULE_STRING ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:906:1: ruleComment returns [EObject current=null] : ( (lv_comment_0_0= RULE_SL_COMMENT ) ) ;
     public final EObject ruleComment() throws RecognitionException {
         EObject current = null;
 
-        Token otherlv_0=null;
-        Token lv_comment_1_0=null;
+        Token lv_comment_0_0=null;
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:909:28: ( (otherlv_0= '//' ( (lv_comment_1_0= RULE_STRING ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:910:1: (otherlv_0= '//' ( (lv_comment_1_0= RULE_STRING ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:909:28: ( ( (lv_comment_0_0= RULE_SL_COMMENT ) ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:910:1: ( (lv_comment_0_0= RULE_SL_COMMENT ) )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:910:1: (otherlv_0= '//' ( (lv_comment_1_0= RULE_STRING ) ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:910:3: otherlv_0= '//' ( (lv_comment_1_0= RULE_STRING ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:910:1: ( (lv_comment_0_0= RULE_SL_COMMENT ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:911:1: (lv_comment_0_0= RULE_SL_COMMENT )
             {
-            otherlv_0=(Token)match(input,26,FOLLOW_26_in_ruleComment2048); if (state.failed) return current;
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:911:1: (lv_comment_0_0= RULE_SL_COMMENT )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:912:3: lv_comment_0_0= RULE_SL_COMMENT
+            {
+            lv_comment_0_0=(Token)match(input,RULE_SL_COMMENT,FOLLOW_RULE_SL_COMMENT_in_ruleComment2052); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getCommentAccess().getSolidusSolidusKeyword_0());
-                  
-            }
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:914:1: ( (lv_comment_1_0= RULE_STRING ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:915:1: (lv_comment_1_0= RULE_STRING )
-            {
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:915:1: (lv_comment_1_0= RULE_STRING )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scl/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scl/parser/antlr/internal/InternalSCL.g:916:3: lv_comment_1_0= RULE_STRING
-            {
-            lv_comment_1_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleComment2065); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			newLeafNode(lv_comment_1_0, grammarAccess.getCommentAccess().getCommentSTRINGTerminalRuleCall_1_0()); 
+              			newLeafNode(lv_comment_0_0, grammarAccess.getCommentAccess().getCommentSL_COMMENTTerminalRuleCall_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -2456,13 +2445,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                      		setWithLastConsumed(
                      			current, 
                      			"comment",
-                      		lv_comment_1_0, 
-                      		"STRING");
+                      		lv_comment_0_0, 
+                      		"SL_COMMENT");
               	    
             }
-
-            }
-
 
             }
 
@@ -2557,7 +2543,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_11_in_ruleProgram128 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleProgram145 = new BitSet(new long[]{0x000000000000D000L});
     public static final BitSet FOLLOW_ruleVariable_in_ruleProgram171 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleProgram184 = new BitSet(new long[]{0x00000000066C1020L});
+    public static final BitSet FOLLOW_12_in_ruleProgram184 = new BitSet(new long[]{0x00000000026C1060L});
     public static final BitSet FOLLOW_ruleInstructionSet_in_ruleProgram205 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_13_in_ruleProgram217 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVariable_in_entryRuleVariable253 = new BitSet(new long[]{0x0000000000000000L});
@@ -2588,7 +2574,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_16_in_ruleInstruction901 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleInstructionSet_in_entryRuleInstructionSet937 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleInstructionSet947 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleInstructionOrComment_in_ruleInstructionSet992 = new BitSet(new long[]{0x00000000066C1022L});
+    public static final BitSet FOLLOW_ruleInstructionOrComment_in_ruleInstructionSet992 = new BitSet(new long[]{0x00000000026C1062L});
     public static final BitSet FOLLOW_ruleInstructionOrComment_in_entryRuleInstructionOrComment1028 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleInstructionOrComment1038 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleInstruction_in_ruleInstructionOrComment1088 = new BitSet(new long[]{0x0000000000000002L});
@@ -2596,9 +2582,9 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleScope_in_entryRuleScope1153 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleScope1163 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLabel_in_ruleScope1209 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleScope1222 = new BitSet(new long[]{0x00000000066E1020L});
-    public static final BitSet FOLLOW_ruleLocalVariable_in_ruleScope1243 = new BitSet(new long[]{0x00000000066E1020L});
-    public static final BitSet FOLLOW_ruleInstructionOrComment_in_ruleScope1265 = new BitSet(new long[]{0x00000000066C3020L});
+    public static final BitSet FOLLOW_12_in_ruleScope1222 = new BitSet(new long[]{0x00000000026E1060L});
+    public static final BitSet FOLLOW_ruleLocalVariable_in_ruleScope1243 = new BitSet(new long[]{0x00000000026E1060L});
+    public static final BitSet FOLLOW_ruleInstructionOrComment_in_ruleScope1265 = new BitSet(new long[]{0x00000000026C3060L});
     public static final BitSet FOLLOW_13_in_ruleScope1278 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLabel_in_entryRuleLabel1314 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLabel1324 = new BitSet(new long[]{0x0000000000000002L});
@@ -2619,9 +2605,9 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_RULE_ID_in_ruleGoto1711 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleParallel_in_entryRuleParallel1752 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleParallel1762 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_ruleParallel1799 = new BitSet(new long[]{0x00000000066C1020L});
+    public static final BitSet FOLLOW_22_in_ruleParallel1799 = new BitSet(new long[]{0x00000000026C1060L});
     public static final BitSet FOLLOW_ruleInstructionSet_in_ruleParallel1821 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ruleParallel1834 = new BitSet(new long[]{0x00000000066C1020L});
+    public static final BitSet FOLLOW_23_in_ruleParallel1834 = new BitSet(new long[]{0x00000000026C1060L});
     public static final BitSet FOLLOW_ruleInstructionSet_in_ruleParallel1855 = new BitSet(new long[]{0x0000000001800000L});
     public static final BitSet FOLLOW_24_in_ruleParallel1870 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePause_in_entryRulePause1906 = new BitSet(new long[]{0x0000000000000000L});
@@ -2629,7 +2615,6 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_25_in_rulePause1953 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleComment_in_entryRuleComment2001 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleComment2011 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_ruleComment2048 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleComment2065 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_SL_COMMENT_in_ruleComment2052 = new BitSet(new long[]{0x0000000000000002L});
 
 }

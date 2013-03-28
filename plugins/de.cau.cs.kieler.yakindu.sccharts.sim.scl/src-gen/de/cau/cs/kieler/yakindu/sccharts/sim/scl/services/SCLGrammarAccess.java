@@ -499,27 +499,19 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class CommentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Comment");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cSolidusSolidusKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cCommentAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cCommentSTRINGTerminalRuleCall_1_0 = (RuleCall)cCommentAssignment_1.eContents().get(0);
+		private final Assignment cCommentAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cCommentSL_COMMENTTerminalRuleCall_0 = (RuleCall)cCommentAssignment.eContents().get(0);
 		
 		//Comment:
 		//
-		//	"//" comment=STRING;
+		//	comment=SL_COMMENT;
 		public ParserRule getRule() { return rule; }
 
-		//"//" comment=STRING
-		public Group getGroup() { return cGroup; }
+		//comment=SL_COMMENT
+		public Assignment getCommentAssignment() { return cCommentAssignment; }
 
-		//"//"
-		public Keyword getSolidusSolidusKeyword_0() { return cSolidusSolidusKeyword_0; }
-
-		//comment=STRING
-		public Assignment getCommentAssignment_1() { return cCommentAssignment_1; }
-
-		//STRING
-		public RuleCall getCommentSTRINGTerminalRuleCall_1_0() { return cCommentSTRINGTerminalRuleCall_1_0; }
+		//SL_COMMENT
+		public RuleCall getCommentSL_COMMENTTerminalRuleCall_0() { return cCommentSL_COMMENTTerminalRuleCall_0; }
 	}
 	
 	
@@ -739,7 +731,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Comment:
 	//
-	//	"//" comment=STRING;
+	//	comment=SL_COMMENT;
 	public CommentElements getCommentAccess() {
 		return (pComment != null) ? pComment : (pComment = new CommentElements());
 	}

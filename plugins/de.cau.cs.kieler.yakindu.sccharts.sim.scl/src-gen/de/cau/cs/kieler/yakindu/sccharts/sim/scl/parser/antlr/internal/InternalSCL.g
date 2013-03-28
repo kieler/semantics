@@ -907,15 +907,11 @@ ruleComment returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='//' 
-    {
-    	newLeafNode(otherlv_0, grammarAccess.getCommentAccess().getSolidusSolidusKeyword_0());
-    }
 (
 (
-		lv_comment_1_0=RULE_STRING
+		lv_comment_0_0=RULE_SL_COMMENT
 		{
-			newLeafNode(lv_comment_1_0, grammarAccess.getCommentAccess().getCommentSTRINGTerminalRuleCall_1_0()); 
+			newLeafNode(lv_comment_0_0, grammarAccess.getCommentAccess().getCommentSL_COMMENTTerminalRuleCall_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -924,12 +920,12 @@ ruleComment returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"comment",
-        		lv_comment_1_0, 
-        		"STRING");
+        		lv_comment_0_0, 
+        		"SL_COMMENT");
 	    }
 
 )
-))
+)
 ;
 
 

@@ -222,11 +222,8 @@
       <type metamodel="/0/@metamodelDeclarations.7">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//Comment"/>
       </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="//"/>
-        <elements xsi:type="xtext:Assignment" feature="comment" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
-        </elements>
+      <alternatives xsi:type="xtext:Assignment" feature="comment" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
       </alternatives>
     </rules>
   </xtext:Grammar>
