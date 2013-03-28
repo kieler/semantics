@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 
-import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,30 +23,30 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public interface Conditional extends Instruction
 {
   /**
-   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expression</em>' containment reference.
-   * @see #setExpression(Expression)
+   * @return the value of the '<em>Expression</em>' attribute.
+   * @see #setExpression(String)
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getConditional_Expression()
-   * @model containment="true"
+   * @model
    * @generated
    */
-  Expression getExpression();
+  String getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getExpression <em>Expression</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getExpression <em>Expression</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @param value the new value of the '<em>Expression</em>' attribute.
    * @see #getExpression()
    * @generated
    */
-  void setExpression(Expression value);
+  void setExpression(String value);
 
   /**
    * Returns the value of the '<em><b>Conditional</b></em>' containment reference.
@@ -58,12 +57,12 @@ public interface Conditional extends Instruction
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Conditional</em>' containment reference.
-   * @see #setConditional(InstructionSet)
+   * @see #setConditional(Instruction)
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getConditional_Conditional()
    * @model containment="true"
    * @generated
    */
-  InstructionSet getConditional();
+  Instruction getConditional();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getConditional <em>Conditional</em>}' containment reference.
@@ -73,6 +72,6 @@ public interface Conditional extends Instruction
    * @see #getConditional()
    * @generated
    */
-  void setConditional(InstructionSet value);
+  void setConditional(Instruction value);
 
 } // Conditional

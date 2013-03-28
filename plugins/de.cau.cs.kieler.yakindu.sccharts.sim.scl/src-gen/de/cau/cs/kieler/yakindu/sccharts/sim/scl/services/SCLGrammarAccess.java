@@ -117,25 +117,60 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 
-	public class SCLExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SCLExpression");
+	public class LocalVariableElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalVariable");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cSCLExpressionAction_0 = (Action)cGroup.eContents().get(0);
-		private final RuleCall cSTRINGTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final Keyword cLocalKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTypeSTRINGTerminalRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameSTRINGTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
-		//SCLExpression returns stext::Expression:
+		////LocalVariable returns stext::VariableDefinition:
 		//
-		//	{SCLExpression} STRING;
+		////    ('local') type=[types::Type] (name=STRING)';'
+		//
+		////;
+		//
+		//LocalVariable:
+		//
+		//	"local" type=STRING name=STRING ";";
 		public ParserRule getRule() { return rule; }
 
-		//{SCLExpression} STRING
+		//"local" type=STRING name=STRING ";"
 		public Group getGroup() { return cGroup; }
 
-		//{SCLExpression}
-		public Action getSCLExpressionAction_0() { return cSCLExpressionAction_0; }
+		//"local"
+		public Keyword getLocalKeyword_0() { return cLocalKeyword_0; }
+
+		//type=STRING
+		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 
 		//STRING
-		public RuleCall getSTRINGTerminalRuleCall_1() { return cSTRINGTerminalRuleCall_1; }
+		public RuleCall getTypeSTRINGTerminalRuleCall_1_0() { return cTypeSTRINGTerminalRuleCall_1_0; }
+
+		//name=STRING
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+
+		//STRING
+		public RuleCall getNameSTRINGTerminalRuleCall_2_0() { return cNameSTRINGTerminalRuleCall_2_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
+	}
+
+	public class SCLExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SCLExpression");
+		private final RuleCall cSTRINGTerminalRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//SCLExpression:
+		//
+		//	STRING;
+		public ParserRule getRule() { return rule; }
+
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall() { return cSTRINGTerminalRuleCall; }
 	}
 
 	public class InstructionElements extends AbstractParserRuleElementFinder {
@@ -148,17 +183,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cParallelParserRuleCall_0_3 = (RuleCall)cAlternatives_0.eContents().get(3);
 		private final RuleCall cPauseParserRuleCall_0_4 = (RuleCall)cAlternatives_0.eContents().get(4);
 		private final RuleCall cLabelParserRuleCall_0_5 = (RuleCall)cAlternatives_0.eContents().get(5);
+		private final RuleCall cScopeParserRuleCall_0_6 = (RuleCall)cAlternatives_0.eContents().get(6);
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//Instruction:
 		//
-		//	(Assignment | Conditional | Goto | Parallel | Pause | Label) ";";
+		//	(Assignment | Conditional | Goto | Parallel | Pause | Label | Scope) ";";
 		public ParserRule getRule() { return rule; }
 
-		//(Assignment | Conditional | Goto | Parallel | Pause | Label) ";"
+		//(Assignment | Conditional | Goto | Parallel | Pause | Label | Scope) ";"
 		public Group getGroup() { return cGroup; }
 
-		//Assignment | Conditional | Goto | Parallel | Pause | Label
+		//Assignment | Conditional | Goto | Parallel | Pause | Label | Scope
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//Assignment
@@ -179,6 +215,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//Label
 		public RuleCall getLabelParserRuleCall_0_5() { return cLabelParserRuleCall_0_5; }
 
+		//Scope
+		public RuleCall getScopeParserRuleCall_0_6() { return cScopeParserRuleCall_0_6; }
+
 		//";"
 		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
 	}
@@ -186,26 +225,84 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	public class InstructionSetElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionSet");
 		private final Assignment cInstructionsAssignment = (Assignment)rule.eContents().get(1);
-		private final Alternatives cInstructionsAlternatives_0 = (Alternatives)cInstructionsAssignment.eContents().get(0);
-		private final RuleCall cInstructionsInstructionParserRuleCall_0_0 = (RuleCall)cInstructionsAlternatives_0.eContents().get(0);
-		private final RuleCall cInstructionsCommentParserRuleCall_0_1 = (RuleCall)cInstructionsAlternatives_0.eContents().get(1);
+		private final RuleCall cInstructionsInstructionOrCommentParserRuleCall_0 = (RuleCall)cInstructionsAssignment.eContents().get(0);
 		
 		//InstructionSet:
 		//
-		//	instructions+=(Instruction | Comment)+;
+		//	instructions+=InstructionOrComment+;
 		public ParserRule getRule() { return rule; }
 
-		//instructions+=(Instruction | Comment)+
+		//instructions+=InstructionOrComment+
 		public Assignment getInstructionsAssignment() { return cInstructionsAssignment; }
 
+		//InstructionOrComment
+		public RuleCall getInstructionsInstructionOrCommentParserRuleCall_0() { return cInstructionsInstructionOrCommentParserRuleCall_0; }
+	}
+
+	public class InstructionOrCommentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionOrComment");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cInstructionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cCommentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//InstructionOrComment:
+		//
+		//	Instruction | Comment;
+		public ParserRule getRule() { return rule; }
+
 		//Instruction | Comment
-		public Alternatives getInstructionsAlternatives_0() { return cInstructionsAlternatives_0; }
+		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Instruction
-		public RuleCall getInstructionsInstructionParserRuleCall_0_0() { return cInstructionsInstructionParserRuleCall_0_0; }
+		public RuleCall getInstructionParserRuleCall_0() { return cInstructionParserRuleCall_0; }
 
 		//Comment
-		public RuleCall getInstructionsCommentParserRuleCall_0_1() { return cInstructionsCommentParserRuleCall_0_1; }
+		public RuleCall getCommentParserRuleCall_1() { return cCommentParserRuleCall_1; }
+	}
+
+	public class ScopeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scope");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cLabelAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cLabelLabelParserRuleCall_0_0 = (RuleCall)cLabelAssignment_0.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cVariablesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cVariablesLocalVariableParserRuleCall_2_0 = (RuleCall)cVariablesAssignment_2.eContents().get(0);
+		private final Assignment cInstructionsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cInstructionsInstructionOrCommentParserRuleCall_3_0 = (RuleCall)cInstructionsAssignment_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//Scope:
+		//
+		//	label=Label? "{" variables+=LocalVariable* instructions+=InstructionOrComment+ "}";
+		public ParserRule getRule() { return rule; }
+
+		//label=Label? "{" variables+=LocalVariable* instructions+=InstructionOrComment+ "}"
+		public Group getGroup() { return cGroup; }
+
+		//label=Label?
+		public Assignment getLabelAssignment_0() { return cLabelAssignment_0; }
+
+		//Label
+		public RuleCall getLabelLabelParserRuleCall_0_0() { return cLabelLabelParserRuleCall_0_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+
+		//variables+=LocalVariable*
+		public Assignment getVariablesAssignment_2() { return cVariablesAssignment_2; }
+
+		//LocalVariable
+		public RuleCall getVariablesLocalVariableParserRuleCall_2_0() { return cVariablesLocalVariableParserRuleCall_2_0; }
+
+		//instructions+=InstructionOrComment+
+		public Assignment getInstructionsAssignment_3() { return cInstructionsAssignment_3; }
+
+		//InstructionOrComment
+		public RuleCall getInstructionsInstructionOrCommentParserRuleCall_3_0() { return cInstructionsInstructionOrCommentParserRuleCall_3_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
 	}
 
 	public class LabelElements extends AbstractParserRuleElementFinder {
@@ -260,17 +357,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExpressionSCLExpressionParserRuleCall_1_0 = (RuleCall)cExpressionAssignment_1.eContents().get(0);
 		private final Keyword cThenKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cConditionalAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cConditionalInstructionSetParserRuleCall_3_0 = (RuleCall)cConditionalAssignment_3.eContents().get(0);
-		private final Keyword cEndKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final RuleCall cConditionalInstructionParserRuleCall_3_0 = (RuleCall)cConditionalAssignment_3.eContents().get(0);
 		
 		//Conditional: //    {Label}
 		//
-		//	"if" expression=SCLExpression "then" conditional=InstructionSet "end";
+		//	"if" expression=SCLExpression "then" conditional=Instruction;
 		public ParserRule getRule() { return rule; }
 
 		////    {Label}
 		//
-		//"if" expression=SCLExpression "then" conditional=InstructionSet "end"
+		//"if" expression=SCLExpression "then" conditional=Instruction
 		public Group getGroup() { return cGroup; }
 
 		////    {Label}
@@ -287,14 +383,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"then"
 		public Keyword getThenKeyword_2() { return cThenKeyword_2; }
 
-		//conditional=InstructionSet
+		//conditional=Instruction
 		public Assignment getConditionalAssignment_3() { return cConditionalAssignment_3; }
 
-		//InstructionSet
-		public RuleCall getConditionalInstructionSetParserRuleCall_3_0() { return cConditionalInstructionSetParserRuleCall_3_0; }
-
-		//"end"
-		public Keyword getEndKeyword_4() { return cEndKeyword_4; }
+		//Instruction
+		public RuleCall getConditionalInstructionParserRuleCall_3_0() { return cConditionalInstructionParserRuleCall_3_0; }
 	}
 
 	public class GotoElements extends AbstractParserRuleElementFinder {
@@ -432,9 +525,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private ProgramElements pProgram;
 	private VariableElements pVariable;
+	private LocalVariableElements pLocalVariable;
 	private SCLExpressionElements pSCLExpression;
 	private InstructionElements pInstruction;
 	private InstructionSetElements pInstructionSet;
+	private InstructionOrCommentElements pInstructionOrComment;
+	private ScopeElements pScope;
 	private LabelElements pLabel;
 	private AssignmentElements pAssignment;
 	private ConditionalElements pConditional;
@@ -503,9 +599,26 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableAccess().getRule();
 	}
 
-	//SCLExpression returns stext::Expression:
+	////LocalVariable returns stext::VariableDefinition:
 	//
-	//	{SCLExpression} STRING;
+	////    ('local') type=[types::Type] (name=STRING)';'
+	//
+	////;
+	//
+	//LocalVariable:
+	//
+	//	"local" type=STRING name=STRING ";";
+	public LocalVariableElements getLocalVariableAccess() {
+		return (pLocalVariable != null) ? pLocalVariable : (pLocalVariable = new LocalVariableElements());
+	}
+	
+	public ParserRule getLocalVariableRule() {
+		return getLocalVariableAccess().getRule();
+	}
+
+	//SCLExpression:
+	//
+	//	STRING;
 	public SCLExpressionElements getSCLExpressionAccess() {
 		return (pSCLExpression != null) ? pSCLExpression : (pSCLExpression = new SCLExpressionElements());
 	}
@@ -516,7 +629,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Instruction:
 	//
-	//	(Assignment | Conditional | Goto | Parallel | Pause | Label) ";";
+	//	(Assignment | Conditional | Goto | Parallel | Pause | Label | Scope) ";";
 	public InstructionElements getInstructionAccess() {
 		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
 	}
@@ -527,13 +640,35 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//InstructionSet:
 	//
-	//	instructions+=(Instruction | Comment)+;
+	//	instructions+=InstructionOrComment+;
 	public InstructionSetElements getInstructionSetAccess() {
 		return (pInstructionSet != null) ? pInstructionSet : (pInstructionSet = new InstructionSetElements());
 	}
 	
 	public ParserRule getInstructionSetRule() {
 		return getInstructionSetAccess().getRule();
+	}
+
+	//InstructionOrComment:
+	//
+	//	Instruction | Comment;
+	public InstructionOrCommentElements getInstructionOrCommentAccess() {
+		return (pInstructionOrComment != null) ? pInstructionOrComment : (pInstructionOrComment = new InstructionOrCommentElements());
+	}
+	
+	public ParserRule getInstructionOrCommentRule() {
+		return getInstructionOrCommentAccess().getRule();
+	}
+
+	//Scope:
+	//
+	//	label=Label? "{" variables+=LocalVariable* instructions+=InstructionOrComment+ "}";
+	public ScopeElements getScopeAccess() {
+		return (pScope != null) ? pScope : (pScope = new ScopeElements());
+	}
+	
+	public ParserRule getScopeRule() {
+		return getScopeAccess().getRule();
 	}
 
 	//Label:
@@ -560,7 +695,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Conditional: //    {Label}
 	//
-	//	"if" expression=SCLExpression "then" conditional=InstructionSet "end";
+	//	"if" expression=SCLExpression "then" conditional=Instruction;
 	public ConditionalElements getConditionalAccess() {
 		return (pConditional != null) ? pConditional : (pConditional = new ConditionalElements());
 	}

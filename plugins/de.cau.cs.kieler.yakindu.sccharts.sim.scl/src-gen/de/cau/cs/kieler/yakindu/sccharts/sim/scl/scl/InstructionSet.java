@@ -26,7 +26,7 @@ public interface InstructionSet extends EObject
 {
   /**
    * Returns the value of the '<em><b>Instructions</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrComment}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Instructions</em>' containment reference list isn't clear,
@@ -38,6 +38,6 @@ public interface InstructionSet extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<EObject> getInstructions();
+  EList<InstructionOrComment> getInstructions();
 
 } // InstructionSet

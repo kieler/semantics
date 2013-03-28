@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Comment extends EObject
+public interface Comment extends InstructionOrComment
 {
   /**
    * Returns the value of the '<em><b>Comment</b></em>' attribute.

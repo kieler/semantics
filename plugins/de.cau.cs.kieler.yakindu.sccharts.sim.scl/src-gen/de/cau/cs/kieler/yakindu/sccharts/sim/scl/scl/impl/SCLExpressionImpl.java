@@ -11,8 +11,6 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.yakindu.sct.model.stext.stext.impl.ExpressionImpl;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>SCL Expression</b></em>'.
@@ -26,7 +24,7 @@ import org.yakindu.sct.model.stext.stext.impl.ExpressionImpl;
  *
  * @generated
  */
-public class SCLExpressionImpl extends ExpressionImpl implements SCLExpression
+public class SCLExpressionImpl extends InstructionImpl implements SCLExpression
 {
   /**
    * The default value of the '{@link #getAssignment() <em>Assignment</em>}' attribute.

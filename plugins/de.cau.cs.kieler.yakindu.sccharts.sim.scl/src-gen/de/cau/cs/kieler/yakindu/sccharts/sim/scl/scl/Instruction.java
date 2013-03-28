@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +13,6 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Instruction extends EObject
+public interface Instruction extends InstructionOrComment
 {
 } // Instruction

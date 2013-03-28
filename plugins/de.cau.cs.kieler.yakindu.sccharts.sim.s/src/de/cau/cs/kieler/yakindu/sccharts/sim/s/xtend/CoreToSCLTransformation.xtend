@@ -9,6 +9,8 @@ import java.util.List
 import java.util.Collection
 import java.util.ArrayList
 import org.eclipse.emf.common.util.EList;
+import com.google.inject.Guice
+
 
 import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType
 import org.yakindu.sct.model.sgraph.Statechart
@@ -38,8 +40,12 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 
 class CoreToSCLTransformation {
+    
+     extension de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCLHelper SCLHelper = 
+         Guice::createInjector().getInstance(typeof(SCLHelper))
  
     //-------------------------------------------------------------------------
     //--          C O R E   TO   S C L -  T R A N S F O R M A T I O N        --
@@ -49,20 +55,19 @@ class CoreToSCLTransformation {
     def Program transformCoreToSCL(Statechart rootStatechart) {
         var targetProgram = SclFactory::eINSTANCE.createProgram();
        
+       //rootStatechart.distributeStateIDs();
+       
         targetProgram.setName(rootStatechart.getName());
         
         val Region mainRegion = (rootStatechart.regions.get(0).vertices.get(0) as SyncState).regions.get(0);
+//        targetProgram.program = SCL.createInstructionSet();
         targetProgram.program = transformCoreRegion(mainRegion);
 
-//        for (instruction : instructions.instructions) {
-//            targetProgram.program.instructions.add(instruction);
-//        }
-     
         targetProgram;
     }
 
-    def InstructionSet transformCoreRegion(Region region) {
-        var InstructionSet iSet = SclFactory::eINSTANCE.createInstructionSet();
+    def Scope transformCoreRegion(Region region) {
+        var iSet = SclFactory::eINSTANCE.createSimpleScope();
         val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState)));
 //        val initialState = states.filter(e | e.isInitial == true).head() as SyncState;
 
@@ -72,17 +77,19 @@ class CoreToSCLTransformation {
             iSet.instructions.add(comment);
         }
 
-//        var stateInstructions = transformCoreState(initialState);
         for (state : states) {
+            Debug(state.getHierarchicalName(""));
             val stateInstructions = transformCoreState(state);
+            var stateLabel = stateInstructions.getLabel();
+            if (stateLabel!=null) { iSet.instructions.add(stateLabel); }
             iSet.instructions.addAll(stateInstructions.instructions);
         }
         
         iSet;
     }
     
-    def InstructionSet transformCoreState(SyncState state) {
-        var InstructionSet iSet = SclFactory::eINSTANCE.createInstructionSet();
+    def Scope transformCoreState(SyncState state) {
+        var iSet = SclFactory::eINSTANCE.createBlockScope();
         
         val originalOutgoingTransitionsRaw = ImmutableList::copyOf(state.outgoingTransitions);
         var List<SyncTransition> originalOutgoingTransitions = new ArrayList();
@@ -94,7 +101,13 @@ class CoreToSCLTransformation {
 
         var label = SclFactory::eINSTANCE.createLabel();
         label.setName('S' + state.hashCode.toString() + state.getName());
-        iSet.instructions.add(label)
+//        iSet.instructions.add(label)
+        iSet.setLabel(label);
+        
+        var local = SCL.createLocalVariable();
+        local.setType('Integer');
+        local.setName('test');
+        iSet.variables.add(local);
         
          if (state.isComposite()) {
             
@@ -135,15 +148,15 @@ class CoreToSCLTransformation {
               
               val trigger = transition.getTrigger() as ReactionTrigger;
               
-              var condition = SclFactory::eINSTANCE.createConditional();
+//              var condition = SclFactory::eINSTANCE.createConditional();
               var cSet = SclFactory::eINSTANCE.createInstructionSet();
 //              transition.
-              var exp = trigger.guardExpression;
+//              var exp = trigger.guardExpression;
               cSet.instructions.add(goto);
-              condition.setExpression(exp);
-              condition.setConditional(cSet);              
+//              condition.setExpression(exp);
+//              condition.setConditional(cSet);              
               
-              iSet.instructions.add(condition);
+              iSet.instructions.add(goto);
           }
         
         }

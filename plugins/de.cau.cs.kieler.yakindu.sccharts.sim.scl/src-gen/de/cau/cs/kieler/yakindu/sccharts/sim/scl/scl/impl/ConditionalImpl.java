@@ -3,7 +3,7 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -13,8 +13,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,14 +31,24 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public class ConditionalImpl extends InstructionImpl implements Conditional
 {
   /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+   * The default value of the '{@link #getExpression() <em>Expression</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Expression expression;
+  protected static final String EXPRESSION_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExpression()
+   * @generated
+   * @ordered
+   */
+  protected String expression = EXPRESSION_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getConditional() <em>Conditional</em>}' containment reference.
@@ -50,7 +58,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * @generated
    * @ordered
    */
-  protected InstructionSet conditional;
+  protected Instruction conditional;
 
   /**
    * <!-- begin-user-doc -->
@@ -78,7 +86,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpression()
+  public String getExpression()
   {
     return expression;
   }
@@ -88,16 +96,12 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
+  public void setExpression(String newExpression)
   {
-    Expression oldExpression = expression;
+    String oldExpression = expression;
     expression = newExpression;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.CONDITIONAL__EXPRESSION, oldExpression, newExpression);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.CONDITIONAL__EXPRESSION, oldExpression, expression));
   }
 
   /**
@@ -105,28 +109,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpression(Expression newExpression)
-  {
-    if (newExpression != expression)
-    {
-      NotificationChain msgs = null;
-      if (expression != null)
-        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.CONDITIONAL__EXPRESSION, null, msgs);
-      if (newExpression != null)
-        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.CONDITIONAL__EXPRESSION, null, msgs);
-      msgs = basicSetExpression(newExpression, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.CONDITIONAL__EXPRESSION, newExpression, newExpression));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionSet getConditional()
+  public Instruction getConditional()
   {
     return conditional;
   }
@@ -136,9 +119,9 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetConditional(InstructionSet newConditional, NotificationChain msgs)
+  public NotificationChain basicSetConditional(Instruction newConditional, NotificationChain msgs)
   {
-    InstructionSet oldConditional = conditional;
+    Instruction oldConditional = conditional;
     conditional = newConditional;
     if (eNotificationRequired())
     {
@@ -153,7 +136,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setConditional(InstructionSet newConditional)
+  public void setConditional(Instruction newConditional)
   {
     if (newConditional != conditional)
     {
@@ -179,8 +162,6 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
   {
     switch (featureID)
     {
-      case SclPackage.CONDITIONAL__EXPRESSION:
-        return basicSetExpression(null, msgs);
       case SclPackage.CONDITIONAL__CONDITIONAL:
         return basicSetConditional(null, msgs);
     }
@@ -216,10 +197,10 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     switch (featureID)
     {
       case SclPackage.CONDITIONAL__EXPRESSION:
-        setExpression((Expression)newValue);
+        setExpression((String)newValue);
         return;
       case SclPackage.CONDITIONAL__CONDITIONAL:
-        setConditional((InstructionSet)newValue);
+        setConditional((Instruction)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -236,10 +217,10 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     switch (featureID)
     {
       case SclPackage.CONDITIONAL__EXPRESSION:
-        setExpression((Expression)null);
+        setExpression(EXPRESSION_EDEFAULT);
         return;
       case SclPackage.CONDITIONAL__CONDITIONAL:
-        setConditional((InstructionSet)null);
+        setConditional((Instruction)null);
         return;
     }
     super.eUnset(featureID);
@@ -256,11 +237,28 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     switch (featureID)
     {
       case SclPackage.CONDITIONAL__EXPRESSION:
-        return expression != null;
+        return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
       case SclPackage.CONDITIONAL__CONDITIONAL:
         return conditional != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (expression: ");
+    result.append(expression);
+    result.append(')');
+    return result.toString();
   }
 
 } //ConditionalImpl

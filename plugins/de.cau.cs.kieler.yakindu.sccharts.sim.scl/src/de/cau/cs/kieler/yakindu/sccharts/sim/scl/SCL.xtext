@@ -15,25 +15,42 @@ Program :
 	'module' name = ID
 	((variables+=Variable)*)?
 	'{'
-	   program = InstructionSet
-	'}'
+        program = InstructionSet
+    '}' 
 ;
 
 Variable returns stext::VariableDefinition:
     ('input'|'output') type=[types::Type] (name=STRING)';'
 ;
 
-SCLExpression returns stext::Expression:
-    {SCLExpression}
-    STRING
+//LocalVariable returns stext::VariableDefinition:
+//    ('local') type=[types::Type] (name=STRING)';'
+//;
+
+LocalVariable:
+    'local' type=STRING name=STRING';'
 ;
 
+SCLExpression:STRING;
+
 Instruction:
-    (Assignment | Conditional | Goto | Parallel | Pause | Label)';' 
+    (Assignment | Conditional | Goto | Parallel | Pause | Label | Scope)';' 
 ;
 
 InstructionSet:
-    (instructions += (Instruction | Comment))+ 
+    (instructions += InstructionOrComment)+ 
+;
+
+InstructionOrComment:
+    Instruction | Comment
+;
+
+Scope:
+    (label = Label)?
+    '{'
+        (variables+=LocalVariable)*
+        (instructions += InstructionOrComment)+
+    '}'
 ;
 
 Label:
@@ -48,8 +65,7 @@ Assignment returns SCLExpression:
 Conditional:
 //    {Label}
     'if' expression = SCLExpression 'then'
-        conditional = InstructionSet
-    'end'
+        conditional = Instruction 
 ;
 
 Goto:

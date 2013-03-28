@@ -11,10 +11,6 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.yakindu.sct.model.sgraph.Statement;
-
-import org.yakindu.sct.model.stext.stext.Expression;
-
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
@@ -84,6 +80,11 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createProgramAdapter();
       }
       @Override
+      public Adapter caseLocalVariable(LocalVariable object)
+      {
+        return createLocalVariableAdapter();
+      }
+      @Override
       public Adapter caseInstruction(Instruction object)
       {
         return createInstructionAdapter();
@@ -92,6 +93,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
       public Adapter caseInstructionSet(InstructionSet object)
       {
         return createInstructionSetAdapter();
+      }
+      @Override
+      public Adapter caseInstructionOrComment(InstructionOrComment object)
+      {
+        return createInstructionOrCommentAdapter();
+      }
+      @Override
+      public Adapter caseScope(Scope object)
+      {
+        return createScopeAdapter();
       }
       @Override
       public Adapter caseLabel(Label object)
@@ -127,16 +138,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
       public Adapter caseComment(Comment object)
       {
         return createCommentAdapter();
-      }
-      @Override
-      public Adapter caseStatement(Statement object)
-      {
-        return createStatementAdapter();
-      }
-      @Override
-      public Adapter caseExpression(Expression object)
-      {
-        return createExpressionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -176,6 +177,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable <em>Local Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable
+   * @generated
+   */
+  public Adapter createLocalVariableAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction <em>Instruction</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -201,6 +217,36 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createInstructionSetAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrComment <em>Instruction Or Comment</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrComment
+   * @generated
+   */
+  public Adapter createInstructionOrCommentAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope <em>Scope</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
+   * @generated
+   */
+  public Adapter createScopeAdapter()
   {
     return null;
   }
@@ -306,36 +352,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createCommentAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Statement <em>Statement</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Statement
-   * @generated
-   */
-  public Adapter createStatementAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.Expression <em>Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.stext.stext.Expression
-   * @generated
-   */
-  public Adapter createExpressionAdapter()
   {
     return null;
   }

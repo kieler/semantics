@@ -6,14 +6,17 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrComment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclFactory;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -44,6 +47,13 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass localVariableEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass instructionEClass = null;
 
   /**
@@ -52,6 +62,20 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * @generated
    */
   private EClass instructionSetEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass instructionOrCommentEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass scopeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -213,6 +237,36 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getLocalVariable()
+  {
+    return localVariableEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLocalVariable_Type()
+  {
+    return (EAttribute)localVariableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLocalVariable_Name()
+  {
+    return (EAttribute)localVariableEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getInstruction()
   {
     return instructionEClass;
@@ -236,6 +290,56 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
   public EReference getInstructionSet_Instructions()
   {
     return (EReference)instructionSetEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getInstructionOrComment()
+  {
+    return instructionOrCommentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getScope()
+  {
+    return scopeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getScope_Label()
+  {
+    return (EReference)scopeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getScope_Variables()
+  {
+    return (EReference)scopeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getScope_Instructions()
+  {
+    return (EReference)scopeEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -293,9 +397,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConditional_Expression()
+  public EAttribute getConditional_Expression()
   {
-    return (EReference)conditionalEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)conditionalEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -413,10 +517,21 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEReference(programEClass, PROGRAM__VARIABLES);
     createEReference(programEClass, PROGRAM__PROGRAM);
 
+    localVariableEClass = createEClass(LOCAL_VARIABLE);
+    createEAttribute(localVariableEClass, LOCAL_VARIABLE__TYPE);
+    createEAttribute(localVariableEClass, LOCAL_VARIABLE__NAME);
+
     instructionEClass = createEClass(INSTRUCTION);
 
     instructionSetEClass = createEClass(INSTRUCTION_SET);
     createEReference(instructionSetEClass, INSTRUCTION_SET__INSTRUCTIONS);
+
+    instructionOrCommentEClass = createEClass(INSTRUCTION_OR_COMMENT);
+
+    scopeEClass = createEClass(SCOPE);
+    createEReference(scopeEClass, SCOPE__LABEL);
+    createEReference(scopeEClass, SCOPE__VARIABLES);
+    createEReference(scopeEClass, SCOPE__INSTRUCTIONS);
 
     labelEClass = createEClass(LABEL);
     createEAttribute(labelEClass, LABEL__NAME);
@@ -425,7 +540,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEAttribute(sclExpressionEClass, SCL_EXPRESSION__ASSIGNMENT);
 
     conditionalEClass = createEClass(CONDITIONAL);
-    createEReference(conditionalEClass, CONDITIONAL__EXPRESSION);
+    createEAttribute(conditionalEClass, CONDITIONAL__EXPRESSION);
     createEReference(conditionalEClass, CONDITIONAL__CONDITIONAL);
 
     gotoEClass = createEClass(GOTO);
@@ -472,13 +587,15 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    instructionEClass.getESuperTypes().add(this.getInstructionOrComment());
+    scopeEClass.getESuperTypes().add(this.getInstruction());
     labelEClass.getESuperTypes().add(this.getInstruction());
-    sclExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
     sclExpressionEClass.getESuperTypes().add(this.getInstruction());
     conditionalEClass.getESuperTypes().add(this.getInstruction());
     gotoEClass.getESuperTypes().add(this.getInstruction());
     parallelEClass.getESuperTypes().add(this.getInstruction());
     pauseEClass.getESuperTypes().add(this.getInstruction());
+    commentEClass.getESuperTypes().add(this.getInstructionOrComment());
 
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -486,10 +603,21 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEReference(getProgram_Variables(), theStextPackage.getVariableDefinition(), null, "variables", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProgram_Program(), this.getInstructionSet(), null, "program", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(localVariableEClass, LocalVariable.class, "LocalVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLocalVariable_Type(), ecorePackage.getEString(), "type", null, 0, 1, LocalVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getLocalVariable_Name(), ecorePackage.getEString(), "name", null, 0, 1, LocalVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(instructionSetEClass, InstructionSet.class, "InstructionSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInstructionSet_Instructions(), ecorePackage.getEObject(), null, "instructions", null, 0, -1, InstructionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInstructionSet_Instructions(), this.getInstructionOrComment(), null, "instructions", null, 0, -1, InstructionSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(instructionOrCommentEClass, InstructionOrComment.class, "InstructionOrComment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(scopeEClass, Scope.class, "Scope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getScope_Label(), this.getLabel(), null, "label", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScope_Variables(), this.getLocalVariable(), null, "variables", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScope_Instructions(), this.getInstructionOrComment(), null, "instructions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLabel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -498,8 +626,8 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEAttribute(getSCLExpression_Assignment(), ecorePackage.getEString(), "assignment", null, 0, 1, SCLExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getConditional_Expression(), theStextPackage.getExpression(), null, "expression", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConditional_Conditional(), this.getInstructionSet(), null, "conditional", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConditional_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConditional_Conditional(), this.getInstruction(), null, "conditional", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGoto_Name(), ecorePackage.getEString(), "name", null, 0, 1, Goto.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

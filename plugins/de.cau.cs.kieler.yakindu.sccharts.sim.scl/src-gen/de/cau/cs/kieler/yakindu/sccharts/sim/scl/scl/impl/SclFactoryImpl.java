@@ -65,8 +65,11 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
     switch (eClass.getClassifierID())
     {
       case SclPackage.PROGRAM: return createProgram();
+      case SclPackage.LOCAL_VARIABLE: return createLocalVariable();
       case SclPackage.INSTRUCTION: return createInstruction();
       case SclPackage.INSTRUCTION_SET: return createInstructionSet();
+      case SclPackage.INSTRUCTION_OR_COMMENT: return createInstructionOrComment();
+      case SclPackage.SCOPE: return createScope();
       case SclPackage.LABEL: return createLabel();
       case SclPackage.SCL_EXPRESSION: return createSCLExpression();
       case SclPackage.CONDITIONAL: return createConditional();
@@ -95,6 +98,17 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public LocalVariable createLocalVariable()
+  {
+    LocalVariableImpl localVariable = new LocalVariableImpl();
+    return localVariable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Instruction createInstruction()
   {
     InstructionImpl instruction = new InstructionImpl();
@@ -110,6 +124,28 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     InstructionSetImpl instructionSet = new InstructionSetImpl();
     return instructionSet;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InstructionOrComment createInstructionOrComment()
+  {
+    InstructionOrCommentImpl instructionOrComment = new InstructionOrCommentImpl();
+    return instructionOrComment;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Scope createScope()
+  {
+    ScopeImpl scope = new ScopeImpl();
+    return scope;
   }
 
   /**

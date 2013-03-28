@@ -32,6 +32,15 @@ public interface SclFactory extends EFactory
   Program createProgram();
 
   /**
+   * Returns a new object of class '<em>Local Variable</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Local Variable</em>'.
+   * @generated
+   */
+  LocalVariable createLocalVariable();
+
+  /**
    * Returns a new object of class '<em>Instruction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -48,6 +57,24 @@ public interface SclFactory extends EFactory
    * @generated
    */
   InstructionSet createInstructionSet();
+
+  /**
+   * Returns a new object of class '<em>Instruction Or Comment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instruction Or Comment</em>'.
+   * @generated
+   */
+  InstructionOrComment createInstructionOrComment();
+
+  /**
+   * Returns a new object of class '<em>Scope</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scope</em>'.
+   * @generated
+   */
+  Scope createScope();
 
   /**
    * Returns a new object of class '<em>Label</em>'.

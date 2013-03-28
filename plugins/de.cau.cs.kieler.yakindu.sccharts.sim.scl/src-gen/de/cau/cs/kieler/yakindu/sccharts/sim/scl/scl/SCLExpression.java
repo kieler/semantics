@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 
-import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,7 +19,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * @model
  * @generated
  */
-public interface SCLExpression extends Expression, Instruction
+public interface SCLExpression extends Instruction
 {
   /**
    * Returns the value of the '<em><b>Assignment</b></em>' attribute.

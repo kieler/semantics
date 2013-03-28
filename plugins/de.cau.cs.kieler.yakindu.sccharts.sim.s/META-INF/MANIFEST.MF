@@ -12,13 +12,15 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.yakindu.sgraph;bundle-version="0.1.0",
  com.google.guava,
  org.eclipse.emf.ecore.xmi,
- de.cau.cs.kieler.yakindu.sccharts.sim.scl;bundle-version="0.1.0"
+ de.cau.cs.kieler.yakindu.sccharts.sim.scl;bundle-version="0.1.0",
+ com.google.inject
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: de.cau.cs.kieler.core,
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.model.handlers,
  de.cau.cs.kieler.synccharts.diagram.part,
+ de.cau.cs.kieler.yakindu.model.stext.synctext,
  de.cau.cs.kieler.yakindu.sccharts.model.stext,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.formatting,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.generator,
