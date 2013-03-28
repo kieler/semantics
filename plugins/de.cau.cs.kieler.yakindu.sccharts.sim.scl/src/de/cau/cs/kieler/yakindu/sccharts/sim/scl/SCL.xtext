@@ -38,7 +38,7 @@ Instruction:
 ;
 
 InstructionSet:
-    (instructions += InstructionOrComment)+ 
+    instructions += InstructionOrComment(';' instructions += InstructionOrComment)* 
 ;
 
 InstructionOrComment:
@@ -49,7 +49,7 @@ Scope:
     (label = Label)?
     '{'
         (variables+=LocalVariable)*
-        (instructions += InstructionOrComment)+ 
+        instructions += InstructionOrComment(';' instructions += InstructionOrComment)* 
     '}'
 ;
 
@@ -65,7 +65,8 @@ Assignment returns SCLExpression:
 Conditional:
 //    {Label}
     'if' expression = SCLExpression 'then'
-        conditional = Instruction 
+        conditional = InstructionSet
+    'end' 
 ;
 
 Goto:
