@@ -7,12 +7,12 @@ Bundle-Activator: de.cau.cs.kieler.yakindu.sccharts.sim.s.SCChartsSimSPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtend.util.stdlib;bundle-version="1.2.0",
- org.eclipse.xtend2.lib;bundle-version="2.3.1",
+ org.eclipse.xtend2.lib,
  org.yakindu.sct.model.sgraph;bundle-version="2.0.0",
- de.cau.cs.kieler.yakindu.sgraph;bundle-version="0.1.0",
+ de.cau.cs.kieler.yakindu.model.sgraph,
  com.google.guava,
  org.eclipse.emf.ecore.xmi,
- de.cau.cs.kieler.yakindu.sccharts.sim.scl;bundle-version="0.1.0",
+ de.cau.cs.kieler.yakindu.sccharts.sim.scl,
  com.google.inject
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
