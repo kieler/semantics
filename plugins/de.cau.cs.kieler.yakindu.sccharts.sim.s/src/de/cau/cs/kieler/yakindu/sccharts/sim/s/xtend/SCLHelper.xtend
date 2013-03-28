@@ -43,6 +43,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
 
 class SCLHelper {
     
@@ -97,6 +98,9 @@ class SCLHelper {
         scope;
     }
     
+    def Pause createSCLPause() {
+        SCL.createPause();
+    }
     
     // ======================================================================================================
     // ==                I N S T R U C T I O N    M E T A M O D E L   E X T E N S I O N                    ==
@@ -116,6 +120,14 @@ class SCLHelper {
     
     def void addInstruction(Scope sSet, Comment comment) {
         sSet.instructions.add(comment);    
+    }
+    
+    def void addPause(InstructionSet iSet) {
+        iSet.addInstruction(createSCLPause())
+    }
+    
+    def void addPause(Scope sSet) {
+        sSet.addInstruction(createSCLPause())
     }
     
     
