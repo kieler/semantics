@@ -219,11 +219,18 @@ class CoreToSCLTransformation {
     
     def InstructionSet optimizeLabel(InstructionSet iSet) {
         var newISet = createSCLInstructionSet();
-
+        
+        val oldSet = ImmutableList::copyOf(iSet.instructions);
         val gotos = ImmutableList::copyOf(iSet.eAllContents().toIterable().filter(typeof(Goto)));
         
+        newISet.instructions.addAll(oldSet.filter(e | 
+          (!(e instanceof Label)) || 
+          (gotos.exists(f | f.getName()==(e as Label).getName()))  
+        ));
+        
 
-        for(Integer i: 0..(iSet.instructions.size - 1)) {
+/*      OLD VERSION - DEPRECIATED        
+         for(Integer i: 0..(iSet.instructions.size - 1)) {
             var boolean skip = false
             val instruction = iSet.instructions.get(i);
             
@@ -233,7 +240,7 @@ class CoreToSCLTransformation {
             
             if (!skip) { newISet.addInstruction(instruction.copy); }
             
-        }
+        }*/
         
         newISet;
     }
