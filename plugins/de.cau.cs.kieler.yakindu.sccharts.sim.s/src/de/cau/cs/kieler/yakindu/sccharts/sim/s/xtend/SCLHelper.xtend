@@ -155,6 +155,11 @@ class SCLHelper {
         sSet.scope = iSet    
     }
     
+    def void addInstruction(InstructionSet iSet, InstructionOrCommentSequence ioc) {
+        if (ioc instanceof Instruction) { iSet.addInstruction(ioc as Instruction) }
+          else { iSet.addInstruction(ioc as Comment) }
+    }
+    
     def void addInstruction(Scope sSet, InstructionOrCommentSequence ioc) {
         if (ioc instanceof Instruction) { sSet.addInstruction(ioc as Instruction) }
           else { sSet.addInstruction(ioc as Comment) }

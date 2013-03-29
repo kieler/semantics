@@ -60,10 +60,13 @@ class CoreToSCLTransformation {
         targetProgram.setName(rootStatechart.getName());
         
         val Region mainRegion = (rootStatechart.regions.get(0).vertices.get(0) as SyncState).regions.get(0);
-        targetProgram.program = SCL.createInstructionSet();
-        targetProgram.program.instructions.addAll(transformCoreRegion(mainRegion).scope.instructions);
+        var program = SCL.createInstructionSet();
+        program.instructions.addAll(transformCoreRegion(mainRegion).scope.instructions);
+        
+        
+        targetProgram.program = program//.optimizeGoto;//.optimizeLabel;
 
-        targetProgram;
+        targetProgram
     }
 
     def Scope transformCoreRegion(Region region) {
@@ -84,7 +87,8 @@ class CoreToSCLTransformation {
             iSet.scope.instructions.addAll(stateInstructions.scope.instructions);
         }
         
-        iSet.optimizeScopeGoto.optimizeScopeLabel();
+        iSet.scope = iSet.scope.optimizeGoto.optimizeLabel;
+        iSet;
     }
     
     def Scope transformCoreState(SyncState state) {
@@ -193,46 +197,45 @@ class CoreToSCLTransformation {
     }
  
  
-    def Scope optimizeScopeGoto(Scope scope) {
-        var newScope = createSCLScope("");
-        newScope.variables.addAll(scope.variables);
+    def InstructionSet optimizeGoto(InstructionSet iSet) {
+        var newISet = createSCLInstructionSet();
         
-        for(Integer i: 0..(scope.getScope().instructions.size - 1)) {
+        for(Integer i: 0..(iSet.instructions.size - 1)) {
             var boolean skip = false
-            val instruction = scope.getScope().instructions.get(i);
+            val instruction = iSet.instructions.get(i);
             
-            if (instruction instanceof Goto && i < scope.getScope().instructions.size - 1) {
-                val nextInstruction = scope.getScope().instructions.get(i+1);
+            if (instruction instanceof Goto && i < iSet.instructions.size - 1) {
+                val nextInstruction = iSet.instructions.get(i+1);
                 if (nextInstruction!=null && nextInstruction instanceof Label) {
                     if ((instruction as Goto).getName().equals((nextInstruction as Label).getName())) { skip = true }  
                 }
             }
             
-            if (!skip) { newScope.addInstruction(instruction.copy); }
+            if (!skip) { newISet.addInstruction(instruction.copy); }
         }
       
-      newScope;  
+      newISet;
     }
     
-    def Scope optimizeScopeLabel(Scope scope) {
-        var newScope = createSCLScope("");
-        newScope.variables.addAll(scope.variables);
-        val gotos = ImmutableList::copyOf(scope.getScope().eAllContents().toIterable().filter(typeof(Goto)));
+    def InstructionSet optimizeLabel(InstructionSet iSet) {
+        var newISet = createSCLInstructionSet();
+
+        val gotos = ImmutableList::copyOf(iSet.eAllContents().toIterable().filter(typeof(Goto)));
         
 
-        for(Integer i: 0..(scope.getScope().instructions.size - 1)) {
+        for(Integer i: 0..(iSet.instructions.size - 1)) {
             var boolean skip = false
-            val instruction = scope.getScope().instructions.get(i);
+            val instruction = iSet.instructions.get(i);
             
-            if (instruction instanceof Label && i < scope.getScope().instructions.size - 1) {
+            if (instruction instanceof Label && i < iSet.instructions.size - 1) {
                 if (!gotos.exists(e | e.getName()==(instruction as Label).getName())) { skip = true }    
             }
             
-            if (!skip) { newScope.addInstruction(instruction.copy); }
+            if (!skip) { newISet.addInstruction(instruction.copy); }
             
         }
         
-        newScope;
+        newISet;
     }
  
 }
