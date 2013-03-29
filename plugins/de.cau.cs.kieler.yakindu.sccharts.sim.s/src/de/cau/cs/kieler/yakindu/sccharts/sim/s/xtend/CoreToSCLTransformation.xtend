@@ -73,7 +73,6 @@ class CoreToSCLTransformation {
         var iSet = createSCLScope("");
         val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState))).
           sort(e1, e2 | compareSCLRegionStateOrder(e1, e2));
-//        val initialState = states.filter(e | e.isInitial == true).head() as SyncState;
 
         if (region.getName() != null) {
            iSet.addInstruction(createSCLComment(region.getName()));
