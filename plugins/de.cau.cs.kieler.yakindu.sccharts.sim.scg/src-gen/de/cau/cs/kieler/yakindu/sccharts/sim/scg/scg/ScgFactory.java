@@ -41,69 +41,6 @@ public interface ScgFactory extends EFactory
   Assignment createAssignment();
 
   /**
-   * Returns a new object of class '<em>Dependency</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Dependency</em>'.
-   * @generated
-   */
-  Dependency createDependency();
-
-  /**
-   * Returns a new object of class '<em>Instruction Set</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction Set</em>'.
-   * @generated
-   */
-  InstructionSet createInstructionSet();
-
-  /**
-   * Returns a new object of class '<em>Instruction Set Single Assignment</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction Set Single Assignment</em>'.
-   * @generated
-   */
-  InstructionSetSingleAssignment createInstructionSetSingleAssignment();
-
-  /**
-   * Returns a new object of class '<em>Instruction Or Comment</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction Or Comment</em>'.
-   * @generated
-   */
-  InstructionOrComment createInstructionOrComment();
-
-  /**
-   * Returns a new object of class '<em>Instruction Or Comment Sequence</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction Or Comment Sequence</em>'.
-   * @generated
-   */
-  InstructionOrCommentSequence createInstructionOrCommentSequence();
-
-  /**
-   * Returns a new object of class '<em>Label</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Label</em>'.
-   * @generated
-   */
-  Label createLabel();
-
-  /**
-   * Returns a new object of class '<em>Scope</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Scope</em>'.
-   * @generated
-   */
-  Scope createScope();
-
-  /**
    * Returns a new object of class '<em>Conditional</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -113,40 +50,13 @@ public interface ScgFactory extends EFactory
   Conditional createConditional();
 
   /**
-   * Returns a new object of class '<em>Goto</em>'.
+   * Returns a new object of class '<em>Dependency</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Goto</em>'.
+   * @return a new object of class '<em>Dependency</em>'.
    * @generated
    */
-  Goto createGoto();
-
-  /**
-   * Returns a new object of class '<em>Parallel</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Parallel</em>'.
-   * @generated
-   */
-  Parallel createParallel();
-
-  /**
-   * Returns a new object of class '<em>Pause</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Pause</em>'.
-   * @generated
-   */
-  Pause createPause();
-
-  /**
-   * Returns a new object of class '<em>Comment</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Comment</em>'.
-   * @generated
-   */
-  Comment createComment();
+  Dependency createDependency();
 
   /**
    * Returns the package supported by this factory.

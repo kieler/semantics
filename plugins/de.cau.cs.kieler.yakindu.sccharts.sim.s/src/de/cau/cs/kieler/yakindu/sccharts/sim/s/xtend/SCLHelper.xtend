@@ -45,7 +45,6 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrComment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence;
 
 class SCLHelper {

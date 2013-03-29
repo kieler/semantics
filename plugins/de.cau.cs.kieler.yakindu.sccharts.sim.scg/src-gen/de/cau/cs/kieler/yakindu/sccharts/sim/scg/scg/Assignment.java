@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -11,7 +12,6 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
@@ -23,55 +23,19 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg;
 public interface Assignment extends Instruction, de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
 {
   /**
-   * Returns the value of the '<em><b>Priority</b></em>' attribute.
+   * Returns the value of the '<em><b>Dependencies</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Priority</em>' attribute isn't clear,
+   * If the meaning of the '<em>Dependencies</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Priority</em>' attribute.
-   * @see #setPriority(int)
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage#getAssignment_Priority()
-   * @model
-   * @generated
-   */
-  int getPriority();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment#getPriority <em>Priority</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Priority</em>' attribute.
-   * @see #getPriority()
-   * @generated
-   */
-  void setPriority(int value);
-
-  /**
-   * Returns the value of the '<em><b>Dependencies</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Dependencies</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Dependencies</em>' containment reference.
-   * @see #setDependencies(Dependency)
+   * @return the value of the '<em>Dependencies</em>' containment reference list.
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage#getAssignment_Dependencies()
    * @model containment="true"
    * @generated
    */
-  Dependency getDependencies();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment#getDependencies <em>Dependencies</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Dependencies</em>' containment reference.
-   * @see #getDependencies()
-   * @generated
-   */
-  void setDependencies(Dependency value);
+  EList<Dependency> getDependencies();
 
 } // Assignment

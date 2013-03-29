@@ -7,95 +7,26 @@ generate scg "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg"
 
 
 Instruction:
-    (Assignment | Conditional | Goto | Parallel | Pause | Label | Scope)
+    ({Instruction} | Assignment | Conditional)
+//    (Assignment | Conditional | Goto | Parallel | Pause | Label | Scope)
     'priority' priority=INT 
 ;
 
 Assignment:
-//    {Label}
-    assignment=STRING
-    dependencies = Dependency
+    {Assignment}
+//    assignment=STRING
+    (dependencies += Dependency)*
 ;
-
-Dependency:
-    {Dependency}
-    ('dependency' dependencies += [Assignment])* 
-;
-
-InstructionSet:
-  {InstructionSet}
-  (
-      (instructions += InstructionOrCommentSequence)+
-      (instructions += Instruction)
-      (instructions += Comment)?      
-  ) |
-  {InstructionSet}
-  (
-      (instructions += Comment)
-      (instructions += Instruction)
-  ) |
-  (instructions += Comment) |
-  {InstructionSet}
-  (
-      (instructions += Instruction)
-      (instructions += Comment)
-  ) |
-  {InstructionSet}
-  (instructions += Instruction) 
-;
-
-InstructionSetSingleAssignment:
-    Instruction
-;
-
-InstructionOrComment:
-    Instruction | Comment
-;
-
-InstructionOrCommentSequence:
-    (Instruction';') | Comment
-;
-
-Label:
-    'label:' name = ID
-;
-
-Scope:
-    '{'
-        (variables+=LocalVariable)*
-        scope = InstructionSet 
-    '}'
-;
-
 
 Conditional:
     'if' expression = SCLExpression 'then'
         conditional = InstructionSet
     'end' 
-    dependencies = Dependency
-;
-
-Goto:
-//    {Label}
-    'goto' name = ID 
-;
-
-Parallel:
-//    {Label}
-    'fork'
-    (    threads += InstructionSet
-    ('par'
-         threads += InstructionSet)+)
-    'join'
+    (dependencies += Dependency)*
 ;
 
 
-Pause:
-//    {Label}
-    'pause' {Pause}
+Dependency:
+    'dependency' dependencies = [Assignment]
 ;
 
-
-Comment:
-    comment = SL_COMMENT
-;

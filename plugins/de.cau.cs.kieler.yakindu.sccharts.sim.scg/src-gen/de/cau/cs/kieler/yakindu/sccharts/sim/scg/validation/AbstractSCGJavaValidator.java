@@ -14,7 +14,6 @@ public class AbstractSCGJavaValidator extends SCLJavaValidator {
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
 	    result.add(de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage.eINSTANCE);
-	    result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.yakindu.org/sct/statechart/SText"));
 		return result;
 	}
 

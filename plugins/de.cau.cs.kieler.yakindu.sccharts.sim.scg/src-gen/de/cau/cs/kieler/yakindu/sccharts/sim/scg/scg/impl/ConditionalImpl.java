@@ -9,13 +9,20 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +33,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ConditionalImpl#getConditional <em>Conditional</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ConditionalImpl#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ConditionalImpl#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
@@ -66,34 +72,14 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
   protected InstructionSet conditional;
 
   /**
-   * The default value of the '{@link #getPriority() <em>Priority</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPriority()
-   * @generated
-   * @ordered
-   */
-  protected static final int PRIORITY_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getPriority() <em>Priority</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPriority()
-   * @generated
-   * @ordered
-   */
-  protected int priority = PRIORITY_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference.
+   * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getDependencies()
    * @generated
    * @ordered
    */
-  protected Dependency dependencies;
+  protected EList<Dependency> dependencies;
 
   /**
    * <!-- begin-user-doc -->
@@ -192,70 +178,13 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getPriority()
+  public EList<Dependency> getDependencies()
   {
-    return priority;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setPriority(int newPriority)
-  {
-    int oldPriority = priority;
-    priority = newPriority;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__PRIORITY, oldPriority, priority));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Dependency getDependencies()
-  {
+    if (dependencies == null)
+    {
+      dependencies = new EObjectContainmentEList<Dependency>(Dependency.class, this, ScgPackage.CONDITIONAL__DEPENDENCIES);
+    }
     return dependencies;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetDependencies(Dependency newDependencies, NotificationChain msgs)
-  {
-    Dependency oldDependencies = dependencies;
-    dependencies = newDependencies;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__DEPENDENCIES, oldDependencies, newDependencies);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setDependencies(Dependency newDependencies)
-  {
-    if (newDependencies != dependencies)
-    {
-      NotificationChain msgs = null;
-      if (dependencies != null)
-        msgs = ((InternalEObject)dependencies).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__DEPENDENCIES, null, msgs);
-      if (newDependencies != null)
-        msgs = ((InternalEObject)newDependencies).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__DEPENDENCIES, null, msgs);
-      msgs = basicSetDependencies(newDependencies, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__DEPENDENCIES, newDependencies, newDependencies));
   }
 
   /**
@@ -271,7 +200,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case ScgPackage.CONDITIONAL__CONDITIONAL:
         return basicSetConditional(null, msgs);
       case ScgPackage.CONDITIONAL__DEPENDENCIES:
-        return basicSetDependencies(null, msgs);
+        return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -290,8 +219,6 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return getExpression();
       case ScgPackage.CONDITIONAL__CONDITIONAL:
         return getConditional();
-      case ScgPackage.CONDITIONAL__PRIORITY:
-        return getPriority();
       case ScgPackage.CONDITIONAL__DEPENDENCIES:
         return getDependencies();
     }
@@ -303,6 +230,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -314,11 +242,9 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case ScgPackage.CONDITIONAL__CONDITIONAL:
         setConditional((InstructionSet)newValue);
         return;
-      case ScgPackage.CONDITIONAL__PRIORITY:
-        setPriority((Integer)newValue);
-        return;
       case ScgPackage.CONDITIONAL__DEPENDENCIES:
-        setDependencies((Dependency)newValue);
+        getDependencies().clear();
+        getDependencies().addAll((Collection<? extends Dependency>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -340,11 +266,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case ScgPackage.CONDITIONAL__CONDITIONAL:
         setConditional((InstructionSet)null);
         return;
-      case ScgPackage.CONDITIONAL__PRIORITY:
-        setPriority(PRIORITY_EDEFAULT);
-        return;
       case ScgPackage.CONDITIONAL__DEPENDENCIES:
-        setDependencies((Dependency)null);
+        getDependencies().clear();
         return;
     }
     super.eUnset(featureID);
@@ -364,10 +287,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
       case ScgPackage.CONDITIONAL__CONDITIONAL:
         return conditional != null;
-      case ScgPackage.CONDITIONAL__PRIORITY:
-        return priority != PRIORITY_EDEFAULT;
       case ScgPackage.CONDITIONAL__DEPENDENCIES:
-        return dependencies != null;
+        return dependencies != null && !dependencies.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -425,8 +346,6 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (expression: ");
     result.append(expression);
-    result.append(", priority: ");
-    result.append(priority);
     result.append(')');
     return result.toString();
   }

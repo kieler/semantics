@@ -9,37 +9,17 @@
     usedGenPackages="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.genmodel#//scl">
   <genPackages prefix="Scg" basePackage="de.cau.cs.kieler.yakindu.sccharts.sim.scg"
       disposableProviderFactory="true" ecorePackage="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#/">
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Instruction"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Instruction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Instruction/priority"/>
+    </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Assignment">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Assignment/priority"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Assignment/dependencies"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Conditional">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Conditional/dependencies"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Dependency">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Dependency/dependencies"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//InstructionSet"/>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//InstructionSetSingleAssignment"/>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//InstructionOrComment"/>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//InstructionOrCommentSequence"/>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Label">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Label/priority"/>
-    </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Scope">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Scope/priority"/>
-    </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Conditional">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Conditional/priority"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Conditional/dependencies"/>
-    </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Goto">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Goto/priority"/>
-    </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Parallel">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Parallel/priority"/>
-    </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Pause">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Pause/priority"/>
-    </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Comment"/>
   </genPackages>
 </genmodel:GenModel>

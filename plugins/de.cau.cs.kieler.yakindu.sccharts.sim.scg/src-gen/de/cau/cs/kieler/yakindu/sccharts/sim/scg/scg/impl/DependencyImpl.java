@@ -6,15 +6,13 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage;
 
-import java.util.Collection;
-
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,14 +30,14 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 public class DependencyImpl extends MinimalEObjectImpl.Container implements Dependency
 {
   /**
-   * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list.
+   * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getDependencies()
    * @generated
    * @ordered
    */
-  protected EList<Assignment> dependencies;
+  protected Assignment dependencies;
 
   /**
    * <!-- begin-user-doc -->
@@ -67,13 +65,42 @@ public class DependencyImpl extends MinimalEObjectImpl.Container implements Depe
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Assignment> getDependencies()
+  public Assignment getDependencies()
   {
-    if (dependencies == null)
+    if (dependencies != null && dependencies.eIsProxy())
     {
-      dependencies = new EObjectResolvingEList<Assignment>(Assignment.class, this, ScgPackage.DEPENDENCY__DEPENDENCIES);
+      InternalEObject oldDependencies = (InternalEObject)dependencies;
+      dependencies = (Assignment)eResolveProxy(oldDependencies);
+      if (dependencies != oldDependencies)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.DEPENDENCY__DEPENDENCIES, oldDependencies, dependencies));
+      }
     }
     return dependencies;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Assignment basicGetDependencies()
+  {
+    return dependencies;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDependencies(Assignment newDependencies)
+  {
+    Assignment oldDependencies = dependencies;
+    dependencies = newDependencies;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.DEPENDENCY__DEPENDENCIES, oldDependencies, dependencies));
   }
 
   /**
@@ -87,7 +114,8 @@ public class DependencyImpl extends MinimalEObjectImpl.Container implements Depe
     switch (featureID)
     {
       case ScgPackage.DEPENDENCY__DEPENDENCIES:
-        return getDependencies();
+        if (resolve) return getDependencies();
+        return basicGetDependencies();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -97,15 +125,13 @@ public class DependencyImpl extends MinimalEObjectImpl.Container implements Depe
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
       case ScgPackage.DEPENDENCY__DEPENDENCIES:
-        getDependencies().clear();
-        getDependencies().addAll((Collection<? extends Assignment>)newValue);
+        setDependencies((Assignment)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -122,7 +148,7 @@ public class DependencyImpl extends MinimalEObjectImpl.Container implements Depe
     switch (featureID)
     {
       case ScgPackage.DEPENDENCY__DEPENDENCIES:
-        getDependencies().clear();
+        setDependencies((Assignment)null);
         return;
     }
     super.eUnset(featureID);
@@ -139,7 +165,7 @@ public class DependencyImpl extends MinimalEObjectImpl.Container implements Depe
     switch (featureID)
     {
       case ScgPackage.DEPENDENCY__DEPENDENCIES:
-        return dependencies != null && !dependencies.isEmpty();
+        return dependencies != null;
     }
     return super.eIsSet(featureID);
   }

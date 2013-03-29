@@ -8,13 +8,20 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,7 +31,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AssignmentImpl#getAssignment <em>Assignment</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AssignmentImpl#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AssignmentImpl#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
@@ -54,34 +60,14 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   protected String assignment = ASSIGNMENT_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getPriority() <em>Priority</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPriority()
-   * @generated
-   * @ordered
-   */
-  protected static final int PRIORITY_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getPriority() <em>Priority</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPriority()
-   * @generated
-   * @ordered
-   */
-  protected int priority = PRIORITY_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference.
+   * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getDependencies()
    * @generated
    * @ordered
    */
-  protected Dependency dependencies;
+  protected EList<Dependency> dependencies;
 
   /**
    * <!-- begin-user-doc -->
@@ -132,70 +118,13 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getPriority()
+  public EList<Dependency> getDependencies()
   {
-    return priority;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setPriority(int newPriority)
-  {
-    int oldPriority = priority;
-    priority = newPriority;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__PRIORITY, oldPriority, priority));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Dependency getDependencies()
-  {
+    if (dependencies == null)
+    {
+      dependencies = new EObjectContainmentEList<Dependency>(Dependency.class, this, ScgPackage.ASSIGNMENT__DEPENDENCIES);
+    }
     return dependencies;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetDependencies(Dependency newDependencies, NotificationChain msgs)
-  {
-    Dependency oldDependencies = dependencies;
-    dependencies = newDependencies;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__DEPENDENCIES, oldDependencies, newDependencies);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setDependencies(Dependency newDependencies)
-  {
-    if (newDependencies != dependencies)
-    {
-      NotificationChain msgs = null;
-      if (dependencies != null)
-        msgs = ((InternalEObject)dependencies).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__DEPENDENCIES, null, msgs);
-      if (newDependencies != null)
-        msgs = ((InternalEObject)newDependencies).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__DEPENDENCIES, null, msgs);
-      msgs = basicSetDependencies(newDependencies, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__DEPENDENCIES, newDependencies, newDependencies));
   }
 
   /**
@@ -209,7 +138,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     switch (featureID)
     {
       case ScgPackage.ASSIGNMENT__DEPENDENCIES:
-        return basicSetDependencies(null, msgs);
+        return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -226,8 +155,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case ScgPackage.ASSIGNMENT__ASSIGNMENT:
         return getAssignment();
-      case ScgPackage.ASSIGNMENT__PRIORITY:
-        return getPriority();
       case ScgPackage.ASSIGNMENT__DEPENDENCIES:
         return getDependencies();
     }
@@ -239,6 +166,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -247,11 +175,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       case ScgPackage.ASSIGNMENT__ASSIGNMENT:
         setAssignment((String)newValue);
         return;
-      case ScgPackage.ASSIGNMENT__PRIORITY:
-        setPriority((Integer)newValue);
-        return;
       case ScgPackage.ASSIGNMENT__DEPENDENCIES:
-        setDependencies((Dependency)newValue);
+        getDependencies().clear();
+        getDependencies().addAll((Collection<? extends Dependency>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -270,11 +196,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       case ScgPackage.ASSIGNMENT__ASSIGNMENT:
         setAssignment(ASSIGNMENT_EDEFAULT);
         return;
-      case ScgPackage.ASSIGNMENT__PRIORITY:
-        setPriority(PRIORITY_EDEFAULT);
-        return;
       case ScgPackage.ASSIGNMENT__DEPENDENCIES:
-        setDependencies((Dependency)null);
+        getDependencies().clear();
         return;
     }
     super.eUnset(featureID);
@@ -292,10 +215,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case ScgPackage.ASSIGNMENT__ASSIGNMENT:
         return ASSIGNMENT_EDEFAULT == null ? assignment != null : !ASSIGNMENT_EDEFAULT.equals(assignment);
-      case ScgPackage.ASSIGNMENT__PRIORITY:
-        return priority != PRIORITY_EDEFAULT;
       case ScgPackage.ASSIGNMENT__DEPENDENCIES:
-        return dependencies != null;
+        return dependencies != null && !dependencies.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -351,8 +272,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (assignment: ");
     result.append(assignment);
-    result.append(", priority: ");
-    result.append(priority);
     result.append(')');
     return result.toString();
   }

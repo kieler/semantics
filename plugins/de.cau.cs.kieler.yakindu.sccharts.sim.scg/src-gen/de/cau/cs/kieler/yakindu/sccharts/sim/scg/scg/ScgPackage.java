@@ -69,13 +69,22 @@ public interface ScgPackage extends EPackage
   int INSTRUCTION = 0;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INSTRUCTION__PRIORITY = SclPackage.INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
    * The number of structural features of the '<em>Instruction</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTION_FEATURE_COUNT = SclPackage.INSTRUCTION_FEATURE_COUNT + 0;
+  int INSTRUCTION_FEATURE_COUNT = SclPackage.INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AssignmentImpl <em>Assignment</em>}' class.
@@ -88,6 +97,15 @@ public interface ScgPackage extends EPackage
   int ASSIGNMENT = 1;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__PRIORITY = INSTRUCTION__PRIORITY;
+
+  /**
    * The feature id for the '<em><b>Assignment</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -97,22 +115,13 @@ public interface ScgPackage extends EPackage
   int ASSIGNMENT__ASSIGNMENT = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__PRIORITY = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Dependencies</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSIGNMENT__DEPENDENCIES = INSTRUCTION_FEATURE_COUNT + 2;
+  int ASSIGNMENT__DEPENDENCIES = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Assignment</em>' class.
@@ -121,203 +130,7 @@ public interface ScgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.DependencyImpl <em>Dependency</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.DependencyImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getDependency()
-   * @generated
-   */
-  int DEPENDENCY = 2;
-
-  /**
-   * The feature id for the '<em><b>Dependencies</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DEPENDENCY__DEPENDENCIES = 0;
-
-  /**
-   * The number of structural features of the '<em>Dependency</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DEPENDENCY_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl <em>Instruction Set</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionSet()
-   * @generated
-   */
-  int INSTRUCTION_SET = 3;
-
-  /**
-   * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_SET__INSTRUCTIONS = SclPackage.INSTRUCTION_SET__INSTRUCTIONS;
-
-  /**
-   * The number of structural features of the '<em>Instruction Set</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_SET_FEATURE_COUNT = SclPackage.INSTRUCTION_SET_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetSingleAssignmentImpl <em>Instruction Set Single Assignment</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetSingleAssignmentImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionSetSingleAssignment()
-   * @generated
-   */
-  int INSTRUCTION_SET_SINGLE_ASSIGNMENT = 4;
-
-  /**
-   * The number of structural features of the '<em>Instruction Set Single Assignment</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_SET_SINGLE_ASSIGNMENT_FEATURE_COUNT = SclPackage.INSTRUCTION_SET_SINGLE_ASSIGNMENT_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentImpl <em>Instruction Or Comment</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionOrComment()
-   * @generated
-   */
-  int INSTRUCTION_OR_COMMENT = 5;
-
-  /**
-   * The number of structural features of the '<em>Instruction Or Comment</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_OR_COMMENT_FEATURE_COUNT = SclPackage.INSTRUCTION_OR_COMMENT_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentSequenceImpl <em>Instruction Or Comment Sequence</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentSequenceImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionOrCommentSequence()
-   * @generated
-   */
-  int INSTRUCTION_OR_COMMENT_SEQUENCE = 6;
-
-  /**
-   * The number of structural features of the '<em>Instruction Or Comment Sequence</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT = SclPackage.INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl <em>Label</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getLabel()
-   * @generated
-   */
-  int LABEL = 7;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LABEL__NAME = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LABEL__PRIORITY = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Label</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LABEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScopeImpl <em>Scope</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScopeImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getScope()
-   * @generated
-   */
-  int SCOPE = 8;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCOPE__VARIABLES = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCOPE__SCOPE = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCOPE__PRIORITY = INSTRUCTION_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>Scope</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCOPE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -327,7 +140,16 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getConditional()
    * @generated
    */
-  int CONDITIONAL = 9;
+  int CONDITIONAL = 2;
+
+  /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL__PRIORITY = INSTRUCTION__PRIORITY;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' attribute.
@@ -348,22 +170,13 @@ public interface ScgPackage extends EPackage
   int CONDITIONAL__CONDITIONAL = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONDITIONAL__PRIORITY = INSTRUCTION_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Dependencies</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITIONAL__DEPENDENCIES = INSTRUCTION_FEATURE_COUNT + 3;
+  int CONDITIONAL__DEPENDENCIES = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Conditional</em>' class.
@@ -372,137 +185,35 @@ public interface ScgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 4;
+  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.GotoImpl <em>Goto</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.DependencyImpl <em>Dependency</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.GotoImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getGoto()
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.DependencyImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getDependency()
    * @generated
    */
-  int GOTO = 10;
+  int DEPENDENCY = 3;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GOTO__NAME = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * The feature id for the '<em><b>Dependencies</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GOTO__PRIORITY = INSTRUCTION_FEATURE_COUNT + 1;
+  int DEPENDENCY__DEPENDENCIES = 0;
 
   /**
-   * The number of structural features of the '<em>Goto</em>' class.
+   * The number of structural features of the '<em>Dependency</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GOTO_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl <em>Parallel</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getParallel()
-   * @generated
-   */
-  int PARALLEL = 11;
-
-  /**
-   * The feature id for the '<em><b>Threads</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL__THREADS = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL__PRIORITY = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Parallel</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl <em>Pause</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getPause()
-   * @generated
-   */
-  int PAUSE = 12;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PAUSE__PRIORITY = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Pause</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PAUSE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.CommentImpl <em>Comment</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.CommentImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getComment()
-   * @generated
-   */
-  int COMMENT = 13;
-
-  /**
-   * The feature id for the '<em><b>Comment</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENT__COMMENT = INSTRUCTION_OR_COMMENT_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Comment</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENT_FEATURE_COUNT = INSTRUCTION_OR_COMMENT_FEATURE_COUNT + 1;
+  int DEPENDENCY_FEATURE_COUNT = 1;
 
 
   /**
@@ -516,6 +227,17 @@ public interface ScgPackage extends EPackage
   EClass getInstruction();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction#getPriority <em>Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Priority</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction#getPriority()
+   * @see #getInstruction()
+   * @generated
+   */
+  EAttribute getInstruction_Priority();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment <em>Assignment</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -526,129 +248,15 @@ public interface ScgPackage extends EPackage
   EClass getAssignment();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment#getPriority <em>Priority</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment#getDependencies <em>Dependencies</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Priority</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment#getPriority()
-   * @see #getAssignment()
-   * @generated
-   */
-  EAttribute getAssignment_Priority();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment#getDependencies <em>Dependencies</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Dependencies</em>'.
+   * @return the meta object for the containment reference list '<em>Dependencies</em>'.
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment#getDependencies()
    * @see #getAssignment()
    * @generated
    */
   EReference getAssignment_Dependencies();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency <em>Dependency</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Dependency</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency
-   * @generated
-   */
-  EClass getDependency();
-
-  /**
-   * Returns the meta object for the reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency#getDependencies <em>Dependencies</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Dependencies</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency#getDependencies()
-   * @see #getDependency()
-   * @generated
-   */
-  EReference getDependency_Dependencies();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet <em>Instruction Set</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Instruction Set</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet
-   * @generated
-   */
-  EClass getInstructionSet();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSetSingleAssignment <em>Instruction Set Single Assignment</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Instruction Set Single Assignment</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSetSingleAssignment
-   * @generated
-   */
-  EClass getInstructionSetSingleAssignment();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionOrComment <em>Instruction Or Comment</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Instruction Or Comment</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionOrComment
-   * @generated
-   */
-  EClass getInstructionOrComment();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionOrCommentSequence <em>Instruction Or Comment Sequence</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Instruction Or Comment Sequence</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionOrCommentSequence
-   * @generated
-   */
-  EClass getInstructionOrCommentSequence();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label <em>Label</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Label</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label
-   * @generated
-   */
-  EClass getLabel();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label#getPriority <em>Priority</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Priority</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Label#getPriority()
-   * @see #getLabel()
-   * @generated
-   */
-  EAttribute getLabel_Priority();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Scope <em>Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Scope</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Scope
-   * @generated
-   */
-  EClass getScope();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Scope#getPriority <em>Priority</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Priority</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Scope#getPriority()
-   * @see #getScope()
-   * @generated
-   */
-  EAttribute getScope_Priority();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional <em>Conditional</em>}'.
@@ -661,21 +269,10 @@ public interface ScgPackage extends EPackage
   EClass getConditional();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional#getPriority <em>Priority</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional#getDependencies <em>Dependencies</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Priority</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional#getPriority()
-   * @see #getConditional()
-   * @generated
-   */
-  EAttribute getConditional_Priority();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional#getDependencies <em>Dependencies</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Dependencies</em>'.
+   * @return the meta object for the containment reference list '<em>Dependencies</em>'.
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional#getDependencies()
    * @see #getConditional()
    * @generated
@@ -683,77 +280,25 @@ public interface ScgPackage extends EPackage
   EReference getConditional_Dependencies();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Goto <em>Goto</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency <em>Dependency</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Goto</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Goto
+   * @return the meta object for class '<em>Dependency</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency
    * @generated
    */
-  EClass getGoto();
+  EClass getDependency();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Goto#getPriority <em>Priority</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency#getDependencies <em>Dependencies</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Priority</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Goto#getPriority()
-   * @see #getGoto()
+   * @return the meta object for the reference '<em>Dependencies</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency#getDependencies()
+   * @see #getDependency()
    * @generated
    */
-  EAttribute getGoto_Priority();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel <em>Parallel</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Parallel</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel
-   * @generated
-   */
-  EClass getParallel();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel#getPriority <em>Priority</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Priority</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel#getPriority()
-   * @see #getParallel()
-   * @generated
-   */
-  EAttribute getParallel_Priority();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause <em>Pause</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Pause</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause
-   * @generated
-   */
-  EClass getPause();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getPriority <em>Priority</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Priority</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Pause#getPriority()
-   * @see #getPause()
-   * @generated
-   */
-  EAttribute getPause_Priority();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Comment <em>Comment</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Comment</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Comment
-   * @generated
-   */
-  EClass getComment();
+  EReference getDependency_Dependencies();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -789,6 +334,14 @@ public interface ScgPackage extends EPackage
     EClass INSTRUCTION = eINSTANCE.getInstruction();
 
     /**
+     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INSTRUCTION__PRIORITY = eINSTANCE.getInstruction_Priority();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AssignmentImpl <em>Assignment</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -799,114 +352,12 @@ public interface ScgPackage extends EPackage
     EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
     /**
-     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ASSIGNMENT__PRIORITY = eINSTANCE.getAssignment_Priority();
-
-    /**
-     * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference ASSIGNMENT__DEPENDENCIES = eINSTANCE.getAssignment_Dependencies();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.DependencyImpl <em>Dependency</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.DependencyImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getDependency()
-     * @generated
-     */
-    EClass DEPENDENCY = eINSTANCE.getDependency();
-
-    /**
-     * The meta object literal for the '<em><b>Dependencies</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DEPENDENCY__DEPENDENCIES = eINSTANCE.getDependency_Dependencies();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl <em>Instruction Set</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionSet()
-     * @generated
-     */
-    EClass INSTRUCTION_SET = eINSTANCE.getInstructionSet();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetSingleAssignmentImpl <em>Instruction Set Single Assignment</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetSingleAssignmentImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionSetSingleAssignment()
-     * @generated
-     */
-    EClass INSTRUCTION_SET_SINGLE_ASSIGNMENT = eINSTANCE.getInstructionSetSingleAssignment();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentImpl <em>Instruction Or Comment</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionOrComment()
-     * @generated
-     */
-    EClass INSTRUCTION_OR_COMMENT = eINSTANCE.getInstructionOrComment();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentSequenceImpl <em>Instruction Or Comment Sequence</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentSequenceImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionOrCommentSequence()
-     * @generated
-     */
-    EClass INSTRUCTION_OR_COMMENT_SEQUENCE = eINSTANCE.getInstructionOrCommentSequence();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl <em>Label</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.LabelImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getLabel()
-     * @generated
-     */
-    EClass LABEL = eINSTANCE.getLabel();
-
-    /**
-     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute LABEL__PRIORITY = eINSTANCE.getLabel_Priority();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScopeImpl <em>Scope</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScopeImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getScope()
-     * @generated
-     */
-    EClass SCOPE = eINSTANCE.getScope();
-
-    /**
-     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SCOPE__PRIORITY = eINSTANCE.getScope_Priority();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -919,15 +370,7 @@ public interface ScgPackage extends EPackage
     EClass CONDITIONAL = eINSTANCE.getConditional();
 
     /**
-     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute CONDITIONAL__PRIORITY = eINSTANCE.getConditional_Priority();
-
-    /**
-     * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -935,68 +378,22 @@ public interface ScgPackage extends EPackage
     EReference CONDITIONAL__DEPENDENCIES = eINSTANCE.getConditional_Dependencies();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.GotoImpl <em>Goto</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.DependencyImpl <em>Dependency</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.GotoImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getGoto()
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.DependencyImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getDependency()
      * @generated
      */
-    EClass GOTO = eINSTANCE.getGoto();
+    EClass DEPENDENCY = eINSTANCE.getDependency();
 
     /**
-     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Dependencies</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute GOTO__PRIORITY = eINSTANCE.getGoto_Priority();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl <em>Parallel</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getParallel()
-     * @generated
-     */
-    EClass PARALLEL = eINSTANCE.getParallel();
-
-    /**
-     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PARALLEL__PRIORITY = eINSTANCE.getParallel_Priority();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl <em>Pause</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.PauseImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getPause()
-     * @generated
-     */
-    EClass PAUSE = eINSTANCE.getPause();
-
-    /**
-     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PAUSE__PRIORITY = eINSTANCE.getPause_Priority();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.CommentImpl <em>Comment</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.CommentImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getComment()
-     * @generated
-     */
-    EClass COMMENT = eINSTANCE.getComment();
+    EReference DEPENDENCY__DEPENDENCIES = eINSTANCE.getDependency_Dependencies();
 
   }
 

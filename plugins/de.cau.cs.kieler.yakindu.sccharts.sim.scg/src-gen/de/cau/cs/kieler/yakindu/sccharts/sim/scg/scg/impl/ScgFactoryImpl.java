@@ -66,18 +66,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
     {
       case ScgPackage.INSTRUCTION: return createInstruction();
       case ScgPackage.ASSIGNMENT: return createAssignment();
-      case ScgPackage.DEPENDENCY: return createDependency();
-      case ScgPackage.INSTRUCTION_SET: return createInstructionSet();
-      case ScgPackage.INSTRUCTION_SET_SINGLE_ASSIGNMENT: return createInstructionSetSingleAssignment();
-      case ScgPackage.INSTRUCTION_OR_COMMENT: return createInstructionOrComment();
-      case ScgPackage.INSTRUCTION_OR_COMMENT_SEQUENCE: return createInstructionOrCommentSequence();
-      case ScgPackage.LABEL: return createLabel();
-      case ScgPackage.SCOPE: return createScope();
       case ScgPackage.CONDITIONAL: return createConditional();
-      case ScgPackage.GOTO: return createGoto();
-      case ScgPackage.PARALLEL: return createParallel();
-      case ScgPackage.PAUSE: return createPause();
-      case ScgPackage.COMMENT: return createComment();
+      case ScgPackage.DEPENDENCY: return createDependency();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -110,83 +100,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Dependency createDependency()
-  {
-    DependencyImpl dependency = new DependencyImpl();
-    return dependency;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionSet createInstructionSet()
-  {
-    InstructionSetImpl instructionSet = new InstructionSetImpl();
-    return instructionSet;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionSetSingleAssignment createInstructionSetSingleAssignment()
-  {
-    InstructionSetSingleAssignmentImpl instructionSetSingleAssignment = new InstructionSetSingleAssignmentImpl();
-    return instructionSetSingleAssignment;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionOrComment createInstructionOrComment()
-  {
-    InstructionOrCommentImpl instructionOrComment = new InstructionOrCommentImpl();
-    return instructionOrComment;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionOrCommentSequence createInstructionOrCommentSequence()
-  {
-    InstructionOrCommentSequenceImpl instructionOrCommentSequence = new InstructionOrCommentSequenceImpl();
-    return instructionOrCommentSequence;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Label createLabel()
-  {
-    LabelImpl label = new LabelImpl();
-    return label;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Scope createScope()
-  {
-    ScopeImpl scope = new ScopeImpl();
-    return scope;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Conditional createConditional()
   {
     ConditionalImpl conditional = new ConditionalImpl();
@@ -198,43 +111,10 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Goto createGoto()
+  public Dependency createDependency()
   {
-    GotoImpl goto_ = new GotoImpl();
-    return goto_;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Parallel createParallel()
-  {
-    ParallelImpl parallel = new ParallelImpl();
-    return parallel;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Pause createPause()
-  {
-    PauseImpl pause = new PauseImpl();
-    return pause;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Comment createComment()
-  {
-    CommentImpl comment = new CommentImpl();
-    return comment;
+    DependencyImpl dependency = new DependencyImpl();
+    return dependency;
   }
 
   /**
