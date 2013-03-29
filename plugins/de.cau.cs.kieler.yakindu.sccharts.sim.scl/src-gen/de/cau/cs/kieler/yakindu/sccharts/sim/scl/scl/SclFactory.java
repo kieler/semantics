@@ -104,13 +104,13 @@ public interface SclFactory extends EFactory
   Scope createScope();
 
   /**
-   * Returns a new object of class '<em>SCL Expression</em>'.
+   * Returns a new object of class '<em>Assignment</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>SCL Expression</em>'.
+   * @return a new object of class '<em>Assignment</em>'.
    * @generated
    */
-  SCLExpression createSCLExpression();
+  Assignment createAssignment();
 
   /**
    * Returns a new object of class '<em>Conditional</em>'.

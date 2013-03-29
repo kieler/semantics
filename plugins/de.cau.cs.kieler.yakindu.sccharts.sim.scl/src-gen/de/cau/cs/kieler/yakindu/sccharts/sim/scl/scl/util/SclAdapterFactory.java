@@ -120,9 +120,9 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createScopeAdapter();
       }
       @Override
-      public Adapter caseSCLExpression(SCLExpression object)
+      public Adapter caseAssignment(Assignment object)
       {
-        return createSCLExpressionAdapter();
+        return createAssignmentAdapter();
       }
       @Override
       public Adapter caseConditional(Conditional object)
@@ -307,16 +307,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression <em>SCL Expression</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment <em>Assignment</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
    * @generated
    */
-  public Adapter createSCLExpressionAdapter()
+  public Adapter createAssignmentAdapter()
   {
     return null;
   }

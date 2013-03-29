@@ -21,84 +21,329 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class InstructionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Instruction");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cAssignmentParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cConditionalParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cGotoParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cParallelParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
-		private final RuleCall cPauseParserRuleCall_4_0 = (RuleCall)cGroup_4.eContents().get(0);
-		private final Keyword cPriorityKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cPriorityAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cPriorityINTTerminalRuleCall_4_2_0 = (RuleCall)cPriorityAssignment_4_2.eContents().get(0);
-		private final Group cGroup_4_3 = (Group)cGroup_4.eContents().get(3);
-		private final Keyword cDependencyKeyword_4_3_0 = (Keyword)cGroup_4_3.eContents().get(0);
-		private final Assignment cDependenciesAssignment_4_3_1 = (Assignment)cGroup_4_3.eContents().get(1);
-		private final RuleCall cDependenciesInstructionParserRuleCall_4_3_1_0 = (RuleCall)cDependenciesAssignment_4_3_1.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final RuleCall cAssignmentParserRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
+		private final RuleCall cConditionalParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
+		private final RuleCall cGotoParserRuleCall_0_2 = (RuleCall)cAlternatives_0.eContents().get(2);
+		private final RuleCall cParallelParserRuleCall_0_3 = (RuleCall)cAlternatives_0.eContents().get(3);
+		private final RuleCall cPauseParserRuleCall_0_4 = (RuleCall)cAlternatives_0.eContents().get(4);
+		private final RuleCall cLabelParserRuleCall_0_5 = (RuleCall)cAlternatives_0.eContents().get(5);
+		private final RuleCall cScopeParserRuleCall_0_6 = (RuleCall)cAlternatives_0.eContents().get(6);
+		private final Keyword cPriorityKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cPriorityAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cPriorityINTTerminalRuleCall_2_0 = (RuleCall)cPriorityAssignment_2.eContents().get(0);
 		
 		//Instruction:
 		//
-		//	Assignment | Conditional | Goto | Parallel | Pause "priority" priority=INT ("dependency" dependencies+=Instruction)*;
+		//	(Assignment | Conditional | Goto | Parallel | Pause | Label | Scope) "priority" priority=INT;
 		public ParserRule getRule() { return rule; }
 
-		//Assignment | Conditional | Goto | Parallel | Pause "priority" priority=INT ("dependency" dependencies+=Instruction)*
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//(Assignment | Conditional | Goto | Parallel | Pause | Label | Scope) "priority" priority=INT
+		public Group getGroup() { return cGroup; }
+
+		//Assignment | Conditional | Goto | Parallel | Pause | Label | Scope
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//Assignment
-		public RuleCall getAssignmentParserRuleCall_0() { return cAssignmentParserRuleCall_0; }
+		public RuleCall getAssignmentParserRuleCall_0_0() { return cAssignmentParserRuleCall_0_0; }
 
 		//Conditional
-		public RuleCall getConditionalParserRuleCall_1() { return cConditionalParserRuleCall_1; }
+		public RuleCall getConditionalParserRuleCall_0_1() { return cConditionalParserRuleCall_0_1; }
 
 		//Goto
-		public RuleCall getGotoParserRuleCall_2() { return cGotoParserRuleCall_2; }
+		public RuleCall getGotoParserRuleCall_0_2() { return cGotoParserRuleCall_0_2; }
 
 		//Parallel
-		public RuleCall getParallelParserRuleCall_3() { return cParallelParserRuleCall_3; }
-
-		//Pause "priority" priority=INT ("dependency" dependencies+=Instruction)*
-		public Group getGroup_4() { return cGroup_4; }
+		public RuleCall getParallelParserRuleCall_0_3() { return cParallelParserRuleCall_0_3; }
 
 		//Pause
-		public RuleCall getPauseParserRuleCall_4_0() { return cPauseParserRuleCall_4_0; }
+		public RuleCall getPauseParserRuleCall_0_4() { return cPauseParserRuleCall_0_4; }
+
+		//Label
+		public RuleCall getLabelParserRuleCall_0_5() { return cLabelParserRuleCall_0_5; }
+
+		//Scope
+		public RuleCall getScopeParserRuleCall_0_6() { return cScopeParserRuleCall_0_6; }
 
 		//"priority"
-		public Keyword getPriorityKeyword_4_1() { return cPriorityKeyword_4_1; }
+		public Keyword getPriorityKeyword_1() { return cPriorityKeyword_1; }
 
 		//priority=INT
-		public Assignment getPriorityAssignment_4_2() { return cPriorityAssignment_4_2; }
+		public Assignment getPriorityAssignment_2() { return cPriorityAssignment_2; }
 
 		//INT
-		public RuleCall getPriorityINTTerminalRuleCall_4_2_0() { return cPriorityINTTerminalRuleCall_4_2_0; }
+		public RuleCall getPriorityINTTerminalRuleCall_2_0() { return cPriorityINTTerminalRuleCall_2_0; }
+	}
 
-		//("dependency" dependencies+=Instruction)*
-		public Group getGroup_4_3() { return cGroup_4_3; }
+	public class AssignmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Assignment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAssignmentAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAssignmentSTRINGTerminalRuleCall_0_0 = (RuleCall)cAssignmentAssignment_0.eContents().get(0);
+		private final Assignment cDependenciesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cDependenciesDependencyParserRuleCall_1_0 = (RuleCall)cDependenciesAssignment_1.eContents().get(0);
+		
+		//Assignment: //    {Label}
+		//
+		//	assignment=STRING dependencies=Dependency;
+		public ParserRule getRule() { return rule; }
+
+		////    {Label}
+		//
+		//assignment=STRING dependencies=Dependency
+		public Group getGroup() { return cGroup; }
+
+		////    {Label}
+		//
+		//assignment=STRING
+		public Assignment getAssignmentAssignment_0() { return cAssignmentAssignment_0; }
+
+		//STRING
+		public RuleCall getAssignmentSTRINGTerminalRuleCall_0_0() { return cAssignmentSTRINGTerminalRuleCall_0_0; }
+
+		//dependencies=Dependency
+		public Assignment getDependenciesAssignment_1() { return cDependenciesAssignment_1; }
+
+		//Dependency
+		public RuleCall getDependenciesDependencyParserRuleCall_1_0() { return cDependenciesDependencyParserRuleCall_1_0; }
+	}
+
+	public class DependencyElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Dependency");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDependencyAction_0 = (Action)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cDependencyKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cDependenciesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final CrossReference cDependenciesAssignmentCrossReference_1_1_0 = (CrossReference)cDependenciesAssignment_1_1.eContents().get(0);
+		private final RuleCall cDependenciesAssignmentIDTerminalRuleCall_1_1_0_1 = (RuleCall)cDependenciesAssignmentCrossReference_1_1_0.eContents().get(1);
+		
+		//Dependency:
+		//
+		//	{Dependency} ("dependency" dependencies+=[Assignment])*;
+		public ParserRule getRule() { return rule; }
+
+		//{Dependency} ("dependency" dependencies+=[Assignment])*
+		public Group getGroup() { return cGroup; }
+
+		//{Dependency}
+		public Action getDependencyAction_0() { return cDependencyAction_0; }
+
+		//("dependency" dependencies+=[Assignment])*
+		public Group getGroup_1() { return cGroup_1; }
 
 		//"dependency"
-		public Keyword getDependencyKeyword_4_3_0() { return cDependencyKeyword_4_3_0; }
+		public Keyword getDependencyKeyword_1_0() { return cDependencyKeyword_1_0; }
 
-		//dependencies+=Instruction
-		public Assignment getDependenciesAssignment_4_3_1() { return cDependenciesAssignment_4_3_1; }
+		//dependencies+=[Assignment]
+		public Assignment getDependenciesAssignment_1_1() { return cDependenciesAssignment_1_1; }
 
-		//Instruction
-		public RuleCall getDependenciesInstructionParserRuleCall_4_3_1_0() { return cDependenciesInstructionParserRuleCall_4_3_1_0; }
+		//[Assignment]
+		public CrossReference getDependenciesAssignmentCrossReference_1_1_0() { return cDependenciesAssignmentCrossReference_1_1_0; }
+
+		//ID
+		public RuleCall getDependenciesAssignmentIDTerminalRuleCall_1_1_0_1() { return cDependenciesAssignmentIDTerminalRuleCall_1_1_0_1; }
 	}
 
 	public class InstructionSetElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionSet");
-		private final Assignment cInstructionsAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cInstructionsInstructionParserRuleCall_0 = (RuleCall)cInstructionsAssignment.eContents().get(0);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cInstructionSetAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Group cGroup_0_1 = (Group)cGroup_0.eContents().get(1);
+		private final Assignment cInstructionsAssignment_0_1_0 = (Assignment)cGroup_0_1.eContents().get(0);
+		private final RuleCall cInstructionsInstructionOrCommentSequenceParserRuleCall_0_1_0_0 = (RuleCall)cInstructionsAssignment_0_1_0.eContents().get(0);
+		private final Assignment cInstructionsAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
+		private final RuleCall cInstructionsInstructionParserRuleCall_0_1_1_0 = (RuleCall)cInstructionsAssignment_0_1_1.eContents().get(0);
+		private final Assignment cInstructionsAssignment_0_1_2 = (Assignment)cGroup_0_1.eContents().get(2);
+		private final RuleCall cInstructionsCommentParserRuleCall_0_1_2_0 = (RuleCall)cInstructionsAssignment_0_1_2.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Action cInstructionSetAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Assignment cInstructionsAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cInstructionsCommentParserRuleCall_1_1_0_0 = (RuleCall)cInstructionsAssignment_1_1_0.eContents().get(0);
+		private final Assignment cInstructionsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cInstructionsInstructionParserRuleCall_1_1_1_0 = (RuleCall)cInstructionsAssignment_1_1_1.eContents().get(0);
+		private final Assignment cInstructionsAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final RuleCall cInstructionsCommentParserRuleCall_2_0 = (RuleCall)cInstructionsAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final Action cInstructionSetAction_3_0 = (Action)cGroup_3.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
+		private final Assignment cInstructionsAssignment_3_1_0 = (Assignment)cGroup_3_1.eContents().get(0);
+		private final RuleCall cInstructionsInstructionParserRuleCall_3_1_0_0 = (RuleCall)cInstructionsAssignment_3_1_0.eContents().get(0);
+		private final Assignment cInstructionsAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cInstructionsCommentParserRuleCall_3_1_1_0 = (RuleCall)cInstructionsAssignment_3_1_1.eContents().get(0);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Action cInstructionSetAction_4_0 = (Action)cGroup_4.eContents().get(0);
+		private final Assignment cInstructionsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cInstructionsInstructionParserRuleCall_4_1_0 = (RuleCall)cInstructionsAssignment_4_1.eContents().get(0);
 		
 		//InstructionSet:
 		//
-		//	instructions+=Instruction+;
+		//	{InstructionSet} (instructions+=InstructionOrCommentSequence+ instructions+=Instruction instructions+=Comment?) |
+		//
+		//	{InstructionSet} (instructions+=Comment instructions+=Instruction) | instructions+=Comment | {InstructionSet}
+		//
+		//	(instructions+=Instruction instructions+=Comment) | {InstructionSet} instructions+=Instruction;
 		public ParserRule getRule() { return rule; }
 
-		//instructions+=Instruction+
-		public Assignment getInstructionsAssignment() { return cInstructionsAssignment; }
+		//{InstructionSet} (instructions+=InstructionOrCommentSequence+ instructions+=Instruction instructions+=Comment?) |
+		//
+		//{InstructionSet} (instructions+=Comment instructions+=Instruction) | instructions+=Comment | {InstructionSet}
+		//
+		//(instructions+=Instruction instructions+=Comment) | {InstructionSet} instructions+=Instruction
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//{InstructionSet} (instructions+=InstructionOrCommentSequence+ instructions+=Instruction instructions+=Comment?)
+		public Group getGroup_0() { return cGroup_0; }
+
+		//{InstructionSet}
+		public Action getInstructionSetAction_0_0() { return cInstructionSetAction_0_0; }
+
+		//instructions+=InstructionOrCommentSequence+ instructions+=Instruction instructions+=Comment?
+		public Group getGroup_0_1() { return cGroup_0_1; }
+
+		//instructions+=InstructionOrCommentSequence+
+		public Assignment getInstructionsAssignment_0_1_0() { return cInstructionsAssignment_0_1_0; }
+
+		//InstructionOrCommentSequence
+		public RuleCall getInstructionsInstructionOrCommentSequenceParserRuleCall_0_1_0_0() { return cInstructionsInstructionOrCommentSequenceParserRuleCall_0_1_0_0; }
+
+		//instructions+=Instruction
+		public Assignment getInstructionsAssignment_0_1_1() { return cInstructionsAssignment_0_1_1; }
 
 		//Instruction
-		public RuleCall getInstructionsInstructionParserRuleCall_0() { return cInstructionsInstructionParserRuleCall_0; }
+		public RuleCall getInstructionsInstructionParserRuleCall_0_1_1_0() { return cInstructionsInstructionParserRuleCall_0_1_1_0; }
+
+		//instructions+=Comment?
+		public Assignment getInstructionsAssignment_0_1_2() { return cInstructionsAssignment_0_1_2; }
+
+		//Comment
+		public RuleCall getInstructionsCommentParserRuleCall_0_1_2_0() { return cInstructionsCommentParserRuleCall_0_1_2_0; }
+
+		//{InstructionSet} (instructions+=Comment instructions+=Instruction)
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{InstructionSet}
+		public Action getInstructionSetAction_1_0() { return cInstructionSetAction_1_0; }
+
+		//instructions+=Comment instructions+=Instruction
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//instructions+=Comment
+		public Assignment getInstructionsAssignment_1_1_0() { return cInstructionsAssignment_1_1_0; }
+
+		//Comment
+		public RuleCall getInstructionsCommentParserRuleCall_1_1_0_0() { return cInstructionsCommentParserRuleCall_1_1_0_0; }
+
+		//instructions+=Instruction
+		public Assignment getInstructionsAssignment_1_1_1() { return cInstructionsAssignment_1_1_1; }
+
+		//Instruction
+		public RuleCall getInstructionsInstructionParserRuleCall_1_1_1_0() { return cInstructionsInstructionParserRuleCall_1_1_1_0; }
+
+		//instructions+=Comment
+		public Assignment getInstructionsAssignment_2() { return cInstructionsAssignment_2; }
+
+		//Comment
+		public RuleCall getInstructionsCommentParserRuleCall_2_0() { return cInstructionsCommentParserRuleCall_2_0; }
+
+		//{InstructionSet} (instructions+=Instruction instructions+=Comment)
+		public Group getGroup_3() { return cGroup_3; }
+
+		//{InstructionSet}
+		public Action getInstructionSetAction_3_0() { return cInstructionSetAction_3_0; }
+
+		//instructions+=Instruction instructions+=Comment
+		public Group getGroup_3_1() { return cGroup_3_1; }
+
+		//instructions+=Instruction
+		public Assignment getInstructionsAssignment_3_1_0() { return cInstructionsAssignment_3_1_0; }
+
+		//Instruction
+		public RuleCall getInstructionsInstructionParserRuleCall_3_1_0_0() { return cInstructionsInstructionParserRuleCall_3_1_0_0; }
+
+		//instructions+=Comment
+		public Assignment getInstructionsAssignment_3_1_1() { return cInstructionsAssignment_3_1_1; }
+
+		//Comment
+		public RuleCall getInstructionsCommentParserRuleCall_3_1_1_0() { return cInstructionsCommentParserRuleCall_3_1_1_0; }
+
+		//{InstructionSet} instructions+=Instruction
+		public Group getGroup_4() { return cGroup_4; }
+
+		//{InstructionSet}
+		public Action getInstructionSetAction_4_0() { return cInstructionSetAction_4_0; }
+
+		//instructions+=Instruction
+		public Assignment getInstructionsAssignment_4_1() { return cInstructionsAssignment_4_1; }
+
+		//Instruction
+		public RuleCall getInstructionsInstructionParserRuleCall_4_1_0() { return cInstructionsInstructionParserRuleCall_4_1_0; }
+	}
+
+	public class InstructionSetSingleAssignmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionSetSingleAssignment");
+		private final RuleCall cInstructionParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//InstructionSetSingleAssignment:
+		//
+		//	Instruction;
+		public ParserRule getRule() { return rule; }
+
+		//Instruction
+		public RuleCall getInstructionParserRuleCall() { return cInstructionParserRuleCall; }
+	}
+
+	public class InstructionOrCommentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionOrComment");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cInstructionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cCommentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//InstructionOrComment:
+		//
+		//	Instruction | Comment;
+		public ParserRule getRule() { return rule; }
+
+		//Instruction | Comment
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Instruction
+		public RuleCall getInstructionParserRuleCall_0() { return cInstructionParserRuleCall_0; }
+
+		//Comment
+		public RuleCall getCommentParserRuleCall_1() { return cCommentParserRuleCall_1; }
+	}
+
+	public class InstructionOrCommentSequenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionOrCommentSequence");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final RuleCall cInstructionParserRuleCall_0_0 = (RuleCall)cGroup_0.eContents().get(0);
+		private final Keyword cSemicolonKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final RuleCall cCommentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//InstructionOrCommentSequence:
+		//
+		//	Instruction ";" | Comment;
+		public ParserRule getRule() { return rule; }
+
+		//Instruction ";" | Comment
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Instruction ";"
+		public Group getGroup_0() { return cGroup_0; }
+
+		//Instruction
+		public RuleCall getInstructionParserRuleCall_0_0() { return cInstructionParserRuleCall_0_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_0_1() { return cSemicolonKeyword_0_1; }
+
+		//Comment
+		public RuleCall getCommentParserRuleCall_1() { return cCommentParserRuleCall_1; }
 	}
 
 	public class LabelElements extends AbstractParserRuleElementFinder {
@@ -126,23 +371,41 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 	}
 
-	public class AssignmentElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Assignment");
-		private final Assignment cAssignmentAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cAssignmentSTRINGTerminalRuleCall_0 = (RuleCall)cAssignmentAssignment.eContents().get(0);
+	public class ScopeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scope");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cVariablesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cVariablesLocalVariableParserRuleCall_1_0 = (RuleCall)cVariablesAssignment_1.eContents().get(0);
+		private final Assignment cScopeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cScopeInstructionSetParserRuleCall_2_0 = (RuleCall)cScopeAssignment_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
-		//Assignment returns SCLExpression: //    {Label}
+		//Scope:
 		//
-		//	assignment=STRING;
+		//	"{" variables+=LocalVariable* scope=InstructionSet "}";
 		public ParserRule getRule() { return rule; }
 
-		////    {Label}
-		//
-		//assignment=STRING
-		public Assignment getAssignmentAssignment() { return cAssignmentAssignment; }
+		//"{" variables+=LocalVariable* scope=InstructionSet "}"
+		public Group getGroup() { return cGroup; }
 
-		//STRING
-		public RuleCall getAssignmentSTRINGTerminalRuleCall_0() { return cAssignmentSTRINGTerminalRuleCall_0; }
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_0() { return cLeftCurlyBracketKeyword_0; }
+
+		//variables+=LocalVariable*
+		public Assignment getVariablesAssignment_1() { return cVariablesAssignment_1; }
+
+		//LocalVariable
+		public RuleCall getVariablesLocalVariableParserRuleCall_1_0() { return cVariablesLocalVariableParserRuleCall_1_0; }
+
+		//scope=InstructionSet
+		public Assignment getScopeAssignment_2() { return cScopeAssignment_2; }
+
+		//InstructionSet
+		public RuleCall getScopeInstructionSetParserRuleCall_2_0() { return cScopeInstructionSetParserRuleCall_2_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
 	public class ConditionalElements extends AbstractParserRuleElementFinder {
@@ -155,19 +418,17 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cConditionalAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cConditionalInstructionSetParserRuleCall_3_0 = (RuleCall)cConditionalAssignment_3.eContents().get(0);
 		private final Keyword cEndKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cDependenciesAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cDependenciesDependencyParserRuleCall_5_0 = (RuleCall)cDependenciesAssignment_5.eContents().get(0);
 		
-		//Conditional: //    {Label}
+		//Conditional:
 		//
-		//	"if" expression=SCLExpression "then" conditional=InstructionSet "end";
+		//	"if" expression=SCLExpression "then" conditional=InstructionSet "end" dependencies=Dependency;
 		public ParserRule getRule() { return rule; }
 
-		////    {Label}
-		//
-		//"if" expression=SCLExpression "then" conditional=InstructionSet "end"
+		//"if" expression=SCLExpression "then" conditional=InstructionSet "end" dependencies=Dependency
 		public Group getGroup() { return cGroup; }
 
-		////    {Label}
-		//
 		//"if"
 		public Keyword getIfKeyword_0() { return cIfKeyword_0; }
 
@@ -188,6 +449,12 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"end"
 		public Keyword getEndKeyword_4() { return cEndKeyword_4; }
+
+		//dependencies=Dependency
+		public Assignment getDependenciesAssignment_5() { return cDependenciesAssignment_5; }
+
+		//Dependency
+		public RuleCall getDependenciesDependencyParserRuleCall_5_0() { return cDependenciesDependencyParserRuleCall_5_0; }
 	}
 
 	public class GotoElements extends AbstractParserRuleElementFinder {
@@ -274,32 +541,61 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class PauseElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Pause");
-		private final Assignment cPauseAssignment = (Assignment)rule.eContents().get(1);
-		private final Keyword cPausePauseKeyword_0 = (Keyword)cPauseAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cPauseKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Action cPauseAction_1 = (Action)cGroup.eContents().get(1);
 		
 		//Pause: //    {Label}
 		//
-		//	pause="pause";
+		//	"pause" {Pause};
 		public ParserRule getRule() { return rule; }
 
 		////    {Label}
 		//
-		//pause="pause"
-		public Assignment getPauseAssignment() { return cPauseAssignment; }
+		//"pause" {Pause}
+		public Group getGroup() { return cGroup; }
 
+		////    {Label}
+		//
 		//"pause"
-		public Keyword getPausePauseKeyword_0() { return cPausePauseKeyword_0; }
+		public Keyword getPauseKeyword_0() { return cPauseKeyword_0; }
+
+		//{Pause}
+		public Action getPauseAction_1() { return cPauseAction_1; }
+	}
+
+	public class CommentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Comment");
+		private final Assignment cCommentAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cCommentSL_COMMENTTerminalRuleCall_0 = (RuleCall)cCommentAssignment.eContents().get(0);
+		
+		//Comment:
+		//
+		//	comment=SL_COMMENT;
+		public ParserRule getRule() { return rule; }
+
+		//comment=SL_COMMENT
+		public Assignment getCommentAssignment() { return cCommentAssignment; }
+
+		//SL_COMMENT
+		public RuleCall getCommentSL_COMMENTTerminalRuleCall_0() { return cCommentSL_COMMENTTerminalRuleCall_0; }
 	}
 	
 	
 	private InstructionElements pInstruction;
-	private InstructionSetElements pInstructionSet;
-	private LabelElements pLabel;
 	private AssignmentElements pAssignment;
+	private DependencyElements pDependency;
+	private InstructionSetElements pInstructionSet;
+	private InstructionSetSingleAssignmentElements pInstructionSetSingleAssignment;
+	private InstructionOrCommentElements pInstructionOrComment;
+	private InstructionOrCommentSequenceElements pInstructionOrCommentSequence;
+	private LabelElements pLabel;
+	private ScopeElements pScope;
 	private ConditionalElements pConditional;
 	private GotoElements pGoto;
 	private ParallelElements pParallel;
 	private PauseElements pPause;
+	private CommentElements pComment;
 	
 	private final Grammar grammar;
 
@@ -341,7 +637,7 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Instruction:
 	//
-	//	Assignment | Conditional | Goto | Parallel | Pause "priority" priority=INT ("dependency" dependencies+=Instruction)*;
+	//	(Assignment | Conditional | Goto | Parallel | Pause | Label | Scope) "priority" priority=INT;
 	public InstructionElements getInstructionAccess() {
 		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
 	}
@@ -350,15 +646,74 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 		return getInstructionAccess().getRule();
 	}
 
+	//Assignment: //    {Label}
+	//
+	//	assignment=STRING dependencies=Dependency;
+	public AssignmentElements getAssignmentAccess() {
+		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
+	}
+	
+	public ParserRule getAssignmentRule() {
+		return getAssignmentAccess().getRule();
+	}
+
+	//Dependency:
+	//
+	//	{Dependency} ("dependency" dependencies+=[Assignment])*;
+	public DependencyElements getDependencyAccess() {
+		return (pDependency != null) ? pDependency : (pDependency = new DependencyElements());
+	}
+	
+	public ParserRule getDependencyRule() {
+		return getDependencyAccess().getRule();
+	}
+
 	//InstructionSet:
 	//
-	//	instructions+=Instruction+;
+	//	{InstructionSet} (instructions+=InstructionOrCommentSequence+ instructions+=Instruction instructions+=Comment?) |
+	//
+	//	{InstructionSet} (instructions+=Comment instructions+=Instruction) | instructions+=Comment | {InstructionSet}
+	//
+	//	(instructions+=Instruction instructions+=Comment) | {InstructionSet} instructions+=Instruction;
 	public InstructionSetElements getInstructionSetAccess() {
 		return (pInstructionSet != null) ? pInstructionSet : (pInstructionSet = new InstructionSetElements());
 	}
 	
 	public ParserRule getInstructionSetRule() {
 		return getInstructionSetAccess().getRule();
+	}
+
+	//InstructionSetSingleAssignment:
+	//
+	//	Instruction;
+	public InstructionSetSingleAssignmentElements getInstructionSetSingleAssignmentAccess() {
+		return (pInstructionSetSingleAssignment != null) ? pInstructionSetSingleAssignment : (pInstructionSetSingleAssignment = new InstructionSetSingleAssignmentElements());
+	}
+	
+	public ParserRule getInstructionSetSingleAssignmentRule() {
+		return getInstructionSetSingleAssignmentAccess().getRule();
+	}
+
+	//InstructionOrComment:
+	//
+	//	Instruction | Comment;
+	public InstructionOrCommentElements getInstructionOrCommentAccess() {
+		return (pInstructionOrComment != null) ? pInstructionOrComment : (pInstructionOrComment = new InstructionOrCommentElements());
+	}
+	
+	public ParserRule getInstructionOrCommentRule() {
+		return getInstructionOrCommentAccess().getRule();
+	}
+
+	//InstructionOrCommentSequence:
+	//
+	//	Instruction ";" | Comment;
+	public InstructionOrCommentSequenceElements getInstructionOrCommentSequenceAccess() {
+		return (pInstructionOrCommentSequence != null) ? pInstructionOrCommentSequence : (pInstructionOrCommentSequence = new InstructionOrCommentSequenceElements());
+	}
+	
+	public ParserRule getInstructionOrCommentSequenceRule() {
+		return getInstructionOrCommentSequenceAccess().getRule();
 	}
 
 	//Label:
@@ -372,20 +727,20 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 		return getLabelAccess().getRule();
 	}
 
-	//Assignment returns SCLExpression: //    {Label}
+	//Scope:
 	//
-	//	assignment=STRING;
-	public AssignmentElements getAssignmentAccess() {
-		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
+	//	"{" variables+=LocalVariable* scope=InstructionSet "}";
+	public ScopeElements getScopeAccess() {
+		return (pScope != null) ? pScope : (pScope = new ScopeElements());
 	}
 	
-	public ParserRule getAssignmentRule() {
-		return getAssignmentAccess().getRule();
+	public ParserRule getScopeRule() {
+		return getScopeAccess().getRule();
 	}
 
-	//Conditional: //    {Label}
+	//Conditional:
 	//
-	//	"if" expression=SCLExpression "then" conditional=InstructionSet "end";
+	//	"if" expression=SCLExpression "then" conditional=InstructionSet "end" dependencies=Dependency;
 	public ConditionalElements getConditionalAccess() {
 		return (pConditional != null) ? pConditional : (pConditional = new ConditionalElements());
 	}
@@ -418,13 +773,24 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Pause: //    {Label}
 	//
-	//	pause="pause";
+	//	"pause" {Pause};
 	public PauseElements getPauseAccess() {
 		return (pPause != null) ? pPause : (pPause = new PauseElements());
 	}
 	
 	public ParserRule getPauseRule() {
 		return getPauseAccess().getRule();
+	}
+
+	//Comment:
+	//
+	//	comment=SL_COMMENT;
+	public CommentElements getCommentAccess() {
+		return (pComment != null) ? pComment : (pComment = new CommentElements());
+	}
+	
+	public ParserRule getCommentRule() {
+		return getCommentAccess().getRule();
 	}
 
 	//Program:
@@ -449,9 +815,26 @@ public class SCGGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableAccess().getRule();
 	}
 
-	//SCLExpression returns stext::Expression:
+	////LocalVariable returns stext::VariableDefinition:
 	//
-	//	{SCLExpression} STRING;
+	////    ('local') type=[types::Type] (name=STRING)';'
+	//
+	////;
+	//
+	//LocalVariable:
+	//
+	//	"local" type=STRING name=STRING ";";
+	public SCLGrammarAccess.LocalVariableElements getLocalVariableAccess() {
+		return gaSCL.getLocalVariableAccess();
+	}
+	
+	public ParserRule getLocalVariableRule() {
+		return getLocalVariableAccess().getRule();
+	}
+
+	//SCLExpression:
+	//
+	//	STRING;
 	public SCLGrammarAccess.SCLExpressionElements getSCLExpressionAccess() {
 		return gaSCL.getSCLExpressionAccess();
 	}

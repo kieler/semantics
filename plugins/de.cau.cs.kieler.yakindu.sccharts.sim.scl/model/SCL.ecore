@@ -31,7 +31,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="scope" eType="#//InstructionSet"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SCLExpression" eSuperTypes="#//Instruction">
+  <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="assignment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction">

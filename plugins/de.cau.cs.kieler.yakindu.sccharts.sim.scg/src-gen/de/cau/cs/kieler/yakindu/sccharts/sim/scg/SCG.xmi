@@ -11,22 +11,54 @@
       <type metamodel="/0/@metamodelDeclarations.1">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//Instruction"/>
       </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
-        <elements xsi:type="xtext:Group">
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
           <elements xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
-          <elements xsi:type="xtext:Keyword" value="priority"/>
-          <elements xsi:type="xtext:Assignment" feature="priority" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value="dependency"/>
-            <elements xsi:type="xtext:Assignment" feature="dependencies" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
-            </elements>
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="priority"/>
+        <elements xsi:type="xtext:Assignment" feature="priority" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Assignment">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//Assignment"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" feature="assignment" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="dependencies" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Dependency">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//Dependency"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.1">
+            <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//Dependency"/>
+          </type>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value="dependency"/>
+          <elements xsi:type="xtext:Assignment" feature="dependencies" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.1">
+                <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//Assignment"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+            </terminal>
           </elements>
         </elements>
       </alternatives>
@@ -35,8 +67,95 @@
       <type metamodel="/0/@metamodelDeclarations.1">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//InstructionSet"/>
       </type>
-      <alternatives xsi:type="xtext:Assignment" cardinality="+" feature="instructions" operator="+=">
-        <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
+            <type metamodel="/0/@metamodelDeclarations.1">
+              <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//InstructionSet"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Assignment" cardinality="+" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" cardinality="?" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
+            <type metamodel="/0/@metamodelDeclarations.1">
+              <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//InstructionSet"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
+            <type metamodel="/0/@metamodelDeclarations.1">
+              <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//InstructionSet"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
+            <type metamodel="/0/@metamodelDeclarations.1">
+              <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//InstructionSet"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="InstructionSetSingleAssignment">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//InstructionSetSingleAssignment"/>
+      </type>
+      <alternatives xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="InstructionOrComment">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//InstructionOrComment"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="InstructionOrCommentSequence">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//InstructionOrCommentSequence"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Label">
@@ -50,12 +169,19 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Assignment">
+    <rules xsi:type="xtext:ParserRule" name="Scope">
       <type metamodel="/0/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//SCLExpression"/>
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//Scope"/>
       </type>
-      <alternatives xsi:type="xtext:Assignment" feature="assignment" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="variables" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="scope" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Conditional">
@@ -65,13 +191,16 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="if"/>
         <elements xsi:type="xtext:Assignment" feature="expression" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="then"/>
         <elements xsi:type="xtext:Assignment" feature="conditional" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="end"/>
+        <elements xsi:type="xtext:Assignment" feature="dependencies" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Goto">
@@ -93,12 +222,12 @@
         <elements xsi:type="xtext:Keyword" value="fork"/>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="threads" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
           </elements>
           <elements xsi:type="xtext:Group" cardinality="+">
             <elements xsi:type="xtext:Keyword" value="par"/>
             <elements xsi:type="xtext:Assignment" feature="threads" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
             </elements>
           </elements>
         </elements>
@@ -109,8 +238,21 @@
       <type metamodel="/0/@metamodelDeclarations.1">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//Pause"/>
       </type>
-      <alternatives xsi:type="xtext:Assignment" feature="pause" operator="=">
-        <terminal xsi:type="xtext:Keyword" value="pause"/>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="pause"/>
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.1">
+            <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//Pause"/>
+          </type>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Comment">
+      <type metamodel="/0/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg#//Comment"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" feature="comment" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
       </alternatives>
     </rules>
   </xtext:Grammar>
@@ -153,7 +295,7 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" feature="program" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -181,40 +323,134 @@
         <elements xsi:type="xtext:Keyword" value=";"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="SCLExpression">
-      <type metamodel="/1/@metamodelDeclarations.4">
-        <classifier xsi:type="ecore:EClass" href="http://www.yakindu.org/sct/statechart/SText#//Expression"/>
+    <rules xsi:type="xtext:ParserRule" name="LocalVariable">
+      <type metamodel="/1/@metamodelDeclarations.7">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//LocalVariable"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Action">
-          <type metamodel="/1/@metamodelDeclarations.7">
-            <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//SCLExpression"/>
-          </type>
+        <elements xsi:type="xtext:Keyword" value="local"/>
+        <elements xsi:type="xtext:Assignment" feature="type" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
       </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="SCLExpression">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Instruction">
       <type metamodel="/1/@metamodelDeclarations.7">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//Instruction"/>
       </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Alternatives">
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value=";"/>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="InstructionSet">
       <type metamodel="/1/@metamodelDeclarations.7">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//InstructionSet"/>
       </type>
-      <alternatives xsi:type="xtext:Assignment" cardinality="+" feature="instructions" operator="+=">
-        <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
+            <type metamodel="/1/@metamodelDeclarations.7">
+              <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//InstructionSet"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Assignment" cardinality="+" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" cardinality="?" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
+            <type metamodel="/1/@metamodelDeclarations.7">
+              <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//InstructionSet"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
+            <type metamodel="/1/@metamodelDeclarations.7">
+              <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//InstructionSet"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
+            <type metamodel="/1/@metamodelDeclarations.7">
+              <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//InstructionSet"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="instructions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="InstructionSetSingleAssignment">
+      <type metamodel="/1/@metamodelDeclarations.7">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//InstructionSetSingleAssignment"/>
+      </type>
+      <alternatives xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="InstructionOrComment">
+      <type metamodel="/1/@metamodelDeclarations.7">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//InstructionOrComment"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="InstructionOrCommentSequence">
+      <type metamodel="/1/@metamodelDeclarations.7">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//InstructionOrCommentSequence"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Label">
@@ -228,9 +464,24 @@
         </elements>
       </alternatives>
     </rules>
+    <rules xsi:type="xtext:ParserRule" name="Scope">
+      <type metamodel="/1/@metamodelDeclarations.7">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//Scope"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="variables" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="scope" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
     <rules xsi:type="xtext:ParserRule" name="Assignment">
       <type metamodel="/1/@metamodelDeclarations.7">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//SCLExpression"/>
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//Assignment"/>
       </type>
       <alternatives xsi:type="xtext:Assignment" feature="assignment" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
@@ -243,11 +494,11 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="if"/>
         <elements xsi:type="xtext:Assignment" feature="expression" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="then"/>
         <elements xsi:type="xtext:Assignment" feature="conditional" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="end"/>
       </alternatives>
@@ -271,12 +522,12 @@
         <elements xsi:type="xtext:Keyword" value="fork"/>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="threads" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
           </elements>
           <elements xsi:type="xtext:Group" cardinality="+">
             <elements xsi:type="xtext:Keyword" value="par"/>
             <elements xsi:type="xtext:Assignment" feature="threads" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
             </elements>
           </elements>
         </elements>
@@ -287,8 +538,21 @@
       <type metamodel="/1/@metamodelDeclarations.7">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//Pause"/>
       </type>
-      <alternatives xsi:type="xtext:Assignment" feature="pause" operator="=">
-        <terminal xsi:type="xtext:Keyword" value="pause"/>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="pause"/>
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/1/@metamodelDeclarations.7">
+            <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//Pause"/>
+          </type>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Comment">
+      <type metamodel="/1/@metamodelDeclarations.7">
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//Comment"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" feature="comment" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
       </alternatives>
     </rules>
   </xtext:Grammar>

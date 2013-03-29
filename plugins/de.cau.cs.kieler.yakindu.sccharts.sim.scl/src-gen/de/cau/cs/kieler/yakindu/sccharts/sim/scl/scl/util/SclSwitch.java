@@ -146,14 +146,14 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SclPackage.SCL_EXPRESSION:
+      case SclPackage.ASSIGNMENT:
       {
-        SCLExpression sclExpression = (SCLExpression)theEObject;
-        T result = caseSCLExpression(sclExpression);
-        if (result == null) result = caseInstruction(sclExpression);
-        if (result == null) result = caseInstructionSetSingleAssignment(sclExpression);
-        if (result == null) result = caseInstructionOrComment(sclExpression);
-        if (result == null) result = caseInstructionOrCommentSequence(sclExpression);
+        Assignment assignment = (Assignment)theEObject;
+        T result = caseAssignment(assignment);
+        if (result == null) result = caseInstruction(assignment);
+        if (result == null) result = caseInstructionSetSingleAssignment(assignment);
+        if (result == null) result = caseInstructionOrComment(assignment);
+        if (result == null) result = caseInstructionOrCommentSequence(assignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -359,17 +359,17 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>SCL Expression</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>SCL Expression</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSCLExpression(SCLExpression object)
+  public T caseAssignment(Assignment object)
   {
     return null;
   }

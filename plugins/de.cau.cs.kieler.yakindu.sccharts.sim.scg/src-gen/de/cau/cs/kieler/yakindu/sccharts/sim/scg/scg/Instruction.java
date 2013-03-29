@@ -13,6 +13,6 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg;
  * @model
  * @generated
  */
-public interface Instruction extends de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction
+public interface Instruction extends de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction, InstructionSetSingleAssignment, InstructionOrComment, InstructionOrCommentSequence
 {
 } // Instruction

@@ -10,12 +10,15 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -28,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl#getThreads <em>Threads</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl#getPriority <em>Priority</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,6 +48,26 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * @ordered
    */
   protected EList<InstructionSet> threads;
+
+  /**
+   * The default value of the '{@link #getPriority() <em>Priority</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPriority()
+   * @generated
+   * @ordered
+   */
+  protected static final int PRIORITY_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getPriority() <em>Priority</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPriority()
+   * @generated
+   * @ordered
+   */
+  protected int priority = PRIORITY_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -85,6 +109,29 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
+  public int getPriority()
+  {
+    return priority;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setPriority(int newPriority)
+  {
+    int oldPriority = priority;
+    priority = newPriority;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.PARALLEL__PRIORITY, oldPriority, priority));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -108,6 +155,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
     {
       case ScgPackage.PARALLEL__THREADS:
         return getThreads();
+      case ScgPackage.PARALLEL__PRIORITY:
+        return getPriority();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -127,6 +176,9 @@ public class ParallelImpl extends InstructionImpl implements Parallel
         getThreads().clear();
         getThreads().addAll((Collection<? extends InstructionSet>)newValue);
         return;
+      case ScgPackage.PARALLEL__PRIORITY:
+        setPriority((Integer)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -144,6 +196,9 @@ public class ParallelImpl extends InstructionImpl implements Parallel
       case ScgPackage.PARALLEL__THREADS:
         getThreads().clear();
         return;
+      case ScgPackage.PARALLEL__PRIORITY:
+        setPriority(PRIORITY_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -160,6 +215,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
     {
       case ScgPackage.PARALLEL__THREADS:
         return threads != null && !threads.isEmpty();
+      case ScgPackage.PARALLEL__PRIORITY:
+        return priority != PRIORITY_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -200,6 +257,23 @@ public class ParallelImpl extends InstructionImpl implements Parallel
       }
     }
     return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (priority: ");
+    result.append(priority);
+    result.append(')');
+    return result.toString();
   }
 
 } //ParallelImpl

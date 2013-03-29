@@ -485,7 +485,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAssignmentAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cAssignmentSTRINGTerminalRuleCall_0 = (RuleCall)cAssignmentAssignment.eContents().get(0);
 		
-		//Assignment returns SCLExpression: //    {Label}
+		//Assignment: //    {Label}
 		//
 		//	assignment=STRING;
 		public ParserRule getRule() { return rule; }
@@ -856,7 +856,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getScopeAccess().getRule();
 	}
 
-	//Assignment returns SCLExpression: //    {Label}
+	//Assignment: //    {Label}
 	//
 	//	assignment=STRING;
 	public AssignmentElements getAssignmentAccess() {

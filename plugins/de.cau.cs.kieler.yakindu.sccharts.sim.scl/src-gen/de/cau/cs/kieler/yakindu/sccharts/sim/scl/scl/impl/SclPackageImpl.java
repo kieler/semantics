@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
@@ -15,7 +16,6 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclFactory;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope;
@@ -105,7 +105,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass sclExpressionEClass = null;
+  private EClass assignmentEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -393,9 +393,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSCLExpression()
+  public EClass getAssignment()
   {
-    return sclExpressionEClass;
+    return assignmentEClass;
   }
 
   /**
@@ -403,9 +403,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSCLExpression_Assignment()
+  public EAttribute getAssignment_Assignment()
   {
-    return (EAttribute)sclExpressionEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)assignmentEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -565,8 +565,8 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEReference(scopeEClass, SCOPE__VARIABLES);
     createEReference(scopeEClass, SCOPE__SCOPE);
 
-    sclExpressionEClass = createEClass(SCL_EXPRESSION);
-    createEAttribute(sclExpressionEClass, SCL_EXPRESSION__ASSIGNMENT);
+    assignmentEClass = createEClass(ASSIGNMENT);
+    createEAttribute(assignmentEClass, ASSIGNMENT__ASSIGNMENT);
 
     conditionalEClass = createEClass(CONDITIONAL);
     createEAttribute(conditionalEClass, CONDITIONAL__EXPRESSION);
@@ -621,7 +621,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     instructionEClass.getESuperTypes().add(this.getInstructionOrCommentSequence());
     labelEClass.getESuperTypes().add(this.getInstruction());
     scopeEClass.getESuperTypes().add(this.getInstruction());
-    sclExpressionEClass.getESuperTypes().add(this.getInstruction());
+    assignmentEClass.getESuperTypes().add(this.getInstruction());
     conditionalEClass.getESuperTypes().add(this.getInstruction());
     gotoEClass.getESuperTypes().add(this.getInstruction());
     parallelEClass.getESuperTypes().add(this.getInstruction());
@@ -657,8 +657,8 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEReference(getScope_Variables(), this.getLocalVariable(), null, "variables", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getScope_Scope(), this.getInstructionSet(), null, "scope", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(sclExpressionEClass, SCLExpression.class, "SCLExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSCLExpression_Assignment(), ecorePackage.getEString(), "assignment", null, 0, 1, SCLExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAssignment_Assignment(), ecorePackage.getEString(), "assignment", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getConditional_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

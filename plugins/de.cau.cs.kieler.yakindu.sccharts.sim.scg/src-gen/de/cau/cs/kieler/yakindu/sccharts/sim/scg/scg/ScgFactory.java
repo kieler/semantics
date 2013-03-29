@@ -32,6 +32,24 @@ public interface ScgFactory extends EFactory
   Instruction createInstruction();
 
   /**
+   * Returns a new object of class '<em>Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Assignment</em>'.
+   * @generated
+   */
+  Assignment createAssignment();
+
+  /**
+   * Returns a new object of class '<em>Dependency</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Dependency</em>'.
+   * @generated
+   */
+  Dependency createDependency();
+
+  /**
    * Returns a new object of class '<em>Instruction Set</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -39,6 +57,33 @@ public interface ScgFactory extends EFactory
    * @generated
    */
   InstructionSet createInstructionSet();
+
+  /**
+   * Returns a new object of class '<em>Instruction Set Single Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instruction Set Single Assignment</em>'.
+   * @generated
+   */
+  InstructionSetSingleAssignment createInstructionSetSingleAssignment();
+
+  /**
+   * Returns a new object of class '<em>Instruction Or Comment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instruction Or Comment</em>'.
+   * @generated
+   */
+  InstructionOrComment createInstructionOrComment();
+
+  /**
+   * Returns a new object of class '<em>Instruction Or Comment Sequence</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instruction Or Comment Sequence</em>'.
+   * @generated
+   */
+  InstructionOrCommentSequence createInstructionOrCommentSequence();
 
   /**
    * Returns a new object of class '<em>Label</em>'.
@@ -50,13 +95,13 @@ public interface ScgFactory extends EFactory
   Label createLabel();
 
   /**
-   * Returns a new object of class '<em>SCL Expression</em>'.
+   * Returns a new object of class '<em>Scope</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>SCL Expression</em>'.
+   * @return a new object of class '<em>Scope</em>'.
    * @generated
    */
-  SCLExpression createSCLExpression();
+  Scope createScope();
 
   /**
    * Returns a new object of class '<em>Conditional</em>'.
@@ -93,6 +138,15 @@ public interface ScgFactory extends EFactory
    * @generated
    */
   Pause createPause();
+
+  /**
+   * Returns a new object of class '<em>Comment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Comment</em>'.
+   * @generated
+   */
+  Comment createComment();
 
   /**
    * Returns the package supported by this factory.

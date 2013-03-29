@@ -28,22 +28,9 @@ public abstract class AbstractSCGSyntacticSequencer extends AbstractSyntacticSeq
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if(ruleCall.getRule() == grammarAccess.getSTRINGRule())
-			return getSTRINGToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
-	/**
-	 * terminal STRING	: 
-	 * 			'"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
-	 * 			"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"
-	 * 		;
-	 */
-	protected String getSTRINGToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "\"\"";
-	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
@@ -59,7 +46,7 @@ public abstract class AbstractSCGSyntacticSequencer extends AbstractSyntacticSeq
 
 	/**
 	 * Syntax:
-	 *     'output' | 'input'
+	 *     'input' | 'output'
 	 */
 	protected void emit_Variable_InputKeyword_0_0_or_OutputKeyword_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

@@ -2,6 +2,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.serializer;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
@@ -11,7 +12,6 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.services.SCLGrammarAccess;
@@ -37,6 +37,16 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case SclPackage.ASSIGNMENT:
+				if(context == grammarAccess.getAssignmentRule() ||
+				   context == grammarAccess.getInstructionRule() ||
+				   context == grammarAccess.getInstructionOrCommentRule() ||
+				   context == grammarAccess.getInstructionOrCommentSequenceRule() ||
+				   context == grammarAccess.getInstructionSetSingleAssignmentRule()) {
+					sequence_Assignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else break;
 			case SclPackage.COMMENT:
 				if(context == grammarAccess.getCommentRule() ||
 				   context == grammarAccess.getInstructionOrCommentRule() ||
@@ -113,16 +123,6 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 					return; 
 				}
 				else break;
-			case SclPackage.SCL_EXPRESSION:
-				if(context == grammarAccess.getAssignmentRule() ||
-				   context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionOrCommentRule() ||
-				   context == grammarAccess.getInstructionOrCommentSequenceRule() ||
-				   context == grammarAccess.getInstructionSetSingleAssignmentRule()) {
-					sequence_Assignment(context, (SCLExpression) semanticObject); 
-					return; 
-				}
-				else break;
 			case SclPackage.SCOPE:
 				if(context == grammarAccess.getInstructionRule() ||
 				   context == grammarAccess.getInstructionOrCommentRule() ||
@@ -149,10 +149,10 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	 * Constraint:
 	 *     assignment=STRING
 	 */
-	protected void sequence_Assignment(EObject context, SCLExpression semanticObject) {
+	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.SCL_EXPRESSION__ASSIGNMENT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.SCL_EXPRESSION__ASSIGNMENT));
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.ASSIGNMENT__ASSIGNMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.ASSIGNMENT__ASSIGNMENT));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);

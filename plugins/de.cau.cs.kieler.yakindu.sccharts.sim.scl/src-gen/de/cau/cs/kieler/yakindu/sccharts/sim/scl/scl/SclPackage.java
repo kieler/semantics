@@ -309,14 +309,14 @@ public interface SclPackage extends EPackage
   int SCOPE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SCLExpressionImpl <em>SCL Expression</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SCLExpressionImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getSCLExpression()
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getAssignment()
    * @generated
    */
-  int SCL_EXPRESSION = 9;
+  int ASSIGNMENT = 9;
 
   /**
    * The feature id for the '<em><b>Assignment</b></em>' attribute.
@@ -325,16 +325,16 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCL_EXPRESSION__ASSIGNMENT = INSTRUCTION_FEATURE_COUNT + 0;
+  int ASSIGNMENT__ASSIGNMENT = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>SCL Expression</em>' class.
+   * The number of structural features of the '<em>Assignment</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCL_EXPRESSION_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -667,25 +667,25 @@ public interface SclPackage extends EPackage
   EReference getScope_Scope();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression <em>SCL Expression</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment <em>Assignment</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>SCL Expression</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression
+   * @return the meta object for class '<em>Assignment</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
    * @generated
    */
-  EClass getSCLExpression();
+  EClass getAssignment();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression#getAssignment <em>Assignment</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Assignment</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SCLExpression#getAssignment()
-   * @see #getSCLExpression()
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment()
+   * @see #getAssignment()
    * @generated
    */
-  EAttribute getSCLExpression_Assignment();
+  EAttribute getAssignment_Assignment();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional <em>Conditional</em>}'.
@@ -978,14 +978,14 @@ public interface SclPackage extends EPackage
     EReference SCOPE__SCOPE = eINSTANCE.getScope_Scope();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SCLExpressionImpl <em>SCL Expression</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SCLExpressionImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getSCLExpression()
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getAssignment()
      * @generated
      */
-    EClass SCL_EXPRESSION = eINSTANCE.getSCLExpression();
+    EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
     /**
      * The meta object literal for the '<em><b>Assignment</b></em>' attribute feature.
@@ -993,7 +993,7 @@ public interface SclPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SCL_EXPRESSION__ASSIGNMENT = eINSTANCE.getSCLExpression_Assignment();
+    EAttribute ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.

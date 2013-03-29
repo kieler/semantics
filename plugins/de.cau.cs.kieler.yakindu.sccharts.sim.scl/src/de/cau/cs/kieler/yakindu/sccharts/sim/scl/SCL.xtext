@@ -83,7 +83,7 @@ Scope:
     '}'
 ;
 
-Assignment returns SCLExpression:
+Assignment:
 //    {Label}
     assignment=STRING
 ;

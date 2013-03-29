@@ -73,7 +73,7 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
       case SclPackage.INSTRUCTION_OR_COMMENT_SEQUENCE: return createInstructionOrCommentSequence();
       case SclPackage.LABEL: return createLabel();
       case SclPackage.SCOPE: return createScope();
-      case SclPackage.SCL_EXPRESSION: return createSCLExpression();
+      case SclPackage.ASSIGNMENT: return createAssignment();
       case SclPackage.CONDITIONAL: return createConditional();
       case SclPackage.GOTO: return createGoto();
       case SclPackage.PARALLEL: return createParallel();
@@ -188,10 +188,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public SCLExpression createSCLExpression()
+  public Assignment createAssignment()
   {
-    SCLExpressionImpl sclExpression = new SCLExpressionImpl();
-    return sclExpression;
+    AssignmentImpl assignment = new AssignmentImpl();
+    return assignment;
   }
 
   /**

@@ -225,7 +225,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Assignment">
       <type metamodel="/0/@metamodelDeclarations.7">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//SCLExpression"/>
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl#//Assignment"/>
       </type>
       <alternatives xsi:type="xtext:Assignment" feature="assignment" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>

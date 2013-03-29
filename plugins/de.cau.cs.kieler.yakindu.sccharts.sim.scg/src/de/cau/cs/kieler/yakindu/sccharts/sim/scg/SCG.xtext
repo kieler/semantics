@@ -5,30 +5,74 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 generate scg "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg"
 
+
 Instruction:
-    Assignment | Conditional | Goto | Parallel | Pause
-    'priority' priority=INT
-    ('dependency' dependencies += Instruction)* 
+    (Assignment | Conditional | Goto | Parallel | Pause | Label | Scope)
+    'priority' priority=INT 
+;
+
+Assignment:
+//    {Label}
+    assignment=STRING
+    dependencies = Dependency
+;
+
+Dependency:
+    {Dependency}
+    ('dependency' dependencies += [Assignment])* 
 ;
 
 InstructionSet:
-    (instructions += Instruction)+ 
+  {InstructionSet}
+  (
+      (instructions += InstructionOrCommentSequence)+
+      (instructions += Instruction)
+      (instructions += Comment)?      
+  ) |
+  {InstructionSet}
+  (
+      (instructions += Comment)
+      (instructions += Instruction)
+  ) |
+  (instructions += Comment) |
+  {InstructionSet}
+  (
+      (instructions += Instruction)
+      (instructions += Comment)
+  ) |
+  {InstructionSet}
+  (instructions += Instruction) 
+;
+
+InstructionSetSingleAssignment:
+    Instruction
+;
+
+InstructionOrComment:
+    Instruction | Comment
+;
+
+InstructionOrCommentSequence:
+    (Instruction';') | Comment
 ;
 
 Label:
     'label:' name = ID
 ;
 
-Assignment returns SCLExpression:
-//    {Label}
-    assignment=STRING
+Scope:
+    '{'
+        (variables+=LocalVariable)*
+        scope = InstructionSet 
+    '}'
 ;
 
+
 Conditional:
-//    {Label}
     'if' expression = SCLExpression 'then'
         conditional = InstructionSet
-    'end'
+    'end' 
+    dependencies = Dependency
 ;
 
 Goto:
@@ -45,7 +89,13 @@ Parallel:
     'join'
 ;
 
+
 Pause:
 //    {Label}
-    pause = 'pause'
+    'pause' {Pause}
+;
+
+
+Comment:
+    comment = SL_COMMENT
 ;

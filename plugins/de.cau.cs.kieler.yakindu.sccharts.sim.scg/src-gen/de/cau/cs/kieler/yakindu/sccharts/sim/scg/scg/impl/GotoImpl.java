@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.GotoImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.GotoImpl#getPriority <em>Priority</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,6 +48,26 @@ public class GotoImpl extends InstructionImpl implements Goto
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getPriority() <em>Priority</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPriority()
+   * @generated
+   * @ordered
+   */
+  protected static final int PRIORITY_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getPriority() <em>Priority</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPriority()
+   * @generated
+   * @ordered
+   */
+  protected int priority = PRIORITY_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -97,6 +118,29 @@ public class GotoImpl extends InstructionImpl implements Goto
    * <!-- end-user-doc -->
    * @generated
    */
+  public int getPriority()
+  {
+    return priority;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setPriority(int newPriority)
+  {
+    int oldPriority = priority;
+    priority = newPriority;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GOTO__PRIORITY, oldPriority, priority));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -104,6 +148,8 @@ public class GotoImpl extends InstructionImpl implements Goto
     {
       case ScgPackage.GOTO__NAME:
         return getName();
+      case ScgPackage.GOTO__PRIORITY:
+        return getPriority();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -120,6 +166,9 @@ public class GotoImpl extends InstructionImpl implements Goto
     {
       case ScgPackage.GOTO__NAME:
         setName((String)newValue);
+        return;
+      case ScgPackage.GOTO__PRIORITY:
+        setPriority((Integer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -138,6 +187,9 @@ public class GotoImpl extends InstructionImpl implements Goto
       case ScgPackage.GOTO__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case ScgPackage.GOTO__PRIORITY:
+        setPriority(PRIORITY_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -154,6 +206,8 @@ public class GotoImpl extends InstructionImpl implements Goto
     {
       case ScgPackage.GOTO__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case ScgPackage.GOTO__PRIORITY:
+        return priority != PRIORITY_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -209,6 +263,8 @@ public class GotoImpl extends InstructionImpl implements Goto
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", priority: ");
+    result.append(priority);
     result.append(')');
     return result.toString();
   }
