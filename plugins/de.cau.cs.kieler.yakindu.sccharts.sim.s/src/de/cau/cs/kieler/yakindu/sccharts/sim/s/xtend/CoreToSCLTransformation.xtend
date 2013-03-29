@@ -84,7 +84,7 @@ class CoreToSCLTransformation {
             iSet.scope.instructions.addAll(stateInstructions.scope.instructions);
         }
         
-        iSet;
+        iSet.optimizeScopeGoto.optimizeScopeLabel();
     }
     
     def Scope transformCoreState(SyncState state) {
@@ -139,32 +139,49 @@ class CoreToSCLTransformation {
             } else {
                 // STATE IS NOT A FINAL STATE
                 
-                iSet.addPause();
-
-                var boolean bDefaultTransition = false;
-                var Goto defaultTransition;
-                for(transition : outgoingWeakTransitions) {
-                    val targetState = transition.target as SyncState; 
-                    var goto = createSCLGoto(targetState.getHierarchicalName(""));
-              
-                    if (transition.getSpecification().nullOrEmpty) {
-                        defaultTransition = goto.copy;
-                        bDefaultTransition = true;                  
-                    } else {
-                        var conditional = SclFactory::eINSTANCE.createConditional();
-                        conditional.setExpression("'" + transition.getSpecification() + "'");
-                        conditional.addInstruction(goto);   
+                val transitionCount = outgoingWeakTransitions.size;
                 
-                        iSet.addInstruction(conditional);
-                    }
+                iSet.addPause();
+                
+                if (transitionCount==1) {
+                    // OPTIMIZE GOTO
+                    val transition = outgoingWeakTransitions.get(0);
+                    val targetState = transition.target as SyncState; 
+                    var cSet = createSCLInstructionSet(createSCLGoto(stateID));
+                    var conditional = createSCLConditional("'!(" + transition.getSpecification() + ")'", cSet);
+                    var goto = createSCLGoto(targetState.getHierarchicalName(""));
+                    iSet.addInstruction(conditional);
+                    iSet.addInstruction(goto);
+                    
+                } else { 
+                    // MORE TRANSITIONS (no optimize)
+                
+                    var boolean bDefaultTransition = false;
+                    var Goto defaultTransition;
+                    for(transition : outgoingWeakTransitions) {
+                        val targetState = transition.target as SyncState; 
+                        var goto = createSCLGoto(targetState.getHierarchicalName(""));
+              
+                        if (transition.getSpecification().nullOrEmpty) {
+                            defaultTransition = goto.copy;
+                            bDefaultTransition = true;                  
+                        } else {
+                            var conditional = SclFactory::eINSTANCE.createConditional();
+                            conditional.setExpression("'" + transition.getSpecification() + "'");
+                            conditional.addInstruction(goto);   
+                
+                            iSet.addInstruction(conditional);
+                        }
                             
-                }
-            
-                if (bDefaultTransition) {
-                    iSet.addInstruction(defaultTransition);
-                } else {
-                    iSet.addInstruction(createSCLGoto(stateID));
-                }
+                    }
+                
+                    if (bDefaultTransition) {
+                        iSet.addInstruction(defaultTransition);
+                    } else {
+                        iSet.addInstruction(createSCLGoto(stateID));
+                    }
+                    
+                } // optimize single transition
                 
             } // isFinal
         
@@ -175,5 +192,47 @@ class CoreToSCLTransformation {
         iSet;        
     }
  
+ 
+    def Scope optimizeScopeGoto(Scope scope) {
+        var newScope = createSCLScope("");
+        newScope.variables.addAll(scope.variables);
+        
+        for(Integer i: 0..(scope.getScope().instructions.size - 1)) {
+            var boolean skip = false
+            val instruction = scope.getScope().instructions.get(i);
+            
+            if (instruction instanceof Goto && i < scope.getScope().instructions.size - 1) {
+                val nextInstruction = scope.getScope().instructions.get(i+1);
+                if (nextInstruction!=null && nextInstruction instanceof Label) {
+                    if ((instruction as Goto).getName().equals((nextInstruction as Label).getName())) { skip = true }  
+                }
+            }
+            
+            if (!skip) { newScope.addInstruction(instruction.copy); }
+        }
+      
+      newScope;  
+    }
+    
+    def Scope optimizeScopeLabel(Scope scope) {
+        var newScope = createSCLScope("");
+        newScope.variables.addAll(scope.variables);
+        val gotos = ImmutableList::copyOf(scope.getScope().eAllContents().toIterable().filter(typeof(Goto)));
+        
+
+        for(Integer i: 0..(scope.getScope().instructions.size - 1)) {
+            var boolean skip = false
+            val instruction = scope.getScope().instructions.get(i);
+            
+            if (instruction instanceof Label && i < scope.getScope().instructions.size - 1) {
+                if (!gotos.exists(e | e.getName()==(instruction as Label).getName())) { skip = true }    
+            }
+            
+            if (!skip) { newScope.addInstruction(instruction.copy); }
+            
+        }
+        
+        newScope;
+    }
  
 }

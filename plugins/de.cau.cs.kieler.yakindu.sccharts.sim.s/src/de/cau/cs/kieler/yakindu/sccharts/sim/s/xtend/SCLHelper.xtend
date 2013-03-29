@@ -45,6 +45,8 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrComment;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence;
 
 class SCLHelper {
     
@@ -74,6 +76,12 @@ class SCLHelper {
     def InstructionSet createSCLInstructionSet()
     {
         SCL.createInstructionSet();
+    }
+    
+    def InstructionSet createSCLInstructionSet(Instruction instruction) {
+        var iSet = createSCLInstructionSet();
+        iSet.addInstruction(instruction);
+        iSet;
     }
     
     def Goto createSCLGoto(String targetLabelName)
@@ -110,6 +118,13 @@ class SCLHelper {
         SCL.createPause();
     }
     
+    def Conditional createSCLConditional(String expression, InstructionSet iSet) {
+        var conditional = SCL.createConditional();
+        conditional.setExpression(expression);
+        conditional.setConditional(iSet)
+        conditional;
+    }
+    
     // ======================================================================================================
     // ==                I N S T R U C T I O N    M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
@@ -138,6 +153,11 @@ class SCLHelper {
         }
         iSet.instructions.add(comment);
         sSet.scope = iSet    
+    }
+    
+    def void addInstruction(Scope sSet, InstructionOrCommentSequence ioc) {
+        if (ioc instanceof Instruction) { sSet.addInstruction(ioc as Instruction) }
+          else { sSet.addInstruction(ioc as Comment) }
     }
     
     def void addInstruction(Conditional conditional, Instruction instruction) {
