@@ -14,6 +14,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.services.SCLGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -26,8 +27,6 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEOb
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
-import org.yakindu.sct.model.stext.stext.StextPackage;
-import org.yakindu.sct.model.stext.stext.VariableDefinition;
 
 @SuppressWarnings("all")
 public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -40,16 +39,13 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 			case SclPackage.ASSIGNMENT:
 				if(context == grammarAccess.getAssignmentRule() ||
 				   context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionOrCommentRule() ||
-				   context == grammarAccess.getInstructionOrCommentSequenceRule() ||
-				   context == grammarAccess.getInstructionSetSingleAssignmentRule()) {
+				   context == grammarAccess.getInstructionOrCommentSequenceRule()) {
 					sequence_Assignment(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.COMMENT:
 				if(context == grammarAccess.getCommentRule() ||
-				   context == grammarAccess.getInstructionOrCommentRule() ||
 				   context == grammarAccess.getInstructionOrCommentSequenceRule()) {
 					sequence_Comment(context, (Comment) semanticObject); 
 					return; 
@@ -58,9 +54,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 			case SclPackage.CONDITIONAL:
 				if(context == grammarAccess.getConditionalRule() ||
 				   context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionOrCommentRule() ||
-				   context == grammarAccess.getInstructionOrCommentSequenceRule() ||
-				   context == grammarAccess.getInstructionSetSingleAssignmentRule()) {
+				   context == grammarAccess.getInstructionOrCommentSequenceRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
 					return; 
 				}
@@ -68,9 +62,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 			case SclPackage.GOTO:
 				if(context == grammarAccess.getGotoRule() ||
 				   context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionOrCommentRule() ||
-				   context == grammarAccess.getInstructionOrCommentSequenceRule() ||
-				   context == grammarAccess.getInstructionSetSingleAssignmentRule()) {
+				   context == grammarAccess.getInstructionOrCommentSequenceRule()) {
 					sequence_Goto(context, (Goto) semanticObject); 
 					return; 
 				}
@@ -83,9 +75,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 				else break;
 			case SclPackage.LABEL:
 				if(context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionOrCommentRule() ||
 				   context == grammarAccess.getInstructionOrCommentSequenceRule() ||
-				   context == grammarAccess.getInstructionSetSingleAssignmentRule() ||
 				   context == grammarAccess.getLabelRule()) {
 					sequence_Label(context, (Label) semanticObject); 
 					return; 
@@ -99,9 +89,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 				else break;
 			case SclPackage.PARALLEL:
 				if(context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionOrCommentRule() ||
 				   context == grammarAccess.getInstructionOrCommentSequenceRule() ||
-				   context == grammarAccess.getInstructionSetSingleAssignmentRule() ||
 				   context == grammarAccess.getParallelRule()) {
 					sequence_Parallel(context, (Parallel) semanticObject); 
 					return; 
@@ -109,9 +97,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 				else break;
 			case SclPackage.PAUSE:
 				if(context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionOrCommentRule() ||
 				   context == grammarAccess.getInstructionOrCommentSequenceRule() ||
-				   context == grammarAccess.getInstructionSetSingleAssignmentRule() ||
 				   context == grammarAccess.getPauseRule()) {
 					sequence_Pause(context, (Pause) semanticObject); 
 					return; 
@@ -125,19 +111,15 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 				else break;
 			case SclPackage.SCOPE:
 				if(context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionOrCommentRule() ||
 				   context == grammarAccess.getInstructionOrCommentSequenceRule() ||
-				   context == grammarAccess.getInstructionSetSingleAssignmentRule() ||
 				   context == grammarAccess.getScopeRule()) {
 					sequence_Scope(context, (Scope) semanticObject); 
 					return; 
 				}
 				else break;
-			}
-		else if(semanticObject.eClass().getEPackage() == StextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case StextPackage.VARIABLE_DEFINITION:
+			case SclPackage.VARIABLE:
 				if(context == grammarAccess.getVariableRule()) {
-					sequence_Variable(context, (VariableDefinition) semanticObject); 
+					sequence_Variable(context, (Variable) semanticObject); 
 					return; 
 				}
 				else break;
@@ -299,9 +281,19 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (type=[Type|ID] name=STRING)
+	 *     (type=STRING name=STRING)
 	 */
-	protected void sequence_Variable(EObject context, VariableDefinition semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+	protected void sequence_Variable(EObject context, Variable semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.VARIABLE__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.VARIABLE__TYPE));
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.VARIABLE__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.VARIABLE__NAME));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getVariableAccess().getTypeSTRINGTerminalRuleCall_1_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getVariableAccess().getNameSTRINGTerminalRuleCall_2_0(), semanticObject.getName());
+		feeder.finish();
 	}
 }

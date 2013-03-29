@@ -65,11 +65,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
     switch (eClass.getClassifierID())
     {
       case SclPackage.PROGRAM: return createProgram();
+      case SclPackage.VARIABLE: return createVariable();
       case SclPackage.LOCAL_VARIABLE: return createLocalVariable();
       case SclPackage.INSTRUCTION: return createInstruction();
       case SclPackage.INSTRUCTION_SET: return createInstructionSet();
-      case SclPackage.INSTRUCTION_SET_SINGLE_ASSIGNMENT: return createInstructionSetSingleAssignment();
-      case SclPackage.INSTRUCTION_OR_COMMENT: return createInstructionOrComment();
       case SclPackage.INSTRUCTION_OR_COMMENT_SEQUENCE: return createInstructionOrCommentSequence();
       case SclPackage.LABEL: return createLabel();
       case SclPackage.SCOPE: return createScope();
@@ -93,6 +92,17 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     ProgramImpl program = new ProgramImpl();
     return program;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Variable createVariable()
+  {
+    VariableImpl variable = new VariableImpl();
+    return variable;
   }
 
   /**
@@ -126,28 +136,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     InstructionSetImpl instructionSet = new InstructionSetImpl();
     return instructionSet;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionSetSingleAssignment createInstructionSetSingleAssignment()
-  {
-    InstructionSetSingleAssignmentImpl instructionSetSingleAssignment = new InstructionSetSingleAssignmentImpl();
-    return instructionSetSingleAssignment;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionOrComment createInstructionOrComment()
-  {
-    InstructionOrCommentImpl instructionOrComment = new InstructionOrCommentImpl();
-    return instructionOrComment;
   }
 
   /**

@@ -103,6 +103,43 @@ public interface SclPackage extends EPackage
   int PROGRAM_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.VariableImpl <em>Variable</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.VariableImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getVariable()
+   * @generated
+   */
+  int VARIABLE = 1;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE__TYPE = 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE__NAME = 1;
+
+  /**
+   * The number of structural features of the '<em>Variable</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LocalVariableImpl <em>Local Variable</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -110,7 +147,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getLocalVariable()
    * @generated
    */
-  int LOCAL_VARIABLE = 1;
+  int LOCAL_VARIABLE = 2;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -140,23 +177,23 @@ public interface SclPackage extends EPackage
   int LOCAL_VARIABLE_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSetSingleAssignmentImpl <em>Instruction Set Single Assignment</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionOrCommentSequenceImpl <em>Instruction Or Comment Sequence</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSetSingleAssignmentImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionSetSingleAssignment()
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionOrCommentSequenceImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionOrCommentSequence()
    * @generated
    */
-  int INSTRUCTION_SET_SINGLE_ASSIGNMENT = 4;
+  int INSTRUCTION_OR_COMMENT_SEQUENCE = 5;
 
   /**
-   * The number of structural features of the '<em>Instruction Set Single Assignment</em>' class.
+   * The number of structural features of the '<em>Instruction Or Comment Sequence</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTION_SET_SINGLE_ASSIGNMENT_FEATURE_COUNT = 0;
+  int INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionImpl <em>Instruction</em>}' class.
@@ -166,7 +203,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstruction()
    * @generated
    */
-  int INSTRUCTION = 2;
+  int INSTRUCTION = 3;
 
   /**
    * The number of structural features of the '<em>Instruction</em>' class.
@@ -175,7 +212,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INSTRUCTION_FEATURE_COUNT = INSTRUCTION_SET_SINGLE_ASSIGNMENT_FEATURE_COUNT + 0;
+  int INSTRUCTION_FEATURE_COUNT = INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSetImpl <em>Instruction Set</em>}' class.
@@ -185,7 +222,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionSet()
    * @generated
    */
-  int INSTRUCTION_SET = 3;
+  int INSTRUCTION_SET = 4;
 
   /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
@@ -206,44 +243,6 @@ public interface SclPackage extends EPackage
   int INSTRUCTION_SET_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionOrCommentImpl <em>Instruction Or Comment</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionOrCommentImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionOrComment()
-   * @generated
-   */
-  int INSTRUCTION_OR_COMMENT = 5;
-
-  /**
-   * The number of structural features of the '<em>Instruction Or Comment</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_OR_COMMENT_FEATURE_COUNT = 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionOrCommentSequenceImpl <em>Instruction Or Comment Sequence</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionOrCommentSequenceImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionOrCommentSequence()
-   * @generated
-   */
-  int INSTRUCTION_OR_COMMENT_SEQUENCE = 6;
-
-  /**
-   * The number of structural features of the '<em>Instruction Or Comment Sequence</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT = 0;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LabelImpl <em>Label</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -251,7 +250,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getLabel()
    * @generated
    */
-  int LABEL = 7;
+  int LABEL = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -279,7 +278,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getScope()
    * @generated
    */
-  int SCOPE = 8;
+  int SCOPE = 7;
 
   /**
    * The feature id for the '<em><b>Variables</b></em>' containment reference list.
@@ -316,7 +315,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getAssignment()
    * @generated
    */
-  int ASSIGNMENT = 9;
+  int ASSIGNMENT = 8;
 
   /**
    * The feature id for the '<em><b>Assignment</b></em>' attribute.
@@ -344,7 +343,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getConditional()
    * @generated
    */
-  int CONDITIONAL = 10;
+  int CONDITIONAL = 9;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' attribute.
@@ -381,7 +380,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getGoto()
    * @generated
    */
-  int GOTO = 11;
+  int GOTO = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -409,7 +408,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 12;
+  int PARALLEL = 11;
 
   /**
    * The feature id for the '<em><b>Threads</b></em>' containment reference list.
@@ -437,7 +436,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 13;
+  int PAUSE = 12;
 
   /**
    * The number of structural features of the '<em>Pause</em>' class.
@@ -456,7 +455,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getComment()
    * @generated
    */
-  int COMMENT = 14;
+  int COMMENT = 13;
 
   /**
    * The feature id for the '<em><b>Comment</b></em>' attribute.
@@ -465,7 +464,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__COMMENT = INSTRUCTION_OR_COMMENT_FEATURE_COUNT + 0;
+  int COMMENT__COMMENT = INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Comment</em>' class.
@@ -474,7 +473,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT_FEATURE_COUNT = INSTRUCTION_OR_COMMENT_FEATURE_COUNT + 1;
+  int COMMENT_FEATURE_COUNT = INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT + 1;
 
 
   /**
@@ -519,6 +518,38 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EReference getProgram_Program();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Variable</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable
+   * @generated
+   */
+  EClass getVariable();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable#getType()
+   * @see #getVariable()
+   * @generated
+   */
+  EAttribute getVariable_Type();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable#getName()
+   * @see #getVariable()
+   * @generated
+   */
+  EAttribute getVariable_Name();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable <em>Local Variable</em>}'.
@@ -582,26 +613,6 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EReference getInstructionSet_Instructions();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSetSingleAssignment <em>Instruction Set Single Assignment</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Instruction Set Single Assignment</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSetSingleAssignment
-   * @generated
-   */
-  EClass getInstructionSetSingleAssignment();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrComment <em>Instruction Or Comment</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Instruction Or Comment</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrComment
-   * @generated
-   */
-  EClass getInstructionOrComment();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence <em>Instruction Or Comment Sequence</em>}'.
@@ -850,6 +861,32 @@ public interface SclPackage extends EPackage
     EReference PROGRAM__PROGRAM = eINSTANCE.getProgram_Program();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.VariableImpl <em>Variable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.VariableImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getVariable()
+     * @generated
+     */
+    EClass VARIABLE = eINSTANCE.getVariable();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VARIABLE__TYPE = eINSTANCE.getVariable_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VARIABLE__NAME = eINSTANCE.getVariable_Name();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LocalVariableImpl <em>Local Variable</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -902,26 +939,6 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EReference INSTRUCTION_SET__INSTRUCTIONS = eINSTANCE.getInstructionSet_Instructions();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSetSingleAssignmentImpl <em>Instruction Set Single Assignment</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSetSingleAssignmentImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionSetSingleAssignment()
-     * @generated
-     */
-    EClass INSTRUCTION_SET_SINGLE_ASSIGNMENT = eINSTANCE.getInstructionSetSingleAssignment();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionOrCommentImpl <em>Instruction Or Comment</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionOrCommentImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionOrComment()
-     * @generated
-     */
-    EClass INSTRUCTION_OR_COMMENT = eINSTANCE.getInstructionOrComment();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionOrCommentSequenceImpl <em>Instruction Or Comment Sequence</em>}' class.

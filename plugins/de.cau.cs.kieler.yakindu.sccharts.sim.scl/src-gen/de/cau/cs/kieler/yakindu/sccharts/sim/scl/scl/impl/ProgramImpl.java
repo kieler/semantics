@@ -5,6 +5,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable;
 
 import java.util.Collection;
 
@@ -21,8 +22,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.yakindu.sct.model.stext.stext.VariableDefinition;
 
 /**
  * <!-- begin-user-doc -->
@@ -69,7 +68,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * @generated
    * @ordered
    */
-  protected EList<VariableDefinition> variables;
+  protected EList<Variable> variables;
 
   /**
    * The cached value of the '{@link #getProgram() <em>Program</em>}' containment reference.
@@ -130,11 +129,11 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<VariableDefinition> getVariables()
+  public EList<Variable> getVariables()
   {
     if (variables == null)
     {
-      variables = new EObjectContainmentEList<VariableDefinition>(VariableDefinition.class, this, SclPackage.PROGRAM__VARIABLES);
+      variables = new EObjectContainmentEList<Variable>(Variable.class, this, SclPackage.PROGRAM__VARIABLES);
     }
     return variables;
   }
@@ -241,7 +240,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return;
       case SclPackage.PROGRAM__VARIABLES:
         getVariables().clear();
-        getVariables().addAll((Collection<? extends VariableDefinition>)newValue);
+        getVariables().addAll((Collection<? extends Variable>)newValue);
         return;
       case SclPackage.PROGRAM__PROGRAM:
         setProgram((InstructionSet)newValue);

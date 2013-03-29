@@ -6,8 +6,6 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.yakindu.sct.model.stext.stext.VariableDefinition;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Program</b></em>'.
@@ -56,7 +54,7 @@ public interface Program extends EObject
 
   /**
    * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
-   * The list contents are of type {@link org.yakindu.sct.model.stext.stext.VariableDefinition}.
+   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
@@ -68,7 +66,7 @@ public interface Program extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<VariableDefinition> getVariables();
+  EList<Variable> getVariables();
 
   /**
    * Returns the value of the '<em><b>Program</b></em>' containment reference.

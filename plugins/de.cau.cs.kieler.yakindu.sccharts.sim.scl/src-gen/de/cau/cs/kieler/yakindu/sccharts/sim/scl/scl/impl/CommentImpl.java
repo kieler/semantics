@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class CommentImpl extends InstructionOrCommentImpl implements Comment
+public class CommentImpl extends InstructionOrCommentSequenceImpl implements Comment
 {
   /**
    * The default value of the '{@link #getComment() <em>Comment</em>}' attribute.

@@ -75,18 +75,17 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cInputKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
 		private final Keyword cOutputKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cTypeTypeCrossReference_1_0 = (CrossReference)cTypeAssignment_1.eContents().get(0);
-		private final RuleCall cTypeTypeIDTerminalRuleCall_1_0_1 = (RuleCall)cTypeTypeCrossReference_1_0.eContents().get(1);
+		private final RuleCall cTypeSTRINGTerminalRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameSTRINGTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
-		//Variable returns stext::VariableDefinition:
+		//Variable:
 		//
-		//	("input" | "output") type=[types::Type] name=STRING ";";
+		//	("input" | "output") type=STRING name=STRING ";";
 		public ParserRule getRule() { return rule; }
 
-		//("input" | "output") type=[types::Type] name=STRING ";"
+		//("input" | "output") type=STRING name=STRING ";"
 		public Group getGroup() { return cGroup; }
 
 		//"input" | "output"
@@ -98,14 +97,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"output"
 		public Keyword getOutputKeyword_0_1() { return cOutputKeyword_0_1; }
 
-		//type=[types::Type]
+		//type=STRING
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 
-		//[types::Type]
-		public CrossReference getTypeTypeCrossReference_1_0() { return cTypeTypeCrossReference_1_0; }
-
-		//ID
-		public RuleCall getTypeTypeIDTerminalRuleCall_1_0_1() { return cTypeTypeIDTerminalRuleCall_1_0_1; }
+		//STRING
+		public RuleCall getTypeSTRINGTerminalRuleCall_1_0() { return cTypeSTRINGTerminalRuleCall_1_0; }
 
 		//name=STRING
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
@@ -351,40 +347,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getInstructionsInstructionParserRuleCall_4_1_0() { return cInstructionsInstructionParserRuleCall_4_1_0; }
 	}
 
-	public class InstructionSetSingleAssignmentElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionSetSingleAssignment");
-		private final RuleCall cInstructionParserRuleCall = (RuleCall)rule.eContents().get(1);
-		
-		//InstructionSetSingleAssignment:
-		//
-		//	Instruction;
-		public ParserRule getRule() { return rule; }
-
-		//Instruction
-		public RuleCall getInstructionParserRuleCall() { return cInstructionParserRuleCall; }
-	}
-
-	public class InstructionOrCommentElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionOrComment");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cInstructionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cCommentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//InstructionOrComment:
-		//
-		//	Instruction | Comment;
-		public ParserRule getRule() { return rule; }
-
-		//Instruction | Comment
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//Instruction
-		public RuleCall getInstructionParserRuleCall_0() { return cInstructionParserRuleCall_0; }
-
-		//Comment
-		public RuleCall getCommentParserRuleCall_1() { return cCommentParserRuleCall_1; }
-	}
-
 	public class InstructionOrCommentSequenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionOrCommentSequence");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -393,6 +355,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
 		private final RuleCall cCommentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
+		////InstructionSetSingleAssignment:
+		//
+		////    Instruction
+		//
+		////;
+		//
+		////InstructionOrComment:
+		//
+		////    Instruction | Comment
+		//
+		////;
+		//
 		//InstructionOrCommentSequence:
 		//
 		//	Instruction ";" | Comment;
@@ -675,8 +649,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	private SCLExpressionElements pSCLExpression;
 	private InstructionElements pInstruction;
 	private InstructionSetElements pInstructionSet;
-	private InstructionSetSingleAssignmentElements pInstructionSetSingleAssignment;
-	private InstructionOrCommentElements pInstructionOrComment;
 	private InstructionOrCommentSequenceElements pInstructionOrCommentSequence;
 	private LabelElements pLabel;
 	private ScopeElements pScope;
@@ -736,9 +708,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getProgramAccess().getRule();
 	}
 
-	//Variable returns stext::VariableDefinition:
+	//Variable:
 	//
-	//	("input" | "output") type=[types::Type] name=STRING ";";
+	//	("input" | "output") type=STRING name=STRING ";";
 	public VariableElements getVariableAccess() {
 		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
 	}
@@ -801,28 +773,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getInstructionSetAccess().getRule();
 	}
 
-	//InstructionSetSingleAssignment:
+	////InstructionSetSingleAssignment:
 	//
-	//	Instruction;
-	public InstructionSetSingleAssignmentElements getInstructionSetSingleAssignmentAccess() {
-		return (pInstructionSetSingleAssignment != null) ? pInstructionSetSingleAssignment : (pInstructionSetSingleAssignment = new InstructionSetSingleAssignmentElements());
-	}
-	
-	public ParserRule getInstructionSetSingleAssignmentRule() {
-		return getInstructionSetSingleAssignmentAccess().getRule();
-	}
-
-	//InstructionOrComment:
+	////    Instruction
 	//
-	//	Instruction | Comment;
-	public InstructionOrCommentElements getInstructionOrCommentAccess() {
-		return (pInstructionOrComment != null) ? pInstructionOrComment : (pInstructionOrComment = new InstructionOrCommentElements());
-	}
-	
-	public ParserRule getInstructionOrCommentRule() {
-		return getInstructionOrCommentAccess().getRule();
-	}
-
+	////;
+	//
+	////InstructionOrComment:
+	//
+	////    Instruction | Comment
+	//
+	////;
+	//
 	//InstructionOrCommentSequence:
 	//
 	//	Instruction ";" | Comment;

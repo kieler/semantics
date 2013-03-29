@@ -19,8 +19,8 @@ Program :
     '}' 
 ;
 
-Variable returns stext::VariableDefinition:
-    ('input'|'output') type=[types::Type] (name=STRING)';'
+Variable:
+    ('input'|'output') type=STRING (name=STRING)';'
 ;
 
 //LocalVariable returns stext::VariableDefinition:
@@ -59,13 +59,13 @@ InstructionSet:
   (instructions += Instruction) 
 ;
 
-InstructionSetSingleAssignment:
-    Instruction
-;
+//InstructionSetSingleAssignment:
+//    Instruction
+//;
 
-InstructionOrComment:
-    Instruction | Comment
-;
+//InstructionOrComment:
+//    Instruction | Comment
+//;
 
 InstructionOrCommentSequence:
     (Instruction';') | Comment

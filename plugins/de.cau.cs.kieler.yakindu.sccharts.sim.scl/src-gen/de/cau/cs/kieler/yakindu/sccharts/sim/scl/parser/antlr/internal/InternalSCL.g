@@ -181,18 +181,20 @@ ruleVariable returns [EObject current=null]
     }
 )(
 (
-		{ 
-		  /* */ 
+		lv_type_2_0=RULE_STRING
+		{
+			newLeafNode(lv_type_2_0, grammarAccess.getVariableAccess().getTypeSTRINGTerminalRuleCall_1_0()); 
 		}
 		{
-			if ($current==null) {
+	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getVariableRule());
 	        }
-        }
-	otherlv_2=RULE_ID
-	{
-		newLeafNode(otherlv_2, grammarAccess.getVariableAccess().getTypeTypeCrossReference_1_0()); 
-	}
+       		setWithLastConsumed(
+       			$current, 
+       			"type",
+        		lv_type_2_0, 
+        		"STRING");
+	    }
 
 )
 )(
@@ -646,10 +648,6 @@ ruleInstructionSet returns [EObject current=null]
 )
 )))
 ;
-
-
-
-
 
 
 
