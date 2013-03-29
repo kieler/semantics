@@ -34,27 +34,53 @@ LocalVariable:
 SCLExpression:STRING;
 
 Instruction:
-    (Assignment | Conditional | Goto | Parallel | Pause | Label | Scope)';' 
+    (Assignment | Conditional | Goto | Parallel | Pause | Label | Scope) 
 ;
 
 InstructionSet:
-    instructions += InstructionOrComment(';' instructions += InstructionOrComment)* 
+  {InstructionSet}
+  (
+      (instructions += InstructionOrCommentSequence)+
+      (instructions += Instruction)
+      (instructions += Comment)?      
+  ) |
+  {InstructionSet}
+  (
+      (instructions += Comment)
+      (instructions += Instruction)
+  ) |
+  (instructions += Comment) |
+  {InstructionSet}
+  (
+      (instructions += Instruction)
+      (instructions += Comment)
+  ) |
+  {InstructionSet}
+  (instructions += Instruction) 
+;
+
+InstructionSetSingleAssignment:
+    Instruction
 ;
 
 InstructionOrComment:
     Instruction | Comment
 ;
 
-Scope:
-    (label = Label)?
-    '{'
-        (variables+=LocalVariable)*
-        instructions += InstructionOrComment(';' instructions += InstructionOrComment)* 
-    '}'
+InstructionOrCommentSequence:
+    (Instruction';') | Comment
 ;
 
 Label:
     'label:' name = ID
+;
+
+Scope:
+//    (label = Label)?
+    '{'
+        (variables+=LocalVariable)*
+        scope = InstructionSet 
+    '}'
 ;
 
 Assignment returns SCLExpression:

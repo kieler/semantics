@@ -19,7 +19,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
  * @model
  * @generated
  */
-public interface Comment extends InstructionOrComment
+public interface Comment extends InstructionOrComment, InstructionOrCommentSequence
 {
   /**
    * Returns the value of the '<em><b>Comment</b></em>' attribute.

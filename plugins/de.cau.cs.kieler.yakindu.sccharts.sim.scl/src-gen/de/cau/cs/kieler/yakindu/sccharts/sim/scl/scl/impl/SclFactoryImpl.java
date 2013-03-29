@@ -68,9 +68,11 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
       case SclPackage.LOCAL_VARIABLE: return createLocalVariable();
       case SclPackage.INSTRUCTION: return createInstruction();
       case SclPackage.INSTRUCTION_SET: return createInstructionSet();
+      case SclPackage.INSTRUCTION_SET_SINGLE_ASSIGNMENT: return createInstructionSetSingleAssignment();
       case SclPackage.INSTRUCTION_OR_COMMENT: return createInstructionOrComment();
-      case SclPackage.SCOPE: return createScope();
+      case SclPackage.INSTRUCTION_OR_COMMENT_SEQUENCE: return createInstructionOrCommentSequence();
       case SclPackage.LABEL: return createLabel();
+      case SclPackage.SCOPE: return createScope();
       case SclPackage.SCL_EXPRESSION: return createSCLExpression();
       case SclPackage.CONDITIONAL: return createConditional();
       case SclPackage.GOTO: return createGoto();
@@ -131,6 +133,17 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public InstructionSetSingleAssignment createInstructionSetSingleAssignment()
+  {
+    InstructionSetSingleAssignmentImpl instructionSetSingleAssignment = new InstructionSetSingleAssignmentImpl();
+    return instructionSetSingleAssignment;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public InstructionOrComment createInstructionOrComment()
   {
     InstructionOrCommentImpl instructionOrComment = new InstructionOrCommentImpl();
@@ -142,10 +155,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Scope createScope()
+  public InstructionOrCommentSequence createInstructionOrCommentSequence()
   {
-    ScopeImpl scope = new ScopeImpl();
-    return scope;
+    InstructionOrCommentSequenceImpl instructionOrCommentSequence = new InstructionOrCommentSequenceImpl();
+    return instructionOrCommentSequence;
   }
 
   /**
@@ -157,6 +170,17 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     LabelImpl label = new LabelImpl();
     return label;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Scope createScope()
+  {
+    ScopeImpl scope = new ScopeImpl();
+    return scope;
   }
 
   /**

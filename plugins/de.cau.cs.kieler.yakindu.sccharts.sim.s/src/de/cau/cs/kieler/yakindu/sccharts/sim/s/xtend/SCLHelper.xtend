@@ -44,6 +44,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
 
 class SCLHelper {
     
@@ -70,6 +71,11 @@ class SCLHelper {
     // ==                       C R E A T E   M E T A M O D E L   E X T E N S I O N                        ==
     // ======================================================================================================
     
+    def InstructionSet createSCLInstructionSet()
+    {
+        SCL.createInstructionSet();
+    }
+    
     def Goto createSCLGoto(String targetLabelName)
     {
         var goto = SCL.createGoto();
@@ -90,10 +96,12 @@ class SCLHelper {
     }
     
     def Scope createSCLScope(String labelName) {
-        var scope = SCL.createScope();
+        var scope = SCL.createScope()
+        var iSet  = createSCLInstructionSet()
+        scope.scope = iSet
         if (!labelName.nullOrEmpty) {
-            var label = createSCLLabel(labelName);
-            scope.setLabel(label);
+//            var label = createSCLLabel(labelName);
+//            scope.setLabel(label);
         }
         scope;
     }
@@ -110,8 +118,13 @@ class SCLHelper {
         iSet.instructions.add(instruction);
     }
     
-    def void addInstruction(Scope sSet, Instruction comment) {
-        sSet.instructions.add(comment);    
+    def void addInstruction(Scope sSet, Instruction instruction) {
+        var iSet = sSet.getScope();
+        if (iSet == null) {
+            iSet = createSCLInstructionSet();
+        }
+        iSet.instructions.add(instruction);
+        sSet.scope = iSet    
     }
 
     def void addInstruction(InstructionSet iSet, Comment instruction) {
@@ -119,7 +132,22 @@ class SCLHelper {
     }
     
     def void addInstruction(Scope sSet, Comment comment) {
-        sSet.instructions.add(comment);    
+        var iSet = sSet.getScope();
+        if (iSet == null) {
+            iSet = createSCLInstructionSet();
+        }
+        iSet.instructions.add(comment);
+        sSet.scope = iSet    
+    }
+    
+    def void addInstruction(Conditional conditional, Instruction instruction) {
+        var iSet = conditional.getConditional()
+        if (iSet == null) {
+            iSet = createSCLInstructionSet() 
+        }    
+        
+        iSet.instructions.add(instruction)
+        conditional.setConditional(iSet)
     }
     
     def void addPause(InstructionSet iSet) {
@@ -137,11 +165,11 @@ class SCLHelper {
     
     def InstructionSet scopeToInstructionSet(Scope scope) {
         var iSet = SCL.createInstructionSet();
-        val label = scope.getLabel();
-        if (label!=null) {
-            iSet.instructions.add(label.copy);
-        }
-        for(instruction : scope.instructions) {
+//        val label = scope.getLabel();
+//        if (label!=null) {
+//            iSet.instructions.add(label.copy);
+//        }
+        for(instruction : scope.scope.instructions) {
             iSet.instructions.add(instruction.copy);
         }
         iSet;
@@ -211,6 +239,14 @@ class SCLHelper {
             }
         }
         return StartSymbol + "_";
+    }
+    
+    
+    def int compareSCLRegionStateOrder(SyncState e1, SyncState e2) {
+        var order = 1;
+        if (e1.isInitial) {order = -1}
+        if (e2.isFinal) {order = -1}
+        order;
     }
  
 }

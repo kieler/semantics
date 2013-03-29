@@ -57,12 +57,12 @@ public interface Conditional extends Instruction
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Conditional</em>' containment reference.
-   * @see #setConditional(Instruction)
+   * @see #setConditional(InstructionSet)
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getConditional_Conditional()
    * @model containment="true"
    * @generated
    */
-  Instruction getConditional();
+  InstructionSet getConditional();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getConditional <em>Conditional</em>}' containment reference.
@@ -72,6 +72,6 @@ public interface Conditional extends Instruction
    * @see #getConditional()
    * @generated
    */
-  void setConditional(Instruction value);
+  void setConditional(InstructionSet value);
 
 } // Conditional

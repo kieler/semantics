@@ -61,26 +61,27 @@ class CoreToSCLTransformation {
         
         val Region mainRegion = (rootStatechart.regions.get(0).vertices.get(0) as SyncState).regions.get(0);
         targetProgram.program = SCL.createInstructionSet();
-        targetProgram.program.instructions.addAll(transformCoreRegion(mainRegion).instructions);
+        targetProgram.program.instructions.addAll(transformCoreRegion(mainRegion).scope.instructions);
 
         targetProgram;
     }
 
     def Scope transformCoreRegion(Region region) {
-        var iSet = SclFactory::eINSTANCE.createScope();
-        val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState)));
+        var iSet = createSCLScope("");
+        val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState))).
+          sort(e1, e2 | compareSCLRegionStateOrder(e1, e2));
 //        val initialState = states.filter(e | e.isInitial == true).head() as SyncState;
 
         if (region.getName() != null) {
-            iSet.instructions.add(createSCLComment(region.getName()));
+           iSet.addInstruction(createSCLComment(region.getName()));
         }
 
         for (state : states) {
             Debug(state.getHierarchicalName(""));
             val stateInstructions = transformCoreState(state);
-            var stateLabel = stateInstructions.getLabel();
-            if (stateLabel!=null) { iSet.instructions.add(stateLabel); }
-            iSet.instructions.addAll(stateInstructions.instructions);
+//            val stateLabel = stateInstructions.getLabel();
+//            if (stateLabel!=null) { iSet.addInstruction(stateLabel.copy); }
+            iSet.scope.instructions.addAll(stateInstructions.scope.instructions);
         }
         
         iSet;
@@ -98,7 +99,8 @@ class CoreToSCLTransformation {
         val outgoingWeakTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::WEAKABORT));
         val normalTerminationTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION));
 
-        iSet.setLabel(createSCLLabel(stateID));
+       iSet.addInstruction(createSCLLabel(stateID));
+//        iSet.setLabel(createSCLLabel(stateID));
         iSet.addInstruction(createSCLComment("-- Begin of state "+state.getName()+" --"));
         
  //       var local = SCL.createLocalVariable();
@@ -106,61 +108,69 @@ class CoreToSCLTransformation {
 //        local.setName('test');
 //        iSet.variables.add(local);
         
-         if (state.isComposite()) {
+        
+        if (state.isComposite()) {
+            // COMPOSITE STATE         
             
             if (state.getRegions().size<2) {
                 var regionInstructions =  transformCoreRegion(state.getRegions().get(0));
-                iSet.instructions.addAll(regionInstructions.instructions);
+                iSet.scope.instructions.addAll(regionInstructions.scope.instructions);
             } else {
                 var parallel = SclFactory::eINSTANCE.createParallel();
                 for(stateRegion : state.getRegions()) {
                     var regionInstructions = transformCoreRegion(stateRegion);
                     parallel.getThreads().addAll(regionInstructions.scopeToInstructionSet);
                 }
-                iSet.instructions.add(parallel);
+                iSet.addInstruction(parallel);
             }
             
             for(transition : normalTerminationTransitions) {
-              var goto = SclFactory::eINSTANCE.createGoto();
               val targetState = transition.target as SyncState; 
-              goto.setName('N_S' + targetState.hashCode.toString() + targetState.getName());
-              iSet.instructions.add(goto);
+              var goto = createSCLGoto(targetState.getHierarchicalName(""));
+              iSet.addInstruction(goto);
             }
              
         } else {
+            // NON COMPOSITE STATE
         
-            var pause = SclFactory::eINSTANCE.createPause();
-            iSet.instructions.add(pause);
-
-            var boolean bDefaultTransition = false;
-            var Goto defaultTransition;
-            for(transition : outgoingWeakTransitions) {
-                var goto = SclFactory::eINSTANCE.createGoto();
-                val targetState = transition.target as SyncState; 
-                goto.setName(targetState.getHierarchicalName(""));
-              
-                if (transition.getSpecification().nullOrEmpty) {
-                    defaultTransition = goto.copy;
-                    bDefaultTransition = true;                  
-                } else {
-                    var condition = SclFactory::eINSTANCE.createConditional();
-                    condition.setExpression("'" + transition.getSpecification() + "'");
-                    condition.conditional = goto;   
+            if (state.isFinal) {
+                // FINALE STATE
                 
-                    iSet.instructions.add(condition);
-                }
-                            
-            }
-            
-            if (bDefaultTransition) {
-                iSet.instructions.add(defaultTransition);
             } else {
-                iSet.instructions.add(createSCLGoto(stateID));
-            }
+                // STATE IS NOT A FINAL STATE
+                
+                iSet.addPause();
+
+                var boolean bDefaultTransition = false;
+                var Goto defaultTransition;
+                for(transition : outgoingWeakTransitions) {
+                    val targetState = transition.target as SyncState; 
+                    var goto = createSCLGoto(targetState.getHierarchicalName(""));
+              
+                    if (transition.getSpecification().nullOrEmpty) {
+                        defaultTransition = goto.copy;
+                        bDefaultTransition = true;                  
+                    } else {
+                        var conditional = SclFactory::eINSTANCE.createConditional();
+                        conditional.setExpression("'" + transition.getSpecification() + "'");
+                        conditional.addInstruction(goto);   
+                
+                        iSet.addInstruction(conditional);
+                    }
+                            
+                }
+            
+                if (bDefaultTransition) {
+                    iSet.addInstruction(defaultTransition);
+                } else {
+                    iSet.addInstruction(createSCLGoto(stateID));
+                }
+                
+            } // isFinal
         
-        }
+        } // isComposite
        
-        iSet.addInstruction(createSCLComment("-- End of state "+state.getName()+" --"));
+//        iSet.addInstruction(createSCLComment("-- End of state "+state.getName()+" --"));
        
         iSet;        
     }

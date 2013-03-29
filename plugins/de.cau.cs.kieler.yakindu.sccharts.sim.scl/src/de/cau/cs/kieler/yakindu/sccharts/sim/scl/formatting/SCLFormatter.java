@@ -36,8 +36,21 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
                              f.getProgramAccess().getRightCurlyBracketKeyword_5());
 	    
             // Instructions
-            c.setNoSpace().before(f.getInstructionAccess().getSemicolonKeyword_1());
-            c.setLinewrap(1).after(f.getInstructionAccess().getSemicolonKeyword_1());
+//            c.setNoSpace().before(f.getInstructionAccess().getSemicolonKeyword_1());
+//            c.setLinewrap(1).after(f.getInstructionAccess().getSemicolonKeyword_1());
+            c.setNoSpace().before(f.getInstructionOrCommentSequenceAccess().getSemicolonKeyword_0_1());
+//            c.setLinewrap(1).after(f.getInstructionOrCommentSequenceAccess().getSemicolonKeyword_0_1());
+            
+//            c.setLinewrap(1).after(f.getCommentAccess().getCommentAssignment());
+            
+//            c.setLinewrap(1).after(f.getInstructionSetSingleAssignmentAccess().getRule());
+            
+            c.setLinewrap(1).before(f.getInstructionRule());
+            c.setLinewrap(1).before(f.getCommentRule());
+            
+//            c.setLinewrap(1).after(f.getInstructionSetAccess().getInstructionsAssignment_0());
+//            c.setLinewrap(1).after(f.getInstructionSetAccess().getInstructionsAssignment_1());
+//            c.setLinewrap(1).after(f.getInstructionSetAccess().getInstructionsAssignment_2());
 	    
             // Parallel
             c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());
@@ -50,5 +63,11 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             
             // Comment
             c.setLinewrap(1).after(f.getCommentRule());
+            
+            // Conditional
+            c.setLinewrap(1).after(f.getConditionalAccess().getThenKeyword_2());
+            c.setLinewrap(1).before(f.getConditionalAccess().getEndKeyword_4());
+            c.setIndentation(f.getConditionalAccess().getThenKeyword_2(), 
+                             f.getConditionalAccess().getEndKeyword_4());
 	}
 }

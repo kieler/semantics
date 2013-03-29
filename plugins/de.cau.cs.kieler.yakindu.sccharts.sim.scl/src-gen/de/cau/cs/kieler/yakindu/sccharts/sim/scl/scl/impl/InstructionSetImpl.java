@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrComment;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
@@ -43,7 +43,7 @@ public class InstructionSetImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    * @ordered
    */
-  protected EList<InstructionOrComment> instructions;
+  protected EList<InstructionOrCommentSequence> instructions;
 
   /**
    * <!-- begin-user-doc -->
@@ -71,11 +71,11 @@ public class InstructionSetImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<InstructionOrComment> getInstructions()
+  public EList<InstructionOrCommentSequence> getInstructions()
   {
     if (instructions == null)
     {
-      instructions = new EObjectContainmentEList<InstructionOrComment>(InstructionOrComment.class, this, SclPackage.INSTRUCTION_SET__INSTRUCTIONS);
+      instructions = new EObjectContainmentEList<InstructionOrCommentSequence>(InstructionOrCommentSequence.class, this, SclPackage.INSTRUCTION_SET__INSTRUCTIONS);
     }
     return instructions;
   }
@@ -125,7 +125,7 @@ public class InstructionSetImpl extends MinimalEObjectImpl.Container implements 
     {
       case SclPackage.INSTRUCTION_SET__INSTRUCTIONS:
         getInstructions().clear();
-        getInstructions().addAll((Collection<? extends InstructionOrComment>)newValue);
+        getInstructions().addAll((Collection<? extends InstructionOrCommentSequence>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

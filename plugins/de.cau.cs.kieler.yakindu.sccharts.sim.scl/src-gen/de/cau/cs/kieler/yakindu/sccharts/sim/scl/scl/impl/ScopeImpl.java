@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrComment;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope;
@@ -30,9 +29,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl#getVariables <em>Variables</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl#getInstructions <em>Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl#getScope <em>Scope</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,16 +38,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ScopeImpl extends InstructionImpl implements Scope
 {
-  /**
-   * The cached value of the '{@link #getLabel() <em>Label</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getLabel()
-   * @generated
-   * @ordered
-   */
-  protected Label label;
-
   /**
    * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -61,14 +49,14 @@ public class ScopeImpl extends InstructionImpl implements Scope
   protected EList<LocalVariable> variables;
 
   /**
-   * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
+   * The cached value of the '{@link #getScope() <em>Scope</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInstructions()
+   * @see #getScope()
    * @generated
    * @ordered
    */
-  protected EList<InstructionOrComment> instructions;
+  protected InstructionSet scope;
 
   /**
    * <!-- begin-user-doc -->
@@ -96,54 +84,6 @@ public class ScopeImpl extends InstructionImpl implements Scope
    * <!-- end-user-doc -->
    * @generated
    */
-  public Label getLabel()
-  {
-    return label;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetLabel(Label newLabel, NotificationChain msgs)
-  {
-    Label oldLabel = label;
-    label = newLabel;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.SCOPE__LABEL, oldLabel, newLabel);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setLabel(Label newLabel)
-  {
-    if (newLabel != label)
-    {
-      NotificationChain msgs = null;
-      if (label != null)
-        msgs = ((InternalEObject)label).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.SCOPE__LABEL, null, msgs);
-      if (newLabel != null)
-        msgs = ((InternalEObject)newLabel).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.SCOPE__LABEL, null, msgs);
-      msgs = basicSetLabel(newLabel, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.SCOPE__LABEL, newLabel, newLabel));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<LocalVariable> getVariables()
   {
     if (variables == null)
@@ -158,13 +98,47 @@ public class ScopeImpl extends InstructionImpl implements Scope
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<InstructionOrComment> getInstructions()
+  public InstructionSet getScope()
   {
-    if (instructions == null)
+    return scope;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetScope(InstructionSet newScope, NotificationChain msgs)
+  {
+    InstructionSet oldScope = scope;
+    scope = newScope;
+    if (eNotificationRequired())
     {
-      instructions = new EObjectContainmentEList<InstructionOrComment>(InstructionOrComment.class, this, SclPackage.SCOPE__INSTRUCTIONS);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.SCOPE__SCOPE, oldScope, newScope);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return instructions;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setScope(InstructionSet newScope)
+  {
+    if (newScope != scope)
+    {
+      NotificationChain msgs = null;
+      if (scope != null)
+        msgs = ((InternalEObject)scope).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.SCOPE__SCOPE, null, msgs);
+      if (newScope != null)
+        msgs = ((InternalEObject)newScope).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.SCOPE__SCOPE, null, msgs);
+      msgs = basicSetScope(newScope, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.SCOPE__SCOPE, newScope, newScope));
   }
 
   /**
@@ -177,12 +151,10 @@ public class ScopeImpl extends InstructionImpl implements Scope
   {
     switch (featureID)
     {
-      case SclPackage.SCOPE__LABEL:
-        return basicSetLabel(null, msgs);
       case SclPackage.SCOPE__VARIABLES:
         return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
-      case SclPackage.SCOPE__INSTRUCTIONS:
-        return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
+      case SclPackage.SCOPE__SCOPE:
+        return basicSetScope(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -197,12 +169,10 @@ public class ScopeImpl extends InstructionImpl implements Scope
   {
     switch (featureID)
     {
-      case SclPackage.SCOPE__LABEL:
-        return getLabel();
       case SclPackage.SCOPE__VARIABLES:
         return getVariables();
-      case SclPackage.SCOPE__INSTRUCTIONS:
-        return getInstructions();
+      case SclPackage.SCOPE__SCOPE:
+        return getScope();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -218,16 +188,12 @@ public class ScopeImpl extends InstructionImpl implements Scope
   {
     switch (featureID)
     {
-      case SclPackage.SCOPE__LABEL:
-        setLabel((Label)newValue);
-        return;
       case SclPackage.SCOPE__VARIABLES:
         getVariables().clear();
         getVariables().addAll((Collection<? extends LocalVariable>)newValue);
         return;
-      case SclPackage.SCOPE__INSTRUCTIONS:
-        getInstructions().clear();
-        getInstructions().addAll((Collection<? extends InstructionOrComment>)newValue);
+      case SclPackage.SCOPE__SCOPE:
+        setScope((InstructionSet)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -243,14 +209,11 @@ public class ScopeImpl extends InstructionImpl implements Scope
   {
     switch (featureID)
     {
-      case SclPackage.SCOPE__LABEL:
-        setLabel((Label)null);
-        return;
       case SclPackage.SCOPE__VARIABLES:
         getVariables().clear();
         return;
-      case SclPackage.SCOPE__INSTRUCTIONS:
-        getInstructions().clear();
+      case SclPackage.SCOPE__SCOPE:
+        setScope((InstructionSet)null);
         return;
     }
     super.eUnset(featureID);
@@ -266,12 +229,10 @@ public class ScopeImpl extends InstructionImpl implements Scope
   {
     switch (featureID)
     {
-      case SclPackage.SCOPE__LABEL:
-        return label != null;
       case SclPackage.SCOPE__VARIABLES:
         return variables != null && !variables.isEmpty();
-      case SclPackage.SCOPE__INSTRUCTIONS:
-        return instructions != null && !instructions.isEmpty();
+      case SclPackage.SCOPE__SCOPE:
+        return scope != null;
     }
     return super.eIsSet(featureID);
   }

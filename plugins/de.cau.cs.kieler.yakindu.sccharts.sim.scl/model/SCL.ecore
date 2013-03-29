@@ -14,29 +14,29 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Instruction" eSuperTypes="#//InstructionOrComment"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Instruction" eSuperTypes="#//InstructionSetSingleAssignment #//InstructionOrComment #//InstructionOrCommentSequence"/>
   <eClassifiers xsi:type="ecore:EClass" name="InstructionSet">
     <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" upperBound="-1"
-        eType="#//InstructionOrComment" containment="true"/>
+        eType="#//InstructionOrCommentSequence" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InstructionSetSingleAssignment"/>
   <eClassifiers xsi:type="ecore:EClass" name="InstructionOrComment"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Scope" eSuperTypes="#//Instruction">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//Label"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
-        eType="#//LocalVariable" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" upperBound="-1"
-        eType="#//InstructionOrComment" containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InstructionOrCommentSequence"/>
   <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Scope" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
+        eType="#//LocalVariable" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scope" eType="#//InstructionSet"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SCLExpression" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="assignment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="conditional" eType="#//Instruction"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conditional" eType="#//InstructionSet"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Goto" eSuperTypes="#//Instruction">
@@ -47,7 +47,7 @@
         eType="#//InstructionSet" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//InstructionOrComment">
+  <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//InstructionOrComment #//InstructionOrCommentSequence">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="comment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

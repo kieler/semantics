@@ -90,7 +90,9 @@ public class SclSwitch<T> extends Switch<T>
       {
         Instruction instruction = (Instruction)theEObject;
         T result = caseInstruction(instruction);
+        if (result == null) result = caseInstructionSetSingleAssignment(instruction);
         if (result == null) result = caseInstructionOrComment(instruction);
+        if (result == null) result = caseInstructionOrCommentSequence(instruction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -101,6 +103,13 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SclPackage.INSTRUCTION_SET_SINGLE_ASSIGNMENT:
+      {
+        InstructionSetSingleAssignment instructionSetSingleAssignment = (InstructionSetSingleAssignment)theEObject;
+        T result = caseInstructionSetSingleAssignment(instructionSetSingleAssignment);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SclPackage.INSTRUCTION_OR_COMMENT:
       {
         InstructionOrComment instructionOrComment = (InstructionOrComment)theEObject;
@@ -108,12 +117,10 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SclPackage.SCOPE:
+      case SclPackage.INSTRUCTION_OR_COMMENT_SEQUENCE:
       {
-        Scope scope = (Scope)theEObject;
-        T result = caseScope(scope);
-        if (result == null) result = caseInstruction(scope);
-        if (result == null) result = caseInstructionOrComment(scope);
+        InstructionOrCommentSequence instructionOrCommentSequence = (InstructionOrCommentSequence)theEObject;
+        T result = caseInstructionOrCommentSequence(instructionOrCommentSequence);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -122,7 +129,20 @@ public class SclSwitch<T> extends Switch<T>
         Label label = (Label)theEObject;
         T result = caseLabel(label);
         if (result == null) result = caseInstruction(label);
+        if (result == null) result = caseInstructionSetSingleAssignment(label);
         if (result == null) result = caseInstructionOrComment(label);
+        if (result == null) result = caseInstructionOrCommentSequence(label);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SclPackage.SCOPE:
+      {
+        Scope scope = (Scope)theEObject;
+        T result = caseScope(scope);
+        if (result == null) result = caseInstruction(scope);
+        if (result == null) result = caseInstructionSetSingleAssignment(scope);
+        if (result == null) result = caseInstructionOrComment(scope);
+        if (result == null) result = caseInstructionOrCommentSequence(scope);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -131,7 +151,9 @@ public class SclSwitch<T> extends Switch<T>
         SCLExpression sclExpression = (SCLExpression)theEObject;
         T result = caseSCLExpression(sclExpression);
         if (result == null) result = caseInstruction(sclExpression);
+        if (result == null) result = caseInstructionSetSingleAssignment(sclExpression);
         if (result == null) result = caseInstructionOrComment(sclExpression);
+        if (result == null) result = caseInstructionOrCommentSequence(sclExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -140,7 +162,9 @@ public class SclSwitch<T> extends Switch<T>
         Conditional conditional = (Conditional)theEObject;
         T result = caseConditional(conditional);
         if (result == null) result = caseInstruction(conditional);
+        if (result == null) result = caseInstructionSetSingleAssignment(conditional);
         if (result == null) result = caseInstructionOrComment(conditional);
+        if (result == null) result = caseInstructionOrCommentSequence(conditional);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -149,7 +173,9 @@ public class SclSwitch<T> extends Switch<T>
         Goto goto_ = (Goto)theEObject;
         T result = caseGoto(goto_);
         if (result == null) result = caseInstruction(goto_);
+        if (result == null) result = caseInstructionSetSingleAssignment(goto_);
         if (result == null) result = caseInstructionOrComment(goto_);
+        if (result == null) result = caseInstructionOrCommentSequence(goto_);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -158,7 +184,9 @@ public class SclSwitch<T> extends Switch<T>
         Parallel parallel = (Parallel)theEObject;
         T result = caseParallel(parallel);
         if (result == null) result = caseInstruction(parallel);
+        if (result == null) result = caseInstructionSetSingleAssignment(parallel);
         if (result == null) result = caseInstructionOrComment(parallel);
+        if (result == null) result = caseInstructionOrCommentSequence(parallel);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -167,7 +195,9 @@ public class SclSwitch<T> extends Switch<T>
         Pause pause = (Pause)theEObject;
         T result = casePause(pause);
         if (result == null) result = caseInstruction(pause);
+        if (result == null) result = caseInstructionSetSingleAssignment(pause);
         if (result == null) result = caseInstructionOrComment(pause);
+        if (result == null) result = caseInstructionOrCommentSequence(pause);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -176,6 +206,7 @@ public class SclSwitch<T> extends Switch<T>
         Comment comment = (Comment)theEObject;
         T result = caseComment(comment);
         if (result == null) result = caseInstructionOrComment(comment);
+        if (result == null) result = caseInstructionOrCommentSequence(comment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -248,6 +279,22 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Instruction Set Single Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Instruction Set Single Assignment</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInstructionSetSingleAssignment(InstructionSetSingleAssignment object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Instruction Or Comment</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -264,17 +311,17 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Instruction Or Comment Sequence</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Instruction Or Comment Sequence</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseScope(Scope object)
+  public T caseInstructionOrCommentSequence(InstructionOrCommentSequence object)
   {
     return null;
   }
@@ -291,6 +338,22 @@ public class SclSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLabel(Label object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScope(Scope object)
   {
     return null;
   }
