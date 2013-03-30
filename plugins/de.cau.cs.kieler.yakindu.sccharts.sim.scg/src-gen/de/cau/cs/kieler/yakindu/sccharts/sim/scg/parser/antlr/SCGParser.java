@@ -25,7 +25,7 @@ public class SCGParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Instruction";
+		return "Program";
 	}
 	
 	public SCGGrammarAccess getGrammarAccess() {

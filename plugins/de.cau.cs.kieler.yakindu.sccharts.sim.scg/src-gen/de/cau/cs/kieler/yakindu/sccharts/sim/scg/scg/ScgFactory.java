@@ -23,6 +23,15 @@ public interface ScgFactory extends EFactory
   ScgFactory eINSTANCE = de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgFactoryImpl.init();
 
   /**
+   * Returns a new object of class '<em>Program</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Program</em>'.
+   * @generated
+   */
+  Program createProgram();
+
+  /**
    * Returns a new object of class '<em>Instruction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -30,6 +39,24 @@ public interface ScgFactory extends EFactory
    * @generated
    */
   Instruction createInstruction();
+
+  /**
+   * Returns a new object of class '<em>Instruction Set</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instruction Set</em>'.
+   * @generated
+   */
+  InstructionSet createInstructionSet();
+
+  /**
+   * Returns a new object of class '<em>Instruction Or Comment Sequence</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instruction Or Comment Sequence</em>'.
+   * @generated
+   */
+  InstructionOrCommentSequence createInstructionOrCommentSequence();
 
   /**
    * Returns a new object of class '<em>Assignment</em>'.
@@ -57,6 +84,33 @@ public interface ScgFactory extends EFactory
    * @generated
    */
   Dependency createDependency();
+
+  /**
+   * Returns a new object of class '<em>Comment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Comment</em>'.
+   * @generated
+   */
+  Comment createComment();
+
+  /**
+   * Returns a new object of class '<em>Parallel</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Parallel</em>'.
+   * @generated
+   */
+  Parallel createParallel();
+
+  /**
+   * Returns a new object of class '<em>Scope</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scope</em>'.
+   * @generated
+   */
+  Scope createScope();
 
   /**
    * Returns the package supported by this factory.

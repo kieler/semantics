@@ -64,13 +64,30 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
   {
     switch (eClass.getClassifierID())
     {
+      case ScgPackage.PROGRAM: return createProgram();
       case ScgPackage.INSTRUCTION: return createInstruction();
+      case ScgPackage.INSTRUCTION_SET: return createInstructionSet();
+      case ScgPackage.INSTRUCTION_OR_COMMENT_SEQUENCE: return createInstructionOrCommentSequence();
       case ScgPackage.ASSIGNMENT: return createAssignment();
       case ScgPackage.CONDITIONAL: return createConditional();
       case ScgPackage.DEPENDENCY: return createDependency();
+      case ScgPackage.COMMENT: return createComment();
+      case ScgPackage.PARALLEL: return createParallel();
+      case ScgPackage.SCOPE: return createScope();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Program createProgram()
+  {
+    ProgramImpl program = new ProgramImpl();
+    return program;
   }
 
   /**
@@ -82,6 +99,28 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
   {
     InstructionImpl instruction = new InstructionImpl();
     return instruction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InstructionSet createInstructionSet()
+  {
+    InstructionSetImpl instructionSet = new InstructionSetImpl();
+    return instructionSet;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InstructionOrCommentSequence createInstructionOrCommentSequence()
+  {
+    InstructionOrCommentSequenceImpl instructionOrCommentSequence = new InstructionOrCommentSequenceImpl();
+    return instructionOrCommentSequence;
   }
 
   /**
@@ -115,6 +154,39 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
   {
     DependencyImpl dependency = new DependencyImpl();
     return dependency;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Comment createComment()
+  {
+    CommentImpl comment = new CommentImpl();
+    return comment;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Parallel createParallel()
+  {
+    ParallelImpl parallel = new ParallelImpl();
+    return parallel;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Scope createScope()
+  {
+    ScopeImpl scope = new ScopeImpl();
+    return scope;
   }
 
   /**

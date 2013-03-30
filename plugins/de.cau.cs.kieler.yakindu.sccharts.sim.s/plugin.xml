@@ -17,6 +17,11 @@
             id="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.CoreToSCLTransformation"
             name="CoreToSCLTransformation">
       </command>
+      <command
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.category"
+            id="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCLToSCGTransformation"
+            name="SCLToSCGTransformation">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -27,6 +32,10 @@
       <handler
             class="de.cau.cs.kieler.yakindu.sccharts.sim.s.ui.SCLCommandHandler"
             commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.CoreToSCLTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.yakindu.sccharts.sim.s.ui.SCGCommandHandler"
+            commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCLToSCGTransformation">
       </handler>
    </extension>
    <extension
@@ -39,6 +48,12 @@
       </key>
       <key
             commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.CoreToSCLTransformation"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+6">
+      </key>
+      <key
+            commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCLToSCGTransformation"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+6">
@@ -117,6 +132,29 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.sim.s.scgtransformations">
+         <command
+               commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCLToSCGTransformation"
+               label="SCL to SCG Transformation"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scl">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -137,6 +175,18 @@
          <menu
                id="de.cau.cs.kieler.yakindu.sccharts.sim.s.scltransformations"
                label="Core to SCL"
+               mnemonic="T">
+            <separator
+                  name="de.cau.cs.kieler.core.ui.separator1"
+                  visible="true">
+            </separator>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="de.cau.cs.kieler.yakindu.sccharts.sim.s.scgtransformations"
+               label="SCL to SCG"
                mnemonic="T">
             <separator
                   name="de.cau.cs.kieler.core.ui.separator1"

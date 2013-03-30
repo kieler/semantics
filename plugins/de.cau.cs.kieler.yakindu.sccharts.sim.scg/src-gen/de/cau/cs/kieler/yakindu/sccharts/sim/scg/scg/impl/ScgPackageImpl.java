@@ -3,11 +3,17 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Comment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionOrCommentSequence;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Program;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgFactory;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Scope;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
@@ -31,7 +37,28 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass programEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass instructionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass instructionSetEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass instructionOrCommentSequenceEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -53,6 +80,27 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
    * @generated
    */
   private EClass dependencyEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass commentEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass parallelEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass scopeEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -125,6 +173,16 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getProgram()
+  {
+    return programEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getInstruction()
   {
     return instructionEClass;
@@ -138,6 +196,26 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
   public EAttribute getInstruction_Priority()
   {
     return (EAttribute)instructionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getInstructionSet()
+  {
+    return instructionSetEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getInstructionOrCommentSequence()
+  {
+    return instructionOrCommentSequenceEClass;
   }
 
   /**
@@ -205,6 +283,36 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getComment()
+  {
+    return commentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getParallel()
+  {
+    return parallelEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getScope()
+  {
+    return scopeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public ScgFactory getScgFactory()
   {
     return (ScgFactory)getEFactoryInstance();
@@ -230,8 +338,14 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
     isCreated = true;
 
     // Create classes and their features
+    programEClass = createEClass(PROGRAM);
+
     instructionEClass = createEClass(INSTRUCTION);
     createEAttribute(instructionEClass, INSTRUCTION__PRIORITY);
+
+    instructionSetEClass = createEClass(INSTRUCTION_SET);
+
+    instructionOrCommentSequenceEClass = createEClass(INSTRUCTION_OR_COMMENT_SEQUENCE);
 
     assignmentEClass = createEClass(ASSIGNMENT);
     createEReference(assignmentEClass, ASSIGNMENT__DEPENDENCIES);
@@ -241,6 +355,12 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
 
     dependencyEClass = createEClass(DEPENDENCY);
     createEReference(dependencyEClass, DEPENDENCY__DEPENDENCIES);
+
+    commentEClass = createEClass(COMMENT);
+
+    parallelEClass = createEClass(PARALLEL);
+
+    scopeEClass = createEClass(SCOPE);
   }
 
   /**
@@ -275,15 +395,31 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    programEClass.getESuperTypes().add(theSclPackage.getProgram());
     instructionEClass.getESuperTypes().add(theSclPackage.getInstruction());
+    instructionEClass.getESuperTypes().add(this.getInstructionOrCommentSequence());
+    instructionSetEClass.getESuperTypes().add(theSclPackage.getInstructionSet());
+    instructionOrCommentSequenceEClass.getESuperTypes().add(theSclPackage.getInstructionOrCommentSequence());
     assignmentEClass.getESuperTypes().add(this.getInstruction());
     assignmentEClass.getESuperTypes().add(theSclPackage.getAssignment());
     conditionalEClass.getESuperTypes().add(this.getInstruction());
     conditionalEClass.getESuperTypes().add(theSclPackage.getConditional());
+    commentEClass.getESuperTypes().add(this.getInstructionOrCommentSequence());
+    commentEClass.getESuperTypes().add(theSclPackage.getComment());
+    parallelEClass.getESuperTypes().add(this.getInstruction());
+    parallelEClass.getESuperTypes().add(theSclPackage.getParallel());
+    scopeEClass.getESuperTypes().add(this.getInstruction());
+    scopeEClass.getESuperTypes().add(theSclPackage.getScope());
 
     // Initialize classes and features; add operations and parameters
+    initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getInstruction_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Instruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(instructionSetEClass, InstructionSet.class, "InstructionSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(instructionOrCommentSequenceEClass, InstructionOrCommentSequence.class, "InstructionOrCommentSequence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAssignment_Dependencies(), this.getDependency(), null, "dependencies", null, 0, -1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -293,6 +429,12 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage
 
     initEClass(dependencyEClass, Dependency.class, "Dependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getDependency_Dependencies(), this.getAssignment(), null, "dependencies", null, 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(parallelEClass, Parallel.class, "Parallel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(scopeEClass, Scope.class, "Scope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

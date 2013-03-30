@@ -47,6 +47,10 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence;
 
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgFactory;
+// import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
+
+
 class SCLHelper {
     
     // ======================================================================================================
@@ -66,6 +70,8 @@ class SCLHelper {
     def SCCExp() { SCChartsExpFactory::eINSTANCE }
  
     def SCL() { SclFactory::eINSTANCE }
+    
+    def SCG() { ScgFactory::eINSTANCE }
     
     
     // ======================================================================================================
@@ -271,6 +277,16 @@ class SCLHelper {
         if (e1.isInitial) {order = -1}
         if (e2.isFinal) {order = -1}
         order;
+    }
+    
+    
+
+    // ======================================================================================================
+    // ==                         S C L  T O  S C G  T R A N S F O R M A T I O N                           ==
+    // ======================================================================================================
+    
+    def createSCGInstruction() {
+      SCG.createInstruction();  
     }
  
 }

@@ -3,21 +3,21 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.serializer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Comment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Program;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Scope;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.services.SCGGrammarAccess;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.serializer.SCLSemanticSequencer;
 import org.eclipse.emf.ecore.EObject;
@@ -50,6 +50,13 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 					return; 
 				}
 				else break;
+			case ScgPackage.COMMENT:
+				if(context == grammarAccess.getCommentRule() ||
+				   context == grammarAccess.getInstructionOrCommentSequenceRule()) {
+					sequence_Comment(context, (Comment) semanticObject); 
+					return; 
+				}
+				else break;
 			case ScgPackage.CONDITIONAL:
 				if(context == grammarAccess.getConditionalRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
@@ -74,24 +81,45 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 					return; 
 				}
 				else break;
-			}
-		else if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case SclPackage.COMMENT:
-				if(context == grammarAccess.getCommentRule() ||
-				   context == grammarAccess.getInstructionOrCommentSequenceRule()) {
-					sequence_Comment(context, (Comment) semanticObject); 
+			case ScgPackage.INSTRUCTION_SET:
+				if(context == grammarAccess.getInstructionSetRule()) {
+					sequence_InstructionSet(context, (InstructionSet) semanticObject); 
 					return; 
 				}
 				else break;
+			case ScgPackage.PARALLEL:
+				if(context == grammarAccess.getInstructionRule() ||
+				   context == grammarAccess.getInstructionOrCommentSequenceRule()) {
+					sequence_Instruction_Parallel(context, (Parallel) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getParallelRule()) {
+					sequence_Parallel(context, (Parallel) semanticObject); 
+					return; 
+				}
+				else break;
+			case ScgPackage.PROGRAM:
+				if(context == grammarAccess.getProgramRule()) {
+					sequence_Program(context, (Program) semanticObject); 
+					return; 
+				}
+				else break;
+			case ScgPackage.SCOPE:
+				if(context == grammarAccess.getInstructionRule() ||
+				   context == grammarAccess.getInstructionOrCommentSequenceRule()) {
+					sequence_Instruction_Scope(context, (Scope) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getScopeRule()) {
+					sequence_Scope(context, (Scope) semanticObject); 
+					return; 
+				}
+				else break;
+			}
+		else if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case SclPackage.GOTO:
 				if(context == grammarAccess.getGotoRule()) {
 					sequence_Goto(context, (Goto) semanticObject); 
-					return; 
-				}
-				else break;
-			case SclPackage.INSTRUCTION_SET:
-				if(context == grammarAccess.getInstructionSetRule()) {
-					sequence_InstructionSet(context, (InstructionSet) semanticObject); 
 					return; 
 				}
 				else break;
@@ -107,27 +135,9 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 					return; 
 				}
 				else break;
-			case SclPackage.PARALLEL:
-				if(context == grammarAccess.getParallelRule()) {
-					sequence_Parallel(context, (Parallel) semanticObject); 
-					return; 
-				}
-				else break;
 			case SclPackage.PAUSE:
 				if(context == grammarAccess.getPauseRule()) {
 					sequence_Pause(context, (Pause) semanticObject); 
-					return; 
-				}
-				else break;
-			case SclPackage.PROGRAM:
-				if(context == grammarAccess.getProgramRule()) {
-					sequence_Program(context, (Program) semanticObject); 
-					return; 
-				}
-				else break;
-			case SclPackage.SCOPE:
-				if(context == grammarAccess.getScopeRule()) {
-					sequence_Scope(context, (Scope) semanticObject); 
 					return; 
 				}
 				else break;
@@ -156,6 +166,22 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 	 */
 	protected void sequence_Assignment_Instruction(EObject context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     comment=SL_COMMENT
+	 */
+	protected void sequence_Comment(EObject context, Comment semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.COMMENT__COMMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.COMMENT__COMMENT));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getCommentAccess().getCommentSL_COMMENTTerminalRuleCall_0(), semanticObject.getComment());
+		feeder.finish();
 	}
 	
 	
@@ -195,6 +221,20 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 	
 	/**
 	 * Constraint:
+	 *     (
+	 *         (instructions+=InstructionOrCommentSequence+ instructions+=Instruction instructions+=Comment?) | 
+	 *         (instructions+=Comment instructions+=Instruction) | 
+	 *         (instructions+=Instruction instructions+=Comment) | 
+	 *         instructions+=Instruction
+	 *     )
+	 */
+	protected void sequence_InstructionSet(EObject context, InstructionSet semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     priority=INT
 	 */
 	protected void sequence_Instruction(EObject context, Instruction semanticObject) {
@@ -206,5 +246,50 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getInstructionAccess().getPriorityINTTerminalRuleCall_2_0(), semanticObject.getPriority());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (threads+=InstructionSet threads+=InstructionSet+ priority=INT)
+	 */
+	protected void sequence_Instruction_Parallel(EObject context, Parallel semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (variables+=LocalVariable* scope=InstructionSet priority=INT)
+	 */
+	protected void sequence_Instruction_Scope(EObject context, Scope semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (threads+=InstructionSet threads+=InstructionSet+)
+	 */
+	protected void sequence_Parallel(EObject context, Parallel semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ID variables+=Variable? program=InstructionSet)
+	 */
+	protected void sequence_Program(EObject context, Program semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (variables+=LocalVariable* scope=InstructionSet)
+	 */
+	protected void sequence_Scope(EObject context, Scope semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 }
