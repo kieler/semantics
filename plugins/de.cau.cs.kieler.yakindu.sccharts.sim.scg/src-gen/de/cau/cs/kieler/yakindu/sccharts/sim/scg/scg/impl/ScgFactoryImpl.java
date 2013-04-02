@@ -66,8 +66,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
     {
       case ScgPackage.PROGRAM: return createProgram();
       case ScgPackage.INSTRUCTION: return createInstruction();
-      case ScgPackage.INSTRUCTION_SET: return createInstructionSet();
-      case ScgPackage.INSTRUCTION_OR_COMMENT_SEQUENCE: return createInstructionOrCommentSequence();
       case ScgPackage.ASSIGNMENT: return createAssignment();
       case ScgPackage.CONDITIONAL: return createConditional();
       case ScgPackage.DEPENDENCY: return createDependency();
@@ -99,28 +97,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
   {
     InstructionImpl instruction = new InstructionImpl();
     return instruction;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionSet createInstructionSet()
-  {
-    InstructionSetImpl instructionSet = new InstructionSetImpl();
-    return instructionSet;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionOrCommentSequence createInstructionOrCommentSequence()
-  {
-    InstructionOrCommentSequenceImpl instructionOrCommentSequence = new InstructionOrCommentSequenceImpl();
-    return instructionOrCommentSequence;
   }
 
   /**

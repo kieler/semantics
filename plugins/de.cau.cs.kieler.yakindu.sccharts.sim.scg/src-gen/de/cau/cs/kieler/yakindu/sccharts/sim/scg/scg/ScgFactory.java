@@ -41,24 +41,6 @@ public interface ScgFactory extends EFactory
   Instruction createInstruction();
 
   /**
-   * Returns a new object of class '<em>Instruction Set</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction Set</em>'.
-   * @generated
-   */
-  InstructionSet createInstructionSet();
-
-  /**
-   * Returns a new object of class '<em>Instruction Or Comment Sequence</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction Or Comment Sequence</em>'.
-   * @generated
-   */
-  InstructionOrCommentSequence createInstructionOrCommentSequence();
-
-  /**
    * Returns a new object of class '<em>Assignment</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

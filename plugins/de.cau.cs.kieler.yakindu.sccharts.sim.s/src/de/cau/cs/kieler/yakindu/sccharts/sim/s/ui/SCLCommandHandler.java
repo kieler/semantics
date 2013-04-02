@@ -99,86 +99,72 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
             URI input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
             URI output = URI.createURI("");
 
-            // Try to load SyncCharts model
-            Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-            Map<String, Object> m = reg.getExtensionToFactoryMap();
-//            m.put(ModelHandlerFileExtension(), new StextResource(input));
-            XMIResourceImpl inputResource = new XMIResourceImpl(input);
+            String command = event.getCommand().getId().toString();
+            
+            ResourceSet resourceSet = new ResourceSetImpl();
+            Resource resourceLoad=resourceSet.getResource(input, true);
+                
+            EObject modelRoot = resourceLoad.getContents().get(0); 
+            EObject transformedModel = SCChartsDoTransformation(modelRoot, command);
+            
+            // Calculate output path
+            output = URI.createURI(input.toString());
+            output = output.trimFragment();
+            output = output.trimFileExtension().appendFileExtension(ModelHandlerFileExtensionTransformed());                
+      
+
             try {
+                // Write out copy/transformation
+                // TODO: add Factory for KIELER stand-alone
+                /* Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+                Map<String, Object> m = reg.getExtensionToFactoryMap();
+                m.put(ModelHandlerFileExtension(), new XMIResourceFactoryImpl());*/
+                ResourceSet resSet = new ResourceSetImpl();
                 
-                // Extract command
-                String command = event.getCommand().getId().toString();
-                    
-                // Load model
-                inputResource.load(null);
-//              EObject modelRoot = inputResource.getContents().get(0);
-                Statechart modelRoot = (Statechart) EcoreUtil.getObjectByType( 
-                            inputResource.getContents(), SGraphPackage.Literals.STATECHART); 
-                EObject transformedModel = SCChartsDoTransformation(modelRoot, command);
+                // Create ouptut resource
+                Resource resource = resSet.createResource(output);
                 
-                // Calculate output path
-                output = URI.createURI(input.toString());
-                output = output.trimFragment();
-                output = output.trimFileExtension().appendFileExtension(ModelHandlerFileExtensionTransformed());                
-        
+                // Create Diagram, if necessary
+                // Note: Diagrams created this way are empty
+                Diagram diagram = null;
+                if (ModelHandlerCreateDiagram()) {
+                    diagram = ViewService.createDiagram(transformedModel, 
+                                    ModelHandlerDiagramEditorID(), 
+                                    ModelHandlerDiagramPreferencesHint());
+                    if (diagram == null) { throw new NullPointerException(); }
+                    diagram.setElement(transformedModel);
+               
+                    // Save both the model and the diagram in one resource
+                    resource.getContents().add(transformedModel);
+                    resource.getContents().add(diagram);
+                } else {
+                    resource.getContents().add(transformedModel);
+                }
+                
+                resource.save(getSaveOptions());
+                setCharset(WorkspaceSynchronizer.getFile(resource));
 
-                try {
-                    // Write out copy/transformation
-                    // TODO: add Factory for KIELER stand-alone
-                    /* Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-                    Map<String, Object> m = reg.getExtensionToFactoryMap();
-                    m.put(ModelHandlerFileExtension(), new XMIResourceFactoryImpl());*/
-                    ResourceSet resSet = new ResourceSetImpl();
-                    
-                    // Create ouptut resource
-                    Resource resource = resSet.createResource(output);
-                    
-                    // Create Diagram, if necessary
-                    // Note: Diagrams created this way are empty
-                    Diagram diagram = null;
-                    if (ModelHandlerCreateDiagram()) {
-                        diagram = ViewService.createDiagram(transformedModel, 
-                                        ModelHandlerDiagramEditorID(), 
-                                        ModelHandlerDiagramPreferencesHint());
-                        if (diagram == null) { throw new NullPointerException(); }
-                        diagram.setElement(transformedModel);
-                   
-                        // Save both the model and the diagram in one resource
-                        resource.getContents().add(transformedModel);
-                        resource.getContents().add(diagram);
-                    } else {
-                        resource.getContents().add(transformedModel);
-                    }
-                    
-                    resource.save(getSaveOptions());
-                    setCharset(WorkspaceSynchronizer.getFile(resource));
-
-                    // Open associated editor, if necessary
-                    if (ModelHandlerOpenEditor()) {
-                        URI uri = EcoreUtil.getURI(transformedModel);
-                        IFile file2 = ResourcesPlugin.getWorkspace().getRoot()
-                                            .getFile(new Path(uri.toPlatformString(true)));
-                    
-                        IEditorDescriptor desc = PlatformUI.getWorkbench()
-                                                .getEditorRegistry().getDefaultEditor(file.getName());
-                 
-                        final IWorkbenchPage wbPage = PlatformUI.getWorkbench()
-                                                .getActiveWorkbenchWindow().getActivePage();
-                        FileEditorInput fileInput = new FileEditorInput(file2);
-                        IEditorPart editor = wbPage.openEditor(fileInput,
-                                                desc.getId());
-                    }
-                } catch (IOException e) {
-                    throw new ExecutionException("Cannot write output SCChart file.");
-                } catch (PartInitException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-
+                // Open associated editor, if necessary
+                if (ModelHandlerOpenEditor()) {
+                    URI uri = EcoreUtil.getURI(transformedModel);
+                    IFile file2 = ResourcesPlugin.getWorkspace().getRoot()
+                                        .getFile(new Path(uri.toPlatformString(true)));
+                
+                    IEditorDescriptor desc = PlatformUI.getWorkbench()
+                                            .getEditorRegistry().getDefaultEditor(file.getName());
+             
+                    final IWorkbenchPage wbPage = PlatformUI.getWorkbench()
+                                            .getActiveWorkbenchWindow().getActivePage();
+                    FileEditorInput fileInput = new FileEditorInput(file2);
+                    IEditorPart editor = wbPage.openEditor(fileInput,
+                                            desc.getId());
+                }
             } catch (IOException e) {
-                throw new ExecutionException("Cannot read input file.");
-            }
+                throw new ExecutionException("Cannot write output SCChart file.");
+            } catch (PartInitException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
 
             // Refresh the file explorer
             try {

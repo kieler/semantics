@@ -45,9 +45,12 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence;
+//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgFactory;
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence
+
 // import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
 
 
@@ -160,7 +163,7 @@ class SCLHelper {
         sSet.scope = iSet    
     }
     
-    def void addInstruction(InstructionSet iSet, InstructionOrCommentSequence ioc) {
+    def void addInstruction(InstructionSet iSet, EObject ioc) {
         if (ioc instanceof Instruction) { iSet.addInstruction(ioc as Instruction) }
           else { iSet.addInstruction(ioc as Comment) }
     }

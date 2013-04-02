@@ -4,6 +4,8 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.util;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.*;
 
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -85,16 +87,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
         return createInstructionAdapter();
       }
       @Override
-      public Adapter caseInstructionSet(InstructionSet object)
-      {
-        return createInstructionSetAdapter();
-      }
-      @Override
-      public Adapter caseInstructionOrCommentSequence(InstructionOrCommentSequence object)
-      {
-        return createInstructionOrCommentSequenceAdapter();
-      }
-      @Override
       public Adapter caseAssignment(Assignment object)
       {
         return createAssignmentAdapter();
@@ -130,19 +122,14 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
         return createScl_ProgramAdapter();
       }
       @Override
-      public Adapter caseScl_InstructionOrCommentSequence(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence object)
+      public Adapter caseInstructionOrCommentSequence(InstructionOrCommentSequence object)
       {
-        return createScl_InstructionOrCommentSequenceAdapter();
+        return createInstructionOrCommentSequenceAdapter();
       }
       @Override
       public Adapter caseScl_Instruction(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction object)
       {
         return createScl_InstructionAdapter();
-      }
-      @Override
-      public Adapter caseScl_InstructionSet(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet object)
-      {
-        return createScl_InstructionSetAdapter();
       }
       @Override
       public Adapter caseScl_Assignment(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment object)
@@ -217,36 +204,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createInstructionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet <em>Instruction Set</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet
-   * @generated
-   */
-  public Adapter createInstructionSetAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionOrCommentSequence <em>Instruction Or Comment Sequence</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionOrCommentSequence
-   * @generated
-   */
-  public Adapter createInstructionOrCommentSequenceAdapter()
   {
     return null;
   }
@@ -366,7 +323,7 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence
    * @generated
    */
-  public Adapter createScl_InstructionOrCommentSequenceAdapter()
+  public Adapter createInstructionOrCommentSequenceAdapter()
   {
     return null;
   }
@@ -382,21 +339,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScl_InstructionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet <em>Instruction Set</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
-   * @generated
-   */
-  public Adapter createScl_InstructionSetAdapter()
   {
     return null;
   }

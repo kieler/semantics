@@ -41,6 +41,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
+//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
 class CoreToSCLTransformation {
     
@@ -57,7 +58,7 @@ class CoreToSCLTransformation {
        
        //rootStatechart.distributeStateIDs();
        
-        targetProgram.setName(rootStatechart.getName());
+        targetProgram.setName((rootStatechart.regions.get(0).vertices.get(0) as SyncState).getName());
         
         val Region mainRegion = (rootStatechart.regions.get(0).vertices.get(0) as SyncState).regions.get(0);
         var program = SCL.createInstructionSet();
@@ -146,12 +147,15 @@ class CoreToSCLTransformation {
                 
                 iSet.addPause();
                 
+                //if (transitionCount==100) {
                 if (transitionCount==1) {
                     // OPTIMIZE GOTO
                     val transition = outgoingWeakTransitions.get(0);
-                    val targetState = transition.target as SyncState; 
+                    val targetState = transition.target as SyncState;
                     var cSet = createSCLInstructionSet(createSCLGoto(stateID));
-                    var conditional = createSCLConditional("'!(" + transition.getSpecification() + ")'", cSet);
+                    var conditional = createSCLConditional("'!(" + transition.getSpecification() + ")'"
+                      , cSet
+                    );
                     var goto = createSCLGoto(targetState.getHierarchicalName(""));
                     iSet.addInstruction(conditional);
                     iSet.addInstruction(goto);

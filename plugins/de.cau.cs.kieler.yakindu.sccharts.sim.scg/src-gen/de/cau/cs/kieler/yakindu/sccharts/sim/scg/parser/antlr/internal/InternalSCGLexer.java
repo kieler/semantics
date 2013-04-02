@@ -136,10 +136,11 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:15:7: ( ';' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:15:9: ';'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:15:7: ( 'if' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:15:9: 'if'
             {
-            match(';'); 
+            match("if"); 
+
 
             }
 
@@ -156,10 +157,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:16:7: ( 'if' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:16:9: 'if'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:16:7: ( 'then' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:16:9: 'then'
             {
-            match("if"); 
+            match("then"); 
 
 
             }
@@ -177,10 +178,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:17:7: ( 'then' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:17:9: 'then'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:17:7: ( 'end' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:17:9: 'end'
             {
-            match("then"); 
+            match("end"); 
 
 
             }
@@ -198,10 +199,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:18:7: ( 'end' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:18:9: 'end'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:18:7: ( 'dependency' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:18:9: 'dependency'
             {
-            match("end"); 
+            match("dependency"); 
 
 
             }
@@ -219,10 +220,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:19:7: ( 'dependency' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:19:9: 'dependency'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:19:7: ( 'fork' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:19:9: 'fork'
             {
-            match("dependency"); 
+            match("fork"); 
 
 
             }
@@ -240,10 +241,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:20:7: ( 'fork' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:20:9: 'fork'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:20:7: ( 'par' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:20:9: 'par'
             {
-            match("fork"); 
+            match("par"); 
 
 
             }
@@ -261,10 +262,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:21:7: ( 'par' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:21:9: 'par'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:21:7: ( 'join' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:21:9: 'join'
             {
-            match("par"); 
+            match("join"); 
 
 
             }
@@ -282,10 +283,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:22:7: ( 'join' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:22:9: 'join'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:22:7: ( 'input' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:22:9: 'input'
             {
-            match("join"); 
+            match("input"); 
 
 
             }
@@ -303,10 +304,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:23:7: ( 'input' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:23:9: 'input'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:23:7: ( 'output' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:23:9: 'output'
             {
-            match("input"); 
+            match("output"); 
 
 
             }
@@ -324,11 +325,10 @@ public class InternalSCGLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:24:7: ( 'output' )
-            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:24:9: 'output'
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:24:7: ( ';' )
+            // ../de.cau.cs.kieler.yakindu.sccharts.sim.scg/src-gen/de/cau/cs/kieler/yakindu/sccharts/sim/scg/parser/antlr/internal/InternalSCG.g:24:9: ';'
             {
-            match("output"); 
-
+            match(';'); 
 
             }
 
@@ -1042,56 +1042,56 @@ public class InternalSCGLexer extends Lexer {
 
     protected DFA12 dfa12 = new DFA12(this);
     static final String DFA12_eotS =
-        "\1\uffff\1\27\2\uffff\1\27\1\uffff\10\27\1\25\2\uffff\3\25\2\uffff"+
-        "\1\27\3\uffff\2\27\1\uffff\1\56\10\27\5\uffff\2\27\1\71\1\uffff"+
+        "\1\uffff\1\27\2\uffff\10\27\1\uffff\1\27\1\25\2\uffff\3\25\2\uffff"+
+        "\1\27\3\uffff\2\27\1\56\7\27\1\uffff\1\27\5\uffff\2\27\1\71\1\uffff"+
         "\2\27\1\74\7\27\1\uffff\1\27\1\105\1\uffff\1\27\1\107\1\110\4\27"+
         "\1\115\1\uffff\1\27\2\uffff\1\27\1\120\1\121\1\27\1\uffff\1\27\1"+
         "\124\2\uffff\2\27\1\uffff\1\127\1\27\1\uffff\1\27\1\132\1\uffff";
     static final String DFA12_eofS =
         "\133\uffff";
     static final String DFA12_minS =
-        "\1\0\1\157\2\uffff\1\141\1\uffff\1\146\1\150\1\156\1\145\2\157"+
-        "\1\165\1\157\1\101\2\uffff\2\0\1\52\2\uffff\1\144\3\uffff\1\151"+
-        "\1\162\1\uffff\1\60\1\160\1\145\1\144\1\160\1\162\1\151\1\164\1"+
+        "\1\0\1\157\2\uffff\1\141\1\146\1\150\1\156\1\145\2\157\1\165\1"+
+        "\uffff\1\157\1\101\2\uffff\2\0\1\52\2\uffff\1\144\3\uffff\1\151"+
+        "\1\162\1\60\1\160\1\145\1\144\1\160\1\162\1\151\1\164\1\uffff\1"+
         "\143\5\uffff\1\165\1\157\1\60\1\uffff\1\165\1\156\1\60\1\145\1\153"+
         "\1\156\1\160\1\141\1\154\1\162\1\uffff\1\164\1\60\1\uffff\1\156"+
         "\2\60\1\165\1\154\1\145\1\151\1\60\1\uffff\1\144\2\uffff\1\164\2"+
         "\60\1\164\1\uffff\1\145\1\60\2\uffff\1\171\1\156\1\uffff\1\60\1"+
         "\143\1\uffff\1\171\1\60\1\uffff";
     static final String DFA12_maxS =
-        "\1\uffff\1\157\2\uffff\1\162\1\uffff\1\156\1\150\1\156\1\145\2"+
-        "\157\1\165\1\157\1\172\2\uffff\2\uffff\1\57\2\uffff\1\144\3\uffff"+
-        "\1\151\1\162\1\uffff\1\172\1\160\1\145\1\144\1\160\1\162\1\151\1"+
-        "\164\1\143\5\uffff\1\165\1\157\1\172\1\uffff\1\165\1\156\1\172\1"+
-        "\145\1\153\1\156\1\160\1\141\1\154\1\162\1\uffff\1\164\1\172\1\uffff"+
+        "\1\uffff\1\157\2\uffff\1\162\1\156\1\150\1\156\1\145\2\157\1\165"+
+        "\1\uffff\1\157\1\172\2\uffff\2\uffff\1\57\2\uffff\1\144\3\uffff"+
+        "\1\151\1\162\1\172\1\160\1\145\1\144\1\160\1\162\1\151\1\164\1\uffff"+
+        "\1\143\5\uffff\1\165\1\157\1\172\1\uffff\1\165\1\156\1\172\1\145"+
+        "\1\153\1\156\1\160\1\141\1\154\1\162\1\uffff\1\164\1\172\1\uffff"+
         "\1\156\2\172\1\165\1\154\1\145\1\151\1\172\1\uffff\1\144\2\uffff"+
         "\1\164\2\172\1\164\1\uffff\1\145\1\172\2\uffff\1\171\1\156\1\uffff"+
         "\1\172\1\143\1\uffff\1\171\1\172\1\uffff";
     static final String DFA12_acceptS =
-        "\2\uffff\1\2\1\3\1\uffff\1\5\11\uffff\1\20\1\21\3\uffff\1\25\1"+
-        "\26\1\uffff\1\20\1\2\1\3\2\uffff\1\5\11\uffff\1\21\1\22\1\23\1\24"+
-        "\1\25\3\uffff\1\6\12\uffff\1\13\2\uffff\1\10\10\uffff\1\7\1\uffff"+
-        "\1\12\1\14\4\uffff\1\15\2\uffff\1\17\1\1\2\uffff\1\16\2\uffff\1"+
-        "\4\2\uffff\1\11";
+        "\2\uffff\1\2\1\3\10\uffff\1\16\2\uffff\1\20\1\21\3\uffff\1\25\1"+
+        "\26\1\uffff\1\20\1\2\1\3\12\uffff\1\16\1\uffff\1\21\1\22\1\23\1"+
+        "\24\1\25\3\uffff\1\5\12\uffff\1\12\2\uffff\1\7\10\uffff\1\6\1\uffff"+
+        "\1\11\1\13\4\uffff\1\14\2\uffff\1\17\1\1\2\uffff\1\15\2\uffff\1"+
+        "\4\2\uffff\1\10";
     static final String DFA12_specialS =
-        "\1\2\20\uffff\1\1\1\0\110\uffff}>";
+        "\1\0\20\uffff\1\2\1\1\110\uffff}>";
     static final String[] DFA12_transitionS = {
             "\11\25\2\24\2\25\1\24\22\25\1\24\1\25\1\21\4\25\1\22\7\25\1"+
-            "\23\12\20\1\25\1\5\5\25\32\17\3\25\1\16\1\17\1\25\3\17\1\11"+
-            "\1\10\1\12\2\17\1\6\1\13\1\17\1\15\1\1\1\17\1\14\1\4\3\17\1"+
-            "\7\6\17\1\2\1\25\1\3\uff82\25",
+            "\23\12\20\1\25\1\14\5\25\32\17\3\25\1\16\1\17\1\25\3\17\1\10"+
+            "\1\7\1\11\2\17\1\5\1\12\1\17\1\15\1\1\1\17\1\13\1\4\3\17\1\6"+
+            "\6\17\1\2\1\25\1\3\uff82\25",
             "\1\26",
             "",
             "",
             "\1\33\20\uffff\1\32",
-            "",
-            "\1\35\7\uffff\1\36",
+            "\1\34\7\uffff\1\35",
+            "\1\36",
             "\1\37",
             "\1\40",
             "\1\41",
             "\1\42",
             "\1\43",
-            "\1\44",
+            "",
             "\1\45",
             "\32\27\4\uffff\1\27\1\uffff\32\27",
             "",
@@ -1107,7 +1107,6 @@ public class InternalSCGLexer extends Lexer {
             "",
             "\1\54",
             "\1\55",
-            "",
             "\12\27\7\uffff\32\27\4\uffff\1\27\1\uffff\32\27",
             "\1\57",
             "\1\60",
@@ -1116,6 +1115,7 @@ public class InternalSCGLexer extends Lexer {
             "\1\63",
             "\1\64",
             "\1\65",
+            "",
             "\1\66",
             "",
             "",
@@ -1209,26 +1209,6 @@ public class InternalSCGLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA12_18 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA12_18>='\u0000' && LA12_18<='\uFFFF')) ) {s = 39;}
-
-                        else s = 21;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA12_17 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA12_17>='\u0000' && LA12_17<='\uFFFF')) ) {s = 39;}
-
-                        else s = 21;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
                         int LA12_0 = input.LA(1);
 
                         s = -1;
@@ -1240,21 +1220,21 @@ public class InternalSCGLexer extends Lexer {
 
                         else if ( (LA12_0=='p') ) {s = 4;}
 
-                        else if ( (LA12_0==';') ) {s = 5;}
+                        else if ( (LA12_0=='i') ) {s = 5;}
 
-                        else if ( (LA12_0=='i') ) {s = 6;}
+                        else if ( (LA12_0=='t') ) {s = 6;}
 
-                        else if ( (LA12_0=='t') ) {s = 7;}
+                        else if ( (LA12_0=='e') ) {s = 7;}
 
-                        else if ( (LA12_0=='e') ) {s = 8;}
+                        else if ( (LA12_0=='d') ) {s = 8;}
 
-                        else if ( (LA12_0=='d') ) {s = 9;}
+                        else if ( (LA12_0=='f') ) {s = 9;}
 
-                        else if ( (LA12_0=='f') ) {s = 10;}
+                        else if ( (LA12_0=='j') ) {s = 10;}
 
-                        else if ( (LA12_0=='j') ) {s = 11;}
+                        else if ( (LA12_0=='o') ) {s = 11;}
 
-                        else if ( (LA12_0=='o') ) {s = 12;}
+                        else if ( (LA12_0==';') ) {s = 12;}
 
                         else if ( (LA12_0=='l') ) {s = 13;}
 
@@ -1273,6 +1253,26 @@ public class InternalSCGLexer extends Lexer {
                         else if ( ((LA12_0>='\t' && LA12_0<='\n')||LA12_0=='\r'||LA12_0==' ') ) {s = 20;}
 
                         else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\u001F')||LA12_0=='!'||(LA12_0>='#' && LA12_0<='&')||(LA12_0>='(' && LA12_0<='.')||LA12_0==':'||(LA12_0>='<' && LA12_0<='@')||(LA12_0>='[' && LA12_0<=']')||LA12_0=='`'||LA12_0=='|'||(LA12_0>='~' && LA12_0<='\uFFFF')) ) {s = 21;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA12_18 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA12_18>='\u0000' && LA12_18<='\uFFFF')) ) {s = 39;}
+
+                        else s = 21;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA12_17 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA12_17>='\u0000' && LA12_17<='\uFFFF')) ) {s = 39;}
+
+                        else s = 21;
 
                         if ( s>=0 ) return s;
                         break;

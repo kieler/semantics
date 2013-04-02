@@ -133,53 +133,6 @@ public interface ScgPackage extends EPackage
   int INSTRUCTION_FEATURE_COUNT = SclPackage.INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl <em>Instruction Set</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionSet()
-   * @generated
-   */
-  int INSTRUCTION_SET = 2;
-
-  /**
-   * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_SET__INSTRUCTIONS = SclPackage.INSTRUCTION_SET__INSTRUCTIONS;
-
-  /**
-   * The number of structural features of the '<em>Instruction Set</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_SET_FEATURE_COUNT = SclPackage.INSTRUCTION_SET_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentSequenceImpl <em>Instruction Or Comment Sequence</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentSequenceImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionOrCommentSequence()
-   * @generated
-   */
-  int INSTRUCTION_OR_COMMENT_SEQUENCE = 3;
-
-  /**
-   * The number of structural features of the '<em>Instruction Or Comment Sequence</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT = SclPackage.INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT + 0;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AssignmentImpl <em>Assignment</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -187,7 +140,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getAssignment()
    * @generated
    */
-  int ASSIGNMENT = 4;
+  int ASSIGNMENT = 2;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -233,7 +186,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getConditional()
    * @generated
    */
-  int CONDITIONAL = 5;
+  int CONDITIONAL = 3;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -288,7 +241,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getDependency()
    * @generated
    */
-  int DEPENDENCY = 6;
+  int DEPENDENCY = 4;
 
   /**
    * The feature id for the '<em><b>Dependencies</b></em>' reference.
@@ -316,7 +269,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getComment()
    * @generated
    */
-  int COMMENT = 7;
+  int COMMENT = 5;
 
   /**
    * The feature id for the '<em><b>Comment</b></em>' attribute.
@@ -325,7 +278,7 @@ public interface ScgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__COMMENT = INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT + 0;
+  int COMMENT__COMMENT = SclPackage.COMMENT__COMMENT;
 
   /**
    * The number of structural features of the '<em>Comment</em>' class.
@@ -334,7 +287,7 @@ public interface ScgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT_FEATURE_COUNT = INSTRUCTION_OR_COMMENT_SEQUENCE_FEATURE_COUNT + 1;
+  int COMMENT_FEATURE_COUNT = SclPackage.COMMENT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl <em>Parallel</em>}' class.
@@ -344,7 +297,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 8;
+  int PARALLEL = 6;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -381,7 +334,7 @@ public interface ScgPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getScope()
    * @generated
    */
-  int SCOPE = 9;
+  int SCOPE = 7;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -450,26 +403,6 @@ public interface ScgPackage extends EPackage
    * @generated
    */
   EAttribute getInstruction_Priority();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet <em>Instruction Set</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Instruction Set</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet
-   * @generated
-   */
-  EClass getInstructionSet();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionOrCommentSequence <em>Instruction Or Comment Sequence</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Instruction Or Comment Sequence</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionOrCommentSequence
-   * @generated
-   */
-  EClass getInstructionOrCommentSequence();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Assignment <em>Assignment</em>}'.
@@ -614,26 +547,6 @@ public interface ScgPackage extends EPackage
      * @generated
      */
     EAttribute INSTRUCTION__PRIORITY = eINSTANCE.getInstruction_Priority();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl <em>Instruction Set</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionSetImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionSet()
-     * @generated
-     */
-    EClass INSTRUCTION_SET = eINSTANCE.getInstructionSet();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentSequenceImpl <em>Instruction Or Comment Sequence</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionOrCommentSequenceImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getInstructionOrCommentSequence()
-     * @generated
-     */
-    EClass INSTRUCTION_OR_COMMENT_SEQUENCE = eINSTANCE.getInstructionOrCommentSequence();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AssignmentImpl <em>Assignment</em>}' class.

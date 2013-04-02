@@ -19,7 +19,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg;
  * @model
  * @generated
  */
-public interface Instruction extends de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction, InstructionOrCommentSequence
+public interface Instruction extends de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction
 {
   /**
    * Returns the value of the '<em><b>Priority</b></em>' attribute.

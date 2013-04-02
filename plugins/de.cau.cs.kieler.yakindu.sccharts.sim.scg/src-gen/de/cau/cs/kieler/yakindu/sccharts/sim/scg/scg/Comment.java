@@ -13,6 +13,6 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg;
  * @model
  * @generated
  */
-public interface Comment extends InstructionOrCommentSequence, de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment
+public interface Comment extends de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment
 {
 } // Comment

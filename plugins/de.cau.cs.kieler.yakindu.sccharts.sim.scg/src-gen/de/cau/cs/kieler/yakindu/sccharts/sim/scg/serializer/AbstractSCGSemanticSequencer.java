@@ -7,13 +7,13 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Comment;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Program;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Scope;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.services.SCGGrammarAccess;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause;
@@ -81,12 +81,6 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 					return; 
 				}
 				else break;
-			case ScgPackage.INSTRUCTION_SET:
-				if(context == grammarAccess.getInstructionSetRule()) {
-					sequence_InstructionSet(context, (InstructionSet) semanticObject); 
-					return; 
-				}
-				else break;
 			case ScgPackage.PARALLEL:
 				if(context == grammarAccess.getInstructionRule() ||
 				   context == grammarAccess.getInstructionOrCommentSequenceRule()) {
@@ -120,6 +114,12 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 			case SclPackage.GOTO:
 				if(context == grammarAccess.getGotoRule()) {
 					sequence_Goto(context, (Goto) semanticObject); 
+					return; 
+				}
+				else break;
+			case SclPackage.INSTRUCTION_SET:
+				if(context == grammarAccess.getInstructionSetRule()) {
+					sequence_InstructionSet(context, (InstructionSet) semanticObject); 
 					return; 
 				}
 				else break;
@@ -216,20 +216,6 @@ public abstract class AbstractSCGSemanticSequencer extends SCLSemanticSequencer 
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getDependencyAccess().getDependenciesAssignmentIDTerminalRuleCall_1_0_1(), semanticObject.getDependencies());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         (instructions+=InstructionOrCommentSequence+ instructions+=Instruction instructions+=Comment?) | 
-	 *         (instructions+=Comment instructions+=Instruction) | 
-	 *         (instructions+=Instruction instructions+=Comment) | 
-	 *         instructions+=Instruction
-	 *     )
-	 */
-	protected void sequence_InstructionSet(EObject context, InstructionSet semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
