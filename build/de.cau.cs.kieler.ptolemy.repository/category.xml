@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="KIELER Ptolemy Integration (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly-ptolemy/">
+      Update site for the Ptolemy integration nightly builds.
+   </description>
+   <feature url="features/org.ptolemy_8.1.0.qualifier.jar" id="org.ptolemy.feature" version="8.1.0.qualifier">
+      <category name="ptolemy"/>
+   </feature>
+   <category-def name="ptolemy" label="KIELER Ptolemy Integration">
+      <description>
+        Provides the Ptolemy tool wrapped into an Eclipse plug-in to be used as a library.
+      </description>
+   </category-def>
+</site>

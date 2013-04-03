@@ -12,6 +12,7 @@
   <modules>
     <module>../../plugins</module>
     <module>../../features</module>
+    <module>../de.cau.cs.kieler.ptolemy.repository</module>
     <module>../de.cau.cs.kieler.semantics.repository</module>
   </modules>
 
