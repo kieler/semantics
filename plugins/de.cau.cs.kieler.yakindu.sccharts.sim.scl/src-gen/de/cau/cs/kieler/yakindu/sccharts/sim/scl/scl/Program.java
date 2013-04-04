@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getVariables <em>Variables</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getInterface <em>Interface</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getProgram <em>Program</em>}</li>
  * </ul>
  * </p>
@@ -53,20 +53,20 @@ public interface Program extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable}.
+   * Returns the value of the '<em><b>Interface</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Interface</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Variables</em>' containment reference list.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getProgram_Variables()
+   * @return the value of the '<em>Interface</em>' containment reference list.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getProgram_Interface()
    * @model containment="true"
    * @generated
    */
-  EList<Variable> getVariables();
+  EList<VariableDeclaration> getInterface();
 
   /**
    * Returns the value of the '<em><b>Program</b></em>' containment reference.
@@ -77,12 +77,12 @@ public interface Program extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Program</em>' containment reference.
-   * @see #setProgram(InstructionSet)
+   * @see #setProgram(InstructionList)
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getProgram_Program()
    * @model containment="true"
    * @generated
    */
-  InstructionSet getProgram();
+  InstructionList getProgram();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program#getProgram <em>Program</em>}' containment reference.
@@ -92,6 +92,6 @@ public interface Program extends EObject
    * @see #getProgram()
    * @generated
    */
-  void setProgram(InstructionSet value);
+  void setProgram(InstructionList value);
 
 } // Program

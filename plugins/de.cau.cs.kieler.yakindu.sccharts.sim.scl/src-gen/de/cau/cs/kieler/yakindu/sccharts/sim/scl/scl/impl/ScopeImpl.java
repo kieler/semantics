@@ -2,62 +2,24 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope;
 
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Scope</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * The following features are implemented:
- * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl#getVariables <em>Variables</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl#getScope <em>Scope</em>}</li>
- * </ul>
  * </p>
  *
  * @generated
  */
-public class ScopeImpl extends InstructionImpl implements Scope
+public class ScopeImpl extends MinimalEObjectImpl.Container implements Scope
 {
-  /**
-   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getVariables()
-   * @generated
-   * @ordered
-   */
-  protected EList<LocalVariable> variables;
-
-  /**
-   * The cached value of the '{@link #getScope() <em>Scope</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getScope()
-   * @generated
-   * @ordered
-   */
-  protected InstructionSet scope;
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -77,164 +39,6 @@ public class ScopeImpl extends InstructionImpl implements Scope
   protected EClass eStaticClass()
   {
     return SclPackage.Literals.SCOPE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<LocalVariable> getVariables()
-  {
-    if (variables == null)
-    {
-      variables = new EObjectContainmentEList<LocalVariable>(LocalVariable.class, this, SclPackage.SCOPE__VARIABLES);
-    }
-    return variables;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionSet getScope()
-  {
-    return scope;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetScope(InstructionSet newScope, NotificationChain msgs)
-  {
-    InstructionSet oldScope = scope;
-    scope = newScope;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.SCOPE__SCOPE, oldScope, newScope);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setScope(InstructionSet newScope)
-  {
-    if (newScope != scope)
-    {
-      NotificationChain msgs = null;
-      if (scope != null)
-        msgs = ((InternalEObject)scope).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.SCOPE__SCOPE, null, msgs);
-      if (newScope != null)
-        msgs = ((InternalEObject)newScope).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.SCOPE__SCOPE, null, msgs);
-      msgs = basicSetScope(newScope, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.SCOPE__SCOPE, newScope, newScope));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case SclPackage.SCOPE__VARIABLES:
-        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
-      case SclPackage.SCOPE__SCOPE:
-        return basicSetScope(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case SclPackage.SCOPE__VARIABLES:
-        return getVariables();
-      case SclPackage.SCOPE__SCOPE:
-        return getScope();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case SclPackage.SCOPE__VARIABLES:
-        getVariables().clear();
-        getVariables().addAll((Collection<? extends LocalVariable>)newValue);
-        return;
-      case SclPackage.SCOPE__SCOPE:
-        setScope((InstructionSet)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case SclPackage.SCOPE__VARIABLES:
-        getVariables().clear();
-        return;
-      case SclPackage.SCOPE__SCOPE:
-        setScope((InstructionSet)null);
-        return;
-    }
-    super.eUnset(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case SclPackage.SCOPE__VARIABLES:
-        return variables != null && !variables.isEmpty();
-      case SclPackage.SCOPE__SCOPE:
-        return scope != null;
-    }
-    return super.eIsSet(featureID);
   }
 
 } //ScopeImpl

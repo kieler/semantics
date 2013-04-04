@@ -78,13 +78,13 @@ public interface ScgPackage extends EPackage
   int PROGRAM__NAME = SclPackage.PROGRAM__NAME;
 
   /**
-   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
+   * The feature id for the '<em><b>Interface</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__VARIABLES = SclPackage.PROGRAM__VARIABLES;
+  int PROGRAM__INTERFACE = SclPackage.PROGRAM__INTERFACE;
 
   /**
    * The feature id for the '<em><b>Program</b></em>' containment reference.
@@ -96,13 +96,22 @@ public interface ScgPackage extends EPackage
   int PROGRAM__PROGRAM = SclPackage.PROGRAM__PROGRAM;
 
   /**
+   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROGRAM__VARIABLES = SclPackage.PROGRAM_FEATURE_COUNT + 0;
+
+  /**
    * The number of structural features of the '<em>Program</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM_FEATURE_COUNT = SclPackage.PROGRAM_FEATURE_COUNT + 0;
+  int PROGRAM_FEATURE_COUNT = SclPackage.PROGRAM_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionImpl <em>Instruction</em>}' class.
@@ -262,14 +271,14 @@ public interface ScgPackage extends EPackage
   int DEPENDENCY_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.CommentImpl <em>Comment</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AnnotationImpl <em>Annotation</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.CommentImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getComment()
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AnnotationImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getAnnotation()
    * @generated
    */
-  int COMMENT = 5;
+  int ANNOTATION = 5;
 
   /**
    * The feature id for the '<em><b>Comment</b></em>' attribute.
@@ -278,16 +287,16 @@ public interface ScgPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__COMMENT = SclPackage.COMMENT__COMMENT;
+  int ANNOTATION__COMMENT = SclPackage.ANNOTATION__COMMENT;
 
   /**
-   * The number of structural features of the '<em>Comment</em>' class.
+   * The number of structural features of the '<em>Annotation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMMENT_FEATURE_COUNT = SclPackage.COMMENT_FEATURE_COUNT + 0;
+  int ANNOTATION_FEATURE_COUNT = SclPackage.ANNOTATION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl <em>Parallel</em>}' class.
@@ -326,52 +335,6 @@ public interface ScgPackage extends EPackage
    */
   int PARALLEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScopeImpl <em>Scope</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScopeImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getScope()
-   * @generated
-   */
-  int SCOPE = 7;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCOPE__PRIORITY = INSTRUCTION__PRIORITY;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCOPE__VARIABLES = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCOPE__SCOPE = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Scope</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCOPE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
-
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Program <em>Program</em>}'.
@@ -382,6 +345,17 @@ public interface ScgPackage extends EPackage
    * @generated
    */
   EClass getProgram();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Program#getVariables <em>Variables</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Variables</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Program#getVariables()
+   * @see #getProgram()
+   * @generated
+   */
+  EReference getProgram_Variables();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction <em>Instruction</em>}'.
@@ -468,14 +442,14 @@ public interface ScgPackage extends EPackage
   EReference getDependency_Dependencies();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Comment <em>Comment</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Annotation <em>Annotation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Comment</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Comment
+   * @return the meta object for class '<em>Annotation</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Annotation
    * @generated
    */
-  EClass getComment();
+  EClass getAnnotation();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Parallel <em>Parallel</em>}'.
@@ -486,16 +460,6 @@ public interface ScgPackage extends EPackage
    * @generated
    */
   EClass getParallel();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Scope <em>Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Scope</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Scope
-   * @generated
-   */
-  EClass getScope();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -529,6 +493,14 @@ public interface ScgPackage extends EPackage
      * @generated
      */
     EClass PROGRAM = eINSTANCE.getProgram();
+
+    /**
+     * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PROGRAM__VARIABLES = eINSTANCE.getProgram_Variables();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.InstructionImpl <em>Instruction</em>}' class.
@@ -603,14 +575,14 @@ public interface ScgPackage extends EPackage
     EReference DEPENDENCY__DEPENDENCIES = eINSTANCE.getDependency_Dependencies();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.CommentImpl <em>Comment</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AnnotationImpl <em>Annotation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.CommentImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getComment()
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.AnnotationImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getAnnotation()
      * @generated
      */
-    EClass COMMENT = eINSTANCE.getComment();
+    EClass ANNOTATION = eINSTANCE.getAnnotation();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ParallelImpl <em>Parallel</em>}' class.
@@ -621,16 +593,6 @@ public interface ScgPackage extends EPackage
      * @generated
      */
     EClass PARALLEL = eINSTANCE.getParallel();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScopeImpl <em>Scope</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScopeImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.impl.ScgPackageImpl#getScope()
-     * @generated
-     */
-    EClass SCOPE = eINSTANCE.getScope();
 
   }
 

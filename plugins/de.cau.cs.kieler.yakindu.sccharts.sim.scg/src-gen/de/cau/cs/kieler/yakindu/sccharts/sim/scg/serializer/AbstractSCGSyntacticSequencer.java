@@ -18,12 +18,12 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractSCGSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected SCGGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Variable_InputKeyword_0_0_or_OutputKeyword_0_1;
+	protected AbstractElementAlias match_VariableDeclaration_InputKeyword_0_0_or_OutputKeyword_0_1;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (SCGGrammarAccess) access;
-		match_Variable_InputKeyword_0_0_or_OutputKeyword_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getVariableAccess().getInputKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getVariableAccess().getOutputKeyword_0_1()));
+		match_VariableDeclaration_InputKeyword_0_0_or_OutputKeyword_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getVariableDeclarationAccess().getInputKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getVariableDeclarationAccess().getOutputKeyword_0_1()));
 	}
 	
 	@Override
@@ -38,17 +38,17 @@ public abstract class AbstractSCGSyntacticSequencer extends AbstractSyntacticSeq
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_Variable_InputKeyword_0_0_or_OutputKeyword_0_1.equals(syntax))
-				emit_Variable_InputKeyword_0_0_or_OutputKeyword_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
+			if(match_VariableDeclaration_InputKeyword_0_0_or_OutputKeyword_0_1.equals(syntax))
+				emit_VariableDeclaration_InputKeyword_0_0_or_OutputKeyword_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
 	/**
 	 * Syntax:
-	 *     'input' | 'output'
+	 *     'output' | 'input'
 	 */
-	protected void emit_Variable_InputKeyword_0_0_or_OutputKeyword_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_VariableDeclaration_InputKeyword_0_0_or_OutputKeyword_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

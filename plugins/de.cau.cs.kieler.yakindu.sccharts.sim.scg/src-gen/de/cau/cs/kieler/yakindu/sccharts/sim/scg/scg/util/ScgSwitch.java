@@ -4,7 +4,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.util;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.*;
 
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -87,7 +87,7 @@ public class ScgSwitch<T> extends Switch<T>
         Instruction instruction = (Instruction)theEObject;
         T result = caseInstruction(instruction);
         if (result == null) result = caseScl_Instruction(instruction);
-        if (result == null) result = caseInstructionOrCommentSequence(instruction);
+        if (result == null) result = caseInstructionSequence(instruction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -98,7 +98,7 @@ public class ScgSwitch<T> extends Switch<T>
         if (result == null) result = caseInstruction(assignment);
         if (result == null) result = caseScl_Assignment(assignment);
         if (result == null) result = caseScl_Instruction(assignment);
-        if (result == null) result = caseInstructionOrCommentSequence(assignment);
+        if (result == null) result = caseInstructionSequence(assignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -109,7 +109,7 @@ public class ScgSwitch<T> extends Switch<T>
         if (result == null) result = caseInstruction(conditional);
         if (result == null) result = caseScl_Conditional(conditional);
         if (result == null) result = caseScl_Instruction(conditional);
-        if (result == null) result = caseInstructionOrCommentSequence(conditional);
+        if (result == null) result = caseInstructionSequence(conditional);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -120,12 +120,12 @@ public class ScgSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case ScgPackage.COMMENT:
+      case ScgPackage.ANNOTATION:
       {
-        Comment comment = (Comment)theEObject;
-        T result = caseComment(comment);
-        if (result == null) result = caseScl_Comment(comment);
-        if (result == null) result = caseInstructionOrCommentSequence(comment);
+        Annotation annotation = (Annotation)theEObject;
+        T result = caseAnnotation(annotation);
+        if (result == null) result = caseScl_Annotation(annotation);
+        if (result == null) result = caseInstructionSequence(annotation);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -136,18 +136,7 @@ public class ScgSwitch<T> extends Switch<T>
         if (result == null) result = caseInstruction(parallel);
         if (result == null) result = caseScl_Parallel(parallel);
         if (result == null) result = caseScl_Instruction(parallel);
-        if (result == null) result = caseInstructionOrCommentSequence(parallel);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case ScgPackage.SCOPE:
-      {
-        Scope scope = (Scope)theEObject;
-        T result = caseScope(scope);
-        if (result == null) result = caseInstruction(scope);
-        if (result == null) result = caseScl_Scope(scope);
-        if (result == null) result = caseScl_Instruction(scope);
-        if (result == null) result = caseInstructionOrCommentSequence(scope);
+        if (result == null) result = caseInstructionSequence(parallel);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -236,17 +225,17 @@ public class ScgSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Comment</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Annotation</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Comment</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Annotation</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseComment(Comment object)
+  public T caseAnnotation(Annotation object)
   {
     return null;
   }
@@ -268,22 +257,6 @@ public class ScgSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseScope(Scope object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Program</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -300,17 +273,17 @@ public class ScgSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Instruction Or Comment Sequence</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Instruction Sequence</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Instruction Or Comment Sequence</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Instruction Sequence</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseInstructionOrCommentSequence(InstructionOrCommentSequence object)
+  public T caseInstructionSequence(InstructionSequence object)
   {
     return null;
   }
@@ -364,17 +337,17 @@ public class ScgSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Comment</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Annotation</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Comment</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Annotation</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseScl_Comment(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment object)
+  public T caseScl_Annotation(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Annotation object)
   {
     return null;
   }
@@ -391,22 +364,6 @@ public class ScgSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseScl_Parallel(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseScl_Scope(de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope object)
   {
     return null;
   }

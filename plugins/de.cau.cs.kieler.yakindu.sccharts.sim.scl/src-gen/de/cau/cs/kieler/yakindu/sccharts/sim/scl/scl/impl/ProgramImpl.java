@@ -2,10 +2,10 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration;
 
 import java.util.Collection;
 
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ProgramImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ProgramImpl#getVariables <em>Variables</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ProgramImpl#getInterface <em>Interface</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ProgramImpl#getProgram <em>Program</em>}</li>
  * </ul>
  * </p>
@@ -61,14 +61,14 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
+   * The cached value of the '{@link #getInterface() <em>Interface</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVariables()
+   * @see #getInterface()
    * @generated
    * @ordered
    */
-  protected EList<Variable> variables;
+  protected EList<VariableDeclaration> interface_;
 
   /**
    * The cached value of the '{@link #getProgram() <em>Program</em>}' containment reference.
@@ -78,7 +78,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * @generated
    * @ordered
    */
-  protected InstructionSet program;
+  protected InstructionList program;
 
   /**
    * <!-- begin-user-doc -->
@@ -129,13 +129,13 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Variable> getVariables()
+  public EList<VariableDeclaration> getInterface()
   {
-    if (variables == null)
+    if (interface_ == null)
     {
-      variables = new EObjectContainmentEList<Variable>(Variable.class, this, SclPackage.PROGRAM__VARIABLES);
+      interface_ = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, SclPackage.PROGRAM__INTERFACE);
     }
-    return variables;
+    return interface_;
   }
 
   /**
@@ -143,7 +143,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public InstructionSet getProgram()
+  public InstructionList getProgram()
   {
     return program;
   }
@@ -153,9 +153,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetProgram(InstructionSet newProgram, NotificationChain msgs)
+  public NotificationChain basicSetProgram(InstructionList newProgram, NotificationChain msgs)
   {
-    InstructionSet oldProgram = program;
+    InstructionList oldProgram = program;
     program = newProgram;
     if (eNotificationRequired())
     {
@@ -170,7 +170,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setProgram(InstructionSet newProgram)
+  public void setProgram(InstructionList newProgram)
   {
     if (newProgram != program)
     {
@@ -196,8 +196,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case SclPackage.PROGRAM__VARIABLES:
-        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
+      case SclPackage.PROGRAM__INTERFACE:
+        return ((InternalEList<?>)getInterface()).basicRemove(otherEnd, msgs);
       case SclPackage.PROGRAM__PROGRAM:
         return basicSetProgram(null, msgs);
     }
@@ -216,8 +216,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     {
       case SclPackage.PROGRAM__NAME:
         return getName();
-      case SclPackage.PROGRAM__VARIABLES:
-        return getVariables();
+      case SclPackage.PROGRAM__INTERFACE:
+        return getInterface();
       case SclPackage.PROGRAM__PROGRAM:
         return getProgram();
     }
@@ -238,12 +238,12 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SclPackage.PROGRAM__NAME:
         setName((String)newValue);
         return;
-      case SclPackage.PROGRAM__VARIABLES:
-        getVariables().clear();
-        getVariables().addAll((Collection<? extends Variable>)newValue);
+      case SclPackage.PROGRAM__INTERFACE:
+        getInterface().clear();
+        getInterface().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
       case SclPackage.PROGRAM__PROGRAM:
-        setProgram((InstructionSet)newValue);
+        setProgram((InstructionList)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -262,11 +262,11 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SclPackage.PROGRAM__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case SclPackage.PROGRAM__VARIABLES:
-        getVariables().clear();
+      case SclPackage.PROGRAM__INTERFACE:
+        getInterface().clear();
         return;
       case SclPackage.PROGRAM__PROGRAM:
-        setProgram((InstructionSet)null);
+        setProgram((InstructionList)null);
         return;
     }
     super.eUnset(featureID);
@@ -284,8 +284,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     {
       case SclPackage.PROGRAM__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case SclPackage.PROGRAM__VARIABLES:
-        return variables != null && !variables.isEmpty();
+      case SclPackage.PROGRAM__INTERFACE:
+        return interface_ != null && !interface_.isEmpty();
       case SclPackage.PROGRAM__PROGRAM:
         return program != null;
     }

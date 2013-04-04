@@ -3,7 +3,7 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -58,7 +58,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * @generated
    * @ordered
    */
-  protected InstructionSet conditional;
+  protected InstructionList conditional;
 
   /**
    * <!-- begin-user-doc -->
@@ -109,7 +109,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public InstructionSet getConditional()
+  public InstructionList getConditional()
   {
     return conditional;
   }
@@ -119,9 +119,9 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetConditional(InstructionSet newConditional, NotificationChain msgs)
+  public NotificationChain basicSetConditional(InstructionList newConditional, NotificationChain msgs)
   {
-    InstructionSet oldConditional = conditional;
+    InstructionList oldConditional = conditional;
     conditional = newConditional;
     if (eNotificationRequired())
     {
@@ -136,7 +136,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setConditional(InstructionSet newConditional)
+  public void setConditional(InstructionList newConditional)
   {
     if (newConditional != conditional)
     {
@@ -200,7 +200,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         setExpression((String)newValue);
         return;
       case SclPackage.CONDITIONAL__CONDITIONAL:
-        setConditional((InstructionSet)newValue);
+        setConditional((InstructionList)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -220,7 +220,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         setExpression(EXPRESSION_EDEFAULT);
         return;
       case SclPackage.CONDITIONAL__CONDITIONAL:
-        setConditional((InstructionSet)null);
+        setConditional((InstructionList)null);
         return;
     }
     super.eUnset(featureID);

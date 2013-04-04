@@ -65,19 +65,18 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
     switch (eClass.getClassifierID())
     {
       case SclPackage.PROGRAM: return createProgram();
-      case SclPackage.VARIABLE: return createVariable();
-      case SclPackage.LOCAL_VARIABLE: return createLocalVariable();
+      case SclPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
       case SclPackage.INSTRUCTION: return createInstruction();
-      case SclPackage.INSTRUCTION_SET: return createInstructionSet();
-      case SclPackage.INSTRUCTION_OR_COMMENT_SEQUENCE: return createInstructionOrCommentSequence();
-      case SclPackage.LABEL: return createLabel();
+      case SclPackage.INSTRUCTION_LIST: return createInstructionList();
       case SclPackage.SCOPE: return createScope();
+      case SclPackage.INSTRUCTION_SEQUENCE: return createInstructionSequence();
+      case SclPackage.LABEL: return createLabel();
       case SclPackage.ASSIGNMENT: return createAssignment();
       case SclPackage.CONDITIONAL: return createConditional();
       case SclPackage.GOTO: return createGoto();
       case SclPackage.PARALLEL: return createParallel();
       case SclPackage.PAUSE: return createPause();
-      case SclPackage.COMMENT: return createComment();
+      case SclPackage.ANNOTATION: return createAnnotation();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -99,21 +98,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable createVariable()
+  public VariableDeclaration createVariableDeclaration()
   {
-    VariableImpl variable = new VariableImpl();
-    return variable;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public LocalVariable createLocalVariable()
-  {
-    LocalVariableImpl localVariable = new LocalVariableImpl();
-    return localVariable;
+    VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
+    return variableDeclaration;
   }
 
   /**
@@ -132,32 +120,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public InstructionSet createInstructionSet()
+  public InstructionList createInstructionList()
   {
-    InstructionSetImpl instructionSet = new InstructionSetImpl();
-    return instructionSet;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionOrCommentSequence createInstructionOrCommentSequence()
-  {
-    InstructionOrCommentSequenceImpl instructionOrCommentSequence = new InstructionOrCommentSequenceImpl();
-    return instructionOrCommentSequence;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Label createLabel()
-  {
-    LabelImpl label = new LabelImpl();
-    return label;
+    InstructionListImpl instructionList = new InstructionListImpl();
+    return instructionList;
   }
 
   /**
@@ -169,6 +135,28 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     ScopeImpl scope = new ScopeImpl();
     return scope;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InstructionSequence createInstructionSequence()
+  {
+    InstructionSequenceImpl instructionSequence = new InstructionSequenceImpl();
+    return instructionSequence;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Label createLabel()
+  {
+    LabelImpl label = new LabelImpl();
+    return label;
   }
 
   /**
@@ -231,10 +219,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Comment createComment()
+  public Annotation createAnnotation()
   {
-    CommentImpl comment = new CommentImpl();
-    return comment;
+    AnnotationImpl annotation = new AnnotationImpl();
+    return annotation;
   }
 
   /**

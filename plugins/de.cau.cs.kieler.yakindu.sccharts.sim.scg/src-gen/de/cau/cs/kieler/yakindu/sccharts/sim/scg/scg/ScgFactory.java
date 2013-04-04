@@ -68,13 +68,13 @@ public interface ScgFactory extends EFactory
   Dependency createDependency();
 
   /**
-   * Returns a new object of class '<em>Comment</em>'.
+   * Returns a new object of class '<em>Annotation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Comment</em>'.
+   * @return a new object of class '<em>Annotation</em>'.
    * @generated
    */
-  Comment createComment();
+  Annotation createAnnotation();
 
   /**
    * Returns a new object of class '<em>Parallel</em>'.
@@ -84,15 +84,6 @@ public interface ScgFactory extends EFactory
    * @generated
    */
   Parallel createParallel();
-
-  /**
-   * Returns a new object of class '<em>Scope</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Scope</em>'.
-   * @generated
-   */
-  Scope createScope();
 
   /**
    * Returns the package supported by this factory.

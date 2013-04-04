@@ -13,13 +13,13 @@ generate scl "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl"
 
 Program :
 	'module' name = ID
-	((variables+=Variable)*)?
+	((interface+=VariableDeclaration)*)?
 	'{'
-        program = InstructionSet
+        program = InstructionList
     '}' 
 ;
 
-Variable:
+VariableDeclaration:
     ('input'|'output') type=STRING (name=STRING)';'
 ;
 
@@ -27,36 +27,60 @@ Variable:
 //    ('local') type=[types::Type] (name=STRING)';'
 //;
 
-LocalVariable:
-    'local' type=STRING name=STRING';'
-;
+//LocalVariable:
+//    'local' type=STRING name=STRING';'
+//;
 
 SCLExpression:STRING;
 
 Instruction:
-    (Assignment | Conditional | Goto | Parallel | Pause | Label | Scope) 
+    (Assignment | Conditional | Goto | Parallel | Pause | Label) 
 ;
 
-InstructionSet:
-  {InstructionSet}
+InstructionList:
+  {InstructionList}
   (
-      (instructions += InstructionOrCommentSequence)+
+      (instructions += InstructionSequence)+
       (instructions += Instruction)
-      (instructions += Comment)?      
+      (instructions += Annotation)?      
   ) |
-  {InstructionSet}
+  {InstructionList}
   (
-      (instructions += Comment)
+      (instructions += Annotation)
       (instructions += Instruction)
   ) |
-  (instructions += Comment) |
-  {InstructionSet}
+  (instructions += Annotation) |
+  {InstructionList}
   (
       (instructions += Instruction)
-      (instructions += Comment)
+      (instructions += Annotation)
   ) |
-  {InstructionSet}
-  (instructions += Instruction) 
+      (instructions += Instruction)
+;
+
+
+Scope:
+  {InstructionList}
+  (
+      '{'
+      (variables += VariableDeclaration)*
+      (
+          (instructions += InstructionSequence)+
+          (instructions += Instruction)
+          (instructions += Annotation)?      
+      ) |
+      (
+          (instructions += Annotation)
+          (instructions += Instruction)
+      ) |
+          (instructions += Annotation) |
+      (
+          (instructions += Instruction)
+          (instructions += Annotation)
+      ) |
+          (instructions += Instruction)
+      '}'
+    )
 ;
 
 //InstructionSetSingleAssignment:
@@ -67,21 +91,19 @@ InstructionSet:
 //    Instruction | Comment
 //;
 
-InstructionOrCommentSequence:
-    (Instruction';') | Comment
+InstructionSequence:
+    (Instruction';') | Annotation
 ;
 
 Label:
     'label:' name = ID
 ;
 
-Scope:
+//Scope returns InstructionList:
+//    {InstructionList}
 //    (label = Label)?
-    '{'
-        (variables+=LocalVariable)*
-        scope = InstructionSet 
-    '}'
-;
+//    (variables += Variable)*
+//;
 
 Assignment:
 //    {Label}
@@ -91,7 +113,7 @@ Assignment:
 Conditional:
 //    {Label}
     'if' expression = SCLExpression 'then'
-        conditional = InstructionSet
+        conditional = InstructionList
     'end' 
 ;
 
@@ -103,9 +125,9 @@ Goto:
 Parallel:
 //    {Label}
     'fork'
-    (    threads += InstructionSet
+    (    threads += InstructionList
     ('par'
-         threads += InstructionSet)+)
+         threads += InstructionList)+)
     'join'
 ;
 
@@ -116,6 +138,6 @@ Pause:
 ;
 
 
-Comment:
+Annotation:
     comment = SL_COMMENT
 ;

@@ -8,14 +8,14 @@ generate scg "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg"
 
 Program :
     'module' name = ID
-    ((variables+=Variable)*)?
+    ((variables+=VariableDeclaration)*)?
     '{'
-        program = InstructionSet
+        program = InstructionList
     '}' 
 ;
 
 Instruction:
-    ({Instruction} | Assignment | Conditional | Parallel | Scope)
+    ({Instruction} | Assignment | Conditional | Parallel)
 //    (Assignment | Conditional | Goto | Parallel | Pause | Label | Scope)
     'priority' priority=INT 
 ;
@@ -28,7 +28,7 @@ Assignment:
 
 Conditional:
     'if' expression = SCLExpression 'then'
-        conditional = InstructionSet
+        conditional = InstructionList
     'end' 
     (dependencies += Dependency)*
 ;
@@ -38,23 +38,15 @@ Dependency:
     'dependency' dependencies = [Assignment]
 ;
 
-Comment:
+Annotation:
     comment = SL_COMMENT
 ;
 
 Parallel:
 //    {Label}
     'fork'
-    (    threads += InstructionSet
+    (    threads += InstructionList
     ('par'
-         threads += InstructionSet)+)
+         threads += InstructionList)+)
     'join'
-;
-
-Scope:
-//    (label = Label)?
-    '{'
-        (variables+=LocalVariable)*
-        scope = InstructionSet 
-    '}'
 ;

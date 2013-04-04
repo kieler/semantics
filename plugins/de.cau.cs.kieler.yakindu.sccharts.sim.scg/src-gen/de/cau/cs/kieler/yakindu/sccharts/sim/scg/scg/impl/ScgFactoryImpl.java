@@ -69,9 +69,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
       case ScgPackage.ASSIGNMENT: return createAssignment();
       case ScgPackage.CONDITIONAL: return createConditional();
       case ScgPackage.DEPENDENCY: return createDependency();
-      case ScgPackage.COMMENT: return createComment();
+      case ScgPackage.ANNOTATION: return createAnnotation();
       case ScgPackage.PARALLEL: return createParallel();
-      case ScgPackage.SCOPE: return createScope();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -137,10 +136,10 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Comment createComment()
+  public Annotation createAnnotation()
   {
-    CommentImpl comment = new CommentImpl();
-    return comment;
+    AnnotationImpl annotation = new AnnotationImpl();
+    return annotation;
   }
 
   /**
@@ -152,17 +151,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory
   {
     ParallelImpl parallel = new ParallelImpl();
     return parallel;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Scope createScope()
-  {
-    ScopeImpl scope = new ScopeImpl();
-    return scope;
   }
 
   /**

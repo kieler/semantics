@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class InstructionImpl extends InstructionOrCommentSequenceImpl implements Instruction
+public class InstructionImpl extends InstructionSequenceImpl implements Instruction
 {
   /**
    * <!-- begin-user-doc -->

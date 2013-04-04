@@ -40,8 +40,8 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Annotation
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
@@ -49,7 +49,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgFactory;
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
 // import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
 
@@ -81,13 +81,13 @@ class SCLHelper {
     // ==                       C R E A T E   M E T A M O D E L   E X T E N S I O N                        ==
     // ======================================================================================================
     
-    def InstructionSet createSCLInstructionSet()
+    def InstructionList createSCLInstructionList()
     {
-        SCL.createInstructionSet();
+        SCL.createInstructionList();
     }
     
-    def InstructionSet createSCLInstructionSet(Instruction instruction) {
-        var iSet = createSCLInstructionSet();
+    def InstructionList createSCLInstructionSet(Instruction instruction) {
+        var iSet = createSCLInstructionList();
         iSet.addInstruction(instruction);
         iSet;
     }
@@ -99,8 +99,8 @@ class SCLHelper {
         goto;
     }
     
-    def Comment createSCLComment(String commentString) {
-        var comment = SCL.createComment();
+    def Annotation createSCLComment(String commentString) {
+        var comment = SCL.createAnnotation();
         comment.setComment('// '+commentString);
         comment;
     }
@@ -113,8 +113,8 @@ class SCLHelper {
     
     def Scope createSCLScope(String labelName) {
         var scope = SCL.createScope()
-        var iSet  = createSCLInstructionSet()
-        scope.scope = iSet
+//        var iSet  = createSCLInstructionSet()
+//        scope.scope = iSet
         if (!labelName.nullOrEmpty) {
 //            var label = createSCLLabel(labelName);
 //            scope.setLabel(label);
@@ -126,7 +126,7 @@ class SCLHelper {
         SCL.createPause();
     }
     
-    def Conditional createSCLConditional(String expression, InstructionSet iSet) {
+    def Conditional createSCLConditional(String expression, InstructionList iSet) {
         var conditional = SCL.createConditional();
         conditional.setExpression(expression);
         conditional.setConditional(iSet)
@@ -137,53 +137,58 @@ class SCLHelper {
     // ==                I N S T R U C T I O N    M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
     
-    def void addInstruction(InstructionSet iSet, Instruction instruction) {
+    def void addInstruction(InstructionList iSet, Instruction instruction) {
         iSet.instructions.add(instruction);
     }
     
     def void addInstruction(Scope sSet, Instruction instruction) {
-        var iSet = sSet.getScope();
+/*         var iSet = sSet.getScope();
         if (iSet == null) {
             iSet = createSCLInstructionSet();
         }
         iSet.instructions.add(instruction);
-        sSet.scope = iSet    
+        sSet.scope = iSet*/    
     }
 
-    def void addInstruction(InstructionSet iSet, Comment instruction) {
-        iSet.instructions.add(instruction);
+    def void addInstruction(InstructionList iSet, Annotation annotation) {
+        iSet.instructions.add(annotation);
     }
     
-    def void addInstruction(Scope sSet, Comment comment) {
-        var iSet = sSet.getScope();
+    def void addInstruction(Scope sSet, Annotation annotation) {
+/*         var iSet = sSet.getScope();
         if (iSet == null) {
             iSet = createSCLInstructionSet();
         }
         iSet.instructions.add(comment);
-        sSet.scope = iSet    
+        sSet.scope = iSet*/    
     }
     
-    def void addInstruction(InstructionSet iSet, EObject ioc) {
+    def void addInstruction(InstructionList iSet, InstructionSequence ioc) {
         if (ioc instanceof Instruction) { iSet.addInstruction(ioc as Instruction) }
-          else { iSet.addInstruction(ioc as Comment) }
+          else { iSet.addInstruction(ioc as Annotation) }
     }
     
-    def void addInstruction(Scope sSet, InstructionOrCommentSequence ioc) {
+    def void addInstruction(InstructionList iSet, EObject ioc) {
+        if (ioc instanceof Instruction) { iSet.addInstruction(ioc as Instruction) }
+          else { iSet.addInstruction(ioc as Annotation) }
+    }
+    
+    def void addInstruction(Scope sSet, InstructionSequence ioc) {
         if (ioc instanceof Instruction) { sSet.addInstruction(ioc as Instruction) }
-          else { sSet.addInstruction(ioc as Comment) }
+          else { sSet.addInstruction(ioc as Annotation) }
     }
     
     def void addInstruction(Conditional conditional, Instruction instruction) {
         var iSet = conditional.getConditional()
         if (iSet == null) {
-            iSet = createSCLInstructionSet() 
+            iSet = createSCLInstructionList() 
         }    
         
         iSet.instructions.add(instruction)
         conditional.setConditional(iSet)
     }
     
-    def void addPause(InstructionSet iSet) {
+    def void addPause(InstructionList iSet) {
         iSet.addInstruction(createSCLPause())
     }
     
@@ -196,7 +201,7 @@ class SCLHelper {
     // ==                       S C O P E   M E T A M O D E L   E X T E N S I O N                          ==
     // ======================================================================================================
     
-    def InstructionSet scopeToInstructionSet(Scope scope) {
+/*     def InstructionSet scopeToInstructionSet(Scope scope) {
         var iSet = SCL.createInstructionSet();
 //        val label = scope.getLabel();
 //        if (label!=null) {
@@ -206,7 +211,7 @@ class SCLHelper {
             iSet.instructions.add(instruction.copy);
         }
         iSet;
-    }
+    }*/
     
     
     // ======================================================================================================

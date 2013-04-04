@@ -2,7 +2,11 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scg" nsURI="http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scg/scg"
     nsPrefix="scg">
-  <eClassifiers xsi:type="ecore:EClass" name="Program" eSuperTypes="../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Program"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Program" eSuperTypes="../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Program">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//VariableDeclaration"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Instruction" eSuperTypes="../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
@@ -17,7 +21,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="Dependency">
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" eType="#//Assignment"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Comment"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Annotation" eSuperTypes="../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Annotation"/>
   <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Parallel"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Scope" eSuperTypes="#//Instruction ../../de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Scope"/>
 </ecore:EPackage>

@@ -1,5 +1,4 @@
 RULE_ID=4
-T__25=25
 T__24=24
 T__23=23
 T__22=22
@@ -31,7 +30,6 @@ RULE_WS=9
 'module'=11
 'par'=20
 'if'=15
-'local'=25
 'priority'=14
 'dependency'=18
 'input'=22

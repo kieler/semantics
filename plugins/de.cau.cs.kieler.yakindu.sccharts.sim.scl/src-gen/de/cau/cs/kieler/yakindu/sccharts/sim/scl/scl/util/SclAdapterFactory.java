@@ -80,14 +80,9 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createProgramAdapter();
       }
       @Override
-      public Adapter caseVariable(Variable object)
+      public Adapter caseVariableDeclaration(VariableDeclaration object)
       {
-        return createVariableAdapter();
-      }
-      @Override
-      public Adapter caseLocalVariable(LocalVariable object)
-      {
-        return createLocalVariableAdapter();
+        return createVariableDeclarationAdapter();
       }
       @Override
       public Adapter caseInstruction(Instruction object)
@@ -95,24 +90,24 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createInstructionAdapter();
       }
       @Override
-      public Adapter caseInstructionSet(InstructionSet object)
+      public Adapter caseInstructionList(InstructionList object)
       {
-        return createInstructionSetAdapter();
-      }
-      @Override
-      public Adapter caseInstructionOrCommentSequence(InstructionOrCommentSequence object)
-      {
-        return createInstructionOrCommentSequenceAdapter();
-      }
-      @Override
-      public Adapter caseLabel(Label object)
-      {
-        return createLabelAdapter();
+        return createInstructionListAdapter();
       }
       @Override
       public Adapter caseScope(Scope object)
       {
         return createScopeAdapter();
+      }
+      @Override
+      public Adapter caseInstructionSequence(InstructionSequence object)
+      {
+        return createInstructionSequenceAdapter();
+      }
+      @Override
+      public Adapter caseLabel(Label object)
+      {
+        return createLabelAdapter();
       }
       @Override
       public Adapter caseAssignment(Assignment object)
@@ -140,9 +135,9 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createPauseAdapter();
       }
       @Override
-      public Adapter caseComment(Comment object)
+      public Adapter caseAnnotation(Annotation object)
       {
-        return createCommentAdapter();
+        return createAnnotationAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -182,31 +177,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable <em>Variable</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration <em>Variable Declaration</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Variable
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration
    * @generated
    */
-  public Adapter createVariableAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable <em>Local Variable</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.LocalVariable
-   * @generated
-   */
-  public Adapter createLocalVariableAdapter()
+  public Adapter createVariableDeclarationAdapter()
   {
     return null;
   }
@@ -227,46 +207,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet <em>Instruction Set</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList <em>Instruction List</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
    * @generated
    */
-  public Adapter createInstructionSetAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence <em>Instruction Or Comment Sequence</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionOrCommentSequence
-   * @generated
-   */
-  public Adapter createInstructionOrCommentSequenceAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label <em>Label</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
-   * @generated
-   */
-  public Adapter createLabelAdapter()
+  public Adapter createInstructionListAdapter()
   {
     return null;
   }
@@ -282,6 +232,36 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScopeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence <em>Instruction Sequence</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
+   * @generated
+   */
+  public Adapter createInstructionSequenceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label <em>Label</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
+   * @generated
+   */
+  public Adapter createLabelAdapter()
   {
     return null;
   }
@@ -362,16 +342,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment <em>Comment</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Annotation <em>Annotation</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Comment
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Annotation
    * @generated
    */
-  public Adapter createCommentAdapter()
+  public Adapter createAnnotationAdapter()
   {
     return null;
   }

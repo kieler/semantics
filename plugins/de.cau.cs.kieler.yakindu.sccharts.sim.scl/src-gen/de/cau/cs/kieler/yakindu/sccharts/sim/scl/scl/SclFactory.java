@@ -32,22 +32,13 @@ public interface SclFactory extends EFactory
   Program createProgram();
 
   /**
-   * Returns a new object of class '<em>Variable</em>'.
+   * Returns a new object of class '<em>Variable Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable</em>'.
+   * @return a new object of class '<em>Variable Declaration</em>'.
    * @generated
    */
-  Variable createVariable();
-
-  /**
-   * Returns a new object of class '<em>Local Variable</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Local Variable</em>'.
-   * @generated
-   */
-  LocalVariable createLocalVariable();
+  VariableDeclaration createVariableDeclaration();
 
   /**
    * Returns a new object of class '<em>Instruction</em>'.
@@ -59,31 +50,13 @@ public interface SclFactory extends EFactory
   Instruction createInstruction();
 
   /**
-   * Returns a new object of class '<em>Instruction Set</em>'.
+   * Returns a new object of class '<em>Instruction List</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction Set</em>'.
+   * @return a new object of class '<em>Instruction List</em>'.
    * @generated
    */
-  InstructionSet createInstructionSet();
-
-  /**
-   * Returns a new object of class '<em>Instruction Or Comment Sequence</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction Or Comment Sequence</em>'.
-   * @generated
-   */
-  InstructionOrCommentSequence createInstructionOrCommentSequence();
-
-  /**
-   * Returns a new object of class '<em>Label</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Label</em>'.
-   * @generated
-   */
-  Label createLabel();
+  InstructionList createInstructionList();
 
   /**
    * Returns a new object of class '<em>Scope</em>'.
@@ -93,6 +66,24 @@ public interface SclFactory extends EFactory
    * @generated
    */
   Scope createScope();
+
+  /**
+   * Returns a new object of class '<em>Instruction Sequence</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instruction Sequence</em>'.
+   * @generated
+   */
+  InstructionSequence createInstructionSequence();
+
+  /**
+   * Returns a new object of class '<em>Label</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Label</em>'.
+   * @generated
+   */
+  Label createLabel();
 
   /**
    * Returns a new object of class '<em>Assignment</em>'.
@@ -140,13 +131,13 @@ public interface SclFactory extends EFactory
   Pause createPause();
 
   /**
-   * Returns a new object of class '<em>Comment</em>'.
+   * Returns a new object of class '<em>Annotation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Comment</em>'.
+   * @return a new object of class '<em>Annotation</em>'.
    * @generated
    */
-  Comment createComment();
+  Annotation createAnnotation();
 
   /**
    * Returns the package supported by this factory.

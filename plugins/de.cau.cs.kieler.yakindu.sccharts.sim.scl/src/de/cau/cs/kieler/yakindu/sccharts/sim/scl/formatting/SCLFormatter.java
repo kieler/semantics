@@ -48,7 +48,7 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
 //            c.setLinewrap(1).after(f.getInstructionSetSingleAssignmentAccess().getRule());
             
             c.setLinewrap(1).before(f.getInstructionRule());
-            c.setLinewrap(1).before(f.getCommentRule());
+            c.setLinewrap(1).before(f.getAnnotationRule());
             
 //            c.setLinewrap(1).after(f.getInstructionSetAccess().getInstructionsAssignment_0());
 //            c.setLinewrap(1).after(f.getInstructionSetAccess().getInstructionsAssignment_1());
@@ -64,7 +64,7 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
                              f.getParallelAccess().getJoinKeyword_2());
             
             // Comment
-            c.setLinewrap(1).after(f.getCommentRule());
+            c.setLinewrap(1).after(f.getAnnotationRule());
             
             // Conditional
             c.setLinewrap(1).after(f.getConditionalAccess().getThenKeyword_2());

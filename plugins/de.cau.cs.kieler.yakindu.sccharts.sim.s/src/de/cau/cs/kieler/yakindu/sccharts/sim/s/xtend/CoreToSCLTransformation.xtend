@@ -39,7 +39,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
@@ -61,8 +61,8 @@ class CoreToSCLTransformation {
         targetProgram.setName((rootStatechart.regions.get(0).vertices.get(0) as SyncState).getName());
         
         val Region mainRegion = (rootStatechart.regions.get(0).vertices.get(0) as SyncState).regions.get(0);
-        var program = SCL.createInstructionSet();
-        program.instructions.addAll(transformCoreRegion(mainRegion).scope.instructions);
+        var program = SCL.createInstructionList();
+        program.instructions.addAll(transformCoreRegion(mainRegion).instructions);
         
         
         targetProgram.program = program//.optimizeGoto;//.optimizeLabel;
@@ -70,8 +70,8 @@ class CoreToSCLTransformation {
         targetProgram
     }
 
-    def Scope transformCoreRegion(Region region) {
-        var iSet = createSCLScope("");
+    def InstructionList transformCoreRegion(Region region) {
+        var iSet = createSCLInstructionList();
         val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState))).
           sort(e1, e2 | compareSCLRegionStateOrder(e1, e2));
 
@@ -84,15 +84,15 @@ class CoreToSCLTransformation {
             val stateInstructions = transformCoreState(state);
 //            val stateLabel = stateInstructions.getLabel();
 //            if (stateLabel!=null) { iSet.addInstruction(stateLabel.copy); }
-            iSet.scope.instructions.addAll(stateInstructions.scope.instructions);
+            iSet.instructions.addAll(stateInstructions.instructions);
         }
         
-        iSet.scope = iSet.scope.optimizeGoto.optimizeLabel;
+        iSet = iSet.optimizeGoto.optimizeLabel;
         iSet;
     }
     
-    def Scope transformCoreState(SyncState state) {
-        var iSet = SclFactory::eINSTANCE.createScope();
+    def InstructionList transformCoreState(SyncState state) {
+        var iSet = createSCLInstructionList();
         val stateID = state.getHierarchicalName("");
         
         val originalOutgoingTransitionsRaw = ImmutableList::copyOf(state.outgoingTransitions);
@@ -118,12 +118,12 @@ class CoreToSCLTransformation {
             
             if (state.getRegions().size<2) {
                 var regionInstructions =  transformCoreRegion(state.getRegions().get(0));
-                iSet.scope.instructions.addAll(regionInstructions.scope.instructions);
+                iSet.instructions.addAll(regionInstructions.instructions);
             } else {
                 var parallel = SclFactory::eINSTANCE.createParallel();
                 for(stateRegion : state.getRegions()) {
                     var regionInstructions = transformCoreRegion(stateRegion);
-                    parallel.getThreads().addAll(regionInstructions.scopeToInstructionSet);
+                    parallel.getThreads().addAll(regionInstructions);
                 }
                 iSet.addInstruction(parallel);
             }
@@ -200,8 +200,8 @@ class CoreToSCLTransformation {
     }
  
  
-    def InstructionSet optimizeGoto(InstructionSet iSet) {
-        var newISet = createSCLInstructionSet();
+    def InstructionList optimizeGoto(InstructionList iSet) {
+        var newISet = createSCLInstructionList();
         
         for(Integer i: 0..(iSet.instructions.size - 1)) {
             var boolean skip = false
@@ -220,8 +220,8 @@ class CoreToSCLTransformation {
       newISet;
     }
     
-    def InstructionSet optimizeLabel(InstructionSet iSet) {
-        var newISet = createSCLInstructionSet();
+    def InstructionList optimizeLabel(InstructionList iSet) {
+        var newISet = createSCLInstructionList();
         
         val oldSet = ImmutableList::copyOf(iSet.instructions);
         val gotos = ImmutableList::copyOf(iSet.eAllContents().toIterable().filter(typeof(Goto)));

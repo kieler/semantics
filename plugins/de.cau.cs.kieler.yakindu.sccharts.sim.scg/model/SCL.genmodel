@@ -9,7 +9,9 @@
     usedGenPackages="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.genmodel#//scl">
   <genPackages prefix="Scg" basePackage="de.cau.cs.kieler.yakindu.sccharts.sim.scg"
       disposableProviderFactory="true" ecorePackage="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#/">
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Program"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Program">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Program/variables"/>
+    </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Instruction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Instruction/priority"/>
     </genClasses>
@@ -22,8 +24,7 @@
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Dependency">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Dependency/dependencies"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Comment"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Annotation"/>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Parallel"/>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scg/model/SCG.ecore#//Scope"/>
   </genPackages>
 </genmodel:GenModel>

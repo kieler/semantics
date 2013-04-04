@@ -6,7 +6,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Dependency;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgPackage;
 
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSet;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
 import java.util.Collection;
@@ -69,7 +69,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * @generated
    * @ordered
    */
-  protected InstructionSet conditional;
+  protected InstructionList conditional;
 
   /**
    * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference list.
@@ -130,7 +130,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public InstructionSet getConditional()
+  public InstructionList getConditional()
   {
     return conditional;
   }
@@ -140,9 +140,9 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetConditional(InstructionSet newConditional, NotificationChain msgs)
+  public NotificationChain basicSetConditional(InstructionList newConditional, NotificationChain msgs)
   {
-    InstructionSet oldConditional = conditional;
+    InstructionList oldConditional = conditional;
     conditional = newConditional;
     if (eNotificationRequired())
     {
@@ -157,7 +157,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setConditional(InstructionSet newConditional)
+  public void setConditional(InstructionList newConditional)
   {
     if (newConditional != conditional)
     {
@@ -240,7 +240,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         setExpression((String)newValue);
         return;
       case ScgPackage.CONDITIONAL__CONDITIONAL:
-        setConditional((InstructionSet)newValue);
+        setConditional((InstructionList)newValue);
         return;
       case ScgPackage.CONDITIONAL__DEPENDENCIES:
         getDependencies().clear();
@@ -264,7 +264,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         setExpression(EXPRESSION_EDEFAULT);
         return;
       case ScgPackage.CONDITIONAL__CONDITIONAL:
-        setConditional((InstructionSet)null);
+        setConditional((InstructionList)null);
         return;
       case ScgPackage.CONDITIONAL__DEPENDENCIES:
         getDependencies().clear();
