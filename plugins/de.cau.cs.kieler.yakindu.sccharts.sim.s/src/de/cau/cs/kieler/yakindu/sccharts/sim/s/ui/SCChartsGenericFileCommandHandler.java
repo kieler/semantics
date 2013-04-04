@@ -127,7 +127,7 @@ public abstract class SCChartsGenericFileCommandHandler extends AbstractHandler 
 
                         // Open associated editor, if necessary
                         if (ModelHandlerOpenEditor()) {
-                            URI uri = EcoreUtil.getURI(diagram);
+                            URI uri = EcoreUtil.getURI(transformedModel);
                             IFile file2 = ResourcesPlugin.getWorkspace().getRoot()
                                                 .getFile(new Path(uri.toPlatformString(true)));
 	                

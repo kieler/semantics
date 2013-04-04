@@ -1,0 +1,143 @@
+grammar de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL with org.eclipse.xtext.common.Terminals 
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
+import "http://www.yakindu.org/base/types/2.0.0" as types
+import "http://www.yakindu.org/base/base/2.0.0" as base
+import "http://www.yakindu.org/sct/statechart/SText" as stext
+import "http://kieler.cs.cau.de/yakindu/stext/" as synctext
+import "http://kieler.cs.cau.de/yakindu/sccharts/stext/" as scchartsexp
+
+generate scl "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl"
+
+
+Program :
+	'module' name = ID
+	((interface+=VariableDeclaration)*)?
+	'{'
+        program = InstructionList
+    '}' 
+;
+
+VariableDeclaration:
+    ('input'|'output') type=STRING (name=STRING)';'
+;
+
+//LocalVariable returns stext::VariableDefinition:
+//    ('local') type=[types::Type] (name=STRING)';'
+//;
+
+//LocalVariable:
+//    'local' type=STRING name=STRING';'
+//;
+
+SCLExpression:STRING;
+
+Instruction:
+    (Assignment | Conditional | Goto | Parallel | Pause | Label) 
+;
+
+InstructionList:
+  {InstructionList}
+  (
+      (instructions += InstructionSequence)+
+      (instructions += Instruction)
+      (instructions += Annotation)?      
+  ) |
+  {InstructionList}
+  (
+      (instructions += Annotation)
+      (instructions += Instruction)
+  ) |
+  (instructions += Annotation) |
+  {InstructionList}
+  (
+      (instructions += Instruction)
+      (instructions += Annotation)
+  ) |
+      (instructions += Instruction)
+;
+
+
+Scope:
+  {InstructionList}
+  (
+      '{'
+      (variables += VariableDeclaration)*
+      (
+          (instructions += InstructionSequence)+
+          (instructions += Instruction)
+          (instructions += Annotation)?      
+      ) |
+      (
+          (instructions += Annotation)
+          (instructions += Instruction)
+      ) |
+          (instructions += Annotation) |
+      (
+          (instructions += Instruction)
+          (instructions += Annotation)
+      ) |
+          (instructions += Instruction)
+      '}'
+    )
+;
+
+//InstructionSetSingleAssignment:
+//    Instruction
+//;
+
+//InstructionOrComment:
+//    Instruction | Comment
+//;
+
+InstructionSequence:
+    (Instruction';') | Annotation
+;
+
+Label:
+    'label:' name = ID
+;
+
+//Scope returns InstructionList:
+//    {InstructionList}
+//    (label = Label)?
+//    (variables += Variable)*
+//;
+
+Assignment:
+//    {Label}
+    assignment=STRING
+;
+
+Conditional:
+//    {Label}
+    'if' expression = SCLExpression 'then'
+        conditional = InstructionList
+    'end' 
+;
+
+Goto:
+//    {Label}
+    'goto' name = ID 
+;
+
+Parallel:
+//    {Label}
+    'fork'
+    (    threads += InstructionList
+    ('par'
+         threads += InstructionList)+)
+    'join'
+;
+
+
+Pause:
+//    {Label}
+    'pause' {Pause}
+;
+
+
+Annotation:
+    comment = SL_COMMENT
+;

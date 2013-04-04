@@ -31,7 +31,7 @@ import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFact
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.*
 import org.yakindu.sct.model.sgraph.Choice
 
-class SCChartsTransformation {
+class SCCToCoreTransformation {
  
     //-------------------------------------------------------------------------
     //--          S C C -  A B O R T S -  T R A N S F O R M A T I O N        --
