@@ -12,7 +12,6 @@
   <modules>
     <module>../../plugins</module>
     <module>../../features</module>
-    <module>../de.cau.cs.kieler.ptolemy.repository</module>
     <module>../de.cau.cs.kieler.semantics.repository</module>
   </modules>
 
@@ -29,6 +28,11 @@
           <id>p2.juno42</id>
           <layout>p2</layout>
           <url>file:/home/java/repository/juno422/</url>
+        </repository>
+        <repository>
+          <id>p2.ptolemy</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy/</url>
         </repository>
         <repository>
           <id>p2.eclipse.juno</id>
