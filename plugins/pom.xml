@@ -17,7 +17,9 @@
 <!-- all plugins need to be listed as module -->
 
   <modules>
+<!--
     <module>../test</module>
+-->
     <module>de.cau.cs.kieler.core.kexpressions</module>
     <module>de.cau.cs.kieler.core.kexpressions.edit</module>
     <module>de.cau.cs.kieler.core.kexpressions.ui</module>

@@ -49,6 +49,11 @@
           <layout>p2</layout>
           <url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/maintenance/juno</url>
         </repository>
+        <repository>
+          <id>p2.orbit</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository/</url>
+        </repository>
       </repositories>
     </profile>
   </profiles>
