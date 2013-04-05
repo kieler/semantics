@@ -25,9 +25,8 @@
     <module>de.cau.cs.kieler.synccharts.feature.source</module>
 <!--
     <module>de.cau.cs.kieler.uml2.feature</module>
-    <module>de.cau.cs.kieler.uml2.feature.source</module> -->
-    <module>org.ptolemy.feature</module>
-    <module>org.ptolemy.feature.source</module>
+    <module>de.cau.cs.kieler.uml2.feature.source</module>
+-->
   </modules>
 
 </project>

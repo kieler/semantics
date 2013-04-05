@@ -19,11 +19,6 @@
 <!-- all plugins need to be listed as module -->
 
   <modules>
-    <module>de.cau.cs.kieler.core.test</module>
-    <module>de.cau.cs.kieler.klay.test</module>
-    <module>de.cau.cs.kieler.klay.layered.test</module>
-    <module>de.cau.cs.kieler.klighd.test</module>
-    <module>de.cau.cs.kieler.core.kivi.test</module>
     <!--  ESTEREL IS CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.esterel.cec.sim.test</module> -->
     <module>de.cau.cs.kieler.s.sim.sc.test</module>
     <!--  SOME TESTS ARE CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.synccharts.sim.s.test</module> -->

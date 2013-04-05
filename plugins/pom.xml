@@ -47,6 +47,7 @@
     <module>de.cau.cs.kieler.maude</module>
     <module>de.cau.cs.kieler.s</module>
     <module>de.cau.cs.kieler.s.sc</module>
+    <module>de.cau.cs.kieler.s.sim</module>
     <module>de.cau.cs.kieler.s.sim.kivi</module>
     <module>de.cau.cs.kieler.s.sim.sc</module>
     <module>de.cau.cs.kieler.s.ui</module>
@@ -95,8 +96,6 @@
     <module>de.cau.cs.kieler.synccharts.text.ui</module>
     <module>de.tu_berlin.cs.tfs.muvitorkit</module>
     <module>org.json</module>
-    <module>org.ptolemy</module>
-    <module>org.ptolemy.moml</module>
   </modules>
 
 </project>
