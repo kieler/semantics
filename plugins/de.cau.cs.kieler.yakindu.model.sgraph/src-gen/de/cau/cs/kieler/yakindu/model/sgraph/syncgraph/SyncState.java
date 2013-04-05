@@ -10,7 +10,7 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sgraph.syncgraph;
+package de.cau.cs.kieler.yakindu.model.sgraph.syncgraph;
 
 import org.yakindu.sct.model.sgraph.State;
 
@@ -22,12 +22,12 @@ import org.yakindu.sct.model.sgraph.State;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState#isIsInitial <em>Is Initial</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState#isIsFinal <em>Is Final</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState#isIsInitial <em>Is Initial</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState#isIsFinal <em>Is Final</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage#getSyncState()
+ * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage#getSyncState()
  * @model
  * @generated
  */
@@ -43,14 +43,14 @@ public interface SyncState extends State {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Initial</em>' attribute.
 	 * @see #setIsInitial(boolean)
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage#getSyncState_IsInitial()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage#getSyncState_IsInitial()
 	 * @model default="false"
 	 * @generated
 	 */
 	boolean isIsInitial();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState#isIsInitial <em>Is Initial</em>}' attribute.
+	 * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState#isIsInitial <em>Is Initial</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Initial</em>' attribute.
@@ -70,14 +70,14 @@ public interface SyncState extends State {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Final</em>' attribute.
 	 * @see #setIsFinal(boolean)
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage#getSyncState_IsFinal()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage#getSyncState_IsFinal()
 	 * @model default="false"
 	 * @generated
 	 */
 	boolean isIsFinal();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState#isIsFinal <em>Is Final</em>}' attribute.
+	 * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState#isIsFinal <em>Is Final</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Final</em>' attribute.

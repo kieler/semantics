@@ -20,7 +20,7 @@
       <!-- @generated syncgraph -->
       <package
             uri="http://kieler.org/syncgraph"
-            class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage"
+            class="de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage"
             genModel="model/syncgraph.genmodel"/>
    </extension>
 

@@ -6,7 +6,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://kieler.cs.cau.de/yakindu/sccharts/"
-            class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage"
+            class="de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage"
             genModel="model/syncgraph.genmodel"/>
    </extension>
   <!-- Editor -->

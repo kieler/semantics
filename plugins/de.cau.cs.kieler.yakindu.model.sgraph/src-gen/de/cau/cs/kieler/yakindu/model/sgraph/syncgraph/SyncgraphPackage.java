@@ -10,7 +10,7 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sgraph.syncgraph;
+package de.cau.cs.kieler.yakindu.model.sgraph.syncgraph;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -30,7 +30,7 @@ import org.yakindu.sct.model.sgraph.SGraphPackage;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphFactory
+ * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
  * @model kind="package"
  * @generated
  */
@@ -65,14 +65,14 @@ public interface SyncgraphPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	SyncgraphPackage eINSTANCE = de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncgraphPackageImpl.init();
+	SyncgraphPackage eINSTANCE = de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncgraphPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncTransitionImpl <em>Sync Transition</em>}' class.
+	 * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncTransitionImpl <em>Sync Transition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncTransitionImpl
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncgraphPackageImpl#getSyncTransition()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncTransitionImpl
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncgraphPackageImpl#getSyncTransition()
 	 * @generated
 	 */
 	int SYNC_TRANSITION = 0;
@@ -168,11 +168,11 @@ public interface SyncgraphPackage extends EPackage {
 	int SYNC_TRANSITION_FEATURE_COUNT = SGraphPackage.TRANSITION_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncStateImpl <em>Sync State</em>}' class.
+	 * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncStateImpl <em>Sync State</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncStateImpl
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncgraphPackageImpl#getSyncState()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncStateImpl
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncgraphPackageImpl#getSyncState()
 	 * @generated
 	 */
 	int SYNC_STATE = 1;
@@ -367,86 +367,86 @@ public interface SyncgraphPackage extends EPackage {
 	int SYNC_STATE_FEATURE_COUNT = SGraphPackage.STATE_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType <em>Transition Type</em>}' enum.
+	 * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType <em>Transition Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncgraphPackageImpl#getTransitionType()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncgraphPackageImpl#getTransitionType()
 	 * @generated
 	 */
 	int TRANSITION_TYPE = 2;
 
 
 	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition <em>Sync Transition</em>}'.
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition <em>Sync Transition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Sync Transition</em>'.
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 	 * @generated
 	 */
 	EClass getSyncTransition();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition#getType <em>Type</em>}'.
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition#getType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition#getType()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition#getType()
 	 * @see #getSyncTransition()
 	 * @generated
 	 */
 	EAttribute getSyncTransition_Type();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition#isIsHistory <em>Is History</em>}'.
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition#isIsHistory <em>Is History</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Is History</em>'.
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition#isIsHistory()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition#isIsHistory()
 	 * @see #getSyncTransition()
 	 * @generated
 	 */
 	EAttribute getSyncTransition_IsHistory();
 
 	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState <em>Sync State</em>}'.
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState <em>Sync State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Sync State</em>'.
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 	 * @generated
 	 */
 	EClass getSyncState();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState#isIsInitial <em>Is Initial</em>}'.
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState#isIsInitial <em>Is Initial</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Is Initial</em>'.
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState#isIsInitial()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState#isIsInitial()
 	 * @see #getSyncState()
 	 * @generated
 	 */
 	EAttribute getSyncState_IsInitial();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState#isIsFinal <em>Is Final</em>}'.
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState#isIsFinal <em>Is Final</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Is Final</em>'.
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState#isIsFinal()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState#isIsFinal()
 	 * @see #getSyncState()
 	 * @generated
 	 */
 	EAttribute getSyncState_IsFinal();
 
 	/**
-	 * Returns the meta object for enum '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType <em>Transition Type</em>}'.
+	 * Returns the meta object for enum '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType <em>Transition Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for enum '<em>Transition Type</em>'.
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
 	 * @generated
 	 */
 	EEnum getTransitionType();
@@ -474,11 +474,11 @@ public interface SyncgraphPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncTransitionImpl <em>Sync Transition</em>}' class.
+		 * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncTransitionImpl <em>Sync Transition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncTransitionImpl
-		 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncgraphPackageImpl#getSyncTransition()
+		 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncTransitionImpl
+		 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncgraphPackageImpl#getSyncTransition()
 		 * @generated
 		 */
 		EClass SYNC_TRANSITION = eINSTANCE.getSyncTransition();
@@ -500,11 +500,11 @@ public interface SyncgraphPackage extends EPackage {
 		EAttribute SYNC_TRANSITION__IS_HISTORY = eINSTANCE.getSyncTransition_IsHistory();
 
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncStateImpl <em>Sync State</em>}' class.
+		 * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncStateImpl <em>Sync State</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncStateImpl
-		 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncgraphPackageImpl#getSyncState()
+		 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncStateImpl
+		 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncgraphPackageImpl#getSyncState()
 		 * @generated
 		 */
 		EClass SYNC_STATE = eINSTANCE.getSyncState();
@@ -526,11 +526,11 @@ public interface SyncgraphPackage extends EPackage {
 		EAttribute SYNC_STATE__IS_FINAL = eINSTANCE.getSyncState_IsFinal();
 
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType <em>Transition Type</em>}' enum.
+		 * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType <em>Transition Type</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType
-		 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncgraphPackageImpl#getTransitionType()
+		 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
+		 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncgraphPackageImpl#getTransitionType()
 		 * @generated
 		 */
 		EEnum TRANSITION_TYPE = eINSTANCE.getTransitionType();

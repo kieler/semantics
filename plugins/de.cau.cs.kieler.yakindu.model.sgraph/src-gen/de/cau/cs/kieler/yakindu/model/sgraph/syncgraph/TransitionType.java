@@ -10,7 +10,7 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sgraph.syncgraph;
+package de.cau.cs.kieler.yakindu.model.sgraph.syncgraph;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +23,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>Transition Type</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage#getTransitionType()
+ * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage#getTransitionType()
  * @model
  * @generated
  */

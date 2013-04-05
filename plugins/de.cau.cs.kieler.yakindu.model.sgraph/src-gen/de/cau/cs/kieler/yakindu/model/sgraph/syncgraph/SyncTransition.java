@@ -10,7 +10,7 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sgraph.syncgraph;
+package de.cau.cs.kieler.yakindu.model.sgraph.syncgraph;
 
 import org.yakindu.sct.model.sgraph.Transition;
 
@@ -22,12 +22,12 @@ import org.yakindu.sct.model.sgraph.Transition;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition#isIsHistory <em>Is History</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition#isIsHistory <em>Is History</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage#getSyncTransition()
+ * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage#getSyncTransition()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface SyncTransition extends Transition {
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
 	 * The default value is <code>"0"</code>.
-	 * The literals are from the enumeration {@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType}.
+	 * The literals are from the enumeration {@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
@@ -43,20 +43,20 @@ public interface SyncTransition extends Transition {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
 	 * @see #setType(TransitionType)
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage#getSyncTransition_Type()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage#getSyncTransition_Type()
 	 * @model default="0"
 	 * @generated
 	 */
 	TransitionType getType();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition#getType <em>Type</em>}' attribute.
+	 * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition#getType <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
 	 * @see #getType()
 	 * @generated
 	 */
@@ -73,14 +73,14 @@ public interface SyncTransition extends Transition {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is History</em>' attribute.
 	 * @see #setIsHistory(boolean)
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage#getSyncTransition_IsHistory()
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage#getSyncTransition_IsHistory()
 	 * @model default="false"
 	 * @generated
 	 */
 	boolean isIsHistory();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition#isIsHistory <em>Is History</em>}' attribute.
+	 * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition#isIsHistory <em>Is History</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is History</em>' attribute.
