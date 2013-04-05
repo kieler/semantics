@@ -19,7 +19,7 @@ Require-Bundle: org.yakindu.sct.ui.editor;bundle-version="2.0.0",
  org.eclipse.gmf.runtime.diagram.ui.printing.render;bundle-version="1.4.1",
  org.eclipse.gmf.runtime.diagram.ui.providers.ide;bundle-version="1.2.0",
  de.cau.cs.kieler.yakindu.model.stext;bundle-version="0.1.0"
-Import-Package: de.cau.cs.kieler.yakindu.sgraph.syncgraph,
+Import-Package: de.cau.cs.kieler.yakindu.model.sgraph.syncgraph,
  de.itemis.gmf.runtime.commons.parsers,
  org.eclipse.emf.databinding,
  org.eclipse.emf.databinding.edit,

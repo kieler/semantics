@@ -11,8 +11,8 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
 import org.yakindu.sct.model.sgraph.EntryKind;
 import org.yakindu.sct.ui.editor.edithelper.TransitionEditHelper;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
 import de.cau.cs.kieler.yakindu.ui.editor.factory.SyncMetaModelTypeFactory;
 
 public class SyncTransitionEditHelper extends TransitionEditHelper {

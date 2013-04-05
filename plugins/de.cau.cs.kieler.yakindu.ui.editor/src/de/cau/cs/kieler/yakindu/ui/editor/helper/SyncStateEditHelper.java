@@ -9,7 +9,7 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
 import org.yakindu.sct.ui.editor.edithelper.StateEditHelper;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 import de.cau.cs.kieler.yakindu.ui.editor.factory.SyncMetaModelTypeFactory;
 
 public class SyncStateEditHelper extends StateEditHelper {

@@ -13,8 +13,8 @@ import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.ui.editor.providers.SemanticHints;
 import org.yakindu.sct.ui.editor.wizards.DefaultDiagramInitializer;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphFactory;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory;
 
 public class SyncDiagramInitializer extends DefaultDiagramInitializer {
 

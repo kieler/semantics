@@ -25,8 +25,8 @@ import org.yakindu.sct.ui.editor.utils.HelpContextIds;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
 
 public class SyncTransitionPropertySection extends
 		AbstractTwoColumnEditorPropertySection {

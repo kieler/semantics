@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.yakindu.sct.ui.editor.propertysheets.StatePropertySection;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 
 public class SyncStatePropertySection extends StatePropertySection {
 

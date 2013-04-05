@@ -13,8 +13,8 @@ import org.yakindu.sct.ui.editor.editparts.StateEditPart;
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 import de.cau.cs.kieler.yakindu.ui.editor.figures.SyncStateFigure;
 import de.cau.cs.kieler.yakindu.ui.editor.figures.utils.SyncMapModeUtils;
 

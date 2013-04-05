@@ -25,12 +25,12 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.yakindu.model.sgraph.validator.SyncGraphJavaValidator;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.PreValueExpression;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage;
-import de.cau.cs.kieler.yakindu.sgraph.validator.SyncGraphJavaValidator;
 
 /**
  * This class implements the validator for the textual description language. It

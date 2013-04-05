@@ -10,7 +10,7 @@ import org.yakindu.sct.ui.editor.providers.SemanticHints;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 import de.cau.cs.kieler.yakindu.ui.editor.helper.SyncStateEditHelper;
 import de.cau.cs.kieler.yakindu.ui.editor.helper.SyncTransitionEditHelper;
 
