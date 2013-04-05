@@ -95,8 +95,6 @@
     <module>de.cau.cs.kieler.synccharts.text.ui</module>
     <module>de.tu_berlin.cs.tfs.muvitorkit</module>
     <module>org.json</module>
-    <module>org.ptolemy</module>
-    <module>org.ptolemy.moml</module>
   </modules>
 
 </project>
