@@ -10,13 +10,13 @@ import java.util.Collection
 import java.util.ArrayList
 import org.eclipse.emf.common.util.EList;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
 import org.yakindu.sct.model.sgraph.Statechart
 //import org.yakindu.sct.model.sgraph.State
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphFactory
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
 
 import org.yakindu.sct.model.sgraph.SGraphFactory
 import org.yakindu.sct.model.sgraph.State
