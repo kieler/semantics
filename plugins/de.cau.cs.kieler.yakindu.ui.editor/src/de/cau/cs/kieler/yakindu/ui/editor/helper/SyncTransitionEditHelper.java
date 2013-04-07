@@ -17,7 +17,6 @@ import de.cau.cs.kieler.yakindu.ui.editor.factory.SyncMetaModelTypeFactory;
 
 public class SyncTransitionEditHelper extends TransitionEditHelper {
 
-
 	/**
 	 * Set the right {@link EntryKind} for the given {@link ElementType}
 	 */

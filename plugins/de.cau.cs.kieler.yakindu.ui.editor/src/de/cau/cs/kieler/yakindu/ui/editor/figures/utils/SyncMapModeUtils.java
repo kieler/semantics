@@ -16,6 +16,11 @@ package de.cau.cs.kieler.yakindu.ui.editor.figures.utils;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.IMapMode;
 
+/**
+ * This class defines the default node width and height.
+ * @author wah
+ *
+ */
 public final class SyncMapModeUtils {
 
 	private SyncMapModeUtils() {
@@ -24,6 +29,12 @@ public final class SyncMapModeUtils {
 	private static final int DEFAULT_NODE_WIDTH = 30;
 	private static final int DEFAULT_NODE_HEIGHT = 30;
 
+	/**
+	 * Returns the default dimension of a node.
+	 * 
+	 * @param mode
+	 * @return the dimension
+	 */
 	public static Dimension getDefaultSizeDimension(IMapMode mode) {
 		return new Dimension(mode.DPtoLP(DEFAULT_NODE_WIDTH),
 				mode.DPtoLP(DEFAULT_NODE_HEIGHT));

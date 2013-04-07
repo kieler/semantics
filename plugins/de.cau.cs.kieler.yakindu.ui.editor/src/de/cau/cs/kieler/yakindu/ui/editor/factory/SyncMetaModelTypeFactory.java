@@ -1,3 +1,17 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+
 package de.cau.cs.kieler.yakindu.ui.editor.factory;
 
 import java.net.MalformedURLException;
@@ -5,6 +19,7 @@ import java.net.URL;
 
 import org.osgi.framework.FrameworkUtil;
 import org.yakindu.sct.ui.editor.editor.guice.StatechartMetaModelTypeFactory;
+import org.yakindu.sct.ui.editor.editor.guice.AbstractMetaModelTypeFactory.HintedMetamodelType;
 import org.yakindu.sct.ui.editor.providers.SemanticHints;
 
 import com.google.inject.Inject;
@@ -14,6 +29,13 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 import de.cau.cs.kieler.yakindu.ui.editor.helper.SyncStateEditHelper;
 import de.cau.cs.kieler.yakindu.ui.editor.helper.SyncTransitionEditHelper;
 
+/**
+ * Registers all required the {@link HintedMetamodelType}. To add custom element
+ * types, you should override registerCustomElementTypes().
+ * 
+ * @author wah
+ * 
+ */
 public class SyncMetaModelTypeFactory extends StatechartMetaModelTypeFactory {
 
 	public static final String NORMAL_TRANSITION_ID = "de.cau.cs.kieler.yakindu.ui.editor.normaltransition";
@@ -36,6 +58,11 @@ public class SyncMetaModelTypeFactory extends StatechartMetaModelTypeFactory {
 		registerSyncState(acceptor);
 	}
 
+	/**
+	 * Register the SyncState
+	 * 
+	 * @param acceptor
+	 */
 	private void registerSyncState(IMetaModelTypeAcceptor acceptor) {
 		acceptor.accept(new HintedMetamodelType(SYNC_STATE_ID,
 				getUrlFromMyPlugin("icons/obj16/State-16.png"), "State",
@@ -51,6 +78,11 @@ public class SyncMetaModelTypeFactory extends StatechartMetaModelTypeFactory {
 				stateEditHelper.get(), SemanticHints.STATE));
 	}
 
+	/**
+	 * Register the SyncTransition
+	 * 
+	 * @param acceptor
+	 */
 	protected void registerSyncTransition(IMetaModelTypeAcceptor acceptor) {
 		acceptor.accept(new HintedMetamodelType(NORMAL_TRANSITION_ID,
 				getUrlFromMyPlugin("icons/obj16/normal-termination-16.png"),
@@ -69,8 +101,16 @@ public class SyncMetaModelTypeFactory extends StatechartMetaModelTypeFactory {
 				transitionEditHelper.get(), SemanticHints.TRANSITION));
 	}
 
+	/**
+	 * Returns the URL of a path.
+	 * 
+	 * @param imageFilePath
+	 *            the image file path
+	 * @return URL
+	 */
 	protected URL getUrlFromMyPlugin(String imageFilePath) {
-		URL result = FrameworkUtil.getBundle(this.getClass()).getBundleContext().getBundle().getEntry(imageFilePath);
+		URL result = FrameworkUtil.getBundle(this.getClass())
+				.getBundleContext().getBundle().getEntry(imageFilePath);
 		if (result == null) {
 			try {
 				result = new URL(imageFilePath);

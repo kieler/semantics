@@ -21,6 +21,12 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.yakindu.sct.ui.editor.editor.figures.StateFigure;
 import org.yakindu.sct.ui.editor.preferences.StatechartColorConstants;
 
+/**
+ * The SyncState figure which extends the StateFigure.
+ * 
+ * @author wah
+ * 
+ */
 public class SyncStateFigure extends StateFigure {
 
 	/** width of the rectangle border. */
@@ -32,7 +38,7 @@ public class SyncStateFigure extends StateFigure {
 
 	public SyncStateFigure() {
 		// reduce white spaces
-		((GridLayout) this.getLayoutManager()).verticalSpacing=-1;
+		((GridLayout) this.getLayoutManager()).verticalSpacing = -1;
 	}
 
 	/**

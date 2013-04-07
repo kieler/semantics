@@ -33,7 +33,7 @@ import com.google.common.collect.Lists;
 import de.cau.cs.kieler.yakindu.ui.editor.editor.SyncElementTypes;
 
 /**
- * Init the Modeling Assistant Provider
+ * Init the Modeling Assistant Provider.
  * 
  * @author wah
  * 

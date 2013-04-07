@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.yakindu.ui.editor.propertysheets;
 
 import org.eclipse.emf.databinding.EMFDataBindingContext;
@@ -25,9 +38,15 @@ import org.yakindu.sct.ui.editor.utils.HelpContextIds;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 
+/**
+ * The SyncTransition propertysheets.
+ * 
+ * @author wah
+ * 
+ */
 public class SyncTransitionPropertySection extends
 		AbstractTwoColumnEditorPropertySection {
 

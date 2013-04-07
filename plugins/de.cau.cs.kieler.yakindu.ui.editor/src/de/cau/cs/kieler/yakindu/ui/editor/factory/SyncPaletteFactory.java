@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.yakindu.ui.editor.factory;
 
 import org.eclipse.gef.palette.PaletteContainer;
@@ -7,8 +20,17 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.osgi.framework.FrameworkUtil;
 import org.yakindu.sct.ui.editor.providers.DefaultSCTPaletteFactory;
 
+/**
+ * Initialize the palette.
+ * 
+ * @author wah
+ * 
+ */
 public class SyncPaletteFactory extends DefaultSCTPaletteFactory {
 
+	/**
+	 * Create the palette entries.
+	 */
 	public void createPaletteEntries(PaletteRoot root) {
 		PaletteContainer container = createToolsCategory(root);
 		createTransitionEntry(container);
@@ -71,10 +93,16 @@ public class SyncPaletteFactory extends DefaultSCTPaletteFactory {
 				findIcon("icons/obj32/Final-State-32.png")));
 	}
 
-	
+	/**
+	 * Returns an image descriptor from a given icon.
+	 * 
+	 * @param iconPath
+	 * @return an image descriptor
+	 */
 	protected ImageDescriptor findIcon(String iconPath) {
-		return super.getImageDescriptor(iconPath, FrameworkUtil.getBundle(this.getClass()).getBundleContext().getBundle());
+		return super.getImageDescriptor(iconPath,
+				FrameworkUtil.getBundle(this.getClass()).getBundleContext()
+						.getBundle());
 	}
-
 
 }
