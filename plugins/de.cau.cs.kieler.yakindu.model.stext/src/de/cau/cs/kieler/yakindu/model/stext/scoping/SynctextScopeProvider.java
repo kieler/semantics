@@ -49,6 +49,9 @@ public class SynctextScopeProvider extends STextScopeProvider {
 		final ContextElementAdapter provider = (ContextElementAdapter) EcoreUtil
 				.getExistingAdapter(context.eResource(),
 						ContextElementAdapter.class);
+		if (provider == null) {
+		    return IScope.NULLSCOPE;
+		}
 		List<EObject> scopeCandidates = Lists.newArrayList();
 		ArrayList<Declaration> declarations = SyncUtils
 				.getAncestorDeclarations(provider.getElement().eContainer());
