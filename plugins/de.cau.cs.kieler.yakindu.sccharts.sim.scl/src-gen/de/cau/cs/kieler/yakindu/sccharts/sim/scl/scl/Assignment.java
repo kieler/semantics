@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -12,6 +13,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,5 +48,21 @@ public interface Assignment extends Instruction
    * @generated
    */
   void setAssignment(String value);
+
+  /**
+   * Returns the value of the '<em><b>Dependencies</b></em>' reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Dependencies</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Dependencies</em>' reference list.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getAssignment_Dependencies()
+   * @model
+   * @generated
+   */
+  EList<Instruction> getDependencies();
 
 } // Assignment

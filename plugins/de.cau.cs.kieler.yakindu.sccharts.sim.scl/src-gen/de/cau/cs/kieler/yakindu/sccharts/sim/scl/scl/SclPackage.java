@@ -150,13 +150,22 @@ public interface SclPackage extends EPackage
   int INSTRUCTION = 2;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INSTRUCTION__PRIORITY = 0;
+
+  /**
    * The number of structural features of the '<em>Instruction</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTION_FEATURE_COUNT = 0;
+  int INSTRUCTION_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl <em>Scope</em>}' class.
@@ -225,6 +234,15 @@ public interface SclPackage extends EPackage
   int LABEL = 5;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LABEL__PRIORITY = INSTRUCTION__PRIORITY;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -253,6 +271,15 @@ public interface SclPackage extends EPackage
   int ASSIGNMENT = 6;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__PRIORITY = INSTRUCTION__PRIORITY;
+
+  /**
    * The feature id for the '<em><b>Assignment</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -262,13 +289,22 @@ public interface SclPackage extends EPackage
   int ASSIGNMENT__ASSIGNMENT = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Dependencies</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__DEPENDENCIES = INSTRUCTION_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Assignment</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -279,6 +315,15 @@ public interface SclPackage extends EPackage
    * @generated
    */
   int CONDITIONAL = 7;
+
+  /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL__PRIORITY = INSTRUCTION__PRIORITY;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' attribute.
@@ -299,13 +344,22 @@ public interface SclPackage extends EPackage
   int CONDITIONAL__CONDITIONAL = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Dependencies</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL__DEPENDENCIES = INSTRUCTION_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Conditional</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.GotoImpl <em>Goto</em>}' class.
@@ -316,6 +370,15 @@ public interface SclPackage extends EPackage
    * @generated
    */
   int GOTO = 8;
+
+  /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GOTO__PRIORITY = INSTRUCTION__PRIORITY;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -346,6 +409,15 @@ public interface SclPackage extends EPackage
   int PARALLEL = 9;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARALLEL__PRIORITY = INSTRUCTION__PRIORITY;
+
+  /**
    * The feature id for the '<em><b>Threads</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -372,6 +444,15 @@ public interface SclPackage extends EPackage
    * @generated
    */
   int PAUSE = 10;
+
+  /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PAUSE__PRIORITY = INSTRUCTION__PRIORITY;
 
   /**
    * The number of structural features of the '<em>Pause</em>' class.
@@ -497,6 +578,17 @@ public interface SclPackage extends EPackage
   EClass getInstruction();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction#getPriority <em>Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Priority</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction#getPriority()
+   * @see #getInstruction()
+   * @generated
+   */
+  EAttribute getInstruction_Priority();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList <em>Instruction List</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -581,6 +673,17 @@ public interface SclPackage extends EPackage
   EAttribute getAssignment_Assignment();
 
   /**
+   * Returns the meta object for the reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getDependencies <em>Dependencies</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Dependencies</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getDependencies()
+   * @see #getAssignment()
+   * @generated
+   */
+  EReference getAssignment_Dependencies();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional <em>Conditional</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -611,6 +714,17 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EReference getConditional_Conditional();
+
+  /**
+   * Returns the meta object for the reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getDependencies <em>Dependencies</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Dependencies</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getDependencies()
+   * @see #getConditional()
+   * @generated
+   */
+  EReference getConditional_Dependencies();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto <em>Goto</em>}'.
@@ -779,6 +893,14 @@ public interface SclPackage extends EPackage
     EClass INSTRUCTION = eINSTANCE.getInstruction();
 
     /**
+     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INSTRUCTION__PRIORITY = eINSTANCE.getInstruction_Priority();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionListImpl <em>Instruction List</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -851,6 +973,14 @@ public interface SclPackage extends EPackage
     EAttribute ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
 
     /**
+     * The meta object literal for the '<em><b>Dependencies</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASSIGNMENT__DEPENDENCIES = eINSTANCE.getAssignment_Dependencies();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -875,6 +1005,14 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EReference CONDITIONAL__CONDITIONAL = eINSTANCE.getConditional_Conditional();
+
+    /**
+     * The meta object literal for the '<em><b>Dependencies</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONDITIONAL__DEPENDENCIES = eINSTANCE.getConditional_Dependencies();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.GotoImpl <em>Goto</em>}' class.

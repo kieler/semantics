@@ -3,16 +3,23 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,6 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl#getConditional <em>Conditional</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,6 +67,16 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * @ordered
    */
   protected InstructionList conditional;
+
+  /**
+   * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDependencies()
+   * @generated
+   * @ordered
+   */
+  protected EList<Instruction> dependencies;
 
   /**
    * <!-- begin-user-doc -->
@@ -157,6 +175,20 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Instruction> getDependencies()
+  {
+    if (dependencies == null)
+    {
+      dependencies = new EObjectResolvingEList<Instruction>(Instruction.class, this, SclPackage.CONDITIONAL__DEPENDENCIES);
+    }
+    return dependencies;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -182,6 +214,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return getExpression();
       case SclPackage.CONDITIONAL__CONDITIONAL:
         return getConditional();
+      case SclPackage.CONDITIONAL__DEPENDENCIES:
+        return getDependencies();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -191,6 +225,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -201,6 +236,10 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return;
       case SclPackage.CONDITIONAL__CONDITIONAL:
         setConditional((InstructionList)newValue);
+        return;
+      case SclPackage.CONDITIONAL__DEPENDENCIES:
+        getDependencies().clear();
+        getDependencies().addAll((Collection<? extends Instruction>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -222,6 +261,9 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case SclPackage.CONDITIONAL__CONDITIONAL:
         setConditional((InstructionList)null);
         return;
+      case SclPackage.CONDITIONAL__DEPENDENCIES:
+        getDependencies().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -240,6 +282,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
       case SclPackage.CONDITIONAL__CONDITIONAL:
         return conditional != null;
+      case SclPackage.CONDITIONAL__DEPENDENCIES:
+        return dependencies != null && !dependencies.isEmpty();
     }
     return super.eIsSet(featureID);
   }

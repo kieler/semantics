@@ -268,12 +268,12 @@ ruleInstruction returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+((
 	{ 
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getAssignmentParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getAssignmentParserRuleCall_0_0()); 
     }
     this_Assignment_0=ruleAssignment
     { 
@@ -286,7 +286,7 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getConditionalParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getConditionalParserRuleCall_0_1()); 
     }
     this_Conditional_1=ruleConditional
     { 
@@ -299,7 +299,7 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getGotoParserRuleCall_2()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getGotoParserRuleCall_0_2()); 
     }
     this_Goto_2=ruleGoto
     { 
@@ -312,7 +312,7 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getParallelParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getParallelParserRuleCall_0_3()); 
     }
     this_Parallel_3=ruleParallel
     { 
@@ -325,7 +325,7 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getPauseParserRuleCall_4()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getPauseParserRuleCall_0_4()); 
     }
     this_Pause_4=rulePause
     { 
@@ -338,14 +338,32 @@ ruleInstruction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getInstructionAccess().getLabelParserRuleCall_5()); 
+        newCompositeNode(grammarAccess.getInstructionAccess().getLabelParserRuleCall_0_5()); 
     }
     this_Label_5=ruleLabel
     { 
         $current = $this_Label_5.current; 
         afterParserOrEnumRuleCall();
     }
+)(
+(
+		lv_priority_6_0=RULE_INT
+		{
+			newLeafNode(lv_priority_6_0, grammarAccess.getInstructionAccess().getPriorityINTTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getInstructionRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"priority",
+        		lv_priority_6_0, 
+        		"INT");
+	    }
+
 )
+)?)
 ;
 
 
@@ -648,11 +666,11 @@ ruleAssignment returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+((
 (
 		lv_assignment_0_0=RULE_STRING
 		{
-			newLeafNode(lv_assignment_0_0, grammarAccess.getAssignmentAccess().getAssignmentSTRINGTerminalRuleCall_0()); 
+			newLeafNode(lv_assignment_0_0, grammarAccess.getAssignmentAccess().getAssignmentSTRINGTerminalRuleCall_0_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -666,7 +684,23 @@ ruleAssignment returns [EObject current=null]
 	    }
 
 )
+)(
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getAssignmentRule());
+	        }
+        }
+	otherlv_1=RULE_ID
+	{
+		newLeafNode(otherlv_1, grammarAccess.getAssignmentAccess().getDependenciesInstructionCrossReference_1_0()); 
+	}
+
 )
+)*)
 ;
 
 
@@ -735,7 +769,23 @@ ruleConditional returns [EObject current=null]
     {
     	newLeafNode(otherlv_4, grammarAccess.getConditionalAccess().getEndKeyword_4());
     }
+(
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getConditionalRule());
+	        }
+        }
+	otherlv_5=RULE_ID
+	{
+		newLeafNode(otherlv_5, grammarAccess.getConditionalAccess().getDependenciesInstructionCrossReference_5_0()); 
+	}
+
 )
+)*)
 ;
 
 

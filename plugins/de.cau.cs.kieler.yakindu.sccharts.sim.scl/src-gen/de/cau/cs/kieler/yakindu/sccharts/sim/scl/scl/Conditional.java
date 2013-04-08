@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,6 +14,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getConditional <em>Conditional</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,5 +75,21 @@ public interface Conditional extends Instruction
    * @generated
    */
   void setConditional(InstructionList value);
+
+  /**
+   * Returns the value of the '<em><b>Dependencies</b></em>' reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Dependencies</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Dependencies</em>' reference list.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getConditional_Dependencies()
+   * @model
+   * @generated
+   */
+  EList<Instruction> getDependencies();
 
 } // Conditional

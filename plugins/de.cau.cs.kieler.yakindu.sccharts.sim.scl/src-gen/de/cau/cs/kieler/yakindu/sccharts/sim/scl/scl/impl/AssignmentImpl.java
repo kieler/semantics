@@ -3,13 +3,20 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,6 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl#getAssignment <em>Assignment</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
  *
@@ -45,6 +53,16 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * @ordered
    */
   protected String assignment = ASSIGNMENT_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDependencies()
+   * @generated
+   * @ordered
+   */
+  protected EList<Instruction> dependencies;
 
   /**
    * <!-- begin-user-doc -->
@@ -95,6 +113,20 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Instruction> getDependencies()
+  {
+    if (dependencies == null)
+    {
+      dependencies = new EObjectResolvingEList<Instruction>(Instruction.class, this, SclPackage.ASSIGNMENT__DEPENDENCIES);
+    }
+    return dependencies;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -102,6 +134,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
         return getAssignment();
+      case SclPackage.ASSIGNMENT__DEPENDENCIES:
+        return getDependencies();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -111,6 +145,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -118,6 +153,10 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
         setAssignment((String)newValue);
+        return;
+      case SclPackage.ASSIGNMENT__DEPENDENCIES:
+        getDependencies().clear();
+        getDependencies().addAll((Collection<? extends Instruction>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -136,6 +175,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
         setAssignment(ASSIGNMENT_EDEFAULT);
         return;
+      case SclPackage.ASSIGNMENT__DEPENDENCIES:
+        getDependencies().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -152,6 +194,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
         return ASSIGNMENT_EDEFAULT == null ? assignment != null : !ASSIGNMENT_EDEFAULT.equals(assignment);
+      case SclPackage.ASSIGNMENT__DEPENDENCIES:
+        return dependencies != null && !dependencies.isEmpty();
     }
     return super.eIsSet(featureID);
   }

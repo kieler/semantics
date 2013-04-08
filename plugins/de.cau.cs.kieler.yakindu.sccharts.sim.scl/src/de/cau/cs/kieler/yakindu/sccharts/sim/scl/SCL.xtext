@@ -34,7 +34,8 @@ VariableDeclaration:
 SCLExpression:STRING;
 
 Instruction:
-    (Assignment | Conditional | Goto | Parallel | Pause | Label) 
+    (Assignment | Conditional | Goto | Parallel | Pause | Label)
+    (priority=INT)?
 ;
 
 InstructionList:
@@ -96,12 +97,14 @@ Label:
 
 Assignment:
     assignment=STRING
+    (dependencies += [Instruction])*
 ;
 
 Conditional:
     'if' expression = SCLExpression 'then'
         conditional = InstructionList
     'end' 
+    (dependencies += [Instruction])*
 ;
 
 Goto:
@@ -121,7 +124,7 @@ Pause:
     'pause' {Pause}
 ;
 
-
 Annotation:
     comment = SL_COMMENT
 ;
+
