@@ -7,6 +7,8 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Instruction</b></em>'.
@@ -16,7 +18,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class InstructionImpl extends InstructionSequenceImpl implements Instruction
+public class InstructionImpl extends MinimalEObjectImpl.Container implements Instruction
 {
   /**
    * <!-- begin-user-doc -->

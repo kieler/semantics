@@ -40,7 +40,11 @@ Instruction:
 InstructionList:
   {InstructionList}
   (
-      (instructions += InstructionSequence)+
+      (
+          (instructions += Instruction';')
+          |
+          (instructions += Annotation)
+      )+
       (instructions += Instruction)
       (instructions += Annotation)?      
   ) |
@@ -58,72 +62,53 @@ InstructionList:
       (instructions += Instruction)
 ;
 
-
 Scope:
   {InstructionList}
   (
       '{'
       (variables += VariableDeclaration)*
+  (
       (
-          (instructions += InstructionSequence)+
-          (instructions += Instruction)
-          (instructions += Annotation)?      
+          (instructions += Instruction';')
+          |
+          (instructions += Annotation)
+      )+
+      (instructions += Instruction)
+      (instructions += Annotation)?      
       ) |
-      (
+    (
           (instructions += Annotation)
           (instructions += Instruction)
-      ) |
-          (instructions += Annotation) |
-      (
+    ) |
+        (instructions += Annotation) |
+    (
           (instructions += Instruction)
           (instructions += Annotation)
-      ) |
-          (instructions += Instruction)
+        ) |
+        (instructions += Instruction)
       '}'
     )
-;
-
-//InstructionSetSingleAssignment:
-//    Instruction
-//;
-
-//InstructionOrComment:
-//    Instruction | Comment
-//;
-
-InstructionSequence:
-    (Instruction';') | Annotation
 ;
 
 Label:
     'label:' name = ID
 ;
 
-//Scope returns InstructionList:
-//    {InstructionList}
-//    (label = Label)?
-//    (variables += Variable)*
-//;
-
 Assignment:
-//    {Label}
     assignment=STRING
 ;
 
 Conditional:
-//    {Label}
     'if' expression = SCLExpression 'then'
         conditional = InstructionList
     'end' 
 ;
 
 Goto:
-//    {Label}
     'goto' name = ID 
 ;
 
 Parallel:
-//    {Label}
     'fork'
     (    threads += InstructionList
     ('par'
@@ -133,7 +118,6 @@ Parallel:
 
 
 Pause:
-//    {Label}
     'pause' {Pause}
 ;
 

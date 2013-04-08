@@ -84,9 +84,9 @@ public class SCGCommandHandler extends SCChartsGenericFileCommandHandler {
 			String commandString) {
                 if (commandString.equals(SCGTRANSFORMATIONCOMMAND)) {
                     System.out.println("scg transformation: " + commandString);
-                    EObject transformed = (new SCLToSCGTransformation())
-                                    .SCLToSCG(((Program) modelObject));
-                    return transformed;
+//                    EObject transformed = (new SCLToSCGTransformation())
+//                                    .SCLToSCG(((Program) modelObject));
+                    return null; //transformed;
                 }
                 
 		return null;

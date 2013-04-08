@@ -69,7 +69,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
       case SclPackage.INSTRUCTION: return createInstruction();
       case SclPackage.INSTRUCTION_LIST: return createInstructionList();
       case SclPackage.SCOPE: return createScope();
-      case SclPackage.INSTRUCTION_SEQUENCE: return createInstructionSequence();
       case SclPackage.LABEL: return createLabel();
       case SclPackage.ASSIGNMENT: return createAssignment();
       case SclPackage.CONDITIONAL: return createConditional();
@@ -135,17 +134,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     ScopeImpl scope = new ScopeImpl();
     return scope;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public InstructionSequence createInstructionSequence()
-  {
-    InstructionSequenceImpl instructionSequence = new InstructionSequenceImpl();
-    return instructionSequence;
   }
 
   /**

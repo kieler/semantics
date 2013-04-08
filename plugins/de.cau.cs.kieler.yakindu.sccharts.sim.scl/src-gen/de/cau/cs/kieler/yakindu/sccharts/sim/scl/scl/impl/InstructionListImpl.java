@@ -3,7 +3,6 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration;
 
@@ -14,6 +13,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -43,7 +43,7 @@ public class InstructionListImpl extends ScopeImpl implements InstructionList
    * @generated
    * @ordered
    */
-  protected EList<InstructionSequence> instructions;
+  protected EList<EObject> instructions;
 
   /**
    * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
@@ -81,11 +81,11 @@ public class InstructionListImpl extends ScopeImpl implements InstructionList
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<InstructionSequence> getInstructions()
+  public EList<EObject> getInstructions()
   {
     if (instructions == null)
     {
-      instructions = new EObjectContainmentEList<InstructionSequence>(InstructionSequence.class, this, SclPackage.INSTRUCTION_LIST__INSTRUCTIONS);
+      instructions = new EObjectContainmentEList<EObject>(EObject.class, this, SclPackage.INSTRUCTION_LIST__INSTRUCTIONS);
     }
     return instructions;
   }
@@ -153,7 +153,7 @@ public class InstructionListImpl extends ScopeImpl implements InstructionList
     {
       case SclPackage.INSTRUCTION_LIST__INSTRUCTIONS:
         getInstructions().clear();
-        getInstructions().addAll((Collection<? extends InstructionSequence>)newValue);
+        getInstructions().addAll((Collection<? extends EObject>)newValue);
         return;
       case SclPackage.INSTRUCTION_LIST__VARIABLES:
         getVariables().clear();

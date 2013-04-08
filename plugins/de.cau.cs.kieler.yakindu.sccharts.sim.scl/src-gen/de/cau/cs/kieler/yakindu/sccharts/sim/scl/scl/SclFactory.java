@@ -68,15 +68,6 @@ public interface SclFactory extends EFactory
   Scope createScope();
 
   /**
-   * Returns a new object of class '<em>Instruction Sequence</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction Sequence</em>'.
-   * @generated
-   */
-  InstructionSequence createInstructionSequence();
-
-  /**
    * Returns a new object of class '<em>Label</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

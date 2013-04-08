@@ -35,32 +35,28 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case SclPackage.ANNOTATION:
-				if(context == grammarAccess.getAnnotationRule() ||
-				   context == grammarAccess.getInstructionSequenceRule()) {
+				if(context == grammarAccess.getAnnotationRule()) {
 					sequence_Annotation(context, (Annotation) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.ASSIGNMENT:
 				if(context == grammarAccess.getAssignmentRule() ||
-				   context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionSequenceRule()) {
+				   context == grammarAccess.getInstructionRule()) {
 					sequence_Assignment(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.CONDITIONAL:
 				if(context == grammarAccess.getConditionalRule() ||
-				   context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionSequenceRule()) {
+				   context == grammarAccess.getInstructionRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.GOTO:
 				if(context == grammarAccess.getGotoRule() ||
-				   context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionSequenceRule()) {
+				   context == grammarAccess.getInstructionRule()) {
 					sequence_Goto(context, (Goto) semanticObject); 
 					return; 
 				}
@@ -77,7 +73,6 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 				else break;
 			case SclPackage.LABEL:
 				if(context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionSequenceRule() ||
 				   context == grammarAccess.getLabelRule()) {
 					sequence_Label(context, (Label) semanticObject); 
 					return; 
@@ -85,7 +80,6 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 				else break;
 			case SclPackage.PARALLEL:
 				if(context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionSequenceRule() ||
 				   context == grammarAccess.getParallelRule()) {
 					sequence_Parallel(context, (Parallel) semanticObject); 
 					return; 
@@ -93,7 +87,6 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 				else break;
 			case SclPackage.PAUSE:
 				if(context == grammarAccess.getInstructionRule() ||
-				   context == grammarAccess.getInstructionSequenceRule() ||
 				   context == grammarAccess.getPauseRule()) {
 					sequence_Pause(context, (Pause) semanticObject); 
 					return; 
@@ -185,7 +178,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	/**
 	 * Constraint:
 	 *     (
-	 *         (instructions+=InstructionSequence+ instructions+=Instruction instructions+=Annotation?) | 
+	 *         ((instructions+=Instruction | instructions+=Annotation)+ instructions+=Instruction instructions+=Annotation?) | 
 	 *         (instructions+=Annotation instructions+=Instruction) | 
 	 *         (instructions+=Instruction instructions+=Annotation)
 	 *     )
@@ -241,7 +234,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	/**
 	 * Constraint:
 	 *     (
-	 *         (variables+=VariableDeclaration* instructions+=InstructionSequence+ instructions+=Instruction instructions+=Annotation?) | 
+	 *         (variables+=VariableDeclaration* (instructions+=Instruction | instructions+=Annotation)+ instructions+=Instruction instructions+=Annotation?) | 
 	 *         (instructions+=Annotation instructions+=Instruction) | 
 	 *         instructions+=Annotation | 
 	 *         (instructions+=Instruction instructions+=Annotation) | 

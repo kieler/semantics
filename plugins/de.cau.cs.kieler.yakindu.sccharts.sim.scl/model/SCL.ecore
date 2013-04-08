@@ -13,15 +13,14 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Instruction" eSuperTypes="#//InstructionSequence"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Instruction"/>
   <eClassifiers xsi:type="ecore:EClass" name="InstructionList" eSuperTypes="#//Scope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" upperBound="-1"
-        eType="#//InstructionSequence" containment="true"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
         eType="#//VariableDeclaration" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scope"/>
-  <eClassifiers xsi:type="ecore:EClass" name="InstructionSequence"/>
   <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -41,7 +40,7 @@
         eType="#//InstructionList" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Annotation" eSuperTypes="#//InstructionSequence">
+  <eClassifiers xsi:type="ecore:EClass" name="Annotation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="comment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

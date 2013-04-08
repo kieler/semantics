@@ -44,7 +44,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
 
-import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgFactory;
+//import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgFactory;
 
 
 class SCLToSCGTransformation {
@@ -57,24 +57,24 @@ class SCLToSCGTransformation {
     //-------------------------------------------------------------------------
            
     // Transforming SCC Aborts.
-    def Program SCLToSCG(Program sclProgram) {
+/*     def Program SCLToSCG(Program sclProgram) {
         val scgProgram = SCL.createProgram()
 
         sclProgram.program.instructions.forEach(e | 
             {
-                var de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction scgI = null
-                switch e {
-                    Parallel: scgI = null 
-                    default: scgI = null
-                }
-                scgI.setPriority(1);
-                scgProgram.program.instructions.add(scgI);
-            }
+//                var de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction scgI = null
+//                switch e {
+//                    Parallel: scgI = null 
+//                    default: scgI = null
+  //              }
+//                scgI.setPriority(1);
+//                scgProgram.program.instructions.add(scgI);
+//            }
             
-        );
+//        );
         
         scgProgram
-    }
+    }*/
     
 
 }

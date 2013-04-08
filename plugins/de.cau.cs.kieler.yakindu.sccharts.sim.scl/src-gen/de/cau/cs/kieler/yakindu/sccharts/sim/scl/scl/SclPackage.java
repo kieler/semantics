@@ -140,25 +140,6 @@ public interface SclPackage extends EPackage
   int VARIABLE_DECLARATION_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSequenceImpl <em>Instruction Sequence</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSequenceImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionSequence()
-   * @generated
-   */
-  int INSTRUCTION_SEQUENCE = 5;
-
-  /**
-   * The number of structural features of the '<em>Instruction Sequence</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_SEQUENCE_FEATURE_COUNT = 0;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionImpl <em>Instruction</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -175,7 +156,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INSTRUCTION_FEATURE_COUNT = INSTRUCTION_SEQUENCE_FEATURE_COUNT + 0;
+  int INSTRUCTION_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl <em>Scope</em>}' class.
@@ -241,7 +222,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getLabel()
    * @generated
    */
-  int LABEL = 6;
+  int LABEL = 5;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -269,7 +250,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getAssignment()
    * @generated
    */
-  int ASSIGNMENT = 7;
+  int ASSIGNMENT = 6;
 
   /**
    * The feature id for the '<em><b>Assignment</b></em>' attribute.
@@ -297,7 +278,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getConditional()
    * @generated
    */
-  int CONDITIONAL = 8;
+  int CONDITIONAL = 7;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' attribute.
@@ -334,7 +315,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getGoto()
    * @generated
    */
-  int GOTO = 9;
+  int GOTO = 8;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -362,7 +343,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 10;
+  int PARALLEL = 9;
 
   /**
    * The feature id for the '<em><b>Threads</b></em>' containment reference list.
@@ -390,7 +371,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 11;
+  int PAUSE = 10;
 
   /**
    * The number of structural features of the '<em>Pause</em>' class.
@@ -409,7 +390,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getAnnotation()
    * @generated
    */
-  int ANNOTATION = 12;
+  int ANNOTATION = 11;
 
   /**
    * The feature id for the '<em><b>Comment</b></em>' attribute.
@@ -418,7 +399,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANNOTATION__COMMENT = INSTRUCTION_SEQUENCE_FEATURE_COUNT + 0;
+  int ANNOTATION__COMMENT = 0;
 
   /**
    * The number of structural features of the '<em>Annotation</em>' class.
@@ -427,7 +408,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANNOTATION_FEATURE_COUNT = INSTRUCTION_SEQUENCE_FEATURE_COUNT + 1;
+  int ANNOTATION_FEATURE_COUNT = 1;
 
 
   /**
@@ -556,16 +537,6 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EClass getScope();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence <em>Instruction Sequence</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Instruction Sequence</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
-   * @generated
-   */
-  EClass getInstructionSequence();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label <em>Label</em>}'.
@@ -842,16 +813,6 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EClass SCOPE = eINSTANCE.getScope();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSequenceImpl <em>Instruction Sequence</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionSequenceImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionSequence()
-     * @generated
-     */
-    EClass INSTRUCTION_SEQUENCE = eINSTANCE.getInstructionSequence();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LabelImpl <em>Label</em>}' class.

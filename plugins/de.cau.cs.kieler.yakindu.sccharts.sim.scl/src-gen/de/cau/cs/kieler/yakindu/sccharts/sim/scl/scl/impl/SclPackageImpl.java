@@ -8,7 +8,6 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause;
@@ -67,13 +66,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * @generated
    */
   private EClass scopeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass instructionSequenceEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -312,16 +304,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getInstructionSequence()
-  {
-    return instructionSequenceEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getLabel()
   {
     return labelEClass;
@@ -504,8 +486,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     scopeEClass = createEClass(SCOPE);
 
-    instructionSequenceEClass = createEClass(INSTRUCTION_SEQUENCE);
-
     labelEClass = createEClass(LABEL);
     createEAttribute(labelEClass, LABEL__NAME);
 
@@ -557,7 +537,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    instructionEClass.getESuperTypes().add(this.getInstructionSequence());
     instructionListEClass.getESuperTypes().add(this.getScope());
     labelEClass.getESuperTypes().add(this.getInstruction());
     assignmentEClass.getESuperTypes().add(this.getInstruction());
@@ -565,7 +544,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     gotoEClass.getESuperTypes().add(this.getInstruction());
     parallelEClass.getESuperTypes().add(this.getInstruction());
     pauseEClass.getESuperTypes().add(this.getInstruction());
-    annotationEClass.getESuperTypes().add(this.getInstructionSequence());
 
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -580,12 +558,10 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(instructionListEClass, InstructionList.class, "InstructionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInstructionList_Instructions(), this.getInstructionSequence(), null, "instructions", null, 0, -1, InstructionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInstructionList_Instructions(), ecorePackage.getEObject(), null, "instructions", null, 0, -1, InstructionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getInstructionList_Variables(), this.getVariableDeclaration(), null, "variables", null, 0, -1, InstructionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scopeEClass, Scope.class, "Scope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(instructionSequenceEClass, InstructionSequence.class, "InstructionSequence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLabel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -23,7 +23,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//InstructionList/variables"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Scope"/>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//InstructionSequence"/>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Label">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.yakindu.sccharts.sim.scl/model/SCL.ecore#//Label/name"/>
     </genClasses>

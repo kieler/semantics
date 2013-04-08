@@ -47,9 +47,9 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence;
 
-import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgFactory;
+//import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgFactory;
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
+//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
 // import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
 
@@ -74,7 +74,7 @@ class SCLHelper {
  
     def SCL() { SclFactory::eINSTANCE }
     
-    def SCG() { ScgFactory::eINSTANCE }
+//    def SCG() { ScgFactory::eINSTANCE }
     
     
     // ======================================================================================================
@@ -163,20 +163,20 @@ class SCLHelper {
         sSet.scope = iSet*/    
     }
     
-    def void addInstruction(InstructionList iSet, InstructionSequence ioc) {
-        if (ioc instanceof Instruction) { iSet.addInstruction(ioc as Instruction) }
-          else { iSet.addInstruction(ioc as Annotation) }
-    }
+//    def void addInstruction(InstructionList iSet, InstructionSequence ioc) {
+//        if (ioc instanceof Instruction) { iSet.addInstruction(ioc as Instruction) }
+//          else { iSet.addInstruction(ioc as Annotation) }
+//    }
     
     def void addInstruction(InstructionList iSet, EObject ioc) {
         if (ioc instanceof Instruction) { iSet.addInstruction(ioc as Instruction) }
           else { iSet.addInstruction(ioc as Annotation) }
     }
     
-    def void addInstruction(Scope sSet, InstructionSequence ioc) {
-        if (ioc instanceof Instruction) { sSet.addInstruction(ioc as Instruction) }
-          else { sSet.addInstruction(ioc as Annotation) }
-    }
+//    def void addInstruction(Scope sSet, InstructionSequence ioc) {
+//        if (ioc instanceof Instruction) { sSet.addInstruction(ioc as Instruction) }
+//          else { sSet.addInstruction(ioc as Annotation) }
+//    }
     
     def void addInstruction(Conditional conditional, Instruction instruction) {
         var iSet = conditional.getConditional()
@@ -294,7 +294,7 @@ class SCLHelper {
     // ======================================================================================================
     
     def createSCGInstruction() {
-      SCG.createInstruction();  
+//      SCG.createInstruction();  
     }
  
 }

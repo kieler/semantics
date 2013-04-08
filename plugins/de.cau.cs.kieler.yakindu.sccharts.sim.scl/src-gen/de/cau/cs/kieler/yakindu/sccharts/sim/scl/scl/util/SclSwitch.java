@@ -90,7 +90,6 @@ public class SclSwitch<T> extends Switch<T>
       {
         Instruction instruction = (Instruction)theEObject;
         T result = caseInstruction(instruction);
-        if (result == null) result = caseInstructionSequence(instruction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -109,19 +108,11 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SclPackage.INSTRUCTION_SEQUENCE:
-      {
-        InstructionSequence instructionSequence = (InstructionSequence)theEObject;
-        T result = caseInstructionSequence(instructionSequence);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SclPackage.LABEL:
       {
         Label label = (Label)theEObject;
         T result = caseLabel(label);
         if (result == null) result = caseInstruction(label);
-        if (result == null) result = caseInstructionSequence(label);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -130,7 +121,6 @@ public class SclSwitch<T> extends Switch<T>
         Assignment assignment = (Assignment)theEObject;
         T result = caseAssignment(assignment);
         if (result == null) result = caseInstruction(assignment);
-        if (result == null) result = caseInstructionSequence(assignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -139,7 +129,6 @@ public class SclSwitch<T> extends Switch<T>
         Conditional conditional = (Conditional)theEObject;
         T result = caseConditional(conditional);
         if (result == null) result = caseInstruction(conditional);
-        if (result == null) result = caseInstructionSequence(conditional);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -148,7 +137,6 @@ public class SclSwitch<T> extends Switch<T>
         Goto goto_ = (Goto)theEObject;
         T result = caseGoto(goto_);
         if (result == null) result = caseInstruction(goto_);
-        if (result == null) result = caseInstructionSequence(goto_);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -157,7 +145,6 @@ public class SclSwitch<T> extends Switch<T>
         Parallel parallel = (Parallel)theEObject;
         T result = caseParallel(parallel);
         if (result == null) result = caseInstruction(parallel);
-        if (result == null) result = caseInstructionSequence(parallel);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -166,7 +153,6 @@ public class SclSwitch<T> extends Switch<T>
         Pause pause = (Pause)theEObject;
         T result = casePause(pause);
         if (result == null) result = caseInstruction(pause);
-        if (result == null) result = caseInstructionSequence(pause);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -174,7 +160,6 @@ public class SclSwitch<T> extends Switch<T>
       {
         Annotation annotation = (Annotation)theEObject;
         T result = caseAnnotation(annotation);
-        if (result == null) result = caseInstructionSequence(annotation);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -258,22 +243,6 @@ public class SclSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseScope(Scope object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Instruction Sequence</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Instruction Sequence</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseInstructionSequence(InstructionSequence object)
   {
     return null;
   }

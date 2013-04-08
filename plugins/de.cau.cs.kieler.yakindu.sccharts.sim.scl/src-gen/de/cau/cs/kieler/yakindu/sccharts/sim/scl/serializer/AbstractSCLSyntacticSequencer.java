@@ -46,7 +46,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 
 	/**
 	 * Syntax:
-	 *     'input' | 'output'
+	 *     'output' | 'input'
 	 */
 	protected void emit_VariableDeclaration_InputKeyword_0_0_or_OutputKeyword_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
