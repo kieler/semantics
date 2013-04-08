@@ -270,7 +270,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (Input?='input'? Output?='output'? type=[Type|ID]? name=STRING)
+	 *     (Input?='input'? Output?='output'? name=STRING type=[Type|ID]?)
 	 */
 	protected void sequence_VariableDeclaration(EObject context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

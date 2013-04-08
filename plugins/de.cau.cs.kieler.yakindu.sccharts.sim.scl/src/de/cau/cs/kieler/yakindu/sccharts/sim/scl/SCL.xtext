@@ -5,8 +5,8 @@ import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 import "http://www.yakindu.org/base/base/2.0.0" as base
 import "http://www.yakindu.org/sct/statechart/SText" as stext
-import "http://kieler.cs.cau.de/yakindu/stext/" as synctext
-import "http://kieler.cs.cau.de/yakindu/sccharts/stext/" as scchartsexp
+//import "http://kieler.cs.cau.de/yakindu/stext/" as synctext
+//import "http://kieler.cs.cau.de/yakindu/sccharts/stext/" as scchartsexp
 
 generate scl "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl"
 

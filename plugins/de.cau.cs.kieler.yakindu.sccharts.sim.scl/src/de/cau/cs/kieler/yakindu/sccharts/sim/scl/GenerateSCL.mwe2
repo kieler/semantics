@@ -22,10 +22,10 @@ Workflow {
         registerGenModelFile = "platform:/resource/org.yakindu.sct.model.stext/model/SText.genmodel"
         registerGeneratedEPackage = "org.yakindu.sct.model.sgraph.SGraphPackage"
         registerGenModelFile = "platform:/resource/org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel"
-        registerGeneratedEPackage = "de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage"
-        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/Synctext.genmodel"        
-        registerGeneratedEPackage = "de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage"
-        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.yakindu.sccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/SCChartsExp.genmodel"        
+//        registerGeneratedEPackage = "de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage"
+//        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/Synctext.genmodel"        
+//        registerGeneratedEPackage = "de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage"
+//        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.yakindu.sccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/SCChartsExp.genmodel"        
   	}
 
 	component = DirectoryCleaner {
@@ -85,8 +85,8 @@ Workflow {
 			// java-based API for validation 
 			fragment = validation.JavaValidatorFragment {
 				composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-				//composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-				// registerForImportedPackages = true
+				composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+				//registerForImportedPackages = true
 			}
 
 			// scoping and exporting API
@@ -96,6 +96,7 @@ Workflow {
 			// scoping and exporting API 
 			fragment = scoping.ImportNamespacesScopingFragment {}
 			fragment = exporting.QualifiedNamesFragment {}
+//            fragment = builder.BuilderIntegrationFragment {}
 			
 // CMOT: deactivated builder			
 //			fragment = builder.BuilderIntegrationFragment {}

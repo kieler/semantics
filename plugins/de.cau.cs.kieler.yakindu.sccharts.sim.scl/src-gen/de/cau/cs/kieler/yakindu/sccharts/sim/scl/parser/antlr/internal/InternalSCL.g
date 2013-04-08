@@ -206,25 +206,9 @@ ruleVariableDeclaration returns [EObject current=null]
     }
 (
 (
-		{ 
-		  /* */ 
-		}
+		lv_name_3_0=RULE_STRING
 		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getVariableDeclarationRule());
-	        }
-        }
-	otherlv_3=RULE_ID
-	{
-		newLeafNode(otherlv_3, grammarAccess.getVariableDeclarationAccess().getTypeTypeCrossReference_3_0()); 
-	}
-
-)
-)?(
-(
-		lv_name_4_0=RULE_STRING
-		{
-			newLeafNode(lv_name_4_0, grammarAccess.getVariableDeclarationAccess().getNameSTRINGTerminalRuleCall_4_0()); 
+			newLeafNode(lv_name_3_0, grammarAccess.getVariableDeclarationAccess().getNameSTRINGTerminalRuleCall_3_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -233,14 +217,34 @@ ruleVariableDeclaration returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"name",
-        		lv_name_4_0, 
+        		lv_name_3_0, 
         		"STRING");
 	    }
 
 )
-)	otherlv_5=';' 
+)(	otherlv_4=':' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getVariableDeclarationAccess().getSemicolonKeyword_5());
+    	newLeafNode(otherlv_4, grammarAccess.getVariableDeclarationAccess().getColonKeyword_4_0());
+    }
+(
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getVariableDeclarationRule());
+	        }
+        }
+	otherlv_5=RULE_ID
+	{
+		newLeafNode(otherlv_5, grammarAccess.getVariableDeclarationAccess().getTypeTypeCrossReference_4_1_0()); 
+	}
+
+)
+))?	otherlv_6=';' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getVariableDeclarationAccess().getSemicolonKeyword_5());
     }
 )
 ;

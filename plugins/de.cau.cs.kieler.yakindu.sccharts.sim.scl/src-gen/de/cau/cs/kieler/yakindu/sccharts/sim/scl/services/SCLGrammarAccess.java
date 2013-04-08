@@ -76,19 +76,21 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOutputAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final Keyword cOutputOutputKeyword_1_0 = (Keyword)cOutputAssignment_1.eContents().get(0);
 		private final Keyword cSignalKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final CrossReference cTypeTypeCrossReference_3_0 = (CrossReference)cTypeAssignment_3.eContents().get(0);
-		private final RuleCall cTypeTypeIDTerminalRuleCall_3_0_1 = (RuleCall)cTypeTypeCrossReference_3_0.eContents().get(1);
-		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cNameSTRINGTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
+		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNameSTRINGTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cColonKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cTypeAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final CrossReference cTypeTypeCrossReference_4_1_0 = (CrossReference)cTypeAssignment_4_1.eContents().get(0);
+		private final RuleCall cTypeTypeIDTerminalRuleCall_4_1_0_1 = (RuleCall)cTypeTypeCrossReference_4_1_0.eContents().get(1);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//VariableDeclaration:
 		//
-		//	Input?="input"? Output?="output"? "signal" type=[types::Type]? name=STRING ";";
+		//	Input?="input"? Output?="output"? "signal" name=STRING (":" type=[types::Type])? ";";
 		public ParserRule getRule() { return rule; }
 
-		//Input?="input"? Output?="output"? "signal" type=[types::Type]? name=STRING ";"
+		//Input?="input"? Output?="output"? "signal" name=STRING (":" type=[types::Type])? ";"
 		public Group getGroup() { return cGroup; }
 
 		//Input?="input"?
@@ -106,20 +108,26 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"signal"
 		public Keyword getSignalKeyword_2() { return cSignalKeyword_2; }
 
-		//type=[types::Type]?
-		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
-
-		//[types::Type]
-		public CrossReference getTypeTypeCrossReference_3_0() { return cTypeTypeCrossReference_3_0; }
-
-		//ID
-		public RuleCall getTypeTypeIDTerminalRuleCall_3_0_1() { return cTypeTypeIDTerminalRuleCall_3_0_1; }
-
 		//name=STRING
-		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
+		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
 
 		//STRING
-		public RuleCall getNameSTRINGTerminalRuleCall_4_0() { return cNameSTRINGTerminalRuleCall_4_0; }
+		public RuleCall getNameSTRINGTerminalRuleCall_3_0() { return cNameSTRINGTerminalRuleCall_3_0; }
+
+		//(":" type=[types::Type])?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//":"
+		public Keyword getColonKeyword_4_0() { return cColonKeyword_4_0; }
+
+		//type=[types::Type]
+		public Assignment getTypeAssignment_4_1() { return cTypeAssignment_4_1; }
+
+		//[types::Type]
+		public CrossReference getTypeTypeCrossReference_4_1_0() { return cTypeTypeCrossReference_4_1_0; }
+
+		//ID
+		public RuleCall getTypeTypeIDTerminalRuleCall_4_1_0_1() { return cTypeTypeIDTerminalRuleCall_4_1_0_1; }
 
 		//";"
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
@@ -696,7 +704,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//VariableDeclaration:
 	//
-	//	Input?="input"? Output?="output"? "signal" type=[types::Type]? name=STRING ";";
+	//	Input?="input"? Output?="output"? "signal" name=STRING (":" type=[types::Type])? ";";
 	public VariableDeclarationElements getVariableDeclarationAccess() {
 		return (pVariableDeclaration != null) ? pVariableDeclaration : (pVariableDeclaration = new VariableDeclarationElements());
 	}
