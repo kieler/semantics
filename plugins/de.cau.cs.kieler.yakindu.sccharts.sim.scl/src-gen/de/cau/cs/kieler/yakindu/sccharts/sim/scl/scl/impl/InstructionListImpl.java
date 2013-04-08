@@ -4,7 +4,6 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration;
 
 import java.util.Collection;
 
@@ -15,6 +14,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -27,13 +28,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionListImpl#getInstructions <em>Instructions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionListImpl#getVariables <em>Variables</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class InstructionListImpl extends ScopeImpl implements InstructionList
+public class InstructionListImpl extends MinimalEObjectImpl.Container implements InstructionList
 {
   /**
    * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
@@ -44,16 +44,6 @@ public class InstructionListImpl extends ScopeImpl implements InstructionList
    * @ordered
    */
   protected EList<EObject> instructions;
-
-  /**
-   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getVariables()
-   * @generated
-   * @ordered
-   */
-  protected EList<VariableDeclaration> variables;
 
   /**
    * <!-- begin-user-doc -->
@@ -95,20 +85,6 @@ public class InstructionListImpl extends ScopeImpl implements InstructionList
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<VariableDeclaration> getVariables()
-  {
-    if (variables == null)
-    {
-      variables = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, SclPackage.INSTRUCTION_LIST__VARIABLES);
-    }
-    return variables;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -116,8 +92,6 @@ public class InstructionListImpl extends ScopeImpl implements InstructionList
     {
       case SclPackage.INSTRUCTION_LIST__INSTRUCTIONS:
         return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
-      case SclPackage.INSTRUCTION_LIST__VARIABLES:
-        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -134,8 +108,6 @@ public class InstructionListImpl extends ScopeImpl implements InstructionList
     {
       case SclPackage.INSTRUCTION_LIST__INSTRUCTIONS:
         return getInstructions();
-      case SclPackage.INSTRUCTION_LIST__VARIABLES:
-        return getVariables();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -155,10 +127,6 @@ public class InstructionListImpl extends ScopeImpl implements InstructionList
         getInstructions().clear();
         getInstructions().addAll((Collection<? extends EObject>)newValue);
         return;
-      case SclPackage.INSTRUCTION_LIST__VARIABLES:
-        getVariables().clear();
-        getVariables().addAll((Collection<? extends VariableDeclaration>)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -176,9 +144,6 @@ public class InstructionListImpl extends ScopeImpl implements InstructionList
       case SclPackage.INSTRUCTION_LIST__INSTRUCTIONS:
         getInstructions().clear();
         return;
-      case SclPackage.INSTRUCTION_LIST__VARIABLES:
-        getVariables().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -195,8 +160,6 @@ public class InstructionListImpl extends ScopeImpl implements InstructionList
     {
       case SclPackage.INSTRUCTION_LIST__INSTRUCTIONS:
         return instructions != null && !instructions.isEmpty();
-      case SclPackage.INSTRUCTION_LIST__VARIABLES:
-        return variables != null && !variables.isEmpty();
     }
     return super.eIsSet(featureID);
   }

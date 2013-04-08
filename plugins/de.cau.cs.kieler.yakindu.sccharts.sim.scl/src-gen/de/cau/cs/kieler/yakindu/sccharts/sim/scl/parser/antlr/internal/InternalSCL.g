@@ -123,7 +123,7 @@ ruleProgram returns [EObject current=null]
 	    }
 
 )
-)?	otherlv_3='{' 
+)*	otherlv_3='{' 
     {
     	newLeafNode(otherlv_3, grammarAccess.getProgramAccess().getLeftCurlyBracketKeyword_3());
     }
@@ -170,38 +170,61 @@ ruleVariableDeclaration returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((	otherlv_0='input' 
-    {
-    	newLeafNode(otherlv_0, grammarAccess.getVariableDeclarationAccess().getInputKeyword_0_0());
-    }
-
-    |	otherlv_1='output' 
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getVariableDeclarationAccess().getOutputKeyword_0_1());
-    }
-)(
+((
 (
-		lv_type_2_0=RULE_STRING
-		{
-			newLeafNode(lv_type_2_0, grammarAccess.getVariableDeclarationAccess().getTypeSTRINGTerminalRuleCall_1_0()); 
-		}
-		{
+		lv_Input_0_0=	'input' 
+    {
+        newLeafNode(lv_Input_0_0, grammarAccess.getVariableDeclarationAccess().getInputInputKeyword_0_0());
+    }
+ 
+	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getVariableDeclarationRule());
 	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"type",
-        		lv_type_2_0, 
-        		"STRING");
+       		setWithLastConsumed($current, "Input", true, "input");
 	    }
 
 )
-)(
+)?(
 (
-		lv_name_3_0=RULE_STRING
+		lv_Output_1_0=	'output' 
+    {
+        newLeafNode(lv_Output_1_0, grammarAccess.getVariableDeclarationAccess().getOutputOutputKeyword_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getVariableDeclarationRule());
+	        }
+       		setWithLastConsumed($current, "Output", true, "output");
+	    }
+
+)
+)?	otherlv_2='signal' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getVariableDeclarationAccess().getSignalKeyword_2());
+    }
+(
+(
+		{ 
+		  /* */ 
+		}
 		{
-			newLeafNode(lv_name_3_0, grammarAccess.getVariableDeclarationAccess().getNameSTRINGTerminalRuleCall_2_0()); 
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getVariableDeclarationRule());
+	        }
+        }
+	otherlv_3=RULE_ID
+	{
+		newLeafNode(otherlv_3, grammarAccess.getVariableDeclarationAccess().getTypeTypeCrossReference_3_0()); 
+	}
+
+)
+)?(
+(
+		lv_name_4_0=RULE_STRING
+		{
+			newLeafNode(lv_name_4_0, grammarAccess.getVariableDeclarationAccess().getNameSTRINGTerminalRuleCall_4_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -210,14 +233,14 @@ ruleVariableDeclaration returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"name",
-        		lv_name_3_0, 
+        		lv_name_4_0, 
         		"STRING");
 	    }
 
 )
-)	otherlv_4=';' 
+)	otherlv_5=';' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getVariableDeclarationAccess().getSemicolonKeyword_3());
+    	newLeafNode(otherlv_5, grammarAccess.getVariableDeclarationAccess().getSemicolonKeyword_5());
     }
 )
 ;
@@ -602,8 +625,6 @@ ruleInstructionList returns [EObject current=null]
 )
 ))
 ;
-
-
 
 
 

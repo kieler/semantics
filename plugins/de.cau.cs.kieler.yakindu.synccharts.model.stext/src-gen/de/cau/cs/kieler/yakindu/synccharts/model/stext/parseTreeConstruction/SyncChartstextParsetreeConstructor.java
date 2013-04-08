@@ -130,11 +130,11 @@ protected class ThisRootNode extends RootToken {
  * 
  * VariableDefinition:
  * 
- * 	{VariableDefinition} isStatic?="static"? type=[types::Type|FQN] name=ID ("=" varInitialValue=Expression)? ";";
+ * 	{VariableDefinition} Static?="static"? type=[types::Type|FQN] name=ID ("=" varInitialValue=Expression)? ";";
  *
  **/
 
-// {VariableDefinition} isStatic?="static"? type=[types::Type|FQN] name=ID ("=" varInitialValue=Expression)? ";"
+// {VariableDefinition} Static?="static"? type=[types::Type|FQN] name=ID ("=" varInitialValue=Expression)? ";"
 protected class VariableDefinition_Group extends GroupToken {
 	
 	public VariableDefinition_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -189,16 +189,16 @@ protected class VariableDefinition_VariableDefinitionAction_0 extends ActionToke
 	}
 }
 
-// isStatic?="static"?
-protected class VariableDefinition_IsStaticAssignment_1 extends AssignmentToken  {
+// Static?="static"?
+protected class VariableDefinition_StaticAssignment_1 extends AssignmentToken  {
 	
-	public VariableDefinition_IsStaticAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public VariableDefinition_StaticAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getVariableDefinitionAccess().getIsStaticAssignment_1();
+		return grammarAccess.getVariableDefinitionAccess().getStaticAssignment_1();
 	}
 
     @Override
@@ -211,11 +211,11 @@ protected class VariableDefinition_IsStaticAssignment_1 extends AssignmentToken 
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("isStatic",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("isStatic");
+		if((value = eObjectConsumer.getConsumable("Static",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("Static");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KEYWORD;
-			element = grammarAccess.getVariableDefinitionAccess().getIsStaticStaticKeyword_1_0();
+			element = grammarAccess.getVariableDefinitionAccess().getStaticStaticKeyword_1_0();
 			return obj;
 		}
 		return null;
@@ -238,7 +238,7 @@ protected class VariableDefinition_TypeAssignment_2 extends AssignmentToken  {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new VariableDefinition_IsStaticAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new VariableDefinition_StaticAssignment_1(lastRuleCallOrigin, this, 0, inst);
 			case 1: return new VariableDefinition_VariableDefinitionAction_0(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
@@ -613,13 +613,13 @@ protected class SignalDeclaration_SignalDefinitionParserRuleCall extends RuleCal
  *
  * SignalDefinition:
  * 
- * 	{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+ * 	{EventDefinition} Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
  * 
  * 	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";";
  *
  **/
 
-// {EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+// {EventDefinition} Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
 // 
 // varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";"
 protected class SignalDefinition_Group extends GroupToken {
@@ -676,16 +676,16 @@ protected class SignalDefinition_EventDefinitionAction_0 extends ActionToken  {
 	}
 }
 
-// isInput?="input"?
-protected class SignalDefinition_IsInputAssignment_1 extends AssignmentToken  {
+// Input?="input"?
+protected class SignalDefinition_InputAssignment_1 extends AssignmentToken  {
 	
-	public SignalDefinition_IsInputAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public SignalDefinition_InputAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalDefinitionAccess().getIsInputAssignment_1();
+		return grammarAccess.getSignalDefinitionAccess().getInputAssignment_1();
 	}
 
     @Override
@@ -698,11 +698,11 @@ protected class SignalDefinition_IsInputAssignment_1 extends AssignmentToken  {
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("isInput",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("isInput");
+		if((value = eObjectConsumer.getConsumable("Input",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("Input");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KEYWORD;
-			element = grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0();
+			element = grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0();
 			return obj;
 		}
 		return null;
@@ -710,22 +710,22 @@ protected class SignalDefinition_IsInputAssignment_1 extends AssignmentToken  {
 
 }
 
-// isOutput?="output"?
-protected class SignalDefinition_IsOutputAssignment_2 extends AssignmentToken  {
+// Output?="output"?
+protected class SignalDefinition_OutputAssignment_2 extends AssignmentToken  {
 	
-	public SignalDefinition_IsOutputAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public SignalDefinition_OutputAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSignalDefinitionAccess().getIsOutputAssignment_2();
+		return grammarAccess.getSignalDefinitionAccess().getOutputAssignment_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new SignalDefinition_IsInputAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new SignalDefinition_InputAssignment_1(lastRuleCallOrigin, this, 0, inst);
 			case 1: return new SignalDefinition_EventDefinitionAction_0(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
@@ -733,11 +733,11 @@ protected class SignalDefinition_IsOutputAssignment_2 extends AssignmentToken  {
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("isOutput",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("isOutput");
+		if((value = eObjectConsumer.getConsumable("Output",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("Output");
 		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
 			type = AssignmentType.KEYWORD;
-			element = grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0();
+			element = grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0();
 			return obj;
 		}
 		return null;
@@ -760,8 +760,8 @@ protected class SignalDefinition_SignalKeyword_3 extends KeywordToken  {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new SignalDefinition_IsOutputAssignment_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new SignalDefinition_IsInputAssignment_1(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new SignalDefinition_OutputAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new SignalDefinition_InputAssignment_1(lastRuleCallOrigin, this, 1, inst);
 			case 2: return new SignalDefinition_EventDefinitionAction_0(lastRuleCallOrigin, this, 2, inst);
 			default: return null;
 		}	

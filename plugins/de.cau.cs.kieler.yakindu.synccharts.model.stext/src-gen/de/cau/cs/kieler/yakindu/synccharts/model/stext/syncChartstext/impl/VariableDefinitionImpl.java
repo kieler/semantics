@@ -22,7 +22,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.impl.VariableDefinitionImpl#isIsStatic <em>Is Static</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.impl.VariableDefinitionImpl#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.impl.VariableDefinitionImpl#getVarInitialValue <em>Var Initial Value</em>}</li>
  * </ul>
  * </p>
@@ -32,24 +32,24 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public class VariableDefinitionImpl extends de.cau.cs.kieler.yakindu.model.stext.synctext.impl.VariableDefinitionImpl implements VariableDefinition
 {
   /**
-   * The default value of the '{@link #isIsStatic() <em>Is Static</em>}' attribute.
+   * The default value of the '{@link #isStatic() <em>Static</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsStatic()
+   * @see #isStatic()
    * @generated
    * @ordered
    */
-  protected static final boolean IS_STATIC_EDEFAULT = false;
+  protected static final boolean STATIC_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isIsStatic() <em>Is Static</em>}' attribute.
+   * The cached value of the '{@link #isStatic() <em>Static</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsStatic()
+   * @see #isStatic()
    * @generated
    * @ordered
    */
-  protected boolean isStatic = IS_STATIC_EDEFAULT;
+  protected boolean static_ = STATIC_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getVarInitialValue() <em>Var Initial Value</em>}' containment reference.
@@ -87,9 +87,9 @@ public class VariableDefinitionImpl extends de.cau.cs.kieler.yakindu.model.stext
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isIsStatic()
+  public boolean isStatic()
   {
-    return isStatic;
+    return static_;
   }
 
   /**
@@ -97,12 +97,12 @@ public class VariableDefinitionImpl extends de.cau.cs.kieler.yakindu.model.stext
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setIsStatic(boolean newIsStatic)
+  public void setStatic(boolean newStatic)
   {
-    boolean oldIsStatic = isStatic;
-    isStatic = newIsStatic;
+    boolean oldStatic = static_;
+    static_ = newStatic;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SyncChartstextPackage.VARIABLE_DEFINITION__IS_STATIC, oldIsStatic, isStatic));
+      eNotify(new ENotificationImpl(this, Notification.SET, SyncChartstextPackage.VARIABLE_DEFINITION__STATIC, oldStatic, static_));
   }
 
   /**
@@ -179,8 +179,8 @@ public class VariableDefinitionImpl extends de.cau.cs.kieler.yakindu.model.stext
   {
     switch (featureID)
     {
-      case SyncChartstextPackage.VARIABLE_DEFINITION__IS_STATIC:
-        return isIsStatic();
+      case SyncChartstextPackage.VARIABLE_DEFINITION__STATIC:
+        return isStatic();
       case SyncChartstextPackage.VARIABLE_DEFINITION__VAR_INITIAL_VALUE:
         return getVarInitialValue();
     }
@@ -197,8 +197,8 @@ public class VariableDefinitionImpl extends de.cau.cs.kieler.yakindu.model.stext
   {
     switch (featureID)
     {
-      case SyncChartstextPackage.VARIABLE_DEFINITION__IS_STATIC:
-        setIsStatic((Boolean)newValue);
+      case SyncChartstextPackage.VARIABLE_DEFINITION__STATIC:
+        setStatic((Boolean)newValue);
         return;
       case SyncChartstextPackage.VARIABLE_DEFINITION__VAR_INITIAL_VALUE:
         setVarInitialValue((Expression)newValue);
@@ -217,8 +217,8 @@ public class VariableDefinitionImpl extends de.cau.cs.kieler.yakindu.model.stext
   {
     switch (featureID)
     {
-      case SyncChartstextPackage.VARIABLE_DEFINITION__IS_STATIC:
-        setIsStatic(IS_STATIC_EDEFAULT);
+      case SyncChartstextPackage.VARIABLE_DEFINITION__STATIC:
+        setStatic(STATIC_EDEFAULT);
         return;
       case SyncChartstextPackage.VARIABLE_DEFINITION__VAR_INITIAL_VALUE:
         setVarInitialValue((Expression)null);
@@ -237,8 +237,8 @@ public class VariableDefinitionImpl extends de.cau.cs.kieler.yakindu.model.stext
   {
     switch (featureID)
     {
-      case SyncChartstextPackage.VARIABLE_DEFINITION__IS_STATIC:
-        return isStatic != IS_STATIC_EDEFAULT;
+      case SyncChartstextPackage.VARIABLE_DEFINITION__STATIC:
+        return static_ != STATIC_EDEFAULT;
       case SyncChartstextPackage.VARIABLE_DEFINITION__VAR_INITIAL_VALUE:
         return varInitialValue != null;
     }
@@ -256,8 +256,8 @@ public class VariableDefinitionImpl extends de.cau.cs.kieler.yakindu.model.stext
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (isStatic: ");
-    result.append(isStatic);
+    result.append(" (Static: ");
+    result.append(static_);
     result.append(')');
     return result.toString();
   }

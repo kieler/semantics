@@ -113,7 +113,7 @@ public class SyncChartstextPackageImpl extends EPackageImpl implements SyncChart
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableDefinition_IsStatic()
+  public EAttribute getVariableDefinition_Static()
   {
     return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(0);
   }
@@ -159,7 +159,7 @@ public class SyncChartstextPackageImpl extends EPackageImpl implements SyncChart
 
     // Create classes and their features
     variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
-    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_STATIC);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__STATIC);
     createEReference(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_INITIAL_VALUE);
   }
 
@@ -200,7 +200,7 @@ public class SyncChartstextPackageImpl extends EPackageImpl implements SyncChart
 
     // Initialize classes and features; add operations and parameters
     initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVariableDefinition_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDefinition_Static(), ecorePackage.getEBoolean(), "Static", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVariableDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource

@@ -85,6 +85,7 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
                     System.out.println("scl transformation: " + commandString);
                     EObject transformed = (new CoreToSCLTransformation())
                                     .transformCoreToSCL((Statechart) modelObject);
+                    EcoreUtil.resolveAll(transformed);
                     return transformed;
                 }
                 

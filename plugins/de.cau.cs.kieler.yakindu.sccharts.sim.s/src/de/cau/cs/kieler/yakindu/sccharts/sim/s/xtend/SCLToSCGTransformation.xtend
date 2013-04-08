@@ -40,7 +40,7 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
+//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
 

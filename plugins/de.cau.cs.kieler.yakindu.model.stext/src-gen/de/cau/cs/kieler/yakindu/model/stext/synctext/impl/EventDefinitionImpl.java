@@ -25,8 +25,8 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventDefinitionImpl#isIsInput <em>Is Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventDefinitionImpl#isIsOutput <em>Is Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventDefinitionImpl#isInput <em>Input</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventDefinitionImpl#isOutput <em>Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventDefinitionImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventDefinitionImpl#getVarInitialValue <em>Var Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventDefinitionImpl#getVarCombineOperator <em>Var Combine Operator</em>}</li>
@@ -38,44 +38,44 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public class EventDefinitionImpl extends SignalDefinitionImpl implements EventDefinition
 {
   /**
-   * The default value of the '{@link #isIsInput() <em>Is Input</em>}' attribute.
+   * The default value of the '{@link #isInput() <em>Input</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsInput()
+   * @see #isInput()
    * @generated
    * @ordered
    */
-  protected static final boolean IS_INPUT_EDEFAULT = false;
+  protected static final boolean INPUT_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isIsInput() <em>Is Input</em>}' attribute.
+   * The cached value of the '{@link #isInput() <em>Input</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsInput()
+   * @see #isInput()
    * @generated
    * @ordered
    */
-  protected boolean isInput = IS_INPUT_EDEFAULT;
+  protected boolean input = INPUT_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isIsOutput() <em>Is Output</em>}' attribute.
+   * The default value of the '{@link #isOutput() <em>Output</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsOutput()
+   * @see #isOutput()
    * @generated
    * @ordered
    */
-  protected static final boolean IS_OUTPUT_EDEFAULT = false;
+  protected static final boolean OUTPUT_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isIsOutput() <em>Is Output</em>}' attribute.
+   * The cached value of the '{@link #isOutput() <em>Output</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsOutput()
+   * @see #isOutput()
    * @generated
    * @ordered
    */
-  protected boolean isOutput = IS_OUTPUT_EDEFAULT;
+  protected boolean output = OUTPUT_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' reference.
@@ -143,9 +143,9 @@ public class EventDefinitionImpl extends SignalDefinitionImpl implements EventDe
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isIsInput()
+  public boolean isInput()
   {
-    return isInput;
+    return input;
   }
 
   /**
@@ -153,12 +153,12 @@ public class EventDefinitionImpl extends SignalDefinitionImpl implements EventDe
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setIsInput(boolean newIsInput)
+  public void setInput(boolean newInput)
   {
-    boolean oldIsInput = isInput;
-    isInput = newIsInput;
+    boolean oldInput = input;
+    input = newInput;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.EVENT_DEFINITION__IS_INPUT, oldIsInput, isInput));
+      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.EVENT_DEFINITION__INPUT, oldInput, input));
   }
 
   /**
@@ -166,9 +166,9 @@ public class EventDefinitionImpl extends SignalDefinitionImpl implements EventDe
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isIsOutput()
+  public boolean isOutput()
   {
-    return isOutput;
+    return output;
   }
 
   /**
@@ -176,12 +176,12 @@ public class EventDefinitionImpl extends SignalDefinitionImpl implements EventDe
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setIsOutput(boolean newIsOutput)
+  public void setOutput(boolean newOutput)
   {
-    boolean oldIsOutput = isOutput;
-    isOutput = newIsOutput;
+    boolean oldOutput = output;
+    output = newOutput;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.EVENT_DEFINITION__IS_OUTPUT, oldIsOutput, isOutput));
+      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.EVENT_DEFINITION__OUTPUT, oldOutput, output));
   }
 
   /**
@@ -324,10 +324,10 @@ public class EventDefinitionImpl extends SignalDefinitionImpl implements EventDe
   {
     switch (featureID)
     {
-      case SynctextPackage.EVENT_DEFINITION__IS_INPUT:
-        return isIsInput();
-      case SynctextPackage.EVENT_DEFINITION__IS_OUTPUT:
-        return isIsOutput();
+      case SynctextPackage.EVENT_DEFINITION__INPUT:
+        return isInput();
+      case SynctextPackage.EVENT_DEFINITION__OUTPUT:
+        return isOutput();
       case SynctextPackage.EVENT_DEFINITION__TYPE:
         if (resolve) return getType();
         return basicGetType();
@@ -349,11 +349,11 @@ public class EventDefinitionImpl extends SignalDefinitionImpl implements EventDe
   {
     switch (featureID)
     {
-      case SynctextPackage.EVENT_DEFINITION__IS_INPUT:
-        setIsInput((Boolean)newValue);
+      case SynctextPackage.EVENT_DEFINITION__INPUT:
+        setInput((Boolean)newValue);
         return;
-      case SynctextPackage.EVENT_DEFINITION__IS_OUTPUT:
-        setIsOutput((Boolean)newValue);
+      case SynctextPackage.EVENT_DEFINITION__OUTPUT:
+        setOutput((Boolean)newValue);
         return;
       case SynctextPackage.EVENT_DEFINITION__TYPE:
         setType((Type)newValue);
@@ -378,11 +378,11 @@ public class EventDefinitionImpl extends SignalDefinitionImpl implements EventDe
   {
     switch (featureID)
     {
-      case SynctextPackage.EVENT_DEFINITION__IS_INPUT:
-        setIsInput(IS_INPUT_EDEFAULT);
+      case SynctextPackage.EVENT_DEFINITION__INPUT:
+        setInput(INPUT_EDEFAULT);
         return;
-      case SynctextPackage.EVENT_DEFINITION__IS_OUTPUT:
-        setIsOutput(IS_OUTPUT_EDEFAULT);
+      case SynctextPackage.EVENT_DEFINITION__OUTPUT:
+        setOutput(OUTPUT_EDEFAULT);
         return;
       case SynctextPackage.EVENT_DEFINITION__TYPE:
         setType((Type)null);
@@ -407,10 +407,10 @@ public class EventDefinitionImpl extends SignalDefinitionImpl implements EventDe
   {
     switch (featureID)
     {
-      case SynctextPackage.EVENT_DEFINITION__IS_INPUT:
-        return isInput != IS_INPUT_EDEFAULT;
-      case SynctextPackage.EVENT_DEFINITION__IS_OUTPUT:
-        return isOutput != IS_OUTPUT_EDEFAULT;
+      case SynctextPackage.EVENT_DEFINITION__INPUT:
+        return input != INPUT_EDEFAULT;
+      case SynctextPackage.EVENT_DEFINITION__OUTPUT:
+        return output != OUTPUT_EDEFAULT;
       case SynctextPackage.EVENT_DEFINITION__TYPE:
         return type != null;
       case SynctextPackage.EVENT_DEFINITION__VAR_INITIAL_VALUE:
@@ -432,10 +432,10 @@ public class EventDefinitionImpl extends SignalDefinitionImpl implements EventDe
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (isInput: ");
-    result.append(isInput);
-    result.append(", isOutput: ");
-    result.append(isOutput);
+    result.append(" (Input: ");
+    result.append(input);
+    result.append(", Output: ");
+    result.append(output);
     result.append(", varCombineOperator: ");
     result.append(varCombineOperator);
     result.append(')');

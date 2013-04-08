@@ -14,8 +14,8 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsInput <em>Is Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsOutput <em>Is Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isInput <em>Input</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isOutput <em>Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#getVarInitialValue <em>Var Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#getVarCombineOperator <em>Var Combine Operator</em>}</li>
@@ -29,56 +29,56 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public interface EventDefinition extends SignalDefinition
 {
   /**
-   * Returns the value of the '<em><b>Is Input</b></em>' attribute.
+   * Returns the value of the '<em><b>Input</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Is Input</em>' attribute isn't clear,
+   * If the meaning of the '<em>Input</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Is Input</em>' attribute.
-   * @see #setIsInput(boolean)
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage#getEventDefinition_IsInput()
+   * @return the value of the '<em>Input</em>' attribute.
+   * @see #setInput(boolean)
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage#getEventDefinition_Input()
    * @model
    * @generated
    */
-  boolean isIsInput();
+  boolean isInput();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsInput <em>Is Input</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isInput <em>Input</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Is Input</em>' attribute.
-   * @see #isIsInput()
+   * @param value the new value of the '<em>Input</em>' attribute.
+   * @see #isInput()
    * @generated
    */
-  void setIsInput(boolean value);
+  void setInput(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Is Output</b></em>' attribute.
+   * Returns the value of the '<em><b>Output</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Is Output</em>' attribute isn't clear,
+   * If the meaning of the '<em>Output</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Is Output</em>' attribute.
-   * @see #setIsOutput(boolean)
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage#getEventDefinition_IsOutput()
+   * @return the value of the '<em>Output</em>' attribute.
+   * @see #setOutput(boolean)
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage#getEventDefinition_Output()
    * @model
    * @generated
    */
-  boolean isIsOutput();
+  boolean isOutput();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsOutput <em>Is Output</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isOutput <em>Output</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Is Output</em>' attribute.
-   * @see #isIsOutput()
+   * @param value the new value of the '<em>Output</em>' attribute.
+   * @see #isOutput()
    * @generated
    */
-  void setIsOutput(boolean value);
+  void setOutput(boolean value);
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' reference.

@@ -75,10 +75,6 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 					sequence_InstructionList(context, (InstructionList) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getScopeRule()) {
-					sequence_Scope(context, (InstructionList) semanticObject); 
-					return; 
-				}
 				else break;
 			case SclPackage.LABEL:
 				if(context == grammarAccess.getInstructionRule()) {
@@ -265,7 +261,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (name=ID interface+=VariableDeclaration? program=InstructionList)
+	 *     (name=ID interface+=VariableDeclaration* program=InstructionList)
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -274,34 +270,9 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         (variables+=VariableDeclaration* (instructions+=Instruction | instructions+=Annotation)+ instructions+=Instruction instructions+=Annotation?) | 
-	 *         (instructions+=Annotation instructions+=Instruction) | 
-	 *         instructions+=Annotation | 
-	 *         (instructions+=Instruction instructions+=Annotation) | 
-	 *         instructions+=Instruction
-	 *     )
-	 */
-	protected void sequence_Scope(EObject context, InstructionList semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (type=STRING name=STRING)
+	 *     (Input?='input'? Output?='output'? type=[Type|ID]? name=STRING)
 	 */
 	protected void sequence_VariableDeclaration(EObject context, VariableDeclaration semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.VARIABLE_DECLARATION__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.VARIABLE_DECLARATION__TYPE));
-			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.VARIABLE_DECLARATION__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.VARIABLE_DECLARATION__NAME));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getVariableDeclarationAccess().getTypeSTRINGTerminalRuleCall_1_0(), semanticObject.getType());
-		feeder.accept(grammarAccess.getVariableDeclarationAccess().getNameSTRINGTerminalRuleCall_2_0(), semanticObject.getName());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 }

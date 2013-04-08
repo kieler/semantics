@@ -215,7 +215,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SignalDefinition:
 	//
-	//	{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+	//	{EventDefinition} Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
 	//
 	//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";";
 	public SynctextGrammarAccess.SignalDefinitionElements getSignalDefinitionAccess() {

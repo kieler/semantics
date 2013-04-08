@@ -24,8 +24,8 @@ public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableDefinition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cVariableDefinitionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cIsStaticAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsStaticStaticKeyword_1_0 = (Keyword)cIsStaticAssignment_1.eContents().get(0);
+		private final Assignment cStaticAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cStaticStaticKeyword_1_0 = (Keyword)cStaticAssignment_1.eContents().get(0);
 		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final CrossReference cTypeTypeCrossReference_2_0 = (CrossReference)cTypeAssignment_2.eContents().get(0);
 		private final RuleCall cTypeTypeFQNParserRuleCall_2_0_1 = (RuleCall)cTypeTypeCrossReference_2_0.eContents().get(1);
@@ -47,20 +47,20 @@ public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//VariableDefinition:
 		//
-		//	{VariableDefinition} isStatic?="static"? type=[types::Type|FQN] name=ID ("=" varInitialValue=Expression)? ";";
+		//	{VariableDefinition} Static?="static"? type=[types::Type|FQN] name=ID ("=" varInitialValue=Expression)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//{VariableDefinition} isStatic?="static"? type=[types::Type|FQN] name=ID ("=" varInitialValue=Expression)? ";"
+		//{VariableDefinition} Static?="static"? type=[types::Type|FQN] name=ID ("=" varInitialValue=Expression)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{VariableDefinition}
 		public Action getVariableDefinitionAction_0() { return cVariableDefinitionAction_0; }
 
-		//isStatic?="static"?
-		public Assignment getIsStaticAssignment_1() { return cIsStaticAssignment_1; }
+		//Static?="static"?
+		public Assignment getStaticAssignment_1() { return cStaticAssignment_1; }
 
 		//"static"
-		public Keyword getIsStaticStaticKeyword_1_0() { return cIsStaticStaticKeyword_1_0; }
+		public Keyword getStaticStaticKeyword_1_0() { return cStaticStaticKeyword_1_0; }
 
 		//type=[types::Type|FQN]
 		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
@@ -144,7 +144,7 @@ public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//VariableDefinition:
 	//
-	//	{VariableDefinition} isStatic?="static"? type=[types::Type|FQN] name=ID ("=" varInitialValue=Expression)? ";";
+	//	{VariableDefinition} Static?="static"? type=[types::Type|FQN] name=ID ("=" varInitialValue=Expression)? ";";
 	public VariableDefinitionElements getVariableDefinitionAccess() {
 		return (pVariableDefinition != null) ? pVariableDefinition : (pVariableDefinition = new VariableDefinitionElements());
 	}
@@ -181,7 +181,7 @@ public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SignalDefinition:
 	//
-	//	{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+	//	{EventDefinition} Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
 	//
 	//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";";
 	public SynctextGrammarAccess.SignalDefinitionElements getSignalDefinitionAccess() {

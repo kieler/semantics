@@ -18,7 +18,7 @@ StateScope:
 SignalDeclaration returns sgraph::Event:
 	SignalDefinition;
 SignalDefinition:
-	{EventDefinition} (isInput?='input')? (isOutput?='output')? 'signal'
+	{EventDefinition} (Input?='input')? (Output?='output')? 'signal'
 	name=ID (':' type=[types::Type|FQN]
 	('=' varInitialValue=Expression)?
 	('with' varCombineOperator=CombineOperator)?)? ';';

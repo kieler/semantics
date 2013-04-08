@@ -11171,22 +11171,22 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
 
 
     // $ANTLR start "rule__SignalDefinition__Group__1__Impl"
-    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3427:1: rule__SignalDefinition__Group__1__Impl : ( ( rule__SignalDefinition__IsInputAssignment_1 )? ) ;
+    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3427:1: rule__SignalDefinition__Group__1__Impl : ( ( rule__SignalDefinition__InputAssignment_1 )? ) ;
     public final void rule__SignalDefinition__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3431:1: ( ( ( rule__SignalDefinition__IsInputAssignment_1 )? ) )
-            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3432:1: ( ( rule__SignalDefinition__IsInputAssignment_1 )? )
+            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3431:1: ( ( ( rule__SignalDefinition__InputAssignment_1 )? ) )
+            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3432:1: ( ( rule__SignalDefinition__InputAssignment_1 )? )
             {
-            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3432:1: ( ( rule__SignalDefinition__IsInputAssignment_1 )? )
-            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3433:1: ( rule__SignalDefinition__IsInputAssignment_1 )?
+            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3432:1: ( ( rule__SignalDefinition__InputAssignment_1 )? )
+            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3433:1: ( rule__SignalDefinition__InputAssignment_1 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSignalDefinitionAccess().getIsInputAssignment_1()); 
+               before(grammarAccess.getSignalDefinitionAccess().getInputAssignment_1()); 
             }
-            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3434:1: ( rule__SignalDefinition__IsInputAssignment_1 )?
+            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3434:1: ( rule__SignalDefinition__InputAssignment_1 )?
             int alt31=2;
             int LA31_0 = input.LA(1);
 
@@ -11195,10 +11195,10 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             }
             switch (alt31) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3434:2: rule__SignalDefinition__IsInputAssignment_1
+                    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3434:2: rule__SignalDefinition__InputAssignment_1
                     {
-                    pushFollow(FOLLOW_rule__SignalDefinition__IsInputAssignment_1_in_rule__SignalDefinition__Group__1__Impl7532);
-                    rule__SignalDefinition__IsInputAssignment_1();
+                    pushFollow(FOLLOW_rule__SignalDefinition__InputAssignment_1_in_rule__SignalDefinition__Group__1__Impl7532);
+                    rule__SignalDefinition__InputAssignment_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -11209,7 +11209,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSignalDefinitionAccess().getIsInputAssignment_1()); 
+               after(grammarAccess.getSignalDefinitionAccess().getInputAssignment_1()); 
             }
 
             }
@@ -11271,22 +11271,22 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
 
 
     // $ANTLR start "rule__SignalDefinition__Group__2__Impl"
-    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3456:1: rule__SignalDefinition__Group__2__Impl : ( ( rule__SignalDefinition__IsOutputAssignment_2 )? ) ;
+    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3456:1: rule__SignalDefinition__Group__2__Impl : ( ( rule__SignalDefinition__OutputAssignment_2 )? ) ;
     public final void rule__SignalDefinition__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3460:1: ( ( ( rule__SignalDefinition__IsOutputAssignment_2 )? ) )
-            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3461:1: ( ( rule__SignalDefinition__IsOutputAssignment_2 )? )
+            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3460:1: ( ( ( rule__SignalDefinition__OutputAssignment_2 )? ) )
+            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3461:1: ( ( rule__SignalDefinition__OutputAssignment_2 )? )
             {
-            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3461:1: ( ( rule__SignalDefinition__IsOutputAssignment_2 )? )
-            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3462:1: ( rule__SignalDefinition__IsOutputAssignment_2 )?
+            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3461:1: ( ( rule__SignalDefinition__OutputAssignment_2 )? )
+            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3462:1: ( rule__SignalDefinition__OutputAssignment_2 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSignalDefinitionAccess().getIsOutputAssignment_2()); 
+               before(grammarAccess.getSignalDefinitionAccess().getOutputAssignment_2()); 
             }
-            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3463:1: ( rule__SignalDefinition__IsOutputAssignment_2 )?
+            // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3463:1: ( rule__SignalDefinition__OutputAssignment_2 )?
             int alt32=2;
             int LA32_0 = input.LA(1);
 
@@ -11295,10 +11295,10 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             }
             switch (alt32) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3463:2: rule__SignalDefinition__IsOutputAssignment_2
+                    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:3463:2: rule__SignalDefinition__OutputAssignment_2
                     {
-                    pushFollow(FOLLOW_rule__SignalDefinition__IsOutputAssignment_2_in_rule__SignalDefinition__Group__2__Impl7593);
-                    rule__SignalDefinition__IsOutputAssignment_2();
+                    pushFollow(FOLLOW_rule__SignalDefinition__OutputAssignment_2_in_rule__SignalDefinition__Group__2__Impl7593);
+                    rule__SignalDefinition__OutputAssignment_2();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -11309,7 +11309,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSignalDefinitionAccess().getIsOutputAssignment_2()); 
+               after(grammarAccess.getSignalDefinitionAccess().getOutputAssignment_2()); 
             }
 
             }
@@ -30367,9 +30367,9 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
     // $ANTLR end "rule__StateScope__DeclarationsAssignment_1"
 
 
-    // $ANTLR start "rule__SignalDefinition__IsInputAssignment_1"
-    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:10569:1: rule__SignalDefinition__IsInputAssignment_1 : ( ( 'input' ) ) ;
-    public final void rule__SignalDefinition__IsInputAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__SignalDefinition__InputAssignment_1"
+    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:10569:1: rule__SignalDefinition__InputAssignment_1 : ( ( 'input' ) ) ;
+    public final void rule__SignalDefinition__InputAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -30381,23 +30381,23 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:10575:1: ( 'input' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0()); 
+               before(grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0()); 
             }
             // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:10576:1: ( 'input' )
             // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:10577:1: 'input'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0()); 
+               before(grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0()); 
             }
-            match(input,101,FOLLOW_101_in_rule__SignalDefinition__IsInputAssignment_121511); if (state.failed) return ;
+            match(input,101,FOLLOW_101_in_rule__SignalDefinition__InputAssignment_121511); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0()); 
+               after(grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0()); 
+               after(grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0()); 
             }
 
             }
@@ -30417,12 +30417,12 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__SignalDefinition__IsInputAssignment_1"
+    // $ANTLR end "rule__SignalDefinition__InputAssignment_1"
 
 
-    // $ANTLR start "rule__SignalDefinition__IsOutputAssignment_2"
-    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:10592:1: rule__SignalDefinition__IsOutputAssignment_2 : ( ( 'output' ) ) ;
-    public final void rule__SignalDefinition__IsOutputAssignment_2() throws RecognitionException {
+    // $ANTLR start "rule__SignalDefinition__OutputAssignment_2"
+    // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:10592:1: rule__SignalDefinition__OutputAssignment_2 : ( ( 'output' ) ) ;
+    public final void rule__SignalDefinition__OutputAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -30434,23 +30434,23 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:10598:1: ( 'output' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0()); 
+               before(grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0()); 
             }
             // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:10599:1: ( 'output' )
             // ../de.cau.cs.kieler.yakindu.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:10600:1: 'output'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0()); 
+               before(grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0()); 
             }
-            match(input,102,FOLLOW_102_in_rule__SignalDefinition__IsOutputAssignment_221555); if (state.failed) return ;
+            match(input,102,FOLLOW_102_in_rule__SignalDefinition__OutputAssignment_221555); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0()); 
+               after(grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0()); 
+               after(grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0()); 
             }
 
             }
@@ -30470,7 +30470,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
         }
         return ;
     }
-    // $ANTLR end "rule__SignalDefinition__IsOutputAssignment_2"
+    // $ANTLR end "rule__SignalDefinition__OutputAssignment_2"
 
 
     // $ANTLR start "rule__SignalDefinition__NameAssignment_4"
@@ -34415,10 +34415,10 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
     public static final BitSet FOLLOW_rule__SignalDefinition__Group__1_in_rule__SignalDefinition__Group__07444 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__SignalDefinition__Group__1__Impl_in_rule__SignalDefinition__Group__17502 = new BitSet(new long[]{0x0000000000000000L,0x0000006000000200L});
     public static final BitSet FOLLOW_rule__SignalDefinition__Group__2_in_rule__SignalDefinition__Group__17505 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__SignalDefinition__IsInputAssignment_1_in_rule__SignalDefinition__Group__1__Impl7532 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__SignalDefinition__InputAssignment_1_in_rule__SignalDefinition__Group__1__Impl7532 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__SignalDefinition__Group__2__Impl_in_rule__SignalDefinition__Group__27563 = new BitSet(new long[]{0x0000000000000000L,0x0000006000000200L});
     public static final BitSet FOLLOW_rule__SignalDefinition__Group__3_in_rule__SignalDefinition__Group__27566 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__SignalDefinition__IsOutputAssignment_2_in_rule__SignalDefinition__Group__2__Impl7593 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__SignalDefinition__OutputAssignment_2_in_rule__SignalDefinition__Group__2__Impl7593 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__SignalDefinition__Group__3__Impl_in_rule__SignalDefinition__Group__37624 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_rule__SignalDefinition__Group__4_in_rule__SignalDefinition__Group__37627 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_73_in_rule__SignalDefinition__Group__3__Impl7655 = new BitSet(new long[]{0x0000000000000002L});
@@ -34968,8 +34968,8 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
     public static final BitSet FOLLOW_rule__StringLiteral__Group__1__Impl_in_rule__StringLiteral__Group__121407 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__StringLiteral__ValueAssignment_1_in_rule__StringLiteral__Group__1__Impl21434 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__StateScope__DeclarationsAlternatives_1_0_in_rule__StateScope__DeclarationsAssignment_121473 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_101_in_rule__SignalDefinition__IsInputAssignment_121511 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_102_in_rule__SignalDefinition__IsOutputAssignment_221555 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_101_in_rule__SignalDefinition__InputAssignment_121511 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_102_in_rule__SignalDefinition__OutputAssignment_221555 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__SignalDefinition__NameAssignment_421594 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFQN_in_rule__SignalDefinition__TypeAssignment_5_121629 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__SignalDefinition__VarInitialValueAssignment_5_2_121664 = new BitSet(new long[]{0x0000000000000002L});

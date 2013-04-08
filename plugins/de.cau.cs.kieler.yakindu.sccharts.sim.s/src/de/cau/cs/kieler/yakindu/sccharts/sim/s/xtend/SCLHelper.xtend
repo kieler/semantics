@@ -42,13 +42,17 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Annotation
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
+//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence;
 
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgFactory;
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration
+import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
+
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
 // import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
@@ -111,16 +115,16 @@ class SCLHelper {
         label;
     }
     
-    def Scope createSCLScope(String labelName) {
-        var scope = SCL.createScope()
+//    def Scope createSCLScope(String labelName) {
+//        var scope = SCL.createScope()
 //        var iSet  = createSCLInstructionSet()
 //        scope.scope = iSet
-        if (!labelName.nullOrEmpty) {
+//        if (!labelName.nullOrEmpty) {
 //            var label = createSCLLabel(labelName);
 //            scope.setLabel(label);
-        }
-        scope;
-    }
+//        }
+//        scope;
+//    }
     
     def Pause createSCLPause() {
         SCL.createPause();
@@ -133,6 +137,27 @@ class SCLHelper {
         conditional;
     }
     
+    def VariableDeclaration createVariableDeclaration() {
+        var varDef = SCL.createVariableDeclaration();
+        varDef;
+    }
+    
+    def VariableDeclaration createVariableDeclaration(EventDefinition definition) {
+        var varDef = SCL.createVariableDeclaration();
+        varDef.setName(definition.getName());
+        varDef.setInput(definition.isInput());
+        varDef.setOutput(definition.isOutput());
+        if (definition.getType() != null) varDef.setType(definition.getType());
+        varDef;
+    }
+    
+    def Assignment createAssignment() {
+        var asm = SCL.createAssignment();
+        asm;
+    }
+    
+//    def Assignment crea
+    
     // ======================================================================================================
     // ==                I N S T R U C T I O N    M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
@@ -141,27 +166,27 @@ class SCLHelper {
         iSet.instructions.add(instruction);
     }
     
-    def void addInstruction(Scope sSet, Instruction instruction) {
+//    def void addInstruction(Scope sSet, Instruction instruction) {
 /*         var iSet = sSet.getScope();
         if (iSet == null) {
             iSet = createSCLInstructionSet();
         }
         iSet.instructions.add(instruction);
         sSet.scope = iSet*/    
-    }
+//    }
 
     def void addInstruction(InstructionList iSet, Annotation annotation) {
         iSet.instructions.add(annotation);
     }
     
-    def void addInstruction(Scope sSet, Annotation annotation) {
+//    def void addInstruction(Scope sSet, Annotation annotation) {
 /*         var iSet = sSet.getScope();
         if (iSet == null) {
             iSet = createSCLInstructionSet();
         }
         iSet.instructions.add(comment);
         sSet.scope = iSet*/    
-    }
+//    }
     
 //    def void addInstruction(InstructionList iSet, InstructionSequence ioc) {
 //        if (ioc instanceof Instruction) { iSet.addInstruction(ioc as Instruction) }
@@ -192,9 +217,9 @@ class SCLHelper {
         iSet.addInstruction(createSCLPause())
     }
     
-    def void addPause(Scope sSet) {
-        sSet.addInstruction(createSCLPause())
-    }
+//    def void addPause(Scope sSet) {
+//        sSet.addInstruction(createSCLPause())
+//    }
     
     
     // ======================================================================================================

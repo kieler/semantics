@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList#getInstructions <em>Instructions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList#getVariables <em>Variables</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface InstructionList extends Scope
+public interface InstructionList extends EObject
 {
   /**
    * Returns the value of the '<em><b>Instructions</b></em>' containment reference list.
@@ -40,21 +39,5 @@ public interface InstructionList extends Scope
    * @generated
    */
   EList<EObject> getInstructions();
-
-  /**
-   * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Variables</em>' containment reference list.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getInstructionList_Variables()
-   * @model containment="true"
-   * @generated
-   */
-  EList<VariableDeclaration> getVariables();
 
 } // InstructionList

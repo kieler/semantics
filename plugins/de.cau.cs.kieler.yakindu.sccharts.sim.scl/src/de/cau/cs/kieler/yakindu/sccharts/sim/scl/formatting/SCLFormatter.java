@@ -71,5 +71,10 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             c.setLinewrap(1).before(f.getConditionalAccess().getEndKeyword_4());
             c.setIndentation(f.getConditionalAccess().getThenKeyword_2(), 
                              f.getConditionalAccess().getEndKeyword_4());
+            
+            // Variable Declaration
+            c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword_5());
+            c.setLinewrap(1).after(f.getVariableDeclarationRule());
+        
 	}
 }

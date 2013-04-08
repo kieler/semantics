@@ -123,13 +123,13 @@ public interface SyncChartstextPackage extends EPackage
   int VARIABLE_DEFINITION__INITIAL_VALUE = SynctextPackage.VARIABLE_DEFINITION__INITIAL_VALUE;
 
   /**
-   * The feature id for the '<em><b>Is Static</b></em>' attribute.
+   * The feature id for the '<em><b>Static</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__IS_STATIC = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
+  int VARIABLE_DEFINITION__STATIC = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Var Initial Value</b></em>' containment reference.
@@ -161,15 +161,15 @@ public interface SyncChartstextPackage extends EPackage
   EClass getVariableDefinition();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition#isIsStatic <em>Is Static</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition#isStatic <em>Static</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Static</em>'.
-   * @see de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition#isIsStatic()
+   * @return the meta object for the attribute '<em>Static</em>'.
+   * @see de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition#isStatic()
    * @see #getVariableDefinition()
    * @generated
    */
-  EAttribute getVariableDefinition_IsStatic();
+  EAttribute getVariableDefinition_Static();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition#getVarInitialValue <em>Var Initial Value</em>}'.
@@ -216,12 +216,12 @@ public interface SyncChartstextPackage extends EPackage
     EClass VARIABLE_DEFINITION = eINSTANCE.getVariableDefinition();
 
     /**
-     * The meta object literal for the '<em><b>Is Static</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE_DEFINITION__IS_STATIC = eINSTANCE.getVariableDefinition_IsStatic();
+    EAttribute VARIABLE_DEFINITION__STATIC = eINSTANCE.getVariableDefinition_Static();
 
     /**
      * The meta object literal for the '<em><b>Var Initial Value</b></em>' containment reference feature.

@@ -478,22 +478,22 @@ public interface SynctextPackage extends EPackage
   int EVENT_DEFINITION__NAME = SIGNAL_DEFINITION__NAME;
 
   /**
-   * The feature id for the '<em><b>Is Input</b></em>' attribute.
+   * The feature id for the '<em><b>Input</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT_DEFINITION__IS_INPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 0;
+  int EVENT_DEFINITION__INPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Is Output</b></em>' attribute.
+   * The feature id for the '<em><b>Output</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT_DEFINITION__IS_OUTPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 1;
+  int EVENT_DEFINITION__OUTPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -823,26 +823,26 @@ public interface SynctextPackage extends EPackage
   EClass getEventDefinition();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsInput <em>Is Input</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isInput <em>Input</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Input</em>'.
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsInput()
+   * @return the meta object for the attribute '<em>Input</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isInput()
    * @see #getEventDefinition()
    * @generated
    */
-  EAttribute getEventDefinition_IsInput();
+  EAttribute getEventDefinition_Input();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsOutput <em>Is Output</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isOutput <em>Output</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Output</em>'.
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isIsOutput()
+   * @return the meta object for the attribute '<em>Output</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#isOutput()
    * @see #getEventDefinition()
    * @generated
    */
-  EAttribute getEventDefinition_IsOutput();
+  EAttribute getEventDefinition_Output();
 
   /**
    * Returns the meta object for the reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition#getType <em>Type</em>}'.
@@ -1165,20 +1165,20 @@ public interface SynctextPackage extends EPackage
     EClass EVENT_DEFINITION = eINSTANCE.getEventDefinition();
 
     /**
-     * The meta object literal for the '<em><b>Is Input</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute EVENT_DEFINITION__IS_INPUT = eINSTANCE.getEventDefinition_IsInput();
+    EAttribute EVENT_DEFINITION__INPUT = eINSTANCE.getEventDefinition_Input();
 
     /**
-     * The meta object literal for the '<em><b>Is Output</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute EVENT_DEFINITION__IS_OUTPUT = eINSTANCE.getEventDefinition_IsOutput();
+    EAttribute EVENT_DEFINITION__OUTPUT = eINSTANCE.getEventDefinition_Output();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' reference feature.

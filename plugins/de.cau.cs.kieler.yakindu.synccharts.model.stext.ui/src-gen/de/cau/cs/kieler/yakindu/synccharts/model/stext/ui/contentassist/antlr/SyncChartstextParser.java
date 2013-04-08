@@ -157,13 +157,13 @@ public class SyncChartstextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRealLiteralAccess().getGroup(), "rule__RealLiteral__Group__0");
 					put(grammarAccess.getHexLiteralAccess().getGroup(), "rule__HexLiteral__Group__0");
 					put(grammarAccess.getStringLiteralAccess().getGroup(), "rule__StringLiteral__Group__0");
-					put(grammarAccess.getVariableDefinitionAccess().getIsStaticAssignment_1(), "rule__VariableDefinition__IsStaticAssignment_1");
+					put(grammarAccess.getVariableDefinitionAccess().getStaticAssignment_1(), "rule__VariableDefinition__StaticAssignment_1");
 					put(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_2(), "rule__VariableDefinition__TypeAssignment_2");
 					put(grammarAccess.getVariableDefinitionAccess().getNameAssignment_3(), "rule__VariableDefinition__NameAssignment_3");
 					put(grammarAccess.getVariableDefinitionAccess().getVarInitialValueAssignment_4_1(), "rule__VariableDefinition__VarInitialValueAssignment_4_1");
 					put(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1(), "rule__StateScope__DeclarationsAssignment_1");
-					put(grammarAccess.getSignalDefinitionAccess().getIsInputAssignment_1(), "rule__SignalDefinition__IsInputAssignment_1");
-					put(grammarAccess.getSignalDefinitionAccess().getIsOutputAssignment_2(), "rule__SignalDefinition__IsOutputAssignment_2");
+					put(grammarAccess.getSignalDefinitionAccess().getInputAssignment_1(), "rule__SignalDefinition__InputAssignment_1");
+					put(grammarAccess.getSignalDefinitionAccess().getOutputAssignment_2(), "rule__SignalDefinition__OutputAssignment_2");
 					put(grammarAccess.getSignalDefinitionAccess().getNameAssignment_4(), "rule__SignalDefinition__NameAssignment_4");
 					put(grammarAccess.getSignalDefinitionAccess().getTypeAssignment_5_1(), "rule__SignalDefinition__TypeAssignment_5_1");
 					put(grammarAccess.getSignalDefinitionAccess().getVarInitialValueAssignment_5_2_1(), "rule__SignalDefinition__VarInitialValueAssignment_5_2_1");

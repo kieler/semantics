@@ -5,12 +5,12 @@
     modelPluginID="de.cau.cs.kieler.yakindu.synccharts.model.stext" forceOverwrite="true"
     modelName="SyncChartstext" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.yakindu.synccharts.model.stext.edit"
-    editorPluginID="de.cau.cs.kieler.yakindu.synccharts.model.stext.editor" runtimeVersion="2.9"
+    editorPluginID="de.cau.cs.kieler.yakindu.synccharts.model.stext.editor" runtimeVersion="2.8"
     usedGenPackages="../../../../../../../../../../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/Synctext.genmodel#//synctext ../../../../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../../../../org.yakindu.base.types/model/types.genmodel#//types ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
   <genPackages prefix="SyncChartstext" basePackage="de.cau.cs.kieler.yakindu.synccharts.model.stext"
       disposableProviderFactory="true" ecorePackage="SyncChartstext.ecore#/">
     <genClasses ecoreClass="SyncChartstext.ecore#//VariableDefinition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SyncChartstext.ecore#//VariableDefinition/isStatic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SyncChartstext.ecore#//VariableDefinition/Static"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SyncChartstext.ecore#//VariableDefinition/varInitialValue"/>
     </genClasses>
   </genPackages>

@@ -11,16 +11,17 @@ import "http://kieler.cs.cau.de/yakindu/sccharts/stext/" as scchartsexp
 generate scl "http://www.cau.de/cs/kieler/yakindu/sccharts/sim/scl/scl"
 
 
+
 Program :
 	'module' name = ID
-	((interface+=VariableDeclaration)*)?
+	(interface+=VariableDeclaration)*
 	'{'
         program = InstructionList
     '}' 
 ;
 
 VariableDeclaration:
-    ('input'|'output') type=STRING (name=STRING)';'
+    (Input?='input')? (Output?='output')? 'signal' (name=STRING)(':'type=[types::Type])?';'
 ;
 
 //LocalVariable returns stext::VariableDefinition:
@@ -63,33 +64,33 @@ InstructionList:
       (instructions += Instruction)
 ;
 
-Scope:
-  {InstructionList}
-  (
-      '{'
-      (variables += VariableDeclaration)*
-  (
-      (
-          (instructions += Instruction';')
-          |
-          (instructions += Annotation)
-      )+
-      (instructions += Instruction)
-      (instructions += Annotation)?      
-      ) |
-    (
-          (instructions += Annotation)
-          (instructions += Instruction)
-    ) |
-        (instructions += Annotation) |
-    (
-          (instructions += Instruction)
-          (instructions += Annotation)
-        ) |
-        (instructions += Instruction)
-      '}'
-    )
-;
+//Scope:
+//  {InstructionList}
+//  (
+//      '{'
+//      (variables += VariableDeclaration)*
+//  (
+//      (
+//          (instructions += Instruction';')
+//          |
+//          (instructions += Annotation)
+//      )+
+//      (instructions += Instruction)
+//      (instructions += Annotation)?      
+//      ) |
+//    (
+//          (instructions += Annotation)
+//          (instructions += Instruction)
+//    ) |
+//        (instructions += Annotation) |
+//    (
+//          (instructions += Instruction)
+//          (instructions += Annotation)
+//        ) |
+//        (instructions += Instruction)
+//      '}'
+//    )
+//;
 
 Label:
     'label:' name = ID

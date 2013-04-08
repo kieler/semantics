@@ -12,7 +12,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition#isIsStatic <em>Is Static</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition#getVarInitialValue <em>Var Initial Value</em>}</li>
  * </ul>
  * </p>
@@ -24,30 +24,30 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public interface VariableDefinition extends de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition
 {
   /**
-   * Returns the value of the '<em><b>Is Static</b></em>' attribute.
+   * Returns the value of the '<em><b>Static</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Is Static</em>' attribute isn't clear,
+   * If the meaning of the '<em>Static</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Is Static</em>' attribute.
-   * @see #setIsStatic(boolean)
-   * @see de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.SyncChartstextPackage#getVariableDefinition_IsStatic()
+   * @return the value of the '<em>Static</em>' attribute.
+   * @see #setStatic(boolean)
+   * @see de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.SyncChartstextPackage#getVariableDefinition_Static()
    * @model
    * @generated
    */
-  boolean isIsStatic();
+  boolean isStatic();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition#isIsStatic <em>Is Static</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.synccharts.model.stext.syncChartstext.VariableDefinition#isStatic <em>Static</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Is Static</em>' attribute.
-   * @see #isIsStatic()
+   * @param value the new value of the '<em>Static</em>' attribute.
+   * @see #isStatic()
    * @generated
    */
-  void setIsStatic(boolean value);
+  void setStatic(boolean value);
 
   /**
    * Returns the value of the '<em><b>Var Initial Value</b></em>' containment reference.

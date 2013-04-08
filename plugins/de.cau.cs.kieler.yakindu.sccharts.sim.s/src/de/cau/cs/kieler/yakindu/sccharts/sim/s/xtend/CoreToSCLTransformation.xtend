@@ -40,7 +40,9 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
+//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
+import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
+
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
 class CoreToSCLTransformation {
@@ -63,6 +65,12 @@ class CoreToSCLTransformation {
         val Region mainRegion = (rootStatechart.regions.get(0).vertices.get(0) as SyncState).regions.get(0);
         var program = SCL.createInstructionList();
         program.instructions.addAll(transformCoreRegion(mainRegion).instructions);
+        
+        val mainState = (rootStatechart.regions.get(0).vertices.get(0) as SyncState);
+        for(declaration : mainState.scopes.get(0).declarations) {
+           targetProgram.interface.add(createVariableDeclaration(declaration as EventDefinition));
+        }
+         
         
         
         targetProgram.program = program//.optimizeGoto;//.optimizeLabel;

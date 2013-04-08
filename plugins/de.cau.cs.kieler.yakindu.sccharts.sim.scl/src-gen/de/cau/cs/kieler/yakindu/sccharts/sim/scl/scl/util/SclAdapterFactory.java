@@ -95,11 +95,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createInstructionListAdapter();
       }
       @Override
-      public Adapter caseScope(Scope object)
-      {
-        return createScopeAdapter();
-      }
-      @Override
       public Adapter caseLabel(Label object)
       {
         return createLabelAdapter();
@@ -212,21 +207,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createInstructionListAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope <em>Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
-   * @generated
-   */
-  public Adapter createScopeAdapter()
   {
     return null;
   }
