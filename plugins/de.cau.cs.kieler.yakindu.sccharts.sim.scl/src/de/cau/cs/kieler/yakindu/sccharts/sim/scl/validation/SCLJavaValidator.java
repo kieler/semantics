@@ -33,19 +33,19 @@ public class SCLJavaValidator extends AbstractSCLJavaValidator {
     public void checkElementReferenceExpression(AssignmentExpression assignment) {
 //        if (eo instanceof AssignmentExpression) {
 //            AssignmentExpression assignment = (AssignmentExpression) eo;
-            if (assignment.getVarRef() instanceof ElementReferenceExpression) {
-                ElementReferenceExpression ref = (ElementReferenceExpression) assignment
-                        .getVarRef();
-                if (ref.getReference() instanceof EventDefinition) {
-                    return;
-                }
-            }
-            error("HUHU", null);//, eo, StextPackage.eINSTANCE.getElementReferenceExpression_Reference(), -1);
+//            if (assignment.getVarRef() instanceof ElementReferenceExpression) {
+//                ElementReferenceExpression ref = (ElementReferenceExpression) assignment
+//                        .getVarRef();
+//                if (ref.getReference() instanceof EventDefinition) {
+//                    return;
+//                }
+//            }
+//            error("HUHU", null);//, eo, StextPackage.eINSTANCE.getElementReferenceExpression_Reference(), -1);
 //        }
     }
     
-    @Check
-    public void test(Program p) {
-        info("TEST", null);
-    }
+//    @Check
+//    public void test(Program p) {
+//        info("TEST", null);
+//    }
 }

@@ -138,14 +138,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSTRINGTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		////LocalVariable returns stext::VariableDefinition:
-		// //    ('local') type=[types::Type] (name=STRING)';'
-		// //;
 		//
+		////    ('local') type=[types::Type] (name=STRING)';'
+		//
+		////;
 		//
 		////LocalVariable:
-		// //    'local' type=STRING name=STRING';'
-		// //;
-		// SCLExpression:
+		//
+		////    'local' type=STRING name=STRING';'
+		//
+		////;
+		//
+		//SCLExpression:
 		//
 		//	STRING;
 		public ParserRule getRule() { return rule; }
@@ -209,7 +213,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAssignmentExpressionParserRuleCall_0 = (RuleCall)cAssignmentAssignment.eContents().get(0);
 		
 		////    (dependencies += [Instruction])*
-		// Assignment:
+		//
+		//Assignment:
 		//
 		//	assignment=Expression;
 		public ParserRule getRule() { return rule; }
@@ -384,45 +389,60 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
 		////Scope:
-		// //  {InstructionList}
-		// //  (
-		// //      '{'
-		// //      (variables += VariableDeclaration)*
-		// //  (
-		// //      (
 		//
+		////  {InstructionList}
+		//
+		////  (
+		//
+		////      '{'
+		//
+		////      (variables += VariableDeclaration)*
+		//
+		////  (
+		//
+		////      (
 		//
 		////          (instructions += Instruction';')
-		// //          |
-		// //          (instructions += Annotation)
-		// //      )+
 		//
+		////          |
+		//
+		////          (instructions += Annotation)
+		//
+		////      )+
 		//
 		////      (instructions += Instruction)
-		// //      (instructions += Annotation)?      
-		// //      ) |
-		// //    (
 		//
+		////      (instructions += Annotation)?      
+		//
+		////      ) |
+		//
+		////    (
 		//
 		////          (instructions += Annotation)
-		// //          (instructions += Instruction)
-		// //    ) |
 		//
+		////          (instructions += Instruction)
+		//
+		////    ) |
 		//
 		////        (instructions += Annotation) |
-		// //    (
-		// //          (instructions += Instruction)
 		//
+		////    (
+		//
+		////          (instructions += Instruction)
 		//
 		////          (instructions += Annotation)
-		// //        ) |
-		// //        (instructions += Instruction)
-		// //      '}'
 		//
+		////        ) |
+		//
+		////        (instructions += Instruction)
+		//
+		////      '}'
 		//
 		////    )
-		// //;
-		// Label:
+		//
+		////;
+		//
+		//Label:
 		//
 		//	"label:" name=ID;
 		public ParserRule getRule() { return rule; }
@@ -680,14 +700,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////LocalVariable returns stext::VariableDefinition:
-	// //    ('local') type=[types::Type] (name=STRING)';'
-	// //;
 	//
+	////    ('local') type=[types::Type] (name=STRING)';'
+	//
+	////;
 	//
 	////LocalVariable:
-	// //    'local' type=STRING name=STRING';'
-	// //;
-	// SCLExpression:
+	//
+	////    'local' type=STRING name=STRING';'
+	//
+	////;
+	//
+	//SCLExpression:
 	//
 	//	STRING;
 	public SCLExpressionElements getSCLExpressionAccess() {
@@ -710,7 +734,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////    (dependencies += [Instruction])*
-	// Assignment:
+	//
+	//Assignment:
 	//
 	//	assignment=Expression;
 	public AssignmentElements getAssignmentAccess() {
@@ -739,45 +764,60 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////Scope:
-	// //  {InstructionList}
-	// //  (
-	// //      '{'
-	// //      (variables += VariableDeclaration)*
-	// //  (
-	// //      (
 	//
+	////  {InstructionList}
+	//
+	////  (
+	//
+	////      '{'
+	//
+	////      (variables += VariableDeclaration)*
+	//
+	////  (
+	//
+	////      (
 	//
 	////          (instructions += Instruction';')
-	// //          |
-	// //          (instructions += Annotation)
-	// //      )+
 	//
+	////          |
+	//
+	////          (instructions += Annotation)
+	//
+	////      )+
 	//
 	////      (instructions += Instruction)
-	// //      (instructions += Annotation)?      
-	// //      ) |
-	// //    (
 	//
+	////      (instructions += Annotation)?      
+	//
+	////      ) |
+	//
+	////    (
 	//
 	////          (instructions += Annotation)
-	// //          (instructions += Instruction)
-	// //    ) |
 	//
+	////          (instructions += Instruction)
+	//
+	////    ) |
 	//
 	////        (instructions += Annotation) |
-	// //    (
-	// //          (instructions += Instruction)
 	//
+	////    (
+	//
+	////          (instructions += Instruction)
 	//
 	////          (instructions += Annotation)
-	// //        ) |
-	// //        (instructions += Instruction)
-	// //      '}'
 	//
+	////        ) |
+	//
+	////        (instructions += Instruction)
+	//
+	////      '}'
 	//
 	////    )
-	// //;
-	// Label:
+	//
+	////;
+	//
+	//Label:
 	//
 	//	"label:" name=ID;
 	public LabelElements getLabelAccess() {

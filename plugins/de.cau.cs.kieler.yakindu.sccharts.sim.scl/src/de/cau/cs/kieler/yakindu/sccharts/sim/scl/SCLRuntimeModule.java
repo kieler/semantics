@@ -32,10 +32,10 @@ public Class<? extends ILinker> bindILinker() {
         return SCTLinker.class;
 }
 
-@Override
-public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
-        return StextNameProvider.class;
-}
+//@Override
+//public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
+//        return StextNameProvider.class;
+//}
 
 @Override
 public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
