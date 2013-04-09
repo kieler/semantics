@@ -45,7 +45,7 @@ import de.itemis.xtext.utils.jface.viewers.ContextElementAdapter;
  */
 public class SCLScopeProvider extends STextScopeProvider {
 
-    public IScope scope_Assignment_assignment(final EObject context,
+/*    public IScope scope_Assignment_assignment(final EObject context,
             final EReference reference) {
         Assignment asm = getAssignment(context);
         
@@ -80,7 +80,7 @@ public class SCLScopeProvider extends STextScopeProvider {
                                 .eResource().getContents(),
                                 SclPackage.Literals.ASSIGNMENT);
         }
-    }
+    }*/
     
     
     public IScope scope_ElementReferenceExpression_reference(final EObject context,
