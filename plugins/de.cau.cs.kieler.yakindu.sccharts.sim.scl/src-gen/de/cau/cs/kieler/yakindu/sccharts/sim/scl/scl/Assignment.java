@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
@@ -15,7 +13,6 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
  *
@@ -26,45 +23,29 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public interface Assignment extends Instruction
 {
   /**
-   * Returns the value of the '<em><b>Assignment</b></em>' reference.
+   * Returns the value of the '<em><b>Assignment</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Assignment</em>' reference isn't clear,
+   * If the meaning of the '<em>Assignment</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Assignment</em>' reference.
+   * @return the value of the '<em>Assignment</em>' containment reference.
    * @see #setAssignment(Expression)
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getAssignment_Assignment()
-   * @model
+   * @model containment="true"
    * @generated
    */
   Expression getAssignment();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}' reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Assignment</em>' reference.
+   * @param value the new value of the '<em>Assignment</em>' containment reference.
    * @see #getAssignment()
    * @generated
    */
   void setAssignment(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>Dependencies</b></em>' reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Dependencies</em>' reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Dependencies</em>' reference list.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getAssignment_Dependencies()
-   * @model
-   * @generated
-   */
-  EList<Instruction> getDependencies();
 
 } // Assignment

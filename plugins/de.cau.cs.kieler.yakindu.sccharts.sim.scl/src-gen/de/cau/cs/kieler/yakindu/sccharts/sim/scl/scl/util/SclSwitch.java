@@ -9,6 +9,11 @@ import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
 
+import org.yakindu.base.base.NamedElement;
+
+import org.yakindu.sct.model.sgraph.Declaration;
+import org.yakindu.sct.model.sgraph.Variable;
+
 /**
  * <!-- begin-user-doc -->
  * The <b>Switch</b> for the model's inheritance hierarchy.
@@ -83,6 +88,9 @@ public class SclSwitch<T> extends Switch<T>
       {
         VariableDeclaration variableDeclaration = (VariableDeclaration)theEObject;
         T result = caseVariableDeclaration(variableDeclaration);
+        if (result == null) result = caseVariable(variableDeclaration);
+        if (result == null) result = caseDeclaration(variableDeclaration);
+        if (result == null) result = caseNamedElement(variableDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -90,6 +98,14 @@ public class SclSwitch<T> extends Switch<T>
       {
         Instruction instruction = (Instruction)theEObject;
         T result = caseInstruction(instruction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SclPackage.ASSIGNMENT:
+      {
+        Assignment assignment = (Assignment)theEObject;
+        T result = caseAssignment(assignment);
+        if (result == null) result = caseInstruction(assignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -105,14 +121,6 @@ public class SclSwitch<T> extends Switch<T>
         Label label = (Label)theEObject;
         T result = caseLabel(label);
         if (result == null) result = caseInstruction(label);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SclPackage.ASSIGNMENT:
-      {
-        Assignment assignment = (Assignment)theEObject;
-        T result = caseAssignment(assignment);
-        if (result == null) result = caseInstruction(assignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -208,6 +216,22 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAssignment(Assignment object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Instruction List</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -235,22 +259,6 @@ public class SclSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLabel(Label object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAssignment(Assignment object)
   {
     return null;
   }
@@ -331,6 +339,54 @@ public class SclSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAnnotation(Annotation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Named Element</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Named Element</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNamedElement(NamedElement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDeclaration(Declaration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVariable(Variable object)
   {
     return null;
   }

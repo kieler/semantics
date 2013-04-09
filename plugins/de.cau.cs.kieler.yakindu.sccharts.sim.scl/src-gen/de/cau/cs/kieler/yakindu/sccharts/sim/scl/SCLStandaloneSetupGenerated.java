@@ -15,7 +15,7 @@ import com.google.inject.Injector;
 public class SCLStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
-		org.eclipse.xtext.common.TerminalsStandaloneSetup.doSetup();
+		org.yakindu.sct.model.stext.STextStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

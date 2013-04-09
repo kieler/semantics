@@ -1,52 +1,25 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend
 
-import org.eclipse.xtend.util.stdlib.CloningExtensions
 import com.google.common.collect.ImmutableList
-import com.google.common.collect.ImmutableCollection;
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.Collections
-import java.util.List
-import java.util.Collection
-import java.util.ArrayList
-import org.eclipse.emf.common.util.EList;
 import com.google.inject.Guice
-
-
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
-import org.yakindu.sct.model.sgraph.Statechart
-//import org.yakindu.sct.model.sgraph.State
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
-
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
-import org.yakindu.sct.model.stext.stext.Expression
-//import org.yakindu.sct.model.stext.stext.ReactionTrigger
-//import org.yakindu.sct.model.stext.stext.ReactionEffect
-
-import org.yakindu.sct.model.sgraph.SGraphFactory
-import org.yakindu.sct.model.sgraph.State
-import org.yakindu.sct.model.sgraph.Trigger
-import org.yakindu.sct.model.sgraph.Region
-import org.yakindu.sct.model.stext.stext.StextFactory
-//import org.yakindu.sct.model.stext.stext.Expression
-//import org.yakindu.sct.model.stext.stext.ReactionTrigger
-//import org.yakindu.sct.model.stext.stext.ReactionEffect
-
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFactory
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.*
-import org.yakindu.sct.model.sgraph.Choice
-
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclFactory;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
-//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
-import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclFactory
+import java.util.ArrayList
+import java.util.List
+import org.yakindu.sct.model.sgraph.Event
+import org.yakindu.sct.model.sgraph.Region
+import org.yakindu.sct.model.sgraph.Statechart
+import org.yakindu.sct.model.stext.stext.AssignmentExpression
+import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
@@ -73,7 +46,7 @@ class CoreToSCLTransformation {
         
         val mainState = (rootStatechart.regions.get(0).vertices.get(0) as SyncState);
         for(declaration : mainState.scopes.get(0).declarations) {
-           targetProgram.interface.add(createVariableDeclaration(declaration as EventDefinition));
+           targetProgram.interface.add(createVariableDeclaration(declaration as Event));
         }
        
         targetProgram.program = program//.optimizeGoto;//.optimizeLabel;
@@ -145,7 +118,11 @@ class CoreToSCLTransformation {
               val effect = transition.getEffect();
               if (effect != null) {
                   var assignment = SCL.createAssignment();
-                  assignment.setAssignment((effect as ReactionEffect).actions.get(0) as Expression);
+                  assignment.assignment = (effect as ReactionEffect).actions.head.copy;
+                  assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
+                      val varRef = (it.varRef as ElementReferenceExpression);
+                      varRef.reference = (varRef.reference as Event).createVariableDeclaration();
+                  ]
                   iSet.addInstruction(assignment);
               }
               

@@ -1,4 +1,4 @@
-grammar de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL with org.eclipse.xtext.common.Terminals 
+grammar de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL with org.yakindu.sct.model.stext.SText 
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
@@ -38,6 +38,13 @@ Instruction:
     (Assignment | Conditional | Goto | Parallel | Pause | Label)
     (priority=INT)?
 ;
+
+Assignment:
+    assignment=Expression
+//    (dependencies += [Instruction])*
+;
+
+
 
 InstructionList:
   {InstructionList}
@@ -94,11 +101,6 @@ InstructionList:
 
 Label:
     'label:' name = ID
-;
-
-Assignment:
-    assignment=[stext::Expression]
-    (dependencies += [Instruction])*
 ;
 
 Conditional:

@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.yakindu.base.types.TypesPackage;
 
+import org.yakindu.sct.model.sgraph.SGraphPackage;
+
 import org.yakindu.sct.model.stext.stext.StextPackage;
 
 /**
@@ -61,6 +63,13 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass assignmentEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass instructionListEClass = null;
 
   /**
@@ -69,13 +78,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * @generated
    */
   private EClass labelEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass assignmentEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -253,19 +255,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableDeclaration_Name()
-  {
-    return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getVariableDeclaration_Type()
   {
-    return (EReference)variableDeclarationEClass.getEStructuralFeatures().get(3);
+    return (EReference)variableDeclarationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -286,6 +278,26 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
   public EAttribute getInstruction_Priority()
   {
     return (EAttribute)instructionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAssignment()
+  {
+    return assignmentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAssignment_Assignment()
+  {
+    return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -326,36 +338,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
   public EAttribute getLabel_Name()
   {
     return (EAttribute)labelEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getAssignment()
-  {
-    return assignmentEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAssignment_Assignment()
-  {
-    return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAssignment_Dependencies()
-  {
-    return (EReference)assignmentEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -506,21 +488,19 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     variableDeclarationEClass = createEClass(VARIABLE_DECLARATION);
     createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__INPUT);
     createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__OUTPUT);
-    createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__NAME);
     createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
 
     instructionEClass = createEClass(INSTRUCTION);
     createEAttribute(instructionEClass, INSTRUCTION__PRIORITY);
+
+    assignmentEClass = createEClass(ASSIGNMENT);
+    createEReference(assignmentEClass, ASSIGNMENT__ASSIGNMENT);
 
     instructionListEClass = createEClass(INSTRUCTION_LIST);
     createEReference(instructionListEClass, INSTRUCTION_LIST__INSTRUCTIONS);
 
     labelEClass = createEClass(LABEL);
     createEAttribute(labelEClass, LABEL__NAME);
-
-    assignmentEClass = createEClass(ASSIGNMENT);
-    createEReference(assignmentEClass, ASSIGNMENT__ASSIGNMENT);
-    createEReference(assignmentEClass, ASSIGNMENT__DEPENDENCIES);
 
     conditionalEClass = createEClass(CONDITIONAL);
     createEAttribute(conditionalEClass, CONDITIONAL__EXPRESSION);
@@ -564,6 +544,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
+    SGraphPackage theSGraphPackage = (SGraphPackage)EPackage.Registry.INSTANCE.getEPackage(SGraphPackage.eNS_URI);
     TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
     StextPackage theStextPackage = (StextPackage)EPackage.Registry.INSTANCE.getEPackage(StextPackage.eNS_URI);
 
@@ -572,8 +553,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    labelEClass.getESuperTypes().add(this.getInstruction());
+    variableDeclarationEClass.getESuperTypes().add(theSGraphPackage.getVariable());
     assignmentEClass.getESuperTypes().add(this.getInstruction());
+    labelEClass.getESuperTypes().add(this.getInstruction());
     conditionalEClass.getESuperTypes().add(this.getInstruction());
     gotoEClass.getESuperTypes().add(this.getInstruction());
     parallelEClass.getESuperTypes().add(this.getInstruction());
@@ -588,21 +570,19 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEClass(variableDeclarationEClass, VariableDeclaration.class, "VariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVariableDeclaration_Input(), ecorePackage.getEBoolean(), "Input", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDeclaration_Output(), ecorePackage.getEBoolean(), "Output", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariableDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVariableDeclaration_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getInstruction_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Instruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAssignment_Assignment(), theStextPackage.getExpression(), null, "assignment", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(instructionListEClass, InstructionList.class, "InstructionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInstructionList_Instructions(), ecorePackage.getEObject(), null, "instructions", null, 0, -1, InstructionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLabel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAssignment_Assignment(), theStextPackage.getExpression(), null, "assignment", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAssignment_Dependencies(), this.getInstruction(), null, "dependencies", null, 0, -1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getConditional_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

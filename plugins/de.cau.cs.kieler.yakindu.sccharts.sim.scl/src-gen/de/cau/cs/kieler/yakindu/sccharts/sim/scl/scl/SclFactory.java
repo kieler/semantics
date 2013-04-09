@@ -50,6 +50,15 @@ public interface SclFactory extends EFactory
   Instruction createInstruction();
 
   /**
+   * Returns a new object of class '<em>Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Assignment</em>'.
+   * @generated
+   */
+  Assignment createAssignment();
+
+  /**
    * Returns a new object of class '<em>Instruction List</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -66,15 +75,6 @@ public interface SclFactory extends EFactory
    * @generated
    */
   Label createLabel();
-
-  /**
-   * Returns a new object of class '<em>Assignment</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Assignment</em>'.
-   * @generated
-   */
-  Assignment createAssignment();
 
   /**
    * Returns a new object of class '<em>Conditional</em>'.

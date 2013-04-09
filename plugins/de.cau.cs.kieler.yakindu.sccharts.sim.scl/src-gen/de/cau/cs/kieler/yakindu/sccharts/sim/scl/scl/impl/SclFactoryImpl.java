@@ -67,9 +67,9 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
       case SclPackage.PROGRAM: return createProgram();
       case SclPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
       case SclPackage.INSTRUCTION: return createInstruction();
+      case SclPackage.ASSIGNMENT: return createAssignment();
       case SclPackage.INSTRUCTION_LIST: return createInstructionList();
       case SclPackage.LABEL: return createLabel();
-      case SclPackage.ASSIGNMENT: return createAssignment();
       case SclPackage.CONDITIONAL: return createConditional();
       case SclPackage.GOTO: return createGoto();
       case SclPackage.PARALLEL: return createParallel();
@@ -118,6 +118,17 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public Assignment createAssignment()
+  {
+    AssignmentImpl assignment = new AssignmentImpl();
+    return assignment;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public InstructionList createInstructionList()
   {
     InstructionListImpl instructionList = new InstructionListImpl();
@@ -133,17 +144,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     LabelImpl label = new LabelImpl();
     return label;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Assignment createAssignment()
-  {
-    AssignmentImpl assignment = new AssignmentImpl();
-    return assignment;
   }
 
   /**

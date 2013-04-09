@@ -11,9 +11,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.yakindu.base.types.Type;
+
+import org.yakindu.sct.model.sgraph.impl.VariableImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,14 +25,13 @@ import org.yakindu.base.types.Type;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.VariableDeclarationImpl#isInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.VariableDeclarationImpl#isOutput <em>Output</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.VariableDeclarationImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.VariableDeclarationImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class VariableDeclarationImpl extends MinimalEObjectImpl.Container implements VariableDeclaration
+public class VariableDeclarationImpl extends VariableImpl implements VariableDeclaration
 {
   /**
    * The default value of the '{@link #isInput() <em>Input</em>}' attribute.
@@ -72,26 +72,6 @@ public class VariableDeclarationImpl extends MinimalEObjectImpl.Container implem
    * @ordered
    */
   protected boolean output = OUTPUT_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' reference.
@@ -175,29 +155,6 @@ public class VariableDeclarationImpl extends MinimalEObjectImpl.Container implem
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.VARIABLE_DECLARATION__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Type getType()
   {
     if (type != null && type.eIsProxy())
@@ -250,8 +207,6 @@ public class VariableDeclarationImpl extends MinimalEObjectImpl.Container implem
         return isInput();
       case SclPackage.VARIABLE_DECLARATION__OUTPUT:
         return isOutput();
-      case SclPackage.VARIABLE_DECLARATION__NAME:
-        return getName();
       case SclPackage.VARIABLE_DECLARATION__TYPE:
         if (resolve) return getType();
         return basicGetType();
@@ -274,9 +229,6 @@ public class VariableDeclarationImpl extends MinimalEObjectImpl.Container implem
         return;
       case SclPackage.VARIABLE_DECLARATION__OUTPUT:
         setOutput((Boolean)newValue);
-        return;
-      case SclPackage.VARIABLE_DECLARATION__NAME:
-        setName((String)newValue);
         return;
       case SclPackage.VARIABLE_DECLARATION__TYPE:
         setType((Type)newValue);
@@ -301,9 +253,6 @@ public class VariableDeclarationImpl extends MinimalEObjectImpl.Container implem
       case SclPackage.VARIABLE_DECLARATION__OUTPUT:
         setOutput(OUTPUT_EDEFAULT);
         return;
-      case SclPackage.VARIABLE_DECLARATION__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case SclPackage.VARIABLE_DECLARATION__TYPE:
         setType((Type)null);
         return;
@@ -325,8 +274,6 @@ public class VariableDeclarationImpl extends MinimalEObjectImpl.Container implem
         return input != INPUT_EDEFAULT;
       case SclPackage.VARIABLE_DECLARATION__OUTPUT:
         return output != OUTPUT_EDEFAULT;
-      case SclPackage.VARIABLE_DECLARATION__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SclPackage.VARIABLE_DECLARATION__TYPE:
         return type != null;
     }
@@ -348,8 +295,6 @@ public class VariableDeclarationImpl extends MinimalEObjectImpl.Container implem
     result.append(input);
     result.append(", Output: ");
     result.append(output);
-    result.append(", name: ");
-    result.append(name);
     result.append(')');
     return result.toString();
   }

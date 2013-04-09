@@ -3,21 +3,15 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 import org.yakindu.sct.model.stext.stext.Expression;
 
@@ -29,7 +23,6 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl#getAssignment <em>Assignment</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,7 +31,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public class AssignmentImpl extends InstructionImpl implements Assignment
 {
   /**
-   * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' reference.
+   * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getAssignment()
@@ -46,16 +39,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * @ordered
    */
   protected Expression assignment;
-
-  /**
-   * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getDependencies()
-   * @generated
-   * @ordered
-   */
-  protected EList<Instruction> dependencies;
 
   /**
    * <!-- begin-user-doc -->
@@ -85,16 +68,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    */
   public Expression getAssignment()
   {
-    if (assignment != null && assignment.eIsProxy())
-    {
-      InternalEObject oldAssignment = (InternalEObject)assignment;
-      assignment = (Expression)eResolveProxy(oldAssignment);
-      if (assignment != oldAssignment)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SclPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, assignment));
-      }
-    }
     return assignment;
   }
 
@@ -103,9 +76,16 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression basicGetAssignment()
+  public NotificationChain basicSetAssignment(Expression newAssignment, NotificationChain msgs)
   {
-    return assignment;
+    Expression oldAssignment = assignment;
+    assignment = newAssignment;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, newAssignment);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
@@ -115,10 +95,18 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    */
   public void setAssignment(Expression newAssignment)
   {
-    Expression oldAssignment = assignment;
-    assignment = newAssignment;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, assignment));
+    if (newAssignment != assignment)
+    {
+      NotificationChain msgs = null;
+      if (assignment != null)
+        msgs = ((InternalEObject)assignment).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.ASSIGNMENT__ASSIGNMENT, null, msgs);
+      if (newAssignment != null)
+        msgs = ((InternalEObject)newAssignment).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.ASSIGNMENT__ASSIGNMENT, null, msgs);
+      msgs = basicSetAssignment(newAssignment, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__ASSIGNMENT, newAssignment, newAssignment));
   }
 
   /**
@@ -126,13 +114,15 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Instruction> getDependencies()
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    if (dependencies == null)
+    switch (featureID)
     {
-      dependencies = new EObjectResolvingEList<Instruction>(Instruction.class, this, SclPackage.ASSIGNMENT__DEPENDENCIES);
+      case SclPackage.ASSIGNMENT__ASSIGNMENT:
+        return basicSetAssignment(null, msgs);
     }
-    return dependencies;
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -146,10 +136,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     switch (featureID)
     {
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        if (resolve) return getAssignment();
-        return basicGetAssignment();
-      case SclPackage.ASSIGNMENT__DEPENDENCIES:
-        return getDependencies();
+        return getAssignment();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -159,7 +146,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -167,10 +153,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
         setAssignment((Expression)newValue);
-        return;
-      case SclPackage.ASSIGNMENT__DEPENDENCIES:
-        getDependencies().clear();
-        getDependencies().addAll((Collection<? extends Instruction>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -189,9 +171,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
         setAssignment((Expression)null);
         return;
-      case SclPackage.ASSIGNMENT__DEPENDENCIES:
-        getDependencies().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -208,8 +187,6 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
         return assignment != null;
-      case SclPackage.ASSIGNMENT__DEPENDENCIES:
-        return dependencies != null && !dependencies.isEmpty();
     }
     return super.eIsSet(featureID);
   }

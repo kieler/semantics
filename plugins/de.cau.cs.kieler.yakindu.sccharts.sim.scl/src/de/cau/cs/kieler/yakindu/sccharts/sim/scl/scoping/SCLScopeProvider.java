@@ -66,8 +66,6 @@ public class SCLScopeProvider extends STextScopeProvider {
                 return IScope.NULLSCOPE;
         }
         
-//        return new SimpleScope(getUnnamedTopLevelScope(asm, reference)
-//                .getAllElements());
     }
     
     protected Assignment getAssignment(EObject context) {
@@ -82,6 +80,13 @@ public class SCLScopeProvider extends STextScopeProvider {
                                 .eResource().getContents(),
                                 SclPackage.Literals.ASSIGNMENT);
         }
-}
+    }
+    
+    
+    public IScope scope_ElementReferenceExpression_reference(final EObject context,
+            final EReference reference) {
+        Program p = EcoreUtil2.getContainerOfType(context, Program.class);
+        return null; //Scopes.scopeFor(p.getInterface());
+    }  
     
 }

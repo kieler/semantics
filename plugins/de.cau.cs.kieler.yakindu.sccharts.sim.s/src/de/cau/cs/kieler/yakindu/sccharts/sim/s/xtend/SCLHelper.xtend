@@ -52,6 +52,8 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration
 import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
+import org.yakindu.sct.model.sgraph.Event
+import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
 
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
@@ -142,13 +144,19 @@ class SCLHelper {
         varDef;
     }
     
-    def VariableDeclaration createVariableDeclaration(EventDefinition definition) {
-        var varDef = SCL.createVariableDeclaration();
+    def VariableDeclaration create varDef: SCL.createVariableDeclaration()
+        createVariableDeclaration(Event definition) {
+
         varDef.setName(definition.getName());
-        varDef.setInput(definition.isInput());
-        varDef.setOutput(definition.isOutput());
-        if (definition.getType() != null) varDef.setType(definition.getType());
-        varDef;
+        if (definition instanceof EventDefinition) {
+            val eventDefinition = definition as EventDefinition;
+            varDef.setInput(eventDefinition.isInput());
+            varDef.setOutput(eventDefinition.isOutput());
+            
+            if (eventDefinition.getType() != null) {
+                varDef.setType(eventDefinition.getType());
+            }
+        }
     }
     
     def Assignment createAssignment() {

@@ -1,7 +1,6 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.s.ui;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -17,7 +16,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
@@ -30,11 +28,10 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.yakindu.sct.model.sgraph.SGraphPackage;
 import org.yakindu.sct.model.sgraph.Statechart;
-import org.yakindu.sct.model.sgraph.resource.AbstractSCTResource;
-import org.yakindu.sct.ui.editor.DiagramActivator;
-import org.yakindu.sct.model.stext.resource.impl.StextResource;
+import org.yakindu.sct.model.stext.STextStandaloneSetup;
+
+import com.google.inject.Injector;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.CoreToSCLTransformation;
 
@@ -92,6 +89,8 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
 		return null;
 	}
 	
+	private static Injector injector = new STextStandaloneSetup().createInjectorAndDoEMFRegistration();
+	
         public Object execute(ExecutionEvent event) throws ExecutionException {
             // Get input model from currently selected file in Explorer
             ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
@@ -102,11 +101,12 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
 
             String command = event.getCommand().getId().toString();
             
-            ResourceSet resourceSet = new ResourceSetImpl();
+            ResourceSet resourceSet = injector.getInstance(ResourceSet.class);
             Resource resourceLoad=resourceSet.getResource(input, true);
                 
             EObject modelRoot = resourceLoad.getContents().get(0); 
             EObject transformedModel = SCChartsDoTransformation(modelRoot, command);
+            resourceLoad.unload();
             
             // Calculate output path
             output = URI.createURI(input.toString());

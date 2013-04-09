@@ -7,6 +7,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
+import org.yakindu.sct.model.sgraph.SGraphPackage;
+
 /**
  * <!-- begin-user-doc -->
  * The <b>Package</b> for the model.
@@ -113,13 +115,22 @@ public interface SclPackage extends EPackage
   int VARIABLE_DECLARATION = 1;
 
   /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DECLARATION__NAME = SGraphPackage.VARIABLE__NAME;
+
+  /**
    * The feature id for the '<em><b>Input</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION__INPUT = 0;
+  int VARIABLE_DECLARATION__INPUT = SGraphPackage.VARIABLE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Output</b></em>' attribute.
@@ -128,16 +139,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION__OUTPUT = 1;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DECLARATION__NAME = 2;
+  int VARIABLE_DECLARATION__OUTPUT = SGraphPackage.VARIABLE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -146,7 +148,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION__TYPE = 3;
+  int VARIABLE_DECLARATION__TYPE = SGraphPackage.VARIABLE_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Variable Declaration</em>' class.
@@ -155,7 +157,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION_FEATURE_COUNT = 4;
+  int VARIABLE_DECLARATION_FEATURE_COUNT = SGraphPackage.VARIABLE_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionImpl <em>Instruction</em>}' class.
@@ -186,6 +188,43 @@ public interface SclPackage extends EPackage
   int INSTRUCTION_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getAssignment()
+   * @generated
+   */
+  int ASSIGNMENT = 3;
+
+  /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__PRIORITY = INSTRUCTION__PRIORITY;
+
+  /**
+   * The feature id for the '<em><b>Assignment</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__ASSIGNMENT = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Assignment</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionListImpl <em>Instruction List</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -193,7 +232,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getInstructionList()
    * @generated
    */
-  int INSTRUCTION_LIST = 3;
+  int INSTRUCTION_LIST = 4;
 
   /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
@@ -221,7 +260,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getLabel()
    * @generated
    */
-  int LABEL = 4;
+  int LABEL = 5;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -249,52 +288,6 @@ public interface SclPackage extends EPackage
    * @ordered
    */
   int LABEL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getAssignment()
-   * @generated
-   */
-  int ASSIGNMENT = 5;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSIGNMENT__PRIORITY = INSTRUCTION__PRIORITY;
-
-  /**
-   * The feature id for the '<em><b>Assignment</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSIGNMENT__ASSIGNMENT = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Dependencies</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSIGNMENT__DEPENDENCIES = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Assignment</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -558,17 +551,6 @@ public interface SclPackage extends EPackage
   EAttribute getVariableDeclaration_Output();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration#getName()
-   * @see #getVariableDeclaration()
-   * @generated
-   */
-  EAttribute getVariableDeclaration_Name();
-
-  /**
    * Returns the meta object for the reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -599,6 +581,27 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EAttribute getInstruction_Priority();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment <em>Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Assignment</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
+   * @generated
+   */
+  EClass getAssignment();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Assignment</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment()
+   * @see #getAssignment()
+   * @generated
+   */
+  EReference getAssignment_Assignment();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList <em>Instruction List</em>}'.
@@ -641,38 +644,6 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EAttribute getLabel_Name();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment <em>Assignment</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Assignment</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
-   * @generated
-   */
-  EClass getAssignment();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Assignment</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment()
-   * @see #getAssignment()
-   * @generated
-   */
-  EReference getAssignment_Assignment();
-
-  /**
-   * Returns the meta object for the reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getDependencies <em>Dependencies</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Dependencies</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getDependencies()
-   * @see #getAssignment()
-   * @generated
-   */
-  EReference getAssignment_Dependencies();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional <em>Conditional</em>}'.
@@ -874,14 +845,6 @@ public interface SclPackage extends EPackage
     EAttribute VARIABLE_DECLARATION__OUTPUT = eINSTANCE.getVariableDeclaration_Output();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VARIABLE_DECLARATION__NAME = eINSTANCE.getVariableDeclaration_Name();
-
-    /**
      * The meta object literal for the '<em><b>Type</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -906,6 +869,24 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EAttribute INSTRUCTION__PRIORITY = eINSTANCE.getInstruction_Priority();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getAssignment()
+     * @generated
+     */
+    EClass ASSIGNMENT = eINSTANCE.getAssignment();
+
+    /**
+     * The meta object literal for the '<em><b>Assignment</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionListImpl <em>Instruction List</em>}' class.
@@ -942,32 +923,6 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EAttribute LABEL__NAME = eINSTANCE.getLabel_Name();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.AssignmentImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getAssignment()
-     * @generated
-     */
-    EClass ASSIGNMENT = eINSTANCE.getAssignment();
-
-    /**
-     * The meta object literal for the '<em><b>Assignment</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
-
-    /**
-     * The meta object literal for the '<em><b>Dependencies</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ASSIGNMENT__DEPENDENCIES = eINSTANCE.getAssignment_Dependencies();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
