@@ -20,7 +20,9 @@
     <module>de.cau.cs.kieler.dependencies.feature</module>
     <module>de.cau.cs.kieler.esterel.feature</module>
     <module>de.cau.cs.kieler.esterel.feature.source</module>
+<!--
     <module>de.cau.cs.kieler.sdk.feature</module>
+-->
     <module>de.cau.cs.kieler.synccharts.feature</module>
     <module>de.cau.cs.kieler.synccharts.feature.source</module>
 <!--
