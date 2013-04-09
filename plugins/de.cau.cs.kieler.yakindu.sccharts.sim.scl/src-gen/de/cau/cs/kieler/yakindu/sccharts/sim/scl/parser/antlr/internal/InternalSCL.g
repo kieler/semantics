@@ -693,20 +693,18 @@ ruleAssignment returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
-		lv_assignment_0_0=RULE_STRING
-		{
-			newLeafNode(lv_assignment_0_0, grammarAccess.getAssignmentAccess().getAssignmentSTRINGTerminalRuleCall_0_0()); 
+		{ 
+		  /* */ 
 		}
 		{
-	        if ($current==null) {
+			if ($current==null) {
 	            $current = createModelElement(grammarAccess.getAssignmentRule());
 	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"assignment",
-        		lv_assignment_0_0, 
-        		"STRING");
-	    }
+        }
+	otherlv_0=RULE_ID
+	{
+		newLeafNode(otherlv_0, grammarAccess.getAssignmentAccess().getAssignmentExpressionCrossReference_0_0()); 
+	}
 
 )
 )(

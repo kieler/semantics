@@ -19,15 +19,20 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
+import org.yakindu.sct.model.stext.stext.Expression
+//import org.yakindu.sct.model.stext.stext.ReactionTrigger
+//import org.yakindu.sct.model.stext.stext.ReactionEffect
 
 import org.yakindu.sct.model.sgraph.SGraphFactory
 import org.yakindu.sct.model.sgraph.State
 import org.yakindu.sct.model.sgraph.Trigger
 import org.yakindu.sct.model.sgraph.Region
 import org.yakindu.sct.model.stext.stext.StextFactory
-import org.yakindu.sct.model.stext.stext.Expression
-import org.yakindu.sct.model.stext.stext.ReactionTrigger
-import org.yakindu.sct.model.stext.stext.ReactionEffect
+//import org.yakindu.sct.model.stext.stext.Expression
+//import org.yakindu.sct.model.stext.stext.ReactionTrigger
+//import org.yakindu.sct.model.stext.stext.ReactionEffect
 
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFactory
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.*
@@ -70,9 +75,7 @@ class CoreToSCLTransformation {
         for(declaration : mainState.scopes.get(0).declarations) {
            targetProgram.interface.add(createVariableDeclaration(declaration as EventDefinition));
         }
-         
-        
-        
+       
         targetProgram.program = program//.optimizeGoto;//.optimizeLabel;
 
         targetProgram
@@ -138,6 +141,14 @@ class CoreToSCLTransformation {
             
             for(transition : normalTerminationTransitions) {
               val targetState = transition.target as SyncState; 
+              
+              val effect = transition.getEffect();
+              if (effect != null) {
+                  var assignment = SCL.createAssignment();
+                  assignment.setAssignment((effect as ReactionEffect).actions.get(0) as Expression);
+                  iSet.addInstruction(assignment);
+              }
+              
               var goto = createSCLGoto(targetState.getHierarchicalName(""));
               iSet.addInstruction(goto);
             }

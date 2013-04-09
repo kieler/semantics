@@ -33,5 +33,6 @@ Export-Package: de.cau.cs.kieler.yakindu.model.stext,
  de.cau.cs.kieler.yakindu.model.stext.synctext.impl,
  de.cau.cs.kieler.yakindu.model.stext.synctext.util,
  de.cau.cs.kieler.yakindu.model.stext.types,
+ de.cau.cs.kieler.yakindu.model.stext.utils,
  de.cau.cs.kieler.yakindu.model.stext.validation
 

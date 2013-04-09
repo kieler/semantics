@@ -44,17 +44,17 @@ public class SynctextScopeProvider extends STextScopeProvider {
 	 * 
 	 */
 	@Override
-//	public IScope scope_ElementReferenceExpression_reference(
-//			final EObject context, EReference reference) {
-//		return new SimpleScope(getUnnamedTopLevelScope(context, reference)
-//				.getAllElements());
-//	}
-        public IScope scope_ElementReferenceExpression_reference(
-                final EObject context, EReference reference) {
-          return new SimpleScope(Iterables.concat(
-                  getUnnamedTopLevelScope(context, reference).getAllElements(),
-                  Scopes.scopeFor(typeSystemUtils.getEnumerationTypes(typeSystem)).getAllElements()));
-}	
+	public IScope scope_ElementReferenceExpression_reference(
+			final EObject context, EReference reference) {
+		return new SimpleScope(getUnnamedTopLevelScope(context, reference)
+				.getAllElements());
+	}
+//        public IScope scope_ElementReferenceExpression_reference(
+//                final EObject context, EReference reference) {
+//          return new SimpleScope(Iterables.concat(
+//                  getUnnamedTopLevelScope(context, reference).getAllElements(),
+//                  Scopes.scopeFor(typeSystemUtils.getEnumerationTypes(typeSystem)).getAllElements()));
+//}	
 	
 
 	/**

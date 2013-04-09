@@ -26,7 +26,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Instruction">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assignment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assignment" eType="ecore:EClass ../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" unique="false"
         upperBound="-1" eType="#//Instruction"/>
   </eClassifiers>

@@ -445,24 +445,28 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Assignment");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAssignmentAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAssignmentSTRINGTerminalRuleCall_0_0 = (RuleCall)cAssignmentAssignment_0.eContents().get(0);
+		private final CrossReference cAssignmentExpressionCrossReference_0_0 = (CrossReference)cAssignmentAssignment_0.eContents().get(0);
+		private final RuleCall cAssignmentExpressionIDTerminalRuleCall_0_0_1 = (RuleCall)cAssignmentExpressionCrossReference_0_0.eContents().get(1);
 		private final Assignment cDependenciesAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cDependenciesInstructionCrossReference_1_0 = (CrossReference)cDependenciesAssignment_1.eContents().get(0);
 		private final RuleCall cDependenciesInstructionIDTerminalRuleCall_1_0_1 = (RuleCall)cDependenciesInstructionCrossReference_1_0.eContents().get(1);
 		
 		//Assignment:
 		//
-		//	assignment=STRING dependencies+=[Instruction]*;
+		//	assignment=[stext::Expression] dependencies+=[Instruction]*;
 		public ParserRule getRule() { return rule; }
 
-		//assignment=STRING dependencies+=[Instruction]*
+		//assignment=[stext::Expression] dependencies+=[Instruction]*
 		public Group getGroup() { return cGroup; }
 
-		//assignment=STRING
+		//assignment=[stext::Expression]
 		public Assignment getAssignmentAssignment_0() { return cAssignmentAssignment_0; }
 
-		//STRING
-		public RuleCall getAssignmentSTRINGTerminalRuleCall_0_0() { return cAssignmentSTRINGTerminalRuleCall_0_0; }
+		//[stext::Expression]
+		public CrossReference getAssignmentExpressionCrossReference_0_0() { return cAssignmentExpressionCrossReference_0_0; }
+
+		//ID
+		public RuleCall getAssignmentExpressionIDTerminalRuleCall_0_0_1() { return cAssignmentExpressionIDTerminalRuleCall_0_0_1; }
 
 		//dependencies+=[Instruction]*
 		public Assignment getDependenciesAssignment_1() { return cDependenciesAssignment_1; }
@@ -831,7 +835,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Assignment:
 	//
-	//	assignment=STRING dependencies+=[Instruction]*;
+	//	assignment=[stext::Expression] dependencies+=[Instruction]*;
 	public AssignmentElements getAssignmentAccess() {
 		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
 	}

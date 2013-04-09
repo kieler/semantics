@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.yakindu.base.types.TypesPackage;
 
+import org.yakindu.sct.model.stext.stext.StextPackage;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
@@ -159,7 +161,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     isInited = true;
 
     // Initialize simple dependencies
-    TypesPackage.eINSTANCE.eClass();
+    StextPackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theSclPackage.createPackageContents();
@@ -341,9 +343,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAssignment_Assignment()
+  public EReference getAssignment_Assignment()
   {
-    return (EAttribute)assignmentEClass.getEStructuralFeatures().get(0);
+    return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -517,7 +519,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEAttribute(labelEClass, LABEL__NAME);
 
     assignmentEClass = createEClass(ASSIGNMENT);
-    createEAttribute(assignmentEClass, ASSIGNMENT__ASSIGNMENT);
+    createEReference(assignmentEClass, ASSIGNMENT__ASSIGNMENT);
     createEReference(assignmentEClass, ASSIGNMENT__DEPENDENCIES);
 
     conditionalEClass = createEClass(CONDITIONAL);
@@ -563,6 +565,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     // Obtain other dependent packages
     TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
+    StextPackage theStextPackage = (StextPackage)EPackage.Registry.INSTANCE.getEPackage(StextPackage.eNS_URI);
 
     // Create type parameters
 
@@ -598,7 +601,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEAttribute(getLabel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAssignment_Assignment(), ecorePackage.getEString(), "assignment", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAssignment_Assignment(), theStextPackage.getExpression(), null, "assignment", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAssignment_Dependencies(), this.getInstruction(), null, "dependencies", null, 0, -1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

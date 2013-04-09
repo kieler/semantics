@@ -97,7 +97,7 @@ Label:
 ;
 
 Assignment:
-    assignment=STRING
+    assignment=[stext::Expression]
     (dependencies += [Instruction])*
 ;
 

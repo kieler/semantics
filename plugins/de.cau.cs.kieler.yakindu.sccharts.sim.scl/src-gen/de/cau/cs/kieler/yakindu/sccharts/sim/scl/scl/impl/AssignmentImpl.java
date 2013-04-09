@@ -13,10 +13,13 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+
+import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,24 +38,14 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 public class AssignmentImpl extends InstructionImpl implements Assignment
 {
   /**
-   * The default value of the '{@link #getAssignment() <em>Assignment</em>}' attribute.
+   * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getAssignment()
    * @generated
    * @ordered
    */
-  protected static final String ASSIGNMENT_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAssignment()
-   * @generated
-   * @ordered
-   */
-  protected String assignment = ASSIGNMENT_EDEFAULT;
+  protected Expression assignment;
 
   /**
    * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list.
@@ -90,7 +83,27 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getAssignment()
+  public Expression getAssignment()
+  {
+    if (assignment != null && assignment.eIsProxy())
+    {
+      InternalEObject oldAssignment = (InternalEObject)assignment;
+      assignment = (Expression)eResolveProxy(oldAssignment);
+      if (assignment != oldAssignment)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SclPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, assignment));
+      }
+    }
+    return assignment;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression basicGetAssignment()
   {
     return assignment;
   }
@@ -100,9 +113,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setAssignment(String newAssignment)
+  public void setAssignment(Expression newAssignment)
   {
-    String oldAssignment = assignment;
+    Expression oldAssignment = assignment;
     assignment = newAssignment;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, assignment));
@@ -133,7 +146,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     switch (featureID)
     {
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        return getAssignment();
+        if (resolve) return getAssignment();
+        return basicGetAssignment();
       case SclPackage.ASSIGNMENT__DEPENDENCIES:
         return getDependencies();
     }
@@ -152,7 +166,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     switch (featureID)
     {
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        setAssignment((String)newValue);
+        setAssignment((Expression)newValue);
         return;
       case SclPackage.ASSIGNMENT__DEPENDENCIES:
         getDependencies().clear();
@@ -173,7 +187,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     switch (featureID)
     {
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        setAssignment(ASSIGNMENT_EDEFAULT);
+        setAssignment((Expression)null);
         return;
       case SclPackage.ASSIGNMENT__DEPENDENCIES:
         getDependencies().clear();
@@ -193,28 +207,11 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     switch (featureID)
     {
       case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        return ASSIGNMENT_EDEFAULT == null ? assignment != null : !ASSIGNMENT_EDEFAULT.equals(assignment);
+        return assignment != null;
       case SclPackage.ASSIGNMENT__DEPENDENCIES:
         return dependencies != null && !dependencies.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (assignment: ");
-    result.append(assignment);
-    result.append(')');
-    return result.toString();
   }
 
 } //AssignmentImpl

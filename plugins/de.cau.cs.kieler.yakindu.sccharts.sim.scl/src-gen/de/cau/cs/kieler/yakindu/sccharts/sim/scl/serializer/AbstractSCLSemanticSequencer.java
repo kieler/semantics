@@ -140,7 +140,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (assignment=STRING dependencies+=[Instruction|ID]*)
+	 *     (assignment=[Expression|ID] dependencies+=[Instruction|ID]*)
 	 */
 	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -149,7 +149,7 @@ public abstract class AbstractSCLSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (assignment=STRING dependencies+=[Instruction|ID]* priority=INT?)
+	 *     (assignment=[Expression|ID] dependencies+=[Instruction|ID]* priority=INT?)
 	 */
 	protected void sequence_Assignment_Instruction(EObject context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

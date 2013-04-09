@@ -4,6 +4,8 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.yakindu.sct.model.stext.stext.Expression;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Assignment</b></em>'.
@@ -24,30 +26,30 @@ import org.eclipse.emf.common.util.EList;
 public interface Assignment extends Instruction
 {
   /**
-   * Returns the value of the '<em><b>Assignment</b></em>' attribute.
+   * Returns the value of the '<em><b>Assignment</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Assignment</em>' attribute isn't clear,
+   * If the meaning of the '<em>Assignment</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Assignment</em>' attribute.
-   * @see #setAssignment(String)
+   * @return the value of the '<em>Assignment</em>' reference.
+   * @see #setAssignment(Expression)
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage#getAssignment_Assignment()
    * @model
    * @generated
    */
-  String getAssignment();
+  Expression getAssignment();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Assignment</em>' attribute.
+   * @param value the new value of the '<em>Assignment</em>' reference.
    * @see #getAssignment()
    * @generated
    */
-  void setAssignment(String value);
+  void setAssignment(Expression value);
 
   /**
    * Returns the value of the '<em><b>Dependencies</b></em>' reference list.

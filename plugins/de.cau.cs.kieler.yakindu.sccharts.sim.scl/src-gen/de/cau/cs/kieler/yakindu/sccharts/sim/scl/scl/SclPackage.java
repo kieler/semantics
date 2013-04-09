@@ -270,7 +270,7 @@ public interface SclPackage extends EPackage
   int ASSIGNMENT__PRIORITY = INSTRUCTION__PRIORITY;
 
   /**
-   * The feature id for the '<em><b>Assignment</b></em>' attribute.
+   * The feature id for the '<em><b>Assignment</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -653,15 +653,15 @@ public interface SclPackage extends EPackage
   EClass getAssignment();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment <em>Assignment</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Assignment</em>'.
+   * @return the meta object for the reference '<em>Assignment</em>'.
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getAssignment()
    * @see #getAssignment()
    * @generated
    */
-  EAttribute getAssignment_Assignment();
+  EReference getAssignment_Assignment();
 
   /**
    * Returns the meta object for the reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment#getDependencies <em>Dependencies</em>}'.
@@ -954,12 +954,12 @@ public interface SclPackage extends EPackage
     EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
     /**
-     * The meta object literal for the '<em><b>Assignment</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Assignment</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
+    EReference ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
 
     /**
      * The meta object literal for the '<em><b>Dependencies</b></em>' reference list feature.
