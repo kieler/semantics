@@ -1,59 +1,34 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend
 
-import org.eclipse.xtend.util.stdlib.CloningExtensions
-import com.google.common.collect.ImmutableList
-import com.google.common.collect.ImmutableCollection;
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.Collections
-import java.util.List
-import java.util.Collection
-import java.util.ArrayList
-import java.util.HashMap;
-import org.eclipse.emf.common.util.EList;
-
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
-import org.yakindu.sct.model.sgraph.Statechart
-//import org.yakindu.sct.model.sgraph.State
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
-
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
-
-import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory;
-
-import org.yakindu.sct.model.sgraph.SGraphFactory
-import org.yakindu.sct.model.sgraph.State
-import org.yakindu.sct.model.sgraph.Trigger
-import org.yakindu.sct.model.sgraph.Region
-import org.yakindu.sct.model.stext.stext.StextFactory
-import org.yakindu.sct.model.stext.stext.Expression
-import org.yakindu.sct.model.stext.stext.ReactionTrigger
-import org.yakindu.sct.model.stext.stext.ReactionEffect
-
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFactory
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.*
-import org.yakindu.sct.model.sgraph.Choice
-
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclFactory;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Annotation
-//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
-//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence;
-
-//import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.ScgFactory;
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration
-import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclFactory
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.VariableDeclaration
+import java.util.HashMap
+import org.eclipse.emf.ecore.EObject
+import org.yakindu.sct.model.sgraph.Effect
 import org.yakindu.sct.model.sgraph.Event
+import org.yakindu.sct.model.sgraph.SGraphFactory
+import org.yakindu.sct.model.sgraph.Statechart
+import org.yakindu.sct.model.sgraph.Trigger
+import org.yakindu.sct.model.stext.stext.AssignmentExpression
+import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
+import org.yakindu.sct.model.stext.stext.StextFactory
 import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
+import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
@@ -132,14 +107,8 @@ class SCLHelper {
         SCL.createPause();
     }
     
-    def Conditional createSCLConditional(String expression, InstructionList iSet) {
-        var conditional = SCL.createConditional();
-        conditional.setExpression(expression);
-        conditional.setConditional(iSet)
-        conditional;
-    }
-    
-    def VariableDeclaration createVariableDeclaration() {
+   
+    def VariableDeclaration createSCLVariableDeclaration() {
         var varDef = SCL.createVariableDeclaration();
         varDef;
     }
@@ -159,10 +128,37 @@ class SCLHelper {
         }
     }
     
-    def Assignment createAssignment() {
-        var asm = SCL.createAssignment();
-        asm;
+    def Assignment createSCLAssignment(Effect effect) {
+        var assignment = SCL.createAssignment();
+        if (effect instanceof ReactionEffect) {
+                assignment.assignment = (effect as ReactionEffect).actions.head.copy;
+                assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
+                    val varRef = (it.varRef as ElementReferenceExpression);
+                    varRef.reference = (varRef.reference as Event).createVariableDeclaration();
+                ]
+        }
+        
+        assignment;    
     }
+    
+    def Conditional createSCLConditional() {
+        var conditional = SCL.createConditional();
+        conditional;
+    }
+    
+    def Conditional createSCLConditional(Trigger trigger) {
+        var conditional = SCL.createConditional();
+        if (trigger instanceof ReactionTrigger) {
+            val reactionTrigger = trigger as ReactionTrigger;
+            if (reactionTrigger.guardExpression != null) {
+                conditional.expression = reactionTrigger.guardExpression.copy;
+                conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
+                    e.reference = (e.reference as Event).createVariableDeclaration;  
+                ]
+            }
+        }
+        conditional;
+    }    
     
 //    def Assignment crea
     

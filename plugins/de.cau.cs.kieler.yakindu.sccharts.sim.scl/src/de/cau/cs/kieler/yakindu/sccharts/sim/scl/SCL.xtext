@@ -24,16 +24,6 @@ VariableDeclaration:
     (Input?='input')? (Output?='output')? 'signal' (name=STRING)(':'type=[types::Type])?';'
 ;
 
-//LocalVariable returns stext::VariableDefinition:
-//    ('local') type=[types::Type] (name=STRING)';'
-//;
-
-//LocalVariable:
-//    'local' type=STRING name=STRING';'
-//;
-
-SCLExpression:STRING;
-
 Instruction:
     (Assignment | Conditional | Goto | Parallel | Pause | Label)
     (priority=INT)?
@@ -41,10 +31,7 @@ Instruction:
 
 Assignment:
     assignment=Expression
-//    (dependencies += [Instruction])*
 ;
-
-
 
 InstructionList:
   {InstructionList}
@@ -56,58 +43,65 @@ InstructionList:
       )+
       (instructions += Instruction)
       (instructions += Annotation)?      
-  ) |
+  ) 
+  |
   {InstructionList}
   (
       (instructions += Annotation)
       (instructions += Instruction)
-  ) |
-  (instructions += Annotation) |
+  ) 
+  |
+  (instructions += Annotation) 
+  |
   {InstructionList}
   (
       (instructions += Instruction)
       (instructions += Annotation)
-  ) |
-      (instructions += Instruction)
+  ) 
+  |
+  (instructions += Instruction)
 ;
 
-//Scope:
-//  {InstructionList}
-//  (
-//      '{'
-//      (variables += VariableDeclaration)*
-//  (
-//      (
-//          (instructions += Instruction';')
-//          |
-//          (instructions += Annotation)
-//      )+
-//      (instructions += Instruction)
-//      (instructions += Annotation)?      
-//      ) |
-//    (
-//          (instructions += Annotation)
-//          (instructions += Instruction)
-//    ) |
-//        (instructions += Annotation) |
-//    (
-//          (instructions += Instruction)
-//          (instructions += Annotation)
-//        ) |
-//        (instructions += Instruction)
-//      '}'
-//    )
-//;
+Scope:
+  {InstructionList}
+  (
+      '{'
+      (declarations += VariableDeclaration)*
+  (
+      (
+          (instructions += Instruction';')
+          |
+          (instructions += Annotation)
+      )+
+      (instructions += Instruction)
+      (instructions += Annotation)?      
+  ) 
+  |
+  (
+      (instructions += Annotation)
+      (instructions += Instruction)
+  ) 
+  |
+  (instructions += Annotation) 
+  |
+  (
+      (instructions += Instruction)
+      (instructions += Annotation)
+  ) 
+  |
+  (instructions += Instruction)
+      '}'
+    )
+;
 
 Label:
     'label:' name = ID
 ;
 
 Conditional:
-    'if' expression = SCLExpression 'then'
+    'if' expression = Expression 'then'
         conditional = InstructionList
     'end' 
-    (dependencies += [Instruction])*
 ;
 
 Goto:

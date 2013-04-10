@@ -21,19 +21,19 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="assignment" eType="ecore:EClass ../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InstructionList">
+  <eClassifiers xsi:type="ecore:EClass" name="InstructionList" eSuperTypes="#//Scope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" upperBound="-1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Scope" eSuperTypes="../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Scope"/>
   <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="conditional" eType="#//InstructionList"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" unique="false"
-        upperBound="-1" eType="#//Instruction"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Goto" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

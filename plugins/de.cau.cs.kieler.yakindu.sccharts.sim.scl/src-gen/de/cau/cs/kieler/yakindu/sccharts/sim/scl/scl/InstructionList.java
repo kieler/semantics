@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface InstructionList extends EObject
+public interface InstructionList extends Scope
 {
   /**
    * Returns the value of the '<em><b>Instructions</b></em>' containment reference list.

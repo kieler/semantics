@@ -255,34 +255,6 @@ ruleVariableDeclaration returns [EObject current=null]
 
 
 
-// Entry rule entryRuleSCLExpression
-entryRuleSCLExpression returns [String current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getSCLExpressionRule()); } 
-	 iv_ruleSCLExpression=ruleSCLExpression 
-	 { $current=$iv_ruleSCLExpression.current.getText(); }  
-	 EOF 
-;
-
-// Rule SCLExpression
-ruleSCLExpression returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-    this_STRING_0=RULE_STRING    {
-		$current.merge(this_STRING_0);
-    }
-
-    { 
-    newLeafNode(this_STRING_0, grammarAccess.getSCLExpressionAccess().getSTRINGTerminalRuleCall()); 
-    }
-
-    ;
-
-
-
-
-
 // Entry rule entryRuleInstruction
 entryRuleInstruction returns [EObject current=null] 
 	:
@@ -675,6 +647,8 @@ ruleInstructionList returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleLabel
 entryRuleLabel returns [EObject current=null] 
 	:
@@ -739,9 +713,9 @@ ruleConditional returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConditionalAccess().getExpressionSCLExpressionParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getConditionalAccess().getExpressionExpressionParserRuleCall_1_0()); 
 	    }
-		lv_expression_1_0=ruleSCLExpression		{
+		lv_expression_1_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConditionalRule());
 	        }
@@ -749,7 +723,7 @@ ruleConditional returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_1_0, 
-        		"SCLExpression");
+        		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -780,23 +754,7 @@ ruleConditional returns [EObject current=null]
     {
     	newLeafNode(otherlv_4, grammarAccess.getConditionalAccess().getEndKeyword_4());
     }
-(
-(
-		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getConditionalRule());
-	        }
-        }
-	otherlv_5=RULE_ID
-	{
-		newLeafNode(otherlv_5, grammarAccess.getConditionalAccess().getDependenciesInstructionCrossReference_5_0()); 
-	}
-
 )
-)*)
 ;
 
 
@@ -1323,8 +1281,6 @@ ruleTransitionSpecification returns [EObject current=null]
 )
 )
 ;
-
-
 
 
 

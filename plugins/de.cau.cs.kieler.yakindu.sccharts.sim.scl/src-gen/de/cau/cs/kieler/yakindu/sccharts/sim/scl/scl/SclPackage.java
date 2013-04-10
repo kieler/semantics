@@ -225,6 +225,52 @@ public interface SclPackage extends EPackage
   int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl <em>Scope</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getScope()
+   * @generated
+   */
+  int SCOPE = 5;
+
+  /**
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCOPE__DECLARATIONS = SGraphPackage.SCOPE__DECLARATIONS;
+
+  /**
+   * The feature id for the '<em><b>Events</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCOPE__EVENTS = SGraphPackage.SCOPE__EVENTS;
+
+  /**
+   * The feature id for the '<em><b>Variables</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCOPE__VARIABLES = SGraphPackage.SCOPE__VARIABLES;
+
+  /**
+   * The number of structural features of the '<em>Scope</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCOPE_FEATURE_COUNT = SGraphPackage.SCOPE_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.InstructionListImpl <em>Instruction List</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -235,13 +281,40 @@ public interface SclPackage extends EPackage
   int INSTRUCTION_LIST = 4;
 
   /**
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INSTRUCTION_LIST__DECLARATIONS = SCOPE__DECLARATIONS;
+
+  /**
+   * The feature id for the '<em><b>Events</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INSTRUCTION_LIST__EVENTS = SCOPE__EVENTS;
+
+  /**
+   * The feature id for the '<em><b>Variables</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INSTRUCTION_LIST__VARIABLES = SCOPE__VARIABLES;
+
+  /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTION_LIST__INSTRUCTIONS = 0;
+  int INSTRUCTION_LIST__INSTRUCTIONS = SCOPE_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Instruction List</em>' class.
@@ -250,7 +323,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INSTRUCTION_LIST_FEATURE_COUNT = 1;
+  int INSTRUCTION_LIST_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LabelImpl <em>Label</em>}' class.
@@ -260,7 +333,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getLabel()
    * @generated
    */
-  int LABEL = 5;
+  int LABEL = 6;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -297,7 +370,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getConditional()
    * @generated
    */
-  int CONDITIONAL = 6;
+  int CONDITIONAL = 7;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -309,7 +382,7 @@ public interface SclPackage extends EPackage
   int CONDITIONAL__PRIORITY = INSTRUCTION__PRIORITY;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -327,22 +400,13 @@ public interface SclPackage extends EPackage
   int CONDITIONAL__CONDITIONAL = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Dependencies</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITIONAL__DEPENDENCIES = INSTRUCTION_FEATURE_COUNT + 2;
-
-  /**
    * The number of structural features of the '<em>Conditional</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
+  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.GotoImpl <em>Goto</em>}' class.
@@ -352,7 +416,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getGoto()
    * @generated
    */
-  int GOTO = 7;
+  int GOTO = 8;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -389,7 +453,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 8;
+  int PARALLEL = 9;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -426,7 +490,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 9;
+  int PAUSE = 10;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -454,7 +518,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getAnnotation()
    * @generated
    */
-  int ANNOTATION = 10;
+  int ANNOTATION = 11;
 
   /**
    * The feature id for the '<em><b>Comment</b></em>' attribute.
@@ -625,6 +689,16 @@ public interface SclPackage extends EPackage
   EReference getInstructionList_Instructions();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope <em>Scope</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scope</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
+   * @generated
+   */
+  EClass getScope();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label <em>Label</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -656,15 +730,15 @@ public interface SclPackage extends EPackage
   EClass getConditional();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @return the meta object for the containment reference '<em>Expression</em>'.
    * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getExpression()
    * @see #getConditional()
    * @generated
    */
-  EAttribute getConditional_Expression();
+  EReference getConditional_Expression();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getConditional <em>Conditional</em>}'.
@@ -676,17 +750,6 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EReference getConditional_Conditional();
-
-  /**
-   * Returns the meta object for the reference list '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getDependencies <em>Dependencies</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Dependencies</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional#getDependencies()
-   * @see #getConditional()
-   * @generated
-   */
-  EReference getConditional_Dependencies();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto <em>Goto</em>}'.
@@ -907,6 +970,16 @@ public interface SclPackage extends EPackage
     EReference INSTRUCTION_LIST__INSTRUCTIONS = eINSTANCE.getInstructionList_Instructions();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl <em>Scope</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ScopeImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.SclPackageImpl#getScope()
+     * @generated
+     */
+    EClass SCOPE = eINSTANCE.getScope();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.LabelImpl <em>Label</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -935,12 +1008,12 @@ public interface SclPackage extends EPackage
     EClass CONDITIONAL = eINSTANCE.getConditional();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONDITIONAL__EXPRESSION = eINSTANCE.getConditional_Expression();
+    EReference CONDITIONAL__EXPRESSION = eINSTANCE.getConditional_Expression();
 
     /**
      * The meta object literal for the '<em><b>Conditional</b></em>' containment reference feature.
@@ -949,14 +1022,6 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EReference CONDITIONAL__CONDITIONAL = eINSTANCE.getConditional_Conditional();
-
-    /**
-     * The meta object literal for the '<em><b>Dependencies</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference CONDITIONAL__DEPENDENCIES = eINSTANCE.getConditional_Dependencies();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.GotoImpl <em>Goto</em>}' class.

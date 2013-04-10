@@ -3,23 +3,18 @@
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclPackage;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +25,6 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl#getConditional <em>Conditional</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.impl.ConditionalImpl#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,24 +33,14 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 public class ConditionalImpl extends InstructionImpl implements Conditional
 {
   /**
-   * The default value of the '{@link #getExpression() <em>Expression</em>}' attribute.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected static final String EXPRESSION_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpression()
-   * @generated
-   * @ordered
-   */
-  protected String expression = EXPRESSION_EDEFAULT;
+  protected Expression expression;
 
   /**
    * The cached value of the '{@link #getConditional() <em>Conditional</em>}' containment reference.
@@ -67,16 +51,6 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * @ordered
    */
   protected InstructionList conditional;
-
-  /**
-   * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getDependencies()
-   * @generated
-   * @ordered
-   */
-  protected EList<Instruction> dependencies;
 
   /**
    * <!-- begin-user-doc -->
@@ -104,7 +78,7 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getExpression()
+  public Expression getExpression()
   {
     return expression;
   }
@@ -114,12 +88,37 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpression(String newExpression)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    String oldExpression = expression;
+    Expression oldExpression = expression;
     expression = newExpression;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.CONDITIONAL__EXPRESSION, oldExpression, expression));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.CONDITIONAL__EXPRESSION, oldExpression, newExpression);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setExpression(Expression newExpression)
+  {
+    if (newExpression != expression)
+    {
+      NotificationChain msgs = null;
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.CONDITIONAL__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.CONDITIONAL__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.CONDITIONAL__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -175,25 +174,13 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Instruction> getDependencies()
-  {
-    if (dependencies == null)
-    {
-      dependencies = new EObjectResolvingEList<Instruction>(Instruction.class, this, SclPackage.CONDITIONAL__DEPENDENCIES);
-    }
-    return dependencies;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
+      case SclPackage.CONDITIONAL__EXPRESSION:
+        return basicSetExpression(null, msgs);
       case SclPackage.CONDITIONAL__CONDITIONAL:
         return basicSetConditional(null, msgs);
     }
@@ -214,8 +201,6 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return getExpression();
       case SclPackage.CONDITIONAL__CONDITIONAL:
         return getConditional();
-      case SclPackage.CONDITIONAL__DEPENDENCIES:
-        return getDependencies();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -225,21 +210,16 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
       case SclPackage.CONDITIONAL__EXPRESSION:
-        setExpression((String)newValue);
+        setExpression((Expression)newValue);
         return;
       case SclPackage.CONDITIONAL__CONDITIONAL:
         setConditional((InstructionList)newValue);
-        return;
-      case SclPackage.CONDITIONAL__DEPENDENCIES:
-        getDependencies().clear();
-        getDependencies().addAll((Collection<? extends Instruction>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -256,13 +236,10 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     switch (featureID)
     {
       case SclPackage.CONDITIONAL__EXPRESSION:
-        setExpression(EXPRESSION_EDEFAULT);
+        setExpression((Expression)null);
         return;
       case SclPackage.CONDITIONAL__CONDITIONAL:
         setConditional((InstructionList)null);
-        return;
-      case SclPackage.CONDITIONAL__DEPENDENCIES:
-        getDependencies().clear();
         return;
     }
     super.eUnset(featureID);
@@ -279,30 +256,11 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     switch (featureID)
     {
       case SclPackage.CONDITIONAL__EXPRESSION:
-        return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
+        return expression != null;
       case SclPackage.CONDITIONAL__CONDITIONAL:
         return conditional != null;
-      case SclPackage.CONDITIONAL__DEPENDENCIES:
-        return dependencies != null && !dependencies.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (expression: ");
-    result.append(expression);
-    result.append(')');
-    return result.toString();
   }
 
 } //ConditionalImpl
