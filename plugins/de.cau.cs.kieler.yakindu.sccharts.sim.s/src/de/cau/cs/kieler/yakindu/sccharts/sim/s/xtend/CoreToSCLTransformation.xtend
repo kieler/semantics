@@ -85,23 +85,8 @@ class CoreToSCLTransformation {
         var iSet = createSCLInstructionList();
         val stateID = state.getHierarchicalName("");
         
-        val originalOutgoingTransitionsRaw = ImmutableList::copyOf(state.outgoingTransitions);
-        var List<SyncTransition> originalOutgoingTransitions = new ArrayList();
-        for (raw : originalOutgoingTransitionsRaw) {
-            originalOutgoingTransitions.add(0, raw as SyncTransition);
-        }
-        val outgoingWeakTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::WEAKABORT));
-        val normalTerminationTransitions = ImmutableList::copyOf(originalOutgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION));
-
-       iSet.addInstruction(createSCLLabel(stateID));
-//        iSet.setLabel(createSCLLabel(stateID));
+        iSet.addInstruction(createSCLLabel(stateID));
         iSet.addInstruction(createSCLComment("-- Begin of state "+state.getName()+" --"));
-        
- //       var local = SCL.createLocalVariable();
-//        local.setType('Integer');
-//        local.setName('test');
-//        iSet.variables.add(local);
-        
         
         if (state.isComposite()) {
             // COMPOSITE STATE         
@@ -118,7 +103,7 @@ class CoreToSCLTransformation {
                 iSet.addInstruction(parallel);
             }
             
-            for(transition : normalTerminationTransitions) {
+            for(transition : state.getNormalterminations) {
               val targetState = transition.target as SyncState; 
               
               val effect = transition.getEffect();
@@ -139,53 +124,11 @@ class CoreToSCLTransformation {
             } else {
                 // STATE IS NOT A FINAL STATE
                 
-                val transitionCount = outgoingWeakTransitions.size;
-                
                 iSet.addPause();
                 
-//                if (transitionCount==100) {
-                if (transitionCount==1) {
-                    // OPTIMIZE GOTO
-                    iSet.instructions.addAll(transformCoreTransition(outgoingWeakTransitions.head).instructions);
-                } else { 
-                    // MORE TRANSITIONS (no optimize)
+                iSet.addInstruction(state.transformStateTransitions);
                 
-                    var boolean bDefaultTransition = false;
-                    var Goto defaultTransition;
-                    
-                    for(transition : outgoingWeakTransitions) {
-                        val targetState = transition.target as SyncState;
-                        val transitionEffect = transition.getEffect();
-                        val transitionTrigger = transition.getTrigger();
-                       
-                        var targetGoto = createSCLGoto(targetState.getHierarchicalName(""));
-              
-                        if (!transitionTrigger.exists) {
-                            defaultTransition = targetGoto.copy;
-                            bDefaultTransition = true;                  
-                        } else {
-                            var conditional = createSCLConditional(transitionTrigger);
-
-                            if (transitionEffect.exists) {
-                                var transitionAssignment = createSCLAssignment(transitionEffect);
-                                conditional.addInstruction(transitionAssignment);
-                            }
-
-                            conditional.addInstruction(targetGoto);
-                               
-                            iSet.addInstruction(conditional);
-                        }
-                            
-                    }
-                
-                    if (bDefaultTransition) {
-                        iSet.addInstruction(defaultTransition);
-                    } else {
-                        iSet.addInstruction(createSCLGoto(stateID));
-                    }
-                    
-                } // optimize single transition
-                
+               
             } // isFinal
         
         } // isComposite
@@ -196,7 +139,52 @@ class CoreToSCLTransformation {
     }
     
     
-    def InstructionList transformCoreTransition(SyncTransition transition) {
+    def InstructionList transformStateTransitions(SyncState state) {
+        var iSet = createSCLInstructionList();
+        
+        val transitions = state.getTransitions;
+        var selfTransitions = transitions.filter(e | 
+            (e.target instanceof SyncState) && ((e.target as SyncState) == state))
+        
+        if (((transitions.size==2) && (selfTransitions.size==1) && 
+                (selfTransitions.head.trigger == null)) ||
+            (transitions.size==1) && (selfTransitions.size!=1)) {
+            var targetInstructions = transformStateTransition(
+                transitions.filter(e | ((e.target) instanceof SyncState) &&
+                    ((e.target as SyncState) != state
+                )
+                ).head
+            )
+            if (targetInstructions.instructions.last instanceof Goto) {
+                iSet.addInstruction(targetInstructions);
+            } else {
+                var InstructionList selfInstructions = null;
+                
+                if (selfTransitions.size==1) {
+                    selfInstructions = transformStateTransition(selfTransitions.head)
+                } else {
+                    selfInstructions = createSCLInstructionList();
+                    selfInstructions.addInstruction(createSCLGoto(state.getHierarchicalName("")));
+                }
+                
+                iSet.addInstruction(optimizeSelfLoop(targetInstructions, selfInstructions));
+            } 
+        } else {
+            var boolean defaultTransition = false;
+            for (transition : transitions) {
+                val targetInstructions = transformStateTransition(transition)
+                if (targetInstructions.instructions.last instanceof Goto) { defaultTransition = true; }
+                iSet.addInstruction(targetInstructions)
+            }
+            if (!defaultTransition) {
+                iSet.addInstruction(createSCLGoto(state.getHierarchicalName("")));
+            }
+        }
+        
+        iSet;
+    }
+    
+    def InstructionList transformStateTransition(SyncTransition transition) {
         var iSet = createSCLInstructionList()
         val targetState = transition.target as SyncState;
         val transitionEffect = transition.getEffect();
@@ -221,6 +209,19 @@ class CoreToSCLTransformation {
     }
     
     
+    
+    def InstructionList optimizeSelfLoop(InstructionList tSet, InstructionList sSet) {
+        var iSet = createSCLInstructionList();
+        
+        var conditional = tSet.instructions.head as Conditional;
+        var condSet = conditional.conditional;
+        conditional.setConditional(sSet);
+        conditional.expression = conditional.expression.negate;
+        
+        iSet.addInstruction(conditional.copy)
+        iSet.addInstruction(condSet.copy)
+        iSet;
+    }
  
  
     def InstructionList optimizeGoto(InstructionList iSet) {

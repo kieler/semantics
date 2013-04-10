@@ -169,6 +169,10 @@ class SCLHelper {
     def void addInstruction(InstructionList iSet, Instruction instruction) {
         iSet.instructions.add(instruction);
     }
+
+    def void addInstruction(InstructionList iSet, InstructionList iList) {
+        iSet.instructions.addAll(iList.instructions);
+    }
     
 //    def void addInstruction(Scope sSet, Instruction instruction) {
 /*         var iSet = sSet.getScope();
