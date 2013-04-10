@@ -36,7 +36,7 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
                              f.getProgramAccess().getRightCurlyBracketKeyword_5());
 	    
             // Instructions
-            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_0_1_0_0_1());
+            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_1_0_0_0_1());
 //            c.setLinewrap(1).after(f.getInstructionAccess().getSemicolonKeyword_1());
             
 //            c.setNoSpace().before(f.getInstructionOrCommentSequenceAccess().getSemicolonKeyword_0_1());
@@ -49,6 +49,7 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             
             c.setLinewrap(1).before(f.getInstructionRule());
             c.setLinewrap(1).before(f.getAnnotationRule());
+            c.setLinewrap(1).before(f.getLabelRule());
             
 //            c.setLinewrap(1).after(f.getInstructionSetAccess().getInstructionsAssignment_0());
 //            c.setLinewrap(1).after(f.getInstructionSetAccess().getInstructionsAssignment_1());
@@ -71,6 +72,9 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             c.setLinewrap(1).before(f.getConditionalAccess().getEndKeyword_4());
             c.setIndentation(f.getConditionalAccess().getThenKeyword_2(), 
                              f.getConditionalAccess().getEndKeyword_4());
+            
+            //Label
+            c.setNoSpace().before(f.getLabelAccess().getColonKeyword_2());
             
             // Variable Declaration
             c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword_5());

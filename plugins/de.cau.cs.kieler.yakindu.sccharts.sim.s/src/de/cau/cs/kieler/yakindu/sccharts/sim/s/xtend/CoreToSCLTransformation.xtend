@@ -21,6 +21,9 @@ import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
 
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction
 
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
@@ -74,7 +77,7 @@ class CoreToSCLTransformation {
             iSet.instructions.addAll(stateInstructions.instructions);
         }
         
-        iSet = iSet.optimizeGoto.optimizeLabel;
+//        iSet = iSet.optimizeGoto.optimizeLabel;
         iSet;
     }
     
@@ -143,23 +146,7 @@ class CoreToSCLTransformation {
 //                if (transitionCount==100) {
                 if (transitionCount==1) {
                     // OPTIMIZE GOTO
-                    val transition = outgoingWeakTransitions.head;
-                    val transitionEffect = transition.getEffect();
-                    val transitionTrigger = transition.getTrigger();
-                    val targetState = transition.target as SyncState;
-
-                    if (transitionTrigger.exists) {
-                        var conditional = createSCLConditional(transitionTrigger);
-                        if (transitionEffect != null) {
-                            var transitionAssignment = createSCLAssignment(transitionEffect);
-                            conditional.addInstruction(transitionAssignment);
-                        }
-                        conditional.addInstruction(createSCLGoto(stateID));
-                        iSet.addInstruction(conditional);
-                        iSet.addInstruction(createSCLGoto(targetState.getHierarchicalName("")));                        
-                    } else {
-                        iSet.addInstruction(createSCLGoto(stateID));
-                    }
+                    iSet.instructions.addAll(transformCoreTransition(outgoingWeakTransitions.head).instructions);
                 } else { 
                     // MORE TRANSITIONS (no optimize)
                 
@@ -170,17 +157,16 @@ class CoreToSCLTransformation {
                         val targetState = transition.target as SyncState;
                         val transitionEffect = transition.getEffect();
                         val transitionTrigger = transition.getTrigger();
-                        
                        
                         var targetGoto = createSCLGoto(targetState.getHierarchicalName(""));
               
-                        if (transitionTrigger == null) {
+                        if (!transitionTrigger.exists) {
                             defaultTransition = targetGoto.copy;
                             bDefaultTransition = true;                  
                         } else {
                             var conditional = createSCLConditional(transitionTrigger);
 
-                            if (transitionEffect != null) {
+                            if (transitionEffect.exists) {
                                 var transitionAssignment = createSCLAssignment(transitionEffect);
                                 conditional.addInstruction(transitionAssignment);
                             }
@@ -208,6 +194,33 @@ class CoreToSCLTransformation {
        
         iSet;        
     }
+    
+    
+    def InstructionList transformCoreTransition(SyncTransition transition) {
+        var iSet = createSCLInstructionList()
+        val targetState = transition.target as SyncState;
+        val transitionEffect = transition.getEffect();
+        val transitionTrigger = transition.getTrigger();
+        var targetGoto = createSCLGoto(targetState.getHierarchicalName(""));
+        if (transitionTrigger.exists) {
+            var conditional = createSCLConditional(transitionTrigger);
+            if (transitionEffect.exists) {
+                val transitionAssignment = createSCLAssignment(transitionEffect);
+                conditional.addInstruction(transitionAssignment);
+            }
+            conditional.addInstruction(targetGoto);
+            iSet.instructions.add(conditional);
+        } else {
+            if (transitionEffect.exists) {
+                val transitionAssignment = createSCLAssignment(transitionEffect);
+                iSet.instructions.add(transitionAssignment);
+            }
+            iSet.instructions.add(targetGoto);
+        }
+        iSet;
+    }
+    
+    
  
  
     def InstructionList optimizeGoto(InstructionList iSet) {

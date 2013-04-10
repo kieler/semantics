@@ -94,32 +94,23 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 				}
 				else break;
 			case SclPackage.ASSIGNMENT:
-				if(context == grammarAccess.getAssignmentRule()) {
+				if(context == grammarAccess.getAssignmentRule() ||
+				   context == grammarAccess.getInstructionRule()) {
 					sequence_Assignment(context, (Assignment) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getInstructionRule()) {
-					sequence_Assignment_Instruction(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.CONDITIONAL:
-				if(context == grammarAccess.getConditionalRule()) {
+				if(context == grammarAccess.getConditionalRule() ||
+				   context == grammarAccess.getInstructionRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getInstructionRule()) {
-					sequence_Conditional_Instruction(context, (Conditional) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.GOTO:
-				if(context == grammarAccess.getGotoRule()) {
+				if(context == grammarAccess.getGotoRule() ||
+				   context == grammarAccess.getInstructionRule()) {
 					sequence_Goto(context, (Goto) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getInstructionRule()) {
-					sequence_Goto_Instruction(context, (Goto) semanticObject); 
 					return; 
 				}
 				else break;
@@ -128,37 +119,23 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 					sequence_InstructionList(context, (InstructionList) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getScopeRule()) {
-					sequence_Scope(context, (InstructionList) semanticObject); 
-					return; 
-				}
 				else break;
 			case SclPackage.LABEL:
-				if(context == grammarAccess.getInstructionRule()) {
-					sequence_Instruction_Label(context, (Label) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getLabelRule()) {
+				if(context == grammarAccess.getLabelRule()) {
 					sequence_Label(context, (Label) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.PARALLEL:
-				if(context == grammarAccess.getInstructionRule()) {
-					sequence_Instruction_Parallel(context, (Parallel) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getParallelRule()) {
+				if(context == grammarAccess.getInstructionRule() ||
+				   context == grammarAccess.getParallelRule()) {
 					sequence_Parallel(context, (Parallel) semanticObject); 
 					return; 
 				}
 				else break;
 			case SclPackage.PAUSE:
-				if(context == grammarAccess.getInstructionRule()) {
-					sequence_Instruction(context, (Pause) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getPauseRule()) {
+				if(context == grammarAccess.getInstructionRule() ||
+				   context == grammarAccess.getPauseRule()) {
 					sequence_Pause(context, (Pause) semanticObject); 
 					return; 
 				}
@@ -476,6 +453,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 			case StextPackage.INTERFACE_SCOPE:
 				if(context == grammarAccess.getInterfaceScopeRule() ||
 				   context == grammarAccess.getNamedInterfaceScopeRule() ||
+				   context == grammarAccess.getScopeRule() ||
 				   context == grammarAccess.getStatechartScopeRule()) {
 					sequence_InterfaceScope(context, (InterfaceScope) semanticObject); 
 					return; 
@@ -483,6 +461,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 				else break;
 			case StextPackage.INTERNAL_SCOPE:
 				if(context == grammarAccess.getInternalScopeRule() ||
+				   context == grammarAccess.getScopeRule() ||
 				   context == grammarAccess.getStatechartScopeRule()) {
 					sequence_InternalScope(context, (InternalScope) semanticObject); 
 					return; 
@@ -788,7 +767,8 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 				}
 				else break;
 			case StextPackage.SIMPLE_SCOPE:
-				if(context == grammarAccess.getStateScopeRule()) {
+				if(context == grammarAccess.getScopeRule() ||
+				   context == grammarAccess.getStateScopeRule()) {
 					sequence_StateScope(context, (SimpleScope) semanticObject); 
 					return; 
 				}
@@ -894,16 +874,14 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     assignment=Expression
 	 */
 	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (assignment=Expression priority=INT?)
-	 */
-	protected void sequence_Assignment_Instruction(EObject context, Assignment semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.ASSIGNMENT__ASSIGNMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.ASSIGNMENT__ASSIGNMENT));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getAssignmentAccess().getAssignmentExpressionParserRuleCall_0(), semanticObject.getAssignment());
+		feeder.finish();
 	}
 	
 	
@@ -912,16 +890,17 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     (expression=Expression conditional=InstructionList)
 	 */
 	protected void sequence_Conditional(EObject context, Conditional semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (expression=Expression conditional=InstructionList priority=INT?)
-	 */
-	protected void sequence_Conditional_Instruction(EObject context, Conditional semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.CONDITIONAL__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.CONDITIONAL__EXPRESSION));
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.CONDITIONAL__CONDITIONAL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.CONDITIONAL__CONDITIONAL));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getConditionalAccess().getExpressionExpressionParserRuleCall_1_0(), semanticObject.getExpression());
+		feeder.accept(grammarAccess.getConditionalAccess().getConditionalInstructionListParserRuleCall_3_0(), semanticObject.getConditional());
+		feeder.finish();
 	}
 	
 	
@@ -930,25 +909,25 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     name=ID
 	 */
 	protected void sequence_Goto(EObject context, Goto semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (name=ID priority=INT?)
-	 */
-	protected void sequence_Goto_Instruction(EObject context, Goto semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.GOTO__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.GOTO__NAME));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getGotoAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
 	/**
 	 * Constraint:
 	 *     (
-	 *         ((instructions+=Instruction | instructions+=Annotation)+ instructions+=Instruction instructions+=Annotation?) | 
-	 *         (instructions+=Annotation instructions+=Instruction) | 
-	 *         (instructions+=Instruction instructions+=Annotation)
+	 *         (
+	 *             ((instructions+=Instruction | instructions+=Annotation | instructions+=Label)* instructions+=Instruction) | 
+	 *             instructions+=Annotation | 
+	 *             instructions+=Label
+	 *         )*
 	 *     )
 	 */
 	protected void sequence_InstructionList(EObject context, InstructionList semanticObject) {
@@ -958,37 +937,17 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (name=ID priority=INT?)
-	 */
-	protected void sequence_Instruction_Label(EObject context, Label semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (threads+=InstructionList threads+=InstructionList+ priority=INT?)
-	 */
-	protected void sequence_Instruction_Parallel(EObject context, Parallel semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (priority=INT?)
-	 */
-	protected void sequence_Instruction(EObject context, Pause semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
 	 *     name=ID
 	 */
 	protected void sequence_Label(EObject context, Label semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.LABEL__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.LABEL__NAME));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getLabelAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
@@ -1015,21 +974,6 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     (name=ID interface+=VariableDeclaration* program=InstructionList)
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         (declarations+=VariableDeclaration* (instructions+=Instruction | instructions+=Annotation)+ instructions+=Instruction instructions+=Annotation?) | 
-	 *         (instructions+=Annotation instructions+=Instruction) | 
-	 *         instructions+=Annotation | 
-	 *         (instructions+=Instruction instructions+=Annotation) | 
-	 *         instructions+=Instruction
-	 *     )
-	 */
-	protected void sequence_Scope(EObject context, InstructionList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

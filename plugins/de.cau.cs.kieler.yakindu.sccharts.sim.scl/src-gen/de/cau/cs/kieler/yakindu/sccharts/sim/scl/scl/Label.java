@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,7 +20,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl;
  * @model
  * @generated
  */
-public interface Label extends Instruction
+public interface Label extends EObject
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

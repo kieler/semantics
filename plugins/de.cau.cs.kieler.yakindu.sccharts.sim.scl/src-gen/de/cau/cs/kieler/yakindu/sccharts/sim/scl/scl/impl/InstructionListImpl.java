@@ -15,6 +15,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -31,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class InstructionListImpl extends ScopeImpl implements InstructionList
+public class InstructionListImpl extends MinimalEObjectImpl.Container implements InstructionList
 {
   /**
    * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.

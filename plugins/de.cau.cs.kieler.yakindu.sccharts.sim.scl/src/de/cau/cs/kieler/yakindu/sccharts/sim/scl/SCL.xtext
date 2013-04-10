@@ -25,8 +25,7 @@ VariableDeclaration:
 ;
 
 Instruction:
-    (Assignment | Conditional | Goto | Parallel | Pause | Label)
-    (priority=INT)?
+    (Assignment | Conditional | Goto | Parallel | Pause)
 ;
 
 Assignment:
@@ -40,62 +39,27 @@ InstructionList:
           (instructions += Instruction';')
           |
           (instructions += Annotation)
-      )+
+          |
+          (instructions += Label)
+      )*
       (instructions += Instruction)
-      (instructions += Annotation)?      
-  ) 
-  |
-  {InstructionList}
-  (
+      |
       (instructions += Annotation)
-      (instructions += Instruction)
-  ) 
-  |
-  (instructions += Annotation) 
-  |
-  {InstructionList}
-  (
-      (instructions += Instruction)
-      (instructions += Annotation)
-  ) 
-  |
-  (instructions += Instruction)
+      |
+      (instructions += Label)
+  )*    
 ;
 
-Scope:
-  {InstructionList}
-  (
-      '{'
-      (declarations += VariableDeclaration)*
-  (
-      (
-          (instructions += Instruction';')
-          |
-          (instructions += Annotation)
-      )+
-      (instructions += Instruction)
-      (instructions += Annotation)?      
-  ) 
-  |
-  (
-      (instructions += Annotation)
-      (instructions += Instruction)
-  ) 
-  |
-  (instructions += Annotation) 
-  |
-  (
-      (instructions += Instruction)
-      (instructions += Annotation)
-  ) 
-  |
-  (instructions += Instruction)
-      '}'
-    )
-;
+//Scope:
+//  {InstructionList}
+//  (
+//      '{'
+//      '}'
+//    )
+//;
 
 Label:
-    'label:' name = ID
+    'label' name = ID ':'
 ;
 
 Conditional:

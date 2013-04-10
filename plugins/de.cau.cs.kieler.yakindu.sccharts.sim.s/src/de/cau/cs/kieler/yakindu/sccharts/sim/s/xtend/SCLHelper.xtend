@@ -182,6 +182,10 @@ class SCLHelper {
     def void addInstruction(InstructionList iSet, Annotation annotation) {
         iSet.instructions.add(annotation);
     }
+
+    def void addInstruction(InstructionList iSet, Label label) {
+        iSet.instructions.add(label);
+    }
     
 //    def void addInstruction(Scope sSet, Annotation annotation) {
 /*         var iSet = sSet.getScope();
@@ -199,6 +203,7 @@ class SCLHelper {
     
     def void addInstruction(InstructionList iSet, EObject ioc) {
         if (ioc instanceof Instruction) { iSet.addInstruction(ioc as Instruction) }
+        if (ioc instanceof Label) { iSet.addInstruction(ioc as Label) }
           else { iSet.addInstruction(ioc as Annotation) }
     }
     
