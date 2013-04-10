@@ -68,7 +68,7 @@ class SCCHelper {
         for (raw : originalOutgoingTransitions) {
             outgoingTransitions.add(0, raw as SyncTransition);
         }
-        outgoingTransitions.sort(e1, e2 | compareSCCTransitionOrder(e1, e2));
+        outgoingTransitions.sort(e1, e2 | compareSCCTransitionOrderFIXME(e1, e2));
     }
     
     def List<SyncTransition> getWeakTransitions(SyncState state) {
@@ -82,7 +82,13 @@ class SCCHelper {
 
     def int compareSCCTransitionOrder(SyncTransition e1, SyncTransition e2) {
         var order = 1;
-        if (e1.priority>e2.priority) { order = -1}
+        if (e1.priority<e2.priority) { order = -1}
+        order;
+    }
+    
+    def int compareSCCTransitionOrderFIXME(SyncTransition e1, SyncTransition e2) {
+        var order = 1;
+        if (e2.trigger == null) { order = -1}
         order;
     }
              
