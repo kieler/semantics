@@ -28,6 +28,8 @@ class CoreToSCLTransformation {
     
      extension de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCLHelper SCLHelper = 
          Guice::createInjector().getInstance(typeof(SCLHelper))
+     extension de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCCHelper SCCHelper = 
+         Guice::createInjector().getInstance(typeof(SCCHelper))
  
     //-------------------------------------------------------------------------
     //--          C O R E   TO   S C L -  T R A N S F O R M A T I O N        --
@@ -72,7 +74,7 @@ class CoreToSCLTransformation {
             iSet.instructions.addAll(stateInstructions.instructions);
         }
         
-//        iSet = iSet.optimizeGoto.optimizeLabel;
+        iSet = iSet.optimizeGoto.optimizeLabel;
         iSet;
     }
     
@@ -138,32 +140,26 @@ class CoreToSCLTransformation {
                 
                 iSet.addPause();
                 
-                if (transitionCount==100) {
-                //if (transitionCount==1) {
+//                if (transitionCount==100) {
+                if (transitionCount==1) {
                     // OPTIMIZE GOTO
                     val transition = outgoingWeakTransitions.head;
                     val transitionEffect = transition.getEffect();
-                    
+                    val transitionTrigger = transition.getTrigger();
                     val targetState = transition.target as SyncState;
-                    var cSet = createSCLInstructionList;
-                    
-                    
-                    
-                    
-                    var targetGoto = createSCLGoto(stateID);
-                   
-                    
-                    
-//                    var conditional = createSCLConditional("'!(" + transition.getSpecification() + ")'"
-//                      , cSet
-//                    );
-                    
-                    
-                    
-                    var goto = createSCLGoto(targetState.getHierarchicalName(""));
-//                    iSet.addInstruction(conditional);
-                    iSet.addInstruction(goto);
-                    
+
+                    if (transitionTrigger.exists) {
+                        var conditional = createSCLConditional(transitionTrigger);
+                        if (transitionEffect != null) {
+                            var transitionAssignment = createSCLAssignment(transitionEffect);
+                            conditional.addInstruction(transitionAssignment);
+                        }
+                        conditional.addInstruction(createSCLGoto(stateID));
+                        iSet.addInstruction(conditional);
+                        iSet.addInstruction(createSCLGoto(targetState.getHierarchicalName("")));                        
+                    } else {
+                        iSet.addInstruction(createSCLGoto(stateID));
+                    }
                 } else { 
                     // MORE TRANSITIONS (no optimize)
                 
