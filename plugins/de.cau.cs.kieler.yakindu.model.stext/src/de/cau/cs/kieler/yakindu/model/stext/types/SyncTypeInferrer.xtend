@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -29,18 +29,25 @@ import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
 
 /**
  * 
- * The SCCTypeInferrer extends the STextDefaultTypeInferrer to add supplement checks for type conformance
+ * The SCCTypeInferrer extends the STextDefaultTypeInferrer 
+ * to add supplement checks for type conformance (e.g. check the type of pre(int) which is an integer).
+ * 
+ * The StextDefaultTypeInferrer checks that:
+ * 		- EventDefinition may not be null, 
+ * 		- Cannot assign a value of type int to a variable of type boolean,
+ * 		- ...
  * 
  * @author wah
  *  
  */
 class SyncTypeInferrer extends STextDefaultTypeInferrer{
 	@Inject protected extension
-	ISTextTypeSystem ts
+	ISTextTypeSystem typesystem
 	
 	/**
-	 * This method is override to allow the check of PreValueExpression 
+	 * This method is overridden to allow the check of PreValueExpression 
 	 * which was implemented by the SCChartsExp
+	 * (allow the check of the type conformance of e.g. pre(S)==S). 
 	 * 
 	 */
 	override dispatch doInferType(FeatureCall featureCall){
@@ -64,7 +71,7 @@ class SyncTypeInferrer extends STextDefaultTypeInferrer{
 	/**
 	 * This method is override to allow the check of PreValueExpression 
 	 * which was implemented by the SCChartsExp.
-	 * It returns the type of the operand by the following operations (raise, Valueof(), Pre())
+	 * It returns the type of the operand by the following operations (raise, Valueof(), Pre()).
 	 * 
 	 */
 	override dispatch InferenceResult doInferType(ElementReferenceExpression expression){
@@ -81,7 +88,7 @@ class SyncTypeInferrer extends STextDefaultTypeInferrer{
 	}
 
 	/**
- 	 * Pre(dec) operator should have the type of dec
+ 	 * Pre(int) operator should have the type of int.
  	 */
 	def dispatch InferenceResult doInferType(PreValueExpression expression){
 		return inferType(expression.value)
