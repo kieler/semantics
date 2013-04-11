@@ -28,57 +28,42 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
 	            (de.cau.cs.kieler.yakindu.sccharts.sim.scl.services.SCLGrammarAccess) getGrammarAccess();
 	        
 	    // Program
-//	    c.setLinewrap(1).after(f.getProgramAccess().getModuleKeyword_0());
             c.setLinewrap(1).after(f.getProgramAccess().getNameAssignment_1());
 	    c.setLinewrap(1).after(f.getProgramAccess().getLeftCurlyBracketKeyword_3());
             c.setLinewrap(1).after(f.getProgramAccess().getRightCurlyBracketKeyword_5());
+            c.setLinewrap(1).before(f.getProgramAccess().getRightCurlyBracketKeyword_5());
             c.setIndentation(f.getProgramAccess().getLeftCurlyBracketKeyword_3(), 
                              f.getProgramAccess().getRightCurlyBracketKeyword_5());
 	    
             // Instructions
             c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_1_0_0_0_1());
-//            c.setLinewrap(1).after(f.getInstructionAccess().getSemicolonKeyword_1());
-            
-//            c.setNoSpace().before(f.getInstructionOrCommentSequenceAccess().getSemicolonKeyword_0_1());
-            
-//            c.setLinewrap(1).after(f.getInstructionOrCommentSequenceAccess().getSemicolonKeyword_0_1());
-            
-//            c.setLinewrap(1).after(f.getCommentAccess().getCommentAssignment());
-            
-//            c.setLinewrap(1).after(f.getInstructionSetSingleAssignmentAccess().getRule());
             
             c.setLinewrap(1).before(f.getInstructionRule());
             c.setLinewrap(1).before(f.getAnnotationRule());
-            c.setLinewrap(1).before(f.getLabelRule());
-            
-//            c.setLinewrap(1).after(f.getInstructionSetAccess().getInstructionsAssignment_0());
-//            c.setLinewrap(1).after(f.getInstructionSetAccess().getInstructionsAssignment_1());
-//            c.setLinewrap(1).after(f.getInstructionSetAccess().getInstructionsAssignment_2());
-	    
-            // Parallel
-            c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());
-            c.setLinewrap(1).after(f.getParallelAccess().getParKeyword_1_1_0());
-            c.setLinewrap(1).after(f.getParallelAccess().getJoinKeyword_2());
-            c.setIndentation(f.getParallelAccess().getForkKeyword_0(), 
-                             f.getParallelAccess().getParKeyword_1_1_0());
-            c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
-                             f.getParallelAccess().getJoinKeyword_2());
-            
-            // Comment
             c.setLinewrap(1).after(f.getAnnotationRule());
-            
+            c.setNoSpace().before(f.getLabelAccess().getColonKeyword_2());
+            c.setLinewrap(1).before(f.getLabelAccess().getColonKeyword_2());
+          
             // Conditional
             c.setLinewrap(1).after(f.getConditionalAccess().getThenKeyword_2());
             c.setLinewrap(1).before(f.getConditionalAccess().getEndKeyword_4());
             c.setIndentation(f.getConditionalAccess().getThenKeyword_2(), 
                              f.getConditionalAccess().getEndKeyword_4());
             
-            //Label
-            c.setNoSpace().before(f.getLabelAccess().getColonKeyword_2());
-            
+   
             // Variable Declaration
             c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword_5());
             c.setLinewrap(1).after(f.getVariableDeclarationRule());
         
+            // Parallel
+            c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());
+            c.setLinewrap(1).after(f.getParallelAccess().getParKeyword_1_1_0());
+            c.setLinewrap(1).after(f.getParallelAccess().getJoinKeyword_2());
+            c.setLinewrap(1).before(f.getParallelAccess().getParKeyword_1_1_0());
+            c.setLinewrap(1).before(f.getParallelAccess().getJoinKeyword_2());
+            c.setIndentation(f.getParallelAccess().getForkKeyword_0(), 
+                             f.getParallelAccess().getParKeyword_1_1_0());
+            c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
+                             f.getParallelAccess().getJoinKeyword_2());
 	}
 }

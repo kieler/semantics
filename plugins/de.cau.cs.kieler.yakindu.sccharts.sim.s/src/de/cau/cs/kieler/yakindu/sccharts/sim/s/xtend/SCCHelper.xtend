@@ -77,7 +77,13 @@ class SCCHelper {
     
     def List<SyncTransition> getNormalterminations(SyncState state) {
         ImmutableList::copyOf(state.getTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION));        
-    }       
+    }
+    
+    def boolean isImmediate(SyncTransition transition) {
+        (transition.trigger != null && 
+            (transition.trigger as ReactionTrigger).isImmediate
+        )
+    }        
 
 
     def int compareSCCTransitionOrder(SyncTransition e1, SyncTransition e2) {
