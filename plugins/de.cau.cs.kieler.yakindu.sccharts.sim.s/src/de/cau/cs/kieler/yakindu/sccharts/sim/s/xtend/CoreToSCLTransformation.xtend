@@ -4,28 +4,20 @@ import com.google.common.collect.ImmutableList
 import com.google.inject.Guice
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Annotation
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.SclFactory
 import java.util.ArrayList
-import java.util.List
+import java.util.HashMap
 import org.yakindu.sct.model.sgraph.Event
 import org.yakindu.sct.model.sgraph.Region
 import org.yakindu.sct.model.sgraph.Statechart
-import org.yakindu.sct.model.stext.stext.AssignmentExpression
-import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
-
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Annotation
-import java.util.HashMap
 
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 

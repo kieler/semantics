@@ -33,7 +33,9 @@ import org.yakindu.sct.model.stext.STextStandaloneSetup;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.klighd.views.DiagramViewManager;
 import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.CoreToSCLTransformation;
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -160,6 +162,12 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
                     IEditorPart editor = wbPage.openEditor(fileInput,
                                             desc.getId());
                 }
+                
+                
+                DiagramViewManager.getInstance().createView(
+                        "de.cau.cs.kieler.yakindu.sccharts.sim.scl.klighd.scg.SCGDiagramSynthesis", 
+                        "SCG", (Program) transformedModel, null); 
+                
             } catch (IOException e) {
                 throw new ExecutionException("Cannot write output SCChart file.");
             } catch (PartInitException e) {

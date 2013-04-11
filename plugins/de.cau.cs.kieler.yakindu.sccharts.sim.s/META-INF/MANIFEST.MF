@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava,
  org.eclipse.emf.ecore.xmi,
  de.cau.cs.kieler.yakindu.sccharts.sim.scl,
- com.google.inject
+ com.google.inject,
+ de.cau.cs.kieler.klighd;bundle-version="0.2.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: de.cau.cs.kieler.core,
