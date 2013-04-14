@@ -23,56 +23,41 @@ import org.yakindu.sct.model.sgraph.State;
 
 /**
  * This class provides some utils to load declarations (signals and varibales).
- * from parent scopes
+ * from parent scopes {@link SynctextScopeProvider}.
  * 
  * @author wah
+ * @kieler.rating green 2013-04-13
  * 
  */
 public class SyncUtils {
 
 	/**
 	 * Method to find all ancestor declarations. All declarations in parent
-	 * state and parent of parent states.
+	 * state and parent of parent states. This method goes through all parent
+	 * scopes and puts declarations in an ArrayList.
 	 * 
 	 * @param object
 	 *            the eContainer object
 	 * @return ArrayList of Declarations
 	 */
 	public static ArrayList<Declaration> getAncestorDeclarations(EObject object) {
+		// Initialize an ArrayList of declarations.
 		ArrayList<Declaration> declarations = new ArrayList<Declaration>();
+		// Go to the parent element.
 		object = object.eContainer();
 		while (object != null) {
+			// If the object is a State get the declarations and put them in the
+			// ArrayList.
 			if (object instanceof State) {
 				EList<Scope> scopes = ((State) object).getScopes();
 				for (Scope scope : scopes) {
 					declarations.addAll(scope.getDeclarations());
 				}
 			}
+			// Go to the parent element.
 			object = object.eContainer();
 		}
+		// Return the ArrayList of declarations
 		return declarations;
-	}
-
-	/**
-	 * Method to return declarations made in the current state.
-	 * 
-	 * @param object
-	 *            the eContainer object
-	 * @return ArrayList of Declarations
-	 */
-	public static ArrayList<Declaration> getCurrentStateDeclarations(
-			EObject object) {
-		ArrayList<Declaration> declarations = new ArrayList<Declaration>();
-		while (object != null) {
-			if (object instanceof State) {
-				EList<Scope> scopes = ((State) object).getScopes();
-				for (Scope scope : scopes) {
-					declarations.addAll(scope.getDeclarations());
-				}
-				return declarations;
-			}
-			object = object.eContainer();
-		}
-		return null;
 	}
 }

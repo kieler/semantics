@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -18,7 +18,9 @@ import org.eclipse.gmf.runtime.draw2d.ui.mapmode.IMapMode;
 
 /**
  * This class defines the default node width and height.
+ *
  * @author wah
+ * @kieler.rating green 2013-04-13
  *
  */
 public final class SyncMapModeUtils {

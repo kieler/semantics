@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -28,6 +28,15 @@ import de.cau.cs.kieler.yakindu.ui.editor.parts.SyncStateEditPart;
 import de.cau.cs.kieler.yakindu.ui.editor.parts.SyncStateNameEditPart;
 import de.cau.cs.kieler.yakindu.ui.editor.parts.SyncTransitionEditPart;
 
+/**
+ * Initial contribution and api. This class extends the SCTModule class to
+ * register the SyncTransition, SyncState, and SyncRegion edit parts and to use
+ * the SyncPalette and SyncDiagramInitializer.
+ * 
+ * @author wah
+ * @kieler.rating green 2013-04-13
+ * 
+ */
 public class SyncModule extends SCTModule {
 	@Override
 	protected Class<? extends IGraphicalEditPart> getTransitionEditPart() {
@@ -38,21 +47,21 @@ public class SyncModule extends SCTModule {
 	protected Class<? extends IGraphicalEditPart> getStateEditPart() {
 		return SyncStateEditPart.class;
 	}
-	
-	 @Override
-	 protected Class<? extends IGraphicalEditPart> getRegionNameEditPart() {
-	 return SyncRegionNameEditPart.class;
-	 }
-	 
-	 @Override
+
+	@Override
+	protected Class<? extends IGraphicalEditPart> getRegionNameEditPart() {
+		return SyncRegionNameEditPart.class;
+	}
+
+	@Override
 	protected Class<? extends IGraphicalEditPart> getRegionEditPart() {
 		return SyncRegionEditPart.class;
 	}
-	
-	 @Override
-	 protected Class<? extends IGraphicalEditPart> getStateNameEditPart() {
-	 return SyncStateNameEditPart.class;
-	 }
+
+	@Override
+	protected Class<? extends IGraphicalEditPart> getStateNameEditPart() {
+		return SyncStateNameEditPart.class;
+	}
 
 	@Override
 	protected Class<? extends IMetaModelTypeFactory> getMetaModelTypeFactory() {
@@ -68,11 +77,11 @@ public class SyncModule extends SCTModule {
 	protected Class<? extends IDiagramInitializer> getDiagramInitializer() {
 		return SyncDiagramInitializer.class;
 	}
-	
+
 	@Override
 	protected void configure() {
 		super.configure();
-		
+
 	}
 
 }

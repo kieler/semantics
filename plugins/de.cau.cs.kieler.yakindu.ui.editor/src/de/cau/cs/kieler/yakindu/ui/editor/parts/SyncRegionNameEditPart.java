@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -19,6 +19,13 @@ import org.yakindu.base.base.BasePackage;
 import org.yakindu.sct.ui.editor.DiagramActivator;
 import org.yakindu.sct.ui.editor.editparts.RegionNameEditPart;
 
+/**
+ * This class extends the RegionNameEditPart to skip the <name> text if a region
+ * has no name.
+ * 
+ * @author wah
+ * @kieler.rating green 2013-04-13
+ */
 public class SyncRegionNameEditPart extends RegionNameEditPart {
 
 	public IParser getParser() {

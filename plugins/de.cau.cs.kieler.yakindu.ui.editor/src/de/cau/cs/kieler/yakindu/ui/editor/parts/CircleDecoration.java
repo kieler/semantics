@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,7 +12,6 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.yakindu.ui.editor.parts;
-
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.PolygonDecoration;
@@ -23,38 +22,44 @@ import org.eclipse.draw2d.geometry.Rectangle;
  * A decoration that depicts a circle.
  * 
  * @author wah
+ * @kieler.rating green 2013-04-13
  */
-public class CircleDecoration extends PolygonDecoration{
+public class CircleDecoration extends PolygonDecoration {
 
-    /**
-     * Sets the angle by which rotation is to be done on the PolygonDecoration.
-     * This method has to be empty, otherwise the circle would change its size
-     * at different angles.
-     * 
-     * @param angle angle of rotation
-     */
-    @Override
-    public void setRotation(final double angle) {
-    }
+	private static final int VALUE_SIDE_INSET = 1;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void outlineShape(final Graphics g) {
-        Rectangle ovalBounds = getBounds().getCopy();
-        ovalBounds.shrink(new Insets(1));
-        g.drawOval(ovalBounds);
-    }
+	/**
+	 * Sets the angle by which rotation is to be done on the PolygonDecoration.
+	 * This method has to be empty, otherwise the circle would change its size
+	 * at different angles.
+	 * 
+	 * @param angle
+	 *            angle of rotation
+	 */
+	@Override
+	public void setRotation(final double angle) {
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void fillShape(final Graphics g) {
-        Rectangle ovalBounds = getBounds().getCopy();
-        ovalBounds.shrink(new Insets(1));
-        g.fillOval(ovalBounds);
-    }
+	/**
+	 * {@inheritDoc} This method shrinks a rectangle by the VALUE_SIDE_INSET and
+	 * draws it in g.
+	 */
+	@Override
+	protected void outlineShape(final Graphics g) {
+		Rectangle ovalBounds = getBounds().getCopy();
+		ovalBounds.shrink(new Insets(VALUE_SIDE_INSET));
+		g.drawOval(ovalBounds);
+	}
+
+	/**
+	 * {@inheritDoc} This method shrinks a rectangle by the VALUE_SIDE_INSET and
+	 * fills it in g.
+	 */
+	@Override
+	protected void fillShape(final Graphics g) {
+		Rectangle ovalBounds = getBounds().getCopy();
+		ovalBounds.shrink(new Insets(VALUE_SIDE_INSET));
+		g.fillOval(ovalBounds);
+	}
 
 }

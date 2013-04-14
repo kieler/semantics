@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -25,6 +25,13 @@ import org.yakindu.sct.ui.editor.edithelper.StateEditHelper;
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 import de.cau.cs.kieler.yakindu.ui.editor.factory.SyncMetaModelTypeFactory;
 
+/**
+ * The SyncState edit helper. This class extends the StateEditHelper class to
+ * allow the creation of initial and final states.
+ * 
+ * @author wah
+ * @kieler.rating green 2013-04-13
+ */
 public class SyncStateEditHelper extends StateEditHelper {
 	@Override
 	protected ICommand getConfigureCommand(ConfigureRequest req) {
@@ -48,5 +55,5 @@ public class SyncStateEditHelper extends StateEditHelper {
 		}
 		return result;
 	}
-	
+
 }

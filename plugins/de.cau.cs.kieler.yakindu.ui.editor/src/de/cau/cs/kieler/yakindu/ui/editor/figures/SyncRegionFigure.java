@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -19,6 +19,7 @@ import org.yakindu.sct.ui.editor.editor.figures.RegionFigure;
  * The SyncRegionFigure extends the RegionFigure.
  * 
  * @author wah
+ * @kieler.rating green 2013-04-13
  *
  */
 public class SyncRegionFigure extends RegionFigure {

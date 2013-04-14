@@ -38,6 +38,8 @@ import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
  * 		- ...
  * 
  * @author wah
+ * @kieler.rating green 2013-04-13
+ 
  *  
  */
 class SyncTypeInferrer extends STextDefaultTypeInferrer{

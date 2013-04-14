@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -20,9 +20,13 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.yakindu.ui.editor.figures.SyncRegionFigure;
 
 /**
- * The SyncRegion editpart.
+ * The SyncRegion edit part. This class extends the RegionEditPart to return the
+ * SyncRegionFigure when calling the getPrimaryShape method. The
+ * SyncRegionFigure extends the RegionFigure which is previously returned by the
+ * getPrimaryShape method.
  * 
  * @author wah
+ * @kieler.rating green 2013-04-13
  * 
  */
 public class SyncRegionEditPart extends RegionEditPart {

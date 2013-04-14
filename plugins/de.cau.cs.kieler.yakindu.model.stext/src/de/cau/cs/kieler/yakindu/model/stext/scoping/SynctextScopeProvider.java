@@ -41,6 +41,7 @@ import de.itemis.xtext.utils.jface.viewers.ContextElementAdapter;
  * declarations can be read from the parent regions.
  * 
  * @author wah
+ * @kieler.rating green 2013-04-13
  * 
  */
 public class SynctextScopeProvider extends STextScopeProvider {
