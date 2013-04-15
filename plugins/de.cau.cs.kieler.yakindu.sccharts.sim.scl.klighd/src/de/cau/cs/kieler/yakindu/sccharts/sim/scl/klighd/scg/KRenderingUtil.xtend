@@ -87,6 +87,37 @@ class KRenderingUtil {
 		return node;
 	}
 	
+    def KNode createRectangulareNode(Object o) {
+        val node = o.node;
+        val rect = KRenderingFactory::eINSTANCE.createKRectangle;
+        node.data.add(rect);
+        return node;
+    }
+    
+    def KNode createRectangulareNode(Object o, int height, int width) {
+        val node = o.createRectangulareNode;
+        val shapeLayout = node.getData(typeof(KShapeLayout));
+        shapeLayout.height = height;
+        shapeLayout.width = width;
+        return node;
+    }
+
+    def KNode createEllipseNode(Object o) {
+        val node = o.node;
+        val rect = KRenderingFactory::eINSTANCE.createKEllipse;
+        node.data.add(rect);
+        return node;
+    }
+    
+    def KNode createEllipseNode(Object o, int height, int width) {
+        val node = o.createEllipseNode;
+        val shapeLayout = node.getData(typeof(KShapeLayout));
+        shapeLayout.height = height;
+        shapeLayout.width = width;
+        return node;
+    }
+	
+	
 	def KEdge create node: KimlUtil::createInitializedEdge getEdge(Object o) {
 	}
 	

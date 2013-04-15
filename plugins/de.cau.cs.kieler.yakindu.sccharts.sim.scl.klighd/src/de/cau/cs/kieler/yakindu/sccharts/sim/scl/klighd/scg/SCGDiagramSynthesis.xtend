@@ -23,6 +23,9 @@ import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program
 import javax.inject.Inject
 
 import static de.cau.cs.kieler.yakindu.sccharts.sim.scl.klighd.scg.SCGDiagramSynthesis.*
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
 
 class SCGDiagramSynthesis extends AbstractTransformation<Program, KNode> {
 
@@ -92,10 +95,82 @@ class SCGDiagramSynthesis extends AbstractTransformation<Program, KNode> {
             switch(instruction) {
                 Assignment: (instruction as Assignment).createAssignmentFigure(rootNode)
                 Parallel: (instruction as Parallel).createParallelFigure(rootNode)
+                Pause: (instruction as Pause).createPauseFigure(rootNode)
+                Conditional: (instruction as Conditional).createConditionalFigure(rootNode)
             }  
         }
 	}
 
+    def createParallelFigure(Parallel instr, KNode rootNode) {
+            val Object ContainerObj = new Object
+            val Object JoinObj = new Object
+            
+            val kContainerNode = ContainerObj.createRectangulareNode(150,100)
+            kContainerNode.KRendering.add(factory.createKLineWidth.of(2));
+            kContainerNode.KRendering.foreground = "gray".color;
+            rootNode.children.add(kContainerNode)
+            
+            val kForkNode = instr.createRoundedRectangulareNode(25, 85);
+            kForkNode.KRendering.add(factory.createKLineWidth.of(2));
+            kForkNode.KRendering.foreground = "gray".color;
+            val nodeTextFork = "FORK";
+           
+            kForkNode.KRendering.add(factory.createKText.of(nodeTextFork));
+            kContainerNode.children.add(kForkNode)
+
+            val kJoinNode = JoinObj.createRoundedRectangulareNode(25, 85);
+            kJoinNode.KRendering.add(factory.createKLineWidth.of(2));
+            kJoinNode.KRendering.foreground = "gray".color;
+            val nodeTextJoin = "JOIN";
+            kJoinNode.KRendering.add(factory.createKText.of(nodeTextJoin));
+            kContainerNode.children.add(kJoinNode)
+
+
+            for(threads : instr.threads) {
+                val Object BackgroundObj = new Object
+                val Object EntryObj = new Object
+                val Object ExitObj = new Object
+            
+                val kBackgroundNode = BackgroundObj.createRectangulareNode(150,100)
+                kBackgroundNode.KRendering.add(factory.createKLineWidth.of(2));
+                kBackgroundNode.KRendering.foreground = "gray".color;
+                kContainerNode.children.add(kBackgroundNode)
+
+
+                val kEntryNode = EntryObj.createEllipseNode(25,50)
+                kEntryNode.KRendering.add(factory.createKLineWidth.of(2));
+                kEntryNode.KRendering.foreground = "gray".color;
+                kBackgroundNode.children.add(kEntryNode)
+                
+                
+                threads.createInstructionListFigure(kBackgroundNode)
+                
+                
+                val kExitNode = ExitObj.createEllipseNode(25,50)
+                kExitNode.KRendering.add(factory.createKLineWidth.of(2));
+                kExitNode.KRendering.foreground = "gray".color;
+                kBackgroundNode.children.add(kExitNode)
+            
+                createEdge() => [
+                    it.source = kForkNode
+                    it.target = kBackgroundNode
+                    it.data += renderingFactory.createKPolyline() => [
+                        it.setLineWidth(2);
+                    ];          
+                ]
+                createEdge() => [
+                    it.source = kBackgroundNode
+                    it.target = kJoinNode
+                    it.data += renderingFactory.createKPolyline() => [
+                        it.setLineWidth(2);
+                    ];          
+                ]
+            
+            }
+           
+            return kForkNode
+    }
+    
     def createAssignmentFigure(Assignment instr, KNode rootNode) {
             val kNode = instr.createRoundedRectangulareNode(25, 85);
             kNode.KRendering.add(factory.createKLineWidth.of(2));
@@ -104,23 +179,30 @@ class SCGDiagramSynthesis extends AbstractTransformation<Program, KNode> {
             kNode.KRendering.foreground = "gray".color;
             
 //            val nodeText = node.id.substring(0,node.id.length - 2);
-            val nodeText = "1";
+            val nodeText = "ASSIGNMENT";
             
             kNode.KRendering.add(factory.createKText.of(nodeText));
             rootNode.children.add(kNode)
             return kNode
     }
 
-    def createParallelFigure(Parallel instr, KNode rootNode) {
+    def createPauseFigure(Pause instr, KNode rootNode) {
             val kNode = instr.createRoundedRectangulareNode(25, 85);
             kNode.KRendering.add(factory.createKLineWidth.of(2));
             
-//            kNode.KRendering.foreground = if (node.id.endsWith("_S")) "black".color else "gray".color;
             kNode.KRendering.foreground = "gray".color;
+            val nodeText = "PAUSE";
+            kNode.KRendering.add(factory.createKText.of(nodeText));
+            rootNode.children.add(kNode)
+            return kNode
+    }
+
+    def createConditionalFigure(Conditional instr, KNode rootNode) {
+            val kNode = instr.createRoundedRectangulareNode(25, 85);
+            kNode.KRendering.add(factory.createKLineWidth.of(2));
             
-//            val nodeText = node.id.substring(0,node.id.length - 2);
-            val nodeText = "1";
-            
+            kNode.KRendering.foreground = "gray".color;
+            val nodeText = "CONDITIONAL";
             kNode.KRendering.add(factory.createKText.of(nodeText));
             rootNode.children.add(kNode)
             return kNode
