@@ -26,8 +26,9 @@ import static de.cau.cs.kieler.yakindu.sccharts.sim.scl.klighd.scg.SCGDiagramSyn
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
+import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
 
-class SCGDiagramSynthesis extends AbstractTransformation<Program, KNode> {
+class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
     @Inject
     extension KRenderingUtil
@@ -75,11 +76,10 @@ class SCGDiagramSynthesis extends AbstractTransformation<Program, KNode> {
     /**
      * {@inheritDoc}
      */
-	override KNode transform(Program program, TransformationContext<Program, KNode> transformationContext) {
-	    use(transformationContext);
+	override KNode transform(Program program) {
 		
         val rootNode = KimlUtil::createInitializedNode;
-        rootNode.KShapeLayout.setProperty(LayoutOptions::SPACING, Float::valueOf("25.0"));
+        rootNode.addLayoutParam(LayoutOptions::SPACING, Float::valueOf("25.0"));
         rootNode.KShapeLayout.setProperty(LayoutOptions::DIRECTION, Direction::DOWN);
         rootNode.KShapeLayout.setProperty(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         rootNode.KShapeLayout.setProperty(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
@@ -137,7 +137,7 @@ class SCGDiagramSynthesis extends AbstractTransformation<Program, KNode> {
                 kContainerNode.children.add(kBackgroundNode)
 
 
-                val kEntryNode = EntryObj.createEllipseNode(25,50)
+                val kEntryNode = EntryObj.createEllipseNode(25,50).putToLookUpWith(EntryObj)
                 kEntryNode.KRendering.add(factory.createKLineWidth.of(2));
                 kEntryNode.KRendering.foreground = "gray".color;
                 kBackgroundNode.children.add(kEntryNode)

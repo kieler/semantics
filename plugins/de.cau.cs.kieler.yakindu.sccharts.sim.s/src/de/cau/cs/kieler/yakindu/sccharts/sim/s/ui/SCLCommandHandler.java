@@ -33,6 +33,10 @@ import org.yakindu.sct.model.stext.STextStandaloneSetup;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.core.properties.IPropertyHolder;
+import de.cau.cs.kieler.core.properties.MapPropertyHolder;
+import de.cau.cs.kieler.klighd.LightDiagramServices;
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy;
 import de.cau.cs.kieler.klighd.views.DiagramViewManager;
 import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.CoreToSCLTransformation;
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
@@ -163,10 +167,11 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
                                             desc.getId());
                 }
                 
-                
+                IPropertyHolder p = new MapPropertyHolder();
+                p.setProperty(LightDiagramServices.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
                 DiagramViewManager.getInstance().createView(
                         "de.cau.cs.kieler.yakindu.sccharts.sim.scl.klighd.scg.SCGDiagramSynthesis", 
-                        "SCG", (Program) transformedModel, null); 
+                        "SCG", (Program) transformedModel, p); 
                 
             } catch (IOException e) {
                 throw new ExecutionException("Cannot write output SCChart file.");
