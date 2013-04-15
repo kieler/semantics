@@ -12,6 +12,8 @@ import java.util.List
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 import java.util.ArrayList
 import org.yakindu.sct.model.stext.stext.Expression
+import org.yakindu.sct.model.sgraph.Statechart
+import org.yakindu.sct.model.sgraph.Transition
 
 class SCCHelper {
     
@@ -68,7 +70,7 @@ class SCCHelper {
         for (raw : originalOutgoingTransitions) {
             outgoingTransitions.add(0, raw as SyncTransition);
         }
-        outgoingTransitions.sort(e1, e2 | compareSCCTransitionOrderFIXME(e1, e2));
+        outgoingTransitions.sort(e1, e2 | compareSCCTransitionOrder(e1, e2));
     }
     
     def List<SyncTransition> getWeakTransitions(SyncState state) {
@@ -96,6 +98,19 @@ class SCCHelper {
         var order = 1;
         if (e2.trigger == null) { order = -1}
         order;
+    }
+
+    def void statechartDistributePriorities(Statechart statechart) {
+        var states = statechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();
+        for (state : states) {
+            var int priority = 1
+            val transitions = ImmutableList::copyOf(state.outgoingTransitions.filter(typeof(SyncTransition))).
+                sort(e1, e2 | compareSCCTransitionOrderFIXME(e1, e2));
+            for (transition : transitions) {
+              transition.priority = priority
+              priority = priority + 1  
+            }  
+        }
     }
              
 }

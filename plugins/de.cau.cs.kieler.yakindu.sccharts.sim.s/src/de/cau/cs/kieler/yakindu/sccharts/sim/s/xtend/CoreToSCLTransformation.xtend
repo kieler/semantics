@@ -36,7 +36,7 @@ class CoreToSCLTransformation {
     def Program transformCoreToSCL(Statechart rootStatechart) {
         var targetProgram = SclFactory::eINSTANCE.createProgram();
        
-       //rootStatechart.distributeStateIDs();
+        rootStatechart.statechartDistributePriorities
        
         targetProgram.setName((rootStatechart.regions.get(0).vertices.get(0) as SyncState).getName());
         
