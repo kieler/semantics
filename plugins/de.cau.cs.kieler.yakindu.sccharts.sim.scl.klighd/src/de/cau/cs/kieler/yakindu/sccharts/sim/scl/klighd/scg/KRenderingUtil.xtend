@@ -13,18 +13,20 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.sim.scl.klighd.scg
 
-import de.cau.cs.kieler.kiml.util.KimlUtil
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
-import de.cau.cs.kieler.core.krendering.KRendering
-import de.cau.cs.kieler.core.kgraph.KGraphElement
-import de.cau.cs.kieler.core.krendering.KStyle
-import de.cau.cs.kieler.core.krendering.KLineWidth
-import de.cau.cs.kieler.core.krendering.KContainerRendering
-import de.cau.cs.kieler.core.krendering.KText
 import de.cau.cs.kieler.core.kgraph.KEdge
-
+import de.cau.cs.kieler.core.kgraph.KGraphElement
+import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.KContainerRendering
+import de.cau.cs.kieler.core.krendering.KLineWidth
+import de.cau.cs.kieler.core.krendering.KPolyline
+import de.cau.cs.kieler.core.krendering.KRendering
+import de.cau.cs.kieler.core.krendering.KRenderingFactory
+import de.cau.cs.kieler.core.krendering.KStyle
+import de.cau.cs.kieler.core.krendering.KText
+import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
+import de.cau.cs.kieler.kiml.util.KimlUtil
+import javax.inject.Inject
 /**
  * KRendering Utility class for KLighD visualization.
  * 
@@ -34,6 +36,9 @@ import de.cau.cs.kieler.core.kgraph.KEdge
  * 
  */
 class KRenderingUtil {
+    
+    @Inject
+    extension KRenderingExtensions
 	
 	def KRenderingFactory factory() {
 		return KRenderingFactory::eINSTANCE;
@@ -116,7 +121,134 @@ class KRenderingUtil {
         shapeLayout.width = width;
         return node;
     }
-	
+    
+    
+    def KNode createTriangleNode(Object o) {
+        val node = o.node;
+        val tria = createTriangleShape
+        node.data.add(tria)
+        return node
+    }
+    
+    def KNode createTriangleNode(Object o, int height, int width) {
+        val node = o.createTriangleNode
+        val shapeLayout = node.getData(typeof(KShapeLayout))
+        shapeLayout.height = height
+        shapeLayout.width = width
+        return node
+    }
+
+    def KNode createTriangleReversedNode(Object o) {
+        val node = o.node;
+        val tria = createTriangleShapeReversed
+        node.data.add(tria)
+        return node
+    }
+    
+    def KNode createTriangleReversedNode(Object o, int height, int width) {
+        val node = o.createTriangleReversedNode
+        val shapeLayout = node.getData(typeof(KShapeLayout))
+        shapeLayout.height = height
+        shapeLayout.width = width
+        return node
+    }
+
+    def KNode createDiamondNode(Object o) {
+        val node = o.node;
+        val tria = createDiamondShape
+        node.data.add(tria)
+        return node
+    }
+    
+    def KNode createDiamondNode(Object o, int height, int width) {
+        val node = o.createDiamondNode
+        val shapeLayout = node.getData(typeof(KShapeLayout))
+        shapeLayout.height = height
+        shapeLayout.width = width
+        return node
+    }
+
+    def KNode createSurfaceNode(Object o) {
+        val node = o.node;
+        val tria = createSurfaceShape
+        node.data.add(tria)
+        return node
+    }
+    
+    def KNode createSurfaceNode(Object o, int height, int width) {
+        val node = o.createSurfaceNode
+        val shapeLayout = node.getData(typeof(KShapeLayout))
+        shapeLayout.height = height
+        shapeLayout.width = width
+        return node
+    }
+
+    def KNode createDepthNode(Object o) {
+        val node = o.node;
+        val tria = createDepthShape
+        node.data.add(tria)
+        return node
+    }
+    
+    def KNode createDepthNode(Object o, int height, int width) {
+        val node = o.createDepthNode
+        val shapeLayout = node.getData(typeof(KShapeLayout))
+        shapeLayout.height = height
+        shapeLayout.width = width
+        return node
+    }
+    
+
+    def KPolyline createTriangleShape() {
+        factory.createKPolyline() => [
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
+        ];
+    }	
+
+    def KPolyline createTriangleShapeReversed() {
+        factory.createKPolyline() => [
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0f);
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
+        ];
+    }   
+
+    def KPolyline createDiamondShape() {
+        factory.createKPolyline() => [
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0f);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.5f);
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0f, TOP,  0, 0.5f);
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0f);
+        ];
+    }   
+
+    def KPolyline createSurfaceShape() {
+        factory.createKPolyline() => [
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.33f);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.33f);
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
+        ];
+    }   
+
+    def KPolyline createDepthShape() {
+        factory.createKPolyline() => [
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.66f);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.66f);
+            it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
+        ];
+    }   
+
 	
 	def KEdge create node: KimlUtil::createInitializedEdge getEdge(Object o) {
 	}

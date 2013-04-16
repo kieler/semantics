@@ -69,4 +69,5 @@ Import-Package: de.cau.cs.kieler.core,
  org.yakindu.sct.ui.editor.editor,
  org.yakindu.sct.ui.editor.editparts,
  org.yakindu.sct.ui.editor.providers
-Export-Package: de.cau.cs.kieler.yakindu.sccharts.sim.s.ui
+Export-Package: de.cau.cs.kieler.yakindu.sccharts.sim.s.ui,
+ de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend

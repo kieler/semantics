@@ -29,6 +29,7 @@ import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel
 
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
@@ -236,6 +237,107 @@ class SCLHelper {
     
   
         
+    // ======================================================================================================
+    // ==                 G O T O  - L O O K U P   M E T A M O D E L   E X T E N S I O N                   ==
+    // ======================================================================================================
+    
+    def Instruction gotoLookUp(Goto goto, InstructionList iList) {
+        gotoLookUp(goto.name, iList)
+    }
+    
+    def Instruction gotoLookUp(String label, InstructionList iList) {
+        var boolean foundLabel = false
+        for(instruction : iList.instructions) {
+            if (instruction instanceof Label) {
+                if ((instruction as Label).name == label) {
+                    foundLabel = true
+                }
+            } else if (!(instruction instanceof Annotation)) {
+                if (foundLabel) {
+                    return instruction as Instruction
+                } else {
+                    if (instruction instanceof Parallel) {
+                        for(threads : (instruction as Parallel).threads) {
+                            val instrRes = gotoLookUp(label, threads as InstructionList)
+                            if (instrRes != null ) { return instrRes }
+                        }
+                    }
+                    else if (instruction instanceof Conditional) {
+                            val instrRes = gotoLookUp(label, (instruction as Conditional).conditional as InstructionList)
+                            if (instrRes != null ) { return instrRes }
+                    }
+                }
+            }
+        }
+        return null
+    }
+    
+    def boolean gotoTargetExists(Goto goto, InstructionList iList) {
+        gotoTargetExists(goto.name, iList)
+    }
+    
+    def boolean gotoTargetExists(String label, InstructionList iList) {
+        for(instruction : iList.instructions) {
+            if (instruction instanceof Label) {
+                if ((instruction as Label).name == label) {
+                    return true
+                }
+            } else if (!(instruction instanceof Annotation)) {
+               if (instruction instanceof Parallel) {
+                    for(threads : (instruction as Parallel).threads) {
+                        if (gotoTargetExists(label, threads as InstructionList)) { return true }
+                    }
+                }
+                else if (instruction instanceof Conditional) {
+                    if (gotoTargetExists(label, (instruction as Conditional).conditional as InstructionList))
+                        {return true}
+                }
+            }
+        }
+        return false
+    }
+    
+    def Label gotoGetLabel(Goto goto, InstructionList iList) {
+        gotoGetLabel(goto.name, iList)
+    }
+    
+    def Label gotoGetLabel(String label, InstructionList iList) {
+        for(instruction : iList.instructions) {
+            if (instruction instanceof Label) {
+                if ((instruction as Label).name == label) {
+                    return (instruction as Label)
+                }
+            } else if (!(instruction instanceof Annotation)) {
+               if (instruction instanceof Parallel) {
+                    for(threads : (instruction as Parallel).threads) {
+                        val ret = gotoGetLabel(label, threads as InstructionList)
+                        if (ret != null) { return ret }
+                    }
+                }
+                else if (instruction instanceof Conditional) {
+                    val ret = gotoGetLabel(label, (instruction as Conditional).conditional as InstructionList)
+                    if (ret != null) { return ret }     
+                }
+            }
+        }
+        return null
+    }
+    
+    def InstructionList getAncestorThreadList(Label label) {
+        var ancestor = label.eContainer
+        while (ancestor != null) {
+            if (ancestor instanceof InstructionList) {
+                if (ancestor.eContainer != null) {
+                    if (ancestor.eContainer instanceof Parallel) {
+                        return ancestor as InstructionList;
+                    }
+                }
+            }
+            ancestor = ancestor.eContainer
+        }
+        return null
+    }
+    
     // ======================================================================================================
     // ==                       S C O P E   M E T A M O D E L   E X T E N S I O N                          ==
     // ======================================================================================================
