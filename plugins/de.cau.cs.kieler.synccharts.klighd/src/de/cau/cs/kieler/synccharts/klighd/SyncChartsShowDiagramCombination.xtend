@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
+import java.util.Collections
 
 class SyncChartsShowDiagramCombination extends AbstractCombination {
     
@@ -39,19 +40,23 @@ class SyncChartsShowDiagramCombination extends AbstractCombination {
                 
         val selection = selectionState.selectedObjects;
         if (!selection.nullOrEmpty) {
-              if (selection.size == 1 && typeof(IFile).isInstance(selection.get(0))) {
-                  val IFile file = selection.get(0) as IFile;
-                  val path = file.fullPath.toPortableString;
-                  
-                  if (!path.endsWith("kixs") && !path.endsWith("kits")) {
-                      return;
-                  }
-                  
-                  val resource = resSet.getResource(URI::createPlatformResourceURI(path, false), true);
-                  val eObject = resource?.contents?.head
-                  
-                  this.schedule(new KlighdDiagramEffect("volatile.synccharts.outline", eObject));
-              }
+            if (selection.size == 1 && typeof(IFile).isInstance(selection.get(0))) {
+                val IFile file = selection.get(0) as IFile;
+                val path = file.fullPath.toPortableString;
+              
+                if (!path.endsWith("kixs") && !path.endsWith("kits")) {
+                    return;
+                }
+                
+                val res = resSet.createResource(URI::createPlatformResourceURI(path, false));
+                val eObject = (res => [
+                    it?.unload();
+                    it?.load(Collections::emptyMap());
+                ])?.contents?.head;
+                if (eObject != null) {
+                    this.schedule(new KlighdDiagramEffect("volatile.synccharts.outline", eObject));
+                }
+            }
         }
     }    
 }
