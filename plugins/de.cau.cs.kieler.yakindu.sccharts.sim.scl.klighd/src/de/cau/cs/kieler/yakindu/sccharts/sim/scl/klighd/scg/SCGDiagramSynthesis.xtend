@@ -195,11 +195,18 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         var sourcePair = new Pair<KNode, KNode>(null, entryNode)
 	    
 	    for(instruction : iSet.instructions) {
+	        var noGoto = true
             switch(instruction) {
                 Assignment: (instruction as Assignment).createAssignmentFigure(rootNode)
                 Parallel: (instruction as Parallel).createParallelFigure(rootNode)
                 Pause: (instruction as Pause).createPauseFigure(rootNode)
-                Conditional: (instruction as Conditional).createConditionalFigure(rootNode)
+                Conditional: {
+                    val li = (instruction as Conditional).createConditionalFigure(rootNode)
+                    if (li instanceof Goto) {
+//                        lastInstruction = null
+//                        noGoto = false
+                    }
+                    }
                 Goto: {
                     if (lastInstruction != null) {
                         GotoMapping.put((instruction as Goto), 
@@ -214,13 +221,13 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             if ((instruction instanceof Assignment) ||
                 (instruction instanceof Parallel) ||
                 (instruction instanceof Pause) ||
-                (instruction instanceof Conditional)
+                ((instruction instanceof Conditional) && (noGoto))
             ) {
                 
-                if (lastInstruction!=null) {
+                if ((lastInstruction!=null) && (!(lastInstruction instanceof Goto))) {
                     sourcePair = InstructionMapping.get(lastInstruction as Instruction);
                 }
-                if (sourcePair.second != null) {
+                if ((sourcePair != null) && (sourcePair.second != null)) {
                     val targetPair = InstructionMapping.get(instruction as Instruction);
                     val sourceNode = sourcePair.second
                     createEdge() => [
@@ -231,13 +238,16 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                             it.addArrowDecorator();
                         ];          
                     ]
+                    sourcePair = null
                 }
             
-                lastInstruction = instruction as Instruction
+                if (noGoto) { lastInstruction = instruction as Instruction }
+                else { lastInstruction = null }
             }
+            if (!noGoto) { lastInstruction = null }
         }
         
-        if (exitNode != null) {
+        if ((exitNode != null) && (lastInstruction != null)) {
             sourcePair = InstructionMapping.get(lastInstruction as Instruction);
             val targetPair = new Pair<KNode, KNode>(exitNode, null)
             if (sourcePair.second != null) {
@@ -343,7 +353,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             }
             
             (instr as Instruction).addToMapping(kForkNode, kJoinNode)           
-            return kForkNode
+            return (instr as Instruction)
     }
     
 
@@ -360,7 +370,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             rootNode.children.add(kNode)
 
             (instr as Instruction).addToMapping(kNode, kNode)           
-            return kNode
+            return (instr as Instruction)
     }
 
     def createPauseFigure(Pause instr, KNode rootNode) {
@@ -401,7 +411,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 ]
                 
             (instr as Instruction).addToMapping(kContainerNode, kContainerNode)           
-            return kNode
+            return (instr as Instruction)
     }
 
     def createConditionalFigure(Conditional instr, KNode rootNode) {
@@ -413,10 +423,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kNode.KRendering.add(factory.createKText.of(nodeText));
             rootNode.children.add(kNode)
             
-            instr.conditional.createInstructionListFigure(rootNode, kNode, null)
+            val lastInstruction = instr.conditional.createInstructionListFigure(rootNode, kNode, null)
 
             (instr as Instruction).addToMapping(kNode, kNode)           
-            return kNode
+            return lastInstruction
     }
 	
 }
