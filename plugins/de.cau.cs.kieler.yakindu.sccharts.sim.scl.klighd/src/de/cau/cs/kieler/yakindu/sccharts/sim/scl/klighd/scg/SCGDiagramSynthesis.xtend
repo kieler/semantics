@@ -2,6 +2,8 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.klighd.scg
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
+import com.google.inject.Guice
+import com.google.inject.Injector
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.LineStyle
@@ -10,34 +12,43 @@ import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kiml.util.KimlUtil
-import de.cau.cs.kieler.klighd.TransformationContext
 import de.cau.cs.kieler.klighd.TransformationOption
-import de.cau.cs.kieler.klighd.transformations.AbstractTransformation
+import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
+import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCLHelper
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Assignment
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionList
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Parallel
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scoping.SCLScopeProvider
+import java.util.HashMap
 import javax.inject.Inject
-import com.google.inject.Guice
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.serializer.ISerializer
+import org.yakindu.sct.model.stext.stext.Expression
+
 
 import static de.cau.cs.kieler.yakindu.sccharts.sim.scl.klighd.scg.SCGDiagramSynthesis.*
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Pause
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Conditional
-import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
-import de.cau.cs.kieler.core.krendering.KPolyline
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Instruction
-import java.util.HashMap
-import de.cau.cs.kieler.core.util.Pair
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Goto
-import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCLHelper
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Label
+import de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCLStandaloneSetup
+import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 
 class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
+    
+    private static val Injector i = SCLStandaloneSetup::doSetup();
+    private static val SCLScopeProvider scopeProvider = i.getInstance(typeof(SCLScopeProvider));
+    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
+    private static val Resource TMP_RES = i.getInstance(typeof(ResourceSet))
+            .createResource(URI::createFileURI("dummy.action.scg"));    
 
     @Inject
     extension KRenderingUtil
@@ -56,6 +67,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     
 	@Inject
 	extension KColorExtensions
+	
+	@Inject
+	extension KPortExtensions
 	
 	     extension de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCLHelper SCLHelper = 
          Guice::createInjector().getInstance(typeof(SCLHelper))
@@ -190,7 +204,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                     if (lastInstruction != null) {
                         GotoMapping.put((instruction as Goto), 
                             InstructionMapping.get(lastInstruction as Instruction).second)
-                    } else { GotoMapping.put((instruction as Goto), entryNode) }
+                    } else { 
+                        GotoMapping.put((instruction as Goto), sourcePair.second)
+                    }
+                    lastInstruction = null
                 } 
             }  
             
@@ -335,11 +352,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             val kNode = instr.createRoundedRectangulareNode(25, 85);
             kNode.KRendering.add(factory.createKLineWidth.of(2));
             
-//            kNode.KRendering.foreground = if (node.id.endsWith("_S")) "black".color else "gray".color;
             kNode.KRendering.foreground = "gray".color;
-            
-//            val nodeText = node.id.substring(0,node.id.length - 2);
-            val nodeText = "ASSIGNMENT";
+          
+            val nodeText = serializer.serialize(instr);            
             
             kNode.KRendering.add(factory.createKText.of(nodeText));
             rootNode.children.add(kNode)
@@ -393,7 +408,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             val kNode = instr.createDiamondNode(75, 75);
             kNode.KRendering.add(factory.createKLineWidth.of(2));
             
-            val nodeText = "COND";
+            val Expression exp = instr.expression
+            val nodeText = serializer.serialize(exp);            
             kNode.KRendering.add(factory.createKText.of(nodeText));
             rootNode.children.add(kNode)
             
