@@ -324,16 +324,36 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 val Object EntryObj = new Object
                 val Object ExitObj = new Object
             
-                val kBackgroundNode = BackgroundObj.createRectangulareNode(150,100)
+                val kBackgroundNode = BackgroundObj.createRectangulareNode()
                 kBackgroundNode.KRendering.add(factory.createKLineWidth.of(2));
                 kBackgroundNode.KRendering.foreground = "gray".color;
                 kContainerNode.children.add(kBackgroundNode)
 
-           kBackgroundNode.addLayoutParam(LayoutOptions::SPACING, Float::valueOf("25.0"));
-           kBackgroundNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
+           kBackgroundNode.addLayoutParam(LayoutOptions::SPACING, 25.0f);
+//           kBackgroundNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
            kBackgroundNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
            kBackgroundNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
 //           kBackgroundNode.addLayoutParam(LayoutOptions::LAYOUT_HIERARCHY, true);
+           kBackgroundNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+            
+            val kPortIncoming = BackgroundObj.createPort() => [
+                kBackgroundNode.ports += it;
+//                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+//                it.setPortPos(75, -9)
+                it.setPortSize(10,10)
+                
+            ]
+            val kPortOutgoing = unassigned.createPort() => [
+                kBackgroundNode.ports += it;
+//                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+//                it.setPortPos(75, kBackgroundNode.height - 2)
+                it.setPortSize(2,2)
+            ]
+            kBackgroundNode.addToPortMapping('incoming', kPortIncoming)
+            kBackgroundNode.addToPortMapping('outgoing', kPortOutgoing)
+
+
+
 
 
                 val kEntryNode = EntryObj.createEllipseNode(30,75).putToLookUpWith(EntryObj)
@@ -385,46 +405,14 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kExitNode.addToPortMapping('incoming', kPortIncomingExit)
             kExitNode.addToPortMapping('outgoing', kPortOutgoingExit)
 
-
-            kBackgroundNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            val kPortIncoming = BackgroundObj.createPort() => [
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
-                it.setPortPos(75, 0)
-                it.setPortSize(2,2)
-            ]
-            val kPortOutgoing = unassigned.createPort() => [
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
-                it.setPortPos(75, kBackgroundNode.height - 2)
-                it.setPortSize(2,2)
-            ]
-            val kPortIncomingInner = unassigned.createPort() => [
-                it.setPortPos(75, kBackgroundNode.height)
-                it.setPortSize(2,2)
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
-            ]
-            val kPortOutgoingInner = unassigned.createPort() => [
-                it.setPortPos(75, 2)
-                it.setPortSize(2,2)
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
-            ]
-            kBackgroundNode.ports += kPortIncoming;
-            kBackgroundNode.ports += kPortOutgoing;
-            kBackgroundNode.addToPortMapping('incoming', kPortIncoming)
-            kBackgroundNode.addToPortMapping('outgoing', kPortOutgoing)
-            kBackgroundNode.ports += kPortIncomingInner;
-            kBackgroundNode.ports += kPortOutgoingInner;
-            kBackgroundNode.addToPortMapping('incomingInner', kPortIncomingInner)
-            kBackgroundNode.addToPortMapping('outgoingInner', kPortOutgoingInner)
-
-
                 threads.createInstructionListFigure(kBackgroundNode, kEntryNode, kExitNode, '')
 
                 ParallelExitMapping.put(threads, kExitNode);
             
                 createEdge(kForkNode, kBackgroundNode, false)
-                createEdge(kBackgroundNode, kJoinNode, false)
-                createEdgeArrow(kBackgroundNode, kEntryNode, 'outgoingInner', 'incoming')
-                createEdgeArrow(kExitNode, kBackgroundNode, 'outgoing', 'incomingInner')
+                createEdgeArrow(kBackgroundNode, kJoinNode)
+                createEdgeArrow(kBackgroundNode, kEntryNode, 'incoming', 'incoming')
+                createEdge(kExitNode, kBackgroundNode, 'outgoing', 'outgoing', false)
 //                createEdgeArrow(kForkNode, kEntryNode)
 //                createEdgeArrow(kExitNode, kJoinNode) => [
 //                    val layout = it.getData(typeof(KEdgeLayout));
