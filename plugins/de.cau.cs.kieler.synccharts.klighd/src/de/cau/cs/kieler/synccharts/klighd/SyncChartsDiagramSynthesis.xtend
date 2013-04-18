@@ -1,5 +1,7 @@
+
 package de.cau.cs.kieler.synccharts.klighd
 
+import java.util.List
 import javax.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kgraph.KNode
@@ -21,7 +23,9 @@ import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
 import de.cau.cs.kieler.synccharts.State
+import de.cau.cs.kieler.synccharts.StateType
 import de.cau.cs.kieler.synccharts.Region
 import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.TransitionType
@@ -33,7 +37,6 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
 
 class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -67,6 +70,11 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     override transform(Region model) {
         return model.translate();
     }
+    
+    
+    private static val float DASH_BLACK = 10;
+    private static val float DASH_WHITE = 5;
+    private static val List<Float> DASH_PATTERN = newArrayList(DASH_BLACK, DASH_WHITE); 
 
     def dispatch KNode translate(Region r) {
         return r.createNode().putToLookUpWith(r) => [ node |
@@ -96,12 +104,16 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
                 it.addVerticalLine(LEFT, 1, 1) => [
-                    it.lineStyle = LineStyle::DASH;
+                    it.lineStyle = LineStyle::CUSTOM;
+                    it.lineStyle.dashPattern.clear;
+                    it.lineStyle.dashPattern += DASH_PATTERN;
                     it.invisible = true;
                     it.invisible.modifierId = "de.cau.cs.kieler.synccharts.klighd.regionLineModifier";
                 ];
                 it.addHorizontalLine(TOP, 1, 1) => [
-                    it.lineStyle = LineStyle::DASH;
+                    it.lineStyle = LineStyle::CUSTOM;
+                    it.lineStyle.dashPattern.clear;
+                    it.lineStyle.dashPattern += DASH_PATTERN;
                     it.invisible = true;
                     it.invisible.modifierId = "de.cau.cs.kieler.synccharts.klighd.regionLineModifier";
                 ];
@@ -118,14 +130,25 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             node.addLayoutParam(LayoutOptions::SPACING, 0f);
             node.transferAnnotationsOf(s);
 
+            val conditional = s.type == StateType::CONDITIONAL;
             val simpleState = s.signals.empty && s.regions.empty;
-            val cornerRadius = if (simpleState) 15 else 8;
+            val cornerRadius = if (conditional) 10 else if (simpleState) 15 else 8;
             val lineWidth = if (s.isInitial && s.isFinal) 2.1f else if (s.isInitial) 4 else 1;
 
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
                 .background = "white".color;
             (
-                if (s.isFinal) figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
+                if (conditional) figure => [
+                    it.background = "black".color;
+                    it.addArc => [
+                        it.foreground = "white".color;
+                        it.startAngle = 45;
+                        it.arcAngle = 270;
+                        it.lineWidth = 2;
+                        it.setSurroundingSpace(0, 0.3f);
+                    ];
+                    node.setNodeSize(20,20);
+                ] else if (s.isFinal) figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
                     // re-configure the outer rounded rectangle
                     val offset = figure.lineWidthValue + 1;
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
@@ -134,12 +157,18 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.styleRef = figure;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
                 ] else figure
+                
              ) => [
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
+                
+                if (conditional) {
+                    return;
+                }
                 
                 if (!simpleState) {
                     it.setGridPlacement(1);
                 } 
+                
                 it.addText(s.label).putToLookUpWith(s) => [
                     it.background = "white".color;
                     it.fontSize = 11;
