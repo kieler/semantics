@@ -388,8 +388,26 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
     
     def createAssignmentFigure(Assignment instr, KNode rootNode) {
+            val Object outPortObj = new Object
             val kNode = instr.createRoundedRectangulareNode(25, 85);
             kNode.KRendering.add(factory.createKLineWidth.of(2));
+            
+            kNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            val kPortIncoming = instr.createPort() => [
+                it.setPortPos(41, 0)
+                it.setPortSize(2,2)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+            ]
+            val kPortOutgoing = outPortObj.createPort() => [
+                it.setPortPos(41, 23)
+                it.setPortSize(2,2)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+            ]
+            kNode.ports += kPortIncoming;
+            kNode.addToPortMapping('incoming', kPortIncoming)
+            kNode.ports += kPortOutgoing;
+            kNode.addToPortMapping('outgoing', kPortOutgoing)
+            
             
             kNode.KRendering.foreground = "gray".color;
           
