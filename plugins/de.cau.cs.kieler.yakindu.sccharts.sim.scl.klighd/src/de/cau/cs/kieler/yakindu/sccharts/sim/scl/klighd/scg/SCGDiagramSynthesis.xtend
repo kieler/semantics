@@ -292,18 +292,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             val Object ContainerObj = new Object
             val Object JoinObj = new Object
             
-            
-            
             val kContainerNode = rootNode
-//            val kContainerNode = ContainerObj.createRectangulareNode(150,100)
-//            kContainerNode.KRendering.add(factory.createKLineWidth.of(2));
-//            kContainerNode.KRendering.foreground = "lightBlue".color;
-//            rootNode.children.add(kContainerNode)
-
-//        kContainerNode.addLayoutParam(LayoutOptions::SPACING, Float::valueOf("25.0"));
-//        kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
-//        kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-//        kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");            
             
             val kForkNode = instr.createTriangleNode(50, 100);
             kForkNode.KRendering.add(factory.createKLineWidth.of(2));
@@ -324,33 +313,33 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 val Object EntryObj = new Object
                 val Object ExitObj = new Object
             
-                val kBackgroundNode = BackgroundObj.createRectangulareNode()
+                val kBackgroundNode = BackgroundObj.createRectangulareNode(50, 150)
                 kBackgroundNode.KRendering.add(factory.createKLineWidth.of(2));
                 kBackgroundNode.KRendering.foreground = "gray".color;
                 kContainerNode.children.add(kBackgroundNode)
 
            kBackgroundNode.addLayoutParam(LayoutOptions::SPACING, 25.0f);
-//           kBackgroundNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
+           kBackgroundNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
            kBackgroundNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
            kBackgroundNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-//           kBackgroundNode.addLayoutParam(LayoutOptions::LAYOUT_HIERARCHY, true);
-           kBackgroundNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+//           kBackgroundNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             
-            val kPortIncoming = BackgroundObj.createPort() => [
+/*             val kPortIncoming = BackgroundObj.createPort() => [
                 kBackgroundNode.ports += it;
-//                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
-//                it.setPortPos(75, -9)
-                it.setPortSize(10,10)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+                it.setPortPos(75, 0)
+                it.setPortSize(2,2)
                 
             ]
             val kPortOutgoing = unassigned.createPort() => [
                 kBackgroundNode.ports += it;
-//                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
-//                it.setPortPos(75, kBackgroundNode.height - 2)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+                it.setPortPos(75, kBackgroundNode.height - 2)
                 it.setPortSize(2,2)
             ]
             kBackgroundNode.addToPortMapping('incoming', kPortIncoming)
             kBackgroundNode.addToPortMapping('outgoing', kPortOutgoing)
+*/
 
 
 
@@ -372,47 +361,49 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 kBackgroundNode.children.add(kExitNode)
 
 
-            kEntryNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+/*             kEntryNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             val kPortIncomingEntry = EntryObj.createPort() => [
-                it.setPortPos(41, 0)
+                it.setPortPos(37, 0)
                 it.setPortSize(2,2)
                 it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
             ]
+            kEntryNode.ports += kPortIncomingEntry;
+            kEntryNode.addToPortMapping('incoming', kPortIncomingEntry)
+*/
             val kPortOutgoingEntry = unassigned.createPort() => [
-                it.setPortPos(41, 23)
+                it.setPortPos(37, 30)
                 it.setPortSize(2,2)
                 it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
             ]
-            kEntryNode.ports += kPortIncomingEntry;
             kEntryNode.ports += kPortOutgoingEntry;
-            kEntryNode.addToPortMapping('incoming', kPortIncomingEntry)
             kEntryNode.addToPortMapping('outgoing', kPortOutgoingEntry)
 
                 
             kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             val kPortIncomingExit = ExitObj.createPort() => [
-                it.setPortPos(41, 0)
+                it.setPortPos(37, 0)
                 it.setPortSize(2,2)
                 it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
             ]
-            val kPortOutgoingExit = unassigned.createPort() => [
-                it.setPortPos(41, 23)
+            kExitNode.ports += kPortIncomingExit;
+            kExitNode.addToPortMapping('incoming', kPortIncomingExit)
+/*             val kPortOutgoingExit = unassigned.createPort() => [
+                it.setPortPos(37, 30)
                 it.setPortSize(2,2)
                 it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
             ]
-            kExitNode.ports += kPortIncomingExit;
             kExitNode.ports += kPortOutgoingExit;
-            kExitNode.addToPortMapping('incoming', kPortIncomingExit)
             kExitNode.addToPortMapping('outgoing', kPortOutgoingExit)
+*/
 
                 threads.createInstructionListFigure(kBackgroundNode, kEntryNode, kExitNode, '')
 
                 ParallelExitMapping.put(threads, kExitNode);
             
-                createEdge(kForkNode, kBackgroundNode, false)
+                createEdgeArrow(kForkNode, kBackgroundNode)
                 createEdgeArrow(kBackgroundNode, kJoinNode)
-                createEdgeArrow(kBackgroundNode, kEntryNode, 'incoming', 'incoming')
-                createEdge(kExitNode, kBackgroundNode, 'outgoing', 'outgoing', false)
+//                createEdgeArrow(kBackgroundNode, kEntryNode, 'incoming', 'incoming')
+//                createEdge(kExitNode, kBackgroundNode, 'outgoing', 'outgoing', false)
 //                createEdgeArrow(kForkNode, kEntryNode)
 //                createEdgeArrow(kExitNode, kJoinNode) => [
 //                    val layout = it.getData(typeof(KEdgeLayout));
@@ -451,9 +442,6 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kNode.ports += kPortOutgoing;
             kNode.addToPortMapping('outgoing', kPortOutgoing)
             
-            
-            kNode.KRendering.foreground = "gray".color;
-          
             val nodeText = serializer.serialize(instr);            
             
             kNode.KRendering.add(factory.createKText.of(nodeText));
@@ -473,9 +461,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.KRendering.invisible = true;
             
             
-            kContainerNode.addLayoutParam(LayoutOptions::SPACING, Float::valueOf("20.0"));
-            kContainerNode.addLayoutParam(LayoutOptions::BORDER_SPACING, Float::valueOf("0.0"));
-//            kContainerNode.addLayoutParam(LayoutOptions::EXPAND_NODES, true);
+            kContainerNode.addLayoutParam(LayoutOptions::SPACING, 20.0f);
+            kContainerNode.addLayoutParam(LayoutOptions::BORDER_SPACING, 0.0f);
             kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
             kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
@@ -597,7 +584,6 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                     it.sourcePort = sourcePort
                     it.target = targetNode
                     it.targetPort = targetPort
-//                    it.createLabel.configureTailLabel('test', 8, KlighdConstants::DEFAULT_FONT_NAME)
                     it.data += renderingFactory.createKPolyline() => [
                         it.setLineWidth(2);
                         if (addArrow == true) { it.addArrowDecorator(); }
