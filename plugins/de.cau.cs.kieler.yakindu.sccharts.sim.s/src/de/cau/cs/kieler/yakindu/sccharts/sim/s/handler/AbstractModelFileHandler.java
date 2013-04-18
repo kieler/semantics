@@ -1,7 +1,10 @@
-package de.cau.cs.kieler.yakindu.sccharts.sim.s.ui;
+package de.cau.cs.kieler.yakindu.sccharts.sim.s.handler;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.internal.resources.File;
@@ -9,6 +12,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -16,6 +20,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
@@ -28,75 +33,49 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.yakindu.sct.model.sgraph.Statechart;
-import org.yakindu.sct.model.stext.STextStandaloneSetup;
 
 import com.google.inject.Injector;
-
-import de.cau.cs.kieler.core.properties.IPropertyHolder;
-import de.cau.cs.kieler.core.properties.MapPropertyHolder;
-import de.cau.cs.kieler.klighd.LightDiagramServices;
-import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy;
-import de.cau.cs.kieler.klighd.views.DiagramViewManager;
-import de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.CoreToSCLTransformation;
-import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program;
+// NEEDED for KIELER stand-alone
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
- * 
- * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
 @SuppressWarnings("restriction")
-public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
-
-        public static final String SCLTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.CoreToSCLTransformation";
-
+public abstract class AbstractModelFileHandler extends AbstractHandler {
 	/**
 	 * The constructor.
 	 */
-	public SCLCommandHandler() {
-	}
-
-	public String ModelHandlerFileExtension() {
-		return "scc";
-	}
-
-	public String ModelHandlerFileExtensionTransformed() {
-		return "scl";
-	}
-
-	public String ModelHandlerDiagramEditorID() {
-		return "de.cau.cs.kieler.yakindu.sccharts.sim.scl.SCL";
-	}
-
-	public PreferencesHint ModelHandlerDiagramPreferencesHint() {
-		return new PreferencesHint("");
-	}
-
-	public boolean ModelHandlerCreateDiagram() {
-		return false;
-	}
-
-	public boolean ModelHandlerOpenEditor() {
-		return false;
-	}
-
-	public EObject SCChartsDoTransformation(EObject modelObject,
-			String commandString) {
-                if (commandString.equals(SCLTRANSFORMATIONCOMMAND)) {
-                    System.out.println("scl transformation: " + commandString);
-                    EObject transformed = (new CoreToSCLTransformation())
-                                    .transformCoreToSCL((Statechart) modelObject);
-                    EcoreUtil.resolveAll(transformed);
-                    return transformed;
-                }
-                
-		return null;
+	
+	public AbstractModelFileHandler() {
 	}
 	
-	private static Injector injector = new STextStandaloneSetup().createInjectorAndDoEMFRegistration();
+	public abstract String ModelHandlerFileExtension();
 	
+	public abstract String ModelHandlerFileExtensionTransformed();
+	
+	public abstract String ModelHandlerDiagramEditorID();
+	
+	public abstract PreferencesHint ModelHandlerDiagramPreferencesHint();
+	
+	public abstract boolean ModelHandlerCreateDiagram();
+	
+	public abstract boolean ModelHandlerOpenEditor();
+	
+	public abstract Injector CreateResourceInjector();
+	
+	public EObject doTransformation(EObject modelObject, String commandString) {
+		return modelObject;
+	}
+	
+	public void doPostProcessing(EObject modelObject) { 
+	    
+	}
+	
+	/**
+	 * the command has been executed, so extract extract the needed information
+	 * from the application context.
+	 */
         public Object execute(ExecutionEvent event) throws ExecutionException {
             // Get input model from currently selected file in Explorer
             ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
@@ -107,11 +86,12 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
 
             String command = event.getCommand().getId().toString();
             
-            ResourceSet resourceSet = injector.getInstance(ResourceSet.class);
+            Injector rInjector = CreateResourceInjector();
+            ResourceSet resourceSet = rInjector.getInstance(ResourceSet.class);
             Resource resourceLoad=resourceSet.getResource(input, true);
                 
             EObject modelRoot = resourceLoad.getContents().get(0); 
-            EObject transformedModel = SCChartsDoTransformation(modelRoot, command);
+            EObject transformedModel = doTransformation(modelRoot, command);
             resourceLoad.unload();
             
             // Calculate output path
@@ -129,7 +109,7 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
                 ResourceSet resSet = new ResourceSetImpl();
                 
                 // Create ouptut resource
-                Resource resource = resSet.createResource(output);
+                Resource saveRes = resSet.createResource(output);
                 
                 // Create Diagram, if necessary
                 // Note: Diagrams created this way are empty
@@ -142,14 +122,14 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
                     diagram.setElement(transformedModel);
                
                     // Save both the model and the diagram in one resource
-                    resource.getContents().add(transformedModel);
-                    resource.getContents().add(diagram);
+                    saveRes.getContents().add(transformedModel);
+                    saveRes.getContents().add(diagram);
                 } else {
-                    resource.getContents().add(transformedModel);
+                    saveRes.getContents().add(transformedModel);
                 }
                 
-                resource.save(getSaveOptions());
-                setCharset(WorkspaceSynchronizer.getFile(resource));
+                saveRes.save(getSaveOptions());
+                setCharset(WorkspaceSynchronizer.getFile(saveRes));
 
                 // Open associated editor, if necessary
                 if (ModelHandlerOpenEditor()) {
@@ -167,18 +147,13 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
                                             desc.getId());
                 }
                 
-                IPropertyHolder p = new MapPropertyHolder();
-                p.setProperty(LightDiagramServices.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
-                DiagramViewManager.getInstance().createView(
-                        "de.cau.cs.kieler.yakindu.sccharts.sim.scl.klighd.scg.SCGDiagramSynthesis", 
-                        "SCG", (Program) transformedModel, p); 
-                
+                doPostProcessing(transformedModel);
+               
             } catch (IOException e) {
                 throw new ExecutionException("Cannot write output SCChart file.");
             } catch (PartInitException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
+                e.printStackTrace();
+            }
 
             // Refresh the file explorer
             try {
@@ -187,9 +162,25 @@ public class SCLCommandHandler extends SCChartsGenericFileCommandHandler {
                 e2.printStackTrace();
             }
             
-            
             return null;
     }
-
-
+	
+    protected Map<String, String> getSaveOptions() {
+        Map<String, String> saveOptions = new HashMap<String, String>();
+        saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
+        saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED,
+                            Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
+        return saveOptions;
+    }
+       
+    protected void setCharset(IFile file) {
+        if (file == null) {
+            return;
+        }
+        try {
+            file.setCharset("UTF-8", new NullProgressMonitor());
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
+    }
 }

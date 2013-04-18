@@ -26,15 +26,15 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.yakindu.sccharts.sim.s.ui.SCCCommandHandler"
+            class="de.cau.cs.kieler.yakindu.sccharts.sim.s.handler.SCCModelFileHandler"
             commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCCToCoreTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.yakindu.sccharts.sim.s.ui.SCLCommandHandler"
+            class="de.cau.cs.kieler.yakindu.sccharts.sim.s.handler.SCLModelFileHandler"
             commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.CoreToSCLTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.yakindu.sccharts.sim.s.ui.SCGCommandHandler"
+            class="de.cau.cs.kieler.yakindu.sccharts.sim.s.handler.SCGCommandHandler"
             commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCLToSCGTransformation">
       </handler>
    </extension>
