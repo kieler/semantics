@@ -38,19 +38,17 @@ class CoreToSCLTransformation {
        
         rootStatechart.statechartDistributePriorities
        
-        targetProgram.setName((rootStatechart.regions.get(0).vertices.get(0) as SyncState).getName());
+        targetProgram.program = SCL.createInstructionList();
+        val mainState = rootStatechart.regions.get(0).vertices.get(0) as SyncState
+       
+        targetProgram.setName(mainState.name)
         
-        val Region mainRegion = (rootStatechart.regions.get(0).vertices.get(0) as SyncState).regions.get(0);
-        var program = SCL.createInstructionList();
-        program.instructions.addAll(transformCoreRegion(mainRegion).instructions);
+        targetProgram.program.instructions.addAll(transformCoreState(mainState).instructions);
         
-        val mainState = (rootStatechart.regions.get(0).vertices.get(0) as SyncState);
         for(declaration : mainState.scopes.get(0).declarations) {
            targetProgram.interface.add(createVariableDeclaration(declaration as Event));
         }
        
-        targetProgram.program = program//.optimizeGoto;//.optimizeLabel;
-
         targetProgram
     }
 
