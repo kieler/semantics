@@ -2,7 +2,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sim.scl.klighd.scg
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination
 import de.cau.cs.kieler.core.model.triggers.SelectionTrigger$SelectionState
-import de.cau.cs.kieler.klighd.effects.KlighdUpdateDiagramEffect
+import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
 import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Program
 import java.util.Collections
 import org.eclipse.core.internal.resources.File
@@ -25,8 +25,7 @@ class SCGDiagramSynthesisCombination extends AbstractCombination {
 			if (resource != null && !resource.contents.nullOrEmpty) {
 				val sclProgram = resource.contents.get(0) as Program;
 					
-	            this.schedule(new KlighdUpdateDiagramEffect(sclProgram));
-				
+	            this.schedule(new KlighdDiagramEffect(sclProgram));
 			}
 			    	
 		}
