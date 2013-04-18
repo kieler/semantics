@@ -17,11 +17,6 @@
             id="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.CoreToSCLTransformation"
             name="CoreToSCLTransformation">
       </command>
-      <command
-            categoryId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.category"
-            id="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCLToSCGTransformation"
-            name="SCLToSCGTransformation">
-      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -33,64 +28,17 @@
             class="de.cau.cs.kieler.yakindu.sccharts.sim.s.handler.SCLModelFileHandler"
             commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.CoreToSCLTransformation">
       </handler>
-      <handler
-            class="de.cau.cs.kieler.yakindu.sccharts.sim.s.handler.SCGCommandHandler"
-            commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCLToSCGTransformation">
-      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
-      <key
-            commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCCToCoreTransformation"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+6">
-      </key>
-      <key
-            commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.CoreToSCLTransformation"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+6">
-      </key>
-      <key
-            commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCLToSCGTransformation"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+6">
-      </key>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               id="de.cau.cs.kieler.yakindu.sccharts.sim.s.menus.SCCharts"
-               label="SCCharts"
-               mnemonic="M">
-            <command
-                  commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCCToCoreTransformation"
-                  id="Transform SCC to Core"
-                  mnemonic="S">
-            </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCChartsTransformation">
-            <command
-                  commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCCToCoreTransformation"
-                  icon="icons/sample.gif"
-                  id="Transform SCC to Core"
-                  tooltip="Say hello world">
-            </command>
-         </toolbar>
-      </menuContribution>
-      <menuContribution
             locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.sim.s.transformations">
          <command
                commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCCToCoreTransformation"
-               label="Test Transformation"
+               label="SCC to Core Transformation"
                mnemonic="A"
                style="push">
             <visibleWhen>
@@ -110,7 +58,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.sim.s.scltransformations">
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
                commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.CoreToSCLTransformation"
                label="Core to SCL Transformation"
@@ -132,29 +80,6 @@
             </visibleWhen>
          </command>
       </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.sim.s.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.yakindu.sccharts.sim.s.commands.SCLToSCGTransformation"
-               label="SCL to SCG Transformation"
-               mnemonic="A"
-               style="push">
-            <visibleWhen>
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scl">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -163,30 +88,6 @@
          <menu
                id="de.cau.cs.kieler.yakindu.sccharts.sim.s.transformations"
                label="SCCharts to Core"
-               mnemonic="T">
-            <separator
-                  name="de.cau.cs.kieler.core.ui.separator1"
-                  visible="true">
-            </separator>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="de.cau.cs.kieler.yakindu.sccharts.sim.s.scltransformations"
-               label="Core to SCL"
-               mnemonic="T">
-            <separator
-                  name="de.cau.cs.kieler.core.ui.separator1"
-                  visible="true">
-            </separator>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="de.cau.cs.kieler.yakindu.sccharts.sim.s.scgtransformations"
-               label="SCL to SCG"
                mnemonic="T">
             <separator
                   name="de.cau.cs.kieler.core.ui.separator1"
