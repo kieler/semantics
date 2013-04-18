@@ -105,6 +105,11 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createInstructionListAdapter();
       }
       @Override
+      public Adapter caseScope(Scope object)
+      {
+        return createScopeAdapter();
+      }
+      @Override
       public Adapter caseLabel(Label object)
       {
         return createLabelAdapter();
@@ -148,6 +153,11 @@ public class SclAdapterFactory extends AdapterFactoryImpl
       public Adapter caseVariable(Variable object)
       {
         return createVariableAdapter();
+      }
+      @Override
+      public Adapter caseSGraph_Scope(org.yakindu.sct.model.sgraph.Scope object)
+      {
+        return createSGraph_ScopeAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -242,6 +252,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createInstructionListAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope <em>Scope</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.Scope
+   * @generated
+   */
+  public Adapter createScopeAdapter()
   {
     return null;
   }
@@ -377,6 +402,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVariableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Scope <em>Scope</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.sct.model.sgraph.Scope
+   * @generated
+   */
+  public Adapter createSGraph_ScopeAdapter()
   {
     return null;
   }

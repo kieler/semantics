@@ -50,13 +50,26 @@ InstructionList:
   )*    
 ;
 
-//Scope:
-//  {InstructionList}
-//  (
-//      '{'
-//      '}'
-//    )
-//;
+Scope:
+  {InstructionList}
+ '{'
+      (interface+=VariableDeclaration)*
+  (
+      (
+          (instructions += Instruction';')
+          |
+          (instructions += Annotation)
+          |
+          (instructions += Label)
+      )*
+      (instructions += Instruction)
+      |
+      (instructions += Annotation)
+      |
+      (instructions += Label)
+  )*    
+ '}'
+;
 
 Label:
     'label' name = ID ':'

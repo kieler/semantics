@@ -119,6 +119,10 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 					sequence_InstructionList(context, (InstructionList) semanticObject); 
 					return; 
 				}
+				else if(context == grammarAccess.getScopeRule()) {
+					sequence_Scope(context, (InstructionList) semanticObject); 
+					return; 
+				}
 				else break;
 			case SclPackage.LABEL:
 				if(context == grammarAccess.getLabelRule()) {
@@ -453,7 +457,6 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 			case StextPackage.INTERFACE_SCOPE:
 				if(context == grammarAccess.getInterfaceScopeRule() ||
 				   context == grammarAccess.getNamedInterfaceScopeRule() ||
-				   context == grammarAccess.getScopeRule() ||
 				   context == grammarAccess.getStatechartScopeRule()) {
 					sequence_InterfaceScope(context, (InterfaceScope) semanticObject); 
 					return; 
@@ -461,7 +464,6 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 				else break;
 			case StextPackage.INTERNAL_SCOPE:
 				if(context == grammarAccess.getInternalScopeRule() ||
-				   context == grammarAccess.getScopeRule() ||
 				   context == grammarAccess.getStatechartScopeRule()) {
 					sequence_InternalScope(context, (InternalScope) semanticObject); 
 					return; 
@@ -767,8 +769,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 				}
 				else break;
 			case StextPackage.SIMPLE_SCOPE:
-				if(context == grammarAccess.getScopeRule() ||
-				   context == grammarAccess.getStateScopeRule()) {
+				if(context == grammarAccess.getStateScopeRule()) {
 					sequence_StateScope(context, (SimpleScope) semanticObject); 
 					return; 
 				}
@@ -974,6 +975,22 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     (name=ID interface+=VariableDeclaration* program=InstructionList)
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         interface+=VariableDeclaration* 
+	 *         (
+	 *             ((instructions+=Instruction | instructions+=Annotation | instructions+=Label)* instructions+=Instruction) | 
+	 *             instructions+=Annotation | 
+	 *             instructions+=Label
+	 *         )*
+	 *     )
+	 */
+	protected void sequence_Scope(EObject context, InstructionList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

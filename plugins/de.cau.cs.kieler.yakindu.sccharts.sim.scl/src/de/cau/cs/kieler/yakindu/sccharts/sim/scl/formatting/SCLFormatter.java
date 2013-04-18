@@ -34,6 +34,8 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             c.setLinewrap(1).before(f.getProgramAccess().getRightCurlyBracketKeyword_5());
             c.setIndentation(f.getProgramAccess().getLeftCurlyBracketKeyword_3(), 
                              f.getProgramAccess().getRightCurlyBracketKeyword_5());
+            
+            c.setNoSpace().before(f.getVariableDeclarationAccess().getColonKeyword_4_0());
 	    
             // Instructions
             c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_1_0_0_0_1());

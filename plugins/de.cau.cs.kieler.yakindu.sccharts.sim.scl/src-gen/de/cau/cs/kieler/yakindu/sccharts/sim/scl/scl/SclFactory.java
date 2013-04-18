@@ -68,6 +68,15 @@ public interface SclFactory extends EFactory
   InstructionList createInstructionList();
 
   /**
+   * Returns a new object of class '<em>Scope</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scope</em>'.
+   * @generated
+   */
+  Scope createScope();
+
+  /**
    * Returns a new object of class '<em>Label</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

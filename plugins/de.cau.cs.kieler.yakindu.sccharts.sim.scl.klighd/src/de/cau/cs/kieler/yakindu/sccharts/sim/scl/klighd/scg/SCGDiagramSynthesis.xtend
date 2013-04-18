@@ -84,9 +84,6 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	@Inject
 	extension SCLHelper
 	
-//	     extension de.cau.cs.kieler.yakindu.sccharts.sim.s.xtend.SCLHelper SCLHelper = 
-//         Guice::createInjector().getInstance(typeof(SCLHelper))
-	
     private static val KRenderingFactory renderingFactory = KRenderingFactory::eINSTANCE
 
     private static val CHOSEN = "Chosen classes";
@@ -210,7 +207,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             ) {
                 val targetNode = targetPair.first
                 if (sourcePortID.empty) {
-                createEdgeArrow(sourceNode, targetNode)
+                    createEdgeArrow(sourceNode, targetNode)
                 } else {
                     createEdgeArrow(sourceNode, targetNode, sourcePortID, 'incoming')
                 }
@@ -226,6 +223,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	    
 	    var Instruction lastInstruction = null
         var sourcePair = new Pair<KNode, KNode>(null, entryNode)
+        var alternativeOutID = alternativeOutgoingID
 	    
 	    for(instruction : iSet.instructions) {
 	        var noGoto = true
@@ -244,10 +242,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                     if (lastInstruction != null) {
                         GotoMapping.put((instruction as Goto), 
                             new Pair<KNode, String>(InstructionMapping.get(lastInstruction as Instruction).second,
-                                alternativeOutgoingID))
+                                alternativeOutID))
                     } else { 
                         GotoMapping.put((instruction as Goto), 
-                            new Pair<KNode, String>(sourcePair.second, alternativeOutgoingID)
+                            new Pair<KNode, String>(sourcePair.second, alternativeOutID)
                         )
                     }
                     lastInstruction = null
@@ -266,10 +264,11 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 if ((sourcePair != null) && (sourcePair.second != null)) {
                     val targetPair = InstructionMapping.get(instruction as Instruction);
                     val sourceNode = sourcePair.second
-                    if (alternativeOutgoingID.empty) {
-                    createEdgeArrow(sourceNode, targetPair.first)
+                    if (alternativeOutID.empty) {
+                        createEdgeArrow(sourceNode, targetPair.first)
                     } else {
-                        createEdgeArrow(sourceNode, targetPair.first, alternativeOutgoingID, 'incoming')
+                        createEdgeArrow(sourceNode, targetPair.first, alternativeOutID, 'incoming')
+                        alternativeOutID = ''
                     }
                     sourcePair = null
                 }
@@ -354,6 +353,15 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 kExitNode.KRendering.foreground = "gray".color;
                 kExitNode.KRendering.add(factory.createKText.of('exit'));
                 kBackgroundNode.children.add(kExitNode)
+                
+            kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            val kPortIncoming = ExitObj.createPort() => [
+                it.setPortPos(36, 0)
+                it.setPortSize(2,2)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+            ]
+            kExitNode.ports += kPortIncoming;
+            kExitNode.addToPortMapping('incoming', kPortIncoming)
 
 
                 threads.createInstructionListFigure(kBackgroundNode, kEntryNode, kExitNode, '')
@@ -527,7 +535,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                     ];          
                 ]  
         if (IDout == 'conditional') {
-            edge.createLabel.configureTailLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
+            edge.createLabel.configureTailLabel('_true', 9, KlighdConstants::DEFAULT_FONT_NAME)
         }        
         edge
     }
