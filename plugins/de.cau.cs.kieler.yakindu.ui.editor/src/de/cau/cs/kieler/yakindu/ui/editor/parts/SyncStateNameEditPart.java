@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -19,14 +19,33 @@ import org.yakindu.base.base.BasePackage;
 import org.yakindu.sct.ui.editor.DiagramActivator;
 import org.yakindu.sct.ui.editor.editparts.StateNameEditPart;
 
+/**
+ * This class extends the StateNameEditPart to skip the <name> text if a state
+ * has no name.
+ * 
+ * @author wah
+ * @kieler.rating green 2013-04-13
+ * 
+ */
 public class SyncStateNameEditPart extends StateNameEditPart {
-	
+
+	/**
+	 * This method returns the SyncAttributParser method, which overrides the
+	 * AttributePartser to skip the <name> text if a state has no name.
+	 */
+	@Override
 	public IParser getParser() {
 		return new SyncAttributeParser(
 				BasePackage.Literals.NAMED_ELEMENT__NAME,
 				DiagramActivator.PLUGIN_ID);
 	}
 
+	/**
+	 * This method overrides the getEditText method from the
+	 * TextAwareLabelEditPart class to return the new implementation of the
+	 * getParser method which is overridden in this class.
+	 */
+	@Override
 	public String getEditText() {
 		return getParser().getEditString(
 				new EObjectAdapter(resolveSemanticElement()), -1);

@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -32,9 +32,10 @@ import de.cau.cs.kieler.yakindu.ui.editor.figures.SyncStateFigure;
 import de.cau.cs.kieler.yakindu.ui.editor.figures.utils.SyncMapModeUtils;
 
 /**
- * Implement the Initial and Final state EditParts
+ * Implement the Initial and Final state EditParts.
  * 
  * @author wah
+ * @kieler.rating green 2013-04-13
  * 
  */
 public class SyncStateEditPart extends StateEditPart {
@@ -42,10 +43,17 @@ public class SyncStateEditPart extends StateEditPart {
 	@Inject
 	private SyncStateFigure primaryShape;
 
+	/**
+	 * This method returns the primary shape (the SyncState figure).
+	 */
 	public SyncStateFigure getPrimaryShape() {
 		return primaryShape;
 	}
 
+	/**
+	 * This method overrides the createNodeFigure from the StateEditPart to set
+	 * the new default size of a state.
+	 */
 	@Override
 	protected NodeFigure createNodeFigure() {
 		updateStateType();
@@ -74,7 +82,9 @@ public class SyncStateEditPart extends StateEditPart {
 
 	@Override
 	protected void handleNotificationEvent(Notification notification) {
-		// update the state Border
+		// Update the state Border.
+		// If the state is set to initial state, draw a thicker line border.
+		// If the state is set to final state, draw a double line border.
 		if (notification.getFeature() == SyncgraphPackage.Literals.SYNC_STATE__IS_INITIAL
 				|| notification.getFeature() == SyncgraphPackage.Literals.SYNC_STATE__IS_FINAL) {
 			updateStateType();
@@ -86,13 +96,15 @@ public class SyncStateEditPart extends StateEditPart {
 
 	/**
 	 * Update the State type (thick border for initial state and double line
-	 * border for final state)
+	 * border for final state).
 	 */
 	private void updateStateType() {
 		EObject element = resolveSemanticElement();
 		if (element instanceof SyncState) {
-			getPrimaryShape().setThickBorder(((SyncState) element).isIsInitial());
-			getPrimaryShape().setDoubleLineBorder(((SyncState) element).isIsFinal());
+			getPrimaryShape().setThickBorder(
+					((SyncState) element).isIsInitial());
+			getPrimaryShape().setDoubleLineBorder(
+					((SyncState) element).isIsFinal());
 		}
 	}
 }
