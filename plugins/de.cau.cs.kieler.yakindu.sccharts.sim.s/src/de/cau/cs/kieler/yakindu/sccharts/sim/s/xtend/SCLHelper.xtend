@@ -421,6 +421,10 @@ class SCLHelper {
     }
     
     
+    // ======================================================================================================
+    // ==                       O R D E R I N G   M E T A M O D E L   E X T E N S I O N                    ==
+    // ======================================================================================================
+    
     def int compareSCLRegionStateOrder(SyncState e1, SyncState e2) {
         var order = 1;
         if (e1.isInitial) {order = -1}
@@ -428,4 +432,29 @@ class SCLHelper {
         order;
     }
     
+    
+    // ======================================================================================================
+    // ==                   D E P E N D E N C Y   M E T A M O D E L   E X T E N S I O N                    ==
+    // ======================================================================================================
+    
+//CONDITIONAL
+//LogicalRelationExpressionImpl
+//    ElementReferenceExpressionImpl
+//        VariableDeclarationImpl
+//            Name
+//    operator = RelationalOperator
+//        == >=
+//    PrimitiveValueExpressionImpl
+//        value = BoolLiteralImpl
+//
+//    ParenthesizedExpressionImpl
+//        NumericalAddSubtractExpressionImpl
+//        ...
+//
+//ASSIGNMENT
+//AssignmentExpression
+//    expression = PrimitiveValueExpressionImpl
+//    operator = AssignmentOperator
+//    varRef = ElementReferenceExpressionImpl
+//    
 }

@@ -52,10 +52,7 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     
     private static val Injector i = SCLStandaloneSetup::doSetup();
-    private static val SCLScopeProvider scopeProvider = i.getInstance(typeof(SCLScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
-    private static val Resource TMP_RES = i.getInstance(typeof(ResourceSet))
-            .createResource(URI::createFileURI("dummy.action.scg"));    
 
     @Inject
     extension KRenderingUtil
