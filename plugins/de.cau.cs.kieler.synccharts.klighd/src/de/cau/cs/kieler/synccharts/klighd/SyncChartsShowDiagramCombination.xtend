@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
 import java.util.Collections
+import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 
 class SyncChartsShowDiagramCombination extends AbstractCombination {
     
@@ -54,7 +56,9 @@ class SyncChartsShowDiagramCombination extends AbstractCombination {
                     it?.load(Collections::emptyMap());
                 ])?.contents?.head;
                 if (eObject != null) {
-                    this.schedule(new KlighdDiagramEffect("volatile.synccharts.outline", eObject));
+                    this.schedule(new KlighdDiagramEffect("volatile.synccharts.outline", eObject) => [
+                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
+                    ]);
                 }
             }
         }
