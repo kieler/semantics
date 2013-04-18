@@ -353,23 +353,81 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 kExitNode.KRendering.foreground = "gray".color;
                 kExitNode.KRendering.add(factory.createKText.of('exit'));
                 kBackgroundNode.children.add(kExitNode)
-                
-            kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            val kPortIncoming = ExitObj.createPort() => [
-                it.setPortPos(36, 0)
+
+
+            kEntryNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            val kPortIncomingEntry = EntryObj.createPort() => [
+                it.setPortPos(41, 0)
                 it.setPortSize(2,2)
                 it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
             ]
-            kExitNode.ports += kPortIncoming;
-            kExitNode.addToPortMapping('incoming', kPortIncoming)
+            val kPortOutgoingEntry = unassigned.createPort() => [
+                it.setPortPos(41, 23)
+                it.setPortSize(2,2)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+            ]
+            kEntryNode.ports += kPortIncomingEntry;
+            kEntryNode.ports += kPortOutgoingEntry;
+            kEntryNode.addToPortMapping('incoming', kPortIncomingEntry)
+            kEntryNode.addToPortMapping('outgoing', kPortOutgoingEntry)
+
+                
+            kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            val kPortIncomingExit = ExitObj.createPort() => [
+                it.setPortPos(41, 0)
+                it.setPortSize(2,2)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+            ]
+            val kPortOutgoingExit = unassigned.createPort() => [
+                it.setPortPos(41, 23)
+                it.setPortSize(2,2)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+            ]
+            kExitNode.ports += kPortIncomingExit;
+            kExitNode.ports += kPortOutgoingExit;
+            kExitNode.addToPortMapping('incoming', kPortIncomingExit)
+            kExitNode.addToPortMapping('outgoing', kPortOutgoingExit)
+
+
+            kBackgroundNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            val kPortIncoming = BackgroundObj.createPort() => [
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+                it.setPortPos(75, 0)
+                it.setPortSize(2,2)
+            ]
+            val kPortOutgoing = unassigned.createPort() => [
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+                it.setPortPos(75, kBackgroundNode.height - 2)
+                it.setPortSize(2,2)
+            ]
+            val kPortIncomingInner = unassigned.createPort() => [
+                it.setPortPos(75, kBackgroundNode.height)
+                it.setPortSize(2,2)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+            ]
+            val kPortOutgoingInner = unassigned.createPort() => [
+                it.setPortPos(75, 2)
+                it.setPortSize(2,2)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+            ]
+            kBackgroundNode.ports += kPortIncoming;
+            kBackgroundNode.ports += kPortOutgoing;
+            kBackgroundNode.addToPortMapping('incoming', kPortIncoming)
+            kBackgroundNode.addToPortMapping('outgoing', kPortOutgoing)
+            kBackgroundNode.ports += kPortIncomingInner;
+            kBackgroundNode.ports += kPortOutgoingInner;
+            kBackgroundNode.addToPortMapping('incomingInner', kPortIncomingInner)
+            kBackgroundNode.addToPortMapping('outgoingInner', kPortOutgoingInner)
 
 
                 threads.createInstructionListFigure(kBackgroundNode, kEntryNode, kExitNode, '')
 
                 ParallelExitMapping.put(threads, kExitNode);
             
-                createEdgeArrow(kForkNode, kBackgroundNode)
-                createEdgeArrow(kBackgroundNode, kJoinNode)
+                createEdge(kForkNode, kBackgroundNode, false)
+                createEdge(kBackgroundNode, kJoinNode, false)
+                createEdgeArrow(kBackgroundNode, kEntryNode, 'outgoingInner', 'incoming')
+                createEdgeArrow(kExitNode, kBackgroundNode, 'outgoing', 'incomingInner')
 //                createEdgeArrow(kForkNode, kEntryNode)
 //                createEdgeArrow(kExitNode, kJoinNode) => [
 //                    val layout = it.getData(typeof(KEdgeLayout));
@@ -526,10 +584,18 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     }
     
     def KEdge createEdgeArrow(KNode sourceNode, KNode targetNode) {
-        createEdgeArrow(sourceNode, targetNode, 'outgoing', 'incoming')
+        createEdge(sourceNode, targetNode, 'outgoing', 'incoming', true)
+    }
+    
+    def KEdge createEdge(KNode sourceNode, KNode targetNode, boolean addArrow) {
+        createEdge(sourceNode, targetNode, 'outgoing', 'incoming', addArrow)
     }
 
     def KEdge createEdgeArrow(KNode sourceNode, KNode targetNode, String IDout, String IDin) {
+        createEdge(sourceNode, targetNode, IDout, IDin, true)
+    }
+
+    def KEdge createEdge(KNode sourceNode, KNode targetNode, String IDout, String IDin, boolean addArrow) {
         var KPort sPort = null
         var KPort tPort = null
         if (PortMapping.containsKey(sourceNode)) {
@@ -549,7 +615,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 //                    it.createLabel.configureTailLabel('test', 8, KlighdConstants::DEFAULT_FONT_NAME)
                     it.data += renderingFactory.createKPolyline() => [
                         it.setLineWidth(2);
-                        it.addArrowDecorator();
+                        if (addArrow == true) { it.addArrowDecorator(); }
                     ];          
                 ]  
         if (IDout == 'conditional') {
@@ -557,6 +623,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         }        
         edge
     }
-    
+ 
+    def Object unassigned() {
+        return new Object
+    }   
 	
 }
