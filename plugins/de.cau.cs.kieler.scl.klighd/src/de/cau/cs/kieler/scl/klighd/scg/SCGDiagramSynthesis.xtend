@@ -95,6 +95,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     private var HashMap<Goto, Pair<KNode, String>>GotoMapping;
     private var HashMap<InstructionList, KNode>ParallelExitMapping;
     
+    private var HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>EdgeMapping;
+    
     /**
      * {@inheritDoc}
      * <br><br>
@@ -114,6 +116,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	    PortMapping = new HashMap<KNode, HashMap<String, KPort>>;
 	    GotoMapping = new HashMap<Goto, Pair<KNode, String>>;
 	    ParallelExitMapping = new HashMap<InstructionList, KNode>;
+	    EdgeMapping = new HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>;
 		
         val rootNode = KimlUtil::createInitializedNode;
 //        rootNode.addLayoutParam(LayoutOptions::SPACING, Float::valueOf("25.0"));
@@ -142,13 +145,18 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	    mappingPair.setSecond(exit)
 	}
 	
-	def void addToPortMapping(KNode node, String ID, KPort port) {
+	def KPort addToPortMapping(KNode node, String ID, KPort port) {
 	    if (!PortMapping.containsKey(node)) {
 	        val mappingHash = new HashMap<String, KPort>
 	        PortMapping.put(node, mappingHash)
 	    }
 	    var mappingHash = PortMapping.get(node);
 	    mappingHash.put(ID, port)
+	    port
+	}
+	
+	def KPort addToPortMapping(KPort port, KNode node, String ID) {
+	    node.addToPortMapping(ID, port);
 	}
 	
 	def KPort getPort(KNode node, String ID) {
@@ -157,6 +165,62 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             return mappingHash.get(ID)
         }
 	    return null
+	}
+	
+    def void addNSPortsFixed(KNode node) {
+        node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+        node.addPort(unassigned, 'incoming', node.width / 2 - 1, 0, 2, PortSide::NORTH)
+        node.addPort(unassigned, 'outgoing', node.width / 2 - 1, node.height, 2, PortSide::SOUTH)
+    }   
+
+    def KPort addPort(KNode node, Object obj, String mapping, float x, float y, int size, PortSide side) {
+      (obj.createPort() => [
+         it.setPortPos(x, y)
+         it.setPortSize(size,size)
+         it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
+         node.ports += it
+      ]).addToPortMapping(node, mapping)
+    } 
+	
+	
+	def void addEdge(Instruction sourceInstruction, Instruction targetInstruction) {
+	    sourceInstruction.addEdge(targetInstruction)
+	}
+	
+	def void addEdge(Instruction sourceInstruction, String sourcePortID, Instruction targetInstruction, String targetPortID) {
+	    addEdge(InstructionMapping.get(sourceInstruction).second, 
+	        sourcePortID, 
+	        InstructionMapping.get(targetInstruction).first,
+	        targetPortID
+	    )
+	}
+	
+	def void addEdge(KNode sourceNode, Instruction targetInstruction) {
+	    sourceNode.addEdge('outgoing', targetInstruction, 'incoming')
+	}
+	
+	def void addEdge(KNode sourceNode, String sourcePortID, Instruction targetInstruction, String targetPortID) {
+	    sourceNode.addEdge(sourcePortID, InstructionMapping.get(targetInstruction).first, targetPortID)
+	}
+	
+	def void addEdge(KNode sourceNode, KNode targetNode) {
+	    sourceNode.addEdge('outgoing', targetNode, 'incoming')
+	}
+	
+	def void addEdge(KNode sourceNode, String sourcePortID, KNode targetNode, String targetPortID) {
+	    sourceNode.addEdge(sourceNode.getPort(sourcePortID), 
+	        targetNode,
+	        targetNode.getPort(targetPortID)
+	    )
+	}
+	
+	def void addEdge(KNode sourceNode, KPort sourcePort, KNode targetNode, KPort targetPort) {
+	    if (!EdgeMapping.containsKey(sourceNode)) {
+	        val instructionMap = new HashMap<KPort, Pair<KNode, KPort>>
+            EdgeMapping.put(sourceNode, instructionMap);
+        }
+	    var edgeMap = EdgeMapping.get(sourceNode)
+	    edgeMap.put(sourcePort, new Pair<KNode, KPort>(targetNode, targetPort))
 	}
 
     def createInstructionListFigure(InstructionList iSet, KNode rootNode) {
@@ -199,10 +263,18 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             ) {
                 val targetNode = targetPair.first
                 if (sourcePortID.empty) {
-                    createEdgeArrow(sourceNode, targetNode)
+                    sourceNode.addEdge(targetNode)
                 } else {
-                    createEdgeArrow(sourceNode, targetNode, sourcePortID, 'incoming')
+                    sourceNode.addEdge(sourcePortID, targetNode, 'incoming')
                 }
+            }
+        }
+        
+        for(sourceNode : EdgeMapping.keySet) {
+            val sourceEdges = EdgeMapping.get(sourceNode)
+            for (sourcePort : sourceEdges.keySet) {
+                val destination = sourceEdges.get(sourcePort);
+                createEdge(sourceNode, destination.first, sourcePort, destination.second, true);
             }
         }
         
@@ -214,7 +286,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	) {
 	    
 	    var Instruction lastInstruction = null
-        var sourcePair = new Pair<KNode, KNode>(null, entryNode)
+        var sourceNode = entryNode
         var alternativeOutID = alternativeOutgoingID
 	    
 	    for(instruction : iSet.instructions) {
@@ -237,7 +309,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                                 alternativeOutID))
                     } else { 
                         GotoMapping.put((instruction as Goto), 
-                            new Pair<KNode, String>(sourcePair.second, alternativeOutID)
+                            new Pair<KNode, String>(sourceNode, alternativeOutID)
                         )
                     }
                     lastInstruction = null
@@ -251,18 +323,16 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             ) {
                 
                 if ((lastInstruction!=null) && (!(lastInstruction instanceof Goto))) {
-                    sourcePair = InstructionMapping.get(lastInstruction as Instruction);
+                    sourceNode = InstructionMapping.get(lastInstruction as Instruction).second;
                 }
-                if ((sourcePair != null) && (sourcePair.second != null)) {
-                    val targetPair = InstructionMapping.get(instruction as Instruction);
-                    val sourceNode = sourcePair.second
+                if (sourceNode != null) {
                     if (alternativeOutID.empty) {
-                        createEdgeArrow(sourceNode, targetPair.first)
+                        sourceNode.addEdge(instruction as Instruction)
                     } else {
-                        createEdgeArrow(sourceNode, targetPair.first, alternativeOutID, 'incoming')
+                        sourceNode.addEdge(alternativeOutID, instruction as Instruction, 'incoming')
                         alternativeOutID = ''
                     }
-                    sourcePair = null
+                    sourceNode = null
                 }
             
                 if (noGoto) { lastInstruction = instruction as Instruction }
@@ -272,11 +342,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         }
         
         if ((exitNode != null) && (lastInstruction != null)) {
-            sourcePair = InstructionMapping.get(lastInstruction as Instruction);
-            val targetPair = new Pair<KNode, KNode>(exitNode, null)
-            if (sourcePair.second != null) {
-                val sourceNode = sourcePair.second
-                createEdgeArrow(sourceNode, targetPair.first)
+            sourceNode = InstructionMapping.get(lastInstruction as Instruction).second;
+            if (sourceNode != null) {
+                sourceNode.addEdge(exitNode)
             }
         }
         
@@ -394,9 +462,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 threads.createInstructionListFigure(kBackgroundNode, kEntryNode, kExitNode, '')
 
                 ParallelExitMapping.put(threads, kExitNode);
-            
+
                 createEdgeArrow(kForkNode, kBackgroundNode)
-                createEdgeArrow(kBackgroundNode, kJoinNode)
+                kBackgroundNode.addEdge(kJoinNode)            
 //                createEdgeArrow(kBackgroundNode, kEntryNode, 'incoming', 'incoming')
 //                createEdge(kExitNode, kBackgroundNode, 'outgoing', 'outgoing', false)
 //                createEdgeArrow(kForkNode, kEntryNode)
@@ -413,29 +481,15 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             (instr as Instruction).addToMapping(kForkNode, kJoinNode)           
             return (instr as Instruction)
     }
-    
 
-    
+
+   
     def createAssignmentFigure(Assignment instr, KNode rootNode) {
             val Object outPortObj = new Object
             val kNode = instr.createRoundedRectangulareNode(25, 85);
             kNode.KRendering.add(factory.createKLineWidth.of(2));
             
-            kNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            val kPortIncoming = instr.createPort() => [
-                it.setPortPos(41, 0)
-                it.setPortSize(2,2)
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
-            ]
-            val kPortOutgoing = outPortObj.createPort() => [
-                it.setPortPos(41, 23)
-                it.setPortSize(2,2)
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
-            ]
-            kNode.ports += kPortIncoming;
-            kNode.addToPortMapping('incoming', kPortIncoming)
-            kNode.ports += kPortOutgoing;
-            kNode.addToPortMapping('outgoing', kPortOutgoing)
+            kNode.addNSPortsFixed
             
             val nodeText = serializer.serialize(instr);            
             
@@ -461,7 +515,6 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
             kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            kContainerNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
            
             val kNode = instr.createSurfaceNode(30, 75);
             kNode.KRendering.add(factory.createKLineWidth.of(2));
@@ -474,24 +527,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             rootNode.children.add(kContainerNode)
             kContainerNode.children.add(kNode)
             kContainerNode.children.add(kDepthNode)
-            
+
+            kContainerNode.addNSPortsFixed            
       
-            val kPortIncoming = instr.createPort() => [
-                it.setPortPos(36, -2)
-                it.setPortSize(2,2)
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
-            ]
-            val kPortOutgoing = containerObj.createPort() => [
-                it.setPortPos(36, 68)
-                it.setPortSize(2,2)
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
-            ]
-            kContainerNode.ports += kPortIncoming
-            kContainerNode.ports += kPortOutgoing;
-            kContainerNode.addToPortMapping('incoming', kPortIncoming)
-            kContainerNode.addToPortMapping('outgoing', kPortOutgoing)
-
-
                 createEdge() => [
                     it.source = kNode
                     it.target = kDepthNode
@@ -507,38 +545,21 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     }
 
     def createConditionalFigure(Conditional instr, KNode rootNode) {
-            val Object falseTree = new Object
-            val Object trueTree  = new Object
-            
             val kNode = instr.createDiamondNode(75, 75);
             kNode.KRendering.add(factory.createKLineWidth.of(2));
-            kNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             
             val Expression exp = instr.expression
             val nodeText = serializer.serialize(exp);            
             kNode.KRendering.add(factory.createKText.of(nodeText));
             rootNode.children.add(kNode)
-            
-            val kPortIncoming = instr.createPort() => [
-                it.setPortPos(36, -2)
-                it.setPortSize(2,2)
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
-            ]
-            val kPortOutgoing = falseTree.createPort() => [
-                it.setPortPos(36, 75)
-                it.setPortSize(2,2)
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
-            ]
-            val kPortTrueTree = trueTree.createPort() => [
+
+            kNode.addNSPortsFixed            
+            val kPortTrueTree = unassigned.createPort() => [
                 it.setPortPos(75, 36)
                 it.setPortSize(2,2)
                 it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST);
             ]
-            kNode.ports += kPortIncoming
-            kNode.ports += kPortOutgoing
             kNode.ports += kPortTrueTree;
-            kNode.addToPortMapping('incoming', kPortIncoming)
-            kNode.addToPortMapping('outgoing', kPortOutgoing)
             kNode.addToPortMapping('conditional', kPortTrueTree)
             
             
@@ -572,21 +593,25 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             tPort = getPort(targetNode, IDin)
         }
         
-        val sourcePort = sPort
-        val targetPort = tPort
+        val edge = createEdge(sourceNode, targetNode, sPort, tPort, addArrow);
+        
+        if (IDout == 'conditional') {
+            edge.createLabel.configureTailLabel('_true', 9, KlighdConstants::DEFAULT_FONT_NAME)
+        }        
+        edge
+    }
+        
+    def KEdge createEdge(KNode sourceNode, KNode targetNode, KPort portOut, KPort portIn, boolean addArrow) {
         val edge = createEdge() => [
                     it.source = sourceNode
-                    it.sourcePort = sourcePort
+                    it.sourcePort = portOut
                     it.target = targetNode
-                    it.targetPort = targetPort
+                    it.targetPort = portIn
                     it.data += renderingFactory.createKPolyline() => [
                         it.setLineWidth(2);
                         if (addArrow == true) { it.addArrowDecorator(); }
                     ];          
                 ]  
-        if (IDout == 'conditional') {
-            edge.createLabel.configureTailLabel('_true', 9, KlighdConstants::DEFAULT_FONT_NAME)
-        }        
         edge
     }
  
