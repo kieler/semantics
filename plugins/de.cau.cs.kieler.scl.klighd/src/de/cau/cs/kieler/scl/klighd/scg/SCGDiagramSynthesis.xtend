@@ -167,6 +167,15 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	    return null
 	}
 	
+	def String getPortID(KNode node, KPort port) {
+	    if (!PortMapping.containsKey(node)) { return '' }
+	    val mapping = PortMapping.get(node)
+	    for (id : mapping.keySet) {
+	        if (mapping.get(id) == port) { return id }
+	    }
+	    return ''
+	}
+	
     def void addNSPortsFixed(KNode node) {
         node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
         node.addPort(unassigned, 'incoming', node.width / 2 - 1, 0, 2, PortSide::NORTH)
@@ -562,7 +571,6 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kNode.ports += kPortTrueTree;
             kNode.addToPortMapping('conditional', kPortTrueTree)
             
-            
             val lastInstruction = instr.conditional.createInstructionListFigure(rootNode, kNode, null, 
                 'conditional'
             )
@@ -595,9 +603,6 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         
         val edge = createEdge(sourceNode, targetNode, sPort, tPort, addArrow);
         
-        if (IDout == 'conditional') {
-            edge.createLabel.configureTailLabel('_true', 9, KlighdConstants::DEFAULT_FONT_NAME)
-        }        
         edge
     }
         
@@ -612,6 +617,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                         if (addArrow == true) { it.addArrowDecorator(); }
                     ];          
                 ]  
+        if (sourceNode.getPortID(portOut) == 'conditional') {
+            edge.createLabel.configureTailLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
+        }
+                
         edge
     }
  
