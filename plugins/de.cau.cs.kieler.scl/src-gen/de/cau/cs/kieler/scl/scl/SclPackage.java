@@ -170,13 +170,22 @@ public interface SclPackage extends EPackage
   int INSTRUCTION = 2;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INSTRUCTION__PRIORITY = 0;
+
+  /**
    * The number of structural features of the '<em>Instruction</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTION_FEATURE_COUNT = 0;
+  int INSTRUCTION_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
@@ -187,6 +196,15 @@ public interface SclPackage extends EPackage
    * @generated
    */
   int ASSIGNMENT = 3;
+
+  /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__PRIORITY = INSTRUCTION__PRIORITY;
 
   /**
    * The feature id for the '<em><b>Assignment</b></em>' containment reference.
@@ -355,6 +373,15 @@ public interface SclPackage extends EPackage
   int CONDITIONAL = 7;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL__PRIORITY = INSTRUCTION__PRIORITY;
+
+  /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -392,6 +419,15 @@ public interface SclPackage extends EPackage
   int GOTO = 8;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GOTO__PRIORITY = INSTRUCTION__PRIORITY;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -420,6 +456,15 @@ public interface SclPackage extends EPackage
   int PARALLEL = 9;
 
   /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARALLEL__PRIORITY = INSTRUCTION__PRIORITY;
+
+  /**
    * The feature id for the '<em><b>Threads</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -446,6 +491,15 @@ public interface SclPackage extends EPackage
    * @generated
    */
   int PAUSE = 10;
+
+  /**
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PAUSE__PRIORITY = INSTRUCTION__PRIORITY;
 
   /**
    * The number of structural features of the '<em>Pause</em>' class.
@@ -580,6 +634,17 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EClass getInstruction();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.Instruction#getPriority <em>Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Priority</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Instruction#getPriority()
+   * @see #getInstruction()
+   * @generated
+   */
+  EAttribute getInstruction_Priority();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Assignment <em>Assignment</em>}'.
@@ -870,6 +935,14 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EClass INSTRUCTION = eINSTANCE.getInstruction();
+
+    /**
+     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INSTRUCTION__PRIORITY = eINSTANCE.getInstruction_Priority();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.

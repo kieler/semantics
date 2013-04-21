@@ -21,11 +21,12 @@ Program :
 ;
 
 VariableDeclaration:
-    (Input?='input')? (Output?='output')? 'signal' (name=STRING)(':'type=[types::Type])?';'
+    (Input?='input')? (Output?='output')? 'signal' (name=ID)(':'type=[types::Type])?';'
 ;
 
 Instruction:
     (Assignment | Conditional | Goto | Parallel | Pause)
+    (priority=INT)?
 ;
 
 Assignment:

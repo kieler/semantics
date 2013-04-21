@@ -283,6 +283,16 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getInstruction_Priority()
+  {
+    return (EAttribute)instructionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getAssignment()
   {
     return assignmentEClass;
@@ -499,6 +509,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
 
     instructionEClass = createEClass(INSTRUCTION);
+    createEAttribute(instructionEClass, INSTRUCTION__PRIORITY);
 
     assignmentEClass = createEClass(ASSIGNMENT);
     createEReference(assignmentEClass, ASSIGNMENT__ASSIGNMENT);
@@ -583,6 +594,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEReference(getVariableDeclaration_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getInstruction_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Instruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAssignment_Assignment(), theStextPackage.getExpression(), null, "assignment", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

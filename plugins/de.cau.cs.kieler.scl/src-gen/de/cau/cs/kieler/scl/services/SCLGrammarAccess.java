@@ -77,7 +77,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOutputOutputKeyword_1_0 = (Keyword)cOutputAssignment_1.eContents().get(0);
 		private final Keyword cSignalKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cNameSTRINGTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cColonKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cTypeAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -87,10 +87,10 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//VariableDeclaration:
 		//
-		//	Input?="input"? Output?="output"? "signal" name=STRING (":" type=[types::Type])? ";";
+		//	Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ";";
 		public ParserRule getRule() { return rule; }
 
-		//Input?="input"? Output?="output"? "signal" name=STRING (":" type=[types::Type])? ";"
+		//Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ";"
 		public Group getGroup() { return cGroup; }
 
 		//Input?="input"?
@@ -108,11 +108,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"signal"
 		public Keyword getSignalKeyword_2() { return cSignalKeyword_2; }
 
-		//name=STRING
+		//name=ID
 		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
 
-		//STRING
-		public RuleCall getNameSTRINGTerminalRuleCall_3_0() { return cNameSTRINGTerminalRuleCall_3_0; }
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_3_0() { return cNameIDTerminalRuleCall_3_0; }
 
 		//(":" type=[types::Type])?
 		public Group getGroup_4() { return cGroup_4; }
@@ -135,35 +135,47 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class InstructionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Instruction");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cAssignmentParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cConditionalParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cGotoParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cParallelParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cPauseParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final RuleCall cAssignmentParserRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
+		private final RuleCall cConditionalParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
+		private final RuleCall cGotoParserRuleCall_0_2 = (RuleCall)cAlternatives_0.eContents().get(2);
+		private final RuleCall cParallelParserRuleCall_0_3 = (RuleCall)cAlternatives_0.eContents().get(3);
+		private final RuleCall cPauseParserRuleCall_0_4 = (RuleCall)cAlternatives_0.eContents().get(4);
+		private final Assignment cPriorityAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPriorityINTTerminalRuleCall_1_0 = (RuleCall)cPriorityAssignment_1.eContents().get(0);
 		
 		//Instruction:
 		//
-		//	Assignment | Conditional | Goto | Parallel | Pause;
+		//	(Assignment | Conditional | Goto | Parallel | Pause) priority=INT?;
 		public ParserRule getRule() { return rule; }
 
+		//(Assignment | Conditional | Goto | Parallel | Pause) priority=INT?
+		public Group getGroup() { return cGroup; }
+
 		//Assignment | Conditional | Goto | Parallel | Pause
-		public Alternatives getAlternatives() { return cAlternatives; }
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//Assignment
-		public RuleCall getAssignmentParserRuleCall_0() { return cAssignmentParserRuleCall_0; }
+		public RuleCall getAssignmentParserRuleCall_0_0() { return cAssignmentParserRuleCall_0_0; }
 
 		//Conditional
-		public RuleCall getConditionalParserRuleCall_1() { return cConditionalParserRuleCall_1; }
+		public RuleCall getConditionalParserRuleCall_0_1() { return cConditionalParserRuleCall_0_1; }
 
 		//Goto
-		public RuleCall getGotoParserRuleCall_2() { return cGotoParserRuleCall_2; }
+		public RuleCall getGotoParserRuleCall_0_2() { return cGotoParserRuleCall_0_2; }
 
 		//Parallel
-		public RuleCall getParallelParserRuleCall_3() { return cParallelParserRuleCall_3; }
+		public RuleCall getParallelParserRuleCall_0_3() { return cParallelParserRuleCall_0_3; }
 
 		//Pause
-		public RuleCall getPauseParserRuleCall_4() { return cPauseParserRuleCall_4; }
+		public RuleCall getPauseParserRuleCall_0_4() { return cPauseParserRuleCall_0_4; }
+
+		//priority=INT?
+		public Assignment getPriorityAssignment_1() { return cPriorityAssignment_1; }
+
+		//INT
+		public RuleCall getPriorityINTTerminalRuleCall_1_0() { return cPriorityINTTerminalRuleCall_1_0; }
 	}
 
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
@@ -628,7 +640,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//VariableDeclaration:
 	//
-	//	Input?="input"? Output?="output"? "signal" name=STRING (":" type=[types::Type])? ";";
+	//	Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ";";
 	public VariableDeclarationElements getVariableDeclarationAccess() {
 		return (pVariableDeclaration != null) ? pVariableDeclaration : (pVariableDeclaration = new VariableDeclarationElements());
 	}
@@ -639,7 +651,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Instruction:
 	//
-	//	Assignment | Conditional | Goto | Parallel | Pause;
+	//	(Assignment | Conditional | Goto | Parallel | Pause) priority=INT?;
 	public InstructionElements getInstructionAccess() {
 		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
 	}
