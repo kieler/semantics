@@ -183,7 +183,15 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kExitNode.KRendering.foreground = "gray".color;
         kExitNode.KRendering.add(factory.createKText.of('exit'));
         rootNode.children.add(kExitNode)
-
+        
+        // Add incoming port for the exit node
+        (ExitObj.createPort() => [
+            kExitNode.ports += it
+            it.setPortPos(37, 0)
+            it.setPortSize(2,2)
+            it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+        ]).addToPortMapping(kExitNode, 'incoming')
+            
         // Evaluate the root instruction list
         createInstructionListFigure(iSet, rootNode, kEntryNode, kExitNode, '')
         ParallelExitMapping.put(iSet, kExitNode);

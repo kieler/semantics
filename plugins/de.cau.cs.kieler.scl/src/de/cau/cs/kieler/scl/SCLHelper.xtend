@@ -30,6 +30,7 @@ import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.scl.scl.Program
 
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
@@ -325,7 +326,8 @@ class SCLHelper {
         while (ancestor != null) {
             if (ancestor instanceof InstructionList) {
                 if (ancestor.eContainer != null) {
-                    if (ancestor.eContainer instanceof Parallel) {
+                    if ((ancestor.eContainer instanceof Parallel) ||
+                        (ancestor.eContainer instanceof Program)) {
                         return ancestor as InstructionList;
                     }
                 }
