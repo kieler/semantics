@@ -27,7 +27,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//InstructionList/instructions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//InstructionList/interface"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Scope"/>
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Label">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Label/name"/>
     </genClasses>

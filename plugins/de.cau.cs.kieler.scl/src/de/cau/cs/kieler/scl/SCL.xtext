@@ -36,6 +36,7 @@ Assignment:
 InstructionList:
   {InstructionList}
   (
+  (
       (
           (instructions += Instruction';')
           |
@@ -48,11 +49,11 @@ InstructionList:
       (instructions += Annotation)
       |
       (instructions += Label)
-  )*    
-;
-
-Scope:
+  )*
+  )
+  |
   {InstructionList}
+  (
  '{'
       (interface+=VariableDeclaration)*
   (
@@ -70,7 +71,29 @@ Scope:
       (instructions += Label)
   )*    
  '}'
+  )    
 ;
+
+//VariableScope:
+//  {InstructionList}
+// '<'
+//      (interface+=VariableDeclaration)*
+//  (
+//      (
+//          (instructions += Instruction';')
+//          |
+//          (instructions += Annotation)
+//          |
+//          (instructions += Label)
+//      )*
+//      (instructions += Instruction)
+//      |
+//      (instructions += Annotation)
+//      |
+//      (instructions += Label)
+//  )*    
+// '>'
+//;
 
 Label:
     'label' name = ID ':'

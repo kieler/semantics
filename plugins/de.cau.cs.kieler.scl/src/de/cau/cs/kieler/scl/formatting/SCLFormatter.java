@@ -38,7 +38,9 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             c.setNoSpace().before(f.getVariableDeclarationAccess().getColonKeyword_4_0());
 	    
             // Instructions
-            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_1_0_0_0_1());
+//            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_1_0_0_0_1());
+            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_0_1_0_0_0_1());
+            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_1_1_2_0_0_0_1());
             
             c.setLinewrap(1).before(f.getInstructionRule());
             c.setLinewrap(1).before(f.getAnnotationRule());

@@ -14,7 +14,6 @@ import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclFactory;
 import de.cau.cs.kieler.scl.scl.SclPackage;
-import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -72,13 +71,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * @generated
    */
   private EClass instructionListEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass scopeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -343,16 +335,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getScope()
-  {
-    return scopeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getLabel()
   {
     return labelEClass;
@@ -518,8 +500,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEReference(instructionListEClass, INSTRUCTION_LIST__INSTRUCTIONS);
     createEReference(instructionListEClass, INSTRUCTION_LIST__INTERFACE);
 
-    scopeEClass = createEClass(SCOPE);
-
     labelEClass = createEClass(LABEL);
     createEAttribute(labelEClass, LABEL__NAME);
 
@@ -575,8 +555,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     // Add supertypes to classes
     variableDeclarationEClass.getESuperTypes().add(theSGraphPackage.getVariable());
     assignmentEClass.getESuperTypes().add(this.getInstruction());
-    instructionListEClass.getESuperTypes().add(this.getScope());
-    scopeEClass.getESuperTypes().add(theSGraphPackage.getScope());
     conditionalEClass.getESuperTypes().add(this.getInstruction());
     gotoEClass.getESuperTypes().add(this.getInstruction());
     parallelEClass.getESuperTypes().add(this.getInstruction());
@@ -602,8 +580,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEClass(instructionListEClass, InstructionList.class, "InstructionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInstructionList_Instructions(), ecorePackage.getEObject(), null, "instructions", null, 0, -1, InstructionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getInstructionList_Interface(), this.getVariableDeclaration(), null, "interface", null, 0, -1, InstructionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(scopeEClass, Scope.class, "Scope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLabel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

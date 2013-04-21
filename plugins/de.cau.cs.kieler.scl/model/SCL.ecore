@@ -20,13 +20,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="assignment" eType="ecore:EClass ../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InstructionList" eSuperTypes="#//Scope">
+  <eClassifiers xsi:type="ecore:EClass" name="InstructionList">
     <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" upperBound="-1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="interface" upperBound="-1"
         eType="#//VariableDeclaration" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Scope" eSuperTypes="../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Scope"/>
   <eClassifiers xsi:type="ecore:EClass" name="Label">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
