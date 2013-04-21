@@ -17,6 +17,11 @@
             id="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformation"
             name="CoreToSCLTransformation">
       </command>
+      <command
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.category"
+            id="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationNoOpt"
+            name="CoreToSCLTransformationNoOpt">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -28,12 +33,28 @@
             class="de.cau.cs.kieler.yakindu.sccharts.scl.handler.SCLModelFileHandler"
             commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformation">
       </handler>
+      <handler
+            class="de.cau.cs.kieler.yakindu.sccharts.scl.handler.SCLModelFileHandler"
+            commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationNoOpt">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
    </extension>
    <extension
          point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="de.cau.cs.kieler.yakindu.sccharts.scl.transformations"
+               label="SCCharts to Core"
+               mnemonic="T">
+            <separator
+                  name="de.cau.cs.kieler.core.ui.separator1"
+                  visible="true">
+            </separator>
+         </menu>
+      </menuContribution>
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.scl.transformations">
          <command
@@ -57,6 +78,9 @@
             </visibleWhen>
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
@@ -80,20 +104,28 @@
             </visibleWhen>
          </command>
       </menuContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="de.cau.cs.kieler.yakindu.sccharts.scl.transformations"
-               label="SCCharts to Core"
-               mnemonic="T">
-            <separator
-                  name="de.cau.cs.kieler.core.ui.separator1"
-                  visible="true">
-            </separator>
-         </menu>
+         <command
+               commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationNoOpt"
+               label="Core to SCL Transformation (no optimization)"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
 

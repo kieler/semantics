@@ -20,21 +20,32 @@ import org.yakindu.sct.model.sgraph.Statechart
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.SCLHelper
 
-//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
-
 class CoreToSCLTransformation {
     
      extension de.cau.cs.kieler.scl.SCLHelper SCLHelper = 
          Guice::createInjector().getInstance(typeof(SCLHelper))
      extension de.cau.cs.kieler.yakindu.sccharts.scl.xtend.SCCHelper SCCHelper = 
          Guice::createInjector().getInstance(typeof(SCCHelper))
+         
+         
+    public static int OPTIMIZE_NONE             = 0
+    public static int OPTIMIZE_GOTO             = 1
+    public static int OPTIMIZE_LABEL            = 2
+    public static int OPTIMIZE_SELFLOOP         = 4
+    public static int OPTIMIZE_STATEPOSITION    = 8
+    public static int OPTIMIZE_ALL              = OPTIMIZE_GOTO + OPTIMIZE_LABEL + OPTIMIZE_SELFLOOP + 
+                                                  OPTIMIZE_STATEPOSITION;         
  
+ 
+    def boolean optimize(int oFlags, int optimization) {
+        oFlags.bitwiseAnd(optimization) > 0
+    }
     //-------------------------------------------------------------------------
     //--          C O R E   TO   S C L -  T R A N S F O R M A T I O N        --
     //-------------------------------------------------------------------------
            
     // Transforming SCC Aborts.
-    def Program transformCoreToSCL(Statechart rootStatechart) {
+    def Program transformCoreToSCL(Statechart rootStatechart, int optimizationFlags) {
         var targetProgram = SclFactory::eINSTANCE.createProgram();
        
         rootStatechart.statechartDistributePriorities
@@ -44,7 +55,7 @@ class CoreToSCLTransformation {
        
         targetProgram.setName(mainState.name)
         
-        targetProgram.program.instructions.addAll(transformCoreState(mainState).instructions);
+        targetProgram.program.instructions.addAll(transformCoreState(mainState, optimizationFlags).instructions);
         
         for(declaration : mainState.scopes.get(0).declarations) {
            targetProgram.interface.add(createVariableDeclaration(declaration as Event));
@@ -53,7 +64,7 @@ class CoreToSCLTransformation {
         targetProgram
     }
 
-    def InstructionList transformCoreRegion(Region region) {
+    def InstructionList transformCoreRegion(Region region, int optimizationFlags) {
         var iSet = createSCLInstructionList();
         val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState))).
           sort(e1, e2 | compareSCLRegionStateOrder(e1, e2));
@@ -65,19 +76,22 @@ class CoreToSCLTransformation {
         var stateInstructions = new ArrayList<InstructionList>;
         for (state : states) {
             Debug(state.getHierarchicalName(""));
-            stateInstructions.add(transformCoreState(state));
+            stateInstructions.add(transformCoreState(state, optimizationFlags));
         }
         
-        stateInstructions = stateInstructions.optimizeStateSetPosition;
+        if (optimizationFlags.optimize(OPTIMIZE_STATEPOSITION)) {
+            stateInstructions = stateInstructions.optimizeStateSetPosition;
+        }
         for(stateSet : stateInstructions) {
             iSet.instructions.addAll(stateSet.instructions);
         }
         
-        iSet = iSet.optimizeGoto.optimizeLabel;
+        if (optimizationFlags.optimize(OPTIMIZE_GOTO)) { iSet = iSet.optimizeGoto }
+        if (optimizationFlags.optimize(OPTIMIZE_LABEL)) { iSet = iSet.optimizeLabel }
         iSet;
     }
     
-    def InstructionList transformCoreState(SyncState state) {
+    def InstructionList transformCoreState(SyncState state, int optimizationFlags) {
         var iSet = createSCLInstructionList();
         val stateID = state.getHierarchicalName("");
         
@@ -88,12 +102,12 @@ class CoreToSCLTransformation {
             // COMPOSITE STATE         
             
             if (state.getRegions().size<2) {
-                var regionInstructions =  transformCoreRegion(state.getRegions().get(0));
+                var regionInstructions =  transformCoreRegion(state.getRegions().head, optimizationFlags);
                 iSet.instructions.addAll(regionInstructions.instructions);
             } else {
                 var parallel = SclFactory::eINSTANCE.createParallel();
                 for(stateRegion : state.getRegions()) {
-                    var regionInstructions = transformCoreRegion(stateRegion);
+                    var regionInstructions = transformCoreRegion(stateRegion, optimizationFlags);
                     parallel.getThreads().addAll(regionInstructions);
                 }
                 iSet.addInstruction(parallel);
@@ -120,7 +134,7 @@ class CoreToSCLTransformation {
             } else {
                 // STATE IS NOT A FINAL STATE
                 
-                iSet.addInstruction(state.transformStateTransitions);
+                iSet.addInstruction(state.transformStateTransitions(optimizationFlags));
                 
                
             } // isFinal
@@ -133,7 +147,7 @@ class CoreToSCLTransformation {
     }
     
     
-    def InstructionList transformStateTransitions(SyncState state) {
+    def InstructionList transformStateTransitions(SyncState state, int optimizationFlags) {
         var iSet = createSCLInstructionList();
         
         val transitions = state.getTransitions;
@@ -159,7 +173,8 @@ class CoreToSCLTransformation {
         
         iSet.addPause;
         
-        if (((transitions.size==2) && (selfTransitions.size==1) && 
+        if (!optimizationFlags.optimize(OPTIMIZE_SELFLOOP) &&
+            ((transitions.size==2) && (selfTransitions.size==1) && 
                 (selfTransitions.head.trigger == null)) ||
             (transitions.size==1) && (selfTransitions.size!=1)) {
             var targetInstructions = transformStateTransition(

@@ -23,6 +23,7 @@ public class SCLModelFileHandler extends AbstractModelFileHandler {
         public static final String SCGKLIGHDVIEWTITLE = "SCG Light Diagram View";
         
         public static final String SCLTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformation";
+        public static final String SCLTRANSFORMATIONCOMMANDNOOPT = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationNoOpt";
 
 	public SCLModelFileHandler() {
 	}
@@ -57,22 +58,23 @@ public class SCLModelFileHandler extends AbstractModelFileHandler {
 
 	public EObject doTransformation(EObject modelObject,
 			String commandString) {
-                if (commandString.equals(SCLTRANSFORMATIONCOMMAND)) {
-                    System.out.println("scl transformation: " + commandString);
-                    EObject transformed = (new CoreToSCLTransformation())
-                                    .transformCoreToSCL((Statechart) modelObject);
-                    EcoreUtil.resolveAll(transformed);
-                    return transformed;
-                }
-                
-		return null;
+	    int opt = CoreToSCLTransformation.OPTIMIZE_ALL;
+	    if (commandString.equals(SCLTRANSFORMATIONCOMMANDNOOPT)) {
+	        opt = CoreToSCLTransformation.OPTIMIZE_NONE;
+	    }
+
+            EObject transformed = (new CoreToSCLTransformation())
+                                .transformCoreToSCL((Statechart) modelObject, 
+                                opt);
+            EcoreUtil.resolveAll(transformed);
+            return transformed;
 	}
 	
 	public void doPostProcessing(EObject modelObject) {
-            IPropertyHolder p = new MapPropertyHolder();
-            p.setProperty(LightDiagramServices.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
-            DiagramViewManager.getInstance().createView(SCGKLIGHDVIEWID, SCGKLIGHDVIEWTITLE, 
-                    (Program) modelObject, p); 
+//            IPropertyHolder p = new MapPropertyHolder();
+//            p.setProperty(LightDiagramServices.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
+//            DiagramViewManager.getInstance().createView(SCGKLIGHDVIEWID, SCGKLIGHDVIEWTITLE, 
+//                    (Program) modelObject, p); 
 	}
 		
 }
