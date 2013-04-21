@@ -81,9 +81,16 @@ class SCCHelper {
     }
     
     def boolean isImmediate(SyncTransition transition) {
-        (transition.trigger != null && 
+        var ret = (transition.trigger != null && 
             (transition.trigger as ReactionTrigger).isImmediate
         )
+        
+        /* workaround for triggerless immediate transitions */
+        if (transition.trigger == null) {
+            ret = transition.specification.equals('#');
+        }
+        
+        ret
     }        
 
 

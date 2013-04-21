@@ -164,8 +164,8 @@ class CoreToSCLTransformation {
         }
                 
         if (transitions.size <= immediateTransitions.size) {
-            iSet.addPause;
             if (!defaultTransition) {
+                iSet.addPause;
                 iSet.addInstruction(createSCLGoto(state.getHierarchicalName("")));
             }
             return iSet;
