@@ -2,7 +2,6 @@ package de.cau.cs.kieler.scl.klighd.scg
 
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
-import com.google.inject.Guice
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
@@ -44,6 +43,9 @@ import de.cau.cs.kieler.core.kgraph.KPort
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.KlighdConstants
 import java.util.ArrayList
+import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
+
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -176,6 +178,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kEntryNode.KRendering.foreground = "gray".color;
         kEntryNode.KRendering.add(factory.createKText.of('entry'));
         rootNode.children.add(kEntryNode)
+        kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
                 
         // Create the exit node
         val kExitNode = ExitObj.createEllipseNode(30,75)
@@ -183,6 +186,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kExitNode.KRendering.foreground = "gray".color;
         kExitNode.KRendering.add(factory.createKText.of('exit'));
         rootNode.children.add(kExitNode)
+        kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
         
         // Add incoming port for the exit node
         (ExitObj.createPort() => [
@@ -381,18 +385,20 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val kForkNode = instr.createTriangleNode(50, 100);
         kForkNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextFork = "FORK";
-        kForkNode.KRendering.add(factory.createKText.of(nodeTextFork));
+        kForkNode.KRendering.add(factory.createKText.of(nodeTextFork)
+            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 20, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0));
         rootNode.children.add(kForkNode)
 
         // Create join node
         val kJoinNode = JoinObj.createTriangleReversedNode(50, 100);
         kJoinNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextJoin = "JOIN";
-        kJoinNode.KRendering.add(factory.createKText.of(nodeTextJoin));
+        kJoinNode.KRendering.add(factory.createKText.of(nodeTextJoin)
+            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 20, 0));
         rootNode.children.add(kJoinNode)
 
         /* 
-         * Create a compartment for every thread. Every threads possesses an entry and an exit node,
+         * Create a compartment for every thread. Every thread possesses an entry and an exit node,
          */
         for(thread : instr.threads) {
             // Create objects for the nodes
@@ -401,9 +407,12 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             val ExitObj = new Object
             
             // Create container
-            val kContainerNode = ContainerObj.createRectangulareNode(50, 150)
+            val kContainerNode = ContainerObj.createRoundedRectangulareNode()
             kContainerNode.KRendering.add(factory.createKLineWidth.of(2));
-            kContainerNode.KRendering.foreground = "gray".color;
+            kContainerNode.KRendering.foreground = "black".color;
+            kContainerNode.KRendering.foreground.alpha = 0;
+            kContainerNode.KRendering.background = "gray".color;
+            kContainerNode.KRendering.background.alpha = 30
             rootNode.children.add(kContainerNode)
 
             // Set layout paramter for this hierarchy
@@ -418,13 +427,14 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kEntryNode.KRendering.foreground = "gray".color;
             kEntryNode.KRendering.add(factory.createKText.of('entry'));
             kContainerNode.children.add(kEntryNode)
+            kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             
             // Create exit node
             val kExitNode = ExitObj.createEllipseNode(30,75)
             kExitNode.KRendering.add(factory.createKLineWidth.of(2));
-            kExitNode.KRendering.foreground = "gray".color;
             kExitNode.KRendering.add(factory.createKText.of('exit'));
             kContainerNode.children.add(kExitNode)
+            kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
 
             // Create a fixed port at the entry node for outgoing edges.
             kEntryNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
@@ -745,7 +755,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                     it.sourcePort = portOut
                     it.target = targetNode
                     it.targetPort = portIn
-                    it.data += renderingFactory.createKPolyline() => [
+                    it.data += renderingFactory.createKRoundedBendsPolyline() => [
+                        it.bendRadius = 5;
                         it.setLineWidth(2);
                         if (addArrow == true) { it.addArrowDecorator(); }
                     ];          
