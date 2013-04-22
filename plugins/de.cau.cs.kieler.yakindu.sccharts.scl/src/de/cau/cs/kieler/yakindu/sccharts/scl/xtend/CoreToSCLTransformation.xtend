@@ -174,7 +174,7 @@ class CoreToSCLTransformation {
         iSet.addPause;
         
         if (!optimizationFlags.optimize(OPTIMIZE_SELFLOOP) &&
-            ((transitions.size==2) && (selfTransitions.size==1) && 
+           ((transitions.size==2) && (selfTransitions.size==1) && 
                 (selfTransitions.head.trigger == null)) ||
             (transitions.size==1) && (selfTransitions.size!=1)) {
             var targetInstructions = transformStateTransition(

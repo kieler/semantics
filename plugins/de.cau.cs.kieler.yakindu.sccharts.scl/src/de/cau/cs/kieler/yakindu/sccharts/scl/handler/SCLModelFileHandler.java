@@ -13,6 +13,7 @@ import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy;
 import de.cau.cs.kieler.klighd.views.DiagramViewManager;
 import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLTransformation;
+import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 import de.cau.cs.kieler.scl.scl.Program;
 
 public class SCLModelFileHandler extends AbstractModelFileHandler {

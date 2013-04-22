@@ -38,8 +38,8 @@ import org.yakindu.sct.model.stext.STextStandaloneSetup;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.SCCToCoreTransformation;
-import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLTransformation;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
