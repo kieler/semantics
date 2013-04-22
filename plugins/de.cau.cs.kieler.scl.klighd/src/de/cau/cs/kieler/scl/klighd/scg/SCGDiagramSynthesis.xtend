@@ -280,7 +280,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	         * Take the source node of this hierarchy instead. The goto mapping will handle the rest.
 	         */
             switch(instruction) {
-                Assignment: { returnList = ((instruction as Assignment).createAssignmentFigure(rootNode)) }
+                Assignment: returnList = ((instruction as Assignment).createAssignmentFigure(rootNode)) 
                 Parallel: returnList = ((instruction as Parallel).createParallelFigure(rootNode))
                 Pause: returnList = ((instruction as Pause).createPauseFigure(rootNode))
                 Conditional: { returnList = ((instruction as Conditional).createConditionalFigure(rootNode)) }
@@ -427,7 +427,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kEntryNode.KRendering.foreground = "gray".color;
             kEntryNode.KRendering.add(factory.createKText.of('entry'));
             kContainerNode.children.add(kEntryNode)
-            kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
             
             // Create exit node
             val kExitNode = ExitObj.createEllipseNode(30,75)
@@ -435,7 +435,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kExitNode.KRendering.foreground = "gray".color;
             kExitNode.KRendering.add(factory.createKText.of('exit'));
             kContainerNode.children.add(kExitNode)
-            kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
+            kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
 
             // Create a fixed port at the entry node for outgoing edges.
             kEntryNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
