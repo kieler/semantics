@@ -434,109 +434,101 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 	}
 
-	public class InstructionsElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Instructions");
+	public class ThreadElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Thread");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cInstructionsAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cThreadAction_0 = (Action)cGroup.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
 		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
 		private final Alternatives cAlternatives_1_0_0 = (Alternatives)cGroup_1_0.eContents().get(0);
 		private final Group cGroup_1_0_0_0 = (Group)cAlternatives_1_0_0.eContents().get(0);
-		private final Assignment cListAssignment_1_0_0_0_0 = (Assignment)cGroup_1_0_0_0.eContents().get(0);
-		private final RuleCall cListInstructionParserRuleCall_1_0_0_0_0_0 = (RuleCall)cListAssignment_1_0_0_0_0.eContents().get(0);
+		private final Assignment cInstructionsAssignment_1_0_0_0_0 = (Assignment)cGroup_1_0_0_0.eContents().get(0);
+		private final RuleCall cInstructionsInstructionParserRuleCall_1_0_0_0_0_0 = (RuleCall)cInstructionsAssignment_1_0_0_0_0.eContents().get(0);
 		private final Keyword cSemicolonKeyword_1_0_0_0_1 = (Keyword)cGroup_1_0_0_0.eContents().get(1);
-		private final Assignment cListAssignment_1_0_0_1 = (Assignment)cAlternatives_1_0_0.eContents().get(1);
-		private final RuleCall cListAnnotationParserRuleCall_1_0_0_1_0 = (RuleCall)cListAssignment_1_0_0_1.eContents().get(0);
-		private final Assignment cListAssignment_1_0_0_2 = (Assignment)cAlternatives_1_0_0.eContents().get(2);
-		private final RuleCall cListLabelParserRuleCall_1_0_0_2_0 = (RuleCall)cListAssignment_1_0_0_2.eContents().get(0);
-		private final Assignment cListAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
-		private final RuleCall cListInstructionParserRuleCall_1_0_1_0 = (RuleCall)cListAssignment_1_0_1.eContents().get(0);
+		private final Assignment cInstructionsAssignment_1_0_0_1 = (Assignment)cAlternatives_1_0_0.eContents().get(1);
+		private final RuleCall cInstructionsAnnotationParserRuleCall_1_0_0_1_0 = (RuleCall)cInstructionsAssignment_1_0_0_1.eContents().get(0);
+		private final Assignment cInstructionsAssignment_1_0_0_2 = (Assignment)cAlternatives_1_0_0.eContents().get(2);
+		private final RuleCall cInstructionsLabelParserRuleCall_1_0_0_2_0 = (RuleCall)cInstructionsAssignment_1_0_0_2.eContents().get(0);
+		private final Assignment cInstructionsAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final RuleCall cInstructionsInstructionParserRuleCall_1_0_1_0 = (RuleCall)cInstructionsAssignment_1_0_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_1_0_2 = (Keyword)cGroup_1_0.eContents().get(2);
-		private final Assignment cListAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cListAnnotationParserRuleCall_1_1_0 = (RuleCall)cListAssignment_1_1.eContents().get(0);
-		private final Assignment cListAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
-		private final RuleCall cListLabelParserRuleCall_1_2_0 = (RuleCall)cListAssignment_1_2.eContents().get(0);
-		private final Assignment cProgramAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cProgramProgramCrossReference_2_0 = (CrossReference)cProgramAssignment_2.eContents().get(0);
-		private final RuleCall cProgramProgramIDTerminalRuleCall_2_0_1 = (RuleCall)cProgramProgramCrossReference_2_0.eContents().get(1);
+		private final Assignment cInstructionsAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
+		private final RuleCall cInstructionsAnnotationParserRuleCall_1_1_0 = (RuleCall)cInstructionsAssignment_1_1.eContents().get(0);
+		private final Assignment cInstructionsAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
+		private final RuleCall cInstructionsLabelParserRuleCall_1_2_0 = (RuleCall)cInstructionsAssignment_1_2.eContents().get(0);
 		
-		//Instructions:
+		////    (program = [Program])?
 		//
-		//	{Instructions} ((list+=Instruction ";" | list+=Annotation | list+=Label)* list+=Instruction ";"? | list+=Annotation |
+		//Thread:
 		//
-		//	list+=Label)* program=[Program]?;
+		//	{Thread} ((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction
+		//
+		//	";"? | instructions+=Annotation | instructions+=Label)*;
 		public ParserRule getRule() { return rule; }
 
-		//{Instructions} ((list+=Instruction ";" | list+=Annotation | list+=Label)* list+=Instruction ";"? | list+=Annotation |
+		//{Thread} ((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction
 		//
-		//list+=Label)* program=[Program]?
+		//";"? | instructions+=Annotation | instructions+=Label)*
 		public Group getGroup() { return cGroup; }
 
-		//{Instructions}
-		public Action getInstructionsAction_0() { return cInstructionsAction_0; }
+		//{Thread}
+		public Action getThreadAction_0() { return cThreadAction_0; }
 
-		//((list+=Instruction ";" | list+=Annotation | list+=Label)* list+=Instruction ";"? | list+=Annotation | list+=Label)*
+		//((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction ";"? |
+		//
+		//instructions+=Annotation | instructions+=Label)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//(list+=Instruction ";" | list+=Annotation | list+=Label)* list+=Instruction ";"?
+		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction ";"?
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
-		//(list+=Instruction ";" | list+=Annotation | list+=Label)*
+		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)*
 		public Alternatives getAlternatives_1_0_0() { return cAlternatives_1_0_0; }
 
-		//list+=Instruction ";"
+		//instructions+=Instruction ";"
 		public Group getGroup_1_0_0_0() { return cGroup_1_0_0_0; }
 
-		//list+=Instruction
-		public Assignment getListAssignment_1_0_0_0_0() { return cListAssignment_1_0_0_0_0; }
+		//instructions+=Instruction
+		public Assignment getInstructionsAssignment_1_0_0_0_0() { return cInstructionsAssignment_1_0_0_0_0; }
 
 		//Instruction
-		public RuleCall getListInstructionParserRuleCall_1_0_0_0_0_0() { return cListInstructionParserRuleCall_1_0_0_0_0_0; }
+		public RuleCall getInstructionsInstructionParserRuleCall_1_0_0_0_0_0() { return cInstructionsInstructionParserRuleCall_1_0_0_0_0_0; }
 
 		//";"
 		public Keyword getSemicolonKeyword_1_0_0_0_1() { return cSemicolonKeyword_1_0_0_0_1; }
 
-		//list+=Annotation
-		public Assignment getListAssignment_1_0_0_1() { return cListAssignment_1_0_0_1; }
+		//instructions+=Annotation
+		public Assignment getInstructionsAssignment_1_0_0_1() { return cInstructionsAssignment_1_0_0_1; }
 
 		//Annotation
-		public RuleCall getListAnnotationParserRuleCall_1_0_0_1_0() { return cListAnnotationParserRuleCall_1_0_0_1_0; }
+		public RuleCall getInstructionsAnnotationParserRuleCall_1_0_0_1_0() { return cInstructionsAnnotationParserRuleCall_1_0_0_1_0; }
 
-		//list+=Label
-		public Assignment getListAssignment_1_0_0_2() { return cListAssignment_1_0_0_2; }
+		//instructions+=Label
+		public Assignment getInstructionsAssignment_1_0_0_2() { return cInstructionsAssignment_1_0_0_2; }
 
 		//Label
-		public RuleCall getListLabelParserRuleCall_1_0_0_2_0() { return cListLabelParserRuleCall_1_0_0_2_0; }
+		public RuleCall getInstructionsLabelParserRuleCall_1_0_0_2_0() { return cInstructionsLabelParserRuleCall_1_0_0_2_0; }
 
-		//list+=Instruction
-		public Assignment getListAssignment_1_0_1() { return cListAssignment_1_0_1; }
+		//instructions+=Instruction
+		public Assignment getInstructionsAssignment_1_0_1() { return cInstructionsAssignment_1_0_1; }
 
 		//Instruction
-		public RuleCall getListInstructionParserRuleCall_1_0_1_0() { return cListInstructionParserRuleCall_1_0_1_0; }
+		public RuleCall getInstructionsInstructionParserRuleCall_1_0_1_0() { return cInstructionsInstructionParserRuleCall_1_0_1_0; }
 
 		//";"?
 		public Keyword getSemicolonKeyword_1_0_2() { return cSemicolonKeyword_1_0_2; }
 
-		//list+=Annotation
-		public Assignment getListAssignment_1_1() { return cListAssignment_1_1; }
+		//instructions+=Annotation
+		public Assignment getInstructionsAssignment_1_1() { return cInstructionsAssignment_1_1; }
 
 		//Annotation
-		public RuleCall getListAnnotationParserRuleCall_1_1_0() { return cListAnnotationParserRuleCall_1_1_0; }
+		public RuleCall getInstructionsAnnotationParserRuleCall_1_1_0() { return cInstructionsAnnotationParserRuleCall_1_1_0; }
 
-		//list+=Label
-		public Assignment getListAssignment_1_2() { return cListAssignment_1_2; }
+		//instructions+=Label
+		public Assignment getInstructionsAssignment_1_2() { return cInstructionsAssignment_1_2; }
 
 		//Label
-		public RuleCall getListLabelParserRuleCall_1_2_0() { return cListLabelParserRuleCall_1_2_0; }
-
-		//program=[Program]?
-		public Assignment getProgramAssignment_2() { return cProgramAssignment_2; }
-
-		//[Program]
-		public CrossReference getProgramProgramCrossReference_2_0() { return cProgramProgramCrossReference_2_0; }
-
-		//ID
-		public RuleCall getProgramProgramIDTerminalRuleCall_2_0_1() { return cProgramProgramIDTerminalRuleCall_2_0_1; }
+		public RuleCall getInstructionsLabelParserRuleCall_1_2_0() { return cInstructionsLabelParserRuleCall_1_2_0; }
 	}
 
 	public class ParallelElements extends AbstractParserRuleElementFinder {
@@ -545,44 +537,44 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cForkKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Assignment cThreadsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final RuleCall cThreadsInstructionsParserRuleCall_1_0_0 = (RuleCall)cThreadsAssignment_1_0.eContents().get(0);
+		private final RuleCall cThreadsThreadParserRuleCall_1_0_0 = (RuleCall)cThreadsAssignment_1_0.eContents().get(0);
 		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
 		private final Keyword cParKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
 		private final Assignment cThreadsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cThreadsInstructionsParserRuleCall_1_1_1_0 = (RuleCall)cThreadsAssignment_1_1_1.eContents().get(0);
+		private final RuleCall cThreadsThreadParserRuleCall_1_1_1_0 = (RuleCall)cThreadsAssignment_1_1_1.eContents().get(0);
 		private final Keyword cJoinKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
 		//Parallel:
 		//
-		//	"fork" (threads+=Instructions ("par" threads+=Instructions)+) "join";
+		//	"fork" (threads+=Thread ("par" threads+=Thread)+) "join";
 		public ParserRule getRule() { return rule; }
 
-		//"fork" (threads+=Instructions ("par" threads+=Instructions)+) "join"
+		//"fork" (threads+=Thread ("par" threads+=Thread)+) "join"
 		public Group getGroup() { return cGroup; }
 
 		//"fork"
 		public Keyword getForkKeyword_0() { return cForkKeyword_0; }
 
-		//threads+=Instructions ("par" threads+=Instructions)+
+		//threads+=Thread ("par" threads+=Thread)+
 		public Group getGroup_1() { return cGroup_1; }
 
-		//threads+=Instructions
+		//threads+=Thread
 		public Assignment getThreadsAssignment_1_0() { return cThreadsAssignment_1_0; }
 
-		//Instructions
-		public RuleCall getThreadsInstructionsParserRuleCall_1_0_0() { return cThreadsInstructionsParserRuleCall_1_0_0; }
+		//Thread
+		public RuleCall getThreadsThreadParserRuleCall_1_0_0() { return cThreadsThreadParserRuleCall_1_0_0; }
 
-		//("par" threads+=Instructions)+
+		//("par" threads+=Thread)+
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//"par"
 		public Keyword getParKeyword_1_1_0() { return cParKeyword_1_1_0; }
 
-		//threads+=Instructions
+		//threads+=Thread
 		public Assignment getThreadsAssignment_1_1_1() { return cThreadsAssignment_1_1_1; }
 
-		//Instructions
-		public RuleCall getThreadsInstructionsParserRuleCall_1_1_1_0() { return cThreadsInstructionsParserRuleCall_1_1_1_0; }
+		//Thread
+		public RuleCall getThreadsThreadParserRuleCall_1_1_1_0() { return cThreadsThreadParserRuleCall_1_1_1_0; }
 
 		//"join"
 		public Keyword getJoinKeyword_2() { return cJoinKeyword_2; }
@@ -745,7 +737,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	private LabelElements pLabel;
 	private ConditionalElements pConditional;
 	private GotoElements pGoto;
-	private InstructionsElements pInstructions;
+	private ThreadElements pThread;
 	private ParallelElements pParallel;
 	private PauseElements pPause;
 	private InstructionScopeElements pInstructionScope;
@@ -870,22 +862,24 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getGotoAccess().getRule();
 	}
 
-	//Instructions:
+	////    (program = [Program])?
 	//
-	//	{Instructions} ((list+=Instruction ";" | list+=Annotation | list+=Label)* list+=Instruction ";"? | list+=Annotation |
+	//Thread:
 	//
-	//	list+=Label)* program=[Program]?;
-	public InstructionsElements getInstructionsAccess() {
-		return (pInstructions != null) ? pInstructions : (pInstructions = new InstructionsElements());
+	//	{Thread} ((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction
+	//
+	//	";"? | instructions+=Annotation | instructions+=Label)*;
+	public ThreadElements getThreadAccess() {
+		return (pThread != null) ? pThread : (pThread = new ThreadElements());
 	}
 	
-	public ParserRule getInstructionsRule() {
-		return getInstructionsAccess().getRule();
+	public ParserRule getThreadRule() {
+		return getThreadAccess().getRule();
 	}
 
 	//Parallel:
 	//
-	//	"fork" (threads+=Instructions ("par" threads+=Instructions)+) "join";
+	//	"fork" (threads+=Thread ("par" threads+=Thread)+) "join";
 	public ParallelElements getParallelAccess() {
 		return (pParallel != null) ? pParallel : (pParallel = new ParallelElements());
 	}

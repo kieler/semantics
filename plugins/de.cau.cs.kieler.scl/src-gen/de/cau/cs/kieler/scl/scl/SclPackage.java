@@ -336,41 +336,32 @@ public interface SclPackage extends EPackage
   int GOTO_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.InstructionsImpl <em>Instructions</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.ThreadImpl <em>Thread</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.scl.scl.impl.InstructionsImpl
-   * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getInstructions()
+   * @see de.cau.cs.kieler.scl.scl.impl.ThreadImpl
+   * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getThread()
    * @generated
    */
-  int INSTRUCTIONS = 7;
+  int THREAD = 7;
 
   /**
-   * The feature id for the '<em><b>List</b></em>' containment reference list.
+   * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTIONS__LIST = 0;
+  int THREAD__INSTRUCTIONS = 0;
 
   /**
-   * The feature id for the '<em><b>Program</b></em>' reference.
+   * The number of structural features of the '<em>Thread</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTIONS__PROGRAM = 1;
-
-  /**
-   * The number of structural features of the '<em>Instructions</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTIONS_FEATURE_COUNT = 2;
+  int THREAD_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.ParallelImpl <em>Parallel</em>}' class.
@@ -715,36 +706,25 @@ public interface SclPackage extends EPackage
   EAttribute getGoto_Name();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Instructions <em>Instructions</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Thread <em>Thread</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Instructions</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Instructions
+   * @return the meta object for class '<em>Thread</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Thread
    * @generated
    */
-  EClass getInstructions();
+  EClass getThread();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Instructions#getList <em>List</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Thread#getInstructions <em>Instructions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>List</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Instructions#getList()
-   * @see #getInstructions()
+   * @return the meta object for the containment reference list '<em>Instructions</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Thread#getInstructions()
+   * @see #getThread()
    * @generated
    */
-  EReference getInstructions_List();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.scl.scl.Instructions#getProgram <em>Program</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Program</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Instructions#getProgram()
-   * @see #getInstructions()
-   * @generated
-   */
-  EReference getInstructions_Program();
+  EReference getThread_Instructions();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Parallel <em>Parallel</em>}'.
@@ -1020,30 +1000,22 @@ public interface SclPackage extends EPackage
     EAttribute GOTO__NAME = eINSTANCE.getGoto_Name();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.InstructionsImpl <em>Instructions</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.ThreadImpl <em>Thread</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scl.scl.impl.InstructionsImpl
-     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getInstructions()
+     * @see de.cau.cs.kieler.scl.scl.impl.ThreadImpl
+     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getThread()
      * @generated
      */
-    EClass INSTRUCTIONS = eINSTANCE.getInstructions();
+    EClass THREAD = eINSTANCE.getThread();
 
     /**
-     * The meta object literal for the '<em><b>List</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Instructions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference INSTRUCTIONS__LIST = eINSTANCE.getInstructions_List();
-
-    /**
-     * The meta object literal for the '<em><b>Program</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference INSTRUCTIONS__PROGRAM = eINSTANCE.getInstructions_Program();
+    EReference THREAD__INSTRUCTIONS = eINSTANCE.getThread_Instructions();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.ParallelImpl <em>Parallel</em>}' class.

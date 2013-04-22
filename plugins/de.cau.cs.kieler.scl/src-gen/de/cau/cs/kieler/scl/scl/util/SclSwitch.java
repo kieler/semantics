@@ -2,7 +2,18 @@
  */
 package de.cau.cs.kieler.scl.scl.util;
 
-import de.cau.cs.kieler.scl.scl.*;
+import de.cau.cs.kieler.scl.scl.Annotation;
+import de.cau.cs.kieler.scl.scl.Assignment;
+import de.cau.cs.kieler.scl.scl.Conditional;
+import de.cau.cs.kieler.scl.scl.Goto;
+import de.cau.cs.kieler.scl.scl.Instruction;
+import de.cau.cs.kieler.scl.scl.InstructionScope;
+import de.cau.cs.kieler.scl.scl.Label;
+import de.cau.cs.kieler.scl.scl.Parallel;
+import de.cau.cs.kieler.scl.scl.Pause;
+import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -132,10 +143,10 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SclPackage.INSTRUCTIONS:
+      case SclPackage.THREAD:
       {
-        Instructions instructions = (Instructions)theEObject;
-        T result = caseInstructions(instructions);
+        de.cau.cs.kieler.scl.scl.Thread thread = (de.cau.cs.kieler.scl.scl.Thread)theEObject;
+        T result = caseThread(thread);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -287,17 +298,17 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Instructions</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Thread</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Instructions</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Thread</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseInstructions(Instructions object)
+  public T caseThread(de.cau.cs.kieler.scl.scl.Thread object)
   {
     return null;
   }

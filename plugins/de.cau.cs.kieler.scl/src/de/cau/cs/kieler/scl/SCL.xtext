@@ -73,17 +73,17 @@ Thread:
     {Thread}
         (
             (
-                (list += Instruction';')
+                (instructions += Instruction';')
                 |
-                (list += Annotation)
+                (instructions += Annotation)
                 |
-                (list += Label)
+                (instructions += Label)
             )*
-            (list += Instruction)';'?
+            (instructions += Instruction)';'?
             |
-            (list += Annotation)
+            (instructions += Annotation)
             |
-            (list += Label)
+            (instructions += Label)
         )*
 //    (program = [Program])?
 ;

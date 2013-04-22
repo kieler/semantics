@@ -7,7 +7,6 @@ import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.Goto;
 import de.cau.cs.kieler.scl.scl.InstructionScope;
-import de.cau.cs.kieler.scl.scl.Instructions;
 import de.cau.cs.kieler.scl.scl.Label;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
@@ -134,12 +133,6 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 					return; 
 				}
 				else break;
-			case SclPackage.INSTRUCTIONS:
-				if(context == grammarAccess.getInstructionsRule()) {
-					sequence_Instructions(context, (Instructions) semanticObject); 
-					return; 
-				}
-				else break;
 			case SclPackage.LABEL:
 				if(context == grammarAccess.getLabelRule()) {
 					sequence_Label(context, (Label) semanticObject); 
@@ -169,6 +162,12 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 			case SclPackage.PROGRAM:
 				if(context == grammarAccess.getProgramRule()) {
 					sequence_Program(context, (Program) semanticObject); 
+					return; 
+				}
+				else break;
+			case SclPackage.THREAD:
+				if(context == grammarAccess.getThreadRule()) {
+					sequence_Thread(context, (de.cau.cs.kieler.scl.scl.Thread) semanticObject); 
 					return; 
 				}
 				else break;
@@ -999,7 +998,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (threads+=Instructions threads+=Instructions+ priority=INT?)
+	 *     (threads+=Thread threads+=Thread+ priority=INT?)
 	 */
 	protected void sequence_Instruction_Parallel(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1011,15 +1010,6 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     (priority=INT?)
 	 */
 	protected void sequence_Instruction(EObject context, Pause semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     ((((list+=Instruction | list+=Annotation | list+=Label)* list+=Instruction) | list+=Annotation | list+=Label)* program=[Program|ID]?)
-	 */
-	protected void sequence_Instructions(EObject context, Instructions semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1042,7 +1032,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (threads+=Instructions threads+=Instructions+)
+	 *     (threads+=Thread threads+=Thread+)
 	 */
 	protected void sequence_Parallel(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1071,6 +1061,21 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     )
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             ((instructions+=Instruction | instructions+=Annotation | instructions+=Label)* instructions+=Instruction) | 
+	 *             instructions+=Annotation | 
+	 *             instructions+=Label
+	 *         )*
+	 *     )
+	 */
+	protected void sequence_Thread(EObject context, de.cau.cs.kieler.scl.scl.Thread semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

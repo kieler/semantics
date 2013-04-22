@@ -8,7 +8,6 @@ import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.Goto;
 import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.InstructionScope;
-import de.cau.cs.kieler.scl.scl.Instructions;
 import de.cau.cs.kieler.scl.scl.Label;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
@@ -92,7 +91,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass instructionsEClass = null;
+  private EClass threadEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -383,9 +382,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getInstructions()
+  public EClass getThread()
   {
-    return instructionsEClass;
+    return threadEClass;
   }
 
   /**
@@ -393,19 +392,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getInstructions_List()
+  public EReference getThread_Instructions()
   {
-    return (EReference)instructionsEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getInstructions_Program()
-  {
-    return (EReference)instructionsEClass.getEStructuralFeatures().get(1);
+    return (EReference)threadEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -544,9 +533,8 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     gotoEClass = createEClass(GOTO);
     createEAttribute(gotoEClass, GOTO__NAME);
 
-    instructionsEClass = createEClass(INSTRUCTIONS);
-    createEReference(instructionsEClass, INSTRUCTIONS__LIST);
-    createEReference(instructionsEClass, INSTRUCTIONS__PROGRAM);
+    threadEClass = createEClass(THREAD);
+    createEReference(threadEClass, THREAD__INSTRUCTIONS);
 
     parallelEClass = createEClass(PARALLEL);
     createEReference(parallelEClass, PARALLEL__THREADS);
@@ -630,12 +618,11 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGoto_Name(), ecorePackage.getEString(), "name", null, 0, 1, Goto.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(instructionsEClass, Instructions.class, "Instructions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInstructions_List(), ecorePackage.getEObject(), null, "list", null, 0, -1, Instructions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getInstructions_Program(), this.getProgram(), null, "program", null, 0, 1, Instructions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(threadEClass, de.cau.cs.kieler.scl.scl.Thread.class, "Thread", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getThread_Instructions(), ecorePackage.getEObject(), null, "instructions", null, 0, -1, de.cau.cs.kieler.scl.scl.Thread.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(parallelEClass, Parallel.class, "Parallel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getParallel_Threads(), this.getInstructions(), null, "threads", null, 0, -1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getParallel_Threads(), this.getThread(), null, "threads", null, 0, -1, Parallel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

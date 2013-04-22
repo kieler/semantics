@@ -2,7 +2,19 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.*;
+import de.cau.cs.kieler.scl.scl.Annotation;
+import de.cau.cs.kieler.scl.scl.Assignment;
+import de.cau.cs.kieler.scl.scl.Conditional;
+import de.cau.cs.kieler.scl.scl.Goto;
+import de.cau.cs.kieler.scl.scl.Instruction;
+import de.cau.cs.kieler.scl.scl.InstructionScope;
+import de.cau.cs.kieler.scl.scl.Label;
+import de.cau.cs.kieler.scl.scl.Parallel;
+import de.cau.cs.kieler.scl.scl.Pause;
+import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SclFactory;
+import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -71,7 +83,7 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
       case SclPackage.LABEL: return createLabel();
       case SclPackage.CONDITIONAL: return createConditional();
       case SclPackage.GOTO: return createGoto();
-      case SclPackage.INSTRUCTIONS: return createInstructions();
+      case SclPackage.THREAD: return createThread();
       case SclPackage.PARALLEL: return createParallel();
       case SclPackage.PAUSE: return createPause();
       case SclPackage.INSTRUCTION_SCOPE: return createInstructionScope();
@@ -163,10 +175,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Instructions createInstructions()
+  public de.cau.cs.kieler.scl.scl.Thread createThread()
   {
-    InstructionsImpl instructions = new InstructionsImpl();
-    return instructions;
+    ThreadImpl thread = new ThreadImpl();
+    return thread;
   }
 
   /**

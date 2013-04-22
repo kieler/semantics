@@ -32,14 +32,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="Goto" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Instructions">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="list" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="program" eType="#//Program"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Thread">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="threads" upperBound="-1"
-        eType="#//Instructions" containment="true"/>
+        eType="#//Thread" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction"/>
   <eClassifiers xsi:type="ecore:EClass" name="InstructionScope" eSuperTypes="#//Instruction">

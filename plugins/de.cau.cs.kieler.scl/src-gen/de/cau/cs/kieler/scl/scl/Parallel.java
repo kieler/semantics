@@ -24,7 +24,7 @@ public interface Parallel extends Instruction
 {
   /**
    * Returns the value of the '<em><b>Threads</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Instructions}.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Thread}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Threads</em>' containment reference list isn't clear,
@@ -36,6 +36,6 @@ public interface Parallel extends Instruction
    * @model containment="true"
    * @generated
    */
-  EList<Instructions> getThreads();
+  EList<de.cau.cs.kieler.scl.scl.Thread> getThreads();
 
 } // Parallel

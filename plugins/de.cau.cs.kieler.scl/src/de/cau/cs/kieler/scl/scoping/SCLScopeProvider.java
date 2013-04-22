@@ -12,7 +12,6 @@ import org.eclipse.xtext.scoping.Scopes;
 import org.yakindu.sct.model.stext.scoping.STextScopeProvider;
 
 import de.cau.cs.kieler.scl.scl.Assignment;
-import de.cau.cs.kieler.scl.scl.Instructions;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.itemis.xtext.utils.jface.viewers.ContextElementAdapter;
@@ -68,9 +67,9 @@ public class SCLScopeProvider extends STextScopeProvider {
             final EReference reference) {
         Program p = EcoreUtil2.getContainerOfType(context, Program.class);
         if (p == null) { 
-           Instructions i = EcoreUtil2.getContainerOfType(context, Instructions.class);
-           p = i.getProgram();
-           return Scopes.scopeFor(p.getInterface());
+//           Instructions i = EcoreUtil2.getContainerOfType(context, Instructions.class);
+//           p = i.getProgram();
+//           return Scopes.scopeFor(p.getInterface());
         }
         return null; //Scopes.scopeFor(p.getInterface());
     }  

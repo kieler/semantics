@@ -2,7 +2,18 @@
  */
 package de.cau.cs.kieler.scl.scl.util;
 
-import de.cau.cs.kieler.scl.scl.*;
+import de.cau.cs.kieler.scl.scl.Annotation;
+import de.cau.cs.kieler.scl.scl.Assignment;
+import de.cau.cs.kieler.scl.scl.Conditional;
+import de.cau.cs.kieler.scl.scl.Goto;
+import de.cau.cs.kieler.scl.scl.Instruction;
+import de.cau.cs.kieler.scl.scl.InstructionScope;
+import de.cau.cs.kieler.scl.scl.Label;
+import de.cau.cs.kieler.scl.scl.Parallel;
+import de.cau.cs.kieler.scl.scl.Pause;
+import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -115,9 +126,9 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createGotoAdapter();
       }
       @Override
-      public Adapter caseInstructions(Instructions object)
+      public Adapter caseThread(de.cau.cs.kieler.scl.scl.Thread object)
       {
-        return createInstructionsAdapter();
+        return createThreadAdapter();
       }
       @Override
       public Adapter caseParallel(Parallel object)
@@ -282,16 +293,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Instructions <em>Instructions</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Thread <em>Thread</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.Instructions
+   * @see de.cau.cs.kieler.scl.scl.Thread
    * @generated
    */
-  public Adapter createInstructionsAdapter()
+  public Adapter createThreadAdapter()
   {
     return null;
   }

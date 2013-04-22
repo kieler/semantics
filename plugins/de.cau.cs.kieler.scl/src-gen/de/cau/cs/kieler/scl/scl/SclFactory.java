@@ -86,13 +86,13 @@ public interface SclFactory extends EFactory
   Goto createGoto();
 
   /**
-   * Returns a new object of class '<em>Instructions</em>'.
+   * Returns a new object of class '<em>Thread</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instructions</em>'.
+   * @return a new object of class '<em>Thread</em>'.
    * @generated
    */
-  Instructions createInstructions();
+  Thread createThread();
 
   /**
    * Returns a new object of class '<em>Parallel</em>'.
