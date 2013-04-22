@@ -118,7 +118,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      */
     private var HashMap<InstructionList, KNode>ParallelExitMapping;
     
-    // To keep the code clean all edges are reserved and drawn once the program evalutation is complete.  
+    // To keep the code clean all edges are reserved and drawn once the program evaluation is complete.  
     private var HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>EdgeMapping;
     
     /**
@@ -164,7 +164,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * 
      * This method creates an entry and an exit node for a program and then executes the transformation
      * for the root instruction list of a scl program. 
-     * Subsequently, all reserved goto statesments are evaluated and finally all edges are drawn.    
+     * Subsequently, all reserved goto statements are evaluated and finally all edges are drawn.    
      */
     def createProgramFigure(InstructionList iSet, KNode rootNode) {
         
@@ -232,7 +232,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             }
         }
         
-        // Create all adges
+        // Create all edges
         for(sourceNode : EdgeMapping.keySet) {
             val sourceEdges = EdgeMapping.get(sourceNode)
             for (sourcePort : sourceEdges.keySet) {
@@ -247,14 +247,14 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * Creates the transformation for a scl instruction list
      * 
      * This method evaluates a scl instruction list and calls more specific figure methods if 
-     * necessary. Thus, instructions can implement other instructions lists, it is possible this method
+     * necessary. Because instructions can include other instructions lists, it is possible this method
      * is called several times recursively.
      *  
      * A list of preceding instructions is stored in lastInstructions and used to schedule edges from 
      * the actual instruction to its predecessors.
      * 
      * alternativeOutgoingID specifies the outgoing port on the parent knode. One can alter the default
-     * port to enable different outgoing ports on the parent node. (f.e. true and false at a conditianl
+     * port to enable different outgoing ports on the parent node. (f.e. true and false at a conditional
      * node.)       
      */
 	def createInstructionListFigure(InstructionList iSet, KNode rootNode, KNode entryNode, KNode exitNode,
@@ -264,7 +264,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	    var ArrayList<Instruction> lastInstructions = new ArrayList<Instruction>
         var ArrayList returnList 
 	    
-	    // prepare source nod information, set to default, if port is emptry
+	    // prepare source nod information, set to default, if port is empty
         var sourceNode = entryNode
         var sourceNodeOutID = alternativeOutgoingID
         if (sourceNodeOutID.empty) { sourceNodeOutID = 'outgoing' }
@@ -297,7 +297,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                         )
                     }
                     /*
-                     * Because succeeding instructions should not draw edges to preceding instructions, 
+                     * Because succeeding instructions should not draw edges to gotos, 
                      * clear the instruction list. 
                      */
                     lastInstructions.clear;
@@ -334,7 +334,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 sourceNode = null
                 sourceNodeOutID = 'outgoing'
                 /*
-                 * Clear the instruction actual list, since all edges are scheduled and add the return
+                 * Clear the actual instruction list, since all edges are scheduled and add the return
                  * list of the actual instruction to the list, so that the next instruction can use them.
                  * Subsequently, clear the return list. 
                  */
@@ -358,7 +358,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             lastInstructions.clear
         }
         
-        //Return the instruction list. Maybe a higher hierarchy is waiting for  it.
+        //Return the instruction list. Maybe a higher hierarchy is waiting for it.
        return lastInstructions
 	}
 
@@ -398,7 +398,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         rootNode.children.add(kJoinNode)
 
         /* 
-         * Create a compartment for every thread. Every thread possesses an entry and an exit node,
+         * Create a compartment for every thread. Every thread possesses an entry and an exit node.
          */
         for(thread : instr.threads) {
             // Create objects for the nodes
@@ -412,10 +412,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.KRendering.foreground = "black".color;
             kContainerNode.KRendering.foreground.alpha = 0;
             kContainerNode.KRendering.background = "gray".color;
-            kContainerNode.KRendering.background.alpha = 30
+            kContainerNode.KRendering.background.alpha = 50
             rootNode.children.add(kContainerNode)
 
-            // Set layout paramter for this hierarchy
+            // Set layout parameter for this hierarchy
             kContainerNode.addLayoutParam(LayoutOptions::SPACING, 25.0f);
             kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
             kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
@@ -432,6 +432,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             // Create exit node
             val kExitNode = ExitObj.createEllipseNode(30,75)
             kExitNode.KRendering.add(factory.createKLineWidth.of(2));
+            kExitNode.KRendering.foreground = "gray".color;
             kExitNode.KRendering.add(factory.createKText.of('exit'));
             kContainerNode.children.add(kExitNode)
             kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
@@ -456,7 +457,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
             /*
              * Call the transformation for the instruction list of this thread
-             * and store the list of this thread in the parallel map to the goto mapping
+             * and store the list of this thread in the parallel map for the goto mapping
              */
             thread.createInstructionListFigure(kContainerNode, kEntryNode, kExitNode, '')
             ParallelExitMapping.put(thread, kExitNode);
@@ -488,7 +489,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * corresponding node.  
      */
     def createAssignmentFigure(Assignment instr, KNode rootNode) {
-        // Use the injected serializer to seralize the expression in the assignment statement.
+        // Use the injected serializer to serialize the expression in the assignment statement.
         val nodeText = serializer.serialize(instr);
 
         /* Create the knode.
@@ -502,7 +503,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kNode.KRendering.add(factory.createKText.of(nodeText));
         rootNode.children.add(kNode)
 
-        // Add this instruction to the instructionmap and return a instruction list with this statement.
+        // Add this instruction to the instruction map and return a instruction list with this statement.
         (instr as Instruction).addToMapping(kNode, kNode)           
         val retList = new ArrayList<Instruction>
         retList.add(instr as Instruction);           
