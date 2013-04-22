@@ -6,7 +6,8 @@ import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.Goto;
-import de.cau.cs.kieler.scl.scl.InstructionList;
+import de.cau.cs.kieler.scl.scl.InstructionScope;
+import de.cau.cs.kieler.scl.scl.Instructions;
 import de.cau.cs.kieler.scl.scl.Label;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
@@ -123,9 +124,19 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 					return; 
 				}
 				else break;
-			case SclPackage.INSTRUCTION_LIST:
-				if(context == grammarAccess.getInstructionListRule()) {
-					sequence_InstructionList(context, (InstructionList) semanticObject); 
+			case SclPackage.INSTRUCTION_SCOPE:
+				if(context == grammarAccess.getInstructionScopeRule()) {
+					sequence_InstructionScope(context, (InstructionScope) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getInstructionRule()) {
+					sequence_Instruction_InstructionScope(context, (InstructionScope) semanticObject); 
+					return; 
+				}
+				else break;
+			case SclPackage.INSTRUCTIONS:
+				if(context == grammarAccess.getInstructionsRule()) {
+					sequence_Instructions(context, (Instructions) semanticObject); 
 					return; 
 				}
 				else break;
@@ -904,7 +915,14 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (expression=Expression conditional=InstructionList)
+	 *     (
+	 *         expression=Expression 
+	 *         (
+	 *             ((instructions+=Instruction | instructions+=Annotation | instructions+=Label)* instructions+=Instruction) | 
+	 *             instructions+=Annotation | 
+	 *             instructions+=Label
+	 *         )*
+	 *     )
 	 */
 	protected void sequence_Conditional(EObject context, Conditional semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -913,7 +931,15 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (expression=Expression conditional=InstructionList priority=INT?)
+	 *     (
+	 *         expression=Expression 
+	 *         (
+	 *             ((instructions+=Instruction | instructions+=Annotation | instructions+=Label)* instructions+=Instruction) | 
+	 *             instructions+=Annotation | 
+	 *             instructions+=Label
+	 *         )* 
+	 *         priority=INT?
+	 *     )
 	 */
 	protected void sequence_Conditional_Instruction(EObject context, Conditional semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -941,31 +967,39 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	/**
 	 * Constraint:
 	 *     (
+	 *         interface+=VariableDeclaration* 
 	 *         (
-	 *             (
-	 *                 ((instructions+=Instruction | instructions+=Annotation | instructions+=Label)* instructions+=Instruction) | 
-	 *                 instructions+=Annotation | 
-	 *                 instructions+=Label
-	 *             )*
-	 *         ) | 
-	 *         (
-	 *             interface+=VariableDeclaration* 
-	 *             (
-	 *                 ((instructions+=Instruction | instructions+=Annotation | instructions+=Label)* instructions+=Instruction) | 
-	 *                 instructions+=Annotation | 
-	 *                 instructions+=Label
-	 *             )*
-	 *         )
+	 *             ((instructions+=Instruction | instructions+=Annotation | instructions+=Label)* instructions+=Instruction) | 
+	 *             instructions+=Annotation | 
+	 *             instructions+=Label
+	 *         )*
 	 *     )
 	 */
-	protected void sequence_InstructionList(EObject context, InstructionList semanticObject) {
+	protected void sequence_InstructionScope(EObject context, InstructionScope semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (threads+=InstructionList threads+=InstructionList+ priority=INT?)
+	 *     (
+	 *         interface+=VariableDeclaration* 
+	 *         (
+	 *             ((instructions+=Instruction | instructions+=Annotation | instructions+=Label)* instructions+=Instruction) | 
+	 *             instructions+=Annotation | 
+	 *             instructions+=Label
+	 *         )* 
+	 *         priority=INT?
+	 *     )
+	 */
+	protected void sequence_Instruction_InstructionScope(EObject context, InstructionScope semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (threads+=Instructions threads+=Instructions+ priority=INT?)
 	 */
 	protected void sequence_Instruction_Parallel(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -977,6 +1011,15 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     (priority=INT?)
 	 */
 	protected void sequence_Instruction(EObject context, Pause semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ((((list+=Instruction | list+=Annotation | list+=Label)* list+=Instruction) | list+=Annotation | list+=Label)* program=[Program|ID]?)
+	 */
+	protected void sequence_Instructions(EObject context, Instructions semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -999,7 +1042,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (threads+=InstructionList threads+=InstructionList+)
+	 *     (threads+=Instructions threads+=Instructions+)
 	 */
 	protected void sequence_Parallel(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1017,7 +1060,15 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (name=ID interface+=VariableDeclaration* program=InstructionList)
+	 *     (
+	 *         name=ID 
+	 *         interface+=VariableDeclaration* 
+	 *         (
+	 *             ((instructions+=Instruction | instructions+=Annotation | instructions+=Label)* instructions+=Instruction) | 
+	 *             instructions+=Annotation | 
+	 *             instructions+=Label
+	 *         )*
+	 *     )
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

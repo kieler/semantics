@@ -109,13 +109,6 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SclPackage.INSTRUCTION_LIST:
-      {
-        InstructionList instructionList = (InstructionList)theEObject;
-        T result = caseInstructionList(instructionList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SclPackage.LABEL:
       {
         Label label = (Label)theEObject;
@@ -139,6 +132,13 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SclPackage.INSTRUCTIONS:
+      {
+        Instructions instructions = (Instructions)theEObject;
+        T result = caseInstructions(instructions);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SclPackage.PARALLEL:
       {
         Parallel parallel = (Parallel)theEObject;
@@ -152,6 +152,14 @@ public class SclSwitch<T> extends Switch<T>
         Pause pause = (Pause)theEObject;
         T result = casePause(pause);
         if (result == null) result = caseInstruction(pause);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SclPackage.INSTRUCTION_SCOPE:
+      {
+        InstructionScope instructionScope = (InstructionScope)theEObject;
+        T result = caseInstructionScope(instructionScope);
+        if (result == null) result = caseInstruction(instructionScope);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -231,22 +239,6 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Instruction List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Instruction List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseInstructionList(InstructionList object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Label</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -295,6 +287,22 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Instructions</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Instructions</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInstructions(Instructions object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Parallel</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -322,6 +330,22 @@ public class SclSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePause(Pause object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Instruction Scope</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Instruction Scope</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInstructionScope(InstructionScope object)
   {
     return null;
   }

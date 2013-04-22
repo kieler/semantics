@@ -25,7 +25,7 @@ import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Instruction
-import de.cau.cs.kieler.scl.scl.InstructionList
+import de.cau.cs.kieler.scl.scl.Instructions
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Program
@@ -116,7 +116,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * ParallelExitMap is used by the goto mapping to draw edges to the exit node.
      * Might be replaced by the edgeMapping in a later revision.
      */
-    private var HashMap<InstructionList, KNode>ParallelExitMapping;
+    private var HashMap<Instructions, KNode>ParallelExitMapping;
     
     // To keep the code clean all edges are reserved and drawn once the program evaluation is complete.  
     private var HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>EdgeMapping;
@@ -141,7 +141,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	    InstructionMapping = new HashMap<Instruction, Pair<KNode, KNode>>;
 	    PortMapping = new HashMap<KNode, HashMap<String, KPort>>;
 	    GotoMapping = new HashMap<Goto, Pair<KNode, String>>;
-	    ParallelExitMapping = new HashMap<InstructionList, KNode>;
+	    ParallelExitMapping = new HashMap<Instructions, KNode>;
 	    EdgeMapping = new HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>;
 		
 		// Initialize root node
@@ -154,7 +154,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
 
         // Evaluate the program beginning at the program root
-        program.program.createProgramFigure(rootNode);        		
+        program.toInstructionsClass.createProgramFigure(rootNode);        		
         
         rootNode
 	}
@@ -166,7 +166,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * for the root instruction list of a scl program. 
      * Subsequently, all reserved goto statements are evaluated and finally all edges are drawn.    
      */
-    def createProgramFigure(InstructionList iSet, KNode rootNode) {
+    def createProgramFigure(Instructions iSet, KNode rootNode) {
         
         // Create objects for the entry and exit nodes
         val EntryObj = new Object
@@ -257,7 +257,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * port to enable different outgoing ports on the parent node. (f.e. true and false at a conditional
      * node.)       
      */
-	def createInstructionListFigure(InstructionList iSet, KNode rootNode, KNode entryNode, KNode exitNode,
+	def createInstructionListFigure(Instructions iSet, KNode rootNode, KNode entryNode, KNode exitNode,
 	    String alternativeOutgoingID) {
 	    
 	    // preceding instructions and returned instructions from other scl statements
@@ -270,7 +270,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         if (sourceNodeOutID.empty) { sourceNodeOutID = 'outgoing' }
 	    
 	    // iterate through whole instruction list
-	    for(instruction : iSet.instructions) {
+	    for(instruction : iSet.list) {
 	        /*
 	         * For instructions with visual nodes, call their figure functions directly and retrieve 
 	         * last instructions.
@@ -597,7 +597,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         ]).addToPortMapping(kNode, 'conditional')
         
         // Evaluate the true condition and add the result to the result list.    
-        val lastInstructions = instr.conditional.createInstructionListFigure(rootNode, kNode, null, 
+        val lastInstructions = instr.toInstructionsClass.createInstructionListFigure(rootNode, kNode, null, 
             'conditional')
         retList.addAll(lastInstructions)
 

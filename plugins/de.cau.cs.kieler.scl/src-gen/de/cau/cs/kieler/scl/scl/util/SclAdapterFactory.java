@@ -100,11 +100,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createAssignmentAdapter();
       }
       @Override
-      public Adapter caseInstructionList(InstructionList object)
-      {
-        return createInstructionListAdapter();
-      }
-      @Override
       public Adapter caseLabel(Label object)
       {
         return createLabelAdapter();
@@ -120,6 +115,11 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createGotoAdapter();
       }
       @Override
+      public Adapter caseInstructions(Instructions object)
+      {
+        return createInstructionsAdapter();
+      }
+      @Override
       public Adapter caseParallel(Parallel object)
       {
         return createParallelAdapter();
@@ -128,6 +128,11 @@ public class SclAdapterFactory extends AdapterFactoryImpl
       public Adapter casePause(Pause object)
       {
         return createPauseAdapter();
+      }
+      @Override
+      public Adapter caseInstructionScope(InstructionScope object)
+      {
+        return createInstructionScopeAdapter();
       }
       @Override
       public Adapter caseAnnotation(Annotation object)
@@ -232,21 +237,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.InstructionList <em>Instruction List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.InstructionList
-   * @generated
-   */
-  public Adapter createInstructionListAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Label <em>Label</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -292,6 +282,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Instructions <em>Instructions</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.Instructions
+   * @generated
+   */
+  public Adapter createInstructionsAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Parallel <em>Parallel</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -317,6 +322,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPauseAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.InstructionScope <em>Instruction Scope</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.InstructionScope
+   * @generated
+   */
+  public Adapter createInstructionScopeAdapter()
   {
     return null;
   }

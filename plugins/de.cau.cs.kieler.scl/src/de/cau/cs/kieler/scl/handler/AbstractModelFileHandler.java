@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.yakindu.sccharts.scl.handler;
+package de.cau.cs.kieler.scl.handler;
 
 import java.io.IOException;
 import java.util.HashMap;

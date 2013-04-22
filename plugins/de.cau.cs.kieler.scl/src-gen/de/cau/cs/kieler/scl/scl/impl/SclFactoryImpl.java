@@ -68,12 +68,13 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
       case SclPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
       case SclPackage.INSTRUCTION: return createInstruction();
       case SclPackage.ASSIGNMENT: return createAssignment();
-      case SclPackage.INSTRUCTION_LIST: return createInstructionList();
       case SclPackage.LABEL: return createLabel();
       case SclPackage.CONDITIONAL: return createConditional();
       case SclPackage.GOTO: return createGoto();
+      case SclPackage.INSTRUCTIONS: return createInstructions();
       case SclPackage.PARALLEL: return createParallel();
       case SclPackage.PAUSE: return createPause();
+      case SclPackage.INSTRUCTION_SCOPE: return createInstructionScope();
       case SclPackage.ANNOTATION: return createAnnotation();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -129,17 +130,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public InstructionList createInstructionList()
-  {
-    InstructionListImpl instructionList = new InstructionListImpl();
-    return instructionList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Label createLabel()
   {
     LabelImpl label = new LabelImpl();
@@ -173,6 +163,17 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public Instructions createInstructions()
+  {
+    InstructionsImpl instructions = new InstructionsImpl();
+    return instructions;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Parallel createParallel()
   {
     ParallelImpl parallel = new ParallelImpl();
@@ -188,6 +189,17 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     PauseImpl pause = new PauseImpl();
     return pause;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InstructionScope createInstructionScope()
+  {
+    InstructionScopeImpl instructionScope = new InstructionScopeImpl();
+    return instructionScope;
   }
 
   /**

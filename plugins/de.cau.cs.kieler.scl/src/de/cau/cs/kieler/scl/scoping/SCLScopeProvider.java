@@ -5,11 +5,17 @@ package de.cau.cs.kieler.scl.scoping;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.Scopes;
 import org.yakindu.sct.model.stext.scoping.STextScopeProvider;
 
+import de.cau.cs.kieler.scl.scl.Assignment;
+import de.cau.cs.kieler.scl.scl.Instructions;
 import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.itemis.xtext.utils.jface.viewers.ContextElementAdapter;
 
 /**
  * This class contains custom scoping description.
@@ -61,6 +67,11 @@ public class SCLScopeProvider extends STextScopeProvider {
     public IScope scope_ElementReferenceExpression_reference(final EObject context,
             final EReference reference) {
         Program p = EcoreUtil2.getContainerOfType(context, Program.class);
+        if (p == null) { 
+           Instructions i = EcoreUtil2.getContainerOfType(context, Instructions.class);
+           p = i.getProgram();
+           return Scopes.scopeFor(p.getInterface());
+        }
         return null; //Scopes.scopeFor(p.getInterface());
     }  
     

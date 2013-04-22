@@ -5,18 +5,27 @@ import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 import "http://www.yakindu.org/base/base/2.0.0" as base
 import "http://www.yakindu.org/sct/statechart/SText" as stext
-//import "http://kieler.cs.cau.de/yakindu/stext/" as synctext
-//import "http://kieler.cs.cau.de/yakindu/sccharts/stext/" as scchartsexp
 
 generate scl "http://www.cau.de/cs/kieler/scl/scl"
 
-
-
-Program :
+Program:
 	'module' name = ID
 	(interface+=VariableDeclaration)*
 	'{'
-        program = InstructionList
+        (
+            (
+                (instructions += Instruction';')
+                |
+                (instructions += Annotation)
+                |
+                (instructions += Label)
+            )*
+            (instructions += Instruction)';'?
+            |
+            (instructions += Annotation)
+            |
+            (instructions += Label)
+        )*
     '}' 
 ;
 
@@ -25,75 +34,13 @@ VariableDeclaration:
 ;
 
 Instruction:
-    (Assignment | Conditional | Goto | Parallel | Pause)
+    (Assignment | Conditional | Goto | Parallel | Pause | InstructionScope)
     (priority=INT)?
 ;
 
 Assignment:
-    assignment=Expression
+    assignment = Expression
 ;
-
-InstructionList:
-  {InstructionList}
-  (
-  (
-      (
-          (instructions += Instruction';')
-          |
-          (instructions += Annotation)
-          |
-          (instructions += Label)
-      )*
-      (instructions += Instruction)
-      |
-      (instructions += Annotation)
-      |
-      (instructions += Label)
-  )*
-  )
-  |
-  {InstructionList}
-  (
- '{'
-      (interface+=VariableDeclaration)*
-  (
-      (
-          (instructions += Instruction';')
-          |
-          (instructions += Annotation)
-          |
-          (instructions += Label)
-      )*
-      (instructions += Instruction)
-      |
-      (instructions += Annotation)
-      |
-      (instructions += Label)
-  )*    
- '}'
-  )    
-;
-
-//VariableScope:
-//  {InstructionList}
-// '<'
-//      (interface+=VariableDeclaration)*
-//  (
-//      (
-//          (instructions += Instruction';')
-//          |
-//          (instructions += Annotation)
-//          |
-//          (instructions += Label)
-//      )*
-//      (instructions += Instruction)
-//      |
-//      (instructions += Annotation)
-//      |
-//      (instructions += Label)
-//  )*    
-// '>'
-//;
 
 Label:
     'label' name = ID ':'
@@ -101,7 +48,20 @@ Label:
 
 Conditional:
     'if' expression = Expression 'then'
-        conditional = InstructionList
+        (
+            (
+                (instructions += Instruction';')
+                |
+                (instructions += Annotation)
+                |
+                (instructions += Label)
+            )*
+            (instructions += Instruction)';'?
+            |
+            (instructions += Annotation)
+            |
+            (instructions += Label)
+        )*
     'end' 
 ;
 
@@ -109,17 +69,57 @@ Goto:
     'goto' name = ID 
 ;
 
+Thread:
+    {Thread}
+        (
+            (
+                (list += Instruction';')
+                |
+                (list += Annotation)
+                |
+                (list += Label)
+            )*
+            (list += Instruction)';'?
+            |
+            (list += Annotation)
+            |
+            (list += Label)
+        )*
+//    (program = [Program])?
+;
+
 Parallel:
     'fork'
-    (    threads += InstructionList
+    (    threads += Thread
     ('par'
-         threads += InstructionList)+)
+         threads += Thread)+)
     'join'
 ;
 
 
 Pause:
     'pause' {Pause}
+;
+
+InstructionScope:
+    {InstructionScope}
+    '{'
+    (interface+=VariableDeclaration)*
+        (
+            (
+                (instructions += Instruction';')
+                |
+                (instructions += Annotation)
+                |
+                (instructions += Label)
+            )*
+            (instructions += Instruction)';'?
+            |
+            (instructions += Annotation)
+            |
+            (instructions += Label)
+        )*
+    '}'    
 ;
 
 Annotation:

@@ -59,15 +59,6 @@ public interface SclFactory extends EFactory
   Assignment createAssignment();
 
   /**
-   * Returns a new object of class '<em>Instruction List</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction List</em>'.
-   * @generated
-   */
-  InstructionList createInstructionList();
-
-  /**
    * Returns a new object of class '<em>Label</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -95,6 +86,15 @@ public interface SclFactory extends EFactory
   Goto createGoto();
 
   /**
+   * Returns a new object of class '<em>Instructions</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instructions</em>'.
+   * @generated
+   */
+  Instructions createInstructions();
+
+  /**
    * Returns a new object of class '<em>Parallel</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -111,6 +111,15 @@ public interface SclFactory extends EFactory
    * @generated
    */
   Pause createPause();
+
+  /**
+   * Returns a new object of class '<em>Instruction Scope</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instruction Scope</em>'.
+   * @generated
+   */
+  InstructionScope createInstructionScope();
 
   /**
    * Returns a new object of class '<em>Annotation</em>'.

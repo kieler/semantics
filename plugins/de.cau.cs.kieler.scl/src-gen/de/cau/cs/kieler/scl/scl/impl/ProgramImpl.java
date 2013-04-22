@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.InstructionList;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.VariableDeclaration;
@@ -15,6 +14,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getInterface <em>Interface</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getProgram <em>Program</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getInstructions <em>Instructions</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,14 +71,14 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected EList<VariableDeclaration> interface_;
 
   /**
-   * The cached value of the '{@link #getProgram() <em>Program</em>}' containment reference.
+   * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getProgram()
+   * @see #getInstructions()
    * @generated
    * @ordered
    */
-  protected InstructionList program;
+  protected EList<EObject> instructions;
 
   /**
    * <!-- begin-user-doc -->
@@ -143,47 +143,13 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public InstructionList getProgram()
+  public EList<EObject> getInstructions()
   {
-    return program;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetProgram(InstructionList newProgram, NotificationChain msgs)
-  {
-    InstructionList oldProgram = program;
-    program = newProgram;
-    if (eNotificationRequired())
+    if (instructions == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.PROGRAM__PROGRAM, oldProgram, newProgram);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      instructions = new EObjectContainmentEList<EObject>(EObject.class, this, SclPackage.PROGRAM__INSTRUCTIONS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setProgram(InstructionList newProgram)
-  {
-    if (newProgram != program)
-    {
-      NotificationChain msgs = null;
-      if (program != null)
-        msgs = ((InternalEObject)program).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.PROGRAM__PROGRAM, null, msgs);
-      if (newProgram != null)
-        msgs = ((InternalEObject)newProgram).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.PROGRAM__PROGRAM, null, msgs);
-      msgs = basicSetProgram(newProgram, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.PROGRAM__PROGRAM, newProgram, newProgram));
+    return instructions;
   }
 
   /**
@@ -198,8 +164,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     {
       case SclPackage.PROGRAM__INTERFACE:
         return ((InternalEList<?>)getInterface()).basicRemove(otherEnd, msgs);
-      case SclPackage.PROGRAM__PROGRAM:
-        return basicSetProgram(null, msgs);
+      case SclPackage.PROGRAM__INSTRUCTIONS:
+        return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -218,8 +184,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return getName();
       case SclPackage.PROGRAM__INTERFACE:
         return getInterface();
-      case SclPackage.PROGRAM__PROGRAM:
-        return getProgram();
+      case SclPackage.PROGRAM__INSTRUCTIONS:
+        return getInstructions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -242,8 +208,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         getInterface().clear();
         getInterface().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
-      case SclPackage.PROGRAM__PROGRAM:
-        setProgram((InstructionList)newValue);
+      case SclPackage.PROGRAM__INSTRUCTIONS:
+        getInstructions().clear();
+        getInstructions().addAll((Collection<? extends EObject>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -265,8 +232,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SclPackage.PROGRAM__INTERFACE:
         getInterface().clear();
         return;
-      case SclPackage.PROGRAM__PROGRAM:
-        setProgram((InstructionList)null);
+      case SclPackage.PROGRAM__INSTRUCTIONS:
+        getInstructions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -286,8 +253,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SclPackage.PROGRAM__INTERFACE:
         return interface_ != null && !interface_.isEmpty();
-      case SclPackage.PROGRAM__PROGRAM:
-        return program != null;
+      case SclPackage.PROGRAM__INSTRUCTIONS:
+        return instructions != null && !instructions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

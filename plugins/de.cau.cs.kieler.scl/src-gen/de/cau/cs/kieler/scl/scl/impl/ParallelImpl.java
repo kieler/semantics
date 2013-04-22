@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.InstructionList;
+import de.cau.cs.kieler.scl.scl.Instructions;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 
@@ -41,7 +41,7 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * @generated
    * @ordered
    */
-  protected EList<InstructionList> threads;
+  protected EList<Instructions> threads;
 
   /**
    * <!-- begin-user-doc -->
@@ -69,11 +69,11 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<InstructionList> getThreads()
+  public EList<Instructions> getThreads()
   {
     if (threads == null)
     {
-      threads = new EObjectContainmentEList<InstructionList>(InstructionList.class, this, SclPackage.PARALLEL__THREADS);
+      threads = new EObjectContainmentEList<Instructions>(Instructions.class, this, SclPackage.PARALLEL__THREADS);
     }
     return threads;
   }
@@ -123,7 +123,7 @@ public class ParallelImpl extends InstructionImpl implements Parallel
     {
       case SclPackage.PARALLEL__THREADS:
         getThreads().clear();
-        getThreads().addAll((Collection<? extends InstructionList>)newValue);
+        getThreads().addAll((Collection<? extends Instructions>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

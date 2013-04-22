@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.InstructionList;
+import de.cau.cs.kieler.scl.scl.InstructionScope;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
@@ -16,37 +16,25 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Instruction List</b></em>'.
+ * An implementation of the model object '<em><b>Instruction Scope</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.InstructionListImpl#getInstructions <em>Instructions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.InstructionListImpl#getInterface <em>Interface</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.InstructionScopeImpl#getInterface <em>Interface</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.InstructionScopeImpl#getInstructions <em>Instructions</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class InstructionListImpl extends MinimalEObjectImpl.Container implements InstructionList
+public class InstructionScopeImpl extends InstructionImpl implements InstructionScope
 {
-  /**
-   * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getInstructions()
-   * @generated
-   * @ordered
-   */
-  protected EList<EObject> instructions;
-
   /**
    * The cached value of the '{@link #getInterface() <em>Interface</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -58,11 +46,21 @@ public class InstructionListImpl extends MinimalEObjectImpl.Container implements
   protected EList<VariableDeclaration> interface_;
 
   /**
+   * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getInstructions()
+   * @generated
+   * @ordered
+   */
+  protected EList<EObject> instructions;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected InstructionListImpl()
+  protected InstructionScopeImpl()
   {
     super();
   }
@@ -75,21 +73,7 @@ public class InstructionListImpl extends MinimalEObjectImpl.Container implements
   @Override
   protected EClass eStaticClass()
   {
-    return SclPackage.Literals.INSTRUCTION_LIST;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<EObject> getInstructions()
-  {
-    if (instructions == null)
-    {
-      instructions = new EObjectContainmentEList<EObject>(EObject.class, this, SclPackage.INSTRUCTION_LIST__INSTRUCTIONS);
-    }
-    return instructions;
+    return SclPackage.Literals.INSTRUCTION_SCOPE;
   }
 
   /**
@@ -101,9 +85,23 @@ public class InstructionListImpl extends MinimalEObjectImpl.Container implements
   {
     if (interface_ == null)
     {
-      interface_ = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, SclPackage.INSTRUCTION_LIST__INTERFACE);
+      interface_ = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, SclPackage.INSTRUCTION_SCOPE__INTERFACE);
     }
     return interface_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<EObject> getInstructions()
+  {
+    if (instructions == null)
+    {
+      instructions = new EObjectContainmentEList<EObject>(EObject.class, this, SclPackage.INSTRUCTION_SCOPE__INSTRUCTIONS);
+    }
+    return instructions;
   }
 
   /**
@@ -116,10 +114,10 @@ public class InstructionListImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case SclPackage.INSTRUCTION_LIST__INSTRUCTIONS:
-        return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
-      case SclPackage.INSTRUCTION_LIST__INTERFACE:
+      case SclPackage.INSTRUCTION_SCOPE__INTERFACE:
         return ((InternalEList<?>)getInterface()).basicRemove(otherEnd, msgs);
+      case SclPackage.INSTRUCTION_SCOPE__INSTRUCTIONS:
+        return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -134,10 +132,10 @@ public class InstructionListImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case SclPackage.INSTRUCTION_LIST__INSTRUCTIONS:
-        return getInstructions();
-      case SclPackage.INSTRUCTION_LIST__INTERFACE:
+      case SclPackage.INSTRUCTION_SCOPE__INTERFACE:
         return getInterface();
+      case SclPackage.INSTRUCTION_SCOPE__INSTRUCTIONS:
+        return getInstructions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -153,13 +151,13 @@ public class InstructionListImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case SclPackage.INSTRUCTION_LIST__INSTRUCTIONS:
-        getInstructions().clear();
-        getInstructions().addAll((Collection<? extends EObject>)newValue);
-        return;
-      case SclPackage.INSTRUCTION_LIST__INTERFACE:
+      case SclPackage.INSTRUCTION_SCOPE__INTERFACE:
         getInterface().clear();
         getInterface().addAll((Collection<? extends VariableDeclaration>)newValue);
+        return;
+      case SclPackage.INSTRUCTION_SCOPE__INSTRUCTIONS:
+        getInstructions().clear();
+        getInstructions().addAll((Collection<? extends EObject>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -175,11 +173,11 @@ public class InstructionListImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case SclPackage.INSTRUCTION_LIST__INSTRUCTIONS:
-        getInstructions().clear();
-        return;
-      case SclPackage.INSTRUCTION_LIST__INTERFACE:
+      case SclPackage.INSTRUCTION_SCOPE__INTERFACE:
         getInterface().clear();
+        return;
+      case SclPackage.INSTRUCTION_SCOPE__INSTRUCTIONS:
+        getInstructions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -195,12 +193,12 @@ public class InstructionListImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case SclPackage.INSTRUCTION_LIST__INSTRUCTIONS:
-        return instructions != null && !instructions.isEmpty();
-      case SclPackage.INSTRUCTION_LIST__INTERFACE:
+      case SclPackage.INSTRUCTION_SCOPE__INTERFACE:
         return interface_ != null && !interface_.isEmpty();
+      case SclPackage.INSTRUCTION_SCOPE__INSTRUCTIONS:
+        return instructions != null && !instructions.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //InstructionListImpl
+} //InstructionScopeImpl
