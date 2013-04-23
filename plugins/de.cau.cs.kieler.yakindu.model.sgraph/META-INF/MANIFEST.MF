@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCCharts sgraph
-Bundle-SymbolicName: de.cau.cs.kieler.yakindu.sgraph;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.yakindu.model.sgraph;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
@@ -10,11 +10,11 @@ Require-Bundle: org.eclipse.core.runtime,
  org.yakindu.base.types;visibility:=reexport,
  org.yakindu.sct.model.sgraph;bundle-version="2.0.0"
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.yakindu.sgraph.validator,
- de.cau.cs.kieler.yakindu.sgraph.syncgraph,
- de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl,
- de.cau.cs.kieler.yakindu.sgraph.syncgraph.util
-Import-Package: de.cau.cs.kieler.yakindu.sgraph.syncgraph,
+Export-Package: de.cau.cs.kieler.yakindu.model.sgraph.syncgraph,
+ de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl,
+ de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.util,
+ de.cau.cs.kieler.yakindu.model.sgraph.validator
+Import-Package: de.cau.cs.kieler.yakindu.model.sgraph.syncgraph,
  org.eclipse.xtext.validation
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin

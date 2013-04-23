@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.yakindu.sgraph.validator;
+package de.cau.cs.kieler.yakindu.model.sgraph.validator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -14,9 +14,9 @@ import org.yakindu.sct.model.sgraph.Transition;
 import org.yakindu.sct.model.sgraph.Vertex;
 import org.yakindu.sct.model.sgraph.validation.SGraphJavaValidator;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
 
 /**
  * This validator is intended to be used by a compositeValidator (See

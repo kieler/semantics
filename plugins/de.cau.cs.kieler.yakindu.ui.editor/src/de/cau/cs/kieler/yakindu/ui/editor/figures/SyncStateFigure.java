@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -21,18 +21,30 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.yakindu.sct.ui.editor.editor.figures.StateFigure;
 import org.yakindu.sct.ui.editor.preferences.StatechartColorConstants;
 
+/**
+ * The SyncState figure which extends the StateFigure. The StateFigure is
+ * extended to draw a double line border if the state is a final state and a
+ * thicker border if an initial state.
+ * 
+ * @author wah
+ * @kieler.rating green 2013-04-13
+ * 
+ */
 public class SyncStateFigure extends StateFigure {
 
 	/** width of the rectangle border. */
 	public static final int NORMAL_BORDER_WIDTH = 1;
 	public static final int THICK_BORDER_WIDTH = 2;
 
+	/** Margin constant **/
+	private static final int MARGIN_DOUBLE_LINE = 3;
+
 	private boolean isDoubleLineBorder = false;
 	private boolean isThickBorder = false;
 
 	public SyncStateFigure() {
 		// reduce white spaces
-		((GridLayout) this.getLayoutManager()).verticalSpacing=-1;
+		((GridLayout) this.getLayoutManager()).verticalSpacing = -1;
 	}
 
 	/**
@@ -47,10 +59,14 @@ public class SyncStateFigure extends StateFigure {
 			// set the second rectangle. It is calculated according the border
 			// line width
 			Rectangle rect = new Rectangle();
-			rect.x = getBounds().x + 3 * getLineWidth() / 2 + 1;
-			rect.y = getBounds().y + 3 * getLineWidth() / 2 + 1;
-			rect.width = getBounds().width - 3 * getLineWidth() - 2;
-			rect.height = getBounds().height - 3 * getLineWidth() - 2;
+			rect.x = getBounds().x + MARGIN_DOUBLE_LINE * getLineWidth() / 2
+					+ 1;
+			rect.y = getBounds().y + MARGIN_DOUBLE_LINE * getLineWidth() / 2
+					+ 1;
+			rect.width = getBounds().width - MARGIN_DOUBLE_LINE
+					* getLineWidth() - 2;
+			rect.height = getBounds().height - MARGIN_DOUBLE_LINE
+					* getLineWidth() - 2;
 			// Draw the second rectangle inside the first one
 			graphics.drawRoundRectangle(rect, getCornerDimensions().width
 					- (getLineWidth() + 1) * getLineWidth(),
@@ -68,7 +84,7 @@ public class SyncStateFigure extends StateFigure {
 	}
 
 	/**
-	 * Override to change the State preferred height
+	 * Override to change the State preferred height.
 	 */
 	@Override
 	public Dimension getPreferredSize(int wHint, int hHint) {
@@ -77,7 +93,7 @@ public class SyncStateFigure extends StateFigure {
 	}
 
 	/**
-	 * Return the Rounded Rectangle border width
+	 * Return the Rounded Rectangle border width.
 	 * 
 	 * @return the border width
 	 */
@@ -86,7 +102,7 @@ public class SyncStateFigure extends StateFigure {
 	}
 
 	/**
-	 * Return true if a Thick line border, false otherwise
+	 * Return true if a Thick line border, false otherwise.
 	 * 
 	 * @return the true if a Thick line border, false otherwise
 	 */
@@ -95,7 +111,7 @@ public class SyncStateFigure extends StateFigure {
 	}
 
 	/**
-	 * Set the border to thick
+	 * Set the border to thick.
 	 * 
 	 * @param isThickBorder
 	 *            true for a thick border, and false otherwise
@@ -105,7 +121,7 @@ public class SyncStateFigure extends StateFigure {
 	}
 
 	/**
-	 * Return true if a double line border, false otherwise
+	 * Return true if a double line border, false otherwise.
 	 * 
 	 * @return the true if a double line border, false otherwise
 	 */
@@ -114,7 +130,7 @@ public class SyncStateFigure extends StateFigure {
 	}
 
 	/**
-	 * Set the line border to double
+	 * Set the line border to double.
 	 * 
 	 * @param isDoubleLineBorder
 	 *            true for a double line border, and false otherwise

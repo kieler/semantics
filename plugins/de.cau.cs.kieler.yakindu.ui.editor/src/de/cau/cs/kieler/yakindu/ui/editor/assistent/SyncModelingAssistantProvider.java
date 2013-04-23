@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -33,13 +33,20 @@ import com.google.common.collect.Lists;
 import de.cau.cs.kieler.yakindu.ui.editor.editor.SyncElementTypes;
 
 /**
- * Init the Modeling Assistant Provider
+ * Init the Modeling Assistant Provider. This class extends the
+ * ModelingAssistantProvider to initialize the elements which are used in the
+ * pop-up bar and the connection creation assistant. It adds the SyncState and
+ * all types of transitions (weak abort, strong abort, and normal termination).
  * 
  * @author wah
- * 
+ * @kieler.rating green 2013-04-13
  */
 public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 
+	/**
+	 * Initialize the elements to display in the pop-up bar (choice, region,
+	 * SyncState).
+	 */
 	@Override
 	public List<IElementType> getTypesForPopupBar(IAdaptable host) {
 		IGraphicalEditPart editPart = (IGraphicalEditPart) host
@@ -58,6 +65,12 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 		return Lists.newArrayList();
 	}
 
+	/**
+	 * Initialize the list of creation assistant elements on a target transition
+	 * (choice, initial state, state, or final state).
+	 */
+	// The warning is supressed while the returned type is conform to
+	// List<IElementType>.
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<IElementType> getTypesForTarget(IAdaptable source,
@@ -75,6 +88,12 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 		return Collections.EMPTY_LIST;
 	}
 
+	/**
+	 * Initialize the list of creation assistant elements on a source transition
+	 * (choice, initial state, state, or final state).
+	 */
+	// The warning is supressed while the returned type is conform to
+	// List<IElementType>.
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<IElementType> getTypesForSource(IAdaptable target,
@@ -92,6 +111,11 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 		return Collections.EMPTY_LIST;
 	}
 
+	/**
+	 * Initialize different types of transitions for the connection creation
+	 * provider (wean abortion, strong abortion, normal termination).
+	 * 
+	 */
 	@Override
 	public List<?> getRelTypesOnSource(IAdaptable source) {
 		return Lists.newArrayList(getSyncWeakAbortTransitionElementType(),
@@ -99,6 +123,11 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 				getSyncNormalTerminationTransitionElementType());
 	}
 
+	/**
+	 * Initialize different types of transitions for the connection creation
+	 * provider (wean abortion, strong abortion, normal termination).
+	 * 
+	 */
 	@Override
 	public List<?> getRelTypesOnTarget(IAdaptable target) {
 		return Lists.newArrayList(getSyncWeakAbortTransitionElementType(),
@@ -106,6 +135,11 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 				getSyncNormalTerminationTransitionElementType());
 	}
 
+	/**
+	 * Initialize different types of transitions for the connection creation
+	 * provider (wean abortion, strong abortion, normal termination).
+	 * 
+	 */
 	@Override
 	public List<?> getRelTypesOnSourceAndTarget(IAdaptable source,
 			IAdaptable target) {
@@ -116,7 +150,8 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 	}
 
 	/**
-	 * Override this method to return the Final State Element Type
+	 * Override this method to return the Final State Element Type.
+	 * This method must be overridden to return the right object.
 	 * 
 	 * @return the Final State Element Type
 	 */
@@ -125,7 +160,8 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 	}
 
 	/**
-	 * Override this method to return the Final State Element Type
+	 * Override this method to return the State Element Type.
+	 * This method must be overridden to return the right object.
 	 * 
 	 * @return the State Element Type
 	 */
@@ -134,7 +170,8 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 	}
 
 	/**
-	 * Override this method to return the Final State Element Type
+	 * Override this method to return the initial State Element Type.
+	 * This method must be overridden to return the right object.
 	 * 
 	 * @return the initial State Element Type
 	 */
@@ -143,7 +180,8 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 	}
 
 	/**
-	 * Override this method to return the Final State Element Type
+	 * Override this method to return the normal termination transition Element Type.
+	 * This method must be overridden to return the right object
 	 * 
 	 * @return the normal termination transition Element Type
 	 */
@@ -152,7 +190,8 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 	}
 
 	/**
-	 * Override this method to return the Final State Element Type
+	 * Override this method to return the strong abort transition Element Type.
+	 * This method must be overridden to return the right object.
 	 * 
 	 * @return the strong abort transition Element Type
 	 */
@@ -161,7 +200,8 @@ public class SyncModelingAssistantProvider extends ModelingAssistantProvider {
 	}
 
 	/**
-	 * Override this method to return the Final State Element Type
+	 * Override this method to return the weak abort transition Element Type.
+	 * This method must be overridden to return the right object.
 	 * 
 	 * @return the weak abort transition Element Type
 	 */

@@ -10,13 +10,13 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl;
+package de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphFactory;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -66,7 +66,7 @@ public class SyncgraphPackageImpl extends EPackageImpl implements SyncgraphPacka
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage#eNS_URI
+	 * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

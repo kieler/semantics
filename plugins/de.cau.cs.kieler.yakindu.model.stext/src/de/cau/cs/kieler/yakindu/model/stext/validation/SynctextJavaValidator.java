@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.yakindu.model.stext.validation;
 
 import java.util.List;
@@ -25,12 +38,12 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.yakindu.model.sgraph.validator.SyncGraphJavaValidator;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.PreValueExpression;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage;
-import de.cau.cs.kieler.yakindu.sgraph.validator.SyncGraphJavaValidator;
 
 /**
  * This class implements the validator for the textual description language. It
@@ -38,6 +51,7 @@ import de.cau.cs.kieler.yakindu.sgraph.validator.SyncGraphJavaValidator;
  * project.
  * 
  * @author wah
+ * @kieler.rating green 2013-04-13
  * 
  */
 @ComposedChecks(validators = { SyncGraphJavaValidator.class,
@@ -150,65 +164,9 @@ public class SynctextJavaValidator extends STextJavaValidator {
 	 * 
 	 */
 	protected void checkElementReferenceEffect(ElementReferenceExpression refExp) {
-//		if (!(refExp.getReference() instanceof Operation)) {
-//			if (refExp.getReference() instanceof Property) {
-//				error("Access blo to property '"
-//						+ nameProvider.getFullyQualifiedName(refExp
-//								.getReference()) + "' has no effect.",
-//						refExp,
-//						StextPackage.Literals.ELEMENT_REFERENCE_EXPRESSION__REFERENCE,
-//						INSIGNIFICANT_INDEX, FEATURE_CALL_HAS_NO_EFFECT);
-//			}
-//		}
+
 	}
 
-	/**
-	 * Check the affection to pre operator
-	 * 
-	 * @param refExp
-	 */
-	// @Check(CheckType.FAST)
-	// public void checkPreEffectActions(AssignmentExpression exp) {
-	// if ((exp instanceof PreValueExpression)) {
-	// System.out.println("");
-	// }
-	// }
-
-	/*********************************************************************************************************
-	 * The following methods are override to allow the Injection of sccInferrer
-	 * object
-	 */
-	// @Check(CheckType.FAST)
-	// public void checkVariableDefinitionInitialValue(
-	// VariableDefinition definition) {
-	// Type varType = definition.getType();
-	// if (definition.getInitialValue() == null)
-	// return;
-	// try {
-	// Type valType = sccInferrer.getType(definition.getInitialValue());
-	// Type combine = tsAccess.combine(valType, varType);
-	// if (combine == null || !tsAccess.isAssignable(varType, valType)) {
-	// error("Can not assign a value of type '" + valType.getName()
-	// + "' to a variable of type '" + varType + "'",
-	// StextPackage.Literals.VARIABLE_DEFINITION__INITIAL_VALUE);
-	// }
-	// } catch (Exception e) {
-	// error(e.getMessage(), null);
-	// }
-	// }
-
-	// @Check(CheckType.FAST)
-	// public void checkExpression(final Statement statement) {
-	// try {
-	// sccInferrer.getType(statement);
-	// } catch (TypeCheckException e) {
-	// error(e.getMessage(), null);
-	// } catch (IllegalArgumentException e) {
-	// // This happens, when the expression is not completed for Unhandled
-	// // parameter types: [null]
-	// // We can safely ignore this exception
-	// }
-	// }
 
 	@Check(CheckType.FAST)
 	public void checkAssignmentExpression(final AssignmentExpression exp) {

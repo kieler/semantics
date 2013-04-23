@@ -10,7 +10,7 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sgraph.syncgraph;
+package de.cau.cs.kieler.yakindu.model.sgraph.syncgraph;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage
+ * @see de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage
  * @generated
  */
 public interface SyncgraphFactory extends EFactory {
@@ -29,7 +29,7 @@ public interface SyncgraphFactory extends EFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	SyncgraphFactory eINSTANCE = de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncgraphFactoryImpl.init();
+	SyncgraphFactory eINSTANCE = de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncgraphFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Sync Transition</em>'.

@@ -10,11 +10,11 @@
  *   This code is provided under the terms of the Eclipse Public License (EPL).
  *   See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl;
+package de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl;
 
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncgraphPackage;
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.TransitionType;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -31,8 +31,8 @@ import org.yakindu.sct.model.sgraph.impl.TransitionImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncTransitionImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sgraph.syncgraph.impl.SyncTransitionImpl#isIsHistory <em>Is History</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncTransitionImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncTransitionImpl#isIsHistory <em>Is History</em>}</li>
  * </ul>
  * </p>
  *
