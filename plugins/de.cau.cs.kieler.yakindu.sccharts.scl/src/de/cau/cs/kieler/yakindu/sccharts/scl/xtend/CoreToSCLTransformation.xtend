@@ -34,7 +34,10 @@ class CoreToSCLTransformation {
     public static int OPTIMIZE_LABEL            = 2
     public static int OPTIMIZE_SELFLOOP         = 4
     public static int OPTIMIZE_STATEPOSITION    = 8
-    public static int OPTIMIZE_ALL              = OPTIMIZE_GOTO + OPTIMIZE_LABEL + OPTIMIZE_SELFLOOP + 
+    public static int OPTIMIZE_ALL              = 
+                                                  OPTIMIZE_GOTO + 
+                                                  OPTIMIZE_LABEL + 
+                                                  OPTIMIZE_SELFLOOP + 
                                                   OPTIMIZE_STATEPOSITION;         
  
  
@@ -274,8 +277,8 @@ class CoreToSCLTransformation {
     def ArrayList<EObject> optimizeLabel(List<EObject> iList) {
         var iS = createNewInstructionList();
         
-        val oldSet = ImmutableList::copyOf(iS);
-        val gotos = ImmutableList::copyOf(iS.getAllContents.filter(typeof(Goto)));
+        val oldSet = iList
+        val gotos = iList.getAllContents.filter(typeof(Goto))
         
         iS.addAll(oldSet.filter(e | 
           (!(e instanceof Label)) || 
