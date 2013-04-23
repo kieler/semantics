@@ -182,8 +182,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
                 
         // Create the exit node
-        val kExitNode = iList.createNode("exit").setNodeSize(30,75);
-        kExitNode.addEllipse;
+//        val kExitNode = ExitObj..createNode("exit").setNodeSize(30,75);
+//        kExitNode.addEllipse;
+        val kExitNode = ExitObj.createEllipseNode(30, 75);
         kExitNode.KRendering.lineWidth = 2;
         kExitNode.KRendering.foreground = "gray".color;
         kExitNode.KRendering.add(factory.createKText.of('exit'));

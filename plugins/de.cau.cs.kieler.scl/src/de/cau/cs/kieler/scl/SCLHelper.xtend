@@ -1,21 +1,27 @@
 package de.cau.cs.kieler.scl
 
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFactory
 import de.cau.cs.kieler.scl.scl.Annotation
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.Label
+import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
+import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.VariableDeclaration
 import de.cau.cs.kieler.scl.scl.Thread
+import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
+import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
+import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFactory
 import java.util.HashMap
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.EcoreUtil2;
 import org.yakindu.sct.model.sgraph.Effect
 import org.yakindu.sct.model.sgraph.Event
 import org.yakindu.sct.model.sgraph.SGraphFactory
@@ -24,16 +30,13 @@ import org.yakindu.sct.model.sgraph.Trigger
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import org.yakindu.sct.model.stext.stext.StextFactory
-import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
-import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.scl.Parallel
-import de.cau.cs.kieler.scl.scl.Program
-import org.eclipse.emf.common.util.EList
+import java.util.ArrayList
 import de.cau.cs.kieler.scl.scl.Thread
+import de.cau.cs.kieler.scl.scl.Thread
+import java.util.List
+import de.cau.cs.kieler.scl.scl.InstructionScope
 
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
@@ -63,16 +66,14 @@ class SCLHelper {
     // ==                       C R E A T E   M E T A M O D E L   E X T E N S I O N                        ==
     // ======================================================================================================
     
-//    def Instructions createSCLInstructions()
-//    {
-//        SCL.createInstructions();
-//    }
-//    
-//    def Instructions createSCLInstructionSet(Instruction instruction) {
-//        var iS = createSCLInstructions();
-//        iS.addInstruction(instruction);
-//        iS;
-//    }
+    def createNewInstructionList()
+    {
+        new ArrayList<EObject>
+    }
+    
+    def createNewInstructionList(Instruction instruction) {
+        createNewInstructionList.add(instruction)
+    }
     
     def Goto createSCLGoto(String targetLabelName)
     {
@@ -161,11 +162,21 @@ class SCLHelper {
         conditional;
     }    
     
+    def Thread createSCLThread() {
+        SCL.createThread();
+    }
+    
+    def Thread createSCLThread(List<EObject> iList) {
+        val thread = createSCLThread()
+        thread.instructions.addAll(iList)
+        thread
+    }
+    
     // ======================================================================================================
     // ==                I N S T R U C T I O N    M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
     
-    def void addInstruction(EList<EObject> iList, EObject instruction) {
+    def void addInstruction(List<EObject> iList, EObject instruction) {
         if (instruction instanceof Instruction ||
             instruction instanceof Label ||
             instruction instanceof Annotation)
@@ -184,12 +195,41 @@ class SCLHelper {
         thread.instructions.addInstruction(instruction)
     }
     
+//    def void addInstruction(List<EObject> list, EObject instruction) {
+//        if (instruction instanceof Instruction ||
+//            instruction instanceof Label ||
+//            instruction instanceof Annotation)
+//        list.add(instruction)
+//    }
+    
+    def void addInstructions(List<EObject> list, List<EObject> addition) {
+        list.addAll(addition)
+    }
+    
     def void addTo(EList<EObject> iListFrom, EList<EObject> iListTo) {
         iListTo.addAll(iListFrom)
     }
     
-    def void addPause(EList<EObject> iList) {
+    def void addPause(List<EObject> iList) {
         iList.addInstruction(createSCLPause())
+    }
+    
+    def ArrayList<EObject> allContents(List<EObject> iList) {
+        var rList = createNewInstructionList()
+        for(instruction : iList) {
+            if (instruction instanceof Parallel) {
+                for(thread : (instruction as Parallel).threads) {
+                    rList.addAll(thread.instructions.allContents)
+                }
+            } 
+            else if (instruction instanceof Conditional) 
+                rList.addAll((instruction as Conditional).instructions.allContents)
+            else if (instruction instanceof InstructionScope) 
+                rList.addAll((instruction as InstructionScope).instructions.allContents)
+            else 
+                rList.addInstruction(instruction)
+        }
+        rList
     }
         
     // ======================================================================================================

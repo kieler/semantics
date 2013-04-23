@@ -7,7 +7,6 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import de.cau.cs.kieler.scl.scl.Annotation
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.InstructionList
 import de.cau.cs.kieler.scl.scl.Label
 import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.SclFactory
@@ -19,6 +18,8 @@ import org.yakindu.sct.model.sgraph.Statechart
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.SCLHelper
+import org.eclipse.emf.ecore.EObject
+import java.util.List
 
 class CoreToSCLTransformation {
     
@@ -50,12 +51,11 @@ class CoreToSCLTransformation {
        
         rootStatechart.statechartDistributePriorities
        
-        targetProgram.program = SCL.createInstructionList();
         val mainState = rootStatechart.regions.get(0).vertices.get(0) as SyncState
        
         targetProgram.setName(mainState.name)
         
-        targetProgram.program.instructions.addAll(transformCoreState(mainState, optimizationFlags).instructions);
+        targetProgram.instructions.addAll(transformCoreState(mainState, optimizationFlags));
         
         for(declaration : mainState.scopes.get(0).declarations) {
            targetProgram.interface.add(createVariableDeclaration(declaration as Event));
@@ -64,65 +64,65 @@ class CoreToSCLTransformation {
         targetProgram
     }
 
-    def InstructionList transformCoreRegion(Region region, int optimizationFlags) {
-        var iSet = createSCLInstructionList();
+    def ArrayList<EObject> transformCoreRegion(Region region, int optimizationFlags) {
+        var iS = createNewInstructionList()
         val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState))).
-          sort(e1, e2 | compareSCLRegionStateOrder(e1, e2));
+          sort(e1, e2 | compareSCLRegionStateOrder(e1, e2))
 
         if (region.getName() != null) {
-           iSet.addInstruction(createSCLComment(region.getName()));
+           iS.addInstruction(createSCLComment(region.getName()))
         }
 
-        var stateInstructions = new ArrayList<InstructionList>;
+        var stateInstructions = new ArrayList<ArrayList<EObject>>
         for (state : states) {
-            Debug(state.getHierarchicalName(""));
-            stateInstructions.add(transformCoreState(state, optimizationFlags));
+            Debug(state.getHierarchicalName(""))
+            stateInstructions.add(transformCoreState(state, optimizationFlags))
         }
         
         if (optimizationFlags.optimize(OPTIMIZE_STATEPOSITION)) {
-            stateInstructions = stateInstructions.optimizeStateSetPosition;
+            stateInstructions = stateInstructions.optimizeStateSetPosition
         }
         for(stateSet : stateInstructions) {
-            iSet.instructions.addAll(stateSet.instructions);
+            iS.addAll(stateSet)
         }
         
-        if (optimizationFlags.optimize(OPTIMIZE_GOTO)) { iSet = iSet.optimizeGoto }
-        if (optimizationFlags.optimize(OPTIMIZE_LABEL)) { iSet = iSet.optimizeLabel }
-        iSet;
+        if (optimizationFlags.optimize(OPTIMIZE_GOTO)) { iS = iS.optimizeGoto }
+        if (optimizationFlags.optimize(OPTIMIZE_LABEL)) { iS = iS.optimizeLabel }
+        iS
     }
     
-    def InstructionList transformCoreState(SyncState state, int optimizationFlags) {
-        var iSet = createSCLInstructionList();
-        val stateID = state.getHierarchicalName("");
+    def ArrayList<EObject> transformCoreState(SyncState state, int optimizationFlags) {
+        var iS = createNewInstructionList()
+        val stateID = state.getHierarchicalName("")
         
-        iSet.addInstruction(createSCLComment("-- Begin of state "+state.getName()+" --"));
-        iSet.addInstruction(createSCLLabel(stateID));
+        iS.addInstruction(createSCLComment("-- Begin of state "+state.getName()+" --"))
+        iS.addInstruction(createSCLLabel(stateID));
         
         if (state.isComposite()) {
             // COMPOSITE STATE         
             
             if (state.getRegions().size<2) {
-                var regionInstructions =  transformCoreRegion(state.getRegions().head, optimizationFlags);
-                iSet.instructions.addAll(regionInstructions.instructions);
+                var regionInstructions =  transformCoreRegion(state.getRegions().head, optimizationFlags)
+                iS.addAll(regionInstructions)
             } else {
                 var parallel = SclFactory::eINSTANCE.createParallel();
                 for(stateRegion : state.getRegions()) {
-                    var regionInstructions = transformCoreRegion(stateRegion, optimizationFlags);
-                    parallel.getThreads().addAll(regionInstructions);
+                    val regionInstructions = transformCoreRegion(stateRegion, optimizationFlags)
+                    parallel.getThreads().add(createSCLThread(regionInstructions))
                 }
-                iSet.addInstruction(parallel);
+                iS.addInstruction(parallel)
             }
             
             for(transition : state.getNormalterminations) {
-              val targetState = transition.target as SyncState; 
+              val targetState = transition.target as SyncState 
               
-              val effect = transition.getEffect();
+              val effect = transition.getEffect()
               if (effect != null) {
-                  iSet.addInstruction(createSCLAssignment(effect));
+                  iS.addInstruction(createSCLAssignment(effect))
               }
               
-              var goto = createSCLGoto(targetState.getHierarchicalName(""));
-              iSet.addInstruction(goto);
+              var goto = createSCLGoto(targetState.getHierarchicalName(""))
+              iS.addInstruction(goto)
             }
              
         } else {
@@ -133,22 +133,17 @@ class CoreToSCLTransformation {
                 
             } else {
                 // STATE IS NOT A FINAL STATE
-                
-                iSet.addInstruction(state.transformStateTransitions(optimizationFlags));
-                
-               
+                iS.addInstructions(state.transformStateTransitions(optimizationFlags))
             } // isFinal
         
         } // isComposite
        
-//        iSet.addInstruction(createSCLComment("-- End of state "+state.getName()+" --"));
-       
-        iSet;        
+        iS;        
     }
     
     
-    def InstructionList transformStateTransitions(SyncState state, int optimizationFlags) {
-        var iSet = createSCLInstructionList();
+    def ArrayList<EObject> transformStateTransitions(SyncState state, int optimizationFlags) {
+        var iS = createNewInstructionList()
         
         val transitions = state.getTransitions;
         val immediateTransitions = ImmutableList::copyOf(transitions.filter(e | e.isImmediate));
@@ -159,19 +154,19 @@ class CoreToSCLTransformation {
         
         for(transition : immediateTransitions) {
                 val targetInstructions = transformStateTransition(transition)
-                if (targetInstructions.instructions.last instanceof Goto) { defaultTransition = true; }
-                iSet.addInstruction(targetInstructions)
+                if (targetInstructions.last instanceof Goto) { defaultTransition = true; }
+                iS.addAll(targetInstructions)
         }
                 
         if (transitions.size <= immediateTransitions.size) {
             if (!defaultTransition) {
-                iSet.addPause;
-                iSet.addInstruction(createSCLGoto(state.getHierarchicalName("")));
+                iS.addPause;
+                iS.addInstruction(createSCLGoto(state.getHierarchicalName("")));
             }
-            return iSet;
+            return iS;
         }
         
-        iSet.addPause;
+        iS.addPause;
         
         if (!optimizationFlags.optimize(OPTIMIZE_SELFLOOP) &&
            ((transitions.size==2) && (selfTransitions.size==1) && 
@@ -183,36 +178,36 @@ class CoreToSCLTransformation {
                 )
                 ).head
             )
-            if (targetInstructions.instructions.last instanceof Goto) {
-                iSet.addInstruction(targetInstructions);
+            if (targetInstructions.last instanceof Goto) {
+                iS.addAll(targetInstructions);
             } else {
-                var InstructionList selfInstructions = null;
+                var ArrayList<EObject> selfInstructions = null;
                 
                 if (selfTransitions.size==1) {
                     selfInstructions = transformStateTransition(selfTransitions.head)
                 } else {
-                    selfInstructions = createSCLInstructionList();
+                    selfInstructions = createNewInstructionList();
                     selfInstructions.addInstruction(createSCLGoto(state.getHierarchicalName("")));
                 }
                 
-                iSet.addInstruction(optimizeSelfLoop(targetInstructions, selfInstructions));
+                iS.addInstructions(optimizeSelfLoop(targetInstructions, selfInstructions));
             } 
         } else {
             for (transition : transitions) {
                 val targetInstructions = transformStateTransition(transition)
-                if (targetInstructions.instructions.last instanceof Goto) { defaultTransition = true; }
-                iSet.addInstruction(targetInstructions)
+                if (targetInstructions.last instanceof Goto) { defaultTransition = true; }
+                iS.addAll(targetInstructions)
             }
             if (!defaultTransition) {
-                iSet.addInstruction(createSCLGoto(state.getHierarchicalName("")));
+                iS.addInstruction(createSCLGoto(state.getHierarchicalName("")));
             }
         }
         
-        iSet;
+        iS
     }
     
-    def InstructionList transformStateTransition(SyncTransition transition) {
-        var iSet = createSCLInstructionList()
+    def ArrayList<EObject> transformStateTransition(SyncTransition transition) {
+        var iS = createNewInstructionList()
         val targetState = transition.target as SyncState;
         val transitionEffect = transition.getEffect();
         val transitionTrigger = transition.getTrigger();
@@ -224,109 +219,115 @@ class CoreToSCLTransformation {
                 conditional.addInstruction(transitionAssignment);
             }
             conditional.addInstruction(targetGoto);
-            iSet.instructions.add(conditional);
+            iS.addInstruction(conditional);
         } else {
             if (transitionEffect.exists) {
                 val transitionAssignment = createSCLAssignment(transitionEffect);
-                iSet.instructions.add(transitionAssignment);
+                iS.addInstruction(transitionAssignment);
             }
-            iSet.instructions.add(targetGoto);
+            iS.addInstruction(targetGoto);
         }
-        iSet;
+        iS;
     }
     
     
     
-    def InstructionList optimizeSelfLoop(InstructionList tSet, InstructionList sSet) {
-        var iSet = createSCLInstructionList();
+    def ArrayList<EObject> optimizeSelfLoop(List<EObject> tList, List<EObject> sList) {
+        var iS = createNewInstructionList();
         
-        var conditional = tSet.instructions.head as Conditional;
-        var condSet = conditional.conditional;
-        conditional.setConditional(sSet);
+        var conditional = tList.head as Conditional
+        var condIS = conditional.instructions
+        conditional.instructions.clear
+        conditional.instructions.addAll(sList)
         conditional.expression = conditional.expression.negate;
         
-        iSet.addInstruction(conditional.copy)
-        iSet.addInstruction(condSet.copy)
-        iSet;
+        iS.addInstruction(conditional.copy)
+        iS.addAll(condIS)
+        iS;
     }
  
- 
-    def InstructionList optimizeGoto(InstructionList iSet) {
-        var newISet = createSCLInstructionList();
+    def ArrayList<EObject> optimizeGoto(List<EObject> iList) {
+        var iS = createNewInstructionList()
         
-        for(Integer i: 0..(iSet.instructions.size - 1)) {
+        for(Integer i: 0..(iList.size - 1)) {
             var boolean skip = false
-            val instruction = iSet.instructions.get(i);
+            val instruction = iList.get(i)
             
-            if (instruction instanceof Goto && i < iSet.instructions.size - 1) {
-                var Integer j = new Integer(i + 1);
-                var nextInstruction = iSet.instructions.get(j);
-                while ((j < iSet.instructions.size - 1) && (nextInstruction instanceof Annotation)) { 
+            if (instruction instanceof Goto && i < iList.size - 1) {
+                var Integer j = new Integer(i + 1)
+                var nextInstruction = iList.get(j)
+                while ((j < iList.size - 1) && (nextInstruction instanceof Annotation)) { 
                     j = j + 1;
-                    nextInstruction = iSet.instructions.get(j); 
+                    nextInstruction = iList.get(j) 
                 }
                 if (nextInstruction!=null && nextInstruction instanceof Label) {
                     if ((instruction as Goto).getName().equals((nextInstruction as Label).getName())) { skip = true }  
                 }
             }
             
-            if (!skip) { newISet.instructions.add(instruction.copy); }
+            if (!skip) { iS.add(instruction.copy) }
         }
       
-      newISet;
+      iS
     }
     
-    def InstructionList optimizeLabel(InstructionList iSet) {
-        var newISet = createSCLInstructionList();
+    def ArrayList<EObject> optimizeLabel(List<EObject> iList) {
+        var iS = createNewInstructionList();
         
-        val oldSet = ImmutableList::copyOf(iSet.instructions);
-        val gotos = ImmutableList::copyOf(iSet.eAllContents().toIterable().filter(typeof(Goto)));
+        val oldSet = ImmutableList::copyOf(iS);
+        val gotos = ImmutableList::copyOf(iS.getAllContents.filter(typeof(Goto)));
         
-        newISet.instructions.addAll(oldSet.filter(e | 
+        iS.addAll(oldSet.filter(e | 
           (!(e instanceof Label)) || 
           (gotos.exists(f | f.getName()==(e as Label).getName()))  
         ));
         
-        newISet;
+        iS
     }
     
-    def ArrayList<InstructionList> optimizeStateSetPosition(ArrayList<InstructionList> stateSets) {
-        var newStateSet = new ArrayList<InstructionList>
-        var finished = new HashMap<InstructionList, Boolean>
+    def ArrayList<ArrayList<EObject>> optimizeStateSetPosition(ArrayList<ArrayList<EObject>> stateILists) {
+        var statesIS = new ArrayList<ArrayList<EObject>>
+        var finished = new HashMap<List<EObject>, Boolean>
         
-        val labelList = ImmutableList::copyOf(stateSets.getAllContents.toIterable.
+        val labelList = ImmutableList::copyOf(stateILists.getAllContents.toIterable.
             filter(typeof(Label)))
-        val gotoList = ImmutableList::copyOf(stateSets.getAllContents.toIterable.
+        val gotoList = ImmutableList::copyOf(stateILists.getAllContents.toIterable.
             filter(typeof(Goto)))
             
-        for(stateSet : stateSets) {
-            if (!finished.containsKey(stateSet)) {
-                if (stateSet.instructions.last instanceof Goto) {
-                    val targetGoto = stateSet.instructions.last as Goto
+        for(stateIList : stateILists) {
+            if (!finished.containsKey(stateIList)) {
+                if (stateIList.last instanceof Goto) {
+                    val targetGoto = stateIList.last as Goto
                     val targetGotos = ImmutableList::copyOf(gotoList.filter(e | (e.getName() == targetGoto.getName())))
                     val targetLabels = ImmutableList::copyOf(labelList.filter(e | (e.getName() == targetGoto.getName())))
                     
-                    newStateSet.add(stateSet.copy);
-                    finished.put(stateSet, true);
+                    val stateIArray = new ArrayList<EObject>
+                    stateIArray.addAll(stateIList)
+                    statesIS.add(stateIArray)
+                    finished.put(stateIArray, true);
 
                     if ((targetGotos.size == 1) && (targetLabels.size == 1)) {
-                        for(insertSet : stateSets) {
-                            if ((!finished.containsKey(insertSet)) && 
-                                (insertSet.eAllContents.toIterable.filter(typeof(Label)).
+                        for(insertIList : stateILists) {
+                            if ((!finished.containsKey(insertIList)) && 
+                                (insertIList.getAllContents.toIterable.filter(typeof(Label)).
                                     filter(e | e.getName()==targetGoto.getName()).size>0)) {
-                                newStateSet.add(insertSet.copy)
-                                finished.put(insertSet, true)        
+                                val insertIArray = new ArrayList<EObject>
+                                insertIArray.addAll(insertIList)
+                                statesIS.add(insertIArray)
+                                finished.put(insertIList, true)        
                             }
                         }
                     }
                 } else {
-                    newStateSet.add(stateSet.copy);
-                    finished.put(stateSet, true);
+                    val stateIArray = new ArrayList<EObject>
+                    stateIArray.addAll(stateIList)
+                    statesIS.add(stateIArray)
+                    finished.put(stateIList, true);
                 }    
             }
         }    
         
-        newStateSet
+        statesIS
     }
  
 }
