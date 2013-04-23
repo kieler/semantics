@@ -46,6 +46,7 @@ import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kiml.options.SizeConstraint
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -148,7 +149,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val rootNode = KimlUtil::createInitializedNode;
 
         // Set layout parameter        
-        rootNode.addLayoutParam(LayoutOptions::SPACING, Float::valueOf("25.0"));
+        rootNode.addLayoutParam(LayoutOptions::SPACING, Float::valueOf("30.0"));
         rootNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
         rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
@@ -187,6 +188,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kExitNode.KRendering.add(factory.createKText.of('exit'));
         rootNode.children.add(kExitNode)
         kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
+        kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
         
         // Add incoming port for the exit node
         (ExitObj.createPort() => [
@@ -195,10 +197,36 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             it.setPortSize(2,2)
             it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
         ]).addToPortMapping(kExitNode, 'incoming')
+        
+  
+
+        
+        
             
         // Evaluate the root instruction list
         createInstructionListFigure(iList, rootNode, kEntryNode, kExitNode, '')
         ParallelExitMapping.put(iList, kExitNode);
+
+        for(keyS2 : ParallelExitMapping.keySet) {
+        for(keyS : ParallelExitMapping.keySet) { 
+        if (keyS != keyS2) {
+        val edge = createEdge() => [
+                    it.source = ParallelExitMapping.get(keyS2)
+                    it.sourcePort = null
+                    it.target = ParallelExitMapping.get(keyS)
+                    it.targetPort = null
+                    it.data += renderingFactory.createKRoundedBendsPolyline() => [
+                        it.bendRadius = 5;
+                        it.setLineWidth(2);
+                        it.foreground = "red".color
+                    ];          
+                ]   
+//                edge.addLayoutParam(LayoutOptions::NO_LAYOUT, true)    
+                }
+                }
+            }
+        
+
         
         // Process all reserved goto statements
         for(goto : GotoMapping.keySet) {
@@ -413,6 +441,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.KRendering.foreground.alpha = 0;
             kContainerNode.KRendering.background = "gray".color;
             kContainerNode.KRendering.background.alpha = 50
+            kContainerNode.KRendering.background.targetColor = "white".color;
+            kContainerNode.KRendering.background.gradientAngle = -90;
             rootNode.children.add(kContainerNode)
 
             // Set layout parameter for this hierarchy
@@ -595,6 +625,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             it.setPortSize(2,2)
             it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST);
         ]).addToPortMapping(kNode, 'conditional')
+        kNode.addLayoutParam(LayoutOptions::SIZE_CONSTRAINT, SizeConstraint::fixed);
         
         // Evaluate the true condition and add the result to the result list.    
         val lastInstructions = instr.instructions.createInstructionListFigure(rootNode, kNode, null, 
