@@ -252,7 +252,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
 
         val markedEdges = new HashMap<KNode, KNode>
-        for(instruction : iList.allContents) {
+        for(instruction : iList.flatten) {
             val sourceNode = InstructionMapping.get(instruction)?.first
             val depList = instruction.dependencyInstructions(iList)
             for (targetInstruction : depList) {

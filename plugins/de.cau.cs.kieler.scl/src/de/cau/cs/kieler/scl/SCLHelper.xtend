@@ -37,6 +37,9 @@ import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.scl.Thread
 import java.util.List
 import de.cau.cs.kieler.scl.scl.InstructionScope
+import org.yakindu.sct.model.stext.stext.LogicalRelationExpression
+import org.yakindu.sct.model.stext.stext.Expression
+import org.yakindu.sct.model.stext.stext.ParenthesizedExpression
 
 //import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
 
@@ -214,18 +217,23 @@ class SCLHelper {
         iList.addInstruction(createSCLPause())
     }
     
-    def ArrayList<EObject> allContents(List<EObject> iList) {
+    def ArrayList<EObject> flatten(List<EObject> iList) {
         var rList = createNewInstructionList()
         for(instruction : iList) {
             if (instruction instanceof Parallel) {
+                rList.add(instruction)
                 for(thread : (instruction as Parallel).threads) {
-                    rList.addAll(thread.instructions.allContents)
+                    rList.addAll(thread.instructions.flatten)
                 }
             } 
-            else if (instruction instanceof Conditional) 
-                rList.addAll((instruction as Conditional).instructions.allContents)
-            else if (instruction instanceof InstructionScope) 
-                rList.addAll((instruction as InstructionScope).instructions.allContents)
+            else if (instruction instanceof Conditional) {
+                rList.add(instruction)
+                rList.addAll((instruction as Conditional).instructions.flatten)
+            }
+            else if (instruction instanceof InstructionScope) {
+                rList.add(instruction) 
+                rList.addAll((instruction as InstructionScope).instructions.flatten)
+            }
             else 
                 rList.addInstruction(instruction)
         }
@@ -355,7 +363,10 @@ class SCLHelper {
         }
         return false
     }
-    
+
+    def boolean isInThread(EObject instruction, List<EObject> iList) {
+        iList.contains(instruction)
+    }    
     // ======================================================================================================
     // ==                       S C O P E   M E T A M O D E L   E X T E N S I O N                          ==
     // ======================================================================================================
@@ -490,12 +501,13 @@ class SCLHelper {
 
     def ArrayList<ElementReferenceExpression> dependencyReferences(EObject instruction) {
         if (instruction instanceof Assignment) return dependencyReferences(instruction as Assignment) 
+        if (instruction instanceof Conditional) return dependencyReferences(instruction as Conditional)
         return new ArrayList<ElementReferenceExpression>
     }
  
     def ArrayList<ElementReferenceExpression> dependencyReferences(Assignment instruction) {
-        var resList = new ArrayList<ElementReferenceExpression>
-        if (!(instruction.assignment instanceof AssignmentExpression)) return resList
+        val resList = new ArrayList<ElementReferenceExpression>
+//        if (!(instruction.assignment instanceof AssignmentExpression)) return resList
         val AssignmentExpression aExp = instruction.assignment as AssignmentExpression
         
         resList.add(aExp.varRef as ElementReferenceExpression)
@@ -503,10 +515,22 @@ class SCLHelper {
         resList 
     }
     
+    def ArrayList<ElementReferenceExpression> dependencyReferences(Conditional instruction) {
+        return dependencyReferences(instruction.expression)
+    }
+
+    def ArrayList<ElementReferenceExpression> dependencyReferences(Expression expression) {
+        val resList = new ArrayList<ElementReferenceExpression>
+        expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).forEach([
+            resList.add(it)
+        ])
+        resList
+    }
+    
     def ArrayList<EObject> dependencyInstructions(List<EObject> iList, ElementReferenceExpression varRef) {
         val iS = createNewInstructionList()
         
-        iList.allContents.forEach([ e |
+        iList.flatten.forEach([ e |
             if (e instanceof Assignment) {
                 val references = (e as EObject).dependencyReferences 
                 for (reference : references) {
@@ -531,7 +555,4 @@ class SCLHelper {
         iS
     }
     
-    def boolean isInThread(EObject instruction, List<EObject> iList) {
-        iList.contains(instruction)
-    }
 }
