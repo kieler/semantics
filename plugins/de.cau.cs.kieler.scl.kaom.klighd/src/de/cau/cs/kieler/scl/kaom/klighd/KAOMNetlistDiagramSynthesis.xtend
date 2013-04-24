@@ -4,61 +4,38 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.kgraph.KPort
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.LineStyle
+import de.cau.cs.kieler.core.krendering.Trigger
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.util.Pair
-import de.cau.cs.kieler.kiml.options.Direction
+import de.cau.cs.kieler.kaom.Entity
+import de.cau.cs.kieler.kaom.Link
+import de.cau.cs.kieler.kaom.Port
+import de.cau.cs.kieler.kaom.Relation
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kiml.options.NodeLabelPlacement
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.kiml.util.KimlUtil
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.TransformationOption
 import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
-//import de.cau.cs.kieler.scl.SCLHelper
-//import de.cau.cs.kieler.scl.scl.Assignment
-//import de.cau.cs.kieler.scl.scl.Conditional
-//import de.cau.cs.kieler.scl.scl.Goto
-//import de.cau.cs.kieler.scl.scl.Instruction
-//import de.cau.cs.kieler.scl.scl.InstructionList
-//import de.cau.cs.kieler.scl.scl.Parallel
-//import de.cau.cs.kieler.scl.scl.Pause
-//import de.cau.cs.kieler.scl.scl.Program
-import de.cau.cs.kieler.kaom.Entity
-import de.cau.cs.kieler.kaom.KaomFactory
-
+import de.cau.cs.kieler.scl.SCLStandaloneSetup
+import java.util.ArrayList
 import java.util.HashMap
 import javax.inject.Inject
 import org.eclipse.xtext.serializer.ISerializer
-import org.yakindu.sct.model.stext.stext.Expression
-
 
 import static de.cau.cs.kieler.scl.kaom.klighd.KAOMNetlistDiagramSynthesis.*
-import de.cau.cs.kieler.scl.SCLStandaloneSetup
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KPort
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.klighd.KlighdConstants
-import java.util.ArrayList
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.kaom.Link
-import de.cau.cs.kieler.kaom.Port
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import java.util.EnumSet
-import de.cau.cs.kieler.kiml.options.NodeLabelPlacement
-import de.cau.cs.kieler.kaom.Relation
-import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.core.krendering.KColoring
-import de.cau.cs.kieler.core.krendering.Trigger
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -226,13 +203,6 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
                 case "OR": {
                     kNode.setNodeSize(40,32);
                     rectangle.invisible = true
-                    //rectangle.lineWidth.propagateToChildren = true
-//                    val line = rectangle.addPolyline;
-//                    line.lineWidth = 2
-//                    line.points += createKPosition(RIGHT, 0, 0.3f, TOP, 1,0)
-//                    line.points += createKPosition(LEFT, 0, 0, TOP, 1,0)
-//                    line.points += createKPosition(LEFT, 0, 0, BOTTOM, 1,0)
-//                    line.points += createKPosition(RIGHT, 0, 0.3f, BOTTOM, 1,0)
                     val arc1 = rectangle.addArc();
                     arc1.lineWidth = 2
                     arc1.setArcAngle(190);
@@ -260,7 +230,7 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
                     line.points += createKPosition(LEFT, 0, 0.5f, BOTTOM, 1.5f,0.3f)
                     line.points += createKPosition(RIGHT, 0, 0.2f, BOTTOM, 1.5f,0)
                 }
-                case "!": {
+                case "NOT": {
                     kNode.setNodeSize(32,34);
                     rectangle.invisible = true
                     //rectangle.lineWidth.propagateToChildren = true
