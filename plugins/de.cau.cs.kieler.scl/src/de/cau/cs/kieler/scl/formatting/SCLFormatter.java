@@ -73,5 +73,6 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
                              f.getParallelAccess().getParKeyword_1_1_0());
             c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
                              f.getParallelAccess().getJoinKeyword_2());
+            
 	}
 }

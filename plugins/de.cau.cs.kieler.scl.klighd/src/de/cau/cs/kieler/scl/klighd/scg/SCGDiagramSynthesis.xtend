@@ -640,8 +640,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val retList = new ArrayList<Instruction>
         
         // Serialize the expression in the conditional statement
-        val Expression exp = instr.expression.toExpression
-        val nodeText = serializer.serialize(exp);            
+        val Expression exp = instr.expression
+        var nodeText = serializer.serialize(exp);   
         
         // Create conditional node
         val kNode = instr.createDiamondNode(75, 75);

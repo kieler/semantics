@@ -128,7 +128,7 @@ class SCLHelper {
    
    // Create a new VariableDeclaration object
     def VariableDeclaration createSCLVariableDeclaration() {
-        var varDef = SCL.createVariableDeclaration();
+        val varDef = SCL.createVariableDeclaration();
         varDef;
     }
     
@@ -184,7 +184,7 @@ class SCLHelper {
                 ]
             } else 
             if (reactionTrigger.trigger != null) {
-                conditional.expression = reactionTrigger.trigger.event.toExpression.copy;
+                conditional.expression = reactionTrigger.trigger.toExpression.copy;
                 conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
                     e.reference = (e.reference as Event).createVariableDeclaration;  ]
             }
@@ -203,6 +203,54 @@ class SCLHelper {
         thread.instructions.addAll(iList)
         thread
     }
+    
+    
+    // ======================================================================================================
+    // ==                  E X P R E S S I O N    M E T A M O D E L   E X T E N S I O N                    ==
+    // ======================================================================================================
+
+     def Expression toExpression(RegularEventSpec spec) {
+//      val rel = SText.createLogicalRelationExpression()
+      val elref = SText.createElementReferenceExpression()
+//      val primval = SText.createPrimitiveValueExpression()
+//      val bval = SText.createBoolLiteral()
+      
+      elref.setReference((spec.event as ElementReferenceExpression).reference)
+//      bval.setValue(true)
+//      primval.setValue(bval)
+      
+//      rel.setLeftOperand(elref) 
+//      rel.setOperator(RelationalOperator::EQUALS)
+//      rel.setRightOperand(primval)
+        
+      elref
+    }
+    
+//    def dispatch Expression toExpression(Expression exp) {
+//        exp
+//    }
+
+    def Expression negate(Expression exp) {
+        var not = SText.createLogicalNotExpression()
+        
+        if (exp instanceof ElementReferenceExpression) {
+            not.setOperand(exp)
+            return not
+        }
+        
+        var par = SText.createParenthesizedExpression()
+        par.setExpression(exp)
+        not.setOperand(par)
+        not
+    }
+    
+//    def dispatch Expression negate(RegularEventSpec spec) {
+//        val not = SText.createLogicalNotExpression()
+//        val par = SText.createParenthesizedExpression()
+//        par.setExpression(spec.toExpression)   
+//        not.setOperand(par);
+//        not  
+//    }    
     
     // ======================================================================================================
     // ==                I N S T R U C T I O N    M E T A M O D E L   E X T E N S I O N                    ==
@@ -543,46 +591,7 @@ class SCLHelper {
     }
 
     
-    // ======================================================================================================
-    // ==                  E X P R E S S I O N    M E T A M O D E L   E X T E N S I O N                    ==
-    // ======================================================================================================
 
-     def dispatch Expression toExpression(RegularEventSpec spec) {
-      val rel = SText.createLogicalRelationExpression()
-      val elref = SText.createElementReferenceExpression()
-      val primval = SText.createPrimitiveValueExpression()
-      val bval = SText.createBoolLiteral()
-      
-      elref.setReference(spec.event)
-      bval.setValue(true)
-      primval.setValue(bval)
-      
-      rel.setLeftOperand(elref) 
-      rel.setOperator(RelationalOperator::EQUALS)
-      rel.setRightOperand(primval)
-        
-      rel
-    }
-    
-    def dispatch Expression toExpression(Expression exp) {
-        exp
-    }
-
-    def dispatch Expression negate(Expression exp) {
-        var not = SText.createLogicalNotExpression()
-        var par = SText.createParenthesizedExpression()
-        par.setExpression(exp)
-        not.setOperand(par)
-        not
-    }
-    
-    def dispatch Expression negate(RegularEventSpec spec) {
-        val not = SText.createLogicalNotExpression()
-        val par = SText.createParenthesizedExpression()
-        par.setExpression(spec.toExpression)   
-        not.setOperand(par);
-        not  
-    }
        
     // ======================================================================================================
     // ==                   D E P E N D E N C Y   M E T A M O D E L   E X T E N S I O N                    ==

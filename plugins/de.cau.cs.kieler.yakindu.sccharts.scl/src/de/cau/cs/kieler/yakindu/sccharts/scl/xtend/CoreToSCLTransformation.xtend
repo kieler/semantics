@@ -37,8 +37,8 @@ class CoreToSCLTransformation {
     public static int OPTIMIZE_ALL              = 
                                                   OPTIMIZE_GOTO + 
                                                   OPTIMIZE_LABEL + 
-                                                  OPTIMIZE_SELFLOOP + 
-                                                  OPTIMIZE_STATEPOSITION;         
+                                                  OPTIMIZE_SELFLOOP; 
+//                                                  OPTIMIZE_STATEPOSITION;         
  
  
     def boolean optimize(int oFlags, int optimization) {
@@ -60,8 +60,11 @@ class CoreToSCLTransformation {
 
         for(declaration : mainState.scopes.get(0).declarations) {
            targetProgram.interface.add(createVariableDeclaration(declaration as Event));
-        }        
-        targetProgram.instructions.addAll(transformCoreState(mainState, optimizationFlags));
+        }
+        var iS = transformCoreState(mainState, optimizationFlags)        
+//        if (optimizationFlags.optimize(OPTIMIZE_GOTO)) { iS = iS.optimizeGoto }
+//        if (optimizationFlags.optimize(OPTIMIZE_LABEL)) { iS = iS.optimizeLabel }
+        targetProgram.instructions.addAll(iS)
        
         targetProgram
     }
@@ -153,21 +156,34 @@ class CoreToSCLTransformation {
             (e.target instanceof SyncState) && ((e.target as SyncState) == state))
             
         var boolean defaultTransition = false;
-        
+
+        var immediateIS = createNewInstructionList()    
+     
         for(transition : immediateTransitions) {
                 val targetInstructions = transformStateTransition(transition)
                 if (targetInstructions.last instanceof Goto) { defaultTransition = true; }
-                iS.addAll(targetInstructions)
+                immediateIS.addAll(targetInstructions)
         }
                 
         if (transitions.size <= immediateTransitions.size) {
+            var selfInstructions = createNewInstructionList();
             if (!defaultTransition) {
-                iS.addPause;
-                iS.addInstruction(createSCLGoto(state.getHierarchicalName("")));
+                selfInstructions.addPause;
+                selfInstructions.addInstruction(createSCLGoto(state.getHierarchicalName("")));
             }
+            if (optimizationFlags.optimize(OPTIMIZE_SELFLOOP) &&
+               ((transitions.size==2 && selfTransitions.size==1 && selfTransitions.head.trigger == null) ||
+                (transitions.size==1 && selfTransitions.size!=1))) {
+                iS.addInstructions(optimizeSelfLoop(immediateIS, selfInstructions));
+            } else {
+                iS.addAll(immediateIS)
+                iS.addAll(selfInstructions)            
+            }
+            
             return iS;
         }
         
+        iS.addAll(immediateIS)
         iS.addPause;
         
         if (optimizationFlags.optimize(OPTIMIZE_SELFLOOP) &&
@@ -237,13 +253,12 @@ class CoreToSCLTransformation {
         var iS = createNewInstructionList();
         
         var conditional = tList.head as Conditional
-        var condIS = conditional.instructions
-        conditional.instructions.clear
-        conditional.instructions.addAll(sList)
-        conditional.expression = conditional.expression.negate;
+        val newConditional = createSCLConditional()
+        newConditional.expression = conditional.expression.negate
+        newConditional.instructions.addAll(sList)
         
-        iS.addInstruction(conditional.copy)
-        iS.addAll(condIS)
+        iS.addInstruction(newConditional)
+        iS.addAll(conditional.instructions)
         iS;
     }
  
@@ -275,10 +290,9 @@ class CoreToSCLTransformation {
     def ArrayList<EObject> optimizeLabel(List<EObject> iList) {
         var iS = createNewInstructionList();
         
-        val oldSet = iList
-        val gotos = iList.getAllContents.filter(typeof(Goto))
+        val gotos = ImmutableList::copyOf(iList.getAllContents.filter(typeof(Goto)))
         
-        iS.addAll(oldSet.filter(e | 
+        iS.addAll(iList.filter(e | 
           (!(e instanceof Label)) || 
           (gotos.exists(f | f.getName()==(e as Label).getName()))  
         ));
