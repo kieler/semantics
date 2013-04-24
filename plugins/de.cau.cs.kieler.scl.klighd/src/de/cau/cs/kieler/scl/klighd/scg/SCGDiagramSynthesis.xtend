@@ -209,27 +209,6 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         createInstructionListFigure(iList, rootNode, kEntryNode, kExitNode, '')
         ParallelExitMapping.put(iList, kExitNode);
 
-        for(keyS2 : ParallelExitMapping.keySet) {
-        for(keyS : ParallelExitMapping.keySet) { 
-        if (keyS != keyS2) {
-        val edge = createEdge() => [
-                    it.source = ParallelExitMapping.get(keyS2)
-                    it.sourcePort = null
-                    it.target = ParallelExitMapping.get(keyS)
-                    it.targetPort = null
-                    it.data += renderingFactory.createKRoundedBendsPolyline() => [
-                        it.bendRadius = 5;
-                        it.setLineWidth(2);
-                        it.foreground = "red".color
-                    ];          
-                ]   
-//                edge.addLayoutParam(LayoutOptions::NO_LAYOUT, true)    
-                }
-                }
-            }
-        
-
-        
         // Process all reserved goto statements
         for(goto : GotoMapping.keySet) {
             // Retrieve source node and port
@@ -269,6 +248,29 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 val destination = sourceEdges.get(sourcePort);
                 createEdge(sourceNode, destination.first, sourcePort, destination.second, true);
             }
+        }
+
+
+        for(instruction : iList.allContents) {
+            val sourceNode = InstructionMapping.get(instruction)?.first
+            val depList = instruction.dependencyInstructions(iList)
+            for (targetInstruction : depList) {
+                val targetNode = InstructionMapping.get(targetInstruction)?.first
+            if (sourceNode != targetNode && sourceNode != null && targetNode != null) {
+            val edge = createEdge() => [
+                    it.source = sourceNode
+                    it.sourcePort = null
+                    it.target = targetNode
+                    it.targetPort = null
+                    it.data += renderingFactory.createKRoundedBendsPolyline() => [
+                        it.bendRadius = 5;
+                        it.setLineWidth(2);
+                        it.foreground = "red".color
+                    ];          
+                ]
+                }   
+                
+                }
         }
         
     }

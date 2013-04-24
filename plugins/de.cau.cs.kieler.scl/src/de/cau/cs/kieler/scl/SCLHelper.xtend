@@ -434,5 +434,48 @@ class SCLHelper {
 //    expression = PrimitiveValueExpressionImpl
 //    operator = AssignmentOperator
 //    varRef = ElementReferenceExpressionImpl
-//    
+//   
+
+    def ArrayList<ElementReferenceExpression> dependencyReferences(EObject instruction) {
+        if (instruction instanceof Assignment) return dependencyReferences(instruction as Assignment) 
+        return new ArrayList<ElementReferenceExpression>
+    }
+ 
+    def ArrayList<ElementReferenceExpression> dependencyReferences(Assignment instruction) {
+        var resList = new ArrayList<ElementReferenceExpression>
+        if (!(instruction.assignment instanceof AssignmentExpression)) return resList
+        val AssignmentExpression aExp = instruction.assignment as AssignmentExpression
+        
+        resList.add(aExp.varRef as ElementReferenceExpression)
+                
+        resList 
+    }
+    
+    def ArrayList<EObject> dependencyInstructions(List<EObject> iList, ElementReferenceExpression varRef) {
+        val iS = createNewInstructionList()
+        
+        iList.allContents.forEach([ e |
+            if (e instanceof Assignment) {
+                val references = (e as EObject).dependencyReferences 
+                for (reference : references) {
+                    if (reference.reference.equals(varRef.reference))
+                        if (!iS.contains(e)) iS.add(e as EObject);
+                }
+            }    
+        ]);
+        
+        iS
+    }
+    
+    def ArrayList<EObject> dependencyInstructions(EObject instruction, List<EObject> iList) {
+        val iS = createNewInstructionList()
+        val references = instruction.dependencyReferences
+        if (references == null) return iS
+        
+        for(reference : references) {
+            iS.addAll(iList.dependencyInstructions(reference).filter([it!=instruction]))
+        }
+        
+        iS
+    }
 }
