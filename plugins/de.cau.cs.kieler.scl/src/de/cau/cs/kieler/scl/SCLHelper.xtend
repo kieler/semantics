@@ -5,6 +5,7 @@ import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Instruction
+import de.cau.cs.kieler.scl.scl.InstructionScope
 import de.cau.cs.kieler.scl.scl.Label
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
@@ -19,7 +20,9 @@ import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
 import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFactory
+import java.util.ArrayList
 import java.util.HashMap
+import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.yakindu.sct.model.sgraph.Effect
@@ -29,27 +32,25 @@ import org.yakindu.sct.model.sgraph.Statechart
 import org.yakindu.sct.model.sgraph.Trigger
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
+import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.StextFactory
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.ArrayList
-import de.cau.cs.kieler.scl.scl.Thread
-import de.cau.cs.kieler.scl.scl.Thread
-import java.util.List
-import de.cau.cs.kieler.scl.scl.InstructionScope
-import org.yakindu.sct.model.stext.stext.LogicalRelationExpression
-import org.yakindu.sct.model.stext.stext.Expression
-import org.yakindu.sct.model.stext.stext.ParenthesizedExpression
 
-//import de.cau.cs.kieler.yakindu.sccharts.sim.scl.scl.InstructionSequence
-
-// import de.cau.cs.kieler.yakindu.sccharts.sim.scg.scg.Instruction;
-
+/*
+ * This class provides many useful methods to help to handle a lot of general scl  tasks.
+ * It is divided in several categories. Maybe it's a good idea to split this categories in different
+ * classes in the future.
+ */
 class SCLHelper {
     
     // ======================================================================================================
     // ==                       B A S I C   M E T A M O D E L   E X T E N S I O N                          ==
     // ======================================================================================================
+    
+    /*
+     * Methods for easy factory access 
+     */
     
     def void Debug(String debugString) { System::out.println(debugString) }
  
@@ -69,15 +70,22 @@ class SCLHelper {
     // ==                       C R E A T E   M E T A M O D E L   E X T E N S I O N                        ==
     // ======================================================================================================
     
+    /*
+     * Methods for easy object creation
+     */
+    
+    // Create a new list of EObjects
     def createNewInstructionList()
     {
         new ArrayList<EObject>
     }
     
+    // Create a new list of EObjects and insert the first instruction
     def createNewInstructionList(Instruction instruction) {
         createNewInstructionList.add(instruction)
     }
     
+    // Create a goto statement with target string
     def Goto createSCLGoto(String targetLabelName)
     {
         var goto = SCL.createGoto();
@@ -85,12 +93,14 @@ class SCLHelper {
         goto;
     }
     
+    // Create a SCL comment 
     def Annotation createSCLComment(String commentString) {
         var comment = SCL.createAnnotation();
         comment.setComment('// '+commentString);
         comment;
     }
     
+    // Create a SCL label
     def Label createSCLLabel(String labelName) {
         var label = SCL.createLabel();
         label.setName(labelName);
@@ -108,16 +118,19 @@ class SCLHelper {
 //        scope;
 //    }
     
+    // Create a SCL pause
     def Pause createSCLPause() {
         SCL.createPause();
     }
     
    
+   // Create a new VariableDeclaration object
     def VariableDeclaration createSCLVariableDeclaration() {
         var varDef = SCL.createVariableDeclaration();
         varDef;
     }
     
+    // Create a new VariableDeclaration or return an old one, if it already exists in the given context
     def VariableDeclaration create varDef: SCL.createVariableDeclaration()
         createVariableDeclaration(Event definition) {
 
@@ -133,6 +146,8 @@ class SCLHelper {
         }
     }
     
+    // Create a new SCL assignment statement and copy the first action in the given stext effect as 
+    // expression.
     def Assignment createSCLAssignment(Effect effect) {
         var assignment = SCL.createAssignment();
         if (effect instanceof ReactionEffect) {
@@ -146,11 +161,12 @@ class SCLHelper {
         assignment;    
     }
     
+    // Create a new scl conditional statement
     def Conditional createSCLConditional() {
-        var conditional = SCL.createConditional();
-        conditional;
+        SCL.createConditional();
     }
     
+    // Create a new scl conditional and take the given stext trigger as true trigger for the conditional. 
     def Conditional createSCLConditional(Trigger trigger) {
         var conditional = SCL.createConditional();
         if (trigger instanceof ReactionTrigger) {
@@ -165,10 +181,12 @@ class SCLHelper {
         conditional;
     }    
     
+    // Create a new SCL thread
     def Thread createSCLThread() {
         SCL.createThread();
     }
     
+    // Create a new SCL thread and copy the given instruction list
     def Thread createSCLThread(List<EObject> iList) {
         val thread = createSCLThread()
         thread.instructions.addAll(iList)
@@ -179,6 +197,11 @@ class SCLHelper {
     // ==                I N S T R U C T I O N    M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
     
+    /*
+     * These methods easy the handling of instructions and lists of instructions
+     */
+    
+    // Add an instruction to an list of instructions. Make sure it is a valid instruction.
     def void addInstruction(List<EObject> iList, EObject instruction) {
         if (instruction instanceof Instruction ||
             instruction instanceof Label ||
@@ -186,37 +209,36 @@ class SCLHelper {
             iList.add(instruction)
     }
 
+    // Add an instruction to the EList of a SCL program.
     def void addInstruction(Program program, EObject instruction) {
         program.instructions.addInstruction(instruction)
     }
     
+    // Add an instruction to the EList of a SCL conditional
     def void addInstruction(Conditional conditional, EObject instruction) {
         conditional.instructions.addInstruction(instruction)
     }
 
+    // Add an instruction to the EList of a SCL thread
     def void addInstruction(Thread thread, EObject instruction) {
         thread.instructions.addInstruction(instruction)
     }
     
-//    def void addInstruction(List<EObject> list, EObject instruction) {
-//        if (instruction instanceof Instruction ||
-//            instruction instanceof Label ||
-//            instruction instanceof Annotation)
-//        list.add(instruction)
-//    }
-    
+    // Add all instructions of one instruction list to another instruction list
     def void addInstructions(List<EObject> list, List<EObject> addition) {
         list.addAll(addition)
     }
     
-    def void addTo(EList<EObject> iListFrom, EList<EObject> iListTo) {
-        iListTo.addAll(iListFrom)
-    }
+//    def void addTo(EList<EObject> iListFrom, EList<EObject> iListTo) {
+//        iListTo.addAll(iListFrom)
+//    }
     
+    // Add a pause statement to an instruction list
     def void addPause(List<EObject> iList) {
         iList.addInstruction(createSCLPause())
     }
     
+    // Flatten an instruction list
     def ArrayList<EObject> flatten(List<EObject> iList) {
         var rList = createNewInstructionList()
         for(instruction : iList) {
@@ -244,10 +266,21 @@ class SCLHelper {
     // ==                 G O T O  - L O O K U P   M E T A M O D E L   E X T E N S I O N                   ==
     // ======================================================================================================
     
+    /*
+     * These methods help to find goto targets and successor instructions of labels.
+     */
+    
+    // Retrieves the target instruction of a goto statement.
+    // This is the first valid instruction which succeeds the target label.
+    // REMARK: Because the target may not exit or there is no valid instruction after the target label
+    // this function may return null! 
     def Instruction gotoLookUp(Goto goto, EList<EObject> iList) {
         gotoLookUp(goto.name, iList)
     }
     
+    // Retrieves the first valid instruction which succeeds the label identified by its name.
+    // REMARK: Because the target may not exit or there is no valid instruction after the target label
+    // this function may return null! 
     def Instruction gotoLookUp(String label, EList<EObject> iList) {
         var boolean foundLabel = false
         for(instruction : iList) {
@@ -275,10 +308,12 @@ class SCLHelper {
         return null
     }
     
+    // Checks weather or not a specified goto target exists in the instruction list
     def boolean gotoTargetExists(Goto goto, EList<EObject> iList) {
         gotoTargetExists(goto.name, iList)
     }
     
+    // Checks weather or not a specified label ID exists in the instruction list
     def boolean gotoTargetExists(String label, EList<EObject> iList) {
         for(instruction : iList) {
             if (instruction instanceof Label) {
@@ -299,11 +334,13 @@ class SCLHelper {
         }
         return false
     }
-    
+
+    // Retrieves the target label of a goto statement, if it exists    
     def Label gotoGetLabel(Goto goto, EList<EObject> iList) {
         gotoGetLabel(goto.name, iList)
     }
     
+    // Retrieves the label statement identified by its name, if it exists
     def Label gotoGetLabel(String label, EList<EObject> iList) {
         for(instruction : iList) {
             if (instruction instanceof Label) {
@@ -330,6 +367,11 @@ class SCLHelper {
     // ==                   S C L T H R E A D   M E T A M O D E L   E X T E N S I O N                      ==
     // ======================================================================================================
     
+    /*
+     * Methods for scl threads and instructions in this context 
+     */
+    
+    // Retrieve the thread instruction list of the parent object of a given label
     def EList<EObject> getAncestorThread(Label label) {
         var ancestor = label.eContainer
         while (ancestor != null) {
@@ -340,6 +382,7 @@ class SCLHelper {
         return null
     }
     
+    // Retrieve the thread list of a given instruction
     def EList<EObject> getThread(EObject instruction) {
         var container = instruction.eContainer
         while (container != null) {
@@ -350,10 +393,12 @@ class SCLHelper {
         return null
     }
     
+    // Checks if two instructions are in the same thread instruction list 
     def boolean inSameThreadAs(EObject instruction, EObject secondInstruction) {
         getThread(instruction) == getThread(secondInstruction)
     }
     
+    // Checks if an instruction is in the main thread list (program.instructions)
     def boolean isInMainThread(EObject instruction) {
         var container = instruction.eContainer
         while (container != null) {
@@ -364,6 +409,7 @@ class SCLHelper {
         return false
     }
 
+    // Checks if an instruction is in the given instruction list
     def boolean isInThread(EObject instruction, List<EObject> iList) {
         iList.contains(instruction)
     }    
@@ -376,6 +422,8 @@ class SCLHelper {
     // ==                    ID  &  N A M I N G   M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
     
+    // Since yakindu does not make use of the EObject ID field, one can use this method to 
+    // make every ID in a statechart unique.
     def void distributeStateIDs(Statechart statechart) {
         var states = statechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();
 
@@ -395,6 +443,7 @@ class SCLHelper {
         }        
     } 
     
+    // Remove chars we do not want in our naming scheme.
     def String removeSpecialCharacters(String string) {
         if (string == null) {
             return null;
@@ -407,6 +456,9 @@ class SCLHelper {
                .replace(":","").replace(";","").replace("=","");
     }
     
+    // Generate a name for a state.
+    // This name consists of his name and the names of hierarchical regions and states.
+    // If one sub name is null, the elements hash code is used.
     def String getHierarchicalName(SyncState state, String StartSymbol) {
         if (state.parentRegion != null) {
             if (state.parentRegion.eContainer != null && state.parentRegion.eContainer instanceof SyncState) {
@@ -466,6 +518,12 @@ class SCLHelper {
     // ==                       O R D E R I N G   M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
     
+    /*
+     * Methods used in the xtend.sort scheme
+     */
+    
+    // Order states according to their type.
+    // initial < normal < final
     def int compareSCLRegionStateOrder(SyncState e1, SyncState e2) {
         var order = 1;
         if (e1.isInitial) {order = -1}
@@ -477,37 +535,43 @@ class SCLHelper {
     // ======================================================================================================
     // ==                   D E P E N D E N C Y   M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
-    
-//CONDITIONAL
-//LogicalRelationExpressionImpl
-//    ElementReferenceExpressionImpl
-//        VariableDeclarationImpl
-//            Name
-//    operator = RelationalOperator
-//        == >=
-//    PrimitiveValueExpressionImpl
-//        value = BoolLiteralImpl
-//
-//    ParenthesizedExpressionImpl
-//        NumericalAddSubtractExpressionImpl
-//        ...
-//
-//ASSIGNMENT
-//AssignmentExpression
-//    expression = PrimitiveValueExpressionImpl
-//    operator = AssignmentOperator
-//    varRef = ElementReferenceExpressionImpl
-//   
 
+/* ----------------------------------------------------
+ * SText expression example structure
+ *     
+ * CONDITIONAL
+ * LogicalRelationExpressionImpl
+ *     ElementReferenceExpressionImpl
+ *         VariableDeclarationImpl
+ *             Name
+ *     operator = RelationalOperator
+ *         == >=
+ *     PrimitiveValueExpressionImpl
+ *         value = BoolLiteralImpl
+ * 
+ *     ParenthesizedExpressionImpl
+ *         NumericalAddSubtractExpressionImpl
+ *         ...
+ * 
+ * ASSIGNMENT
+ * AssignmentExpression
+ *     expression = PrimitiveValueExpressionImpl
+ *     operator = AssignmentOperator
+ *     varRef = ElementReferenceExpressionImpl
+ * ----------------------------------------------------
+ */   
+
+    // Checks if the given instruction is an assignment or a conditional statement and retrieves a list
+    // of ElementReferenceExpressions on which this statement depends on. 
     def ArrayList<ElementReferenceExpression> dependencyReferences(EObject instruction) {
         if (instruction instanceof Assignment) return dependencyReferences(instruction as Assignment) 
         if (instruction instanceof Conditional) return dependencyReferences(instruction as Conditional)
         return new ArrayList<ElementReferenceExpression>
     }
  
+    // Retrieve the list of ElementReferenceExpressions for an assignment statement.
     def ArrayList<ElementReferenceExpression> dependencyReferences(Assignment instruction) {
         val resList = new ArrayList<ElementReferenceExpression>
-//        if (!(instruction.assignment instanceof AssignmentExpression)) return resList
         val AssignmentExpression aExp = instruction.assignment as AssignmentExpression
         
         resList.add(aExp.varRef as ElementReferenceExpression)
@@ -518,10 +582,12 @@ class SCLHelper {
         resList 
     }
     
+    // Shortcut for conditionals
     def ArrayList<ElementReferenceExpression> dependencyReferences(Conditional instruction) {
         return dependencyReferences(instruction.expression)
     }
 
+    // Retrieve the list of ElementReferenceExpressions for a conditional statement.
     def ArrayList<ElementReferenceExpression> dependencyReferences(Expression expression) {
         val resList = new ArrayList<ElementReferenceExpression>
         expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).forEach([
@@ -530,6 +596,8 @@ class SCLHelper {
         resList
     }
     
+    // Retrieves a list of all instructions in a given instruction list which depend on the given 
+    // ElementReferenceExpression.
     def ArrayList<EObject> dependencyInstructions(List<EObject> iList, ElementReferenceExpression varRef) {
         val iS = createNewInstructionList()
         
@@ -546,6 +614,8 @@ class SCLHelper {
         iS
     }
     
+    // Retrieves a list of all instructions in a given instruction list which depend on a 
+    // ElementReferenceExpression which is also a dependency for a given instruction.
     def ArrayList<EObject> dependencyInstructions(EObject instruction, List<EObject> iList) {
         val iS = createNewInstructionList()
         val references = instruction.dependencyReferences
