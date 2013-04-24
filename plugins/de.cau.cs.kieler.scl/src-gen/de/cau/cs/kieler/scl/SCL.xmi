@@ -88,6 +88,12 @@
             </terminal>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="="/>
+          <elements xsi:type="xtext:Assignment" feature="initialValue" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.49"/>
+          </elements>
+        </elements>
         <elements xsi:type="xtext:Keyword" value=";"/>
       </alternatives>
     </rules>

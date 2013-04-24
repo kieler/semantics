@@ -6,6 +6,8 @@ import org.yakindu.base.types.Type;
 
 import org.yakindu.sct.model.sgraph.Variable;
 
+import org.yakindu.sct.model.stext.stext.Expression;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Variable Declaration</b></em>'.
@@ -17,6 +19,7 @@ import org.yakindu.sct.model.sgraph.Variable;
  *   <li>{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#isInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#isOutput <em>Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#getInitialValue <em>Initial Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -103,5 +106,31 @@ public interface VariableDeclaration extends Variable
    * @generated
    */
   void setType(Type value);
+
+  /**
+   * Returns the value of the '<em><b>Initial Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Initial Value</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Initial Value</em>' containment reference.
+   * @see #setInitialValue(Expression)
+   * @see de.cau.cs.kieler.scl.scl.SclPackage#getVariableDeclaration_InitialValue()
+   * @model containment="true"
+   * @generated
+   */
+  Expression getInitialValue();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#getInitialValue <em>Initial Value</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Initial Value</em>' containment reference.
+   * @see #getInitialValue()
+   * @generated
+   */
+  void setInitialValue(Expression value);
 
 } // VariableDeclaration

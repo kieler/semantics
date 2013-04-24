@@ -149,14 +149,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTypeAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final CrossReference cTypeTypeCrossReference_4_1_0 = (CrossReference)cTypeAssignment_4_1.eContents().get(0);
 		private final RuleCall cTypeTypeIDTerminalRuleCall_4_1_0_1 = (RuleCall)cTypeTypeCrossReference_4_1_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cEqualsSignKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cInitialValueAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cInitialValueExpressionParserRuleCall_5_1_0 = (RuleCall)cInitialValueAssignment_5_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//VariableDeclaration:
 		//
-		//	Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ";";
+		//	Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ";"
+		//Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//Input?="input"?
@@ -195,8 +199,20 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTypeTypeIDTerminalRuleCall_4_1_0_1() { return cTypeTypeIDTerminalRuleCall_4_1_0_1; }
 
+		//("=" initialValue=Expression)?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_5_0() { return cEqualsSignKeyword_5_0; }
+
+		//initialValue=Expression
+		public Assignment getInitialValueAssignment_5_1() { return cInitialValueAssignment_5_1; }
+
+		//Expression
+		public RuleCall getInitialValueExpressionParserRuleCall_5_1_0() { return cInitialValueExpressionParserRuleCall_5_1_0; }
+
 		//";"
-		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
 	}
 
 	public class InstructionElements extends AbstractParserRuleElementFinder {
@@ -780,7 +796,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//VariableDeclaration:
 	//
-	//	Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ";";
+	//	Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";";
 	public VariableDeclarationElements getVariableDeclarationAccess() {
 		return (pVariableDeclaration != null) ? pVariableDeclaration : (pVariableDeclaration = new VariableDeclarationElements());
 	}

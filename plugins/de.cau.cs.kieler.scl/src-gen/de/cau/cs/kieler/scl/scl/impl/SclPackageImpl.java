@@ -272,6 +272,16 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getVariableDeclaration_InitialValue()
+  {
+    return (EReference)variableDeclarationEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getInstruction()
   {
     return instructionEClass;
@@ -516,6 +526,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__INPUT);
     createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__OUTPUT);
     createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
+    createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__INITIAL_VALUE);
 
     instructionEClass = createEClass(INSTRUCTION);
     createEAttribute(instructionEClass, INSTRUCTION__PRIORITY);
@@ -601,6 +612,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEAttribute(getVariableDeclaration_Input(), ecorePackage.getEBoolean(), "Input", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDeclaration_Output(), ecorePackage.getEBoolean(), "Output", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVariableDeclaration_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVariableDeclaration_InitialValue(), theStextPackage.getExpression(), null, "initialValue", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getInstruction_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Instruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

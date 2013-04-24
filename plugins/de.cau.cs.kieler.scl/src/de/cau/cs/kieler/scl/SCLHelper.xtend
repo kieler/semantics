@@ -141,6 +141,7 @@ class SCLHelper {
             val eventDefinition = definition as EventDefinition;
             varDef.setInput(eventDefinition.isInput());
             varDef.setOutput(eventDefinition.isOutput());
+            if (eventDefinition.varInitialValue != null) varDef.setInitialValue(eventDefinition.varInitialValue)
             
             if (eventDefinition.getType() != null) {
                 varDef.setType(eventDefinition.getType());

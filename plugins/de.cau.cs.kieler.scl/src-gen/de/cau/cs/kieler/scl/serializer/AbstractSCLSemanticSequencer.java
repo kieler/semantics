@@ -1082,7 +1082,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (Input?='input'? Output?='output'? name=ID type=[Type|ID]?)
+	 *     (Input?='input'? Output?='output'? name=ID type=[Type|ID]? initialValue=Expression?)
 	 */
 	protected void sequence_VariableDeclaration(EObject context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

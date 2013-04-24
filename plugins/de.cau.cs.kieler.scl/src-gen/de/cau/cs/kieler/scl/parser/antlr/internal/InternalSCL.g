@@ -342,9 +342,31 @@ ruleVariableDeclaration returns [EObject current=null]
 	}
 
 )
-))?	otherlv_6=';' 
+))?(	otherlv_6='=' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getVariableDeclarationAccess().getSemicolonKeyword_5());
+    	newLeafNode(otherlv_6, grammarAccess.getVariableDeclarationAccess().getEqualsSignKeyword_5_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getVariableDeclarationAccess().getInitialValueExpressionParserRuleCall_5_1_0()); 
+	    }
+		lv_initialValue_7_0=ruleExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getVariableDeclarationRule());
+	        }
+       		set(
+       			$current, 
+       			"initialValue",
+        		lv_initialValue_7_0, 
+        		"Expression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?	otherlv_8=';' 
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getVariableDeclarationAccess().getSemicolonKeyword_6());
     }
 )
 ;

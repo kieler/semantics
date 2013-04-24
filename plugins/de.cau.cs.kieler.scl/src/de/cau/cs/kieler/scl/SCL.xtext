@@ -30,7 +30,7 @@ Program:
 ;
 
 VariableDeclaration:
-    (Input?='input')? (Output?='output')? 'signal' (name=ID)(':'type=[types::Type])?';'
+    (Input?='input')? (Output?='output')? 'signal' (name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 ;
 
 Instruction:
