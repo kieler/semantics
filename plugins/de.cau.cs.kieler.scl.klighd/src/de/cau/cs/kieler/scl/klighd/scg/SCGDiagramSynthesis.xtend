@@ -94,8 +94,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	
     // Constants for the klighd content filter
     private static val SCGRAPH = "Draw SC Graph";
-    private static val SCGRAPH_AND_DEPENDENCIES = "Draw SC Graph & dependencies";
-    private static val SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY = "Draw SC Graph & dependencies without hierarchy";
+    private static val SCGRAPH_AND_DEPENDENCIES = "Draw SC Graph && dependencies";
+    private static val SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY = "Draw SC Graph && dependencies without hierarchy";
     
     private static val String SCG_FILTER_NAME = "SC Graph Filter";
 
@@ -180,6 +180,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kEntryNode.KRendering.add(factory.createKText.of('entry'));
         rootNode.children.add(kEntryNode)
         kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
+//        kEntryNode.addNSPortFixed;
                 
         // Create the exit node
 //        val kExitNode = ExitObj..createNode("exit").setNodeSize(30,75);
@@ -193,6 +194,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
         
         // Add incoming port for the exit node
+//        kExitNode.addNSPortsFixed;
         (ExitObj.createPort() => [
             kExitNode.ports += it
             it.setPortPos(37, 0)
@@ -490,21 +492,23 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
             // Create a fixed port at the entry node for outgoing edges.
             kEntryNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            (unassignedObject.createPort() => [
-                kEntryNode.ports += it
-                it.setPortPos(37, 30)
-                it.setPortSize(2,2)
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
-            ]).addToPortMapping(kEntryNode, 'outgoing')
+//            (unassignedObject.createPort() => [
+//                kEntryNode.ports += it
+//                it.setPortPos(37, 30)
+//                it.setPortSize(2,2)
+//                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+//            ]).addToPortMapping(kEntryNode, 'outgoing')
+            kEntryNode.addNSPortsFixed;
 
             // Create a fixed port at the exit node for incoming edges.                
             kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            (ExitObj.createPort() => [
-                kExitNode.ports += it
-                it.setPortPos(37, 0)
-                it.setPortSize(2,2)
-                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
-            ]).addToPortMapping(kExitNode, 'incoming')
+//            (ExitObj.createPort() => [
+//                kExitNode.ports += it
+//                it.setPortPos(37, 0)
+//                it.setPortSize(2,2)
+//                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+//            ]).addToPortMapping(kExitNode, 'incoming')
+            kExitNode.addNSPortsFixed;
 
             /*
              * Call the transformation for the instruction list of this thread
@@ -814,7 +818,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                     it.target = targetNode
                     it.targetPort = portIn
                     it.data += renderingFactory.createKRoundedBendsPolyline() => [
-                        it.bendRadius = 5;
+                        it.bendRadius = 8;
                         it.setLineWidth(2);
                         if (addArrow == true) { it.addArrowDecorator(); }
                     ];          
