@@ -426,11 +426,11 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val Object JoinObj = new Object
 
         // Create fork node            
-        val kForkNode = instr.createTriangleNode(50, 100);
+        val kForkNode = instr.createTriangleNode(50, 100).putToLookUpWith(instr);
         kForkNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextFork = "FORK";
         kForkNode.KRendering.add(factory.createKText.of(nodeTextFork)
-            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 20, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0));
+            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 20, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).putToLookUpWith(instr));
         rootNode.children.add(kForkNode)
 
         // Create join node
@@ -438,7 +438,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kJoinNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextJoin = "JOIN";
         kJoinNode.KRendering.add(factory.createKText.of(nodeTextJoin)
-            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 20, 0));
+            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 20, 0).putToLookUpWith(instr));
         rootNode.children.add(kJoinNode)
 
         /* 
@@ -455,7 +455,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY) {
                 kContainerNode = rootNode    
             } else {
-            kContainerNode = ContainerObj.createRoundedRectangulareNode()
+            kContainerNode = ContainerObj.createRoundedRectangulareNode().putToLookUpWith(thread)
             kContainerNode.KRendering.add(factory.createKLineWidth.of(2));
             kContainerNode.KRendering.foreground = "black".color;
             kContainerNode.KRendering.foreground.alpha = 0;
@@ -559,10 +559,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
          * addNSPortsFixed adds an incoming and an outgoing port to the node. See addNSPortsFixed for 
          * further information.
          */ 
-        val kNode = instr.createRoundedRectangulareNode(25, 85);
+        val kNode = instr.createRoundedRectangulareNode(25, 85).putToLookUpWith(instr);
         kNode.KRendering.add(factory.createKLineWidth.of(2));
         kNode.addNSPortsFixed
-        kNode.KRendering.add(factory.createKText.of(nodeText));
+        kNode.KRendering.add(factory.createKText.of(nodeText).putToLookUpWith(instr));
         rootNode.children.add(kNode)
 
         // Add this instruction to the instruction map and return a instruction list with this statement.
@@ -584,7 +584,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val Object depthObj = new Object
 
         // Create container for the two nodes and set layout parameter            
-        val kContainerNode = containerObj.createRectangulareNode(70, 75);
+        val kContainerNode = containerObj.createRectangulareNode(70, 75).putToLookUpWith(instr);
         kContainerNode.KRendering.invisible = true;
         kContainerNode.addLayoutParam(LayoutOptions::SPACING, 20.0f);
         kContainerNode.addLayoutParam(LayoutOptions::BORDER_SPACING, 0.0f);
@@ -593,14 +593,14 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
 
         // Create surface node           
-        val kNode = instr.createSurfaceNode(30, 75);
+        val kNode = instr.createSurfaceNode(30, 75).putToLookUpWith(instr);
         kNode.KRendering.add(factory.createKLineWidth.of(2));
-        kNode.KRendering.add(factory.createKText.of("surface"));
+        kNode.KRendering.add(factory.createKText.of("surface").putToLookUpWith(instr));
 
         // Create depth node
-        val kDepthNode = depthObj.createDepthNode(30, 75);
+        val kDepthNode = depthObj.createDepthNode(30, 75).putToLookUpWith(instr);
         kDepthNode.KRendering.add(factory.createKLineWidth.of(2));
-        kDepthNode.KRendering.add(factory.createKText.of("depth"));
+        kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
             
         // Add all nodes to their parents 
         rootNode.children.add(kContainerNode)
@@ -644,9 +644,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         var nodeText = serializer.serialize(exp);   
         
         // Create conditional node
-        val kNode = instr.createDiamondNode(75, 75);
+        val kNode = instr.createDiamondNode(75, 75).putToLookUpWith(instr);
         kNode.KRendering.add(factory.createKLineWidth.of(2));
-        kNode.KRendering.add(factory.createKText.of(nodeText));
+        kNode.KRendering.add(factory.createKText.of(nodeText).putToLookUpWith(instr));
         rootNode.children.add(kNode)
         
         // Add default ports and one extra port expressions evaluated to true
