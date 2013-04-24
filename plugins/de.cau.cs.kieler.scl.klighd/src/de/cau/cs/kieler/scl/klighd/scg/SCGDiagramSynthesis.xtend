@@ -269,9 +269,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 ) {
                     val edge = createEdge() => [
                         it.source = sourceNode
-                        it.sourcePort = null
+                        it.sourcePort = sourceNode.getPort('dependency')
                         it.target = targetNode
-                        it.targetPort = null
+                        it.targetPort = targetNode.getPort('dependency')
                         it.data += renderingFactory.createKRoundedBendsPolyline() => [
                             it.bendRadius = 5;
                             it.setLineWidth(2);
@@ -467,25 +467,27 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             }
 
             // Set layout parameter for this hierarchy
-            kContainerNode.addLayoutParam(LayoutOptions::SPACING, 25.0f);
-            kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
-            kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+            kContainerNode.addLayoutParam(LayoutOptions::SPACING, 25.0f)
+            kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
+            kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+            kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
             
             // Create entry node
             val kEntryNode = EntryObj.createEllipseNode(30,75).putToLookUpWith(EntryObj)
-            kEntryNode.KRendering.add(factory.createKLineWidth.of(2));
-            kEntryNode.KRendering.foreground = "gray".color;
-            kEntryNode.KRendering.add(factory.createKText.of('entry'));
+            kEntryNode.KRendering.add(factory.createKLineWidth.of(2))
+            kEntryNode.KRendering.foreground = "gray".color
+            kEntryNode.KRendering.background = "white".color
+            kEntryNode.KRendering.add(factory.createKText.of('entry'))
             kContainerNode.children.add(kEntryNode)
             if (SCGRAPH_FILTER.optionValue != SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY)
                 kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
             
             // Create exit node
             val kExitNode = ExitObj.createEllipseNode(30,75)
-            kExitNode.KRendering.add(factory.createKLineWidth.of(2));
-            kExitNode.KRendering.foreground = "gray".color;
-            kExitNode.KRendering.add(factory.createKText.of('exit'));
+            kExitNode.KRendering.add(factory.createKLineWidth.of(2))
+            kExitNode.KRendering.foreground = "gray".color
+            kExitNode.KRendering.background = "white".color
+            kExitNode.KRendering.add(factory.createKText.of('exit'))
             kContainerNode.children.add(kExitNode)
             if (SCGRAPH_FILTER.optionValue != SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY)
                 kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
@@ -717,6 +719,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
         node.addPort(unassignedObject, 'incoming', node.width / 2 - 1, 0, 2, PortSide::NORTH)
         node.addPort(unassignedObject, 'outgoing', node.width / 2 - 1, node.height - 2, 2, PortSide::SOUTH)
+        node.addPort(unassignedObject, 'dependency', node.width / 2 - 1, node.height / 2 -1, 2, PortSide::UNDEFINED)
     }   
 
     def KPort addPort(KNode node, Object obj, String mapping, float x, float y, int size, PortSide side) {
@@ -724,6 +727,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
          it.setPortPos(x, y)
          it.setPortSize(size,size)
          it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
+         it.addRectangle.invisible = true;
          node.ports += it
       ]).addToPortMapping(node, mapping)
     } 

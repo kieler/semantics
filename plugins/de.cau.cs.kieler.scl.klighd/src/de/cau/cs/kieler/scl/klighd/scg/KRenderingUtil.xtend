@@ -27,6 +27,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.kiml.util.KimlUtil
 import javax.inject.Inject
+import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 /**
  * KRendering Utility class for KLighD visualization.
  * 
@@ -39,6 +40,9 @@ class KRenderingUtil {
     
     @Inject
     extension KRenderingExtensions
+    
+    @Inject
+    extension KColorExtensions
 	
 	def KRenderingFactory factory() {
 		return KRenderingFactory::eINSTANCE;
@@ -81,6 +85,7 @@ class KRenderingUtil {
 		rect.setCornerHeight(10);
 		rect.setCornerWidth(10);
 		node.data.add(rect);
+		node.KRendering.background = "white".color
 		return node;
 	}
 	
@@ -200,53 +205,58 @@ class KRenderingUtil {
     
 
     def KPolyline createTriangleShape() {
-        factory.createKPolyline() => [
+        factory.createKPolygon() => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
-        ];
+            it.background = "white".color
+         ];
     }	
 
     def KPolyline createTriangleShapeReversed() {
-        factory.createKPolyline() => [
+        factory.createKPolygon() => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
+            it.background = "white".color
         ];
     }   
 
     def KPolyline createDiamondShape() {
-        factory.createKPolyline() => [
+        factory.createKPolygon() => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.5f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0f, TOP,  0, 0.5f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0f);
+            it.background = "white".color
         ];
     }   
 
     def KPolyline createSurfaceShape() {
-        factory.createKPolyline() => [
+        factory.createKPolygon() => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.33f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.33f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
+            it.background = "white".color
         ];
     }   
 
     def KPolyline createDepthShape() {
-        factory.createKPolyline() => [
+        factory.createKPolygon() => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.66f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.66f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
-        ];
+            it.background = "white".color
+         ];
     }   
 
 	
