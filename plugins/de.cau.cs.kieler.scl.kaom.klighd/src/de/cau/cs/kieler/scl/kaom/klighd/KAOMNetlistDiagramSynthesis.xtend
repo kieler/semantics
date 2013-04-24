@@ -58,6 +58,7 @@ import de.cau.cs.kieler.kiml.options.NodeLabelPlacement
 import de.cau.cs.kieler.kaom.Relation
 import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.KColoring
+import de.cau.cs.kieler.core.krendering.Trigger
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -192,9 +193,93 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
             );
         
             kNode.setNodeSize(25,25);
-            kNode.createLabel.configureOutsideCentralBottomNodeLabel(kaomEntity.name, 10, "Arial");
+            kNode.setMinimalNodeSize(25,25);
+            val label = kNode.createLabel.configureOutsideCentralBottomNodeLabel(kaomEntity.name, 10, "Arial");
+            kNode.addRectangle.addText("[-]")=>[
+                it.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                it.setPointPlacementData(createKPosition(RIGHT, 14, 0, TOP, 2, 0), H_LEFT, V_TOP, 0,0,0,0)
+            ]
+            
+            //kNode.addRectangle.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND);
         } else {
-            kNode.addRectangle.addText(" " + kaomEntity.name + " ").setSurroundingSpace(8, 0);
+            val rectangle = kNode.addRectangle
+            switch (kaomEntity.name) {
+                case "AND": {
+                    kNode.setNodeSize(40,29);
+                    rectangle.invisible = true
+                    //rectangle.lineWidth.propagateToChildren = true
+                    val line = rectangle.addPolyline;
+                    line.lineWidth = 2
+                    line.points += createKPosition(RIGHT, 0, 0.3f, TOP, 1,0)
+                    line.points += createKPosition(LEFT, 0, 0, TOP, 1,0)
+                    line.points += createKPosition(LEFT, 0, 0, BOTTOM, 1,0)
+                    line.points += createKPosition(RIGHT, 0, 0.3f, BOTTOM, 1,0)
+                    val arc = rectangle.addArc();
+                    arc.lineWidth = 2
+                    arc.setArcAngle(184);
+                    arc.startAngle = -94;
+                    arc.setAreaPlacementData(
+                        createKPosition(RIGHT, 0, 0.7f, TOP, 0,0),
+                        createKPosition(RIGHT, 0, -0.02f, BOTTOM, 0,0)
+                    )
+                }
+                case "OR": {
+                    kNode.setNodeSize(40,32);
+                    rectangle.invisible = true
+                    //rectangle.lineWidth.propagateToChildren = true
+//                    val line = rectangle.addPolyline;
+//                    line.lineWidth = 2
+//                    line.points += createKPosition(RIGHT, 0, 0.3f, TOP, 1,0)
+//                    line.points += createKPosition(LEFT, 0, 0, TOP, 1,0)
+//                    line.points += createKPosition(LEFT, 0, 0, BOTTOM, 1,0)
+//                    line.points += createKPosition(RIGHT, 0, 0.3f, BOTTOM, 1,0)
+                    val arc1 = rectangle.addArc();
+                    arc1.lineWidth = 2
+                    arc1.setArcAngle(190);
+                    arc1.startAngle = -98;
+                    arc1.setAreaPlacementData(
+                        createKPosition(RIGHT, 0, 1.3f, TOP, 0,0),
+                        createKPosition(RIGHT, 0, 0.95f, BOTTOM, 0,0)
+                    )
+                    val arc2 = rectangle.addArc();
+                    arc2.lineWidth = 2
+                    arc2.setArcAngle(194);
+                    arc2.startAngle = -98;
+                    arc2.setAreaPlacementData(
+                        createKPosition(RIGHT, 0, 2f, TOP, 0,0),
+                        createKPosition(RIGHT, 0, -0.02f, BOTTOM, 0,0)
+                    )
+                }
+                case "R": {
+                    kNode.setNodeSize(32,30);
+                    //rectangle.invisible = true
+                    //rectangle.lineWidth.propagateToChildren = true
+                    val line = rectangle.addPolyline;
+                    line.lineWidth = 2
+                    line.points += createKPosition(LEFT, 0, 0.2f, BOTTOM, 1.5f,0)
+                    line.points += createKPosition(LEFT, 0, 0.5f, BOTTOM, 1.5f,0.3f)
+                    line.points += createKPosition(RIGHT, 0, 0.2f, BOTTOM, 1.5f,0)
+                }
+                case "!": {
+                    kNode.setNodeSize(32,34);
+                    rectangle.invisible = true
+                    //rectangle.lineWidth.propagateToChildren = true
+                    val line = rectangle.addPolyline;
+                    line.lineWidth = 2
+                    line.points += createKPosition(LEFT, 0, 0, TOP, 0,0)
+                    line.points += createKPosition(LEFT, 0, 0.68f, TOP, 0,0.5f)
+                    line.points += createKPosition(LEFT, 0, 0, BOTTOM, 0,0)
+                    line.points += createKPosition(LEFT, 0, 0, TOP, 0,0)
+                    line.points += createKPosition(LEFT, 0, 0.68f, TOP, 0,0.5f)
+                    val circle = rectangle.addEllipse;
+                    circle.lineWidth = 2
+                    circle.setAreaPlacementData(
+                        createKPosition(RIGHT, 0, 0.32f, TOP, 0,0.33f),
+                        createKPosition(RIGHT, 0, -0.02f, BOTTOM, 0,0.33f)
+                    )
+                }
+                default: rectangle.addText(" " + kaomEntity.name + " ").setSurroundingSpace(8, 0)
+            }
         }
         
         kNode.addRectangle;
@@ -245,7 +330,12 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
 
     def createRelationFigure(Relation kaomRelation, KNode rootNode) {
         val kNode = kaomRelation.createNode;
-        kNode.addRectangle.setBackground("black".color);
+        kNode.addPolygon.setBackground("black".color) => [
+            it.points += createKPosition(LEFT,0,0,TOP,0,0.5f)
+            it.points += createKPosition(LEFT,0,0.5f,TOP,0,0)
+            it.points += createKPosition(RIGHT,0,0,TOP,0,0.5f)
+            it.points += createKPosition(RIGHT,0,0.5f,BOTTOM,0,0)
+        ];
         kNode.setNodeSize(5,5);
         rootNode.children.add(kNode);
     }
@@ -271,7 +361,7 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
             }
         }
         
-        kEdge.addPolyline.addArrowDecorator;
+        //kEdge.addPolyline.addArrowDecorator;
         
     }
 }
