@@ -36,6 +36,8 @@ import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.StextFactory
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.yakindu.sct.model.stext.stext.RegularEventSpec
+import org.yakindu.sct.model.stext.stext.RelationalOperator
 
 /*
  * This class provides many useful methods to help to handle a lot of general scl  tasks.
@@ -148,17 +150,21 @@ class SCLHelper {
     
     // Create a new SCL assignment statement and copy the first action in the given stext effect as 
     // expression.
-    def Assignment createSCLAssignment(Effect effect) {
-        var assignment = SCL.createAssignment();
+    def ArrayList<Assignment> createSCLAssignment(Effect effect) {
+        val assignments = new ArrayList<Assignment>
         if (effect instanceof ReactionEffect) {
-                assignment.assignment = (effect as ReactionEffect).actions.head.copy;
+            for(action : (effect as ReactionEffect).actions) {
+                val assignment = SCL.createAssignment();
+                assignment.assignment = action.copy
                 assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
                     val varRef = (it.varRef as ElementReferenceExpression);
                     varRef.reference = (varRef.reference as Event).createVariableDeclaration();
                 ]
+                assignments.add(assignment)
+            }
         }
         
-        assignment;    
+        assignments;    
     }
     
     // Create a new scl conditional statement
@@ -176,6 +182,11 @@ class SCLHelper {
                 conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
                     e.reference = (e.reference as Event).createVariableDeclaration;  
                 ]
+            } else 
+            if (reactionTrigger.trigger != null) {
+                conditional.expression = reactionTrigger.trigger.event.toExpression.copy;
+                conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
+                    e.reference = (e.reference as Event).createVariableDeclaration;  ]
             }
         }
         conditional;
@@ -530,8 +541,49 @@ class SCLHelper {
         if (e2.isFinal) {order = -1}
         order;
     }
+
     
+    // ======================================================================================================
+    // ==                  E X P R E S S I O N    M E T A M O D E L   E X T E N S I O N                    ==
+    // ======================================================================================================
+
+     def dispatch Expression toExpression(RegularEventSpec spec) {
+      val rel = SText.createLogicalRelationExpression()
+      val elref = SText.createElementReferenceExpression()
+      val primval = SText.createPrimitiveValueExpression()
+      val bval = SText.createBoolLiteral()
+      
+      elref.setReference(spec.event)
+      bval.setValue(true)
+      primval.setValue(bval)
+      
+      rel.setLeftOperand(elref) 
+      rel.setOperator(RelationalOperator::EQUALS)
+      rel.setRightOperand(primval)
+        
+      rel
+    }
     
+    def dispatch Expression toExpression(Expression exp) {
+        exp
+    }
+
+    def dispatch Expression negate(Expression exp) {
+        var not = SText.createLogicalNotExpression()
+        var par = SText.createParenthesizedExpression()
+        par.setExpression(exp)
+        not.setOperand(par)
+        not
+    }
+    
+    def dispatch Expression negate(RegularEventSpec spec) {
+        val not = SText.createLogicalNotExpression()
+        val par = SText.createParenthesizedExpression()
+        par.setExpression(spec.toExpression)   
+        not.setOperand(par);
+        not  
+    }
+       
     // ======================================================================================================
     // ==                   D E P E N D E N C Y   M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================

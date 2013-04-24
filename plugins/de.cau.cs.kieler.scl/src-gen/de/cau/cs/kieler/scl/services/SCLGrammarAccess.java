@@ -41,7 +41,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInstructionsLabelParserRuleCall_4_0_0_2_0 = (RuleCall)cInstructionsAssignment_4_0_0_2.eContents().get(0);
 		private final Assignment cInstructionsAssignment_4_0_1 = (Assignment)cGroup_4_0.eContents().get(1);
 		private final RuleCall cInstructionsInstructionParserRuleCall_4_0_1_0 = (RuleCall)cInstructionsAssignment_4_0_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_4_0_2 = (Keyword)cGroup_4_0.eContents().get(2);
 		private final Assignment cInstructionsAssignment_4_1 = (Assignment)cAlternatives_4.eContents().get(1);
 		private final RuleCall cInstructionsAnnotationParserRuleCall_4_1_0 = (RuleCall)cInstructionsAssignment_4_1.eContents().get(0);
 		private final Assignment cInstructionsAssignment_4_2 = (Assignment)cAlternatives_4.eContents().get(2);
@@ -52,12 +51,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	"module" name=ID interface+=VariableDeclaration* "{" ((instructions+=Instruction ";" | instructions+=Annotation |
 		//
-		//	instructions+=Label)* instructions+=Instruction ";"? | instructions+=Annotation | instructions+=Label)* "}";
+		//	instructions+=Label)* instructions+=Instruction | instructions+=Annotation | instructions+=Label)* "}";
 		public ParserRule getRule() { return rule; }
 
 		//"module" name=ID interface+=VariableDeclaration* "{" ((instructions+=Instruction ";" | instructions+=Annotation |
 		//
-		//instructions+=Label)* instructions+=Instruction ";"? | instructions+=Annotation | instructions+=Label)* "}"
+		//instructions+=Label)* instructions+=Instruction | instructions+=Annotation | instructions+=Label)* "}"
 		public Group getGroup() { return cGroup; }
 
 		//"module"
@@ -78,12 +77,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 
-		//((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction ";"? |
+		//((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction |
 		//
 		//instructions+=Annotation | instructions+=Label)*
 		public Alternatives getAlternatives_4() { return cAlternatives_4; }
 
-		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction ";"?
+		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction
 		public Group getGroup_4_0() { return cGroup_4_0; }
 
 		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)*
@@ -118,9 +117,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Instruction
 		public RuleCall getInstructionsInstructionParserRuleCall_4_0_1_0() { return cInstructionsInstructionParserRuleCall_4_0_1_0; }
-
-		//";"?
-		public Keyword getSemicolonKeyword_4_0_2() { return cSemicolonKeyword_4_0_2; }
 
 		//instructions+=Annotation
 		public Assignment getInstructionsAssignment_4_1() { return cInstructionsAssignment_4_1; }
@@ -318,7 +314,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInstructionsLabelParserRuleCall_3_0_0_2_0 = (RuleCall)cInstructionsAssignment_3_0_0_2.eContents().get(0);
 		private final Assignment cInstructionsAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
 		private final RuleCall cInstructionsInstructionParserRuleCall_3_0_1_0 = (RuleCall)cInstructionsAssignment_3_0_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_3_0_2 = (Keyword)cGroup_3_0.eContents().get(2);
 		private final Assignment cInstructionsAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
 		private final RuleCall cInstructionsAnnotationParserRuleCall_3_1_0 = (RuleCall)cInstructionsAssignment_3_1.eContents().get(0);
 		private final Assignment cInstructionsAssignment_3_2 = (Assignment)cAlternatives_3.eContents().get(2);
@@ -329,12 +324,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	"if" expression=Expression "then" ((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)*
 		//
-		//	instructions+=Instruction ";"? | instructions+=Annotation | instructions+=Label)* "end";
+		//	instructions+=Instruction | instructions+=Annotation | instructions+=Label)* "end";
 		public ParserRule getRule() { return rule; }
 
 		//"if" expression=Expression "then" ((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)*
 		//
-		//instructions+=Instruction ";"? | instructions+=Annotation | instructions+=Label)* "end"
+		//instructions+=Instruction | instructions+=Annotation | instructions+=Label)* "end"
 		public Group getGroup() { return cGroup; }
 
 		//"if"
@@ -349,12 +344,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"then"
 		public Keyword getThenKeyword_2() { return cThenKeyword_2; }
 
-		//((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction ";"? |
+		//((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction |
 		//
 		//instructions+=Annotation | instructions+=Label)*
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
-		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction ";"?
+		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction
 		public Group getGroup_3_0() { return cGroup_3_0; }
 
 		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)*
@@ -389,9 +384,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Instruction
 		public RuleCall getInstructionsInstructionParserRuleCall_3_0_1_0() { return cInstructionsInstructionParserRuleCall_3_0_1_0; }
-
-		//";"?
-		public Keyword getSemicolonKeyword_3_0_2() { return cSemicolonKeyword_3_0_2; }
 
 		//instructions+=Annotation
 		public Assignment getInstructionsAssignment_3_1() { return cInstructionsAssignment_3_1; }
@@ -451,7 +443,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInstructionsLabelParserRuleCall_1_0_0_2_0 = (RuleCall)cInstructionsAssignment_1_0_0_2.eContents().get(0);
 		private final Assignment cInstructionsAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
 		private final RuleCall cInstructionsInstructionParserRuleCall_1_0_1_0 = (RuleCall)cInstructionsAssignment_1_0_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_1_0_2 = (Keyword)cGroup_1_0.eContents().get(2);
 		private final Assignment cInstructionsAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
 		private final RuleCall cInstructionsAnnotationParserRuleCall_1_1_0 = (RuleCall)cInstructionsAssignment_1_1.eContents().get(0);
 		private final Assignment cInstructionsAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
@@ -463,23 +454,23 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	{Thread} ((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction
 		//
-		//	";"? | instructions+=Annotation | instructions+=Label)*;
+		//	| instructions+=Annotation | instructions+=Label)*;
 		public ParserRule getRule() { return rule; }
 
-		//{Thread} ((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction
+		//{Thread} ((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction |
 		//
-		//";"? | instructions+=Annotation | instructions+=Label)*
+		//instructions+=Annotation | instructions+=Label)*
 		public Group getGroup() { return cGroup; }
 
 		//{Thread}
 		public Action getThreadAction_0() { return cThreadAction_0; }
 
-		//((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction ";"? |
+		//((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction |
 		//
 		//instructions+=Annotation | instructions+=Label)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction ";"?
+		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
 		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)*
@@ -514,9 +505,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Instruction
 		public RuleCall getInstructionsInstructionParserRuleCall_1_0_1_0() { return cInstructionsInstructionParserRuleCall_1_0_1_0; }
-
-		//";"?
-		public Keyword getSemicolonKeyword_1_0_2() { return cSemicolonKeyword_1_0_2; }
 
 		//instructions+=Annotation
 		public Assignment getInstructionsAssignment_1_1() { return cInstructionsAssignment_1_1; }
@@ -621,7 +609,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInstructionsLabelParserRuleCall_3_0_0_2_0 = (RuleCall)cInstructionsAssignment_3_0_0_2.eContents().get(0);
 		private final Assignment cInstructionsAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
 		private final RuleCall cInstructionsInstructionParserRuleCall_3_0_1_0 = (RuleCall)cInstructionsAssignment_3_0_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_3_0_2 = (Keyword)cGroup_3_0.eContents().get(2);
 		private final Assignment cInstructionsAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
 		private final RuleCall cInstructionsAnnotationParserRuleCall_3_1_0 = (RuleCall)cInstructionsAssignment_3_1.eContents().get(0);
 		private final Assignment cInstructionsAssignment_3_2 = (Assignment)cAlternatives_3.eContents().get(2);
@@ -632,12 +619,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//	{InstructionScope} "{" interface+=VariableDeclaration* ((instructions+=Instruction ";" | instructions+=Annotation |
 		//
-		//	instructions+=Label)* instructions+=Instruction ";"? | instructions+=Annotation | instructions+=Label)* "}";
+		//	instructions+=Label)* instructions+=Instruction | instructions+=Annotation | instructions+=Label)* "}";
 		public ParserRule getRule() { return rule; }
 
 		//{InstructionScope} "{" interface+=VariableDeclaration* ((instructions+=Instruction ";" | instructions+=Annotation |
 		//
-		//instructions+=Label)* instructions+=Instruction ";"? | instructions+=Annotation | instructions+=Label)* "}"
+		//instructions+=Label)* instructions+=Instruction | instructions+=Annotation | instructions+=Label)* "}"
 		public Group getGroup() { return cGroup; }
 
 		//{InstructionScope}
@@ -652,12 +639,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//VariableDeclaration
 		public RuleCall getInterfaceVariableDeclarationParserRuleCall_2_0() { return cInterfaceVariableDeclarationParserRuleCall_2_0; }
 
-		//((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction ";"? |
+		//((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction |
 		//
 		//instructions+=Annotation | instructions+=Label)*
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
-		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction ";"?
+		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction
 		public Group getGroup_3_0() { return cGroup_3_0; }
 
 		//(instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)*
@@ -692,9 +679,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Instruction
 		public RuleCall getInstructionsInstructionParserRuleCall_3_0_1_0() { return cInstructionsInstructionParserRuleCall_3_0_1_0; }
-
-		//";"?
-		public Keyword getSemicolonKeyword_3_0_2() { return cSemicolonKeyword_3_0_2; }
 
 		//instructions+=Annotation
 		public Assignment getInstructionsAssignment_3_1() { return cInstructionsAssignment_3_1; }
@@ -785,7 +769,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	"module" name=ID interface+=VariableDeclaration* "{" ((instructions+=Instruction ";" | instructions+=Annotation |
 	//
-	//	instructions+=Label)* instructions+=Instruction ";"? | instructions+=Annotation | instructions+=Label)* "}";
+	//	instructions+=Label)* instructions+=Instruction | instructions+=Annotation | instructions+=Label)* "}";
 	public ProgramElements getProgramAccess() {
 		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
 	}
@@ -842,7 +826,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	"if" expression=Expression "then" ((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)*
 	//
-	//	instructions+=Instruction ";"? | instructions+=Annotation | instructions+=Label)* "end";
+	//	instructions+=Instruction | instructions+=Annotation | instructions+=Label)* "end";
 	public ConditionalElements getConditionalAccess() {
 		return (pConditional != null) ? pConditional : (pConditional = new ConditionalElements());
 	}
@@ -868,7 +852,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	{Thread} ((instructions+=Instruction ";" | instructions+=Annotation | instructions+=Label)* instructions+=Instruction
 	//
-	//	";"? | instructions+=Annotation | instructions+=Label)*;
+	//	| instructions+=Annotation | instructions+=Label)*;
 	public ThreadElements getThreadAccess() {
 		return (pThread != null) ? pThread : (pThread = new ThreadElements());
 	}
@@ -903,7 +887,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	{InstructionScope} "{" interface+=VariableDeclaration* ((instructions+=Instruction ";" | instructions+=Annotation |
 	//
-	//	instructions+=Label)* instructions+=Instruction ";"? | instructions+=Annotation | instructions+=Label)* "}";
+	//	instructions+=Label)* instructions+=Instruction | instructions+=Annotation | instructions+=Label)* "}";
 	public InstructionScopeElements getInstructionScopeAccess() {
 		return (pInstructionScope != null) ? pInstructionScope : (pInstructionScope = new InstructionScopeElements());
 	}

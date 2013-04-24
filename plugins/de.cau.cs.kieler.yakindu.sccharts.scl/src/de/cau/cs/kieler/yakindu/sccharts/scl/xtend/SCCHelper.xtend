@@ -15,6 +15,8 @@ import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.sgraph.Statechart
 import org.yakindu.sct.model.sgraph.Transition
 import de.cau.cs.kieler.scl.SCLHelper
+import org.yakindu.sct.model.stext.stext.RegularEventSpec
+import org.yakindu.sct.model.stext.stext.RelationalOperator
 
 class SCCHelper {
     
@@ -51,14 +53,6 @@ class SCCHelper {
     }
        
 
-
-    def Expression negate(Expression exp) {
-        var not = SText.createLogicalNotExpression();
-        var par = SText.createParenthesizedExpression();
-        par.setExpression(exp);
-        not.setOperand(par);
-        not;
-    }
 
 
 

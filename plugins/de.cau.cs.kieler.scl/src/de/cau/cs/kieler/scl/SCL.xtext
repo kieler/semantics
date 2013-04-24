@@ -20,7 +20,7 @@ Program:
                 |
                 (instructions += Label)
             )*
-            (instructions += Instruction)';'?
+            (instructions += Instruction)
             |
             (instructions += Annotation)
             |
@@ -56,7 +56,7 @@ Conditional:
                 |
                 (instructions += Label)
             )*
-            (instructions += Instruction)';'?
+            (instructions += Instruction)
             |
             (instructions += Annotation)
             |
@@ -79,7 +79,7 @@ Thread:
                 |
                 (instructions += Label)
             )*
-            (instructions += Instruction)';'?
+            (instructions += Instruction)
             |
             (instructions += Annotation)
             |
@@ -113,7 +113,7 @@ InstructionScope:
                 |
                 (instructions += Label)
             )*
-            (instructions += Instruction)';'?
+            (instructions += Instruction)
             |
             (instructions += Annotation)
             |
