@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
-<plugin>
+<plugin
+>
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -22,6 +23,26 @@
             id="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationNoOpt"
             name="CoreToSCLTransformationNoOpt">
       </command>
+      <command
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.category"
+            id="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyGoto"
+            name="CoreToSCLTransformationOnlyGoto">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.category"
+            id="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyLabel"
+            name="CoreToSCLTransformationOnlyLabel">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.category"
+            id="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlySelfloop"
+            name="CoreToSCLTransformationOnlySelfloop">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.category"
+            id="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyStatePosition"
+            name="CoreToSCLTransformationOnlyStatePosition">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -37,6 +58,22 @@
             class="de.cau.cs.kieler.yakindu.sccharts.scl.handler.SCLModelFileHandler"
             commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationNoOpt">
       </handler>
+      <handler
+            class="de.cau.cs.kieler.yakindu.sccharts.scl.handler.SCLModelFileHandler"
+            commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyGoto">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.yakindu.sccharts.scl.handler.SCLModelFileHandler"
+            commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyLabel">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.yakindu.sccharts.scl.handler.SCLModelFileHandler"
+            commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlySelfloop">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.yakindu.sccharts.scl.handler.SCLModelFileHandler"
+            commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyStatePosition">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
@@ -46,7 +83,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
-               id="de.cau.cs.kieler.yakindu.sccharts.scl.transformations"
+               id="de.cau.cs.kieler.yakindu.sccharts.scl.coretransformations"
                label="SCCharts to Core"
                mnemonic="T">
             <separator
@@ -56,7 +93,7 @@
          </menu>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.scl.transformations">
+            locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.scl.coretransformations">
          <command
                commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.SCCToCoreTransformation"
                label="SCC to Core Transformation"
@@ -105,10 +142,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+            locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.scl.noopttransformations">
          <command
                commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationNoOpt"
-               label="Core to SCL Transformation (no optimization)"
+               label="Transformation without optimization"
                mnemonic="A"
                style="push">
             <visibleWhen>
@@ -126,6 +163,98 @@
                </iterate>
             </visibleWhen>
          </command>
+         <command
+               commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyGoto"
+               label="Transformation with goto optimization only"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyLabel"
+               label="Transformation with label optimization only"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlySelfloop"
+               label="Transformation with selfloop optimization only"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyStatePosition"
+               label="Transformation with state position optimization only"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="de.cau.cs.kieler.yakindu.sccharts.scl.noopttransformations"
+               label="Core to SCL Transformation (selective optimization)"
+               mnemonic="T">
+            <separator
+                  name="de.cau.cs.kieler.core.ui.separator1"
+                  visible="true">
+            </separator>
+         </menu>
       </menuContribution>
    </extension>
 

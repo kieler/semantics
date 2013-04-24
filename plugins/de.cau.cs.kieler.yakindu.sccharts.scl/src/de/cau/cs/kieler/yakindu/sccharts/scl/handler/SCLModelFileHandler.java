@@ -25,6 +25,10 @@ public class SCLModelFileHandler extends AbstractModelFileHandler {
         
         public static final String SCLTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformation";
         public static final String SCLTRANSFORMATIONCOMMANDNOOPT = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationNoOpt";
+        public static final String SCLTRANSFORMATIONCOMMANDONLYGOTO = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyGoto";
+        public static final String SCLTRANSFORMATIONCOMMANDONLYLABEL = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyLabel";
+        public static final String SCLTRANSFORMATIONCOMMANDONLYSELFLOOP = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlySelfloop";
+        public static final String SCLTRANSFORMATIONCOMMANDONLYSTATEPOSITION = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyStatePosition";
 
 	public SCLModelFileHandler() {
 	}
@@ -63,6 +67,18 @@ public class SCLModelFileHandler extends AbstractModelFileHandler {
 	    if (commandString.equals(SCLTRANSFORMATIONCOMMANDNOOPT)) {
 	        opt = CoreToSCLTransformation.OPTIMIZE_NONE;
 	    }
+            if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYGOTO)) {
+                opt = CoreToSCLTransformation.OPTIMIZE_GOTO;
+            }
+            if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYLABEL)) {
+                opt = CoreToSCLTransformation.OPTIMIZE_LABEL;
+            }
+            if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYSELFLOOP)) {
+                opt = CoreToSCLTransformation.OPTIMIZE_SELFLOOP;
+            }
+            if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYSTATEPOSITION)) {
+                opt = CoreToSCLTransformation.OPTIMIZE_STATEPOSITION;
+            }
 
             EObject transformed = (new CoreToSCLTransformation())
                                 .transformCoreToSCL((Statechart) modelObject, 
