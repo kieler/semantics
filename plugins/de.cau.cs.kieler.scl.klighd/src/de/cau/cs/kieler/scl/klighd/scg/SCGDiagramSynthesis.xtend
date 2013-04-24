@@ -716,7 +716,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     def void addNSPortsFixed(KNode node) {
         node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
         node.addPort(unassignedObject, 'incoming', node.width / 2 - 1, 0, 2, PortSide::NORTH)
-        node.addPort(unassignedObject, 'outgoing', node.width / 2 - 1, node.height, 2, PortSide::SOUTH)
+        node.addPort(unassignedObject, 'outgoing', node.width / 2 - 1, node.height - 2, 2, PortSide::SOUTH)
     }   
 
     def KPort addPort(KNode node, Object obj, String mapping, float x, float y, int size, PortSide side) {
