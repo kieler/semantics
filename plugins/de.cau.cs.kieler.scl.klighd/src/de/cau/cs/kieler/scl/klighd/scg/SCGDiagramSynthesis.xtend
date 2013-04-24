@@ -532,7 +532,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      */
     def createAssignmentFigure(Assignment instr, KNode rootNode) {
         // Use the injected serializer to serialize the expression in the assignment statement.
-        val nodeText = serializer.serialize(instr);
+        val nodeText = serializer.serialize(instr).correctSerialization
 
         /* Create the knode.
          * 
