@@ -318,7 +318,11 @@ class SCLHelper {
         return null
     }
     
-    def EList<EObject> getAncestorThreadList(Label label) {
+    // ======================================================================================================
+    // ==                   S C L T H R E A D   M E T A M O D E L   E X T E N S I O N                      ==
+    // ======================================================================================================
+    
+    def EList<EObject> getAncestorThread(Label label) {
         var ancestor = label.eContainer
         while (ancestor != null) {
             if (ancestor instanceof Thread) return (ancestor as Thread).instructions
@@ -326,6 +330,30 @@ class SCLHelper {
             ancestor = ancestor.eContainer
         }
         return null
+    }
+    
+    def EList<EObject> getThread(EObject instruction) {
+        var container = instruction.eContainer
+        while (container != null) {
+            if (container instanceof Thread) return (container as Thread).instructions
+            if (container instanceof Program) return (container as Program).instructions 
+            container = container.eContainer
+        }
+        return null
+    }
+    
+    def boolean inSameThreadAs(EObject instruction, EObject secondInstruction) {
+        getThread(instruction) == getThread(secondInstruction)
+    }
+    
+    def boolean isInMainThread(EObject instruction) {
+        var container = instruction.eContainer
+        while (container != null) {
+            if (container instanceof Thread) return false
+            if (container instanceof Program) return true 
+            container = container.eContainer
+        }
+        return false
     }
     
     // ======================================================================================================
@@ -477,5 +505,9 @@ class SCLHelper {
         }
         
         iS
+    }
+    
+    def boolean isInThread(EObject instruction, List<EObject> iList) {
+        iList.contains(instruction)
     }
 }

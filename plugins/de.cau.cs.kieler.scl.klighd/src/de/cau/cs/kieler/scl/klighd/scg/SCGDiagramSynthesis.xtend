@@ -230,7 +230,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                  */
                 val targetLabel = goto.gotoGetLabel(iList)
                 if (targetLabel != null) {
-                    val labelThreadList = targetLabel.getAncestorThreadList
+                    val labelThreadList = targetLabel.getAncestorThread
                     targetPair = new Pair<KNode, KNode>(ParallelExitMapping.get(labelThreadList), null)
                 }
             }
@@ -251,26 +251,34 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         }
 
 
+        val markedEdges = new HashMap<KNode, KNode>
         for(instruction : iList.allContents) {
             val sourceNode = InstructionMapping.get(instruction)?.first
             val depList = instruction.dependencyInstructions(iList)
             for (targetInstruction : depList) {
+                if (!instruction.inSameThreadAs(targetInstruction) && !instruction.isInMainThread &&
+                    !targetInstruction.isInMainThread
+                ) {
                 val targetNode = InstructionMapping.get(targetInstruction)?.first
-            if (sourceNode != targetNode && sourceNode != null && targetNode != null) {
-            val edge = createEdge() => [
-                    it.source = sourceNode
-                    it.sourcePort = null
-                    it.target = targetNode
-                    it.targetPort = null
-                    it.data += renderingFactory.createKRoundedBendsPolyline() => [
-                        it.bendRadius = 5;
-                        it.setLineWidth(2);
-                        it.foreground = "red".color
-                    ];          
-                ]
+                if (sourceNode != targetNode && sourceNode != null && targetNode != null &&
+                    !((markedEdges.containsKey(targetNode) && markedEdges.get(targetNode) == sourceNode)) 
+                ) {
+                    val edge = createEdge() => [
+                        it.source = sourceNode
+                        it.sourcePort = null
+                        it.target = targetNode
+                        it.targetPort = null
+                        it.data += renderingFactory.createKRoundedBendsPolyline() => [
+                            it.bendRadius = 5;
+                            it.setLineWidth(2);
+                            it.foreground = "red".color
+                            it.setLineStyle(LineStyle::DASH);
+                        ];          
+                    ]
+                    markedEdges.put(sourceNode, targetNode)
                 }   
-                
-                }
+            }
+            }
         }
         
     }
@@ -445,8 +453,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.KRendering.foreground.alpha = 0;
             kContainerNode.KRendering.background = "gray".color;
             kContainerNode.KRendering.background.alpha = 50
-            kContainerNode.KRendering.background.targetColor = "white".color;
-            kContainerNode.KRendering.background.gradientAngle = -90;
+//            kContainerNode.KRendering.background.targetColor = "white".color;
+//            kContainerNode.KRendering.background.gradientAngle = -90;
             rootNode.children.add(kContainerNode)
 
             // Set layout parameter for this hierarchy
