@@ -93,17 +93,16 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	extension SCLHelper
 	
     // Constants for the klighd content filter
-    private static val CHOSEN = "Chosen classes";
-    private static val CHOSEN_AND_RELATED = "Chosen (highlighted) & related classes";
-    private static val ALL = "All classes, selection highlighted";
+    private static val SCGRAPH = "Draw SC Graph";
+    private static val SCGRAPH_AND_DEPENDENCIES = "Draw SC Graph & dependencies";
     
-    private static val String CLASS_FILTER_NAME = "Class filter";
+    private static val String SCG_FILTER_NAME = "SC Graph Filter";
 
     /**
      * The class filter option definition that allows the user to customize the class diagram.
      */
-    private static val TransformationOption CLASS_FILTER = TransformationOption::createChoiceOption(CLASS_FILTER_NAME,
-       ImmutableList::of(CHOSEN, CHOSEN_AND_RELATED, ALL), CHOSEN_AND_RELATED);
+    private static val TransformationOption SCGRAPH_FILTER = TransformationOption::createChoiceOption(SCG_FILTER_NAME,
+       ImmutableList::of(SCGRAPH, SCGRAPH_AND_DEPENDENCIES), SCGRAPH);
 
     /*
      * These maps link the scl program instructions to krendering nodes and ports.
@@ -128,7 +127,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * Registers the content filter option.
      */
     override public getTransformationOptions() {
-        return ImmutableSet::of(CLASS_FILTER);
+        return ImmutableSet::of(SCGRAPH_FILTER);
     }   
 
     /**
@@ -250,6 +249,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             }
         }
 
+
+        if (SCGRAPH_FILTER.optionValue != SCGRAPH_AND_DEPENDENCIES) return
 
         val markedEdges = new HashMap<KNode, KNode>
         for(instruction : iList.flatten) {

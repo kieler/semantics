@@ -511,6 +511,9 @@ class SCLHelper {
         val AssignmentExpression aExp = instruction.assignment as AssignmentExpression
         
         resList.add(aExp.varRef as ElementReferenceExpression)
+        aExp.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).forEach([
+            resList.add(it)
+        ])
                 
         resList 
     }
