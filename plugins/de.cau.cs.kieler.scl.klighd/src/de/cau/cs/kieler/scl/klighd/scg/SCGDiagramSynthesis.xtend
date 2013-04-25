@@ -47,6 +47,8 @@ import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kiml.options.SizeConstraint
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -265,8 +267,11 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 ) {
                 val targetNode = InstructionMapping.get(targetInstruction)?.first
                 if (sourceNode != targetNode && sourceNode != null && targetNode != null &&
-                    !((markedEdges.containsKey(targetNode) && markedEdges.get(targetNode) == sourceNode)) 
-                ) {
+                    !((markedEdges.containsKey(targetNode) && markedEdges.get(targetNode) == sourceNode))) {
+                        
+                    var depType = instruction.dependencyType(targetInstruction)
+                        
+                    if (depType!=null) {
                     val edge = createEdge() => [
                         it.source = sourceNode
                         it.sourcePort = sourceNode.getPort('dependency')
@@ -279,7 +284,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                             it.setLineStyle(LineStyle::DASH);
                         ];          
                     ]
+                    edge.createLabel.configureCenteralLabel(depType, 9, KlighdConstants::DEFAULT_FONT_NAME)
+                    Debug("Dependency found! Type: " + depType)
                     markedEdges.put(sourceNode, targetNode)
+                    }
                 }   
             }
             }

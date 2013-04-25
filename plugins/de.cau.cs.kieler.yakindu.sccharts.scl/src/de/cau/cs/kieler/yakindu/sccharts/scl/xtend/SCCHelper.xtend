@@ -2,21 +2,17 @@ package de.cau.cs.kieler.yakindu.sccharts.scl.xtend
 
 import com.google.common.collect.ImmutableList
 import com.google.inject.Guice
+import de.cau.cs.kieler.scl.SCLHelper
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
-import org.yakindu.sct.model.sgraph.Trigger
-import org.yakindu.sct.model.sgraph.Effect
-import java.util.List
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
 import java.util.ArrayList
-import org.yakindu.sct.model.stext.stext.Expression
+import java.util.List
+import org.yakindu.sct.model.sgraph.Effect
 import org.yakindu.sct.model.sgraph.Statechart
-import org.yakindu.sct.model.sgraph.Transition
-import de.cau.cs.kieler.scl.SCLHelper
-import org.yakindu.sct.model.stext.stext.RegularEventSpec
-import org.yakindu.sct.model.stext.stext.RelationalOperator
+import org.yakindu.sct.model.sgraph.Trigger
 
 class SCCHelper {
     
