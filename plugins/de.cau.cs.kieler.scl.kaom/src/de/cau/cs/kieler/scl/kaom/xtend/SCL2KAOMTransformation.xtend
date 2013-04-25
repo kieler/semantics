@@ -91,10 +91,8 @@ class SCL2KAOMTransformation {
         kaomSequence.setName("SEQUENCE");
         val or1 = kaomSequence.createOr;
         val or2 = kaomSequence.createOr;
-        //val r1 = kaomSequence.createRelation;
         or1.link(kaomSequence.sel);
         or2.link(kaomSequence.k1);
-        //kaomSequence.kill.link(r1);
         
         var firstEntityLinktToGo = false;
         
@@ -107,13 +105,12 @@ class SCL2KAOMTransformation {
                 val entity = instruction.transform(kaomSequence) as Entity;
 
                 if (!firstEntityLinktToGo) {
-                    kaomSequence.go.link(entity);
+                    kaomSequence.go.link(entity.go);
                     firstEntityLinktToGo = true;
                 }
                 
                 entity.sel.link(or1);
                 entity.k1.link(or2);
-                kaomSequence.kill.link(entity.kill);
                 kaomSequence.res.link(entity.res);
                 
                 if (priorInstruction != null) {
@@ -125,6 +122,8 @@ class SCL2KAOMTransformation {
                 priorEntity = entity;
             }
         }
+        // Connect last instruction
+        priorEntity.k0.link(kaomSequence.k0);
         kaomSequence
     }
     
@@ -133,27 +132,19 @@ class SCL2KAOMTransformation {
     def dispatch Entity transform(Pause pause, Entity targetModel) {
         val kaomPause = targetModel.createCompound;
         kaomPause.setName("PAUSE");
-        val register = kaomPause.createRegister;
-        val and1 = kaomPause.createAnd;
-        val and2 = kaomPause.createAnd;
-        val or = kaomPause.createOr;
-        val not = kaomPause.createNot;
+        val reg = kaomPause.createRegister;
+        val and = kaomPause.createAnd;
         val r1 = kaomPause.createRelation;
         val r2 = kaomPause.createRelation;
         
         kaomPause.go.link(r1);
-        kaomPause.res.link(and2);
-        kaomPause.kill.link(not);
+        r1.link(reg);
+        kaomPause.res.link(and);
         r1.link(kaomPause.k1);
-        r1.link(or);
-        or.link(and1);
-        not.link(and1);
-        and1.link(register);
-        register.link(r2);
-        r2.link(and2);
-        and2.link(kaomPause.k0);
+        reg.link(r2);
+        r2.link(and);
+        and.link(kaomPause.k0);
         r2.link(kaomPause.sel);
-        r2.link(or);
         targetModel.childEntities.add(kaomPause);
         kaomPause
     }
@@ -179,7 +170,6 @@ class SCL2KAOMTransformation {
             val entity = thread.instructions.transform(kaomParallel) as Entity;
             kaomParallel.go.link(entity.go);  
             kaomParallel.res.link(entity.res);  
-            kaomParallel.kill.link(entity.kill);  
             entity.k0.link(kaomSynchronizer.i0);
             entity.k1.link(kaomSynchronizer.i1);
             or2.link(not);
@@ -192,6 +182,10 @@ class SCL2KAOMTransformation {
     }
     
     def dispatch Entity transform(Goto goto, Entity targetModel) {
+        
+        
+//        goto.gotoTargetExists(//goto.rootContainer.)
+        
         var kaomGoto = targetModel.createCompound;
         kaomGoto.setName("GOTO");
         targetModel.childEntities.add(kaomGoto);
@@ -209,6 +203,37 @@ class SCL2KAOMTransformation {
     
     def dispatch Entity transform(Conditional conditional, Entity targetModel) {
         var kaomConditional = targetModel.createCompound;
+
+        val or = kaomConditional.createOr;
+        
+        val and1 = kaomConditional.createAnd;
+        val and2 = kaomConditional.createAnd;
+        val not = kaomConditional.createNot;
+        
+        val conditionPort = kaomConditional.getPort("C");
+        
+        conditionPort.link(and1);
+        kaomConditional.go.link(and1);
+        
+        conditionPort.link(not);
+        not.link(and2);
+        kaomConditional.go.link(and2);
+
+        // TODO: The following SHOULD be an Entity!
+        val entity = conditional.instructions.transform(kaomConditional) as Entity;
+        
+        and1.link(entity.go);
+        kaomConditional.res.link(entity.res);
+        
+        entity.sel.link(kaomConditional.sel);
+        
+        // K0 if entity terminates instantaneously or if implicit else branch
+        entity.k0.link(or);
+        and2.link(or);
+        or.link(kaomConditional.k0);
+        
+        entity.k1.link(kaomConditional.k1);
+        
         kaomConditional.setName("C?P:Q");
         targetModel.childEntities.add(kaomConditional);
         kaomConditional
@@ -222,24 +247,12 @@ class SCL2KAOMTransformation {
 
     def Entity createCompound(Entity containingEntity) {
         val entity = KaomFactory::eINSTANCE.createEntity();
-        val inPort1 = KaomFactory::eINSTANCE.createPort();
-        inPort1.setName("Go");
-        val inPort2 = KaomFactory::eINSTANCE.createPort();
-        inPort2.setName("Res");
-        val inPort3 = KaomFactory::eINSTANCE.createPort();
-        inPort3.setName("Kill");
-        val outPort1 = KaomFactory::eINSTANCE.createPort();
-        outPort1.setName("Sel");
-        val outPort2 = KaomFactory::eINSTANCE.createPort();
-        outPort2.setName("K0");
-        val outPort3 = KaomFactory::eINSTANCE.createPort();
-        outPort3.setName("K1");
-        entity.childPorts.add(inPort1);
-        entity.childPorts.add(inPort2);
-        entity.childPorts.add(inPort3);
-        entity.childPorts.add(outPort1);
-        entity.childPorts.add(outPort2);
-        entity.childPorts.add(outPort3);
+        // Create ports
+        entity.go;
+        entity.res;
+        entity.sel;
+        entity.k0;
+        entity.k1;
         containingEntity.childEntities.add(entity);
         return entity;
     }
@@ -248,21 +261,12 @@ class SCL2KAOMTransformation {
 
     def Entity createSynchronizer(Entity containingEntity) {
         val entity = KaomFactory::eINSTANCE.createEntity();
-        val inPort1 = KaomFactory::eINSTANCE.createPort();
-        inPort1.setName("IEM");
-        val inPort2 = KaomFactory::eINSTANCE.createPort();
-        inPort2.setName("I0");
-        val inPort3 = KaomFactory::eINSTANCE.createPort();
-        inPort3.setName("I1");
-        val outPort1 = KaomFactory::eINSTANCE.createPort();
-        outPort1.setName("K0");
-        val outPort2 = KaomFactory::eINSTANCE.createPort();
-        outPort2.setName("K1");
-        entity.childPorts.add(inPort1);
-        entity.childPorts.add(inPort2);
-        entity.childPorts.add(inPort3);
-        entity.childPorts.add(outPort1);
-        entity.childPorts.add(outPort2);
+        // Create ports
+        entity.iem;
+        entity.i0;
+        entity.i1;
+        entity.k0;
+        entity.k1;
         containingEntity.childEntities.add(entity);
         return entity;
     }
@@ -273,7 +277,6 @@ class SCL2KAOMTransformation {
     def Port getOut(Entity entity) {entity.getPort("Out");}
     def Port getGo(Entity entity) {entity.getPort("Go");}
     def Port getRes(Entity entity) {entity.getPort("Res");}
-    def Port getKill(Entity entity) {entity.getPort("Kill");}
     def Port getSel(Entity entity) {entity.getPort("Sel");}
     def Port getK0(Entity entity) {entity.getPort("K0");}
     def Port getK1(Entity entity) {entity.getPort("K1");}
@@ -282,6 +285,12 @@ class SCL2KAOMTransformation {
     def Port getIem(Entity entity) {entity.getPort("IEM");}
     
     def Port getPort(Entity entity, String name) {
+        if (entity.childPorts.filter(e | e.name.equals(name)).nullOrEmpty) {
+            // Create port if it has not exist yet
+            val port = KaomFactory::eINSTANCE.createPort();
+            port.setName(name);
+            entity.childPorts.add(port);
+        }
         entity.childPorts.filter(e | e.name.equals(name)).head;
     }
 
