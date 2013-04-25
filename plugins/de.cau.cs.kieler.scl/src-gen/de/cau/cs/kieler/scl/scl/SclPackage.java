@@ -151,13 +151,22 @@ public interface SclPackage extends EPackage
   int VARIABLE_DECLARATION__TYPE = SGraphPackage.VARIABLE_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DECLARATION__INITIAL_VALUE = SGraphPackage.VARIABLE_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>Variable Declaration</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION_FEATURE_COUNT = SGraphPackage.VARIABLE_FEATURE_COUNT + 3;
+  int VARIABLE_DECLARATION_FEATURE_COUNT = SGraphPackage.VARIABLE_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.InstructionImpl <em>Instruction</em>}' class.
@@ -590,6 +599,17 @@ public interface SclPackage extends EPackage
   EReference getVariableDeclaration_Type();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#getInitialValue <em>Initial Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Initial Value</em>'.
+   * @see de.cau.cs.kieler.scl.scl.VariableDeclaration#getInitialValue()
+   * @see #getVariableDeclaration()
+   * @generated
+   */
+  EReference getVariableDeclaration_InitialValue();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Instruction <em>Instruction</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -900,6 +920,14 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EReference VARIABLE_DECLARATION__TYPE = eINSTANCE.getVariableDeclaration_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VARIABLE_DECLARATION__INITIAL_VALUE = eINSTANCE.getVariableDeclaration_InitialValue();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.InstructionImpl <em>Instruction</em>}' class.

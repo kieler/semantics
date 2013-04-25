@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.scl
 
+import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.scl.scl.Annotation
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
@@ -36,6 +37,11 @@ import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.StextFactory
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.yakindu.sct.model.stext.stext.RegularEventSpec
+import org.yakindu.sct.model.stext.stext.RelationalOperator
+import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
+import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
+import org.yakindu.sct.model.stext.stext.BoolLiteral
 
 /*
  * This class provides many useful methods to help to handle a lot of general scl  tasks.
@@ -126,7 +132,7 @@ class SCLHelper {
    
    // Create a new VariableDeclaration object
     def VariableDeclaration createSCLVariableDeclaration() {
-        var varDef = SCL.createVariableDeclaration();
+        val varDef = SCL.createVariableDeclaration();
         varDef;
     }
     
@@ -139,6 +145,7 @@ class SCLHelper {
             val eventDefinition = definition as EventDefinition;
             varDef.setInput(eventDefinition.isInput());
             varDef.setOutput(eventDefinition.isOutput());
+            if (eventDefinition.varInitialValue != null) varDef.setInitialValue(eventDefinition.varInitialValue)
             
             if (eventDefinition.getType() != null) {
                 varDef.setType(eventDefinition.getType());
@@ -148,17 +155,21 @@ class SCLHelper {
     
     // Create a new SCL assignment statement and copy the first action in the given stext effect as 
     // expression.
-    def Assignment createSCLAssignment(Effect effect) {
-        var assignment = SCL.createAssignment();
+    def ArrayList<Assignment> createSCLAssignment(Effect effect) {
+        val assignments = new ArrayList<Assignment>
         if (effect instanceof ReactionEffect) {
-                assignment.assignment = (effect as ReactionEffect).actions.head.copy;
+            for(action : (effect as ReactionEffect).actions) {
+                val assignment = SCL.createAssignment();
+                assignment.assignment = action.copy
                 assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
                     val varRef = (it.varRef as ElementReferenceExpression);
                     varRef.reference = (varRef.reference as Event).createVariableDeclaration();
                 ]
+                assignments.add(assignment)
+            }
         }
         
-        assignment;    
+        assignments;    
     }
     
     // Create a new scl conditional statement
@@ -176,6 +187,11 @@ class SCLHelper {
                 conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
                     e.reference = (e.reference as Event).createVariableDeclaration;  
                 ]
+            } else 
+            if (reactionTrigger.trigger != null) {
+                conditional.expression = reactionTrigger.trigger.copy.toExpression;
+                conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
+                    e.reference = (e.reference as Event).createVariableDeclaration;  ]
             }
         }
         conditional;
@@ -192,6 +208,54 @@ class SCLHelper {
         thread.instructions.addAll(iList)
         thread
     }
+    
+    
+    // ======================================================================================================
+    // ==                  E X P R E S S I O N    M E T A M O D E L   E X T E N S I O N                    ==
+    // ======================================================================================================
+
+     def Expression toExpression(RegularEventSpec spec) {
+//      val rel = SText.createLogicalRelationExpression()
+      val elref = SText.createElementReferenceExpression()
+//      val primval = SText.createPrimitiveValueExpression()
+//      val bval = SText.createBoolLiteral()
+      
+      elref.setReference((spec.event.copy as ElementReferenceExpression).reference)
+//      bval.setValue(true)
+//      primval.setValue(bval)
+      
+//      rel.setLeftOperand(elref) 
+//      rel.setOperator(RelationalOperator::EQUALS)
+//      rel.setRightOperand(primval)
+        
+      elref
+    }
+    
+//    def dispatch Expression toExpression(Expression exp) {
+//        exp
+//    }
+
+    def Expression negate(Expression exp) {
+        var not = SText.createLogicalNotExpression()
+        
+        if (exp instanceof ElementReferenceExpression) {
+            not.setOperand(exp)
+            return not
+        }
+        
+        var par = SText.createParenthesizedExpression()
+        par.setExpression(exp)
+        not.setOperand(par)
+        not
+    }
+    
+//    def dispatch Expression negate(RegularEventSpec spec) {
+//        val not = SText.createLogicalNotExpression()
+//        val par = SText.createParenthesizedExpression()
+//        par.setExpression(spec.toExpression)   
+//        not.setOperand(par);
+//        not  
+//    }    
     
     // ======================================================================================================
     // ==                I N S T R U C T I O N    M E T A M O D E L   E X T E N S I O N                    ==
@@ -413,6 +477,16 @@ class SCLHelper {
     def boolean isInThread(EObject instruction, List<EObject> iList) {
         iList.contains(instruction)
     }    
+    
+    def Program getRootContainer(EObject instruction) {
+        var container = instruction.eContainer
+        while (container != null) {
+            if (container instanceof Program) return container as Program 
+            container = container.eContainer
+        }
+        return null
+    }    
+    
     // ======================================================================================================
     // ==                       S C O P E   M E T A M O D E L   E X T E N S I O N                          ==
     // ======================================================================================================
@@ -530,8 +604,10 @@ class SCLHelper {
         if (e2.isFinal) {order = -1}
         order;
     }
+
     
-    
+
+       
     // ======================================================================================================
     // ==                   D E P E N D E N C Y   M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
@@ -575,9 +651,8 @@ class SCLHelper {
         val AssignmentExpression aExp = instruction.assignment as AssignmentExpression
         
         resList.add(aExp.varRef as ElementReferenceExpression)
-        aExp.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).forEach([
-            resList.add(it)
-        ])
+        aExp.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).forEach(e |
+            resList.add(e))
                 
         resList 
     }
@@ -590,9 +665,9 @@ class SCLHelper {
     // Retrieve the list of ElementReferenceExpressions for a conditional statement.
     def ArrayList<ElementReferenceExpression> dependencyReferences(Expression expression) {
         val resList = new ArrayList<ElementReferenceExpression>
-        expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).forEach([
-            resList.add(it)
-        ])
+        if (expression instanceof ElementReferenceExpression) resList.add((expression as ElementReferenceExpression))
+        expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).forEach(e |
+            resList.add(e))
         resList
     }
     
@@ -601,31 +676,102 @@ class SCLHelper {
     def ArrayList<EObject> dependencyInstructions(List<EObject> iList, ElementReferenceExpression varRef) {
         val iS = createNewInstructionList()
         
-        iList.flatten.forEach([ e |
-            if (e instanceof Assignment) {
-                val references = (e as EObject).dependencyReferences 
+        for(instr : iList.flatten) {
+            if ((instr instanceof Assignment) || (instr instanceof Conditional)) {
+                val references = (instr as EObject).dependencyReferences 
                 for (reference : references) {
                     if (reference.reference.equals(varRef.reference))
-                        if (!iS.contains(e)) iS.add(e as EObject);
+                        if (!iS.contains(instr)) iS.add((instr as EObject));
                 }
             }    
-        ]);
+        }
         
         iS
     }
     
     // Retrieves a list of all instructions in a given instruction list which depend on a 
     // ElementReferenceExpression which is also a dependency for a given instruction.
-    def ArrayList<EObject> dependencyInstructions(EObject instruction, List<EObject> iList) {
+    def ArrayList<EObject> dependencyInstructions(EObject instruction, EList<EObject> iList) {
         val iS = createNewInstructionList()
         val references = instruction.dependencyReferences
         if (references == null) return iS
         
         for(reference : references) {
-            iS.addAll(iList.dependencyInstructions(reference).filter([it!=instruction]))
+            iS.addAll(iList.dependencyInstructions(reference).filter(e | e!=instruction))
         }
         
         iS
+    }
+    
+    
+    
+    def boolean isConfluentWriterAbs(EObject firstInst, EObject secondInst) {
+        if ((!(firstInst instanceof Assignment)) || (!(secondInst instanceof Assignment))) return false
+        val asgn1 = (firstInst as Assignment).assignment as AssignmentExpression
+        val asgn2 = (secondInst as Assignment).assignment as AssignmentExpression
+        
+        if ((asgn1.varRef as ElementReferenceExpression).reference != (asgn2.varRef as ElementReferenceExpression).reference) return false
+        if (asgn1.operator != asgn2.operator) return false
+        if (asgn1.expression instanceof PrimitiveValueExpression && asgn2.expression instanceof PrimitiveValueExpression) {
+            val pve1 = asgn1.expression as PrimitiveValueExpression
+            val pve2 = asgn2.expression as PrimitiveValueExpression
+            if (pve1.value instanceof BoolLiteral && pve2.value instanceof BoolLiteral) {
+                if ((pve1.value as BoolLiteral).value == (pve2.value as BoolLiteral).value) return true
+            }
+        }
+        return false
+    }
+    
+    def boolean isWriterAbs(EObject instruction) {
+        if (!(instruction instanceof Assignment)) return false
+        val asgn = (instruction as Assignment).assignment as AssignmentExpression
+        val varRef = asgn.varRef
+        
+        if (asgn.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
+            filter(e | e.equals(varRef)).size==0) return true
+        return false
+    }
+
+    def boolean isWriterRel(EObject instruction) {
+        if (!(instruction instanceof Assignment)) return false
+        val asgn = (instruction as Assignment).assignment as AssignmentExpression
+        val varRef = asgn.varRef
+        
+        if (asgn.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
+            filter(e | e.equals(varRef)).size>0) return true
+        return false
+    }
+    
+    def VariableDeclaration getWriteRef(EObject instruction) {
+        if (!(instruction instanceof Assignment)) return null
+        val asgn = (instruction as Assignment).assignment as AssignmentExpression
+        return ((asgn.varRef as ElementReferenceExpression).reference as VariableDeclaration)
+    }
+    
+    def boolean isReader(EObject instruction, VariableDeclaration vardec) {
+        if (instruction instanceof Assignment) {
+            val asgn = (instruction as Assignment).assignment as AssignmentExpression
+            if (asgn.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
+                filter(e | e.reference.equals(vardec)).size>0) return true
+        } else if (instruction instanceof Conditional) {
+            val cond = (instruction as Conditional).expression
+            if (cond instanceof ElementReferenceExpression && 
+                (cond as ElementReferenceExpression).reference.equals(vardec)) return true
+            if (cond.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
+                filter(e | e.reference.equals(vardec)).size>0) return true
+        }
+        return false
+    }
+    
+    
+    def String dependencyType(EObject firstInst, EObject secondInst) {
+        if (firstInst.isWriterAbs && secondInst.isWriterAbs && firstInst.getWriteRef==secondInst.getWriteRef &&
+            !isConfluentWriterAbs(firstInst, secondInst)) return "ww"
+        if (firstInst.isWriterAbs && secondInst.isReader(firstInst.getWriteRef)) return "wr"
+        if (firstInst.isWriterAbs && secondInst.isWriterRel && firstInst.getWriteRef==secondInst.getWriteRef)
+            return "wi"
+        if (firstInst.isWriterRel && secondInst.isReader(firstInst.getWriteRef)) return "ir"
+        return null
     }
     
 }

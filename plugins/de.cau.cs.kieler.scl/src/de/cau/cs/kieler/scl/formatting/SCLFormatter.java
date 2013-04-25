@@ -41,6 +41,10 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
 //            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_1_0_0_0_1());
 //            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_0_1_0_0_0_1());
 //            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_1_1_2_0_0_0_1());
+            c.setNoSpace().before(f.getProgramAccess().getSemicolonKeyword_4_0_0_0_1());
+            c.setNoSpace().before(f.getConditionalAccess().getSemicolonKeyword_3_0_0_0_1());
+            c.setNoSpace().before(f.getInstructionScopeAccess().getSemicolonKeyword_3_0_0_0_1());
+            c.setNoSpace().before(f.getThreadAccess().getSemicolonKeyword_1_0_0_0_1());
             
             c.setLinewrap(1).before(f.getInstructionRule());
             c.setLinewrap(1).before(f.getAnnotationRule());
@@ -56,7 +60,7 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             
    
             // Variable Declaration
-            c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword_5());
+            c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword_6());
             c.setLinewrap(1).after(f.getVariableDeclarationRule());
         
             // Parallel
@@ -69,5 +73,6 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
                              f.getParallelAccess().getParKeyword_1_1_0());
             c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
                              f.getParallelAccess().getJoinKeyword_2());
+            
 	}
 }
