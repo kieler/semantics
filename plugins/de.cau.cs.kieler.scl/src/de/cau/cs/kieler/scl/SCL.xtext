@@ -27,7 +27,7 @@ Program:
 
 
 VariableDeclaration:
-    (Input?='input')? (Output?='output')? 'signal' (name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
+    (input?='input')? (output?='output')? 'signal' (name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 ;
 
 Statement:
@@ -65,7 +65,7 @@ Conditional:
 ;
 
 Goto:
-    'goto' name = ID 
+    'goto' targetLabel = ID 
 ;
 
 Thread:

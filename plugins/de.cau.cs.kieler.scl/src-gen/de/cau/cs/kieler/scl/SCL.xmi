@@ -62,10 +62,10 @@
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/scl/scl#//VariableDeclaration"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="Input" operator="?=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="input" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="input"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="Output" operator="?=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="output" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="output"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="signal"/>
@@ -194,7 +194,7 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="goto"/>
-        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="targetLabel" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
         </elements>
       </alternatives>

@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.GotoImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.GotoImpl#getTargetLabel <em>Target Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -27,24 +27,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class GotoImpl extends InstructionImpl implements Goto
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The default value of the '{@link #getTargetLabel() <em>Target Label</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getTargetLabel()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected static final String TARGET_LABEL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getTargetLabel() <em>Target Label</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getTargetLabel()
    * @generated
    * @ordered
    */
-  protected String name = NAME_EDEFAULT;
+  protected String targetLabel = TARGET_LABEL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,9 +72,9 @@ public class GotoImpl extends InstructionImpl implements Goto
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
+  public String getTargetLabel()
   {
-    return name;
+    return targetLabel;
   }
 
   /**
@@ -82,12 +82,12 @@ public class GotoImpl extends InstructionImpl implements Goto
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(String newName)
+  public void setTargetLabel(String newTargetLabel)
   {
-    String oldName = name;
-    name = newName;
+    String oldTargetLabel = targetLabel;
+    targetLabel = newTargetLabel;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.GOTO__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.GOTO__TARGET_LABEL, oldTargetLabel, targetLabel));
   }
 
   /**
@@ -100,8 +100,8 @@ public class GotoImpl extends InstructionImpl implements Goto
   {
     switch (featureID)
     {
-      case SclPackage.GOTO__NAME:
-        return getName();
+      case SclPackage.GOTO__TARGET_LABEL:
+        return getTargetLabel();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -116,8 +116,8 @@ public class GotoImpl extends InstructionImpl implements Goto
   {
     switch (featureID)
     {
-      case SclPackage.GOTO__NAME:
-        setName((String)newValue);
+      case SclPackage.GOTO__TARGET_LABEL:
+        setTargetLabel((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -133,8 +133,8 @@ public class GotoImpl extends InstructionImpl implements Goto
   {
     switch (featureID)
     {
-      case SclPackage.GOTO__NAME:
-        setName(NAME_EDEFAULT);
+      case SclPackage.GOTO__TARGET_LABEL:
+        setTargetLabel(TARGET_LABEL_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -150,8 +150,8 @@ public class GotoImpl extends InstructionImpl implements Goto
   {
     switch (featureID)
     {
-      case SclPackage.GOTO__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case SclPackage.GOTO__TARGET_LABEL:
+        return TARGET_LABEL_EDEFAULT == null ? targetLabel != null : !TARGET_LABEL_EDEFAULT.equals(targetLabel);
     }
     return super.eIsSet(featureID);
   }
@@ -167,8 +167,8 @@ public class GotoImpl extends InstructionImpl implements Goto
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
+    result.append(" (targetLabel: ");
+    result.append(targetLabel);
     result.append(')');
     return result.toString();
   }

@@ -356,13 +356,13 @@ public interface SclPackage extends EPackage
   int GOTO = 8;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Target Label</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GOTO__NAME = INSTRUCTION_FEATURE_COUNT + 0;
+  int GOTO__TARGET_LABEL = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Goto</em>' class.
@@ -709,15 +709,15 @@ public interface SclPackage extends EPackage
   EClass getGoto();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.Goto#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.Goto#getTargetLabel <em>Target Label</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Goto#getName()
+   * @return the meta object for the attribute '<em>Target Label</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Goto#getTargetLabel()
    * @see #getGoto()
    * @generated
    */
-  EAttribute getGoto_Name();
+  EAttribute getGoto_TargetLabel();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Thread <em>Thread</em>}'.
@@ -1013,12 +1013,12 @@ public interface SclPackage extends EPackage
     EClass GOTO = eINSTANCE.getGoto();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Target Label</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute GOTO__NAME = eINSTANCE.getGoto_Name();
+    EAttribute GOTO__TARGET_LABEL = eINSTANCE.getGoto_TargetLabel();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.ThreadImpl <em>Thread</em>}' class.

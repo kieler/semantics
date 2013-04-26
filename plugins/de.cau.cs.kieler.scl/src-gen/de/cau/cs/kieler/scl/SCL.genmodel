@@ -13,8 +13,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Program/statements"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//VariableDeclaration">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//VariableDeclaration/Input"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//VariableDeclaration/Output"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//VariableDeclaration/input"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//VariableDeclaration/output"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCL.ecore#//VariableDeclaration/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//VariableDeclaration/initialValue"/>
     </genClasses>
@@ -34,7 +34,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Conditional/statements"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Goto">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Goto/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Goto/targetLabel"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Thread">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Thread/statements"/>

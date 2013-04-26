@@ -233,31 +233,31 @@ ruleVariableDeclaration returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
-		lv_Input_0_0=	'input' 
+		lv_input_0_0=	'input' 
     {
-        newLeafNode(lv_Input_0_0, grammarAccess.getVariableDeclarationAccess().getInputInputKeyword_0_0());
+        newLeafNode(lv_input_0_0, grammarAccess.getVariableDeclarationAccess().getInputInputKeyword_0_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getVariableDeclarationRule());
 	        }
-       		setWithLastConsumed($current, "Input", true, "input");
+       		setWithLastConsumed($current, "input", true, "input");
 	    }
 
 )
 )?(
 (
-		lv_Output_1_0=	'output' 
+		lv_output_1_0=	'output' 
     {
-        newLeafNode(lv_Output_1_0, grammarAccess.getVariableDeclarationAccess().getOutputOutputKeyword_1_0());
+        newLeafNode(lv_output_1_0, grammarAccess.getVariableDeclarationAccess().getOutputOutputKeyword_1_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getVariableDeclarationRule());
 	        }
-       		setWithLastConsumed($current, "Output", true, "output");
+       		setWithLastConsumed($current, "output", true, "output");
 	    }
 
 )
@@ -709,9 +709,9 @@ ruleGoto returns [EObject current=null]
     }
 (
 (
-		lv_name_1_0=RULE_ID
+		lv_targetLabel_1_0=RULE_ID
 		{
-			newLeafNode(lv_name_1_0, grammarAccess.getGotoAccess().getNameIDTerminalRuleCall_1_0()); 
+			newLeafNode(lv_targetLabel_1_0, grammarAccess.getGotoAccess().getTargetLabelIDTerminalRuleCall_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -719,8 +719,8 @@ ruleGoto returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"name",
-        		lv_name_1_0, 
+       			"targetLabel",
+        		lv_targetLabel_1_0, 
         		"ID");
 	    }
 

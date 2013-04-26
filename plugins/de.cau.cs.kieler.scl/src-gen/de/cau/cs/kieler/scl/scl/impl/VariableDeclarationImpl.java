@@ -379,9 +379,9 @@ public class VariableDeclarationImpl extends VariableImpl implements VariableDec
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (Input: ");
+    result.append(" (input: ");
     result.append(input);
-    result.append(", Output: ");
+    result.append(", output: ");
     result.append(output);
     result.append(')');
     return result.toString();

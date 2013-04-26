@@ -38,6 +38,9 @@ import org.yakindu.sct.model.stext.stext.RelationalOperator
 import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import org.yakindu.sct.model.stext.stext.BoolLiteral
+import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.Instruction
+import de.cau.cs.kieler.scl.scl.StatementScope
 
 /*
  * This class provides many useful methods to help to handle a lot of general scl  tasks.
@@ -79,20 +82,26 @@ class SCLHelper {
     // Create a new list of EObjects
     def createNewInstructionList()
     {
-        new ArrayList<EObject>
+        new ArrayList<Statement>
     }
     
     // Create a new list of EObjects and insert the first instruction
-//    def createNewInstructionList(Instruction instruction) {
-//        createNewInstructionList.add(instruction)
-//    }
+    def createNewInstructionList(Statement statement) {
+        createNewInstructionList.add(statement)
+    }
+    
+    def createNewInstructionList(Instruction instruction) {
+        val statement = SCL.createInstructionStatement()
+        statement.instruction = instruction
+        createNewInstructionList(statement)
+    }
     
     // Create a goto statement with target string
     def Goto createSCLGoto(String targetLabelName)
     {
-        var goto = SCL.createGoto();
-        goto.setName(targetLabelName);
-        goto;
+        var goto = SCL.createGoto()
+        goto.setTargetLabel(targetLabelName)
+        goto
     }
     
     // Create a SCL comment 
@@ -103,13 +112,13 @@ class SCLHelper {
 //    }
     
     // Create a SCL label
-//    def Label createSCLLabel(String labelName) {
-//        var label = SCL.createLabel();
-//        label.setName(labelName);
-//        label;
-//    }
+    def Statement createSCLEmptyStatement(String labelName) {
+        val statement = SCL.createEmptyStatement()
+        statement.setLabel(labelName)
+        statement
+    }
     
-//    def Scope createSCLScope(String labelName) {
+//    def StatementScope createSCLScope(String labelName) {
 //        var scope = SCL.createScope()
 //        var iSet  = createSCLInstructionSet()
 //        scope.scope = iSet

@@ -143,19 +143,19 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		// //         )?
 		// VariableDeclaration:
 		//
-		//	Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";";
+		//	input?="input"? output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";"
+		//input?="input"? output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";"
 		public Group getGroup() { return cGroup; }
 
-		//Input?="input"?
+		//input?="input"?
 		public Assignment getInputAssignment_0() { return cInputAssignment_0; }
 
 		//"input"
 		public Keyword getInputInputKeyword_0_0() { return cInputInputKeyword_0_0; }
 
-		//Output?="output"?
+		//output?="output"?
 		public Assignment getOutputAssignment_1() { return cOutputAssignment_1; }
 
 		//"output"
@@ -455,25 +455,25 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Goto");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cGotoKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cTargetLabelAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTargetLabelIDTerminalRuleCall_1_0 = (RuleCall)cTargetLabelAssignment_1.eContents().get(0);
 		
 		//Goto:
 		//
-		//	"goto" name=ID;
+		//	"goto" targetLabel=ID;
 		public ParserRule getRule() { return rule; }
 
-		//"goto" name=ID
+		//"goto" targetLabel=ID
 		public Group getGroup() { return cGroup; }
 
 		//"goto"
 		public Keyword getGotoKeyword_0() { return cGotoKeyword_0; }
 
-		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		//targetLabel=ID
+		public Assignment getTargetLabelAssignment_1() { return cTargetLabelAssignment_1; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		public RuleCall getTargetLabelIDTerminalRuleCall_1_0() { return cTargetLabelIDTerminalRuleCall_1_0; }
 	}
 
 	public class ThreadElements extends AbstractParserRuleElementFinder {
@@ -778,7 +778,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	// //         )?
 	// VariableDeclaration:
 	//
-	//	Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";";
+	//	input?="input"? output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";";
 	public VariableDeclarationElements getVariableDeclarationAccess() {
 		return (pVariableDeclaration != null) ? pVariableDeclaration : (pVariableDeclaration = new VariableDeclarationElements());
 	}
@@ -859,7 +859,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Goto:
 	//
-	//	"goto" name=ID;
+	//	"goto" targetLabel=ID;
 	public GotoElements getGotoAccess() {
 		return (pGoto != null) ? pGoto : (pGoto = new GotoElements());
 	}
