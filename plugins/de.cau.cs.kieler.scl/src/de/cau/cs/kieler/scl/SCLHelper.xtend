@@ -118,27 +118,19 @@ class SCLHelper {
         statement
     }
     
-//    def StatementScope createSCLScope(String labelName) {
-//        var scope = SCL.createScope()
-//        var iSet  = createSCLInstructionSet()
-//        scope.scope = iSet
-//        if (!labelName.nullOrEmpty) {
-//            var label = createSCLLabel(labelName);
-//            scope.setLabel(label);
-//        }
-//        scope;
-//    }
+    def StatementScope createSCLStatementScope() {
+        SCL.createStatementScope()
+    }
     
     // Create a SCL pause
     def Pause createSCLPause() {
-        SCL.createPause();
+        SCL.createPause()
     }
     
    
    // Create a new VariableDeclaration object
     def VariableDeclaration createSCLVariableDeclaration() {
-        val varDef = SCL.createVariableDeclaration();
-        varDef;
+        SCL.createVariableDeclaration()
     }
     
     // Create a new VariableDeclaration or return an old one, if it already exists in the given context
@@ -179,7 +171,7 @@ class SCLHelper {
     
     // Create a new scl conditional statement
     def Conditional createSCLConditional() {
-        SCL.createConditional();
+        SCL.createConditional()
     }
     
     // Create a new scl conditional and take the given stext trigger as true trigger for the conditional. 
@@ -199,20 +191,21 @@ class SCLHelper {
                     e.reference = (e.reference as Event).createVariableDeclaration;  ]
             }
         }
-        conditional;
+        
+        conditional
     }    
     
     // Create a new SCL thread
     def Thread createSCLThread() {
-        SCL.createThread();
+        SCL.createThread()
     }
     
     // Create a new SCL thread and copy the given instruction list
-//    def Thread createSCLThread(List<EObject> iList) {
-//        val thread = createSCLThread()
-//        thread.instructions.addAll(iList)
-//        thread
-//    }
+    def Thread createSCLThread(List<Statement> statements) {
+        val thread = createSCLThread()
+        thread.statements.addAll(statements)
+        thread
+    }
     
     
     // ======================================================================================================
@@ -266,47 +259,6 @@ class SCLHelper {
     // ==                I N S T R U C T I O N    M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
     
-    /*
-     * These methods easy the handling of instructions and lists of instructions
-     */
-    
-    // Add an instruction to an list of instructions. Make sure it is a valid instruction.
-//    def void addInstruction(List<EObject> iList, EObject instruction) {
-//        if (instruction instanceof Instruction ||
-//            instruction instanceof Label ||
-//            instruction instanceof Annotation)
-//            iList.add(instruction)
-//    }
-
-    // Add an instruction to the EList of a SCL program.
-//    def void addInstruction(Program program, EObject instruction) {
-//        program.instructions.addInstruction(instruction)
-//    }
-    
-    // Add an instruction to the EList of a SCL conditional
-//    def void addInstruction(Conditional conditional, EObject instruction) {
-//        conditional.instructions.addInstruction(instruction)
-//    }
-
-    // Add an instruction to the EList of a SCL thread
-//    def void addInstruction(Thread thread, EObject instruction) {
-//        thread.instructions.addInstruction(instruction)
-//    }
-    
-    // Add all instructions of one instruction list to another instruction list
-    def void addInstructions(List<EObject> list, List<EObject> addition) {
-        list.addAll(addition)
-    }
-    
-//    def void addTo(EList<EObject> iListFrom, EList<EObject> iListTo) {
-//        iListTo.addAll(iListFrom)
-//    }
-    
-    // Add a pause statement to an instruction list
-//    def void addPause(List<EObject> iList) {
-//        iList.addInstruction(createSCLPause())
-//    }
-    
     // Flatten an instruction list
 //    def ArrayList<EObject> flatten(List<EObject> iList) {
 //        var rList = createNewInstructionList()
@@ -339,43 +291,23 @@ class SCLHelper {
      * These methods help to find goto targets and successor instructions of labels.
      */
     
-    // Retrieves the target instruction of a goto statement.
-    // This is the first valid instruction which succeeds the target label.
-    // REMARK: Because the target may not exit or there is no valid instruction after the target label
-    // this function may return null! 
-//    def Instruction gotoLookUp(Goto goto, EList<EObject> iList) {
-//        gotoLookUp(goto.name, iList)
+    // Retrieves the target statement of a goto statement.
+    // REMARK: Because the target may not exit this function may return null! 
+//    def Statement getTargetStatement(Goto goto, List<Statement> statements) {
+//        getTagetStatement(goto.targetLabel, statements)
 //    }
     
-    // Retrieves the first valid instruction which succeeds the label identified by its name.
-    // REMARK: Because the target may not exit or there is no valid instruction after the target label
-    // this function may return null! 
-//    def Instruction gotoLookUp(String label, EList<EObject> iList) {
-//        var boolean foundLabel = false
-//        for(instruction : iList) {
-//            if (instruction instanceof Label) {
-//                if ((instruction as Label).name == label) {
-//                    foundLabel = true
-//                }
-//            } else if (!(instruction instanceof Annotation)) {
-//                if (foundLabel) {
-//                    return instruction as Instruction
-//                } else {
-//                    if (instruction instanceof Parallel) {
-//                        for(thread : (instruction as Parallel).threads) {
-//                            val instrRes = gotoLookUp(label, thread.instructions)
-//                            if (instrRes != null ) return instrRes
-//                        }
-//                    }
-//                    else if (instruction instanceof Conditional) {
-//                            val instrRes = gotoLookUp(label, (instruction as Conditional).instructions)
-//                            if (instrRes != null ) return instrRes
-//                    }
-//                }
-//            }
-//        }
-//        return null
+    // Retrieves the target statement of a goto statement.
+    // REMARK: Because the target may not exit this function may return null! 
+//    def Statement getTargetStatement(Goto goto, List<Statement> statements) {
+//        getTagetStatement(goto.targetLabel, statements)
 //    }
+//    
+    // Retrieves the target statement identified by its name.
+    // REMARK: Because the target may not exit this function may return null! 
+    def Instruction gotoLookUp(String targetLabel, List<Statement> statements) {
+        return null
+    }
     
     // Checks weather or not a specified goto target exists in the instruction list
 //    def boolean gotoTargetExists(Goto goto, EList<EObject> iList) {
@@ -452,7 +384,7 @@ class SCLHelper {
 //    }
     
     // Retrieve the thread list of a given instruction
-//    def EList<EObject> getThread(EObject instruction) {
+//    def EObject getThread(Instruction instruction) {
 //        var container = instruction.eContainer
 //        while (container != null) {
 //            if (container instanceof Thread) return (container as Thread).instructions

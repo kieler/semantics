@@ -137,7 +137,8 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 				}
 				else break;
 			case SclPackage.PROGRAM:
-				if(context == grammarAccess.getProgramRule()) {
+				if(context == grammarAccess.getAbstractThreadRule() ||
+				   context == grammarAccess.getProgramRule()) {
 					sequence_Program(context, (Program) semanticObject); 
 					return; 
 				}
@@ -150,7 +151,8 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 				}
 				else break;
 			case SclPackage.THREAD:
-				if(context == grammarAccess.getThreadRule()) {
+				if(context == grammarAccess.getAbstractThreadRule() ||
+				   context == grammarAccess.getThreadRule()) {
 					sequence_Thread(context, (de.cau.cs.kieler.scl.scl.Thread) semanticObject); 
 					return; 
 				}

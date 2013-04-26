@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.util;
 
+import de.cau.cs.kieler.scl.scl.AbstractThread;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -93,6 +94,7 @@ public class SclSwitch<T> extends Switch<T>
       {
         Program program = (Program)theEObject;
         T result = caseProgram(program);
+        if (result == null) result = caseAbstractThread(program);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -160,10 +162,18 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SclPackage.ABSTRACT_THREAD:
+      {
+        AbstractThread abstractThread = (AbstractThread)theEObject;
+        T result = caseAbstractThread(abstractThread);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SclPackage.THREAD:
       {
         de.cau.cs.kieler.scl.scl.Thread thread = (de.cau.cs.kieler.scl.scl.Thread)theEObject;
         T result = caseThread(thread);
+        if (result == null) result = caseAbstractThread(thread);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -335,6 +345,22 @@ public class SclSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseGoto(Goto object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Abstract Thread</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Abstract Thread</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAbstractThread(AbstractThread object)
   {
     return null;
   }

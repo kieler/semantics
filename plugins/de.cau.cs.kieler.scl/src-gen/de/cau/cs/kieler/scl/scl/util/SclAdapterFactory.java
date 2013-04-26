@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.util;
 
+import de.cau.cs.kieler.scl.scl.AbstractThread;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -135,6 +136,11 @@ public class SclAdapterFactory extends AdapterFactoryImpl
       public Adapter caseGoto(Goto object)
       {
         return createGotoAdapter();
+      }
+      @Override
+      public Adapter caseAbstractThread(AbstractThread object)
+      {
+        return createAbstractThreadAdapter();
       }
       @Override
       public Adapter caseThread(de.cau.cs.kieler.scl.scl.Thread object)
@@ -324,6 +330,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createGotoAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.AbstractThread <em>Abstract Thread</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.AbstractThread
+   * @generated
+   */
+  public Adapter createAbstractThreadAdapter()
   {
     return null;
   }

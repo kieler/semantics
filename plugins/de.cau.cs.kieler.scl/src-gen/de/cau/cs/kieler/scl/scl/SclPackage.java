@@ -59,6 +59,34 @@ public interface SclPackage extends EPackage
   SclPackage eINSTANCE = de.cau.cs.kieler.scl.scl.impl.SclPackageImpl.init();
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.AbstractThreadImpl <em>Abstract Thread</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.scl.scl.impl.AbstractThreadImpl
+   * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAbstractThread()
+   * @generated
+   */
+  int ABSTRACT_THREAD = 9;
+
+  /**
+   * The feature id for the '<em><b>Statements</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABSTRACT_THREAD__STATEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Abstract Thread</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABSTRACT_THREAD_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl <em>Program</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -69,13 +97,22 @@ public interface SclPackage extends EPackage
   int PROGRAM = 0;
 
   /**
+   * The feature id for the '<em><b>Statements</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROGRAM__STATEMENTS = ABSTRACT_THREAD__STATEMENTS;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__NAME = 0;
+  int PROGRAM__NAME = ABSTRACT_THREAD_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -84,16 +121,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM__DECLARATIONS = 1;
-
-  /**
-   * The feature id for the '<em><b>Statements</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROGRAM__STATEMENTS = 2;
+  int PROGRAM__DECLARATIONS = ABSTRACT_THREAD_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -102,7 +130,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM_FEATURE_COUNT = 3;
+  int PROGRAM_FEATURE_COUNT = ABSTRACT_THREAD_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
@@ -381,7 +409,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getThread()
    * @generated
    */
-  int THREAD = 9;
+  int THREAD = 10;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -390,7 +418,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int THREAD__STATEMENTS = 0;
+  int THREAD__STATEMENTS = ABSTRACT_THREAD__STATEMENTS;
 
   /**
    * The number of structural features of the '<em>Thread</em>' class.
@@ -399,7 +427,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int THREAD_FEATURE_COUNT = 1;
+  int THREAD_FEATURE_COUNT = ABSTRACT_THREAD_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.ParallelImpl <em>Parallel</em>}' class.
@@ -409,7 +437,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 10;
+  int PARALLEL = 11;
 
   /**
    * The feature id for the '<em><b>Threads</b></em>' containment reference list.
@@ -437,7 +465,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 11;
+  int PAUSE = 12;
 
   /**
    * The number of structural features of the '<em>Pause</em>' class.
@@ -456,7 +484,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getStatementScope()
    * @generated
    */
-  int STATEMENT_SCOPE = 12;
+  int STATEMENT_SCOPE = 13;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -517,17 +545,6 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EReference getProgram_Declarations();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Program#getStatements <em>Statements</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Statements</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Program#getStatements()
-   * @see #getProgram()
-   * @generated
-   */
-  EReference getProgram_Statements();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration <em>Variable Declaration</em>}'.
@@ -720,6 +737,27 @@ public interface SclPackage extends EPackage
   EAttribute getGoto_TargetLabel();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.AbstractThread <em>Abstract Thread</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Abstract Thread</em>'.
+   * @see de.cau.cs.kieler.scl.scl.AbstractThread
+   * @generated
+   */
+  EClass getAbstractThread();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.AbstractThread#getStatements <em>Statements</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Statements</em>'.
+   * @see de.cau.cs.kieler.scl.scl.AbstractThread#getStatements()
+   * @see #getAbstractThread()
+   * @generated
+   */
+  EReference getAbstractThread_Statements();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Thread <em>Thread</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -728,17 +766,6 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EClass getThread();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Thread#getStatements <em>Statements</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Statements</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Thread#getStatements()
-   * @see #getThread()
-   * @generated
-   */
-  EReference getThread_Statements();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Parallel <em>Parallel</em>}'.
@@ -851,14 +878,6 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EReference PROGRAM__DECLARATIONS = eINSTANCE.getProgram_Declarations();
-
-    /**
-     * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROGRAM__STATEMENTS = eINSTANCE.getProgram_Statements();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
@@ -1021,6 +1040,24 @@ public interface SclPackage extends EPackage
     EAttribute GOTO__TARGET_LABEL = eINSTANCE.getGoto_TargetLabel();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.AbstractThreadImpl <em>Abstract Thread</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.scl.impl.AbstractThreadImpl
+     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAbstractThread()
+     * @generated
+     */
+    EClass ABSTRACT_THREAD = eINSTANCE.getAbstractThread();
+
+    /**
+     * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ABSTRACT_THREAD__STATEMENTS = eINSTANCE.getAbstractThread_Statements();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.ThreadImpl <em>Thread</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1029,14 +1066,6 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EClass THREAD = eINSTANCE.getThread();
-
-    /**
-     * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference THREAD__STATEMENTS = eINSTANCE.getThread_Statements();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.ParallelImpl <em>Parallel</em>}' class.

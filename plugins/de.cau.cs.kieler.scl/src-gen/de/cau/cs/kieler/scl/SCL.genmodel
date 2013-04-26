@@ -10,7 +10,6 @@
     <genClasses ecoreClass="SCL.ecore#//Program">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Program/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Program/declarations"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Program/statements"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//VariableDeclaration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//VariableDeclaration/input"/>
@@ -36,9 +35,10 @@
     <genClasses ecoreClass="SCL.ecore#//Goto">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Goto/targetLabel"/>
     </genClasses>
-    <genClasses ecoreClass="SCL.ecore#//Thread">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Thread/statements"/>
+    <genClasses ecoreClass="SCL.ecore#//AbstractThread">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//AbstractThread/statements"/>
     </genClasses>
+    <genClasses ecoreClass="SCL.ecore#//Thread"/>
     <genClasses ecoreClass="SCL.ecore#//Parallel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Parallel/threads"/>
     </genClasses>

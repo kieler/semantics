@@ -476,6 +476,27 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getTargetLabelIDTerminalRuleCall_1_0() { return cTargetLabelIDTerminalRuleCall_1_0; }
 	}
 
+	public class AbstractThreadElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AbstractThread");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cThreadParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cProgramParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//AbstractThread:
+		//
+		//	Thread | Program;
+		public ParserRule getRule() { return rule; }
+
+		//Thread | Program
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Thread
+		public RuleCall getThreadParserRuleCall_0() { return cThreadParserRuleCall_0; }
+
+		//Program
+		public RuleCall getProgramParserRuleCall_1() { return cProgramParserRuleCall_1; }
+	}
+
 	public class ThreadElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Thread");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -714,6 +735,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	private AssignmentElements pAssignment;
 	private ConditionalElements pConditional;
 	private GotoElements pGoto;
+	private AbstractThreadElements pAbstractThread;
 	private ThreadElements pThread;
 	private ParallelElements pParallel;
 	private PauseElements pPause;
@@ -866,6 +888,17 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getGotoRule() {
 		return getGotoAccess().getRule();
+	}
+
+	//AbstractThread:
+	//
+	//	Thread | Program;
+	public AbstractThreadElements getAbstractThreadAccess() {
+		return (pAbstractThread != null) ? pAbstractThread : (pAbstractThread = new AbstractThreadElements());
+	}
+	
+	public ParserRule getAbstractThreadRule() {
+		return getAbstractThreadAccess().getRule();
 	}
 
 	//Thread:
