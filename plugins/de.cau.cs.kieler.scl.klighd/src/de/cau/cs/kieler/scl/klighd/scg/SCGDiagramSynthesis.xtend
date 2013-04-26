@@ -471,7 +471,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.KRendering.foreground = "black".color;
             kContainerNode.KRendering.foreground.alpha = 0;
             kContainerNode.KRendering.background = "gray".color;
-            kContainerNode.KRendering.background.alpha = 50
+            kContainerNode.KRendering.background.alpha = 100
 //            kContainerNode.KRendering.background.targetColor = "white".color;
 //            kContainerNode.KRendering.background.gradientAngle = -90;
             rootNode.children.add(kContainerNode)
