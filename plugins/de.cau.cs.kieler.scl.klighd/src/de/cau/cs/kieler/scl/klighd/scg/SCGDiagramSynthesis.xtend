@@ -3,13 +3,17 @@ package de.cau.cs.kieler.scl.klighd.scg
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.kgraph.KPort
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
@@ -17,43 +21,35 @@ import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortSide
+import de.cau.cs.kieler.kiml.options.SizeConstraint
 import de.cau.cs.kieler.kiml.util.KimlUtil
+import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
+import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.TransformationOption
 import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
+import de.cau.cs.kieler.scl.SCLStandaloneSetup
+import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
 import de.cau.cs.kieler.scl.extensions.SCLNamingExtensions
 import de.cau.cs.kieler.scl.extensions.SCLThreadExtensions
-import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
+import de.cau.cs.kieler.scl.scl.AbstractThread
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Instruction
+import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Program
-import de.cau.cs.kieler.scl.scl.Thread
+import de.cau.cs.kieler.scl.scl.Statement
+import java.util.ArrayList
 import java.util.HashMap
 import javax.inject.Inject
+import org.eclipse.emf.common.util.EList
 import org.eclipse.xtext.serializer.ISerializer
 import org.yakindu.sct.model.stext.stext.Expression
 
-
 import static de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis.*
-import de.cau.cs.kieler.scl.SCLStandaloneSetup
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KPort
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.klighd.KlighdConstants
-import java.util.ArrayList
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
-import org.eclipse.emf.common.util.EList
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kiml.options.SizeConstraint
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.InstructionStatement
-import de.cau.cs.kieler.scl.scl.AbstractThread
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -574,7 +570,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
          * addNSPortsFixed adds an incoming and an outgoing port to the node. See addNSPortsFixed for 
          * further information.
          */ 
-        val kNode = instr.createRoundedRectangulareNode(25, 85).putToLookUpWith(instr);
+        val kNode = instr.createRectangulareNode(25, 85).putToLookUpWith(instr);
         kNode.KRendering.add(factory.createKLineWidth.of(2));
         kNode.addNSPortsFixed
         kNode.KRendering.add(factory.createKText.of(nodeText).putToLookUpWith(instr));
