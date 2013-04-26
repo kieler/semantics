@@ -24,15 +24,11 @@ class SCLGotoExtensions {
     // Retrieves the target statement of a goto statement.
     // REMARK: Because the target may not exit this function may return null! 
     def Statement getTargetStatement(Goto goto) {
-        getTargetStatement(goto.targetLabel, goto.getThread)
+        getTargetStatement(goto, goto.getThread)
     }
     
-    def Statement getTargetStatement(Goto goto, Thread thread) {
-        getTargetStatement(goto.targetLabel, thread)
-    }
-    
-    def Statement getTargetStatement(String targetLabel, AbstractThread thread) {
-        thread.eAllContents.filter(typeof(Statement)).filter(e|e.label == targetLabel).head
+    def Statement getTargetStatement(Goto goto, AbstractThread thread) {
+        thread.eAllContents.filter(typeof(Statement)).filter(e|e.label == goto.targetLabel).head
     }
     
     // Checks weather or not a specified goto target exists in the instruction list
@@ -41,7 +37,7 @@ class SCLGotoExtensions {
     }
 
     def boolean targetExists(Goto goto, AbstractThread thread) {
-        getTargetStatement(goto.targetLabel, thread) != null
+        getTargetStatement(goto, thread) != null
     }
 
     def InstructionStatement getInstructionStatement(Statement statement) {
