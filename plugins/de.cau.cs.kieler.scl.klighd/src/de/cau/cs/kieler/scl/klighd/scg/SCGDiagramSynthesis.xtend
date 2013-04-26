@@ -208,6 +208,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kExitNode.ports += it
             it.setPortPos(37, 0)
             it.setPortSize(2,2)
+            it.addRectangle.invisible = true;
             it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
         ]).addToPortMapping(kExitNode, 'incoming')
         
@@ -233,7 +234,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
              * graph, one has to iterate through the code to find the next valid instruction 
              * in the specified scope that follows the targeted label. 
              */
-             var targetNode = InstructionMapping.get(goto.getTargetStatement.getInstructionStatement?.instruction)?.first            
+             var targetNode = InstructionMapping.get(goto.getTargetStatement?.getInstructionStatement?.instruction)?.first            
              if (targetNode == null) {
                 /*
                  * If no follow up instruction was found, retrieve the label and search for an exit node

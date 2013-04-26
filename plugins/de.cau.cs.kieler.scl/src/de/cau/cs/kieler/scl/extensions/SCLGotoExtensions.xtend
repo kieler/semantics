@@ -44,7 +44,7 @@ class SCLGotoExtensions {
     // If the statement is already an InstructionStatement return immediately
     // REMARK: May return null, if no further InstructionStatement exists
     // To get a valid instruction from a goto jump, one can write
-    //      goto.getTargetStatement.getInstructionStatement?.instruction
+    //      goto.getTargetStatement?.getInstructionStatement?.instruction
     // The result value will be the instruction or null. 
     def InstructionStatement getInstructionStatement(Statement statement) {
         if (statement instanceof InstructionStatement) return statement as InstructionStatement
