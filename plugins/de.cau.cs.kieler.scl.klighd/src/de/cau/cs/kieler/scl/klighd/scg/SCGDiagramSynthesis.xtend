@@ -21,6 +21,8 @@ import de.cau.cs.kieler.kiml.util.KimlUtil
 import de.cau.cs.kieler.klighd.TransformationOption
 import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
 import de.cau.cs.kieler.scl.extensions.SCLNamingExtensions
+import de.cau.cs.kieler.scl.extensions.SCLThreadExtensions
+import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
@@ -28,6 +30,7 @@ import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Program
+import de.cau.cs.kieler.scl.scl.Thread
 import java.util.HashMap
 import javax.inject.Inject
 import org.eclipse.xtext.serializer.ISerializer
@@ -50,6 +53,7 @@ import de.cau.cs.kieler.kiml.options.SizeConstraint
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.AbstractThread
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -91,9 +95,15 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	
     private static val KRenderingFactory renderingFactory = KRenderingFactory::eINSTANCE
     
-	// Inject scl helper
 	@Inject
 	extension SCLNamingExtensions
+	
+	@Inject
+	extension SCLThreadExtensions
+
+    @Inject
+    extension SCLGotoExtensions	
+	
 	
     // Constants for the klighd content filter
     private static val SCGRAPH = "Draw SC Graph";
@@ -120,7 +130,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * ParallelExitMap is used by the goto mapping to draw edges to the exit node.
      * Might be replaced by the edgeMapping in a later revision.
      */
-    private var HashMap<EList<EObject>, KNode>ParallelExitMapping;
+    private var HashMap<AbstractThread, KNode>ParallelExitMapping;
     
     // To keep the code clean all edges are reserved and drawn once the program evaluation is complete.  
     private var HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>EdgeMapping;
@@ -145,7 +155,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	    InstructionMapping = new HashMap<Instruction, Pair<KNode, KNode>>;
 	    PortMapping = new HashMap<KNode, HashMap<String, KPort>>;
 	    GotoMapping = new HashMap<Goto, Pair<KNode, String>>;
-	    ParallelExitMapping = new HashMap<EList<EObject>, KNode>;
+	    ParallelExitMapping = new HashMap<AbstractThread, KNode>;
 	    EdgeMapping = new HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>;
 		
 		// Initialize root node
@@ -212,7 +222,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             
         // Evaluate the root instruction list
         createInstructionListFigure(iList, rootNode, kEntryNode, kExitNode, '')
-/*         ParallelExitMapping.put(iList, kExitNode);
+        ParallelExitMapping.put(iList.head.getThread, kExitNode);
 
         // Process all reserved goto statements
         for(goto : GotoMapping.keySet) {
@@ -227,23 +237,19 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
              * graph, one has to iterate through the code to find the next valid instruction 
              * in the specified scope that follows the targeted label. 
              */
-/*             var targetPair = InstructionMapping.get(goto.gotoLookUp(iList))            
-            if (targetPair == null) {
+             var targetNode = InstructionMapping.get(goto.getTargetStatement.getInstructionStatement?.instruction)?.first            
+             if (targetNode == null) {
                 /*
                  * If no follow up instruction was found, retrieve the label and search for an exit node
                  * in a higher hierarchy. 
                  */
-/*                 val targetLabel = goto.gotoGetLabel(iList)
-                if (targetLabel != null) {
-                    val labelThreadList = targetLabel.getAncestorThread
-                    targetPair = new Pair<KNode, KNode>(ParallelExitMapping.get(labelThreadList), null)
-                }
-            }
+                    targetNode = ParallelExitMapping.get(goto.getThread)
+             }
             
-            // Schedule an edge, if source and target are valid.
-            if (targetPair != null) {
-                sourceNode.addEdge(sourcePortID, targetPair.first, 'incoming');
-            }
+             // Schedule an edge, if source and target are valid.
+             if (targetNode != null) {
+                 sourceNode.addEdge(sourcePortID, targetNode, 'incoming');
+             }
         }
         
         // Create all edges
@@ -258,7 +264,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
         if (SCGRAPH_FILTER.optionValue == SCGRAPH) return
 
-        val markedEdges = new HashMap<KNode, KNode>
+/*         val markedEdges = new HashMap<KNode, KNode>
         for(instruction : iList.flatten) {
             val sourceNode = InstructionMapping.get(instruction)?.first
             val depList = instruction.dependencyInstructions(iList)
@@ -292,8 +298,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 }   
             }
             }
-        }
-   */     
+        }*/
     }
 	
     /**
