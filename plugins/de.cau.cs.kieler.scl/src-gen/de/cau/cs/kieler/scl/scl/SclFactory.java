@@ -41,6 +41,15 @@ public interface SclFactory extends EFactory
   VariableDeclaration createVariableDeclaration();
 
   /**
+   * Returns a new object of class '<em>Statement</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Statement</em>'.
+   * @generated
+   */
+  Statement createStatement();
+
+  /**
    * Returns a new object of class '<em>Empty Statement</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -50,13 +59,22 @@ public interface SclFactory extends EFactory
   EmptyStatement createEmptyStatement();
 
   /**
-   * Returns a new object of class '<em>Statement</em>'.
+   * Returns a new object of class '<em>Instruction Statement</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Statement</em>'.
+   * @return a new object of class '<em>Instruction Statement</em>'.
    * @generated
    */
-  Statement createStatement();
+  InstructionStatement createInstructionStatement();
+
+  /**
+   * Returns a new object of class '<em>Instruction</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Instruction</em>'.
+   * @generated
+   */
+  Instruction createInstruction();
 
   /**
    * Returns a new object of class '<em>Assignment</em>'.
@@ -113,13 +131,13 @@ public interface SclFactory extends EFactory
   Pause createPause();
 
   /**
-   * Returns a new object of class '<em>Scope</em>'.
+   * Returns a new object of class '<em>Statement Scope</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Scope</em>'.
+   * @return a new object of class '<em>Statement Scope</em>'.
    * @generated
    */
-  Scope createScope();
+  StatementScope createStatementScope();
 
   /**
    * Returns the package supported by this factory.

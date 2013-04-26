@@ -11,31 +11,44 @@ generate scl "http://www.cau.de/cs/kieler/scl/scl"
 
 Program:
 	'module' name = ID
-	(interface+=VariableDeclaration)*
+	(declarations+=VariableDeclaration)*
 	'{'
         (
-            ((statements += Statement';') | statements += EmptyStatement)*
-           statements += ( Statement | EmptyStatement)
+            ((statements += InstructionStatement';') | statements += EmptyStatement)*
+           statements += ( InstructionStatement | EmptyStatement)
          )?
     '}' 
 ;
+
+//        (
+//            ((statements += Statement';') | statements += EmptyStatement)*
+//           statements += ( Statement | EmptyStatement)
+//         )?
+
 
 VariableDeclaration:
     (Input?='input')? (Output?='output')? 'signal' (name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 ;
 
-EmptyStatement:
-    ('label' label = ID ':')
-
-;
 Statement:
-//    ('label' label = ID ':')
-//    |    
-    (
-        ('label' label = ID ':')?
-        instruction = (Assignment | Conditional | Goto | Parallel | Pause | Scope)
-    )
+    EmptyStatement | InstructionStatement
+;
 
+EmptyStatement:
+    (label = ID ':')
+;
+
+InstructionStatement:    
+//    ('label' label = ID ':')
+//    |
+    (
+        (label = ID ':')?
+        instruction = (Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
+    )
+;
+
+Instruction:
+    Assignment | Conditional | Goto | Parallel | Pause | StatementScope
 ;
 
 Assignment:
@@ -44,8 +57,10 @@ Assignment:
 
 Conditional:
     'if' expression = Expression 'then'
-        ((statements += Statement';')*
-        (statements += Statement))?
+        (
+            ((statements += InstructionStatement';') | statements += EmptyStatement)*
+           statements += ( InstructionStatement | EmptyStatement)
+         )?
     'end' 
 ;
 
@@ -55,8 +70,10 @@ Goto:
 
 Thread:
     {Thread}
-        ((statements += Statement';')*
-        (statements += Statement))?
+        (
+            ((statements += InstructionStatement';') | statements += EmptyStatement)*
+           statements += ( InstructionStatement | EmptyStatement)
+         )?
 ;
 
 Parallel:
@@ -72,11 +89,13 @@ Pause:
     'pause' {Pause}
 ;
 
-Scope:
-    {Scope}
+StatementScope:
+    {StatementScope}
     '{'
     (declarations+=VariableDeclaration)*
-        ((statements += Statement';')*
-        (statements += Statement))?
+        (
+            ((statements += InstructionStatement';') | statements += EmptyStatement)*
+           statements += ( InstructionStatement | EmptyStatement)
+         )?
     '}'    
 ;

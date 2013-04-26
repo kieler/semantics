@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +13,6 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Pause extends EObject
+public interface Pause extends Instruction
 {
 } // Pause

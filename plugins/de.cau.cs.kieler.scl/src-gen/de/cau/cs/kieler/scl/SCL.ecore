@@ -3,49 +3,52 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scl" nsURI="http://www.cau.de/cs/kieler/scl/scl" nsPrefix="scl">
   <eClassifiers xsi:type="ecore:EClass" name="Program">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="interface" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
         eType="#//VariableDeclaration" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
+        eType="#//Statement" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="VariableDeclaration" eSuperTypes="../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Variable">
+  <eClassifiers xsi:type="ecore:EClass" name="VariableDeclaration" eSuperTypes="../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Variable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Input" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass ../../org.yakindu.base.types/model/types.ecore#//Type"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="initialValue" eType="ecore:EClass ../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass ../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initialValue" eType="ecore:EClass ../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EmptyStatement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Statement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="instruction" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EmptyStatement" eSuperTypes="#//Statement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InstructionStatement" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instruction" eType="#//Instruction"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Assignment">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="assignment" eType="ecore:EClass ../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+  <eClassifiers xsi:type="ecore:EClass" name="Instruction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assignment" eType="ecore:EClass ../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Conditional">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+  <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
         eType="#//Statement" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Goto">
+  <eClassifiers xsi:type="ecore:EClass" name="Goto" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Thread">
     <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
         eType="#//Statement" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Parallel">
+  <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="threads" upperBound="-1"
         eType="#//Thread" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Pause"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Scope" eSuperTypes="../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Scope">
+  <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StatementScope" eSuperTypes="#//Instruction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
+        eType="#//VariableDeclaration" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
         eType="#//Statement" containment="true"/>
   </eClassifiers>

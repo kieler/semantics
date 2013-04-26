@@ -4,8 +4,6 @@ package de.cau.cs.kieler.scl.scl;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
@@ -25,7 +23,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * @model
  * @generated
  */
-public interface Conditional extends EObject
+public interface Conditional extends Instruction
 {
   /**
    * Returns the value of the '<em><b>Expression</b></em>' containment reference.

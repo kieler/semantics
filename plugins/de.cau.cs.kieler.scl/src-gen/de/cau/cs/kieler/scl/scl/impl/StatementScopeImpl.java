@@ -3,8 +3,9 @@
 package de.cau.cs.kieler.scl.scl.impl;
 
 import de.cau.cs.kieler.scl.scl.SclPackage;
-import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementScope;
+import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import java.util.Collection;
 
@@ -20,19 +21,30 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Scope</b></em>'.
+ * An implementation of the model object '<em><b>Statement Scope</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ScopeImpl#getStatements <em>Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ScopeImpl extends org.yakindu.sct.model.sgraph.impl.ScopeImpl implements Scope
+public class StatementScopeImpl extends InstructionImpl implements StatementScope
 {
+  /**
+   * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeclarations()
+   * @generated
+   * @ordered
+   */
+  protected EList<VariableDeclaration> declarations;
+
   /**
    * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -48,7 +60,7 @@ public class ScopeImpl extends org.yakindu.sct.model.sgraph.impl.ScopeImpl imple
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ScopeImpl()
+  protected StatementScopeImpl()
   {
     super();
   }
@@ -61,7 +73,21 @@ public class ScopeImpl extends org.yakindu.sct.model.sgraph.impl.ScopeImpl imple
   @Override
   protected EClass eStaticClass()
   {
-    return SclPackage.Literals.SCOPE;
+    return SclPackage.Literals.STATEMENT_SCOPE;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<VariableDeclaration> getDeclarations()
+  {
+    if (declarations == null)
+    {
+      declarations = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, SclPackage.STATEMENT_SCOPE__DECLARATIONS);
+    }
+    return declarations;
   }
 
   /**
@@ -73,7 +99,7 @@ public class ScopeImpl extends org.yakindu.sct.model.sgraph.impl.ScopeImpl imple
   {
     if (statements == null)
     {
-      statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.SCOPE__STATEMENTS);
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.STATEMENT_SCOPE__STATEMENTS);
     }
     return statements;
   }
@@ -88,7 +114,9 @@ public class ScopeImpl extends org.yakindu.sct.model.sgraph.impl.ScopeImpl imple
   {
     switch (featureID)
     {
-      case SclPackage.SCOPE__STATEMENTS:
+      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+        return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+      case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -104,7 +132,9 @@ public class ScopeImpl extends org.yakindu.sct.model.sgraph.impl.ScopeImpl imple
   {
     switch (featureID)
     {
-      case SclPackage.SCOPE__STATEMENTS:
+      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+        return getDeclarations();
+      case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -121,7 +151,11 @@ public class ScopeImpl extends org.yakindu.sct.model.sgraph.impl.ScopeImpl imple
   {
     switch (featureID)
     {
-      case SclPackage.SCOPE__STATEMENTS:
+      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+        getDeclarations().clear();
+        getDeclarations().addAll((Collection<? extends VariableDeclaration>)newValue);
+        return;
+      case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         getStatements().clear();
         getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
@@ -139,7 +173,10 @@ public class ScopeImpl extends org.yakindu.sct.model.sgraph.impl.ScopeImpl imple
   {
     switch (featureID)
     {
-      case SclPackage.SCOPE__STATEMENTS:
+      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+        getDeclarations().clear();
+        return;
+      case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         getStatements().clear();
         return;
     }
@@ -156,10 +193,12 @@ public class ScopeImpl extends org.yakindu.sct.model.sgraph.impl.ScopeImpl imple
   {
     switch (featureID)
     {
-      case SclPackage.SCOPE__STATEMENTS:
+      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+        return declarations != null && !declarations.isEmpty();
+      case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //ScopeImpl
+} //StatementScopeImpl

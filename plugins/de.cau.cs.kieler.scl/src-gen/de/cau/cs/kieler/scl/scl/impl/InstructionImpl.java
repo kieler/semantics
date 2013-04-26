@@ -2,28 +2,30 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.Pause;
+import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Pause</b></em>'.
+ * An implementation of the model object '<em><b>Instruction</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public class PauseImpl extends InstructionImpl implements Pause
+public class InstructionImpl extends MinimalEObjectImpl.Container implements Instruction
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected PauseImpl()
+  protected InstructionImpl()
   {
     super();
   }
@@ -36,7 +38,7 @@ public class PauseImpl extends InstructionImpl implements Pause
   @Override
   protected EClass eStaticClass()
   {
-    return SclPackage.Literals.PAUSE;
+    return SclPackage.Literals.INSTRUCTION;
   }
 
-} //PauseImpl
+} //InstructionImpl

@@ -6,12 +6,14 @@ import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
 import de.cau.cs.kieler.scl.scl.Goto;
+import de.cau.cs.kieler.scl.scl.Instruction;
+import de.cau.cs.kieler.scl.scl.InstructionStatement;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
-import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -100,14 +102,24 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createVariableDeclarationAdapter();
       }
       @Override
+      public Adapter caseStatement(Statement object)
+      {
+        return createStatementAdapter();
+      }
+      @Override
       public Adapter caseEmptyStatement(EmptyStatement object)
       {
         return createEmptyStatementAdapter();
       }
       @Override
-      public Adapter caseStatement(Statement object)
+      public Adapter caseInstructionStatement(InstructionStatement object)
       {
-        return createStatementAdapter();
+        return createInstructionStatementAdapter();
+      }
+      @Override
+      public Adapter caseInstruction(Instruction object)
+      {
+        return createInstructionAdapter();
       }
       @Override
       public Adapter caseAssignment(Assignment object)
@@ -140,9 +152,9 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createPauseAdapter();
       }
       @Override
-      public Adapter caseScope(Scope object)
+      public Adapter caseStatementScope(StatementScope object)
       {
-        return createScopeAdapter();
+        return createStatementScopeAdapter();
       }
       @Override
       public Adapter caseNamedElement(NamedElement object)
@@ -158,11 +170,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
       public Adapter caseVariable(Variable object)
       {
         return createVariableAdapter();
-      }
-      @Override
-      public Adapter caseSGraph_Scope(org.yakindu.sct.model.sgraph.Scope object)
-      {
-        return createSGraph_ScopeAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -217,6 +224,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Statement <em>Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.Statement
+   * @generated
+   */
+  public Adapter createStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.EmptyStatement <em>Empty Statement</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -232,16 +254,31 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Statement <em>Statement</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.InstructionStatement <em>Instruction Statement</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.Statement
+   * @see de.cau.cs.kieler.scl.scl.InstructionStatement
    * @generated
    */
-  public Adapter createStatementAdapter()
+  public Adapter createInstructionStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Instruction <em>Instruction</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.Instruction
+   * @generated
+   */
+  public Adapter createInstructionAdapter()
   {
     return null;
   }
@@ -337,16 +374,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Scope <em>Scope</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.StatementScope <em>Statement Scope</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.Scope
+   * @see de.cau.cs.kieler.scl.scl.StatementScope
    * @generated
    */
-  public Adapter createScopeAdapter()
+  public Adapter createStatementScopeAdapter()
   {
     return null;
   }
@@ -392,21 +429,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVariableAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Scope <em>Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Scope
-   * @generated
-   */
-  public Adapter createSGraph_ScopeAdapter()
   {
     return null;
   }

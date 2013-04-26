@@ -2,7 +2,8 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.Assignment;
+import de.cau.cs.kieler.scl.scl.Instruction;
+import de.cau.cs.kieler.scl.scl.InstructionStatement;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -13,39 +14,37 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.yakindu.sct.model.stext.stext.Expression;
-
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Assignment</b></em>'.
+ * An implementation of the model object '<em><b>Instruction Statement</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getAssignment <em>Assignment</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.InstructionStatementImpl#getInstruction <em>Instruction</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class AssignmentImpl extends InstructionImpl implements Assignment
+public class InstructionStatementImpl extends StatementImpl implements InstructionStatement
 {
   /**
-   * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' containment reference.
+   * The cached value of the '{@link #getInstruction() <em>Instruction</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getAssignment()
+   * @see #getInstruction()
    * @generated
    * @ordered
    */
-  protected Expression assignment;
+  protected Instruction instruction;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected AssignmentImpl()
+  protected InstructionStatementImpl()
   {
     super();
   }
@@ -58,7 +57,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   @Override
   protected EClass eStaticClass()
   {
-    return SclPackage.Literals.ASSIGNMENT;
+    return SclPackage.Literals.INSTRUCTION_STATEMENT;
   }
 
   /**
@@ -66,9 +65,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getAssignment()
+  public Instruction getInstruction()
   {
-    return assignment;
+    return instruction;
   }
 
   /**
@@ -76,13 +75,13 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetAssignment(Expression newAssignment, NotificationChain msgs)
+  public NotificationChain basicSetInstruction(Instruction newInstruction, NotificationChain msgs)
   {
-    Expression oldAssignment = assignment;
-    assignment = newAssignment;
+    Instruction oldInstruction = instruction;
+    instruction = newInstruction;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, newAssignment);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION, oldInstruction, newInstruction);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -93,20 +92,20 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setAssignment(Expression newAssignment)
+  public void setInstruction(Instruction newInstruction)
   {
-    if (newAssignment != assignment)
+    if (newInstruction != instruction)
     {
       NotificationChain msgs = null;
-      if (assignment != null)
-        msgs = ((InternalEObject)assignment).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.ASSIGNMENT__ASSIGNMENT, null, msgs);
-      if (newAssignment != null)
-        msgs = ((InternalEObject)newAssignment).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.ASSIGNMENT__ASSIGNMENT, null, msgs);
-      msgs = basicSetAssignment(newAssignment, msgs);
+      if (instruction != null)
+        msgs = ((InternalEObject)instruction).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION, null, msgs);
+      if (newInstruction != null)
+        msgs = ((InternalEObject)newInstruction).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION, null, msgs);
+      msgs = basicSetInstruction(newInstruction, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__ASSIGNMENT, newAssignment, newAssignment));
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION, newInstruction, newInstruction));
   }
 
   /**
@@ -119,8 +118,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        return basicSetAssignment(null, msgs);
+      case SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION:
+        return basicSetInstruction(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -135,8 +134,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        return getAssignment();
+      case SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION:
+        return getInstruction();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -151,8 +150,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        setAssignment((Expression)newValue);
+      case SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION:
+        setInstruction((Instruction)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -168,8 +167,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        setAssignment((Expression)null);
+      case SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION:
+        setInstruction((Instruction)null);
         return;
     }
     super.eUnset(featureID);
@@ -185,10 +184,10 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        return assignment != null;
+      case SclPackage.INSTRUCTION_STATEMENT__INSTRUCTION:
+        return instruction != null;
     }
     return super.eIsSet(featureID);
   }
 
-} //AssignmentImpl
+} //InstructionStatementImpl

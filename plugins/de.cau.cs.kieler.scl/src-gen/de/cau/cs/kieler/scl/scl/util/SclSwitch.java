@@ -6,12 +6,14 @@ import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
 import de.cau.cs.kieler.scl.scl.Goto;
+import de.cau.cs.kieler.scl.scl.Instruction;
+import de.cau.cs.kieler.scl.scl.InstructionStatement;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
-import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EObject;
@@ -104,13 +106,6 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SclPackage.EMPTY_STATEMENT:
-      {
-        EmptyStatement emptyStatement = (EmptyStatement)theEObject;
-        T result = caseEmptyStatement(emptyStatement);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SclPackage.STATEMENT:
       {
         Statement statement = (Statement)theEObject;
@@ -118,10 +113,34 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SclPackage.EMPTY_STATEMENT:
+      {
+        EmptyStatement emptyStatement = (EmptyStatement)theEObject;
+        T result = caseEmptyStatement(emptyStatement);
+        if (result == null) result = caseStatement(emptyStatement);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SclPackage.INSTRUCTION_STATEMENT:
+      {
+        InstructionStatement instructionStatement = (InstructionStatement)theEObject;
+        T result = caseInstructionStatement(instructionStatement);
+        if (result == null) result = caseStatement(instructionStatement);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SclPackage.INSTRUCTION:
+      {
+        Instruction instruction = (Instruction)theEObject;
+        T result = caseInstruction(instruction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SclPackage.ASSIGNMENT:
       {
         Assignment assignment = (Assignment)theEObject;
         T result = caseAssignment(assignment);
+        if (result == null) result = caseInstruction(assignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -129,6 +148,7 @@ public class SclSwitch<T> extends Switch<T>
       {
         Conditional conditional = (Conditional)theEObject;
         T result = caseConditional(conditional);
+        if (result == null) result = caseInstruction(conditional);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -136,6 +156,7 @@ public class SclSwitch<T> extends Switch<T>
       {
         Goto goto_ = (Goto)theEObject;
         T result = caseGoto(goto_);
+        if (result == null) result = caseInstruction(goto_);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -150,6 +171,7 @@ public class SclSwitch<T> extends Switch<T>
       {
         Parallel parallel = (Parallel)theEObject;
         T result = caseParallel(parallel);
+        if (result == null) result = caseInstruction(parallel);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -157,14 +179,15 @@ public class SclSwitch<T> extends Switch<T>
       {
         Pause pause = (Pause)theEObject;
         T result = casePause(pause);
+        if (result == null) result = caseInstruction(pause);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SclPackage.SCOPE:
+      case SclPackage.STATEMENT_SCOPE:
       {
-        Scope scope = (Scope)theEObject;
-        T result = caseScope(scope);
-        if (result == null) result = caseSGraph_Scope(scope);
+        StatementScope statementScope = (StatementScope)theEObject;
+        T result = caseStatementScope(statementScope);
+        if (result == null) result = caseInstruction(statementScope);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -205,6 +228,22 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Statement</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Statement</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStatement(Statement object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Empty Statement</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -221,17 +260,33 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Statement</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Instruction Statement</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Statement</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Instruction Statement</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseStatement(Statement object)
+  public T caseInstructionStatement(InstructionStatement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Instruction</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Instruction</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInstruction(Instruction object)
   {
     return null;
   }
@@ -333,17 +388,17 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Statement Scope</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Statement Scope</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseScope(Scope object)
+  public T caseStatementScope(StatementScope object)
   {
     return null;
   }
@@ -392,22 +447,6 @@ public class SclSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseVariable(Variable object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSGraph_Scope(org.yakindu.sct.model.sgraph.Scope object)
   {
     return null;
   }
