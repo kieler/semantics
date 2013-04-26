@@ -54,9 +54,7 @@ class SCLGotoExtensions {
         return statements.head as InstructionStatement
     }
     
-    
-    def int getIncomingJumps(InstructionStatement statement) {
-        val thread = statement.getThread
-        thread.statements.filter(typeof(Goto)).filter(e|e.getTargetStatement == statement).size
+    def int getIncomingJumpCount(InstructionStatement statement) {
+        statement.getThread.statements.filter(typeof(Goto)).filter(e|e.getTargetStatement == statement).size
     }
 }
