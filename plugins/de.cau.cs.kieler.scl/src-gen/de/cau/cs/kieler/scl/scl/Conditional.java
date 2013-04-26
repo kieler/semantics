@@ -17,7 +17,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getInstructions <em>Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getStatements <em>Statements</em>}</li>
  * </ul>
  * </p>
  *
@@ -25,7 +25,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * @model
  * @generated
  */
-public interface Conditional extends Instruction
+public interface Conditional extends EObject
 {
   /**
    * Returns the value of the '<em><b>Expression</b></em>' containment reference.
@@ -54,19 +54,19 @@ public interface Conditional extends Instruction
   void setExpression(Expression value);
 
   /**
-   * Returns the value of the '<em><b>Instructions</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+   * Returns the value of the '<em><b>Statements</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Statement}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Instructions</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Statements</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Instructions</em>' containment reference list.
-   * @see de.cau.cs.kieler.scl.scl.SclPackage#getConditional_Instructions()
+   * @return the value of the '<em>Statements</em>' containment reference list.
+   * @see de.cau.cs.kieler.scl.scl.SclPackage#getConditional_Statements()
    * @model containment="true"
    * @generated
    */
-  EList<EObject> getInstructions();
+  EList<Statement> getStatements();
 
 } // Conditional

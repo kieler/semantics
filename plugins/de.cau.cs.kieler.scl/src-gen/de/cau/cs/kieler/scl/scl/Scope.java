@@ -4,25 +4,23 @@ package de.cau.cs.kieler.scl.scl;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Thread</b></em>'.
+ * A representation of the model object '<em><b>Scope</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.Thread#getStatements <em>Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.Scope#getStatements <em>Statements</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.scl.scl.SclPackage#getThread()
+ * @see de.cau.cs.kieler.scl.scl.SclPackage#getScope()
  * @model
  * @generated
  */
-public interface Thread extends EObject
+public interface Scope extends org.yakindu.sct.model.sgraph.Scope
 {
   /**
    * Returns the value of the '<em><b>Statements</b></em>' containment reference list.
@@ -34,10 +32,10 @@ public interface Thread extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Statements</em>' containment reference list.
-   * @see de.cau.cs.kieler.scl.scl.SclPackage#getThread_Statements()
+   * @see de.cau.cs.kieler.scl.scl.SclPackage#getScope_Statements()
    * @model containment="true"
    * @generated
    */
   EList<Statement> getStatements();
 
-} // Thread
+} // Scope

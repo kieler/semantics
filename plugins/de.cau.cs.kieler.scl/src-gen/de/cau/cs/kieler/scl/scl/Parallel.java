@@ -4,6 +4,8 @@ package de.cau.cs.kieler.scl.scl;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Parallel</b></em>'.
@@ -20,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Parallel extends Instruction
+public interface Parallel extends EObject
 {
   /**
    * Returns the value of the '<em><b>Threads</b></em>' containment reference list.

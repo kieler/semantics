@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.scl.scl.impl;
 
 import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.Statement;
 
 import java.util.Collection;
@@ -14,25 +15,23 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Thread</b></em>'.
+ * An implementation of the model object '<em><b>Scope</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ThreadImpl#getStatements <em>Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ScopeImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ThreadImpl extends MinimalEObjectImpl.Container implements de.cau.cs.kieler.scl.scl.Thread
+public class ScopeImpl extends org.yakindu.sct.model.sgraph.impl.ScopeImpl implements Scope
 {
   /**
    * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
@@ -49,7 +48,7 @@ public class ThreadImpl extends MinimalEObjectImpl.Container implements de.cau.c
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ThreadImpl()
+  protected ScopeImpl()
   {
     super();
   }
@@ -62,7 +61,7 @@ public class ThreadImpl extends MinimalEObjectImpl.Container implements de.cau.c
   @Override
   protected EClass eStaticClass()
   {
-    return SclPackage.Literals.THREAD;
+    return SclPackage.Literals.SCOPE;
   }
 
   /**
@@ -74,7 +73,7 @@ public class ThreadImpl extends MinimalEObjectImpl.Container implements de.cau.c
   {
     if (statements == null)
     {
-      statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.THREAD__STATEMENTS);
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.SCOPE__STATEMENTS);
     }
     return statements;
   }
@@ -89,7 +88,7 @@ public class ThreadImpl extends MinimalEObjectImpl.Container implements de.cau.c
   {
     switch (featureID)
     {
-      case SclPackage.THREAD__STATEMENTS:
+      case SclPackage.SCOPE__STATEMENTS:
         return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -105,7 +104,7 @@ public class ThreadImpl extends MinimalEObjectImpl.Container implements de.cau.c
   {
     switch (featureID)
     {
-      case SclPackage.THREAD__STATEMENTS:
+      case SclPackage.SCOPE__STATEMENTS:
         return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -122,7 +121,7 @@ public class ThreadImpl extends MinimalEObjectImpl.Container implements de.cau.c
   {
     switch (featureID)
     {
-      case SclPackage.THREAD__STATEMENTS:
+      case SclPackage.SCOPE__STATEMENTS:
         getStatements().clear();
         getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
@@ -140,7 +139,7 @@ public class ThreadImpl extends MinimalEObjectImpl.Container implements de.cau.c
   {
     switch (featureID)
     {
-      case SclPackage.THREAD__STATEMENTS:
+      case SclPackage.SCOPE__STATEMENTS:
         getStatements().clear();
         return;
     }
@@ -157,10 +156,10 @@ public class ThreadImpl extends MinimalEObjectImpl.Container implements de.cau.c
   {
     switch (featureID)
     {
-      case SclPackage.THREAD__STATEMENTS:
+      case SclPackage.SCOPE__STATEMENTS:
         return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //ThreadImpl
+} //ScopeImpl

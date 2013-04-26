@@ -13,19 +13,14 @@ Workflow {
     bean = StandaloneSetup {
         scanClassPath = true
         platformUri = "${runtimeProject}/.."
-//        registerGenModelFile = "platform:/resource/org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel"
         registerGenModelFile = "platform:/resource/org.yakindu.base.types/model/types.genmodel"
-//        registerGeneratedEPackage = "org.yakindu.sct.model.sgraph.SGraphPackage"
-//        registerGeneratedEPackage = "platform:/resource/org.yakindu.sct.model.sgraph/src/org/yakindu/sct/model/sgraph/SGraphPackage.java"
         registerGeneratedEPackage = "org.yakindu.base.types.TypesPackage"
         registerGeneratedEPackage = "org.yakindu.sct.model.stext.stext.StextPackage"
         registerGenModelFile = "platform:/resource/org.yakindu.sct.model.stext/model/SText.genmodel"
         registerGeneratedEPackage = "org.yakindu.sct.model.sgraph.SGraphPackage"
         registerGenModelFile = "platform:/resource/org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel"
-//        registerGeneratedEPackage = "de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage"
-//        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/Synctext.genmodel"        
-//        registerGeneratedEPackage = "de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage"
-//        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.yakindu.sccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/SCChartsExp.genmodel"        
+        registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"      
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
   	}
 
 	component = DirectoryCleaner {

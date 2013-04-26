@@ -1,13 +1,9 @@
 package de.cau.cs.kieler.scl
 
 import com.google.common.collect.ImmutableList
-import de.cau.cs.kieler.scl.scl.Annotation
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Instruction
-import de.cau.cs.kieler.scl.scl.InstructionScope
-import de.cau.cs.kieler.scl.scl.Label
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Program
@@ -87,9 +83,9 @@ class SCLHelper {
     }
     
     // Create a new list of EObjects and insert the first instruction
-    def createNewInstructionList(Instruction instruction) {
-        createNewInstructionList.add(instruction)
-    }
+//    def createNewInstructionList(Instruction instruction) {
+//        createNewInstructionList.add(instruction)
+//    }
     
     // Create a goto statement with target string
     def Goto createSCLGoto(String targetLabelName)
@@ -100,18 +96,18 @@ class SCLHelper {
     }
     
     // Create a SCL comment 
-    def Annotation createSCLComment(String commentString) {
-        var comment = SCL.createAnnotation();
-        comment.setComment('// '+commentString);
-        comment;
-    }
+//    def Annotation createSCLComment(String commentString) {
+//        var comment = SCL.createAnnotation();
+//        comment.setComment('// '+commentString);
+//        comment;
+//    }
     
     // Create a SCL label
-    def Label createSCLLabel(String labelName) {
-        var label = SCL.createLabel();
-        label.setName(labelName);
-        label;
-    }
+//    def Label createSCLLabel(String labelName) {
+//        var label = SCL.createLabel();
+//        label.setName(labelName);
+//        label;
+//    }
     
 //    def Scope createSCLScope(String labelName) {
 //        var scope = SCL.createScope()
@@ -203,11 +199,11 @@ class SCLHelper {
     }
     
     // Create a new SCL thread and copy the given instruction list
-    def Thread createSCLThread(List<EObject> iList) {
-        val thread = createSCLThread()
-        thread.instructions.addAll(iList)
-        thread
-    }
+//    def Thread createSCLThread(List<EObject> iList) {
+//        val thread = createSCLThread()
+//        thread.instructions.addAll(iList)
+//        thread
+//    }
     
     
     // ======================================================================================================
@@ -266,27 +262,27 @@ class SCLHelper {
      */
     
     // Add an instruction to an list of instructions. Make sure it is a valid instruction.
-    def void addInstruction(List<EObject> iList, EObject instruction) {
-        if (instruction instanceof Instruction ||
-            instruction instanceof Label ||
-            instruction instanceof Annotation)
-            iList.add(instruction)
-    }
+//    def void addInstruction(List<EObject> iList, EObject instruction) {
+//        if (instruction instanceof Instruction ||
+//            instruction instanceof Label ||
+//            instruction instanceof Annotation)
+//            iList.add(instruction)
+//    }
 
     // Add an instruction to the EList of a SCL program.
-    def void addInstruction(Program program, EObject instruction) {
-        program.instructions.addInstruction(instruction)
-    }
+//    def void addInstruction(Program program, EObject instruction) {
+//        program.instructions.addInstruction(instruction)
+//    }
     
     // Add an instruction to the EList of a SCL conditional
-    def void addInstruction(Conditional conditional, EObject instruction) {
-        conditional.instructions.addInstruction(instruction)
-    }
+//    def void addInstruction(Conditional conditional, EObject instruction) {
+//        conditional.instructions.addInstruction(instruction)
+//    }
 
     // Add an instruction to the EList of a SCL thread
-    def void addInstruction(Thread thread, EObject instruction) {
-        thread.instructions.addInstruction(instruction)
-    }
+//    def void addInstruction(Thread thread, EObject instruction) {
+//        thread.instructions.addInstruction(instruction)
+//    }
     
     // Add all instructions of one instruction list to another instruction list
     def void addInstructions(List<EObject> list, List<EObject> addition) {
@@ -298,33 +294,33 @@ class SCLHelper {
 //    }
     
     // Add a pause statement to an instruction list
-    def void addPause(List<EObject> iList) {
-        iList.addInstruction(createSCLPause())
-    }
+//    def void addPause(List<EObject> iList) {
+//        iList.addInstruction(createSCLPause())
+//    }
     
     // Flatten an instruction list
-    def ArrayList<EObject> flatten(List<EObject> iList) {
-        var rList = createNewInstructionList()
-        for(instruction : iList) {
-            if (instruction instanceof Parallel) {
-                rList.add(instruction)
-                for(thread : (instruction as Parallel).threads) {
-                    rList.addAll(thread.instructions.flatten)
-                }
-            } 
-            else if (instruction instanceof Conditional) {
-                rList.add(instruction)
-                rList.addAll((instruction as Conditional).instructions.flatten)
-            }
-            else if (instruction instanceof InstructionScope) {
-                rList.add(instruction) 
-                rList.addAll((instruction as InstructionScope).instructions.flatten)
-            }
-            else 
-                rList.addInstruction(instruction)
-        }
-        rList
-    }
+//    def ArrayList<EObject> flatten(List<EObject> iList) {
+//        var rList = createNewInstructionList()
+//        for(instruction : iList) {
+//            if (instruction instanceof Parallel) {
+//                rList.add(instruction)
+//                for(thread : (instruction as Parallel).threads) {
+//                    rList.addAll(thread.instructions.flatten)
+//                }
+//            } 
+//            else if (instruction instanceof Conditional) {
+//                rList.add(instruction)
+//                rList.addAll((instruction as Conditional).instructions.flatten)
+//            }
+//            else if (instruction instanceof InstructionScope) {
+//                rList.add(instruction) 
+//                rList.addAll((instruction as InstructionScope).instructions.flatten)
+//            }
+//            else 
+//                rList.addInstruction(instruction)
+//        }
+//        rList
+//    }
         
     // ======================================================================================================
     // ==                 G O T O  - L O O K U P   M E T A M O D E L   E X T E N S I O N                   ==
@@ -338,94 +334,94 @@ class SCLHelper {
     // This is the first valid instruction which succeeds the target label.
     // REMARK: Because the target may not exit or there is no valid instruction after the target label
     // this function may return null! 
-    def Instruction gotoLookUp(Goto goto, EList<EObject> iList) {
-        gotoLookUp(goto.name, iList)
-    }
+//    def Instruction gotoLookUp(Goto goto, EList<EObject> iList) {
+//        gotoLookUp(goto.name, iList)
+//    }
     
     // Retrieves the first valid instruction which succeeds the label identified by its name.
     // REMARK: Because the target may not exit or there is no valid instruction after the target label
     // this function may return null! 
-    def Instruction gotoLookUp(String label, EList<EObject> iList) {
-        var boolean foundLabel = false
-        for(instruction : iList) {
-            if (instruction instanceof Label) {
-                if ((instruction as Label).name == label) {
-                    foundLabel = true
-                }
-            } else if (!(instruction instanceof Annotation)) {
-                if (foundLabel) {
-                    return instruction as Instruction
-                } else {
-                    if (instruction instanceof Parallel) {
-                        for(thread : (instruction as Parallel).threads) {
-                            val instrRes = gotoLookUp(label, thread.instructions)
-                            if (instrRes != null ) return instrRes
-                        }
-                    }
-                    else if (instruction instanceof Conditional) {
-                            val instrRes = gotoLookUp(label, (instruction as Conditional).instructions)
-                            if (instrRes != null ) return instrRes
-                    }
-                }
-            }
-        }
-        return null
-    }
+//    def Instruction gotoLookUp(String label, EList<EObject> iList) {
+//        var boolean foundLabel = false
+//        for(instruction : iList) {
+//            if (instruction instanceof Label) {
+//                if ((instruction as Label).name == label) {
+//                    foundLabel = true
+//                }
+//            } else if (!(instruction instanceof Annotation)) {
+//                if (foundLabel) {
+//                    return instruction as Instruction
+//                } else {
+//                    if (instruction instanceof Parallel) {
+//                        for(thread : (instruction as Parallel).threads) {
+//                            val instrRes = gotoLookUp(label, thread.instructions)
+//                            if (instrRes != null ) return instrRes
+//                        }
+//                    }
+//                    else if (instruction instanceof Conditional) {
+//                            val instrRes = gotoLookUp(label, (instruction as Conditional).instructions)
+//                            if (instrRes != null ) return instrRes
+//                    }
+//                }
+//            }
+//        }
+//        return null
+//    }
     
     // Checks weather or not a specified goto target exists in the instruction list
-    def boolean gotoTargetExists(Goto goto, EList<EObject> iList) {
-        gotoTargetExists(goto.name, iList)
-    }
+//    def boolean gotoTargetExists(Goto goto, EList<EObject> iList) {
+//        gotoTargetExists(goto.name, iList)
+//    }
     
     // Checks weather or not a specified label ID exists in the instruction list
-    def boolean gotoTargetExists(String label, EList<EObject> iList) {
-        for(instruction : iList) {
-            if (instruction instanceof Label) {
-                if ((instruction as Label).name == label) {
-                    return true
-                }
-            } else if (!(instruction instanceof Annotation)) {
-               if (instruction instanceof Parallel) {
-                    for(thread : (instruction as Parallel).threads) {
-                        if (gotoTargetExists(label, thread.instructions)) return true
-                    }
-                }
-                else if (instruction instanceof Conditional) {
-                    if (gotoTargetExists(label, (instruction as Conditional).instructions))
-                        return true
-                }
-            }
-        }
-        return false
-    }
+//    def boolean gotoTargetExists(String label, EList<EObject> iList) {
+//        for(instruction : iList) {
+//            if (instruction instanceof Label) {
+//                if ((instruction as Label).name == label) {
+//                    return true
+//                }
+//            } else if (!(instruction instanceof Annotation)) {
+//               if (instruction instanceof Parallel) {
+//                    for(thread : (instruction as Parallel).threads) {
+//                        if (gotoTargetExists(label, thread.instructions)) return true
+//                    }
+//                }
+//                else if (instruction instanceof Conditional) {
+//                    if (gotoTargetExists(label, (instruction as Conditional).instructions))
+//                        return true
+//                }
+//            }
+//        }
+//        return false
+//    }
 
     // Retrieves the target label of a goto statement, if it exists    
-    def Label gotoGetLabel(Goto goto, EList<EObject> iList) {
-        gotoGetLabel(goto.name, iList)
-    }
+//    def Label gotoGetLabel(Goto goto, EList<EObject> iList) {
+//        gotoGetLabel(goto.name, iList)
+//    }
     
     // Retrieves the label statement identified by its name, if it exists
-    def Label gotoGetLabel(String label, EList<EObject> iList) {
-        for(instruction : iList) {
-            if (instruction instanceof Label) {
-                if ((instruction as Label).name == label) {
-                    return (instruction as Label)
-                }
-            } else if (!(instruction instanceof Annotation)) {
-               if (instruction instanceof Parallel) {
-                    for(thread : (instruction as Parallel).threads) {
-                        val ret = gotoGetLabel(label, thread.instructions)
-                        if (ret != null) { return ret }
-                    }
-                }
-                else if (instruction instanceof Conditional) {
-                    val ret = gotoGetLabel(label, (instruction as Conditional).instructions)
-                    if (ret != null) return ret     
-                }
-            }
-        }
-        return null
-    }
+//    def Label gotoGetLabel(String label, EList<EObject> iList) {
+//        for(instruction : iList) {
+//            if (instruction instanceof Label) {
+//                if ((instruction as Label).name == label) {
+//                    return (instruction as Label)
+//                }
+//            } else if (!(instruction instanceof Annotation)) {
+//               if (instruction instanceof Parallel) {
+//                    for(thread : (instruction as Parallel).threads) {
+//                        val ret = gotoGetLabel(label, thread.instructions)
+//                        if (ret != null) { return ret }
+//                    }
+//                }
+//                else if (instruction instanceof Conditional) {
+//                    val ret = gotoGetLabel(label, (instruction as Conditional).instructions)
+//                    if (ret != null) return ret     
+//                }
+//            }
+//        }
+//        return null
+//    }
     
     // ======================================================================================================
     // ==                   S C L T H R E A D   M E T A M O D E L   E X T E N S I O N                      ==
@@ -436,31 +432,31 @@ class SCLHelper {
      */
     
     // Retrieve the thread instruction list of the parent object of a given label
-    def EList<EObject> getAncestorThread(Label label) {
-        var ancestor = label.eContainer
-        while (ancestor != null) {
-            if (ancestor instanceof Thread) return (ancestor as Thread).instructions
-            if (ancestor instanceof Program) return (ancestor as Program).instructions 
-            ancestor = ancestor.eContainer
-        }
-        return null
-    }
+//    def EList<EObject> getAncestorThread(Label label) {
+//        var ancestor = label.eContainer
+//        while (ancestor != null) {
+//            if (ancestor instanceof Thread) return (ancestor as Thread).instructions
+//            if (ancestor instanceof Program) return (ancestor as Program).instructions 
+//            ancestor = ancestor.eContainer
+//        }
+//        return null
+//    }
     
     // Retrieve the thread list of a given instruction
-    def EList<EObject> getThread(EObject instruction) {
-        var container = instruction.eContainer
-        while (container != null) {
-            if (container instanceof Thread) return (container as Thread).instructions
-            if (container instanceof Program) return (container as Program).instructions 
-            container = container.eContainer
-        }
-        return null
-    }
+//    def EList<EObject> getThread(EObject instruction) {
+//        var container = instruction.eContainer
+//        while (container != null) {
+//            if (container instanceof Thread) return (container as Thread).instructions
+//            if (container instanceof Program) return (container as Program).instructions 
+//            container = container.eContainer
+//        }
+//        return null
+//    }
     
     // Checks if two instructions are in the same thread instruction list 
-    def boolean inSameThreadAs(EObject instruction, EObject secondInstruction) {
-        getThread(instruction) == getThread(secondInstruction)
-    }
+//    def boolean inSameThreadAs(EObject instruction, EObject secondInstruction) {
+//        getThread(instruction) == getThread(secondInstruction)
+//    }
     
     // Checks if an instruction is in the main thread list (program.instructions)
     def boolean isInMainThread(EObject instruction) {
@@ -673,35 +669,35 @@ class SCLHelper {
     
     // Retrieves a list of all instructions in a given instruction list which depend on the given 
     // ElementReferenceExpression.
-    def ArrayList<EObject> dependencyInstructions(List<EObject> iList, ElementReferenceExpression varRef) {
-        val iS = createNewInstructionList()
-        
-        for(instr : iList.flatten) {
-            if ((instr instanceof Assignment) || (instr instanceof Conditional)) {
-                val references = (instr as EObject).dependencyReferences 
-                for (reference : references) {
-                    if (reference.reference.equals(varRef.reference))
-                        if (!iS.contains(instr)) iS.add((instr as EObject));
-                }
-            }    
-        }
-        
-        iS
-    }
+//    def ArrayList<EObject> dependencyInstructions(List<EObject> iList, ElementReferenceExpression varRef) {
+//        val iS = createNewInstructionList()
+//        
+//        for(instr : iList.flatten) {
+//            if ((instr instanceof Assignment) || (instr instanceof Conditional)) {
+//                val references = (instr as EObject).dependencyReferences 
+//                for (reference : references) {
+//                    if (reference.reference.equals(varRef.reference))
+//                        if (!iS.contains(instr)) iS.add((instr as EObject));
+//                }
+//            }    
+//        }
+//        
+//        iS
+//    }
     
     // Retrieves a list of all instructions in a given instruction list which depend on a 
     // ElementReferenceExpression which is also a dependency for a given instruction.
-    def ArrayList<EObject> dependencyInstructions(EObject instruction, EList<EObject> iList) {
-        val iS = createNewInstructionList()
-        val references = instruction.dependencyReferences
-        if (references == null) return iS
-        
-        for(reference : references) {
-            iS.addAll(iList.dependencyInstructions(reference).filter(e | e!=instruction))
-        }
-        
-        iS
-    }
+//    def ArrayList<EObject> dependencyInstructions(EObject instruction, EList<EObject> iList) {
+//        val iS = createNewInstructionList()
+//        val references = instruction.dependencyReferences
+//        if (references == null) return iS
+//        
+//        for(reference : references) {
+//            iS.addAll(iList.dependencyInstructions(reference).filter(e | e!=instruction))
+//        }
+//        
+//        iS
+//    }
     
     
     

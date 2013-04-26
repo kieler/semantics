@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
+import org.eclipse.emf.ecore.EObject;
+
 import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
@@ -20,7 +22,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * @model
  * @generated
  */
-public interface Assignment extends Instruction
+public interface Assignment extends EObject
 {
   /**
    * Returns the value of the '<em><b>Assignment</b></em>' containment reference.

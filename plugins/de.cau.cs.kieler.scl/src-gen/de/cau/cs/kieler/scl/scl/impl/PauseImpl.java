@@ -7,6 +7,8 @@ import de.cau.cs.kieler.scl.scl.SclPackage;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Pause</b></em>'.
@@ -16,7 +18,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class PauseImpl extends InstructionImpl implements Pause
+public class PauseImpl extends MinimalEObjectImpl.Container implements Pause
 {
   /**
    * <!-- begin-user-doc -->

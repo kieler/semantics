@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.yakindu.sct.model.stext.stext.Expression;
 
@@ -28,7 +29,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  *
  * @generated
  */
-public class AssignmentImpl extends InstructionImpl implements Assignment
+public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assignment
 {
   /**
    * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' containment reference.

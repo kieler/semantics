@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getInterface <em>Interface</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getInstructions <em>Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,14 +71,14 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected EList<VariableDeclaration> interface_;
 
   /**
-   * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
+   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInstructions()
+   * @see #getStatements()
    * @generated
    * @ordered
    */
-  protected EList<EObject> instructions;
+  protected EList<EObject> statements;
 
   /**
    * <!-- begin-user-doc -->
@@ -143,13 +143,13 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<EObject> getInstructions()
+  public EList<EObject> getStatements()
   {
-    if (instructions == null)
+    if (statements == null)
     {
-      instructions = new EObjectContainmentEList<EObject>(EObject.class, this, SclPackage.PROGRAM__INSTRUCTIONS);
+      statements = new EObjectContainmentEList<EObject>(EObject.class, this, SclPackage.PROGRAM__STATEMENTS);
     }
-    return instructions;
+    return statements;
   }
 
   /**
@@ -164,8 +164,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     {
       case SclPackage.PROGRAM__INTERFACE:
         return ((InternalEList<?>)getInterface()).basicRemove(otherEnd, msgs);
-      case SclPackage.PROGRAM__INSTRUCTIONS:
-        return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
+      case SclPackage.PROGRAM__STATEMENTS:
+        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -184,8 +184,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return getName();
       case SclPackage.PROGRAM__INTERFACE:
         return getInterface();
-      case SclPackage.PROGRAM__INSTRUCTIONS:
-        return getInstructions();
+      case SclPackage.PROGRAM__STATEMENTS:
+        return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -208,9 +208,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         getInterface().clear();
         getInterface().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
-      case SclPackage.PROGRAM__INSTRUCTIONS:
-        getInstructions().clear();
-        getInstructions().addAll((Collection<? extends EObject>)newValue);
+      case SclPackage.PROGRAM__STATEMENTS:
+        getStatements().clear();
+        getStatements().addAll((Collection<? extends EObject>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -232,8 +232,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SclPackage.PROGRAM__INTERFACE:
         getInterface().clear();
         return;
-      case SclPackage.PROGRAM__INSTRUCTIONS:
-        getInstructions().clear();
+      case SclPackage.PROGRAM__STATEMENTS:
+        getStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -253,8 +253,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SclPackage.PROGRAM__INTERFACE:
         return interface_ != null && !interface_.isEmpty();
-      case SclPackage.PROGRAM__INSTRUCTIONS:
-        return instructions != null && !instructions.isEmpty();
+      case SclPackage.PROGRAM__STATEMENTS:
+        return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

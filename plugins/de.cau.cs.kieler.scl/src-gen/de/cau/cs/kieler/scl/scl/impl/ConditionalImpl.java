@@ -4,6 +4,7 @@ package de.cau.cs.kieler.scl.scl.impl;
 
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.Statement;
 
 import java.util.Collection;
 
@@ -13,10 +14,10 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -31,13 +32,13 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getInstructions <em>Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ConditionalImpl extends InstructionImpl implements Conditional
+public class ConditionalImpl extends MinimalEObjectImpl.Container implements Conditional
 {
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -50,14 +51,14 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
   protected Expression expression;
 
   /**
-   * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
+   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInstructions()
+   * @see #getStatements()
    * @generated
    * @ordered
    */
-  protected EList<EObject> instructions;
+  protected EList<Statement> statements;
 
   /**
    * <!-- begin-user-doc -->
@@ -133,13 +134,13 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<EObject> getInstructions()
+  public EList<Statement> getStatements()
   {
-    if (instructions == null)
+    if (statements == null)
     {
-      instructions = new EObjectContainmentEList<EObject>(EObject.class, this, SclPackage.CONDITIONAL__INSTRUCTIONS);
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.CONDITIONAL__STATEMENTS);
     }
-    return instructions;
+    return statements;
   }
 
   /**
@@ -154,8 +155,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     {
       case SclPackage.CONDITIONAL__EXPRESSION:
         return basicSetExpression(null, msgs);
-      case SclPackage.CONDITIONAL__INSTRUCTIONS:
-        return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
+      case SclPackage.CONDITIONAL__STATEMENTS:
+        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -172,8 +173,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     {
       case SclPackage.CONDITIONAL__EXPRESSION:
         return getExpression();
-      case SclPackage.CONDITIONAL__INSTRUCTIONS:
-        return getInstructions();
+      case SclPackage.CONDITIONAL__STATEMENTS:
+        return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -192,9 +193,9 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case SclPackage.CONDITIONAL__EXPRESSION:
         setExpression((Expression)newValue);
         return;
-      case SclPackage.CONDITIONAL__INSTRUCTIONS:
-        getInstructions().clear();
-        getInstructions().addAll((Collection<? extends EObject>)newValue);
+      case SclPackage.CONDITIONAL__STATEMENTS:
+        getStatements().clear();
+        getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -213,8 +214,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case SclPackage.CONDITIONAL__EXPRESSION:
         setExpression((Expression)null);
         return;
-      case SclPackage.CONDITIONAL__INSTRUCTIONS:
-        getInstructions().clear();
+      case SclPackage.CONDITIONAL__STATEMENTS:
+        getStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -232,8 +233,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
     {
       case SclPackage.CONDITIONAL__EXPRESSION:
         return expression != null;
-      case SclPackage.CONDITIONAL__INSTRUCTIONS:
-        return instructions != null && !instructions.isEmpty();
+      case SclPackage.CONDITIONAL__STATEMENTS:
+        return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

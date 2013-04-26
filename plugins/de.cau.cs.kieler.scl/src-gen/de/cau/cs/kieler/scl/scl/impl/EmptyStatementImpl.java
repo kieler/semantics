@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.Goto;
+import de.cau.cs.kieler.scl.scl.EmptyStatement;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -14,45 +14,45 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Goto</b></em>'.
+ * An implementation of the model object '<em><b>Empty Statement</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.GotoImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.EmptyStatementImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class GotoImpl extends MinimalEObjectImpl.Container implements Goto
+public class EmptyStatementImpl extends MinimalEObjectImpl.Container implements EmptyStatement
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getLabel()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected static final String LABEL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getLabel()
    * @generated
    * @ordered
    */
-  protected String name = NAME_EDEFAULT;
+  protected String label = LABEL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected GotoImpl()
+  protected EmptyStatementImpl()
   {
     super();
   }
@@ -65,7 +65,7 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto
   @Override
   protected EClass eStaticClass()
   {
-    return SclPackage.Literals.GOTO;
+    return SclPackage.Literals.EMPTY_STATEMENT;
   }
 
   /**
@@ -73,9 +73,9 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
+  public String getLabel()
   {
-    return name;
+    return label;
   }
 
   /**
@@ -83,12 +83,12 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(String newName)
+  public void setLabel(String newLabel)
   {
-    String oldName = name;
-    name = newName;
+    String oldLabel = label;
+    label = newLabel;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.GOTO__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.EMPTY_STATEMENT__LABEL, oldLabel, label));
   }
 
   /**
@@ -101,8 +101,8 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto
   {
     switch (featureID)
     {
-      case SclPackage.GOTO__NAME:
-        return getName();
+      case SclPackage.EMPTY_STATEMENT__LABEL:
+        return getLabel();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -117,8 +117,8 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto
   {
     switch (featureID)
     {
-      case SclPackage.GOTO__NAME:
-        setName((String)newValue);
+      case SclPackage.EMPTY_STATEMENT__LABEL:
+        setLabel((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -134,8 +134,8 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto
   {
     switch (featureID)
     {
-      case SclPackage.GOTO__NAME:
-        setName(NAME_EDEFAULT);
+      case SclPackage.EMPTY_STATEMENT__LABEL:
+        setLabel(LABEL_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -151,8 +151,8 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto
   {
     switch (featureID)
     {
-      case SclPackage.GOTO__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case SclPackage.EMPTY_STATEMENT__LABEL:
+        return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
     }
     return super.eIsSet(featureID);
   }
@@ -168,10 +168,10 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
+    result.append(" (label: ");
+    result.append(label);
     result.append(')');
     return result.toString();
   }
 
-} //GotoImpl
+} //EmptyStatementImpl

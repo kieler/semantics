@@ -41,13 +41,22 @@ public interface SclFactory extends EFactory
   VariableDeclaration createVariableDeclaration();
 
   /**
-   * Returns a new object of class '<em>Instruction</em>'.
+   * Returns a new object of class '<em>Empty Statement</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction</em>'.
+   * @return a new object of class '<em>Empty Statement</em>'.
    * @generated
    */
-  Instruction createInstruction();
+  EmptyStatement createEmptyStatement();
+
+  /**
+   * Returns a new object of class '<em>Statement</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Statement</em>'.
+   * @generated
+   */
+  Statement createStatement();
 
   /**
    * Returns a new object of class '<em>Assignment</em>'.
@@ -57,15 +66,6 @@ public interface SclFactory extends EFactory
    * @generated
    */
   Assignment createAssignment();
-
-  /**
-   * Returns a new object of class '<em>Label</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Label</em>'.
-   * @generated
-   */
-  Label createLabel();
 
   /**
    * Returns a new object of class '<em>Conditional</em>'.
@@ -113,22 +113,13 @@ public interface SclFactory extends EFactory
   Pause createPause();
 
   /**
-   * Returns a new object of class '<em>Instruction Scope</em>'.
+   * Returns a new object of class '<em>Scope</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Instruction Scope</em>'.
+   * @return a new object of class '<em>Scope</em>'.
    * @generated
    */
-  InstructionScope createInstructionScope();
-
-  /**
-   * Returns a new object of class '<em>Annotation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Annotation</em>'.
-   * @generated
-   */
-  Annotation createAnnotation();
+  Scope createScope();
 
   /**
    * Returns the package supported by this factory.

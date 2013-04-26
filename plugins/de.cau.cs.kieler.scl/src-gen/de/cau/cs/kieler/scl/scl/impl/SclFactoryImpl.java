@@ -2,18 +2,17 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
+import de.cau.cs.kieler.scl.scl.EmptyStatement;
 import de.cau.cs.kieler.scl.scl.Goto;
-import de.cau.cs.kieler.scl.scl.Instruction;
-import de.cau.cs.kieler.scl.scl.InstructionScope;
-import de.cau.cs.kieler.scl.scl.Label;
 import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclFactory;
 import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.Scope;
+import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EClass;
@@ -78,16 +77,15 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
     {
       case SclPackage.PROGRAM: return createProgram();
       case SclPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
-      case SclPackage.INSTRUCTION: return createInstruction();
+      case SclPackage.EMPTY_STATEMENT: return createEmptyStatement();
+      case SclPackage.STATEMENT: return createStatement();
       case SclPackage.ASSIGNMENT: return createAssignment();
-      case SclPackage.LABEL: return createLabel();
       case SclPackage.CONDITIONAL: return createConditional();
       case SclPackage.GOTO: return createGoto();
       case SclPackage.THREAD: return createThread();
       case SclPackage.PARALLEL: return createParallel();
       case SclPackage.PAUSE: return createPause();
-      case SclPackage.INSTRUCTION_SCOPE: return createInstructionScope();
-      case SclPackage.ANNOTATION: return createAnnotation();
+      case SclPackage.SCOPE: return createScope();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -120,10 +118,21 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Instruction createInstruction()
+  public EmptyStatement createEmptyStatement()
   {
-    InstructionImpl instruction = new InstructionImpl();
-    return instruction;
+    EmptyStatementImpl emptyStatement = new EmptyStatementImpl();
+    return emptyStatement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Statement createStatement()
+  {
+    StatementImpl statement = new StatementImpl();
+    return statement;
   }
 
   /**
@@ -135,17 +144,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     AssignmentImpl assignment = new AssignmentImpl();
     return assignment;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Label createLabel()
-  {
-    LabelImpl label = new LabelImpl();
-    return label;
   }
 
   /**
@@ -208,21 +206,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public InstructionScope createInstructionScope()
+  public Scope createScope()
   {
-    InstructionScopeImpl instructionScope = new InstructionScopeImpl();
-    return instructionScope;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Annotation createAnnotation()
-  {
-    AnnotationImpl annotation = new AnnotationImpl();
-    return annotation;
+    ScopeImpl scope = new ScopeImpl();
+    return scope;
   }
 
   /**

@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,7 +20,7 @@ package de.cau.cs.kieler.scl.scl;
  * @model
  * @generated
  */
-public interface Goto extends Instruction
+public interface Goto extends EObject
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

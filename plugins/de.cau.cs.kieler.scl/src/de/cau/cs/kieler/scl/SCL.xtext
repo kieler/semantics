@@ -5,6 +5,7 @@ import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 import "http://www.yakindu.org/base/base/2.0.0" as base
 import "http://www.yakindu.org/sct/statechart/SText" as stext
+import "http://kieler.cs.cau.de/annotations" as annotations
 
 generate scl "http://www.cau.de/cs/kieler/scl/scl"
 
@@ -13,19 +14,9 @@ Program:
 	(interface+=VariableDeclaration)*
 	'{'
         (
-            (
-                (instructions += Instruction';')
-                |
-                (instructions += Annotation)
-                |
-                (instructions += Label)
-            )*
-            (instructions += Instruction)
-            |
-            (instructions += Annotation)
-            |
-            (instructions += Label)
-        )*
+            ((statements += Statement';') | statements += EmptyStatement)*
+           statements += ( Statement | EmptyStatement)
+         )?
     '}' 
 ;
 
@@ -33,35 +24,28 @@ VariableDeclaration:
     (Input?='input')? (Output?='output')? 'signal' (name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 ;
 
-Instruction:
-    (Assignment | Conditional | Goto | Parallel | Pause | InstructionScope)
-    (priority=INT)?
+EmptyStatement:
+    ('label' label = ID ':')
+
+;
+Statement:
+//    ('label' label = ID ':')
+//    |    
+    (
+        ('label' label = ID ':')?
+        instruction = (Assignment | Conditional | Goto | Parallel | Pause | Scope)
+    )
+
 ;
 
 Assignment:
     assignment = Expression
 ;
 
-Label:
-    'label' name = ID ':'
-;
-
 Conditional:
     'if' expression = Expression 'then'
-        (
-            (
-                (instructions += Instruction';')
-                |
-                (instructions += Annotation)
-                |
-                (instructions += Label)
-            )*
-            (instructions += Instruction)
-            |
-            (instructions += Annotation)
-            |
-            (instructions += Label)
-        )*
+        ((statements += Statement';')*
+        (statements += Statement))?
     'end' 
 ;
 
@@ -71,21 +55,8 @@ Goto:
 
 Thread:
     {Thread}
-        (
-            (
-                (instructions += Instruction';')
-                |
-                (instructions += Annotation)
-                |
-                (instructions += Label)
-            )*
-            (instructions += Instruction)
-            |
-            (instructions += Annotation)
-            |
-            (instructions += Label)
-        )*
-//    (program = [Program])?
+        ((statements += Statement';')*
+        (statements += Statement))?
 ;
 
 Parallel:
@@ -101,28 +72,11 @@ Pause:
     'pause' {Pause}
 ;
 
-InstructionScope:
-    {InstructionScope}
+Scope:
+    {Scope}
     '{'
-    (interface+=VariableDeclaration)*
-        (
-            (
-                (instructions += Instruction';')
-                |
-                (instructions += Annotation)
-                |
-                (instructions += Label)
-            )*
-            (instructions += Instruction)
-            |
-            (instructions += Annotation)
-            |
-            (instructions += Label)
-        )*
+    (declarations+=VariableDeclaration)*
+        ((statements += Statement';')*
+        (statements += Statement))?
     '}'    
 ;
-
-Annotation:
-    comment = SL_COMMENT
-;
-
