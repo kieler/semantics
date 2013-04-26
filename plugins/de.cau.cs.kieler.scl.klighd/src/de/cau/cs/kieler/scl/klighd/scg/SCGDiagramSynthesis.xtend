@@ -210,10 +210,13 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             it.setPortSize(2,2)
             it.addRectangle.invisible = true;
             it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+//            it.data += renderingFactory.createKRoundedBendsPolyline() => [
+//                it.invisible = true
+//                it.invisible.functionId = "de.cau.cs.kieler.scl.klighd.scg.BasicBoxModifier"
+//            ];          
         ]).addToPortMapping(kExitNode, 'incoming')
         
-  
-
+        
         
         
             
