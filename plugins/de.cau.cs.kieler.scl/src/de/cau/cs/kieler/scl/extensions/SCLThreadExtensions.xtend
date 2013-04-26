@@ -5,6 +5,7 @@ import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.Thread
+import de.cau.cs.kieler.scl.scl.AbstractThread
 
 class SCLThreadExtensions {
         
@@ -17,27 +18,27 @@ class SCLThreadExtensions {
      */
     
     // Retrieve the thread list of a given instruction
-    def Thread getThread(Instruction instruction) {
+    def AbstractThread getThread(Instruction instruction) {
         getThread(instruction.eContainer as Statement)
     }
     
-    def Thread getThread(Statement statement) {
+    def AbstractThread getThread(Statement statement) {
         var container = statement.eContainer
         while (container != null) {
-            if (container instanceof Thread) return container as Thread
+            if (container instanceof AbstractThread) return container as AbstractThread
             container = container.eContainer
         }
         return null
     }
 
-    def Thread getMainThread(Instruction instruction) {
+    def AbstractThread getMainThread(Instruction instruction) {
         getThread(instruction.eContainer as Statement)
     }
     
-    def Thread getMainThread(Statement statement) {
+    def AbstractThread getMainThread(Statement statement) {
         var container = statement.eContainer
         while (container != null) {
-            if (container instanceof Program) return container as Thread
+            if (container instanceof Program) return container as AbstractThread
             container = container.eContainer
         }
         return null
