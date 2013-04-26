@@ -1,0 +1,183 @@
+package de.cau.cs.kieler.scl.extensions
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import java.util.ArrayList
+import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
+import de.cau.cs.kieler.scl.scl.Assignment
+import de.cau.cs.kieler.scl.scl.Conditional
+import org.eclipse.emf.ecore.EObject
+import org.yakindu.sct.model.stext.stext.AssignmentExpression
+import org.yakindu.sct.model.stext.stext.Expression
+import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
+import org.yakindu.sct.model.stext.stext.BoolLiteral
+import de.cau.cs.kieler.scl.scl.VariableDeclaration
+
+class SCLDependencyExtensions {
+    
+    // ======================================================================================================
+    // ==                   D E P E N D E N C Y   M E T A M O D E L   E X T E N S I O N                    ==
+    // ======================================================================================================
+
+/* ----------------------------------------------------
+ * SText expression example structure
+ *     
+ * CONDITIONAL
+ * LogicalRelationExpressionImpl
+ *     ElementReferenceExpressionImpl
+ *         VariableDeclarationImpl
+ *             Name
+ *     operator = RelationalOperator
+ *         == >=
+ *     PrimitiveValueExpressionImpl
+ *         value = BoolLiteralImpl
+ * 
+ *     ParenthesizedExpressionImpl
+ *         NumericalAddSubtractExpressionImpl
+ *         ...
+ * 
+ * ASSIGNMENT
+ * AssignmentExpression
+ *     expression = PrimitiveValueExpressionImpl
+ *     operator = AssignmentOperator
+ *     varRef = ElementReferenceExpressionImpl
+ * ----------------------------------------------------
+ */   
+
+    // Checks if the given instruction is an assignment or a conditional statement and retrieves a list
+    // of ElementReferenceExpressions on which this statement depends on. 
+    def ArrayList<ElementReferenceExpression> dependencyReferences(EObject instruction) {
+        if (instruction instanceof Assignment) return dependencyReferences(instruction as Assignment) 
+        if (instruction instanceof Conditional) return dependencyReferences(instruction as Conditional)
+        return new ArrayList<ElementReferenceExpression>
+    }
+ 
+    // Retrieve the list of ElementReferenceExpressions for an assignment statement.
+    def ArrayList<ElementReferenceExpression> dependencyReferences(Assignment instruction) {
+        val resList = new ArrayList<ElementReferenceExpression>
+        val AssignmentExpression aExp = instruction.assignment as AssignmentExpression
+        
+        resList.add(aExp.varRef as ElementReferenceExpression)
+        aExp.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).forEach(e |
+            resList.add(e))
+                
+        resList 
+    }
+    
+    // Shortcut for conditionals
+    def ArrayList<ElementReferenceExpression> dependencyReferences(Conditional instruction) {
+        return dependencyReferences(instruction.expression)
+    }
+
+    // Retrieve the list of ElementReferenceExpressions for a conditional statement.
+    def ArrayList<ElementReferenceExpression> dependencyReferences(Expression expression) {
+        val resList = new ArrayList<ElementReferenceExpression>
+        if (expression instanceof ElementReferenceExpression) resList.add((expression as ElementReferenceExpression))
+        expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).forEach(e |
+            resList.add(e))
+        resList
+    }
+    
+    // Retrieves a list of all instructions in a given instruction list which depend on the given 
+    // ElementReferenceExpression.
+//    def ArrayList<EObject> dependencyInstructions(List<EObject> iList, ElementReferenceExpression varRef) {
+//        val iS = createNewInstructionList()
+//        
+//        for(instr : iList.flatten) {
+//            if ((instr instanceof Assignment) || (instr instanceof Conditional)) {
+//                val references = (instr as EObject).dependencyReferences 
+//                for (reference : references) {
+//                    if (reference.reference.equals(varRef.reference))
+//                        if (!iS.contains(instr)) iS.add((instr as EObject));
+//                }
+//            }    
+//        }
+//        
+//        iS
+//    }
+    
+    // Retrieves a list of all instructions in a given instruction list which depend on a 
+    // ElementReferenceExpression which is also a dependency for a given instruction.
+//    def ArrayList<EObject> dependencyInstructions(EObject instruction, EList<EObject> iList) {
+//        val iS = createNewInstructionList()
+//        val references = instruction.dependencyReferences
+//        if (references == null) return iS
+//        
+//        for(reference : references) {
+//            iS.addAll(iList.dependencyInstructions(reference).filter(e | e!=instruction))
+//        }
+//        
+//        iS
+//    }
+    
+    
+    
+    def boolean isConfluentWriterAbs(EObject firstInst, EObject secondInst) {
+        if ((!(firstInst instanceof Assignment)) || (!(secondInst instanceof Assignment))) return false
+        val asgn1 = (firstInst as Assignment).assignment as AssignmentExpression
+        val asgn2 = (secondInst as Assignment).assignment as AssignmentExpression
+        
+        if ((asgn1.varRef as ElementReferenceExpression).reference != (asgn2.varRef as ElementReferenceExpression).reference) return false
+        if (asgn1.operator != asgn2.operator) return false
+        if (asgn1.expression instanceof PrimitiveValueExpression && asgn2.expression instanceof PrimitiveValueExpression) {
+            val pve1 = asgn1.expression as PrimitiveValueExpression
+            val pve2 = asgn2.expression as PrimitiveValueExpression
+            if (pve1.value instanceof BoolLiteral && pve2.value instanceof BoolLiteral) {
+                if ((pve1.value as BoolLiteral).value == (pve2.value as BoolLiteral).value) return true
+            }
+        }
+        return false
+    }
+    
+    def boolean isWriterAbs(EObject instruction) {
+        if (!(instruction instanceof Assignment)) return false
+        val asgn = (instruction as Assignment).assignment as AssignmentExpression
+        val varRef = asgn.varRef
+        
+        if (asgn.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
+            filter(e | e.equals(varRef)).size==0) return true
+        return false
+    }
+
+    def boolean isWriterRel(EObject instruction) {
+        if (!(instruction instanceof Assignment)) return false
+        val asgn = (instruction as Assignment).assignment as AssignmentExpression
+        val varRef = asgn.varRef
+        
+        if (asgn.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
+            filter(e | e.equals(varRef)).size>0) return true
+        return false
+    }
+    
+    def VariableDeclaration getWriteRef(EObject instruction) {
+        if (!(instruction instanceof Assignment)) return null
+        val asgn = (instruction as Assignment).assignment as AssignmentExpression
+        return ((asgn.varRef as ElementReferenceExpression).reference as VariableDeclaration)
+    }
+    
+    def boolean isReader(EObject instruction, VariableDeclaration vardec) {
+        if (instruction instanceof Assignment) {
+            val asgn = (instruction as Assignment).assignment as AssignmentExpression
+            if (asgn.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
+                filter(e | e.reference.equals(vardec)).size>0) return true
+        } else if (instruction instanceof Conditional) {
+            val cond = (instruction as Conditional).expression
+            if (cond instanceof ElementReferenceExpression && 
+                (cond as ElementReferenceExpression).reference.equals(vardec)) return true
+            if (cond.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
+                filter(e | e.reference.equals(vardec)).size>0) return true
+        }
+        return false
+    }
+    
+    
+    def String dependencyType(EObject firstInst, EObject secondInst) {
+        if (firstInst.isWriterAbs && secondInst.isWriterAbs && firstInst.getWriteRef==secondInst.getWriteRef &&
+            !isConfluentWriterAbs(firstInst, secondInst)) return "ww"
+        if (firstInst.isWriterAbs && secondInst.isReader(firstInst.getWriteRef)) return "wr"
+        if (firstInst.isWriterAbs && secondInst.isWriterRel && firstInst.getWriteRef==secondInst.getWriteRef)
+            return "wi"
+        if (firstInst.isWriterRel && secondInst.isReader(firstInst.getWriteRef)) return "ir"
+        return null
+    }
+    
+}
