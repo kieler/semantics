@@ -32,7 +32,7 @@ class SCLThreadExtensions {
     }
 
     def AbstractThread getMainThread(Instruction instruction) {
-        getThread(instruction.eContainer as Statement)
+        getMainThread(instruction.eContainer as Statement)
     }
     
     def AbstractThread getMainThread(Statement statement) {
@@ -62,19 +62,22 @@ class SCLThreadExtensions {
         getThread(statement) == getMainThread(statement)
     }
 
-    // Checks if an instruction is in the given instruction list
+    // Checks if an instruction is in the given thread
     def dispatch boolean isInThread(Instruction instruction, Thread thread) {
         thread.eAllContents.filter(typeof(InstructionStatement)).exists(e|e.instruction == instruction)
     }    
 
+    // Checks if a statement is in the given thread
     def dispatch boolean isInThread(Statement statement, Thread thread) {
         thread.eAllContents.filter(typeof(Statement)).exists(e|e == statement)
     }
     
+    // Checks if a thread contains the given instruction
     def dispatch boolean contains(Thread thread, Instruction instruction) {
         instruction.isInThread(thread)
     }    
     
+    // Checks if a thread contains the given statement
     def dispatch boolean contains(Thread thread, Statement statement) {
         statement.isInThread(thread)
     }
