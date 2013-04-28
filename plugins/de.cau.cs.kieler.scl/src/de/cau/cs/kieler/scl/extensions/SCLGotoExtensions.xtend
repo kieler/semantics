@@ -54,7 +54,7 @@ class SCLGotoExtensions {
         return statements.filter(typeof(InstructionStatement)).head as InstructionStatement
     }
     
-    def int getIncomingJumpCount(InstructionStatement statement) {
-        statement.getThread.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == statement).size
+    def getIncomingJumps(InstructionStatement statement) {
+        statement.getThread.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == statement)
     }
 }
