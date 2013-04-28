@@ -40,20 +40,34 @@ class SCLCreateExtensions {
      */
     
     // Create a new list of EObjects
-    def createNewInstructionList()
+    def createNewStatementList()
     {
         new ArrayList<Statement>
     }
     
     // Create a new list of EObjects and insert the first instruction
-    def createNewInstructionList(Statement statement) {
-        createNewInstructionList.add(statement)
+    def createNewStatementList(Statement statement) {
+        createNewStatementList.add(statement)
     }
     
     def createNewInstructionList(Instruction instruction) {
         val statement = SCL.createInstructionStatement()
         statement.instruction = instruction
-        createNewInstructionList(statement)
+        createNewStatementList(statement)
+    }
+    
+    def createSCLInstructionStatement() {
+        SCL.createInstructionStatement()
+    }
+    
+    def createSCLInstructionStatement(Instruction instruction) {
+        val statement = createSCLInstructionStatement()
+        statement.instruction = instruction
+        statement
+    }
+    
+    def createSCLEmptyStatement() {
+        SCL.createEmptyStatement()
     }
     
     // Create a goto statement with target string
