@@ -1,8 +1,6 @@
 package de.cau.cs.kieler.yakindu.sccharts.scl.xtend
 
 import com.google.common.collect.ImmutableList
-import com.google.inject.Guice
-import de.cau.cs.kieler.scl.SCLHelper
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
@@ -15,9 +13,6 @@ import org.yakindu.sct.model.sgraph.Statechart
 import org.yakindu.sct.model.sgraph.Trigger
 
 class SCCHelper {
-    
-     extension de.cau.cs.kieler.scl.SCLHelper SCLHelper = 
-         Guice::createInjector().getInstance(typeof(SCLHelper))
     
     // ======================================================================================================
     // ==                T R A N S I T I O N    M E T A M O D E L   E X T E N S I O N                      ==

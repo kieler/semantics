@@ -4,6 +4,8 @@ import javax.inject.Inject
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Instruction
+import de.cau.cs.kieler.scl.scl.Goto
 
 class SCLStatementExtensions {
     
@@ -18,6 +20,10 @@ class SCLStatementExtensions {
         statement instanceof InstructionStatement
     }
     
+    def Instruction getInstruction(Statement statement) {
+        (statement as InstructionStatement).instruction
+    }
+    
     def EmptyStatement removeInstruction(Statement statement) {
         if (statement instanceof InstructionStatement) {
             val emptyStatement = createSCLEmptyStatement()
@@ -25,6 +31,10 @@ class SCLStatementExtensions {
             return emptyStatement
         }
         return statement as EmptyStatement
+    }
+    
+    def Goto asGoto(Instruction instruction) {
+        instruction as Goto
     }
     
 }

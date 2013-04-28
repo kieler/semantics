@@ -66,6 +66,16 @@ class SCLCreateExtensions {
         statement
     }
     
+    def createStatement(Instruction instruction) {
+        createSCLInstructionStatement(instruction)
+    }
+    
+    def List<Statement> createStatements(List<Assignment> instructions) {
+        val list = new ArrayList<Statement>
+        instructions.forEach(e|list.add(e.createStatement))
+        list
+    }
+   
     def createSCLEmptyStatement() {
         SCL.createEmptyStatement()
     }
