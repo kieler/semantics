@@ -98,7 +98,6 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.foreground = "red".color;
                 it.addText("Region:") => [
                     it.foreground = "gray".color
-                    it.background = "white".color
                     it.fontSize = 11                    
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
@@ -170,7 +169,6 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 } 
                 
                 it.addText(s.label).putToLookUpWith(s) => [
-                    it.background = "white".color;
                     it.fontSize = 11;
                     it.setGridPlacementData().setMaxCellHeight(40)
                         .from(LEFT, 10, 0, TOP, 10, 0)
