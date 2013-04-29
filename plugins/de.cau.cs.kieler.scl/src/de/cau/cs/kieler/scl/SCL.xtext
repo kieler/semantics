@@ -20,14 +20,6 @@ Program:
     '}' 
 ;
 
-
-
-//        (
-//            ((statements += Statement';') | statements += EmptyStatement)*
-//           statements += ( Statement | EmptyStatement)
-//         )?
-
-
 VariableDeclaration:
     (input?='input')? (output?='output')? 'signal' (name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 ;
@@ -41,8 +33,6 @@ EmptyStatement:
 ;
 
 InstructionStatement:    
-//    ('label' label = ID ':')
-//    |
     (
         (label = ID ':')?
         instruction = (Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
