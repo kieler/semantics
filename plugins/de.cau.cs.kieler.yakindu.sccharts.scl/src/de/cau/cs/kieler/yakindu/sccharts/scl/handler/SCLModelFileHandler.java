@@ -5,6 +5,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
+
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.properties.IPropertyHolder;
@@ -80,9 +82,8 @@ public class SCLModelFileHandler extends AbstractModelFileHandler {
                 opt = CoreToSCLTransformation.OPTIMIZE_STATEPOSITION;
             }
 
-            EObject transformed = (new CoreToSCLTransformation())
-                                .transformCoreToSCL((Statechart) modelObject, 
-                                opt);
+            EObject transformed = Guice.createInjector().getInstance(CoreToSCLTransformation.class)
+                                .transformCoreToSCL((Statechart) modelObject, opt);
             EcoreUtil.resolveAll(transformed);
             return transformed;
 	}
