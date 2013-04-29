@@ -533,7 +533,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
              * and store the list of this thread in the parallel map for the goto mapping
              */
             thread.statements.createInstructionListFigure(kContainerNode, kEntryNode, kExitNode, '')
-//            ParallelExitMapping.put(thread.instructions, kExitNode);
+            ParallelExitMapping.put(thread, kExitNode);
 
             /*
              * Draw edges from the fork node to this container
