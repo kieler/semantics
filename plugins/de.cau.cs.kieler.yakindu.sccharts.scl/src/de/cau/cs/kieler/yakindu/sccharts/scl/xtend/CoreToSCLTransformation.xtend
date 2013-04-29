@@ -163,12 +163,12 @@ class CoreToSCLTransformation {
     def ArrayList<Statement> transformStateTransitions(SyncState state, int optimizationFlags) {
         var iS = createNewStatementList()
         
-        val transitions = state.getTransitions;
-        val immediateTransitions = ImmutableList::copyOf(transitions.filter(e | e.isImmediate));
+        val transitions = state.outgoingTransitions.filter(typeof(SyncTransition))
+        val immediateTransitions = ImmutableList::copyOf(transitions.filter(e | e.isImmediate))
         var selfTransitions = transitions.filter(e | 
             (e.target instanceof SyncState) && ((e.target as SyncState) == state))
             
-        var boolean defaultTransition = false;
+        var boolean defaultTransition = false
 
         var immediateIS = createNewStatementList()    
      

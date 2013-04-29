@@ -48,13 +48,10 @@ class SCCHelper {
 
 
 
-    def List<SyncTransition> getTransitions(SyncState state) {
-        val originalOutgoingTransitions = ImmutableList::copyOf(state.outgoingTransitions);
-        var List<SyncTransition> outgoingTransitions = new ArrayList();
-        for (raw : originalOutgoingTransitions) {
-            outgoingTransitions.add(0, raw as SyncTransition);
-        }
-        outgoingTransitions.sort(e1, e2 | compareSCCTransitionOrder(e1, e2));
+    def getTransitions(SyncState state) {
+        val outgoingTransitions = state.outgoingTransitions.filter(typeof(SyncTransition))
+//        outgoingTransitions.sort(e1, e2 | compareSCCTransitionOrderFIXME(e1, e2));
+        outgoingTransitions
     }
     
     def List<SyncTransition> getWeakTransitions(SyncState state) {
