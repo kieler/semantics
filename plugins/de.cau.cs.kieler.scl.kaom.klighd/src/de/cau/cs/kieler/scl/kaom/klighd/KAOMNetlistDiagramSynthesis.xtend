@@ -36,6 +36,10 @@ import javax.inject.Inject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static de.cau.cs.kieler.scl.kaom.klighd.KAOMNetlistDiagramSynthesis.*
+import de.cau.cs.kieler.kiml.options.PortLabelPlacement
+import de.cau.cs.kieler.kiml.options.SizeConstraint
+import java.util.EnumSet
+import de.cau.cs.kieler.klighd.util.ExpansionAwareProperty
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -165,18 +169,21 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
         if (kaomEntity.childEntities.size > 0) {
             kNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             kNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            kNode.addLayoutParam(LayoutOptions::NODE_LABEL_PLACEMENT,
-                NodeLabelPlacement::outsideBottomCenter
-            );
+//            kNode.addLayoutParam(LayoutOptions::NODE_LABEL_PLACEMENT,
+//                NodeLabelPlacement::outsideBottomCenter
+//            );
         
             kNode.setNodeSize(25,25);
-            kNode.setMinimalNodeSize(25,25);
-            val label = kNode.createLabel.configureOutsideCentralBottomNodeLabel(kaomEntity.name, 10, "Arial");
+            //kNode.setMinimalNodeSize(25,25);
+            kNode.createLabel.configureOutsideCentralBottomNodeLabel(kaomEntity.name, 10, "Arial")
+                .addLayoutParam(KlighdConstants::KLIGHD_SELECTION_UNPICKABLE, true);
+            kNode.addLayoutParam(ExpansionAwareProperty::of(LayoutOptions::NODE_LABEL_PLACEMENT),
+                Pair::create(NodeLabelPlacement::outsideBottomCenter, EnumSet::of( NodeLabelPlacement::INSIDE,  NodeLabelPlacement::V_CENTER,  NodeLabelPlacement::H_CENTER)));
             kNode.addRectangle.addText("[-]")=>[
                 it.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 it.setPointPlacementData(createKPosition(RIGHT, 14, 0, TOP, 2, 0), H_LEFT, V_TOP, 0,0,0,0)
             ]
-            
+
             //kNode.addRectangle.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND);
         } else {
             val rectangle = kNode.addRectangle
@@ -265,9 +272,12 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
         retList.add(kaomEntity as Entity);
         
         kNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+        kNode.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::INSIDE);
+        kNode.addLayoutParam(LayoutOptions::SIZE_CONSTRAINT, EnumSet::of(SizeConstraint::PORTS, SizeConstraint::PORT_LABELS, SizeConstraint::NODE_LABELS, SizeConstraint::MINIMUM_SIZE));
         for (port : kaomEntity.childPorts) {
             kNode.ports += port.createPort=>[
                 it.setPortSize(7,7);
+                it.addLayoutParam(LayoutOptions::OFFSET, 0.0f);
                 if (!port.name.equals("In") && !port.name.equals("Out")) {
                     it.createLabel.configureInsidePortLabel(port.name, 10, "Arial");
                 }
@@ -300,12 +310,12 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
 
     def createRelationFigure(Relation kaomRelation, KNode rootNode) {
         val kNode = kaomRelation.createNode;
-        kNode.addPolygon.setBackground("black".color) => [
-            it.points += createKPosition(LEFT,0,0,TOP,0,0.5f)
-            it.points += createKPosition(LEFT,0,0.5f,TOP,0,0)
-            it.points += createKPosition(RIGHT,0,0,TOP,0,0.5f)
-            it.points += createKPosition(RIGHT,0,0.5f,BOTTOM,0,0)
-        ];
+//        kNode.addPolygon.setBackground("black".color) => [
+//            it.points += createKPosition(LEFT,0,0,TOP,0,0.5f)
+//            it.points += createKPosition(LEFT,0,0.5f,TOP,0,0)
+//            it.points += createKPosition(RIGHT,0,0,TOP,0,0.5f)
+//            it.points += createKPosition(RIGHT,0,0.5f,BOTTOM,0,0)
+//        ];
         kNode.setNodeSize(5,5);
         rootNode.children.add(kNode);
     }
