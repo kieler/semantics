@@ -1,11 +1,15 @@
 package de.cau.cs.kieler.scl.extensions
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.scl.AbstractThread
+import java.util.List
+import java.util.ArrayList
+import de.cau.cs.kieler.scl.scl.Conditional
 
 class SCLThreadExtensions {
         
@@ -80,6 +84,22 @@ class SCLThreadExtensions {
     // Checks if a thread contains the given statement
     def dispatch boolean contains(Thread thread, Statement statement) {
         statement.isInThread(thread)
+    }
+    
+    // Drop previous statements from a list of statements till the given statement
+    def dropPrevious(List<Statement> statements, Statement statement) {
+        var stmts = statements.copyAll
+        while(stmts != null && stmts.size>0 && stmts.head != statement) 
+            stmts = stmts.tail.toList
+        stmts
+    }
+    
+    def dropPrevious(Thread thread, Statement statement) {
+        if (statement.eContainer instanceof Conditional) {
+            return dropPrevious((statement.eContainer as Conditional).statements, statement)    
+        } else {
+            return dropPrevious(thread.statements, statement)
+        }
     }
     
 }

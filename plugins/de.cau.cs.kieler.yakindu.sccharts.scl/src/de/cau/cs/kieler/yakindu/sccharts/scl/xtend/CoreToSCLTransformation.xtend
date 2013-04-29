@@ -1,33 +1,42 @@
 package de.cau.cs.kieler.yakindu.sccharts.scl.xtend
 
 import com.google.common.collect.ImmutableList
-import com.google.inject.Guice
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
-import de.cau.cs.kieler.scl.scl.Annotation
-import de.cau.cs.kieler.scl.scl.Conditional
+import de.cau.cs.kieler.scl.extensions.SCLCreateExtensions
+import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
+import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
+import de.cau.cs.kieler.scl.extensions.SCLNamingExtensions
+import de.cau.cs.kieler.scl.extensions.SCLOrderingExtensions
+import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Label
 import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.SclFactory
+import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import java.util.ArrayList
-import java.util.HashMap
+import javax.inject.Inject
 import org.yakindu.sct.model.sgraph.Event
 import org.yakindu.sct.model.sgraph.Region
 import org.yakindu.sct.model.sgraph.Statechart
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.SCLHelper
-import org.eclipse.emf.ecore.EObject
-import java.util.List
+import static de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLTransformation.*
 
 class CoreToSCLTransformation {
     
-     extension de.cau.cs.kieler.scl.SCLHelper SCLHelper = 
-         Guice::createInjector().getInstance(typeof(SCLHelper))
-     extension de.cau.cs.kieler.yakindu.sccharts.scl.xtend.SCCHelper SCCHelper = 
-         Guice::createInjector().getInstance(typeof(SCCHelper))
-         
+    @Inject
+    extension SCLFactoryExtensions
+    @Inject
+    extension SCLCreateExtensions
+    @Inject
+    extension SCLOrderingExtensions
+    @Inject
+    extension SCLNamingExtensions
+    @Inject
+    extension SCLStatementExtensions
+    @Inject
+    extension SCCHelper         
+    @Inject
+    extension CoreToSCLOptimization
          
     public static int OPTIMIZE_NONE             = 0
     public static int OPTIMIZE_GOTO             = 1
@@ -52,33 +61,33 @@ class CoreToSCLTransformation {
     def Program transformCoreToSCL(Statechart rootStatechart, int optimizationFlags) {
         var targetProgram = SclFactory::eINSTANCE.createProgram();
        
-        rootStatechart.statechartDistributePriorities
+//        rootStatechart.statechartDistributePriorities
        
         val mainState = rootStatechart.regions.get(0).vertices.get(0) as SyncState
        
         targetProgram.setName(mainState.name)
 
         for(declaration : mainState.scopes.get(0).declarations) {
-           targetProgram.interface.add(createVariableDeclaration(declaration as Event));
+           targetProgram.declarations.add(createVariableDeclaration(declaration as Event));
         }
         var iS = transformCoreState(mainState, optimizationFlags)        
 //        if (optimizationFlags.optimize(OPTIMIZE_GOTO)) { iS = iS.optimizeGoto }
 //        if (optimizationFlags.optimize(OPTIMIZE_LABEL)) { iS = iS.optimizeLabel }
-        targetProgram.instructions.addAll(iS)
+        targetProgram.statements.addAll(iS)
        
         targetProgram
     }
 
-    def ArrayList<EObject> transformCoreRegion(Region region, int optimizationFlags) {
-        var iS = createNewInstructionList()
+    def ArrayList<Statement> transformCoreRegion(Region region, int optimizationFlags) {
+        var iS = createNewStatementList()
         val states = ImmutableList::copyOf(region.getVertices.filter(typeof(SyncState))).
           sort(e1, e2 | compareSCLRegionStateOrder(e1, e2))
 
-        if (region.getName() != null) {
-           iS.addInstruction(createSCLComment(region.getName()))
-        }
+//        if (region.getName() != null) {
+//           iS.add((createSCLComment(region.getName()))
+//        }
 
-        var stateInstructions = new ArrayList<ArrayList<EObject>>
+        var stateInstructions = new ArrayList<ArrayList<Statement>>
         for (state : states) {
             Debug(state.getHierarchicalName(""))
             stateInstructions.add(transformCoreState(state, optimizationFlags))
@@ -96,12 +105,12 @@ class CoreToSCLTransformation {
         iS
     }
     
-    def ArrayList<EObject> transformCoreState(SyncState state, int optimizationFlags) {
-        var iS = createNewInstructionList()
+    def ArrayList<Statement> transformCoreState(SyncState state, int optimizationFlags) {
+        var iS = createNewStatementList()
         val stateID = state.getHierarchicalName("")
         
-        iS.addInstruction(createSCLComment("-- Begin of state "+state.getName()+" --"))
-        iS.addInstruction(createSCLLabel(stateID));
+//        iS.addInstruction(createSCLComment("-- Begin of state "+state.getName()+" --"))
+//        iS.addInstruction(createSCLLabel(stateID));
         
         if (state.isComposite()) {
             // COMPOSITE STATE         
@@ -115,7 +124,7 @@ class CoreToSCLTransformation {
                     val regionInstructions = transformCoreRegion(stateRegion, optimizationFlags)
                     parallel.getThreads().add(createSCLThread(regionInstructions))
                 }
-                iS.addInstruction(parallel)
+                iS.add(parallel.createStatement)
             }
             
             for(transition : state.getNormalterminations) {
@@ -123,11 +132,11 @@ class CoreToSCLTransformation {
               
               val effect = transition.getEffect()
               if (effect != null) {
-                  iS.addAll(createSCLAssignment(effect))
+                  iS.addAll(createSCLAssignment(effect).createStatements)
               }
               
               var goto = createSCLGoto(targetState.getHierarchicalName(""))
-              iS.addInstruction(goto)
+              iS.add(goto.createStatement)
             }
              
         } else {
@@ -138,7 +147,7 @@ class CoreToSCLTransformation {
                 
             } else {
                 // STATE IS NOT A FINAL STATE
-                iS.addInstructions(state.transformStateTransitions(optimizationFlags))
+                iS.addAll(state.transformStateTransitions(optimizationFlags))
             } // isFinal
         
         } // isComposite
@@ -147,8 +156,8 @@ class CoreToSCLTransformation {
     }
     
     
-    def ArrayList<EObject> transformStateTransitions(SyncState state, int optimizationFlags) {
-        var iS = createNewInstructionList()
+    def ArrayList<Statement> transformStateTransitions(SyncState state, int optimizationFlags) {
+        var iS = createNewStatementList()
         
         val transitions = state.getTransitions;
         val immediateTransitions = ImmutableList::copyOf(transitions.filter(e | e.isImmediate));
@@ -157,24 +166,24 @@ class CoreToSCLTransformation {
             
         var boolean defaultTransition = false;
 
-        var immediateIS = createNewInstructionList()    
+        var immediateIS = createNewStatementList()    
      
         for(transition : immediateTransitions) {
-                val targetInstructions = transformStateTransition(transition)
-                if (targetInstructions.last instanceof Goto) { defaultTransition = true; }
-                immediateIS.addAll(targetInstructions)
+                val targetStatements = transformStateTransition(transition)
+                if (targetStatements.head?.getInstruction instanceof Goto) { defaultTransition = true; }
+                immediateIS.addAll(targetStatements)
         }
                 
         if (transitions.size <= immediateTransitions.size) {
-            var selfInstructions = createNewInstructionList();
+            var selfInstructions = createNewStatementList()
             if (!defaultTransition) {
-                selfInstructions.addPause;
-                selfInstructions.addInstruction(createSCLGoto(state.getHierarchicalName("")));
+                selfInstructions.add(createSCLPause.createStatement)
+                selfInstructions.add(createSCLGoto(state.getHierarchicalName("")).createStatement)
             }
             if (optimizationFlags.optimize(OPTIMIZE_SELFLOOP) &&
                ((transitions.size==2 && selfTransitions.size==1 && selfTransitions.head.trigger == null) ||
                 (transitions.size==1 && selfTransitions.size!=1))) {
-                iS.addInstructions(optimizeSelfLoop(immediateIS, selfInstructions));
+                iS.addAll(optimizeSelfLoop(immediateIS, selfInstructions));
             } else {
                 iS.addAll(immediateIS)
                 iS.addAll(selfInstructions)            
@@ -184,165 +193,67 @@ class CoreToSCLTransformation {
         }
         
         iS.addAll(immediateIS)
-        iS.addPause;
+        iS.add(createSCLPause.createStatement);
         
         if (optimizationFlags.optimize(OPTIMIZE_SELFLOOP) &&
            ((transitions.size==2 && selfTransitions.size==1 && selfTransitions.head.trigger == null) ||
             (transitions.size==1 && selfTransitions.size!=1))) {
-            var targetInstructions = transformStateTransition(
+            var targetStatements = transformStateTransition(
                 transitions.filter(e | ((e.target) instanceof SyncState) &&
                     ((e.target as SyncState) != state
                 )
                 ).head
             )
-            if (targetInstructions.last instanceof Goto) {
-                iS.addAll(targetInstructions);
+            if (targetStatements.last?.getInstruction instanceof Goto) {
+                iS.addAll(targetStatements);
             } else {
-                var ArrayList<EObject> selfInstructions = null;
+                var ArrayList<Statement> selfInstructions = null;
                 
                 if (selfTransitions.size==1) {
                     selfInstructions = transformStateTransition(selfTransitions.head)
                 } else {
-                    selfInstructions = createNewInstructionList();
-                    selfInstructions.addInstruction(createSCLGoto(state.getHierarchicalName("")));
+                    selfInstructions = createNewStatementList()
+                    selfInstructions.add(createSCLGoto(state.getHierarchicalName("")).createStatement)
                 }
                 
-                iS.addInstructions(optimizeSelfLoop(targetInstructions, selfInstructions));
+                iS.addAll(optimizeSelfLoop(targetStatements, selfInstructions));
             } 
         } else {
             for (transition : transitions) {
-                val targetInstructions = transformStateTransition(transition)
-                if (targetInstructions.last instanceof Goto) { defaultTransition = true; }
-                iS.addAll(targetInstructions)
+                val targetStatements = transformStateTransition(transition)
+                if (targetStatements.last?.getInstruction instanceof Goto) { defaultTransition = true; }
+                iS.addAll(targetStatements)
             }
             if (!defaultTransition) {
-                iS.addInstruction(createSCLGoto(state.getHierarchicalName("")));
+                iS.add(createSCLGoto(state.getHierarchicalName("")).createStatement);
             }
         }
         
         iS
     }
     
-    def ArrayList<EObject> transformStateTransition(SyncTransition transition) {
-        var iS = createNewInstructionList()
-        val targetState = transition.target as SyncState;
-        val transitionEffect = transition.getEffect();
-        val transitionTrigger = transition.getTrigger();
-        var targetGoto = createSCLGoto(targetState.getHierarchicalName(""));
+    def ArrayList<Statement> transformStateTransition(SyncTransition transition) {
+        var iS = createNewStatementList()
+        val targetState = transition.target as SyncState
+        val transitionEffect = transition.getEffect()
+        val transitionTrigger = transition.getTrigger()
+        var targetGoto = createSCLGoto(targetState.getHierarchicalName(""))
         if (transitionTrigger.exists) {
-            var conditional = createSCLConditional(transitionTrigger);
+            var conditional = createSCLConditional(transitionTrigger)
             if (transitionEffect.exists) {
-                val transitionAssignments = createSCLAssignment(transitionEffect);
-                conditional.instructions.addAll(transitionAssignments);
+                val transitionAssignments = createSCLAssignment(transitionEffect)
+                conditional.statements.addAll(transitionAssignments.createStatements)
             }
-            conditional.addInstruction(targetGoto);
-            iS.addInstruction(conditional);
+            conditional.statements.add(targetGoto.createStatement)
+            iS.add(conditional.createStatement)
         } else {
             if (transitionEffect.exists) {
-                val transitionAssignments = createSCLAssignment(transitionEffect);
-                iS.addAll(transitionAssignments);
+                val transitionAssignments = createSCLAssignment(transitionEffect)
+                iS.addAll(transitionAssignments.createStatements)
             }
-            iS.addInstruction(targetGoto);
+            iS.add(targetGoto.createStatement)
         }
         iS;
     }
-    
-    
-    
-    def ArrayList<EObject> optimizeSelfLoop(List<EObject> tList, List<EObject> sList) {
-        var iS = createNewInstructionList();
-        
-        var conditional = tList.head as Conditional
-        val newConditional = createSCLConditional()
-        newConditional.expression = conditional.expression.negate
-        newConditional.instructions.addAll(sList)
-        
-        iS.addInstruction(newConditional)
-        iS.addAll(conditional.instructions)
-        iS;
-    }
- 
-    def ArrayList<EObject> optimizeGoto(List<EObject> iList) {
-        var iS = createNewInstructionList()
-        
-        for(Integer i: 0..(iList.size - 1)) {
-            var boolean skip = false
-            val instruction = iList.get(i)
-            
-            if (instruction instanceof Goto && i < iList.size - 1) {
-                var Integer j = new Integer(i + 1)
-                var nextInstruction = iList.get(j)
-                while ((j < iList.size - 1) && (nextInstruction instanceof Annotation)) { 
-                    j = j + 1;
-                    nextInstruction = iList.get(j) 
-                }
-                if (nextInstruction!=null && nextInstruction instanceof Label) {
-                    if ((instruction as Goto).getName().equals((nextInstruction as Label).getName())) { skip = true }  
-                }
-            }
-            
-            if (!skip) { iS.add(instruction.copy) }
-        }
-      
-      iS
-    }
-    
-    def ArrayList<EObject> optimizeLabel(List<EObject> iList) {
-        var iS = createNewInstructionList();
-        
-        val gotos = ImmutableList::copyOf(iList.getAllContents.filter(typeof(Goto)))
-        
-        iS.addAll(iList.filter(e | 
-          (!(e instanceof Label)) || 
-          (gotos.exists(f | f.getName()==(e as Label).getName()))  
-        ));
-        
-        iS
-    }
-    
-    def ArrayList<ArrayList<EObject>> optimizeStateSetPosition(ArrayList<ArrayList<EObject>> stateILists) {
-        var statesIS = new ArrayList<ArrayList<EObject>>
-        var finished = new HashMap<List<EObject>, Boolean>
-        
-        val labelList = ImmutableList::copyOf(stateILists.getAllContents.toIterable.
-            filter(typeof(Label)))
-        val gotoList = ImmutableList::copyOf(stateILists.getAllContents.toIterable.
-            filter(typeof(Goto)))
-            
-        for(stateIList : stateILists) {
-            if (!finished.containsKey(stateIList)) {
-                if (stateIList.last instanceof Goto) {
-                    val targetGoto = stateIList.last as Goto
-                    val targetGotos = ImmutableList::copyOf(gotoList.filter(e | (e.getName() == targetGoto.getName())))
-                    val targetLabels = ImmutableList::copyOf(labelList.filter(e | (e.getName() == targetGoto.getName())))
-                    
-                    val stateIArray = new ArrayList<EObject>
-                    stateIArray.addAll(stateIList)
-                    statesIS.add(stateIArray)
-                    finished.put(stateIArray, true);
-
-                    if ((targetGotos.size == 1) && (targetLabels.size == 1)) {
-                        for(insertIList : stateILists) {
-                            if ((!finished.containsKey(insertIList)) && 
-                                (insertIList.getAllContents.toIterable.filter(typeof(Label)).
-                                    filter(e | e.getName()==targetGoto.getName()).size>0)) {
-                                val insertIArray = new ArrayList<EObject>
-                                insertIArray.addAll(insertIList)
-                                statesIS.add(insertIArray)
-                                finished.put(insertIList, true)        
-                            }
-                        }
-                    }
-                } else {
-                    val stateIArray = new ArrayList<EObject>
-                    stateIArray.addAll(stateIList)
-                    statesIS.add(stateIArray)
-                    finished.put(stateIList, true);
-                }    
-            }
-        }    
-        
-        statesIS
-    }
- 
+     
 }

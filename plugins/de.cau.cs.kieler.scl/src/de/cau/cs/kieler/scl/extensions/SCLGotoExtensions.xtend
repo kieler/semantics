@@ -51,10 +51,10 @@ class SCLGotoExtensions {
         var statements = statement.getThread.statements.copyAll
         while(statements.size>0 && statements.head != statement) statements = statements.tail.toList
         if (statements.size==0) return null
-        return statements.head as InstructionStatement
+        return statements.filter(typeof(InstructionStatement)).head as InstructionStatement
     }
     
-    def int getIncomingJumpCount(InstructionStatement statement) {
-        statement.getThread.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == statement).size
+    def getIncomingJumps(InstructionStatement statement) {
+        statement.getThread.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == statement)
     }
 }
