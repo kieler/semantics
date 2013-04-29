@@ -54,7 +54,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 
 	/**
 	 * Syntax:
-	 *     'oncycle' | 'always'
+	 *     'always' | 'oncycle'
 	 */
 	protected void emit_AlwaysEvent_AlwaysKeyword_1_0_or_OncycleKeyword_1_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -62,7 +62,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	
 	/**
 	 * Syntax:
-	 *     'default' | 'else'
+	 *     'else' | 'default'
 	 */
 	protected void emit_DefaultTrigger_DefaultKeyword_1_0_or_ElseKeyword_1_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

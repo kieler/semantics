@@ -50,6 +50,7 @@ import org.eclipse.xtext.serializer.ISerializer
 import org.yakindu.sct.model.stext.stext.Expression
 
 import static de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis.*
+import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -92,7 +93,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     private static val KRenderingFactory renderingFactory = KRenderingFactory::eINSTANCE
     
 	@Inject
-	extension SCLNamingExtensions
+	extension SCLExpressionExtensions
 	
 	@Inject
 	extension SCLThreadExtensions

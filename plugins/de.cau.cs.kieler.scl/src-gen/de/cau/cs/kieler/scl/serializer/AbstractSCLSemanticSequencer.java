@@ -884,7 +884,10 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         expression=Expression 
-	 *         ((statements+=InstructionStatement | statements+=EmptyStatement)* (statements+=InstructionStatement | statements+=EmptyStatement))?
+	 *         (
+	 *             ((statements+=InstructionStatement | statements+=EmptyStatement)* statements+=InstructionStatement statements+=EmptyStatement*) | 
+	 *             statements+=EmptyStatement*
+	 *         )
 	 *     )
 	 */
 	protected void sequence_Conditional(EObject context, Conditional semanticObject) {
@@ -966,7 +969,10 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     (
 	 *         name=ID 
 	 *         declarations+=VariableDeclaration* 
-	 *         ((statements+=InstructionStatement | statements+=EmptyStatement)* (statements+=InstructionStatement | statements+=EmptyStatement))?
+	 *         (
+	 *             ((statements+=InstructionStatement | statements+=EmptyStatement)* statements+=InstructionStatement statements+=EmptyStatement*) | 
+	 *             statements+=EmptyStatement*
+	 *         )
 	 *     )
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
@@ -978,7 +984,10 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         declarations+=VariableDeclaration* 
-	 *         ((statements+=InstructionStatement | statements+=EmptyStatement)* (statements+=InstructionStatement | statements+=EmptyStatement))?
+	 *         (
+	 *             ((statements+=InstructionStatement | statements+=EmptyStatement)* statements+=InstructionStatement statements+=EmptyStatement*) | 
+	 *             statements+=EmptyStatement*
+	 *         )
 	 *     )
 	 */
 	protected void sequence_StatementScope(EObject context, StatementScope semanticObject) {
@@ -988,7 +997,10 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (((statements+=InstructionStatement | statements+=EmptyStatement)* (statements+=InstructionStatement | statements+=EmptyStatement))?)
+	 *     (
+	 *         ((statements+=InstructionStatement | statements+=EmptyStatement)* statements+=InstructionStatement statements+=EmptyStatement*) | 
+	 *         statements+=EmptyStatement*
+	 *     )
 	 */
 	protected void sequence_Thread(EObject context, de.cau.cs.kieler.scl.scl.Thread semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -76,30 +76,6 @@ class SCLNamingExtensions {
             }
         }
         return StartSymbol + "_";
-    }
-    
-    // Because expression serialization, serializes ALL text until the preceding ";",
-    // one needs to filter this maybe wrongly serialized text away. 
-    def String correctSerialization(String text) {
-        val i1 = text.lastIndexOf("\r");
-        val i2 = text.lastIndexOf("\n");
-        val i3 = text.lastIndexOf("\t");
-        val i4 = text.lastIndexOf("*/")+1;
-        
-        if ((i1 > 0) || (i2 > 0) || (i3 > 0) || (i4 > 1)) {
-            var i = i4;
-            if ((i1 > i2) && (i1 > i3)  && (i1 > i4)) {
-                i = i1;
-            }
-            else if ((i2 > i1) && (i2 > i3)  && (i2 > i4)) {
-                i = i2;
-            }
-            else if ((i3 > i1) && (i3 > i2)  && (i3 > i4)) {
-                i = i3;
-            }
-            return text.substring(i+1);
-        }
-        text;
-    }    
+    }  
     
 }

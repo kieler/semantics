@@ -13,12 +13,18 @@ Program:
 	'module' name = ID
 	(declarations+=VariableDeclaration)*
 	'{'
-        (
+        ((
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-           statements += ( InstructionStatement | EmptyStatement)
-         )?
+           statements +=  InstructionStatement
+           statements +=  EmptyStatement*
+         )|
+         statements +=  EmptyStatement*)
     '}' 
 ;
+
+//KeyStringValueAnnotation returns annotations::StringAnnotation:
+//    '@' name=ID value=STRING
+//;
 
 VariableDeclaration:
     (input?='input')? (output?='output')? 'signal' (name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
@@ -49,10 +55,12 @@ Assignment:
 
 Conditional:
     'if' expression = Expression 'then'
-        (
+        ((
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-           statements += ( InstructionStatement | EmptyStatement)
-         )?
+           statements +=  InstructionStatement
+           statements +=  EmptyStatement*
+         )|
+         statements +=  EmptyStatement*)
     'end' 
 ;
 
@@ -66,10 +74,12 @@ AbstractThread:
 
 Thread:
     {Thread}
-        (
+        ((
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-           statements += ( InstructionStatement | EmptyStatement)
-         )?
+           statements +=  InstructionStatement
+           statements +=  EmptyStatement*
+         )|
+         statements +=  EmptyStatement*)
 ;
 
 Parallel:
@@ -89,9 +99,11 @@ StatementScope:
     {StatementScope}
     '{'
     (declarations+=VariableDeclaration)*
-        (
+        ((
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-           statements += ( InstructionStatement | EmptyStatement)
-         )?
+           statements +=  InstructionStatement
+           statements +=  EmptyStatement*
+         )|
+         statements +=  EmptyStatement*)
     '}'    
 ;

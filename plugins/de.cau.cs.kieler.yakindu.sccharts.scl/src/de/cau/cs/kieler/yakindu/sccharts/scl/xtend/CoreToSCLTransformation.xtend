@@ -152,6 +152,10 @@ class CoreToSCLTransformation {
         
         } // isComposite
        
+        if (iS.size==0) {
+            iS.add(createSCLEmptyStatement)
+        }
+        iS.head.label = stateID;
         iS;        
     }
     

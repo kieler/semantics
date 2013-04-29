@@ -36,21 +36,20 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
                              f.getProgramAccess().getRightCurlyBracketKeyword_5());
             
             c.setNoSpace().before(f.getVariableDeclarationAccess().getColonKeyword_4_0());
-	    
-            // Instructions
-//            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_1_0_0_0_1());
-//            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_0_1_0_0_0_1());
-//            c.setNoSpace().before(f.getInstructionListAccess().getSemicolonKeyword_1_1_2_0_0_0_1());
-//            c.setNoSpace().before(f.getProgramAccess().getSemicolonKeyword_4_0_0_0_1());
-//            c.setNoSpace().before(f.getConditionalAccess().getSemicolonKeyword_3_0_0_0_1());
-//            c.setNoSpace().before(f.getInstructionScopeAccess().getSemicolonKeyword_3_0_0_0_1());
-//            c.setNoSpace().before(f.getThreadAccess().getSemicolonKeyword_1_0_0_0_1());
-//            
-//            c.setLinewrap(1).before(f.getInstructionRule());
-//            c.setLinewrap(1).before(f.getAnnotationRule());
-//            c.setLinewrap(1).after(f.getAnnotationRule());
-//            c.setNoSpace().before(f.getLabelAccess().getColonKeyword_2());
-//            c.setLinewrap(1).before(f.getLabelAccess().getColonKeyword_2());
+
+            c.setLinewrap(1).after(f.getInstructionStatementRule());
+            
+            c.setNoSpace().before(f.getProgramAccess().getSemicolonKeyword_4_0_0_0_1());
+            c.setNoSpace().before(f.getConditionalAccess().getSemicolonKeyword_3_0_0_0_1());
+            c.setNoSpace().before(f.getThreadAccess().getSemicolonKeyword_1_0_0_0_1());
+            
+            c.setLinewrap(1).after(f.getProgramAccess().getSemicolonKeyword_4_0_0_0_1());
+            c.setLinewrap(1).after(f.getConditionalAccess().getSemicolonKeyword_3_0_0_0_1());
+            c.setLinewrap(1).after(f.getThreadAccess().getSemicolonKeyword_1_0_0_0_1());
+            
+            c.setNoSpace().before(f.getEmptyStatementAccess().getColonKeyword_1());
+            c.setLinewrap(1).after(f.getEmptyStatementAccess().getColonKeyword_1());
+            c.setLinewrap(1).after(f.getInstructionStatementAccess().getColonKeyword_0_1());
           
             // Conditional
             c.setLinewrap(1).after(f.getConditionalAccess().getThenKeyword_2());
