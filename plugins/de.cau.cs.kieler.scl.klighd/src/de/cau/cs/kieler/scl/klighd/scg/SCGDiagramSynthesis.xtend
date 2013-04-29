@@ -577,6 +577,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
          */ 
         val kNode = instr.createRectangulareNode(25, 85).putToLookUpWith(instr);
         kNode.KRendering.add(factory.createKLineWidth.of(2));
+        kNode.KRendering.background = "white".color
         kNode.addNSPortsFixed
         kNode.KRendering.add(factory.createKText.of(nodeText).putToLookUpWith(instr));
         rootNode.children.add(kNode)
