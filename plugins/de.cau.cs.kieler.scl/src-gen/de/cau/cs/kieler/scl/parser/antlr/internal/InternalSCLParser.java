@@ -2512,7 +2512,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParallel"
-    // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:911:1: ruleParallel returns [EObject current=null] : (otherlv_0= 'fork' ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )+ ) otherlv_4= 'join' ) ;
+    // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:911:1: ruleParallel returns [EObject current=null] : (otherlv_0= 'fork' ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )* ) otherlv_4= 'join' ) ;
     public final EObject ruleParallel() throws RecognitionException {
         EObject current = null;
 
@@ -2527,11 +2527,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:914:28: ( (otherlv_0= 'fork' ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )+ ) otherlv_4= 'join' ) )
-            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:915:1: (otherlv_0= 'fork' ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )+ ) otherlv_4= 'join' )
+            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:914:28: ( (otherlv_0= 'fork' ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )* ) otherlv_4= 'join' ) )
+            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:915:1: (otherlv_0= 'fork' ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )* ) otherlv_4= 'join' )
             {
-            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:915:1: (otherlv_0= 'fork' ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )+ ) otherlv_4= 'join' )
-            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:915:3: otherlv_0= 'fork' ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )+ ) otherlv_4= 'join'
+            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:915:1: (otherlv_0= 'fork' ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )* ) otherlv_4= 'join' )
+            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:915:3: otherlv_0= 'fork' ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )* ) otherlv_4= 'join'
             {
             otherlv_0=(Token)match(input,27,FOLLOW_27_in_ruleParallel1701); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -2539,8 +2539,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_0, grammarAccess.getParallelAccess().getForkKeyword_0());
                   
             }
-            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:919:1: ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )+ )
-            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:919:2: ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )+
+            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:919:1: ( ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )* )
+            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:919:2: ( (lv_threads_1_0= ruleThread ) ) (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )*
             {
             // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:919:2: ( (lv_threads_1_0= ruleThread ) )
             // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:920:1: (lv_threads_1_0= ruleThread )
@@ -2577,8 +2577,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:937:2: (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )+
-            int cnt20=0;
+            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:937:2: (otherlv_2= 'par' ( (lv_threads_3_0= ruleThread ) ) )*
             loop20:
             do {
                 int alt20=2;
@@ -2639,13 +2638,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    if ( cnt20 >= 1 ) break loop20;
-            	    if (state.backtracking>0) {state.failed=true; return current;}
-                        EarlyExitException eee =
-                            new EarlyExitException(20, input);
-                        throw eee;
+            	    break loop20;
                 }
-                cnt20++;
             } while (true);
 
 
@@ -18785,7 +18779,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     static final String DFA38_acceptS =
         "\1\uffff\1\3\2\uffff\25\1\25\2";
     static final String DFA38_specialS =
-        "\2\uffff\1\0\1\1\52\uffff}>";
+        "\2\uffff\1\1\1\0\52\uffff}>";
     static final String[] DFA38_transitionS = {
             "\1\1\35\uffff\5\1\1\2\1\3\1\1\3\uffff\14\1",
             "",
@@ -18876,61 +18870,6 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA38_2 = input.LA(1);
-
-                         
-                        int index38_2 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( LA38_2 ==RULE_ID && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 4;}
-
-                        else if ( LA38_2 ==34 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 5;}
-
-                        else if ( LA38_2 ==35 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 6;}
-
-                        else if ( LA38_2 ==36 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 7;}
-
-                        else if ( LA38_2 ==37 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 8;}
-
-                        else if ( LA38_2 ==45 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 9;}
-
-                        else if ( LA38_2 ==46 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 10;}
-
-                        else if ( LA38_2 ==47 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 11;}
-
-                        else if ( LA38_2 ==38 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 12;}
-
-                        else if ( LA38_2 ==39 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 13;}
-
-                        else if ( LA38_2 ==40 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 14;}
-
-                        else if ( LA38_2 ==41 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 15;}
-
-                        else if ( LA38_2 ==48 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 16;}
-
-                        else if ( LA38_2 ==49 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 17;}
-
-                        else if ( LA38_2 ==50 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 18;}
-
-                        else if ( LA38_2 ==51 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 19;}
-
-                        else if ( LA38_2 ==52 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 20;}
-
-                        else if ( LA38_2 ==53 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 21;}
-
-                        else if ( LA38_2 ==54 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 22;}
-
-                        else if ( LA38_2 ==55 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 23;}
-
-                        else if ( LA38_2 ==56 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 24;}
-
-                        else if ( (LA38_2==21) ) {s = 1;}
-
-                         
-                        input.seek(index38_2);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA38_3 = input.LA(1);
 
                          
@@ -18983,6 +18922,61 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                          
                         input.seek(index38_3);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA38_2 = input.LA(1);
+
+                         
+                        int index38_2 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (LA38_2==21) ) {s = 1;}
+
+                        else if ( LA38_2 ==RULE_ID && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 4;}
+
+                        else if ( LA38_2 ==34 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 5;}
+
+                        else if ( LA38_2 ==35 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 6;}
+
+                        else if ( LA38_2 ==36 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 7;}
+
+                        else if ( LA38_2 ==37 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 8;}
+
+                        else if ( LA38_2 ==45 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 9;}
+
+                        else if ( LA38_2 ==46 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 10;}
+
+                        else if ( LA38_2 ==47 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 11;}
+
+                        else if ( LA38_2 ==38 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 12;}
+
+                        else if ( LA38_2 ==39 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 13;}
+
+                        else if ( LA38_2 ==40 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 14;}
+
+                        else if ( LA38_2 ==41 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 15;}
+
+                        else if ( LA38_2 ==48 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 16;}
+
+                        else if ( LA38_2 ==49 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 17;}
+
+                        else if ( LA38_2 ==50 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 18;}
+
+                        else if ( LA38_2 ==51 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 19;}
+
+                        else if ( LA38_2 ==52 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 20;}
+
+                        else if ( LA38_2 ==53 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 21;}
+
+                        else if ( LA38_2 ==54 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 22;}
+
+                        else if ( LA38_2 ==55 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 23;}
+
+                        else if ( LA38_2 ==56 && getUnorderedGroupHelper().canSelect(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), 0) ) {s = 24;}
+
+                         
+                        input.seek(index38_2);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -19062,8 +19056,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleEmptyStatement_in_ruleThread1616 = new BitSet(new long[]{0x018004004C8083F2L,0x0000000001300004L});
     public static final BitSet FOLLOW_ruleParallel_in_entryRuleParallel1654 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleParallel1664 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_ruleParallel1701 = new BitSet(new long[]{0x018004005C8083F0L,0x0000000001300004L});
-    public static final BitSet FOLLOW_ruleThread_in_ruleParallel1723 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_27_in_ruleParallel1701 = new BitSet(new long[]{0x018004007C8083F0L,0x0000000001300004L});
+    public static final BitSet FOLLOW_ruleThread_in_ruleParallel1723 = new BitSet(new long[]{0x0000000030000000L});
     public static final BitSet FOLLOW_28_in_ruleParallel1736 = new BitSet(new long[]{0x018004007C8083F0L,0x0000000001300004L});
     public static final BitSet FOLLOW_ruleThread_in_ruleParallel1757 = new BitSet(new long[]{0x0000000030000000L});
     public static final BitSet FOLLOW_29_in_ruleParallel1772 = new BitSet(new long[]{0x0000000000000002L});

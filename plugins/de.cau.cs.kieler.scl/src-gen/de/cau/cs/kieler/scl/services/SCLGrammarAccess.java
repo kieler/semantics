@@ -153,6 +153,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInitialValueExpressionParserRuleCall_5_1_0 = (RuleCall)cInitialValueAssignment_5_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
+		////KeyStringValueAnnotation returns annotations::StringAnnotation:
+		//
+		////    '@' name=ID value=STRING
+		//
+		////;
+		//
 		//VariableDeclaration:
 		//
 		//	input?="input"? output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";";
@@ -621,16 +627,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Parallel:
 		//
-		//	"fork" (threads+=Thread ("par" threads+=Thread)+) "join";
+		//	"fork" (threads+=Thread ("par" threads+=Thread)*) "join";
 		public ParserRule getRule() { return rule; }
 
-		//"fork" (threads+=Thread ("par" threads+=Thread)+) "join"
+		//"fork" (threads+=Thread ("par" threads+=Thread)*) "join"
 		public Group getGroup() { return cGroup; }
 
 		//"fork"
 		public Keyword getForkKeyword_0() { return cForkKeyword_0; }
 
-		//threads+=Thread ("par" threads+=Thread)+
+		//threads+=Thread ("par" threads+=Thread)*
 		public Group getGroup_1() { return cGroup_1; }
 
 		//threads+=Thread
@@ -639,7 +645,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//Thread
 		public RuleCall getThreadsThreadParserRuleCall_1_0_0() { return cThreadsThreadParserRuleCall_1_0_0; }
 
-		//("par" threads+=Thread)+
+		//("par" threads+=Thread)*
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//"par"
@@ -850,6 +856,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getProgramAccess().getRule();
 	}
 
+	////KeyStringValueAnnotation returns annotations::StringAnnotation:
+	//
+	////    '@' name=ID value=STRING
+	//
+	////;
+	//
 	//VariableDeclaration:
 	//
 	//	input?="input"? output?="output"? "signal" name=ID (":" type=[types::Type])? ("=" initialValue=Expression)? ";";
@@ -966,7 +978,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Parallel:
 	//
-	//	"fork" (threads+=Thread ("par" threads+=Thread)+) "join";
+	//	"fork" (threads+=Thread ("par" threads+=Thread)*) "join";
 	public ParallelElements getParallelAccess() {
 		return (pParallel != null) ? pParallel : (pParallel = new ParallelElements());
 	}

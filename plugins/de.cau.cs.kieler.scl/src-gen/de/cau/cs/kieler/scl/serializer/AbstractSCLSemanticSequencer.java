@@ -948,7 +948,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (threads+=Thread threads+=Thread+)
+	 *     (threads+=Thread threads+=Thread*)
 	 */
 	protected void sequence_Parallel(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

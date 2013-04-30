@@ -86,7 +86,7 @@ Parallel:
     'fork'
     (    threads += Thread
     ('par'
-         threads += Thread)+)
+         threads += Thread)*)
     'join'
 ;
 

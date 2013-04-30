@@ -956,7 +956,7 @@ ruleParallel returns [EObject current=null]
 	    }
 
 )
-))+)	otherlv_4='join' 
+))*)	otherlv_4='join' 
     {
     	newLeafNode(otherlv_4, grammarAccess.getParallelAccess().getJoinKeyword_2());
     }
