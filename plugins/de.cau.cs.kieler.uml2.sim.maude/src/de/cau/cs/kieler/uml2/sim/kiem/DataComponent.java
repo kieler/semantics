@@ -106,6 +106,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     // TODO: is this used as relative position?
     // TODO: still needed? seems to be defined in DCSim and DCMC
     protected static final String MAUDEPARSESTATESTARTER = "maState doneC<STATEC>";
+    protected static final String MAUDEPARSESTATEEND = "<HISTC>";
 
     /** The Constant MAUDENOEVENT no event (will not be displayed). */
     protected static final String MAUDENOEVENT = "(ev: \"noevent\")";
@@ -233,22 +234,24 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         while (foundAnotherSolution) {
             try {
+            	// search:start and end of state configuration
                 int firstSolutionStartIndex = maudeResult.indexOf(MAUDEPARSESTATESTARTER);
-
                 // check if solution is found
                 if (firstSolutionStartIndex < 0) {
                     foundAnotherSolution = false;
                     break;
                 }
-
-                // part result
-                // start of what? i assume the state configuration
-                String maudePartResult = maudeResult.substring(firstSolutionStartIndex
-                        + MAUDEPARSESTATESTARTER.length());
-
+                firstSolutionStartIndex = firstSolutionStartIndex + MAUDEPARSESTATESTARTER.length();                
+                int firstSolutionEndIndex = maudeResult.substring(firstSolutionStartIndex).indexOf(MAUDEPARSESTATEEND);
+                firstSolutionEndIndex = firstSolutionEndIndex + firstSolutionStartIndex;
+                
+                // remove prefix and suffix
+                String maudePartResult = maudeResult.substring(
+                		firstSolutionStartIndex, 
+                        firstSolutionEndIndex);
+                
                 // remainder (may contain previous solutions)
-                maudeResult = maudeResult.substring(firstSolutionStartIndex
-                        + MAUDEPARSESTATESTARTER.length());
+                maudeResult = maudeResult.substring(firstSolutionStartIndex);
 
                 // FIXME: this has to be adapted to the new syntax
                 /*

@@ -33,7 +33,8 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
      */
     // TODO: is this used as relative position?
     // FIXME: the has to be adapted to the new syntax -> check
-    private static final String MAUDEPARSESTATESTARTER = "maState doneC<STATEC>"; // FALSCH!
+	private static final String MAUDEPARSESTATEEND = "<HISTC>"; 
+	private static final String MAUDEPARSESTATESTARTER = "maState doneC<STATEC>"; // FALSCH!
                                                                                   // "--> maState  doneC (r";
 
     /** The constant MAUDEERROR indicates the error token to search for. */
@@ -159,12 +160,16 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         // event pool
         String queryEP = "ready " + queryEQ + queryAS + " ";
         // configuration
+        // FIXME: 2013 add initial valuation here
         String queryCf = "stableC<STATEC> " + currentStatesRegionsQuery
-                + " <HISTC> empty <ENDCONF> ";
+                + " <HISTC> empty <VALUATIONS> NatVar(vID \"x\",0), NatVar(vID \"y\",0), NatVar(vID \"z\",0), NatVar(vID \"xy\",0) <ENDCONF> ";
         // machine configuration
         String queryMC = "maState (" + queryCf + ") (" + triggerEventsQuery + ") ";
         // system configuration
-        String querySC = "readyBFPSM (" + queryEP + ") (" + queryMC + ") ";
+        
+        // FIXME: Use pool in Maude
+        //String querySC = "readyBFPSM (" + queryEP + ") (" + queryMC + ") ";
+        String querySC = queryMC;
 
         // The event pool
         // readyBFPSM(ready <ready emptyQueue > <ready
@@ -176,15 +181,22 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         // "red " + queryEQ + ". \n"+
         // "red " + queryAT + ". \n"+
         // "red " + queryAS + ". \n"+
-
+        //"red " + queryAS + ". \n"+
         // "red " + queryEP + ". \n"+
-        // "red " + queryCf + ". \n"+
-        // "red " + queryMC + ". \n"+
+        //"red " + queryCf + ". \n"+
+        //"red " + queryMC + ". \n"+
         // "red " + querySC + ". \n"+
         // "red $allowed " + triggerEventsQuery + " " + queryAT + " . \n" +
-        "search " + querySC + " =>* mastate such that isDone mastate . \n";
-        // "rew [200] " + querySC +" . \n";
-
+        		
+        //"red isDoneSM " + querySC + " . \n"        		
+        //"rew " + querySC + " . \n"+  
+        "search " + querySC + " =>* mastate . \n"
+        // "rew [200] " + querySC +" . \n"
+        	;
+        
+        System.out.println("search " + querySC + " =>* mastate . \n");
+        
+        
         // Debug output query request
         printConsole(queryRequest);
 

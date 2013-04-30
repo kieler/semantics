@@ -26,10 +26,10 @@ String trigger2(Transition transition):
 String guard2(Transition transition):
   let transitionLabel = transition.name:
   let returnGuard = getGuard(transitionLabel.toString(), transition):
-  if (returnGuard != null && returnGuard.length > 0) then
-    returnGuard
+  if (returnGuard != null && returnGuard.length > 0 && returnGuard != 'true') then
+    returnGuard   	 
   else
-    'true'
+    'trueGD'
 ;
 
 // This method will immitate a transition action and return its String representation
