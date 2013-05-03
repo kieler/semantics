@@ -35,11 +35,13 @@ Statement:
 ;
 
 EmptyStatement:
+    (annotation += SL_COMMENT)*
     (label = ID ':')
 ;
 
 InstructionStatement:    
     (
+        (annotation += SL_COMMENT)*
         (label = ID ':')?
         instruction = (Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
     )

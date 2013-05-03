@@ -897,17 +897,10 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     label=ID
+	 *     (annotation+=SL_COMMENT* label=ID)
 	 */
 	protected void sequence_EmptyStatement(EObject context, EmptyStatement semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.STATEMENT__LABEL) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.STATEMENT__LABEL));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getEmptyStatementAccess().getLabelIDTerminalRuleCall_0_0(), semanticObject.getLabel());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -930,6 +923,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	/**
 	 * Constraint:
 	 *     (
+	 *         annotation+=SL_COMMENT* 
 	 *         label=ID? 
 	 *         (
 	 *             instruction=Assignment | 
