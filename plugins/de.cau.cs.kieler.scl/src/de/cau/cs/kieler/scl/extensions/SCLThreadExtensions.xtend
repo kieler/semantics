@@ -49,11 +49,11 @@ class SCLThreadExtensions {
     }
 
     // Checks if two instructions are in the same thread instruction list 
-    def dispatch boolean inSameThreadAs(Instruction instruction, Instruction secondInstruction) {
+    def dispatch boolean isInSameThreadAs(Instruction instruction, Instruction secondInstruction) {
         getThread(instruction) == getThread(secondInstruction)
     }
 
-    def dispatch boolean inSameThreadAs(Statement statement, Statement secondStatement) {
+    def dispatch boolean isInSameThreadAs(Statement statement, Statement secondStatement) {
         getThread(statement) == getThread(secondStatement)
     }
     
@@ -67,22 +67,22 @@ class SCLThreadExtensions {
     }
 
     // Checks if an instruction is in the given thread
-    def dispatch boolean isInThread(Instruction instruction, Thread thread) {
+    def dispatch boolean isInThread(Instruction instruction, AbstractThread thread) {
         thread.eAllContents.filter(typeof(InstructionStatement)).exists(e|e.instruction == instruction)
     }    
 
     // Checks if a statement is in the given thread
-    def dispatch boolean isInThread(Statement statement, Thread thread) {
+    def dispatch boolean isInThread(Statement statement, AbstractThread thread) {
         thread.eAllContents.filter(typeof(Statement)).exists(e|e == statement)
     }
     
     // Checks if a thread contains the given instruction
-    def dispatch boolean contains(Thread thread, Instruction instruction) {
+    def dispatch boolean contains(AbstractThread thread, Instruction instruction) {
         instruction.isInThread(thread)
     }    
     
     // Checks if a thread contains the given statement
-    def dispatch boolean contains(Thread thread, Statement statement) {
+    def dispatch boolean contains(AbstractThread thread, Statement statement) {
         statement.isInThread(thread)
     }
     
@@ -94,7 +94,7 @@ class SCLThreadExtensions {
         stmts
     }
     
-    def dropPrevious(Thread thread, Statement statement) {
+    def dropPrevious(AbstractThread thread, Statement statement) {
         if (statement.eContainer instanceof Conditional) {
             return dropPrevious((statement.eContainer as Conditional).statements, statement)    
         } else {
