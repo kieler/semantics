@@ -28,6 +28,8 @@ import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.kiml.util.KimlUtil
 import javax.inject.Inject
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.KPolygon
+
 /**
  * KRendering Utility class for KLighD visualization.
  * 
@@ -204,7 +206,7 @@ class KRenderingUtil {
     }
     
 
-    def KPolyline createTriangleShape() {
+    def KPolygon createTriangleShape() {
         factory.createKPolygon() => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
@@ -214,7 +216,7 @@ class KRenderingUtil {
          ];
     }	
 
-    def KPolyline createTriangleShapeReversed() {
+    def KPolygon createTriangleShapeReversed() {
         factory.createKPolygon() => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0f);
@@ -224,7 +226,7 @@ class KRenderingUtil {
         ];
     }   
 
-    def KPolyline createDiamondShape() {
+    def KPolygon createDiamondShape() {
         factory.createKPolygon() => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.5f);
@@ -235,7 +237,7 @@ class KRenderingUtil {
         ];
     }   
 
-    def KPolyline createSurfaceShape() {
+    def KPolygon createSurfaceShape() {
         factory.createKPolygon() => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 0);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.33f);
@@ -247,7 +249,7 @@ class KRenderingUtil {
         ];
     }   
 
-    def KPolyline createDepthShape() {
+    def KPolygon createDepthShape() {
         factory.createKPolygon() => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.66f);

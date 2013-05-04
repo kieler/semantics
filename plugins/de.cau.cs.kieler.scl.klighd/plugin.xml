@@ -19,8 +19,8 @@
    <extension
          point="de.cau.cs.kieler.klighd.layoutPostProcessors">
       <styleModifier
-            class="de.cau.cs.kieler.scl.klighd.scg.BasicBoxModifier"
-            id="de.cau.cs.kieler.scl.klighd.scg.BasicBoxModifier">
+            class="de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
+            id="de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier">
       </styleModifier>
    </extension>
 
