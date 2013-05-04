@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.kiml.options.SizeConstraint
 import de.cau.cs.kieler.kiml.util.KimlUtil
+import de.cau.cs.kieler.kiml.options.NodeLabelPlacement
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
@@ -44,10 +45,12 @@ import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.Statement
 import java.util.ArrayList
 import java.util.HashMap
+import java.util.EnumSet
 import javax.inject.Inject
 import org.eclipse.emf.common.util.EList
 import org.eclipse.xtext.serializer.ISerializer
 import org.yakindu.sct.model.stext.stext.Expression
+//import de.cau.cs.kieler.klighd.util.ExpansionAwareProperty
 
 import static de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis.*
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
@@ -132,6 +135,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     // To keep the code clean all edges are reserved and drawn once the program evaluation is complete.  
     private var HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>EdgeMapping;
     
+    private var KNode ProgramRootNode;
+    
     /**
      * {@inheritDoc}
      * <br><br>
@@ -165,6 +170,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
 
         // Evaluate the program beginning at the program root
+        ProgramRootNode = rootNode
         program.statements.createProgramFigure(rootNode);        		
         
         rootNode
@@ -471,15 +477,23 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY) {
                 kContainerNode = rootNode    
             } else {
-            kContainerNode = ContainerObj.createRoundedRectangulareNode().putToLookUpWith(thread)
-            kContainerNode.KRendering.add(factory.createKLineWidth.of(2));
-            kContainerNode.KRendering.foreground = "black".color;
-            kContainerNode.KRendering.foreground.alpha = 0;
-            kContainerNode.KRendering.background = "gray".color;
-            kContainerNode.KRendering.background.alpha = 100
+                kContainerNode = ContainerObj.createRoundedRectangulareNode().putToLookUpWith(thread)
+                kContainerNode.KRendering.add(factory.createKLineWidth.of(2));
+                kContainerNode.KRendering.foreground = "black".color;
+                kContainerNode.KRendering.foreground.alpha = 0;
+                kContainerNode.KRendering.background = "gray".color;
+                kContainerNode.KRendering.background.alpha = 100
+                
+//                kContainerNode.addLayoutParam(ExpansionAwareProperty::of(LayoutOptions::NODE_LABEL_PLACEMENT),
+//                    Pair::create(NodeLabelPlacement::outsideBottomCenter, EnumSet::of( NodeLabelPlacement::INSIDE,  NodeLabelPlacement::V_CENTER,  NodeLabelPlacement::H_CENTER)));
+//                kContainerNode.addRectangle.addText("[-]")=>[
+//                    it.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND);
+//                    it.setPointPlacementData(createKPosition(RIGHT, 14, 0, TOP, 2, 0), H_LEFT, V_TOP, 0,0,0,0)
+//                ]                
+                
 //            kContainerNode.KRendering.background.targetColor = "white".color;
 //            kContainerNode.KRendering.background.gradientAngle = -90;
-            rootNode.children.add(kContainerNode)
+                rootNode.children.add(kContainerNode)
             }
 
             // Set layout parameter for this hierarchy
@@ -510,22 +524,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
             // Create a fixed port at the entry node for outgoing edges.
             kEntryNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-//            (unassignedObject.createPort() => [
-//                kEntryNode.ports += it
-//                it.setPortPos(37, 30)
-//                it.setPortSize(2,2)
-//                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
-//            ]).addToPortMapping(kEntryNode, 'outgoing')
             kEntryNode.addNSPortsFixed;
 
             // Create a fixed port at the exit node for incoming edges.                
             kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-//            (ExitObj.createPort() => [
-//                kExitNode.ports += it
-//                it.setPortPos(37, 0)
-//                it.setPortSize(2,2)
-//                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
-//            ]).addToPortMapping(kExitNode, 'incoming')
             kExitNode.addNSPortsFixed;
 
             /*
@@ -547,7 +549,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 kExitNode.addEdge(kJoinNode)         
             } else {
                 createEdgeArrow(kForkNode, kContainerNode)
-                kContainerNode.addEdge(kJoinNode)         
+//                createEdgeArrow(kForkNode, kEntryNode)
+                kContainerNode.addEdge(kJoinNode)
+//                createEdgeArrow(kExitNode, kJoinNode)         
             }   
         }
             
@@ -816,6 +820,24 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     def KEdge createEdgeArrow(KNode sourceNode, KNode targetNode, String IDout, String IDin) {
         createEdge(sourceNode, targetNode, IDout, IDin, true)
     }
+    
+    def int hierarchyDepth(KNode node) {
+        var depth = 0
+        var parent = node.parent
+        while(parent!=ProgramRootNode) {
+            depth = depth + 1
+            parent = parent.parent
+        }
+        depth
+    }
+    
+    def KPort addAuxPort(KNode node) {
+      node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+      return unassignedObject.createPort() => [
+//         it.addRectangle.invisible = true;
+         node.ports += it
+      ]
+    }
 
     def KEdge createEdge(KNode sourceNode, KNode targetNode, String IDout, String IDin, boolean addArrow) {
         var KPort sPort = null
@@ -825,6 +847,28 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         }
         if (PortMapping.containsKey(targetNode)) {
             tPort = getPort(targetNode, IDin)
+        }
+        
+        // Check if one of the nodes is in a hierarchy
+        // For hierarchical nodes create a port and a second edge to route through the hierarchy
+        if (sourceNode.parent != targetNode.parent) {
+            var sNode = sourceNode
+            var tNode = targetNode
+            var sAPort = sPort
+            var tAPort = tPort
+            var tArrow = addArrow
+            if (sNode.hierarchyDepth > tNode.hierarchyDepth) {
+               sAPort = addAuxPort(sNode.parent)
+//               createEdge(sourceNode, sNode.parent, sPort, sAPort, false)
+               sNode = sNode.parent 
+            }
+            if (sNode.hierarchyDepth < tNode.hierarchyDepth) {
+                tAPort = addAuxPort(tNode.parent)
+                createEdge(tNode.parent, targetNode, tAPort, tPort, tArrow)
+                tArrow = false
+                tNode = tNode.parent
+            }
+            return createEdge(sNode, tNode, sAPort, tAPort, tArrow)
         }
         
         val edge = createEdge(sourceNode, targetNode, sPort, tPort, addArrow);
