@@ -291,6 +291,18 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
             // ignore any errors
             e.printStackTrace();
         }
+        
+        // FIXME: @Jens: Hier ein Beispiel um Variablen verschiedenen Typs einzufügen
+        int valInt = 46;
+        double valDouble = 4.6;
+        String valString = "HelloString";
+        try {
+            returnObj.accumulate("valInt", valInt);
+            returnObj.accumulate("valDouble", valDouble);
+            returnObj.accumulate("valString", valString);
+        } catch (Exception e) {
+            // ignore any errors
+        }        
 
         // no actions can be extracted so far
         return returnObj;
