@@ -8,7 +8,7 @@ import de.cau.cs.kieler.scl.scl.Statement
 import java.util.ArrayList
 import de.cau.cs.kieler.scl.scl.Assignment
 
-class SCLBasicBoxExtensions {
+class SCLBasicBlockExtensions {
     
     @Inject
     extension SCLGotoExtensions

@@ -39,6 +39,10 @@ class SCLStatementExtensions {
         }
         return statement as EmptyStatement
     }
+    
+    def Statement getStatement(Instruction instruction) {
+        instruction.eContainer as Statement
+    }
         
     def Goto asGoto(Instruction instruction) {
         instruction as Goto
