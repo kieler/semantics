@@ -25,8 +25,8 @@ import de.cau.cs.kieler.synccharts.sim.s.SyncChartsSimSPlugin
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 import de.cau.cs.kieler.core.kexpressions.Expression
 import com.google.common.collect.ImmutableList
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.synccharts.Action
