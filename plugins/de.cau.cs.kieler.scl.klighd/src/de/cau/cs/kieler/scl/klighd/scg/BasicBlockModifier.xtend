@@ -19,7 +19,9 @@ class BasicBlockModifier implements IStyleModifier {
     extension KRenderingExtensions KRenderingExtensions = 
          Guice::createInjector().getInstance(typeof(KRenderingExtensions))    
     extension KColorExtensions KColorExtensions = 
-         Guice::createInjector().getInstance(typeof(KColorExtensions))    
+         Guice::createInjector().getInstance(typeof(KColorExtensions))  
+         
+    private float BBPADDING = 5.0f  
 
     def KNode create node: KimlUtil::createInitializedNode getNode(Object o) {
     }
@@ -54,17 +56,45 @@ class BasicBlockModifier implements IStyleModifier {
         val rootNode = node.eContainer as KNode
 
         val shapeLayout = node.getData(typeof(KShapeLayout))
+        val basicBlockData = node.getData(typeof(BasicBlockDataHolder))
         
         val obj = new Object()
+        
+        var bbLeft = shapeLayout.xpos - BBPADDING
+        var bbTop = shapeLayout.ypos - BBPADDING
+        var bbRight = shapeLayout.xpos + shapeLayout.width + BBPADDING
+        var bbBottom = shapeLayout.ypos + shapeLayout.height + BBPADDING
        
-        val kNode = obj.createFrameNode(shapeLayout.xpos, shapeLayout.ypos, 
-            shapeLayout.xpos + shapeLayout.width, shapeLayout.ypos + shapeLayout.height
-        );
+        for(bbNode : basicBlockData.BasicBlockNodes) {
+            val bbNodeShapeLayout = bbNode.getData(typeof(KShapeLayout))
+            if (bbNodeShapeLayout.padLeft < bbLeft) bbLeft = bbNodeShapeLayout.padLeft
+            if (bbNodeShapeLayout.padTop < bbTop) bbTop = bbNodeShapeLayout.padTop
+            if (bbNodeShapeLayout.padRight > bbRight) bbRight = bbNodeShapeLayout.padRight
+            if (bbNodeShapeLayout.padBottom > bbBottom) bbBottom = bbNodeShapeLayout.padBottom
+        }
+       
+        val kNode = obj.createFrameNode(bbLeft, bbTop, bbRight, bbBottom);
 //        kNode.KRendering.add(factory.createKLineWidth.of(2));
         kNode.KRendering.background = "red".color
         rootNode.children.add(kNode)        
         
         return false;
+    }
+    
+    def float padLeft(KShapeLayout shapeLayout) {
+        shapeLayout.xpos - BBPADDING
+    }
+    
+    def float padRight(KShapeLayout shapeLayout) {
+        shapeLayout.xpos + shapeLayout.width + BBPADDING
+    }
+    
+    def float padTop(KShapeLayout shapeLayout) {
+        shapeLayout.ypos - BBPADDING
+    }
+    
+    def float padBottom(KShapeLayout shapeLayout) {
+        shapeLayout.ypos + shapeLayout.height + BBPADDING
     }
     
 }

@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scl.SCLStandaloneSetup
 import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
 import de.cau.cs.kieler.scl.extensions.SCLNamingExtensions
 import de.cau.cs.kieler.scl.extensions.SCLThreadExtensions
+import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
 import de.cau.cs.kieler.scl.scl.AbstractThread
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
@@ -54,6 +55,7 @@ import org.yakindu.sct.model.stext.stext.Expression
 
 import static de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis.*
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
+import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -71,38 +73,31 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     // Inject all necessary KRendering extensions
     @Inject
     extension KRenderingUtil
-	
 	@Inject
 	extension KNodeExtensions
-	
 	@Inject
 	extension KEdgeExtensions
-	
     @Inject
     extension KRenderingExtensions
-    
     @Inject
     extension KPolylineExtensions
-    
 	@Inject
 	extension KColorExtensions
-	
 	@Inject
 	extension KPortExtensions
-	
 	@Inject
 	extension KLabelExtensions
-	
     private static val KRenderingFactory renderingFactory = KRenderingFactory::eINSTANCE
-    
 	@Inject
 	extension SCLExpressionExtensions
-	
 	@Inject
 	extension SCLThreadExtensions
-
     @Inject
     extension SCLGotoExtensions	
+    @Inject
+    extension SCLStatementExtensions
+    @Inject
+    extension SCLBasicBlockExtensions
 	
 	
     // Constants for the klighd content filter
@@ -168,6 +163,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         rootNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
         rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        rootNode.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
 
         // Evaluate the program beginning at the program root
         ProgramRootNode = rootNode
@@ -217,11 +213,6 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             it.setPortSize(2,2)
             it.addRectangle.invisible = true;
             it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
-            it.data += renderingFactory.createKRoundedBendsPolyline() => [
-                it.invisible = true
-                it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
-            ];    
-                  
         ]).addToPortMapping(kExitNode, 'incoming')
         
         
@@ -334,6 +325,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         var sourceNode = entryNode
         var sourceNodeOutID = alternativeOutgoingID
         if (sourceNodeOutID.empty) { sourceNodeOutID = 'outgoing' }
+        
+        
+        var Statement actualBasicBlockRoot = null
 	    
 	    // iterate through whole instruction list
 	    for(statement : iList.filter(typeof(InstructionStatement))) {
@@ -371,6 +365,23 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 } 
             }  
             
+
+            if (actualBasicBlockRoot == null) {
+                actualBasicBlockRoot = instruction.getStatement
+            } else {
+                if (instruction instanceof Goto || 
+                    (!instruction.getStatement.isInBasicBlock(actualBasicBlockRoot.getBasicBlock))
+                    )
+                     {
+                    (InstructionMapping.get(actualBasicBlockRoot.instruction).first as KNode).addBasicBlockModifier(actualBasicBlockRoot)
+                    if (instruction instanceof Goto) {
+                        actualBasicBlockRoot = null
+                    } else {
+                        actualBasicBlockRoot = instruction.getStatement
+                    }
+                }
+            }
+
             /*
              * If it is a visual instruction, check if an edge to a preceding instruction should be 
              * drawn. Meaning, check if there are preceding instructions or if a source node is present.
@@ -409,8 +420,14 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 lastInstructions.addAll(returnList)
                 returnList.clear
             }
+            
         }
         
+        if (actualBasicBlockRoot != null) {
+            (InstructionMapping.get(actualBasicBlockRoot.instruction).first as KNode).addBasicBlockModifier(actualBasicBlockRoot)
+        }
+
+
         /*
          * If there is an exit node present and there are still instructions in the instruction list,
          * draw edges to the exit node.
@@ -691,6 +708,22 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         retList.add(instr as Instruction)           
         return retList
     }
+    
+    
+    def void addBasicBlockModifier(KNode node, Statement basicBlockRootStatement) {
+        if (node == null) { return }
+        node.data += renderingFactory.createKRoundedBendsPolyline() => [
+            it.invisible = true
+            it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
+        ];       
+        val bbDataHolder = new BasicBlockDataHolder(basicBlockRootStatement)
+        val bbStatements = basicBlockRootStatement.getBasicBlock
+        for(stmt : bbStatements) {
+            val stmtNode = InstructionMapping.get(stmt.asInstructionStatement.getInstruction).first
+            if (stmtNode != null) bbDataHolder.addNode(stmtNode)
+        }   
+        node.data += bbDataHolder
+    }    
     
     // ======================================================================================================
     // ==                       M A P P I N G   H E L P E R   F U N C T I O N S                            ==
