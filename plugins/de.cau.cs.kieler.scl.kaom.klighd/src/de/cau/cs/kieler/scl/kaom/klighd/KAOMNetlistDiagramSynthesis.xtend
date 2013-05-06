@@ -185,8 +185,12 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
             ]
 
             //kNode.addRectangle.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            kNode.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::INSIDE);
+            kNode.addLayoutParam(LayoutOptions::SIZE_CONSTRAINT, EnumSet::of(SizeConstraint::PORTS, SizeConstraint::PORT_LABELS, SizeConstraint::NODE_LABELS, SizeConstraint::MINIMUM_SIZE));
         } else {
+            kNode.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::OUTSIDE);
             val rectangle = kNode.addRectangle
+            
             switch (kaomEntity.name) {
                 case "AND": {
                     kNode.setNodeSize(40,29);
@@ -255,11 +259,18 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
                         createKPosition(RIGHT, 0, -0.02f, BOTTOM, 0,0.33f)
                     )
                 }
-                default: rectangle.addText(" " + kaomEntity.name + " ").setSurroundingSpace(8, 0)
+                default: {
+                    rectangle.addText(" " + kaomEntity.name + " ").setSurroundingSpace(8, 0)
+                    kNode.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::INSIDE);
+                    kNode.addLayoutParam(LayoutOptions::SIZE_CONSTRAINT, EnumSet::of(SizeConstraint::PORTS, SizeConstraint::PORT_LABELS, SizeConstraint::NODE_LABELS, SizeConstraint::MINIMUM_SIZE));
+               }
             }
         }
         
         kNode.addRectangle;
+        
+        // Put ports on fixed side
+        kNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
         
         //val kNode = kaomEntity.createRoundedRectangulareNode(25, 85);
         kNode.KRendering.lineWidth = 2;
@@ -271,26 +282,21 @@ class KAOMNetlistDiagramSynthesis extends AbstractDiagramSynthesis<Entity> {
         val retList = new ArrayList<Entity>
         retList.add(kaomEntity as Entity);
         
-        kNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-        kNode.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::INSIDE);
-        kNode.addLayoutParam(LayoutOptions::SIZE_CONSTRAINT, EnumSet::of(SizeConstraint::PORTS, SizeConstraint::PORT_LABELS, SizeConstraint::NODE_LABELS, SizeConstraint::MINIMUM_SIZE));
         for (port : kaomEntity.childPorts) {
             kNode.ports += port.createPort=>[
-                it.setPortSize(7,7);
+                it.setPortSize(5,5);
                 it.addLayoutParam(LayoutOptions::OFFSET, 0.0f);
                 if (!port.name.equals("In") && !port.name.equals("Out")) {
-                    it.createLabel.configureInsidePortLabel(port.name, 10, "Arial");
+                    it.createLabel.configureInsidePortLabel(port.name, 8, "Arial");
                 }
-                switch(port.name) {
-                    case "In": it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::WEST)
-                    case "Go": it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::WEST)
-                    case "Res": it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::WEST)
-                    case "Kill": it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::WEST)
-                    case "Out": it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::EAST)
-                    case "Sel": it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::EAST)
-                    case "K0": it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::EAST)
-                    case "K1": it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::EAST)
-                }
+                if (port.name.startsWith("In")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::WEST)}
+                if (port.name.startsWith("Go")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::WEST)}
+                if (port.name.startsWith("Res")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::WEST)}
+                if (port.name.startsWith("Kill")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::WEST)}
+                if (port.name.startsWith("Out")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::EAST)}
+                if (port.name.startsWith("Sel")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::EAST)}
+                if (port.name.startsWith("K0")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::EAST)}
+                if (port.name.startsWith("K1")) {it.addLayoutParam(LayoutOptions::PORT_SIDE,PortSide::EAST)}
             ]
         }
         
