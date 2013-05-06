@@ -35,13 +35,15 @@ class BasicBlockModifier implements IStyleModifier {
          ];        
     }
 
-    def KNode createFrameNode(Object o, int left, int top, int right, int bottom) {
+    def KNode createFrameNode(Object o, float left, float top, float right, float bottom) {
         val node = o.node;
         val shape = createFrameShape
         node.data.add(shape)
         val shapeLayout = node.getData(typeof(KShapeLayout))
         shapeLayout.height = bottom - top
         shapeLayout.width = right - left        
+        shapeLayout.xpos = left
+        shapeLayout.ypos = top
         return node;
     }
     
@@ -50,10 +52,14 @@ class BasicBlockModifier implements IStyleModifier {
         val style = context.getStyle()
         val KNode node = ModelingUtil::eContainerOfType(style, typeof(KNode))
         val rootNode = node.eContainer as KNode
+
+        val shapeLayout = node.getData(typeof(KShapeLayout))
         
         val obj = new Object()
        
-        val kNode = obj.createFrameNode(0,0,50,50);
+        val kNode = obj.createFrameNode(shapeLayout.xpos, shapeLayout.ypos, 
+            shapeLayout.xpos + shapeLayout.width, shapeLayout.ypos + shapeLayout.height
+        );
 //        kNode.KRendering.add(factory.createKLineWidth.of(2));
         kNode.KRendering.background = "red".color
         rootNode.children.add(kNode)        
