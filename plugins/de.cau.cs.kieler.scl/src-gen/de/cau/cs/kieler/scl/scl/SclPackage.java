@@ -207,13 +207,22 @@ public interface SclPackage extends EPackage
   int STATEMENT = 2;
 
   /**
+   * The feature id for the '<em><b>Annotation</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT__ANNOTATION = 0;
+
+  /**
    * The feature id for the '<em><b>Label</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATEMENT__LABEL = 0;
+  int STATEMENT__LABEL = 1;
 
   /**
    * The number of structural features of the '<em>Statement</em>' class.
@@ -222,7 +231,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATEMENT_FEATURE_COUNT = 1;
+  int STATEMENT_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.EmptyStatementImpl <em>Empty Statement</em>}' class.
@@ -233,6 +242,15 @@ public interface SclPackage extends EPackage
    * @generated
    */
   int EMPTY_STATEMENT = 3;
+
+  /**
+   * The feature id for the '<em><b>Annotation</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMPTY_STATEMENT__ANNOTATION = STATEMENT__ANNOTATION;
 
   /**
    * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -261,6 +279,15 @@ public interface SclPackage extends EPackage
    * @generated
    */
   int INSTRUCTION_STATEMENT = 4;
+
+  /**
+   * The feature id for the '<em><b>Annotation</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INSTRUCTION_STATEMENT__ANNOTATION = STATEMENT__ANNOTATION;
 
   /**
    * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -611,6 +638,17 @@ public interface SclPackage extends EPackage
   EClass getStatement();
 
   /**
+   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.scl.scl.Statement#getAnnotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Annotation</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Statement#getAnnotation()
+   * @see #getStatement()
+   * @generated
+   */
+  EAttribute getStatement_Annotation();
+
+  /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.Statement#getLabel <em>Label</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -930,6 +968,14 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EClass STATEMENT = eINSTANCE.getStatement();
+
+    /**
+     * The meta object literal for the '<em><b>Annotation</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STATEMENT__ANNOTATION = eINSTANCE.getStatement_Annotation();
 
     /**
      * The meta object literal for the '<em><b>Label</b></em>' attribute feature.

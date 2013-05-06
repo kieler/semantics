@@ -31,7 +31,7 @@ class SCLBasicBoxExtensions {
         while(stmt != null && 
               stmt.isEmpty &&
               stmt.getInstruction instanceof Assignment &&
-              stmt.asInstructionStatement.getIncomingJumps.size < 1) {
+              stmt.asInstructionStatement.getIncomingGotos.size < 1) {
                   bBox.add(stmt)
                   statementsTrim = statementsTrim.drop(1).toList
                   stmt = statementsTrim.head                    

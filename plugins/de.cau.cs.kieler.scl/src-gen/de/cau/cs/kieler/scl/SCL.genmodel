@@ -18,6 +18,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//VariableDeclaration/initialValue"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Statement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Statement/annotation"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Statement/label"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//EmptyStatement"/>

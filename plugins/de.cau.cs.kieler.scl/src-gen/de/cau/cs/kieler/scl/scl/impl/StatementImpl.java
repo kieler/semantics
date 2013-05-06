@@ -5,12 +5,18 @@ package de.cau.cs.kieler.scl.scl.impl;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,6 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl#getAnnotation <em>Annotation</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
@@ -27,6 +34,16 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class StatementImpl extends MinimalEObjectImpl.Container implements Statement
 {
+  /**
+   * The cached value of the '{@link #getAnnotation() <em>Annotation</em>}' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotation()
+   * @generated
+   * @ordered
+   */
+  protected EList<String> annotation;
+
   /**
    * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -73,6 +90,20 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<String> getAnnotation()
+  {
+    if (annotation == null)
+    {
+      annotation = new EDataTypeEList<String>(String.class, this, SclPackage.STATEMENT__ANNOTATION);
+    }
+    return annotation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getLabel()
   {
     return label;
@@ -101,6 +132,8 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case SclPackage.STATEMENT__ANNOTATION:
+        return getAnnotation();
       case SclPackage.STATEMENT__LABEL:
         return getLabel();
     }
@@ -112,11 +145,16 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
+      case SclPackage.STATEMENT__ANNOTATION:
+        getAnnotation().clear();
+        getAnnotation().addAll((Collection<? extends String>)newValue);
+        return;
       case SclPackage.STATEMENT__LABEL:
         setLabel((String)newValue);
         return;
@@ -134,6 +172,9 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case SclPackage.STATEMENT__ANNOTATION:
+        getAnnotation().clear();
+        return;
       case SclPackage.STATEMENT__LABEL:
         setLabel(LABEL_EDEFAULT);
         return;
@@ -151,6 +192,8 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case SclPackage.STATEMENT__ANNOTATION:
+        return annotation != null && !annotation.isEmpty();
       case SclPackage.STATEMENT__LABEL:
         return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
     }
@@ -168,7 +211,9 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (label: ");
+    result.append(" (annotation: ");
+    result.append(annotation);
+    result.append(", label: ");
     result.append(label);
     result.append(')');
     return result.toString();
