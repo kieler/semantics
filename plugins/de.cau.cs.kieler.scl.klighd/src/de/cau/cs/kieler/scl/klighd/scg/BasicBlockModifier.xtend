@@ -19,6 +19,8 @@ import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
 import de.cau.cs.kieler.core.kgraph.KLabel
 import de.cau.cs.kieler.core.kgraph.KLabeledGraphElement
 import java.util.List
+import de.cau.cs.kieler.core.krendering.KText
+import de.cau.cs.kieler.core.krendering.KContainerRendering
 
 class BasicBlockModifier implements IStyleModifier {
     
@@ -80,8 +82,10 @@ class BasicBlockModifier implements IStyleModifier {
         LSData.xpos = LSData.xpos + 5
         
         var gLT = ''
+        var labelLines = 0
         for (pred : basicBlockData.BasicBlockRootStatement.getBasicBlockPredecessorRoots) {
             gLT = gLT + 'P' + pred.getBasicBlockIndex + "\n"
+            labelLines = labelLines + 1
         } 
         val goLabelText = gLT
         val goLabel = node.createLabel() => [
@@ -90,7 +94,7 @@ class BasicBlockModifier implements IStyleModifier {
                 setFontSize(5).setForegroundColor(255, 0, 0);
         ]
         LSData = goLabel.getData(typeof(KShapeLayout))
-        LSData.ypos = LSData.ypos + 4
+        LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
         LSData.xpos = right - left + 8
 
         return node;
@@ -121,7 +125,6 @@ class BasicBlockModifier implements IStyleModifier {
         }
        
         val kNode = obj.createFrameNode(basicBlockData, bbLeft, bbTop, bbRight, bbBottom);
-//        kNode.KRendering.add(factory.createKLineWidth.of(2));
         rootNode.children.add(kNode)        
         
         return false;

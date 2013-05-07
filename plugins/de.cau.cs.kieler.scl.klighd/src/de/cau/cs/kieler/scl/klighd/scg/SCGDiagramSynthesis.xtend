@@ -116,7 +116,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
            SCGRAPH_WO_HIERARCHY, 
 //           SCGRAPH_AND_DEPENDENCIES, 
            SCGRAPH_AND_BASICBLOCKS
-       ), SCGRAPH);
+       ), SCGRAPH_AND_BASICBLOCKS);
 
     /*
      * These maps link the scl program instructions to krendering nodes and ports.

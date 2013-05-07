@@ -11,6 +11,7 @@ import java.util.List
 import java.util.ArrayList
 import de.cau.cs.kieler.scl.scl.Conditional
 import javax.inject.Inject
+import de.cau.cs.kieler.scl.scl.Parallel
 
 class SCLThreadExtensions {
         
@@ -47,6 +48,20 @@ class SCLThreadExtensions {
         var container = statement.eContainer
         while (container != null) {
             if (container instanceof Program) return container as AbstractThread
+            container = container.eContainer
+        }
+        return null
+    }
+    
+    def Statement[] getControlFlow(Instruction instruction) {
+        getControlFlow(instruction.eContainer as Statement)
+    }
+    
+    def Statement[] getControlFlow(Statement statement) {
+        var container = statement.eContainer
+        while (container != null) {
+            if (container instanceof AbstractThread) return (container as AbstractThread).statements
+            if (container instanceof Conditional) return (container as Conditional).statements
             container = container.eContainer
         }
         return null
@@ -124,5 +139,24 @@ class SCLThreadExtensions {
         if (index<0) return null
         thread.statements.get(index)
     }
+    
+    def Statement getPreviousStatementHierarchical(Statement statement) {
+        val cf = statement.getControlFlow
+        var index = cf.indexOf(statement) - 1
+        if (index<0) {
+            if (statement.eContainer instanceof Parallel) return (statement.eContainer as Parallel).getStatement
+            if (statement.eContainer instanceof Conditional) return (statement.eContainer as Conditional).getStatement
+            return null
+        }
+        cf.get(index)
+    }
+
+    def Statement getPreviousInstructionStatementHierarchical(Statement statement) {
+        var prevStatement = statement.previousStatementHierarchical
+        while (prevStatement != null && prevStatement.isEmpty) 
+            prevStatement = prevStatement.previousStatementHierarchical
+        prevStatement
+    }
+
     
 }

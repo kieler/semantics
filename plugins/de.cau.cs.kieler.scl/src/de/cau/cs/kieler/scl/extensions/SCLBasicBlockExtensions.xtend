@@ -8,6 +8,8 @@ import de.cau.cs.kieler.scl.scl.Statement
 import java.util.ArrayList
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Goto
+import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.scl.scl.Conditional
 
 class SCLBasicBlockExtensions {
     
@@ -19,15 +21,17 @@ class SCLBasicBlockExtensions {
     extension SCLThreadExtensions
     
     def ArrayList<Statement> getBasicBlock(Statement statement) {
-        getBasicBlock(statement, statement.getThread.statements)
+        getBasicBlock(statement, statement.getControlFlow)
     }
     
-    def ArrayList<Statement> getBasicBlock(Statement bbStatement, List<Statement> statements) {
+    def ArrayList<Statement> getBasicBlock(Statement statement, List<Statement> statements) {
         val bBox = new ArrayList<Statement>
         
-        var statement = bbStatement
-        while (statement.isGoto && statement != null) statement = statement.previousStatement
-        if (statement == null) return bBox
+        if (statement.isGoto) { 
+            var statementHier = statement.previousStatementHierarchical
+            bBox.add(statementHier)
+            return bBox
+        }
         
         val oIndex = statements.indexOf(statement)
         if (oIndex < 0) return bBox
@@ -40,11 +44,11 @@ class SCLBasicBlockExtensions {
             while (predIndex >= 0) {
                 val predStmt = statements.get(predIndex)
                 if (predStmt.isEmpty || predStmt.isGoto) predIndex = predIndex - 1
-                else if (predStmt.getInstruction instanceof Assignment && 
-                    predStmt.asInstructionStatement.getIncomingGotos.size == 0)
+                else if (predStmt.getInstruction instanceof Assignment)
                 {
                     predStatements.add(predStmt)
                     predIndex = predIndex - 1
+                    if (predStmt.asInstructionStatement.getIncomingGotos.size != 0) predIndex = -1
                 } 
                 else {
                     predIndex = -1                    
@@ -95,14 +99,20 @@ class SCLBasicBlockExtensions {
         basicBlock.getBasicBlockRoot.hashCode.toString
     }
     
-    def ArrayList<Statement> getAllBasicBlockRoots(Statement statement) {
+    def ArrayList<Statement> getBasicBlockRoots(Statement statement) {
         val allRoots = new ArrayList<Statement>
-        val mainThread = statement.getMainThread
-        for(stmt : mainThread.statements) {
+        val cf = statement.getControlFlow
+        for(stmt : cf) {
             val stmtBlockRoot = stmt.getBasicBlockRoot
             if (!allRoots.contains(stmtBlockRoot)) allRoots.add(stmtBlockRoot)
+            if (stmt.hasInstruction && stmt.getInstruction instanceof Conditional) 
+                allRoots.addAll((stmt.getInstruction as Conditional).statements.head.getBasicBlockRoots) 
         }
         allRoots
+    }
+    
+    def ArrayList<Statement> getAllBasicBlockRoots(Statement statement) {
+        getBasicBlockRoots(statement.getMainThread.statements.head)
     }
     
     def int getAllBasicBlockRootsCount(Statement statement) {
@@ -116,7 +126,7 @@ class SCLBasicBlockExtensions {
     
     def ArrayList<Statement> getBasicBlockPredecessorRoots(Statement basicBlockRoot) {
         val predecessors = new ArrayList<Statement>
-        val predStmt = basicBlockRoot.getPreviousInstructionStatement
+        val predStmt = basicBlockRoot.getPreviousInstructionStatementHierarchical
         if (predStmt == null) return predecessors
         
         if (!(predStmt.asInstructionStatement.getInstruction instanceof Goto)) predecessors.add(predStmt.getBasicBlockRoot)
