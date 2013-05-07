@@ -7,6 +7,7 @@ import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Statement
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.scl.EmptyStatement
 
 class SCLGotoExtensions {
     
@@ -48,10 +49,11 @@ class SCLGotoExtensions {
     // The result value will be the instruction or null. 
     def InstructionStatement getInstructionStatement(Statement statement) {
         if (statement instanceof InstructionStatement) return statement as InstructionStatement
-        var statements = statement.getThread.statements.copyAll
-        while(statements.size>0 && statements.head != statement) statements = statements.tail.toList
-        if (statements.size==0) return null
-        return statements.filter(typeof(InstructionStatement)).head as InstructionStatement
+        val thread = statement.getThread
+        var index = thread.statements.indexOf(statement)
+        while(index < thread.statements.size && (thread.statements.get(index) instanceof EmptyStatement)) index = index + 1
+        if (index == thread.statements.size) return null
+        return (thread.statements.get(index)) as InstructionStatement
     }
     
     def getIncomingGotos(Statement statement) {
