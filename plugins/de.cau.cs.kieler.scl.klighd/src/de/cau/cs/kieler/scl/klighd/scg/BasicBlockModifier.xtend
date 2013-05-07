@@ -11,8 +11,14 @@ import de.cau.cs.kieler.kiml.util.KimlUtil
 import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.core.krendering.KPolyline
+import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
+import de.cau.cs.kieler.core.kgraph.KLabel
+import de.cau.cs.kieler.core.kgraph.KLabeledGraphElement
+import java.util.List
 
 class BasicBlockModifier implements IStyleModifier {
     
@@ -20,10 +26,23 @@ class BasicBlockModifier implements IStyleModifier {
          Guice::createInjector().getInstance(typeof(KRenderingExtensions))    
     extension KColorExtensions KColorExtensions = 
          Guice::createInjector().getInstance(typeof(KColorExtensions))  
+//    extension KLabelExtensions KLabelExtensions = 
+//         Guice::createInjector().getInstance(typeof(KLabelExtensions))  
+    private static val KRenderingFactory renderingFactory = KRenderingFactory::eINSTANCE
+    extension SCLBasicBlockExtensions SCLBasicBlockExtensions = 
+         Guice::createInjector().getInstance(typeof(SCLBasicBlockExtensions))  
          
     private float BBPADDING = 5.0f  
 
     def KNode create node: KimlUtil::createInitializedNode getNode(Object o) {
+    }
+    
+    def KLabel create node: KimlUtil::createInitializedLabel(labeledElement) getLabel(List<?> o,
+            KLabeledGraphElement labeledElement) {
+    }
+    
+    def KLabel createLabel(KLabeledGraphElement labeledElement) {
+        return KimlUtil::createInitializedLabel(labeledElement)
     }
     
     def KPolyline createFrameShape() {
@@ -76,6 +95,11 @@ class BasicBlockModifier implements IStyleModifier {
         val kNode = obj.createFrameNode(bbLeft, bbTop, bbRight, bbBottom);
 //        kNode.KRendering.add(factory.createKLineWidth.of(2));
         kNode.KRendering.background = "red".color
+        kNode.createLabel() => [
+            it.text = basicBlockData.BasicBlockRootStatement.getBasicBlockID
+            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+                setFontSize(8);
+        ]
         rootNode.children.add(kNode)        
         
         return false;

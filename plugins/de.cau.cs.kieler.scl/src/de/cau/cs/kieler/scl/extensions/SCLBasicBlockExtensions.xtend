@@ -44,13 +44,37 @@ class SCLBasicBlockExtensions {
         bBox
     }
     
+    def boolean isInBasicBlock(Statement statement, Statement basicBlockRoot) {
+        isInBasicBlock(statement, basicBlockRoot.getBasicBlock)
+    }
+    
     def boolean isInBasicBlock(Statement statement, List<Statement> basicBlock) {
         basicBlock.contains(statement)
     }
     
-    def ArrayList<ArrayList<Statement>> getBasicBlockPredecessors(List<Statement> basicBox) {
+    def Statement getBasicBlockRoot(Statement basicBlockStatement) {
+        basicBlockStatement.getBasicBlock.getBasicBlockRoot
+    }
+    
+    def Statement getBasicBlockRoot(List<Statement> basicBlock) {
+        basicBlock.head
+    }
+    
+    def String getBasicBlockID(Statement basicBlockStatement) {
+        basicBlockStatement.getBasicBlock.getBasicBlockID
+    }
+    
+    def String getBasicBlockID(List<Statement> basicBlock) {
+        basicBlock.getBasicBlockRoot.hashCode.toString
+    }
+    
+    def ArrayList<Statement> getBasicBlockPredecessors(Statement basicBlockRoot) {
+        
+    }
+    
+    def ArrayList<ArrayList<Statement>> getBasicBlockPredecessors(List<Statement> basicBlock) {
         val predecessors = new ArrayList<ArrayList<Statement>>
-        val headStatement = basicBox.head
+        val headStatement = basicBlock.head
         val hsThread = headStatement.getThread
         if (hsThread.statements.head == headStatement) {
             // headStatement is first statement in this thread
