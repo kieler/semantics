@@ -102,8 +102,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	
     // Constants for the klighd content filter
     private static val SCGRAPH = "Draw SC Graph";
+    private static val SCGRAPH_WO_HIERARCHY = "Draw SC Graph without hierarchy";
     private static val SCGRAPH_AND_DEPENDENCIES = "Draw SC Graph && dependencies";
-    private static val SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY = "Draw SC Graph && dependencies without hierarchy";
+    private static val SCGRAPH_AND_BASICBLOCKS = "Draw SC Graph && basic blocks"
     
     private static val String SCG_FILTER_NAME = "SC Graph Filter";
 
@@ -111,7 +112,11 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * The class filter option definition that allows the user to customize the class diagram.
      */
     private static val TransformationOption SCGRAPH_FILTER = TransformationOption::createChoiceOption(SCG_FILTER_NAME,
-       ImmutableList::of(SCGRAPH, SCGRAPH_AND_DEPENDENCIES, SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY), SCGRAPH);
+       ImmutableList::of(SCGRAPH, 
+           SCGRAPH_WO_HIERARCHY, 
+//           SCGRAPH_AND_DEPENDENCIES, 
+           SCGRAPH_AND_BASICBLOCKS
+       ), SCGRAPH);
 
     /*
      * These maps link the scl program instructions to krendering nodes and ports.
@@ -493,7 +498,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             
             // Create container
             var KNode kContainerNode = null
-            if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY) {
+            if (SCGRAPH_FILTER.optionValue == SCGRAPH_WO_HIERARCHY) {
                 kContainerNode = rootNode    
             } else {
                 kContainerNode = ContainerObj.createRoundedRectangulareNode().putToLookUpWith(thread)
@@ -528,7 +533,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kEntryNode.KRendering.background = "white".color
             kEntryNode.KRendering.add(factory.createKText.of('entry'))
             kContainerNode.children.add(kEntryNode)
-            if (SCGRAPH_FILTER.optionValue != SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY)
+            if (SCGRAPH_FILTER.optionValue != SCGRAPH_WO_HIERARCHY)
                 kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
             
             // Create exit node
@@ -538,7 +543,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kExitNode.KRendering.background = "white".color
             kExitNode.KRendering.add(factory.createKText.of('exit'))
             kContainerNode.children.add(kExitNode)
-            if (SCGRAPH_FILTER.optionValue != SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY)
+            if (SCGRAPH_FILTER.optionValue != SCGRAPH_WO_HIERARCHY)
                 kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
 
             // Create a fixed port at the entry node for outgoing edges.
@@ -563,7 +568,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
              * Because the port mapping does not store multiple edges for one outgoing port, create the
              * fork edge directly.
              */
-            if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_DEPENDENCIES_WO_HIERARCHY) {
+            if (SCGRAPH_FILTER.optionValue == SCGRAPH_WO_HIERARCHY) {
                 createEdgeArrow(kForkNode, kEntryNode)
                 kExitNode.addEdge(kJoinNode)         
             } else {
@@ -712,6 +717,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     
     
     def void addBasicBlockModifier(KNode node, Statement basicBlockRootStatement) {
+        if (SCGRAPH_FILTER.optionValue != SCGRAPH_AND_BASICBLOCKS) { return }
         if (node == null) { return }
         node.data += renderingFactory.createKRoundedBendsPolyline() => [
             it.invisible = true
