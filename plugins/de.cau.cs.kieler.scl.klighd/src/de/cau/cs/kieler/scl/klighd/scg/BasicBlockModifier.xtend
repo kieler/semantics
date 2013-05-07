@@ -1,26 +1,23 @@
 package de.cau.cs.kieler.scl.klighd.scg
 
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.klighd.IStyleModifier
-import de.cau.cs.kieler.klighd.StyleModificationContext
-import de.cau.cs.kieler.klighd.util.ModelingUtil
-import javax.inject.Inject
 import com.google.inject.Guice
-import de.cau.cs.kieler.kiml.util.KimlUtil
-import de.cau.cs.kieler.core.krendering.KRendering
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
-import de.cau.cs.kieler.core.krendering.KPolyline
-import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
 import de.cau.cs.kieler.core.kgraph.KLabel
 import de.cau.cs.kieler.core.kgraph.KLabeledGraphElement
+import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.KPolyline
+import de.cau.cs.kieler.core.krendering.KRenderingFactory
+import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
+import de.cau.cs.kieler.kiml.util.KimlUtil
+import de.cau.cs.kieler.klighd.IStyleModifier
+import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.StyleModificationContext
+import de.cau.cs.kieler.klighd.util.ModelingUtil
+import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
 import java.util.List
-import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.krendering.KContainerRendering
+
+import static de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier.*
 
 class BasicBlockModifier implements IStyleModifier {
     

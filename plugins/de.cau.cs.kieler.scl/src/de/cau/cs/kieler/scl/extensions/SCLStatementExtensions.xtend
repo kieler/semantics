@@ -1,14 +1,12 @@
 package de.cau.cs.kieler.scl.extensions
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import javax.inject.Inject
-import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.EmptyStatement
-import de.cau.cs.kieler.scl.scl.InstructionStatement
-import de.cau.cs.kieler.scl.scl.Instruction
-import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Assignment
-import java.util.List
+import de.cau.cs.kieler.scl.scl.EmptyStatement
+import de.cau.cs.kieler.scl.scl.Goto
+import de.cau.cs.kieler.scl.scl.Instruction
+import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Statement
+import javax.inject.Inject
 
 class SCLStatementExtensions {
     

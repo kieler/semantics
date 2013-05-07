@@ -23,17 +23,17 @@ import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.kiml.options.SizeConstraint
 import de.cau.cs.kieler.kiml.util.KimlUtil
-import de.cau.cs.kieler.kiml.options.NodeLabelPlacement
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.TransformationOption
 import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
 import de.cau.cs.kieler.scl.SCLStandaloneSetup
-import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
-import de.cau.cs.kieler.scl.extensions.SCLNamingExtensions
-import de.cau.cs.kieler.scl.extensions.SCLThreadExtensions
 import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
+import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
+import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
+import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
+import de.cau.cs.kieler.scl.extensions.SCLThreadExtensions
 import de.cau.cs.kieler.scl.scl.AbstractThread
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
@@ -46,16 +46,12 @@ import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.Statement
 import java.util.ArrayList
 import java.util.HashMap
-import java.util.EnumSet
 import javax.inject.Inject
 import org.eclipse.emf.common.util.EList
 import org.eclipse.xtext.serializer.ISerializer
 import org.yakindu.sct.model.stext.stext.Expression
-//import de.cau.cs.kieler.klighd.util.ExpansionAwareProperty
 
 import static de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis.*
-import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
-import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
