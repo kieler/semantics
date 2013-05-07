@@ -10,8 +10,12 @@ import de.cau.cs.kieler.scl.scl.AbstractThread
 import java.util.List
 import java.util.ArrayList
 import de.cau.cs.kieler.scl.scl.Conditional
+import javax.inject.Inject
 
 class SCLThreadExtensions {
+        
+    @Inject
+    extension SCLStatementExtensions        
         
     // ======================================================================================================
     // ==                   S C L T H R E A D   M E T A M O D E L   E X T E N S I O N                      ==
@@ -100,6 +104,18 @@ class SCLThreadExtensions {
         } else {
             return dropPrevious(thread.statements, statement)
         }
+    }
+    
+    def InstructionStatement getPreviousInstructionStatement(Statement statement) {
+        val thread = statement.getThread
+        var index = thread.statements.indexOf(statement) - 1
+        if (index<=0) return null
+        while(index>0) {
+            val stmt = thread.statements.get(index)
+            if (stmt.hasInstruction) { return stmt.asInstructionStatement }
+            index = index - 1
+        }
+        return null
     }
     
 }

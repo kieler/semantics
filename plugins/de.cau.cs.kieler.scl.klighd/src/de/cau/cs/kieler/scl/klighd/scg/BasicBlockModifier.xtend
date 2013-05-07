@@ -56,7 +56,9 @@ class BasicBlockModifier implements IStyleModifier {
          ];        
     }
 
-    def KNode createFrameNode(Object o, float left, float top, float right, float bottom) {
+    def KNode createFrameNode(Object o, BasicBlockDataHolder basicBlockData, 
+        float left, float top, float right, float bottom
+    ) {
         val node = o.node;
         val shape = createFrameShape
         node.data.add(shape)
@@ -65,8 +67,34 @@ class BasicBlockModifier implements IStyleModifier {
         shapeLayout.width = right - left        
         shapeLayout.xpos = left
         shapeLayout.ypos = top
+
+        node.KRendering.background = "red".color
+
+        val headLabel = node.createLabel() => [
+            it.text = 'P' + basicBlockData.BasicBlockRootStatement.getBasicBlockIndex
+            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+                setFontSize(5).setForegroundColor(255, 0, 0);
+        ]
+        var LSData = headLabel.getData(typeof(KShapeLayout))
+        LSData.ypos = LSData.ypos - 4
+        LSData.xpos = LSData.xpos + 5
+        
+        var gLT = ''
+        for (pred : basicBlockData.BasicBlockRootStatement.getBasicBlockPredecessorRoots) {
+            gLT = gLT + 'P' + pred.getBasicBlockIndex + "\n"
+        } 
+        val goLabelText = gLT
+        val goLabel = node.createLabel() => [
+            it.text = goLabelText
+            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+                setFontSize(5).setForegroundColor(255, 0, 0);
+        ]
+        LSData = goLabel.getData(typeof(KShapeLayout))
+        LSData.ypos = LSData.ypos + 4
+        LSData.xpos = right - left + 8
+
         return node;
-    }
+    }    
     
     override modify(StyleModificationContext context) {
         System::out.println("MODIFIED2!");
@@ -92,14 +120,8 @@ class BasicBlockModifier implements IStyleModifier {
             if (bbNodeShapeLayout.padBottom > bbBottom) bbBottom = bbNodeShapeLayout.padBottom
         }
        
-        val kNode = obj.createFrameNode(bbLeft, bbTop, bbRight, bbBottom);
+        val kNode = obj.createFrameNode(basicBlockData, bbLeft, bbTop, bbRight, bbBottom);
 //        kNode.KRendering.add(factory.createKLineWidth.of(2));
-        kNode.KRendering.background = "red".color
-        kNode.createLabel() => [
-            it.text = basicBlockData.BasicBlockRootStatement.getBasicBlockID
-            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
-                setFontSize(8);
-        ]
         rootNode.children.add(kNode)        
         
         return false;

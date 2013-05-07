@@ -7,6 +7,7 @@ import java.util.List
 import de.cau.cs.kieler.scl.scl.Statement
 import java.util.ArrayList
 import de.cau.cs.kieler.scl.scl.Assignment
+import de.cau.cs.kieler.scl.scl.Goto
 
 class SCLBasicBlockExtensions {
     
@@ -23,22 +24,41 @@ class SCLBasicBlockExtensions {
     
     def ArrayList<Statement> getBasicBlock(Statement statement, List<Statement> statements) {
         val bBox = new ArrayList<Statement>
-        var boolean add = false
-        for (stmt : statements) {
-            if (add) {
-                if (stmt.hasInstruction && 
-                        ((stmt.getInstruction instanceof Assignment && 
-                        stmt.asInstructionStatement.getIncomingGotos.size>0)
-                    || (!(stmt.getInstruction instanceof Assignment)))
-                    ) add = false 
-                if (add && stmt != null && !stmt.isEmpty)
-                    bBox.add(stmt)
-            } else {
-                if (stmt == statement) {
-                    add = true
-                    bBox.add(stmt)
-                    if (stmt.hasInstruction && (!(stmt.getInstruction instanceof Assignment))) add = false
+        val oIndex = statements.indexOf(statement)
+        if (oIndex < 0) return bBox
+        val stmt = statements.get(oIndex)
+        if (stmt.hasInstruction && stmt.getInstruction instanceof Assignment && oIndex > 0) {
+            val predStatements = new ArrayList<Statement>
+            var predIndex = oIndex - 1
+            while (predIndex >= 0) {
+                val predStmt = statements.get(predIndex)
+                if (predStmt.isEmpty) predIndex = predIndex - 1
+                else if (predStmt.getInstruction instanceof Assignment && 
+                    predStmt.asInstructionStatement.getIncomingGotos.size == 0)
+                {
+                    predStatements.add(predStmt)
+                    predIndex = predIndex - 1
+                } 
+                else {
+                    predIndex = -1                    
                 }
+            }
+            bBox.addAll(predStatements.reverse)
+        }
+        bBox.add(stmt)
+        if (stmt.hasInstruction && !(stmt.getInstruction instanceof Assignment)) return bBox
+        var succIndex = oIndex + 1
+        while (succIndex < statements.size) {
+            val succStmt = statements.get(succIndex)
+            if (succStmt.isEmpty) succIndex = succIndex + 1
+            else if (succStmt.getInstruction instanceof Assignment && 
+                succStmt.asInstructionStatement.getIncomingGotos.size == 0)
+            {
+                bBox.add(succStmt)
+                succIndex = succIndex +1
+            } 
+            else {
+                succIndex = statements.size                    
             }
         }
         bBox
@@ -68,23 +88,37 @@ class SCLBasicBlockExtensions {
         basicBlock.getBasicBlockRoot.hashCode.toString
     }
     
-    def ArrayList<Statement> getBasicBlockPredecessors(Statement basicBlockRoot) {
-        
+    def ArrayList<Statement> getAllBasicBlockRoots(Statement statement) {
+        val allRoots = new ArrayList<Statement>
+        val mainThread = statement.getMainThread
+        for(stmt : mainThread.statements) {
+            val stmtBlockRoot = stmt.getBasicBlockRoot
+            if (!allRoots.contains(stmtBlockRoot)) allRoots.add(stmtBlockRoot)
+        }
+        allRoots
     }
     
-    def ArrayList<ArrayList<Statement>> getBasicBlockPredecessors(List<Statement> basicBlock) {
-        val predecessors = new ArrayList<ArrayList<Statement>>
-        val headStatement = basicBlock.head
-        val hsThread = headStatement.getThread
-        if (hsThread.statements.head == headStatement) {
-            // headStatement is first statement in this thread
-            // check container
-        } else {
-            // check previous instruction
-            
-        }
+    def int getAllBasicBlockRootsCount(Statement statement) {
+        getAllBasicBlockRoots(statement).size
+    }
+    
+    def int getBasicBlockIndex(Statement basicBlockRoot) {
+        val allRoots = basicBlockRoot.getAllBasicBlockRoots
+        allRoots.indexOf(basicBlockRoot)
+    }
+    
+    def ArrayList<Statement> getBasicBlockPredecessorRoots(Statement basicBlockRoot) {
+        val predecessors = new ArrayList<Statement>
+        val predStmt = basicBlockRoot.getPreviousInstructionStatement
+        if (predStmt == null) return predecessors
         
+        if (!(predStmt instanceof Goto)) predecessors.add(predStmt.getBasicBlockRoot)
+        for (goto : basicBlockRoot.asInstructionStatement.getIncomingGotos.toIterable) {
+            predecessors.add((goto.eContainer as Statement).getBasicBlockRoot)
+        }
+         
         predecessors
     }
+    
     
 }
