@@ -22,8 +22,13 @@ class SCLBasicBlockExtensions {
         getBasicBlock(statement, statement.getThread.statements)
     }
     
-    def ArrayList<Statement> getBasicBlock(Statement statement, List<Statement> statements) {
+    def ArrayList<Statement> getBasicBlock(Statement bbStatement, List<Statement> statements) {
         val bBox = new ArrayList<Statement>
+        
+        var statement = bbStatement
+        while (statement.isGoto && statement != null) statement = statement.previousStatement
+        if (statement == null) return bBox
+        
         val oIndex = statements.indexOf(statement)
         if (oIndex < 0) return bBox
         val stmt = statements.get(oIndex)
