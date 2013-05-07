@@ -112,7 +112,7 @@ class SCLBasicBlockExtensions {
         val predStmt = basicBlockRoot.getPreviousInstructionStatement
         if (predStmt == null) return predecessors
         
-        if (!(predStmt instanceof Goto)) predecessors.add(predStmt.getBasicBlockRoot)
+        if (!(predStmt.asInstructionStatement.getInstruction instanceof Goto)) predecessors.add(predStmt.getBasicBlockRoot)
         for (goto : basicBlockRoot.asInstructionStatement.getIncomingGotos.toIterable) {
             predecessors.add((goto.eContainer as Statement).getBasicBlockRoot)
         }
