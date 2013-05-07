@@ -8,9 +8,12 @@ import de.cau.cs.kieler.scl.scl.Statement
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.EmptyStatement
+import java.util.ArrayList
 
 class SCLGotoExtensions {
     
+    @Inject
+    extension SCLStatementExtensions
     @Inject
     extension SCLThreadExtensions
     
@@ -56,7 +59,19 @@ class SCLGotoExtensions {
         return (thread.statements.get(index)) as InstructionStatement
     }
     
-    def getIncomingGotos(Statement statement) {
-        statement.getThread.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == statement)
+    def ArrayList<Goto> getIncomingGotos(Statement statement) {
+        val gotos = new ArrayList<Goto>;
+        val directGotos = statement.getThread.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == statement)
+        var pStmt = statement.getPreviousStatement
+        while (pStmt.isEmpty) {
+            if (!pStmt.asEmptyStatement.label.nullOrEmpty) {
+                val indirectStatement = pStmt
+                val indirectGotos = statement.getThread.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == indirectStatement)
+                gotos.addAll(indirectGotos.toList)
+            }
+            pStmt = pStmt.getPreviousStatement
+        }
+        gotos.addAll(directGotos.toList)
+        gotos
     }
 }

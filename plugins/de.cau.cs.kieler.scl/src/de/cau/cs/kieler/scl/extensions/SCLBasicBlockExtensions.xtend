@@ -27,12 +27,14 @@ class SCLBasicBlockExtensions {
         val oIndex = statements.indexOf(statement)
         if (oIndex < 0) return bBox
         val stmt = statements.get(oIndex)
-        if (stmt.hasInstruction && stmt.getInstruction instanceof Assignment && oIndex > 0) {
+        if (stmt.hasInstruction && stmt.getInstruction instanceof Assignment && oIndex > 0
+            && stmt.asInstructionStatement.getIncomingGotos.size == 0
+        ) {
             val predStatements = new ArrayList<Statement>
             var predIndex = oIndex - 1
             while (predIndex >= 0) {
                 val predStmt = statements.get(predIndex)
-                if (predStmt.isEmpty) predIndex = predIndex - 1
+                if (predStmt.isEmpty || predStmt.isGoto) predIndex = predIndex - 1
                 else if (predStmt.getInstruction instanceof Assignment && 
                     predStmt.asInstructionStatement.getIncomingGotos.size == 0)
                 {
@@ -50,7 +52,7 @@ class SCLBasicBlockExtensions {
         var succIndex = oIndex + 1
         while (succIndex < statements.size) {
             val succStmt = statements.get(succIndex)
-            if (succStmt.isEmpty) succIndex = succIndex + 1
+            if (succStmt.isEmpty || succStmt.isGoto) succIndex = succIndex + 1
             else if (succStmt.getInstruction instanceof Assignment && 
                 succStmt.asInstructionStatement.getIncomingGotos.size == 0)
             {
@@ -113,7 +115,7 @@ class SCLBasicBlockExtensions {
         if (predStmt == null) return predecessors
         
         if (!(predStmt.asInstructionStatement.getInstruction instanceof Goto)) predecessors.add(predStmt.getBasicBlockRoot)
-        for (goto : basicBlockRoot.asInstructionStatement.getIncomingGotos.toIterable) {
+        for (goto : basicBlockRoot.asInstructionStatement.getIncomingGotos) {
             predecessors.add((goto.eContainer as Statement).getBasicBlockRoot)
         }
          

@@ -118,4 +118,11 @@ class SCLThreadExtensions {
         return null
     }
     
+    def Statement getPreviousStatement(Statement statement) {
+        val thread = statement.getThread
+        var index = thread.statements.indexOf(statement) - 1
+        if (index<0) return null
+        thread.statements.get(index)
+    }
+    
 }

@@ -23,6 +23,14 @@ class SCLStatementExtensions {
         statement instanceof InstructionStatement
     }
     
+    def boolean isGoto(Statement statement) {
+        (statement.hasInstruction && statement.asInstructionStatement.getInstruction instanceof Goto)
+    }
+    
+    def EmptyStatement asEmptyStatement(Statement statement) {
+        statement as EmptyStatement
+    }
+    
     def InstructionStatement asInstructionStatement(Statement statement) {
         statement as InstructionStatement
     }
