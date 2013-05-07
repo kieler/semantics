@@ -109,8 +109,8 @@ class SCLThreadExtensions {
     def InstructionStatement getPreviousInstructionStatement(Statement statement) {
         val thread = statement.getThread
         var index = thread.statements.indexOf(statement) - 1
-        if (index<=0) return null
-        while(index>0) {
+        if (index<0) return null
+        while(index>=0) {
             val stmt = thread.statements.get(index)
             if (stmt.hasInstruction) { return stmt.asInstructionStatement }
             index = index - 1

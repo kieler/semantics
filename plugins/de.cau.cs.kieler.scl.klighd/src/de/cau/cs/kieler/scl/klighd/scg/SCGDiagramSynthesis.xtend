@@ -424,7 +424,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         }
         
         if (actualBasicBlockRoot != null) {
-            (InstructionMapping.get(actualBasicBlockRoot.instruction).first as KNode).addBasicBlockModifier(actualBasicBlockRoot)
+            val bbInstructionNodePair = InstructionMapping.get(actualBasicBlockRoot.instruction)
+            if (bbInstructionNodePair != null) (bbInstructionNodePair.first as KNode).addBasicBlockModifier(actualBasicBlockRoot)                            
         }
 
 
