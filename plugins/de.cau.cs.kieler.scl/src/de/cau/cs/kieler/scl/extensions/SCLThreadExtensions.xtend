@@ -52,11 +52,11 @@ class SCLThreadExtensions {
         return null
     }
     
-    def Statement[] getControlFlow(Instruction instruction) {
-        getControlFlow(instruction.eContainer as Statement)
+    def List<Statement> getStatementSequence(Instruction instruction) {
+        getStatementSequence(instruction.eContainer as Statement)
     }
     
-    def Statement[] getControlFlow(Statement statement) {
+    def List<Statement> getStatementSequence(Statement statement) {
         var container = statement.eContainer
         while (container != null) {
             if (container instanceof AbstractThread) return (container as AbstractThread).statements
@@ -140,7 +140,7 @@ class SCLThreadExtensions {
     }
     
     def Statement getPreviousStatementHierarchical(Statement statement) {
-        val cf = statement.getControlFlow
+        val cf = statement.getStatementSequence
         var index = cf.indexOf(statement) - 1
         if (index<0) {
             if (statement.eContainer instanceof Parallel) return (statement.eContainer as Parallel).getStatement

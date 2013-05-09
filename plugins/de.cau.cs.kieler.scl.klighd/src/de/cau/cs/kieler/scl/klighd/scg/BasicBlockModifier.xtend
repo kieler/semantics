@@ -18,6 +18,8 @@ import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
 import java.util.List
 
 import static de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier.*
+import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 
 class BasicBlockModifier implements IStyleModifier {
     
@@ -30,6 +32,8 @@ class BasicBlockModifier implements IStyleModifier {
     private static val KRenderingFactory renderingFactory = KRenderingFactory::eINSTANCE
     extension SCLBasicBlockExtensions SCLBasicBlockExtensions = 
          Guice::createInjector().getInstance(typeof(SCLBasicBlockExtensions))  
+    extension SCLStatementExtensions SCLStatementExtensions = 
+         Guice::createInjector().getInstance(typeof(SCLStatementExtensions))  
          
     private float BBPADDING = 5.0f  
 
@@ -108,17 +112,23 @@ class BasicBlockModifier implements IStyleModifier {
         
         val obj = new Object()
         
-        var bbLeft = shapeLayout.xpos - BBPADDING
-        var bbTop = shapeLayout.ypos - BBPADDING
-        var bbRight = shapeLayout.xpos + shapeLayout.width + BBPADDING
-        var bbBottom = shapeLayout.ypos + shapeLayout.height + BBPADDING
+        var bbLeft = shapeLayout.xpos - BBPADDING + 100 
+        var bbTop = shapeLayout.ypos - BBPADDING + 100 
+        var bbRight = shapeLayout.xpos + shapeLayout.width + BBPADDING - 100 
+        var bbBottom = shapeLayout.ypos + shapeLayout.height + BBPADDING - 100
        
-        for(bbNode : basicBlockData.BasicBlockNodes) {
+        for(bbPair : basicBlockData.BasicBlockNodes) {
+            val bbNode = bbPair.first
+            val bbStatement = bbPair.second
             val bbNodeShapeLayout = bbNode.getData(typeof(KShapeLayout))
-            if (bbNodeShapeLayout.padLeft < bbLeft) bbLeft = bbNodeShapeLayout.padLeft
-            if (bbNodeShapeLayout.padTop < bbTop) bbTop = bbNodeShapeLayout.padTop
-            if (bbNodeShapeLayout.padRight > bbRight) bbRight = bbNodeShapeLayout.padRight
-            if (bbNodeShapeLayout.padBottom > bbBottom) bbBottom = bbNodeShapeLayout.padBottom
+            if (bbNodeShapeLayout.padLeft(basicBlockData.BasicBlockRootStatement, bbStatement) < bbLeft) 
+                bbLeft = bbNodeShapeLayout.padLeft(basicBlockData.BasicBlockRootStatement, bbStatement)
+            if (bbNodeShapeLayout.padTop(basicBlockData.BasicBlockRootStatement, bbStatement) < bbTop) 
+                bbTop = bbNodeShapeLayout.padTop(basicBlockData.BasicBlockRootStatement, bbStatement)
+            if (bbNodeShapeLayout.padRight(basicBlockData.BasicBlockRootStatement, bbStatement) > bbRight) 
+                bbRight = bbNodeShapeLayout.padRight(basicBlockData.BasicBlockRootStatement, bbStatement)
+            if (bbNodeShapeLayout.padBottom(basicBlockData.BasicBlockRootStatement, bbStatement) > bbBottom) 
+                bbBottom = bbNodeShapeLayout.padBottom(basicBlockData.BasicBlockRootStatement, bbStatement)
         }
        
         val kNode = obj.createFrameNode(basicBlockData, bbLeft, bbTop, bbRight, bbBottom);
@@ -127,20 +137,29 @@ class BasicBlockModifier implements IStyleModifier {
         return false;
     }
     
-    def float padLeft(KShapeLayout shapeLayout) {
+    def float padLeft(KShapeLayout shapeLayout, Statement basicBlockHead, Statement statement) {
         shapeLayout.xpos - BBPADDING
     }
     
-    def float padRight(KShapeLayout shapeLayout) {
+    def float padRight(KShapeLayout shapeLayout, Statement basicBlockHead, Statement statement) {
         shapeLayout.xpos + shapeLayout.width + BBPADDING
     }
     
-    def float padTop(KShapeLayout shapeLayout) {
-        shapeLayout.ypos - BBPADDING
+    def float padTop(KShapeLayout shapeLayout, Statement basicBlockHead, Statement statement) {
+        var pad = shapeLayout.ypos
+        if (statement.isPause && basicBlockHead == statement && basicBlockHead.getBasicBlockStatements.last != statement) {
+            pad = pad + 35
+        }
+        pad = pad - BBPADDING
+        pad
     }
     
-    def float padBottom(KShapeLayout shapeLayout) {
-        shapeLayout.ypos + shapeLayout.height + BBPADDING
+    def float padBottom(KShapeLayout shapeLayout, Statement basicBlockHead, Statement statement) {
+        var pad = shapeLayout.ypos + shapeLayout.height
+        if (statement.isPause && basicBlockHead.getBasicBlockStatements.last == statement) {
+            pad = pad - 45
+        } else pad = pad + BBPADDING
+        pad
     }
     
 }

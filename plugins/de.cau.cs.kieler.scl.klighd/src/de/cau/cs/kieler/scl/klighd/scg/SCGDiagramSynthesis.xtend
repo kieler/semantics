@@ -627,19 +627,19 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         // Create container for the two nodes and set layout parameter            
         val kContainerNode = containerObj.createRectangulareNode(70, 75).putToLookUpWith(instr);
         kContainerNode.KRendering.invisible = true;
-        kContainerNode.addLayoutParam(LayoutOptions::SPACING, 20.0f);
+        kContainerNode.addLayoutParam(LayoutOptions::SPACING, 25.0f);
         kContainerNode.addLayoutParam(LayoutOptions::BORDER_SPACING, 0.0f);
         kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
         kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
 
         // Create surface node           
-        val kNode = instr.createSurfaceNode(30, 75).putToLookUpWith(instr);
+        val kNode = instr.createSurfaceNode(25, 75).putToLookUpWith(instr);
         kNode.KRendering.add(factory.createKLineWidth.of(2));
         kNode.KRendering.add(factory.createKText.of("surface").putToLookUpWith(instr));
 
         // Create depth node
-        val kDepthNode = depthObj.createDepthNode(30, 75).putToLookUpWith(instr);
+        val kDepthNode = depthObj.createDepthNode(25, 75).putToLookUpWith(instr);
         kDepthNode.KRendering.add(factory.createKLineWidth.of(2));
         kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
             
@@ -720,10 +720,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
         ];       
         val bbDataHolder = new BasicBlockDataHolder(basicBlockRootStatement)
-        val bbStatements = basicBlockRootStatement.getBasicBlock
+        val bbStatements = basicBlockRootStatement.getBasicBlockStatements
         for(stmt : bbStatements) {
             val stmtNode = InstructionMapping.get(stmt.asInstructionStatement.getInstruction).first
-            if (stmtNode != null) bbDataHolder.addNode(stmtNode)
+            if (stmtNode != null) bbDataHolder.addNode(stmtNode, stmt)
         }   
         node.data += bbDataHolder
     }    

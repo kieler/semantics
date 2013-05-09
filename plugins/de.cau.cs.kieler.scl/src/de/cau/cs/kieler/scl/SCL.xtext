@@ -70,8 +70,12 @@ Goto:
     'goto' targetLabel = ID 
 ;
 
-AbstractThread:
-    Thread | Program
+//AbstractThread:
+//    Thread | Program
+//;
+
+StatementSequence:
+    Thread | Program | Conditional | StatementScope
 ;
 
 Thread:

@@ -7,6 +7,8 @@ import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Statement
 import javax.inject.Inject
+import de.cau.cs.kieler.scl.scl.Pause
+import de.cau.cs.kieler.scl.scl.Conditional
 
 class SCLStatementExtensions {
     
@@ -22,7 +24,15 @@ class SCLStatementExtensions {
     }
     
     def boolean isGoto(Statement statement) {
-        (statement.hasInstruction && statement.asInstructionStatement.getInstruction instanceof Goto)
+        (statement.hasInstruction && statement.getInstruction instanceof Goto)
+    }
+
+    def boolean isPause(Statement statement) {
+        (statement.hasInstruction && statement.getInstruction instanceof Pause)
+    }
+
+    def boolean isConditional(Statement statement) {
+        (statement.hasInstruction && statement.getInstruction instanceof Conditional)
     }
     
     def EmptyStatement asEmptyStatement(Statement statement) {
