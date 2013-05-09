@@ -371,7 +371,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 actualBasicBlockRoot = instruction.getStatement
             } else {
                 if (instruction instanceof Goto || 
-                    (!instruction.getStatement.isInBasicBlock(actualBasicBlockRoot.getBasicBlock))
+                    (!instruction.getStatement.isInBasicBlock(actualBasicBlockRoot.getBasicBlockByAnyStatement))
                     )
                      {
                     (InstructionMapping.get(actualBasicBlockRoot.instruction).first as KNode).addBasicBlockModifier(actualBasicBlockRoot)

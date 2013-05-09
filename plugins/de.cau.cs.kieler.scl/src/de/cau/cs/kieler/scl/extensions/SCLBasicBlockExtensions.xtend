@@ -59,9 +59,9 @@ class SCLBasicBlockExtensions {
     // Retrieves all statements of a basic block, identified by its first statement.
     // If the first statement is a pause, the depth of the pause is the beginning of this block. 
     // (In contrast the surface of a pause statement at the bottom of a block.)
-    def BasicBlock getBasicBlockStatements(Statement statement) {
+    def List<Statement> getBasicBlockStatements(Statement statement) {
         val statements = statement.getStatementSequence
-        val bBox = new BasicBlock()
+        val bBox = new ArrayList<Statement>
         
         if (statement.isGoto) { 
             var statementHier = statement.previousStatementHierarchical
@@ -102,33 +102,43 @@ class SCLBasicBlockExtensions {
     }
     
     // Retrievies the statement, that identifies the basic block
-    def Statement getBasicBlockFirst(List<Statement> basicBlock) {
-        basicBlock.head
+    def Statement getBasicBlockHead(BasicBlock basicBlock) {
+        basicBlock.getHead
     }
     
-    def Statement getBasicBlock(Statement statement) {
-        statement.getBasicBlockStatements.head
+    def BasicBlock createBasicBlock() {
+        new BasicBlock()
+    } 
+    
+    def BasicBlock create basicBlock: createBasicBlock() getBasicBlockByHead(Statement basicBlockHead) {
+        val statements = basicBlockHead.getBasicBlockStatements
+        basicBlock.addAll(statements)
+    }
+    
+    def BasicBlock getBasicBlockByAnyStatement(Statement statement) {
+        val statements = statement.getBasicBlockStatements
+        getBasicBlockByHead(statements.head)
     }
 
     // Returns the hashcode id of the basic block
     // (Which is identical with the ID of the first statement.)    
-    def String getBasicBlockID(Statement basicBlockHead) {
-        basicBlockHead.hashCode.toString
+    def String getBasicBlockID(BasicBlock basicBlock) {
+        basicBlock.getHead.hashCode.toString
     }
     
-    def List<Statement> getBasicBlocks(Statement statement) {
-        val allRoots = new ArrayList<Statement>
+    def List<BasicBlock> getBasicBlocks(Statement statement) {
+        val basicBlocks = new ArrayList<BasicBlock>
         val cf = statement.getStatementSequence
         for(stmt : cf) {
-            val stmtBlockHead = stmt.getBasicBlockStatements.head
-            if (stmtBlockHead != null && !allRoots.contains(stmtBlockHead)) allRoots.add(stmtBlockHead)
+            val stmtBlock = stmt.getBasicBlockByAnyStatement
+            if (stmtBlock != null && !basicBlocks.contains(stmtBlock)) basicBlocks.add(stmtBlock)
             if (stmt.hasInstruction && stmt.getInstruction instanceof Conditional) 
-                allRoots.addAll((stmt.getInstruction as Conditional).statements.head.getBasicBlocks) 
+                basicBlocks.addAll((stmt.getInstruction as Conditional).statements.head.getBasicBlocks) 
         }
-        allRoots
+        basicBlocks
     }
     
-    def List<Statement> getAllBasicBlocks(Statement statement) {
+    def List<BasicBlock> getAllBasicBlocks(Statement statement) {
         getBasicBlocks(statement.getMainThread.statements.head)
     }
     
