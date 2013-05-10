@@ -172,17 +172,27 @@ class SCLBasicBlockExtensions {
         c = -1
     }
     
-    def ArrayList<Statement> getBasicBlockPredecessorRoots(Statement basicBlockHead) {
-        val predecessors = new ArrayList<Statement>
-        val predStmt = basicBlockHead.getPreviousInstructionStatementHierarchical
-        if (predStmt == null) return predecessors
+    def List<BasicBlock> getBasicBlockPredecessor(BasicBlock basicBlock) {
+        val predecessors = new ArrayList<BasicBlock>;
+        val predStmt = basicBlock.getHead.getPreviousInstructionStatementHierarchical
+        if (predStmt == null || (predStmt.isConditional && basicBlock.PauseHeadIsDepth)) {
+            if (basicBlock.getHead.isPause && basicBlock.PauseHeadIsDepth) {
+                val pauseSurface = basicBlock.getHead.getBasicBlockByAnyStatement
+                predecessors.add(pauseSurface)
+            }
+            return predecessors
+        }
         
-//        if (!(predStmt.asInstructionStatement.getInstruction instanceof Goto)) predecessors.add(predStmt.getBasicBlockRoot)
-//        for (goto : basicBlockRoot.asInstructionStatement.getIncomingGotos) {
-//            predecessors.add((goto.eContainer as Statement).getBasicBlockFirst)
-//        }
+        if (!(predStmt.getInstruction instanceof Goto)) predecessors.add(predStmt.getBasicBlockByAnyStatement)
+        for (goto : basicBlock.getHead.asInstructionStatement.getIncomingGotos) {
+            predecessors.add((goto.eContainer as Statement).getBasicBlockByAnyStatement)
+        }
          
         predecessors
+    }
+    
+    def List<BasicBlock> getBasicBlockSuccessor(BasicBlock basicBlock) {
+        
     }
     
     

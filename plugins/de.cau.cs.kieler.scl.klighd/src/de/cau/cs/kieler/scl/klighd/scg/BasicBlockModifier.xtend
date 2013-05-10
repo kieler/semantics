@@ -84,21 +84,21 @@ class BasicBlockModifier implements IStyleModifier {
         LSData.ypos = LSData.ypos - 4
         LSData.xpos = LSData.xpos + 5
         
-//        var gLT = ''
-//        var labelLines = 0
-//        for (pred : basicBlockData.BasicBlockData.getBasicBlockPredecessorRoots) {
-//            gLT = gLT + 'P' + pred.getBasicBlockByHead(false).getBasicBlockIndex + "\n"
-//            labelLines = labelLines + 1
-//        } 
-//        val goLabelText = gLT
-//        val goLabel = node.createLabel() => [
-//            it.text = goLabelText
-//            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
-//                setFontSize(5).setForegroundColor(255, 0, 0);
-//        ]
-//        LSData = goLabel.getData(typeof(KShapeLayout))
-//        LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
-//        LSData.xpos = right - left + 8
+        var gLT = ''
+        var labelLines = 0
+        for (pred : basicBlock.getBasicBlockPredecessor) {
+            gLT = gLT + 'P' + pred.getBasicBlockIndex + "\n"
+            labelLines = labelLines + 1
+        } 
+        val goLabelText = gLT
+        val goLabel = node.createLabel() => [
+            it.text = goLabelText
+            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+                setFontSize(5).setForegroundColor(255, 0, 0);
+        ]
+        LSData = goLabel.getData(typeof(KShapeLayout))
+        LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
+        LSData.xpos = right - left + 8
 
         return node;
     }    
@@ -159,7 +159,7 @@ class BasicBlockModifier implements IStyleModifier {
     def float padBottom(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
         var pad = shapeLayout.ypos + shapeLayout.height
         val lastStatement = basicBlock.getHead.getBasicBlockStatements(basicBlock.PauseHeadIsDepth).last
-        if (lastStatement.isPause && (!basicBlock.PauseHeadIsDepth || lastStatement != statement)) {
+        if (statement.isPause && statement == lastStatement && (!(basicBlock.PauseHeadIsDepth && basicBlock.StatementSequence.size==1))) {
             pad = pad - 43
         } else pad = pad + BBPADDING
         pad
