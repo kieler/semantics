@@ -691,7 +691,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         var nodeText = serializer.serialize(exp);   
         
         // Create conditional node
-        val kNode = instr.createDiamondNode(75, 75).putToLookUpWith(instr);
+        val kNode = instr.createDiamondNode(50, 75).putToLookUpWith(instr);
         kNode.KRendering.add(factory.createKLineWidth.of(2));
         kNode.KRendering.add(factory.createKText.of(nodeText).putToLookUpWith(instr));
         rootNode.children.add(kNode)
@@ -700,7 +700,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kNode.addNSPortsFixed;            
         (unassignedObject.createPort() => [
             kNode.ports += it
-            it.setPortPos(75, 36)
+            it.setPortPos(75, 24)
             it.setPortSize(2,2)
             it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST);
         ]).addToPortMapping(kNode, 'conditional')

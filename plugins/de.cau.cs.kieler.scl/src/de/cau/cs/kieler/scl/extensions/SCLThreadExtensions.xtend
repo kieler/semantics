@@ -11,11 +11,14 @@ import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.scl.Goto
 
 class SCLThreadExtensions {
         
     @Inject
     extension SCLStatementExtensions        
+    @Inject
+    extension SCLGotoExtensions
         
     // ======================================================================================================
     // ==                   S C L T H R E A D   M E T A M O D E L   E X T E N S I O N                      ==
@@ -121,11 +124,11 @@ class SCLThreadExtensions {
     }
     
     def InstructionStatement getPreviousInstructionStatement(Statement statement) {
-        val thread = statement.getThread
-        var index = thread.statements.indexOf(statement) - 1
+        val statements = statement.getStatementSequence
+        var index = statements.indexOf(statement) - 1
         if (index<0) return null
         while(index>=0) {
-            val stmt = thread.statements.get(index)
+            val stmt = statements.get(index)
             if (stmt.hasInstruction) { return stmt.asInstructionStatement }
             index = index - 1
         }
@@ -133,10 +136,10 @@ class SCLThreadExtensions {
     }
     
     def Statement getPreviousStatement(Statement statement) {
-        val thread = statement.getThread
-        var index = thread.statements.indexOf(statement) - 1
+        val statements = statement.getStatementSequence
+        var index = statements.indexOf(statement) - 1
         if (index<0) return null
-        thread.statements.get(index)
+        statements.get(index)
     }
     
     def Statement getPreviousStatementHierarchical(Statement statement) {
@@ -156,6 +159,60 @@ class SCLThreadExtensions {
             prevStatement = prevStatement.previousStatementHierarchical
         prevStatement
     }
+    
+    
+    def Statement getNextStatement(Statement statement) {
+        getNextStatement(statement, false)
+    }
+    
+    def Statement getNextStatement(Statement statement, boolean resolveGotos) {
+        val statements = statement.getStatementSequence
+        var index = statements.indexOf(statement) + 1
+        if (index >= statements.size) return null
+        var result = statements.get(index)
+        var int cyclebreaker = 64
+        if (resolveGotos) while (result != null && result.isGoto && cyclebreaker > 0) {
+            val goto = result.getInstruction as Goto
+            result = goto.getTargetStatement  
+            cyclebreaker = cyclebreaker - 1
+        }         
+        result
+    }
+    
+    def Statement getNextInstructionStatement(Statement statement) {
+        getNextInstructionStatement(statement, false)
+    }
 
+    def Statement getNextInstructionStatement(Statement statement, boolean resolveGotos) {
+        var nextStatement = statement.getNextStatement(resolveGotos)
+        while (nextStatement != null && nextStatement.isEmpty) 
+            nextStatement = nextStatement.getNextStatement(resolveGotos)
+        nextStatement
+    }
+
+    def Statement getNextStatementHierarchical(Statement statement) {
+        getNextStatementHierarchical(statement, false) 
+    }
+    
+    def Statement getNextStatementHierarchical(Statement statement, boolean resolveGotos) {
+        val stmt = statement.getNextStatement(resolveGotos)
+        if (stmt == null) {
+            if (statement.eContainer instanceof Parallel) return (statement.eContainer as Parallel).getStatement.getNextStatement(resolveGotos)
+            if (statement.eContainer instanceof Conditional) return (statement.eContainer as Conditional).getStatement.getNextStatement(resolveGotos)
+            return null
+        }
+        stmt
+    }
+
+    def Statement getNextInstructionStatementHierarchical(Statement statement) {
+        getNextInstructionStatementHierarchical(statement, false) 
+    }
+
+    def Statement getNextInstructionStatementHierarchical(Statement statement, boolean resolveGotos) {
+        var nextStatement = statement.getNextStatementHierarchical(resolveGotos)
+        while (nextStatement != null && nextStatement.isEmpty) 
+            nextStatement = nextStatement.getNextStatementHierarchical(resolveGotos)
+        nextStatement
+    }    
     
 }

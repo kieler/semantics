@@ -192,7 +192,22 @@ class SCLBasicBlockExtensions {
     }
     
     def List<BasicBlock> getBasicBlockSuccessor(BasicBlock basicBlock) {
+        val successors = new ArrayList<BasicBlock>;
         
+        if (basicBlock.StatementSequence.last.isConditional) 
+            successors.add((basicBlock.StatementSequence.last.getInstruction as Conditional).statements.head.getBasicBlockByAnyStatement)
+        
+        val nextStmt = basicBlock.StatementSequence.last.getNextInstructionStatementHierarchical(true)
+        if (nextStmt != null) {
+            successors.add(nextStmt.getBasicBlockByAnyStatement)
+        } else if (basicBlock.StatementSequence.last.isPause && 
+            (!basicBlock.PauseHeadIsDepth || basicBlock.getHead != basicBlock.StatementSequence.last)
+        ) {
+            val pauseDepth = basicBlock.getHead.getBasicBlockByAnyStatementDepth
+            successors.add(pauseDepth)             
+        }
+        
+        successors
     }
     
     

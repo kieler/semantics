@@ -100,6 +100,23 @@ class BasicBlockModifier implements IStyleModifier {
         LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
         LSData.xpos = right - left + 8
 
+        var tLT = ''
+        labelLines = 0
+        for (pred : basicBlock.getBasicBlockSuccessor) {
+            tLT = tLT + 'P' + pred.getBasicBlockIndex + "\n"
+            labelLines = labelLines + 1
+        } 
+        val termLabelText = tLT
+        val termLabel = node.createLabel() => [
+            it.text = termLabelText
+            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+                setFontSize(5).setForegroundColor(128, 0, 0);
+        ]
+        LSData = termLabel.getData(typeof(KShapeLayout))
+        LSData.ypos = bottom - top - 5 * labelLines 
+        LSData.xpos = right - left + 8
+
+
         return node;
     }    
     
@@ -120,7 +137,9 @@ class BasicBlockModifier implements IStyleModifier {
             var bbBottom = 0.0f
             
             for(bbStatement : basicBlock.StatementSequence) {
+                if (!bbStatement.isEmpty) {
                 val bbNodePair = bBDH.NodeData.get(bbStatement.getInstruction)
+                if (bbNodePair != null) {
                 val bbNode = bbNodePair.first
                 val bbNodeShapeLayout = bbNode.getData(typeof(KShapeLayout))
                 if (bbNodeShapeLayout.padLeft(basicBlock, bbStatement) < bbLeft) 
@@ -131,6 +150,9 @@ class BasicBlockModifier implements IStyleModifier {
                     bbRight = bbNodeShapeLayout.padRight(basicBlock, bbStatement)
                 if (bbNodeShapeLayout.padBottom(basicBlock, bbStatement) > bbBottom) 
                     bbBottom = bbNodeShapeLayout.padBottom(basicBlock, bbStatement)
+                }
+                
+                }
             }
        
             val kNode = obj.createFrameNode(basicBlock, bbLeft, bbTop, bbRight, bbBottom);
