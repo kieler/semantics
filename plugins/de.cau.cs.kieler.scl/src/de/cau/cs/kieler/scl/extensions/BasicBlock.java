@@ -8,7 +8,7 @@ import de.cau.cs.kieler.scl.scl.Statement;
 public class BasicBlock {
     
     public List<Statement> StatementSequence;
-    public boolean PauseHeadIsSurface;
+    public boolean PauseHeadIsDepth = false;
     
     BasicBlock() {
         StatementSequence = new ArrayList<Statement>();
@@ -27,12 +27,20 @@ public class BasicBlock {
         StatementSequence.addAll(statements);
     }
     
-    public void setPauseHeadIsSurface(boolean isSurface) {
-        PauseHeadIsSurface = isSurface;
+    public void setPauseHeadIsDepth(boolean isDepth) {
+        PauseHeadIsDepth = isDepth;
     }
     
     public Statement getHead() {
         return StatementSequence.get(0);
     }
 
+    public boolean isEqual(BasicBlock basicBlock) {
+        if (basicBlock.StatementSequence.size()!=this.StatementSequence.size()) return false;
+        if (basicBlock.PauseHeadIsDepth!=this.PauseHeadIsDepth) return false;
+        if (this.StatementSequence.size()>0) {
+            if (!basicBlock.StatementSequence.get(0).equals(this.StatementSequence.get(0))) return false;
+        }
+        return true;
+    }
 }

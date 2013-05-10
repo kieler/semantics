@@ -215,11 +215,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             it.addRectangle.invisible = true;
             it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
         ]).addToPortMapping(kExitNode, 'incoming')
-        
-        
-        
-        
-            
+                    
         // Evaluate the root instruction list
         createInstructionListFigure(iList, rootNode, kEntryNode, kExitNode, '')
         ParallelExitMapping.put(iList.head.getThread, kExitNode);
@@ -261,6 +257,16 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             }
         }
 
+        if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_BASICBLOCKS) {
+            kExitNode.data += renderingFactory.createKRoundedBendsPolyline() => [
+                it.invisible = true
+                it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
+            ];       
+            val bbDataHolder = new BasicBlockDataHolder()
+            bbDataHolder.NodeData = InstructionMapping.clone as HashMap<Instruction, Pair<KNode, KNode>>
+            bbDataHolder.BasicBlockData.addAll(iList.head.getAllBasicBlocks)
+            kExitNode.data += bbDataHolder        
+        }
 
         if (SCGRAPH_FILTER.optionValue == SCGRAPH) return
 
@@ -367,21 +373,21 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             }  
             
 
-            if (actualBasicBlockRoot == null) {
-                actualBasicBlockRoot = instruction.getStatement
-            } else {
-                if (instruction instanceof Goto || 
-                    (!instruction.getStatement.isInBasicBlock(actualBasicBlockRoot.getBasicBlockByAnyStatement))
-                    )
-                     {
-                    (InstructionMapping.get(actualBasicBlockRoot.instruction).first as KNode).addBasicBlockModifier(actualBasicBlockRoot)
-                    if (instruction instanceof Goto) {
-                        actualBasicBlockRoot = null
-                    } else {
-                        actualBasicBlockRoot = instruction.getStatement
-                    }
-                }
-            }
+//            if (actualBasicBlockRoot == null) {
+//                actualBasicBlockRoot = instruction.getStatement
+//            } else {
+//                if (instruction instanceof Goto || 
+//                    (!instruction.getStatement.isInBasicBlock(actualBasicBlockRoot.getBasicBlockByAnyStatement))
+//                    )
+//                     {
+//                    (InstructionMapping.get(actualBasicBlockRoot.instruction).first as KNode).addBasicBlockModifier(actualBasicBlockRoot)
+//                    if (instruction instanceof Goto) {
+//                        actualBasicBlockRoot = null
+//                    } else {
+//                        actualBasicBlockRoot = instruction.getStatement
+//                    }
+//                }
+//            }
 
             /*
              * If it is a visual instruction, check if an edge to a preceding instruction should be 
@@ -424,10 +430,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             
         }
         
-        if (actualBasicBlockRoot != null) {
-            val bbInstructionNodePair = InstructionMapping.get(actualBasicBlockRoot.instruction)
-            if (bbInstructionNodePair != null) (bbInstructionNodePair.first as KNode).addBasicBlockModifier(actualBasicBlockRoot)                            
-        }
+//        if (actualBasicBlockRoot != null) {
+//            val bbInstructionNodePair = InstructionMapping.get(actualBasicBlockRoot.instruction)
+//            if (bbInstructionNodePair != null) (bbInstructionNodePair.first as KNode).addBasicBlockModifier(actualBasicBlockRoot)                            
+//        }
 
 
         /*
@@ -599,7 +605,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
          * addNSPortsFixed adds an incoming and an outgoing port to the node. See addNSPortsFixed for 
          * further information.
          */ 
-        val kNode = instr.createRectangulareNode(25, 85).putToLookUpWith(instr);
+        val kNode = instr.createRectangulareNode(25, 75).putToLookUpWith(instr);
         kNode.KRendering.add(factory.createKLineWidth.of(2));
         kNode.KRendering.background = "white".color
         kNode.addNSPortsFixed
@@ -712,22 +718,22 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     }
     
     
-    def void addBasicBlockModifier(KNode node, Statement basicBlockRootStatement) {
-        if (SCGRAPH_FILTER.optionValue != SCGRAPH_AND_BASICBLOCKS) { return }
-        if (node == null) { return }
-        node.data += renderingFactory.createKRoundedBendsPolyline() => [
-            it.invisible = true
-            it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
-        ];       
-        val bbDataHolder = new BasicBlockDataHolder(basicBlockRootStatement)
-        val bbStatements = basicBlockRootStatement.getBasicBlockStatements
-        for(stmt : bbStatements) {
-            val stmtNode = InstructionMapping.get(stmt.asInstructionStatement.getInstruction).first
-            if (stmtNode != null) bbDataHolder.addNode(stmtNode, stmt)
-        }   
-        node.data += bbDataHolder
-    }    
-    
+//    def void addBasicBlockModifier(KNode node, Statement basicBlockStatement) {
+//        if (SCGRAPH_FILTER.optionValue != SCGRAPH_AND_BASICBLOCKS) { return }
+//        if (node == null) { return }
+//        node.data += renderingFactory.createKRoundedBendsPolyline() => [
+//            it.invisible = true
+//            it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
+//        ];       
+//        val bbDataHolder = new BasicBlockDataHolder(basicBlockStatement.getBasicBlockByAnyStatement)
+//        val bbStatements = basicBlockStatement.getBasicBlockStatements
+//        for(stmt : bbStatements) {
+//            val stmtNode = InstructionMapping.get(stmt.asInstructionStatement.getInstruction).first
+//            if (stmtNode != null) bbDataHolder.addNode(stmtNode, stmt)
+//        }   
+//        node.data += bbDataHolder
+//    }    
+//    
     // ======================================================================================================
     // ==                       M A P P I N G   H E L P E R   F U N C T I O N S                            ==
     // ======================================================================================================

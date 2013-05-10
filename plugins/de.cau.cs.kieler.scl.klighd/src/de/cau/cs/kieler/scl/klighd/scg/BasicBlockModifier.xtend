@@ -20,6 +20,8 @@ import java.util.List
 import static de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier.*
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
+import java.util.ArrayList
+import de.cau.cs.kieler.scl.extensions.BasicBlock
 
 class BasicBlockModifier implements IStyleModifier {
     
@@ -59,7 +61,7 @@ class BasicBlockModifier implements IStyleModifier {
          ];        
     }
 
-    def KNode createFrameNode(Object o, BasicBlockDataHolder basicBlockData, 
+    def KNode createFrameNode(Object o, BasicBlock basicBlock, 
         float left, float top, float right, float bottom
     ) {
         val node = o.node;
@@ -74,7 +76,7 @@ class BasicBlockModifier implements IStyleModifier {
         node.KRendering.background = "red".color
 
         val headLabel = node.createLabel() => [
-            it.text = 'P' + basicBlockData.BasicBlockRootStatement.getBasicBlockIndex
+            it.text = 'P' + basicBlock.getBasicBlockIndex
             it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
                 setFontSize(5).setForegroundColor(255, 0, 0);
         ]
@@ -82,82 +84,83 @@ class BasicBlockModifier implements IStyleModifier {
         LSData.ypos = LSData.ypos - 4
         LSData.xpos = LSData.xpos + 5
         
-        var gLT = ''
-        var labelLines = 0
-        for (pred : basicBlockData.BasicBlockRootStatement.getBasicBlockPredecessorRoots) {
-            gLT = gLT + 'P' + pred.getBasicBlockIndex + "\n"
-            labelLines = labelLines + 1
-        } 
-        val goLabelText = gLT
-        val goLabel = node.createLabel() => [
-            it.text = goLabelText
-            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
-                setFontSize(5).setForegroundColor(255, 0, 0);
-        ]
-        LSData = goLabel.getData(typeof(KShapeLayout))
-        LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
-        LSData.xpos = right - left + 8
+//        var gLT = ''
+//        var labelLines = 0
+//        for (pred : basicBlockData.BasicBlockData.getBasicBlockPredecessorRoots) {
+//            gLT = gLT + 'P' + pred.getBasicBlockByHead(false).getBasicBlockIndex + "\n"
+//            labelLines = labelLines + 1
+//        } 
+//        val goLabelText = gLT
+//        val goLabel = node.createLabel() => [
+//            it.text = goLabelText
+//            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+//                setFontSize(5).setForegroundColor(255, 0, 0);
+//        ]
+//        LSData = goLabel.getData(typeof(KShapeLayout))
+//        LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
+//        LSData.xpos = right - left + 8
 
         return node;
     }    
     
     override modify(StyleModificationContext context) {
-        System::out.println("MODIFIED2!");
+        System::out.println("MODIFIED2!")
         val style = context.getStyle()
         val KNode node = ModelingUtil::eContainerOfType(style, typeof(KNode))
         val rootNode = node.eContainer as KNode
 
-        val shapeLayout = node.getData(typeof(KShapeLayout))
-        val basicBlockData = node.getData(typeof(BasicBlockDataHolder))
+        val bBDH = node.getData(typeof(BasicBlockDataHolder))
         
-        val obj = new Object()
+        for(basicBlock : bBDH.BasicBlockData) {        
+            val obj = new Object()
         
-        var bbLeft = shapeLayout.xpos - BBPADDING + 100 
-        var bbTop = shapeLayout.ypos - BBPADDING + 100 
-        var bbRight = shapeLayout.xpos + shapeLayout.width + BBPADDING - 100 
-        var bbBottom = shapeLayout.ypos + shapeLayout.height + BBPADDING - 100
+            var bbLeft = 100000.0f 
+            var bbTop = 100000.0f 
+            var bbRight = 0.0f
+            var bbBottom = 0.0f
+            
+            for(bbStatement : basicBlock.StatementSequence) {
+                val bbNodePair = bBDH.NodeData.get(bbStatement.getInstruction)
+                val bbNode = bbNodePair.first
+                val bbNodeShapeLayout = bbNode.getData(typeof(KShapeLayout))
+                if (bbNodeShapeLayout.padLeft(basicBlock, bbStatement) < bbLeft) 
+                    bbLeft = bbNodeShapeLayout.padLeft(basicBlock, bbStatement)
+                if (bbNodeShapeLayout.padTop(basicBlock, bbStatement) < bbTop) 
+                    bbTop = bbNodeShapeLayout.padTop(basicBlock, bbStatement)
+                if (bbNodeShapeLayout.padRight(basicBlock, bbStatement) > bbRight) 
+                    bbRight = bbNodeShapeLayout.padRight(basicBlock, bbStatement)
+                if (bbNodeShapeLayout.padBottom(basicBlock, bbStatement) > bbBottom) 
+                    bbBottom = bbNodeShapeLayout.padBottom(basicBlock, bbStatement)
+            }
        
-        for(bbPair : basicBlockData.BasicBlockNodes) {
-            val bbNode = bbPair.first
-            val bbStatement = bbPair.second
-            val bbNodeShapeLayout = bbNode.getData(typeof(KShapeLayout))
-            if (bbNodeShapeLayout.padLeft(basicBlockData.BasicBlockRootStatement, bbStatement) < bbLeft) 
-                bbLeft = bbNodeShapeLayout.padLeft(basicBlockData.BasicBlockRootStatement, bbStatement)
-            if (bbNodeShapeLayout.padTop(basicBlockData.BasicBlockRootStatement, bbStatement) < bbTop) 
-                bbTop = bbNodeShapeLayout.padTop(basicBlockData.BasicBlockRootStatement, bbStatement)
-            if (bbNodeShapeLayout.padRight(basicBlockData.BasicBlockRootStatement, bbStatement) > bbRight) 
-                bbRight = bbNodeShapeLayout.padRight(basicBlockData.BasicBlockRootStatement, bbStatement)
-            if (bbNodeShapeLayout.padBottom(basicBlockData.BasicBlockRootStatement, bbStatement) > bbBottom) 
-                bbBottom = bbNodeShapeLayout.padBottom(basicBlockData.BasicBlockRootStatement, bbStatement)
-        }
-       
-        val kNode = obj.createFrameNode(basicBlockData, bbLeft, bbTop, bbRight, bbBottom);
-        rootNode.children.add(kNode)        
+            val kNode = obj.createFrameNode(basicBlock, bbLeft, bbTop, bbRight, bbBottom);
+            rootNode.children.add(kNode)
+        }        
         
         return false;
     }
     
-    def float padLeft(KShapeLayout shapeLayout, Statement basicBlockHead, Statement statement) {
+    def float padLeft(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
         shapeLayout.xpos - BBPADDING
     }
     
-    def float padRight(KShapeLayout shapeLayout, Statement basicBlockHead, Statement statement) {
+    def float padRight(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
         shapeLayout.xpos + shapeLayout.width + BBPADDING
     }
     
-    def float padTop(KShapeLayout shapeLayout, Statement basicBlockHead, Statement statement) {
+    def float padTop(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
         var pad = shapeLayout.ypos
-        if (statement.isPause && basicBlockHead == statement && basicBlockHead.getBasicBlockStatements.last != statement) {
-            pad = pad + 35
-        }
-        pad = pad - BBPADDING
+        if (statement.isPause && basicBlock.getHead == statement && basicBlock.PauseHeadIsDepth) {
+            pad = pad + 43
+        } else pad = pad - BBPADDING
         pad
     }
     
-    def float padBottom(KShapeLayout shapeLayout, Statement basicBlockHead, Statement statement) {
+    def float padBottom(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
         var pad = shapeLayout.ypos + shapeLayout.height
-        if (statement.isPause && basicBlockHead.getBasicBlockStatements.last == statement) {
-            pad = pad - 45
+        val lastStatement = basicBlock.getHead.getBasicBlockStatements(basicBlock.PauseHeadIsDepth).last
+        if (lastStatement.isPause && (!basicBlock.PauseHeadIsDepth || lastStatement != statement)) {
+            pad = pad - 43
         } else pad = pad + BBPADDING
         pad
     }

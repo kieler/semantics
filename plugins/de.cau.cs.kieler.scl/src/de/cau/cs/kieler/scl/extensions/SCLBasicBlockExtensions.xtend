@@ -60,19 +60,23 @@ class SCLBasicBlockExtensions {
     // If the first statement is a pause, the depth of the pause is the beginning of this block. 
     // (In contrast the surface of a pause statement at the bottom of a block.)
     def List<Statement> getBasicBlockStatements(Statement statement) {
+        getBasicBlockStatements(statement, false)
+    }
+    
+    def List<Statement> getBasicBlockStatements(Statement statement, boolean isDepth) {
         val statements = statement.getStatementSequence
         val bBox = new ArrayList<Statement>
         
         if (statement.isGoto) { 
             var statementHier = statement.previousStatementHierarchical
-            bBox.add(statementHier)
-            return bBox
+            return getBasicBlockStatements(statementHier, isDepth)
         }
         
         val oIndex = statements.indexOf(statement)
         if (oIndex < 0) return bBox
         val stmt = statements.get(oIndex)
-        if (!stmt.isBasicBlockFirst) {
+        if (!stmt.isBasicBlockFirst || 
+            (stmt.isPause && !isDepth && oIndex>0)) {
             val predStatements = new ArrayList<Statement>
             var predIndex = oIndex - 1
             while (predIndex >= 0) {
@@ -84,7 +88,7 @@ class SCLBasicBlockExtensions {
             bBox.addAll(predStatements.reverse)
         }
         bBox.add(stmt)
-        if (stmt.isBasicBlockLast) return bBox
+        if (stmt.isBasicBlockLast && !isDepth) return bBox
         var succIndex = oIndex + 1
         while (succIndex < statements.size) {
             val succStmt = statements.get(succIndex)
@@ -110,14 +114,23 @@ class SCLBasicBlockExtensions {
         new BasicBlock()
     } 
     
-    def BasicBlock create basicBlock: createBasicBlock() getBasicBlockByHead(Statement basicBlockHead) {
-        val statements = basicBlockHead.getBasicBlockStatements
+    def BasicBlock create basicBlock: createBasicBlock() getBasicBlockByHead(Statement basicBlockHead, boolean isDepth) {
+        val statements = basicBlockHead.getBasicBlockStatements(isDepth)
         basicBlock.addAll(statements)
+        basicBlock.setPauseHeadIsDepth(isDepth)
     }
     
     def BasicBlock getBasicBlockByAnyStatement(Statement statement) {
         val statements = statement.getBasicBlockStatements
-        getBasicBlockByHead(statements.head)
+        if (statements.head.isPause && statements.head != statement) 
+            getBasicBlockByHead(statements.head, true)
+        else
+            getBasicBlockByHead(statements.head, false)
+    }
+    
+    def BasicBlock getBasicBlockByAnyStatementDepth(Statement statement) {
+        val statements = statement.getBasicBlockStatements(true)
+        getBasicBlockByHead(statements.head, true)
     }
 
     // Returns the hashcode id of the basic block
@@ -132,6 +145,10 @@ class SCLBasicBlockExtensions {
         for(stmt : cf) {
             val stmtBlock = stmt.getBasicBlockByAnyStatement
             if (stmtBlock != null && !basicBlocks.contains(stmtBlock)) basicBlocks.add(stmtBlock)
+            if (stmt.isPause) {
+                val stmtBlockDepth = stmt.getBasicBlockByAnyStatementDepth
+                if (stmtBlockDepth != null && !basicBlocks.contains(stmtBlockDepth)) basicBlocks.add(stmtBlockDepth)
+            }
             if (stmt.hasInstruction && stmt.getInstruction instanceof Conditional) 
                 basicBlocks.addAll((stmt.getInstruction as Conditional).statements.head.getBasicBlocks) 
         }
@@ -146,9 +163,13 @@ class SCLBasicBlockExtensions {
         getAllBasicBlocks(statement).size
     }
     
-    def int getBasicBlockIndex(Statement basicBlockHead) {
-        val allRoots = basicBlockHead.getAllBasicBlocks
-        allRoots.indexOf(basicBlockHead)
+    def int getBasicBlockIndex(BasicBlock basicBlock) {
+        var c = 0
+        for(block : basicBlock.getHead.getAllBasicBlocks) {
+            if (basicBlock.isEqual(block)) return c        
+            c = c + 1
+        }
+        c = -1
     }
     
     def ArrayList<Statement> getBasicBlockPredecessorRoots(Statement basicBlockHead) {
