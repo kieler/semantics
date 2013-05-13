@@ -63,6 +63,7 @@ fmod STATEMACHINE is
   vars R : Verts .
   vars r r2 r3 : Region .
   vars V V2 src tgt C src2 tgt2 smAllVerts curVerts tgtStates curVert : Verts .  
+  vars neV neV2 : NeVerts .  
   vars v v2 lreg lreg2 : Vert .
   
   ***( 
@@ -72,79 +73,29 @@ fmod STATEMACHINE is
   - current vert state or region
   
   )***
-  op getEntryAc____ : StateMachine HistoryConfs Verts Verts 
-    -> Actions [format (g o d d d d)] .
-  eq getEntryAc sm HC tgt (v, V2) = 
-        ($getEntryAc (getAlldefaults sm) (getAllShallowdefaults sm)  (getAllDeepdefaults sm) (getAllEntry sm) (getVerts sm) HC tgt v) 
-        (getEntryAc sm HC tgt V2) .
-  eq getEntryAc sm HC tgt empty = nil .
+
+  op getEntryAc_ : Vert -> Action [format (g o d)]  .
+  eq getEntryAc v = $getEntryAc SMINT v . 
   
+    
+  op $getEntryAc__ : StateMachine Vert -> Action [format (g g o d)]  .
+  eq $getEntryAc (V D SH DH ENA EXA T) v = $$getEntryAc ENA v . 
   
-  op getEntryAc_ : Vert -> Action [format (g o d)] .
-  op getEntryAc________ : Defaults ShallowDefaults DeepDefaults EntryActions Verts HistoryConfs
-    Verts Verts -> Actions .
-  eq getEntryAc D SH DH ENA C HC tgt (v, V2) = ($getEntryAc D SH DH ENA C HC tgt v) (getEntryAc D SH DH ENA C HC tgt V2) .
-  eq getEntryAc D SH DH ENA C HC tgt empty = nil .
-
-  op $getEntryAc________ : Defaults ShallowDefaults DeepDefaults EntryActions Verts HistoryConfs Verts Vert -> Actions .
-  ceq $getEntryAc D SH DH ENA C HC tgt v = $getEntryAc D SH DH ENA C HC tgt (getShallowDefault v SH)
-    if ((v : H) in tgt) and (nonVisited v HC) [label 2a] .
-  ceq $getEntryAc D SH DH ENA C HC tgt v = $getEntryAc D SH DH ENA C HC tgt (getDeepDefault v DH)
-    if ((v : H*) in tgt) and (nonVisited v HC) [label 2b] .  
-  ceq $getEntryAc D SH DH ENA C HC tgt v = $getEntryAc D SH DH ENA C HC tgt (getHC v HC)
-    if ((v : H) in tgt) and not (nonVisited v HC) and (getHC v HC) =/= empty [label 3] .
-  ceq $getEntryAc D SH DH ENA C HC tgt v = getEntryAc D SH DH ENA C HC ((tgt \(v : H*)), (genDeepTgts (getHC v HC) C)) (getHC v HC) 
-    if (v : H* in tgt) and not (nonVisited v HC) [label 4] .
-  ceq $getEntryAc D SH DH ENA C HC tgt v = $$getEntryAc ENA v
-    if typeState v and |(getSubRegions v C)| == 0 . 
-  ceq $getEntryAc D SH DH ENA C HC tgt v =
-    seq (($$getEntryAc ENA v) (getEntryAc D SH DH ENA C HC tgt (getSubRegions v C)))
-    if typeState v and |(getSubRegions v C)| == 1 .
-  ceq $getEntryAc D SH DH ENA C HC tgt v = 
-        seq (($$getEntryAc ENA v) par (getEntryAc D SH DH ENA C HC tgt (getSubRegions v C))) 
-        if typeState v and |(getSubRegions v C)| > 1 . 
-  ceq $getEntryAc D SH DH ENA C HC tgt v = ($getEntryAc D SH DH ENA C HC tgt (getSubStToTgt v tgt C)) 
-    if (typeRegion v) and not (typeHistory (getSubStToTgt v tgt C)) and
-    ((len v) < (comparelen v tgt)) and intersection((upset v C), tgt) =/= empty [label 5] . 
-  *** 6  
-  eq $getEntryAc D SH DH ENA C HC tgt v = ($getEntryAc D SH DH ENA C HC tgt (getDefault v D)) [owise] .
-
-
-
-          
   op $$getEntryAc__ : EntryActions Vert -> Action [format (g o d d)] .
   eq $$getEntryAc ((entryAc v a), ENA) v = a .
-  eq $$getEntryAc ENA v = nil [owise] .  
-    
-    
-    
-  op getExitAc_ : Verts -> Action [format (g o d)]  .
-  op getExitAc___ : StateMachine Verts Verts 
-    -> Actions [format (g o d d d)]  .
-  eq getExitAc sm C (v, V2) = 
-        ($getExitAc sm C v) 
-        (getExitAc sm C V2) .
-  eq getExitAc sm C empty = nil .
+  eq $$getEntryAc ENA v = skip [owise] .  
+
+ 
+  op getExitAc_ : Vert -> Action [format (g o d)]  .
+  eq getExitAc v = $getExitAc SMINT v . 
   
-  op $getExitAc___ : StateMachine Verts Vert -> Action [format (g o d d d)] .
-  ceq $getExitAc (V D SH DH ENA EXA T) C v = 
-        seq (par (getExitAc (V D SH DH ENA EXA T) C (getSubs v C)) ($$getExitAc EXA v)) 
-        if (getSubs v C) =/= empty and typeState v .
-  ceq $getExitAc sm C v = 
-        getExitAc sm C (getSubs v C) 
-        if (getSubs v C) =/= empty and typeRegion v .
-  ceq $getExitAc (V D SH DH ENA EXA T) C v = 
-        ($$getExitAc EXA v) 
-        if (getSubs v C) == empty and typeState v .
-  eq $getExitAc sm C v = nil [owise] .
-        
-
-
-
+    
+  op $getExitAc__ : StateMachine Vert -> Action [format (g g o d)]  .
+  eq $getExitAc (V D SH DH ENA EXA T) v = $$getExitAc EXA v . 
   
   op $$getExitAc__ : ExitActions Vert -> Action [format (g o d d)] .
   eq $$getExitAc ((exitAc v a), EXA) v = a .
-  eq $$getExitAc EXA v = nil [owise] .  
+  eq $$getExitAc EXA v = skip [owise] .  
    
   op getVerts_ : StateMachine -> Verts .
   eq getVerts(V D SH DH ENA EXA T) = V .

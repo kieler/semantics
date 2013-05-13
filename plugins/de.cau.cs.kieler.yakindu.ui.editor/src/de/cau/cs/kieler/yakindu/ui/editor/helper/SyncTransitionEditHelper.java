@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.yakindu.ui.editor.helper;
 
 import org.eclipse.gmf.runtime.common.core.command.CompositeCommand;
@@ -15,8 +28,16 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
 import de.cau.cs.kieler.yakindu.ui.editor.factory.SyncMetaModelTypeFactory;
 
+/**
+ * The class extends the TransitionEditHelper to allow the creation of the
+ * different transition type (weak abortion, strong abortion, and normal
+ * termination).
+ * 
+ * @author wah
+ * @kieler.rating green 2013-04-13
+ * 
+ */
 public class SyncTransitionEditHelper extends TransitionEditHelper {
-
 
 	/**
 	 * Set the right {@link EntryKind} for the given {@link ElementType}
@@ -36,9 +57,9 @@ public class SyncTransitionEditHelper extends TransitionEditHelper {
 
 		if (normalTransition.equals(req.getTypeToConfigure())) {
 			result.add(new SetValueCommand(
-					new SetRequest(req.getElementToConfigure(),
-							SyncgraphPackage.eINSTANCE
-									.getSyncTransition_Type(),
+					new SetRequest(
+							req.getElementToConfigure(),
+							SyncgraphPackage.eINSTANCE.getSyncTransition_Type(),
 							TransitionType.NORMALTERMINATION)));
 		} else if (weakTransition.equals(req.getTypeToConfigure())) {
 			result.add(new SetValueCommand(new SetRequest(req

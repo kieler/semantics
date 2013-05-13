@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.yakindu.ui.editor.parts;
 
 import org.eclipse.draw2d.ColorConstants;
@@ -6,6 +19,15 @@ import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
 
+/**
+ * The transition decorators. This class creates the weak abort (no decorator),
+ * strong abort (red filled circle), and normal termination (green filled
+ * triangle) transition decorators. This class is used by the
+ * SyncTransitionEditPart class.
+ * 
+ * @author wah
+ * @kieler.rating green 2013-04-13
+ */
 public abstract class TransitionDecorator {
 
 	public static final int LINE_WIDTH = 1;
@@ -15,7 +37,8 @@ public abstract class TransitionDecorator {
 	private static final double TERMINATION_Y_SCALE = 2.5;
 
 	/**
-	 * Create the normal termination decoration.
+	 * Create the normal termination decoration (a triangle filled with a green
+	 * color).
 	 * 
 	 * @return The decoration.
 	 */
@@ -38,7 +61,7 @@ public abstract class TransitionDecorator {
 	private static final double STRONG_ABORT_SCALE = 2.0;
 
 	/**
-	 * Create the strong abortion decoration.
+	 * Create the strong abortion decoration (a circle filled with a red color).
 	 * 
 	 * @return The decoration.
 	 */
@@ -62,7 +85,8 @@ public abstract class TransitionDecorator {
 	private static final double WIDTH_RATIO = 0.25;
 
 	/**
-	 * Create the history target decoration.
+	 * Create the history target decoration (a black circle havin the letter H
+	 * inside).
 	 * 
 	 * @return The decoration.
 	 */
@@ -105,6 +129,11 @@ public abstract class TransitionDecorator {
 		return historyDecoration;
 	}
 
+	/**
+	 * Creates a target decorator (arrowhead). 
+	 * 
+	 * @return RotatableDecoration
+	 */
 	public static RotatableDecoration createTransitionTargetDecoration() {
 		PolygonDecoration df = new PolygonDecoration();
 		df.setFill(true);

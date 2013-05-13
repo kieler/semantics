@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.yakindu.ui.editor.propertysheets;
 
 import org.eclipse.emf.databinding.EMFDataBindingContext;
@@ -25,11 +38,27 @@ import org.yakindu.sct.ui.editor.utils.HelpContextIds;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
 
+/**
+ * The SyncTransition property sheets. This class extends the
+ * AbstractTwoColumnEditorPropertySection to implement the SyncTransition
+ * property sheets. The SyncTransition property sheets allows the user to change
+ * the transition type, to set a transition to a transition history, and to
+ * write transition reactions (triggers and effects). The transition reactions
+ * text area is bound to the right column controls. The Transition type combo
+ * and isHistory combo are bound into the left column controls.
+ * 
+ * @author wah
+ * @kieler.rating green 2013-04-13
+ */
 public class SyncTransitionPropertySection extends
 		AbstractTwoColumnEditorPropertySection {
+
+	/** TEXT */
+	private static final String COMBO_LABEL_TRANSITION_TYPE = "Transition Type: ";
+	private static final String COMBO_LABEL_TRANSITION_IS_HISTORY = "Is History: ";
 
 	private Control textControl;
 	private ComboViewer transitionTypeKindViewer;
@@ -48,7 +77,8 @@ public class SyncTransitionPropertySection extends
 	 *            the parent Composite
 	 */
 	private void createTransitionTypeControl(Composite parent) {
-		Label kindLabel = getToolkit().createLabel(parent, "Transition Type: ");
+		Label kindLabel = getToolkit().createLabel(parent,
+				COMBO_LABEL_TRANSITION_TYPE);
 		GridDataFactory.fillDefaults().applyTo(kindLabel);
 		transitionTypeKindViewer = new ComboViewer(parent, SWT.READ_ONLY
 				| SWT.SINGLE);
@@ -60,13 +90,14 @@ public class SyncTransitionPropertySection extends
 	}
 
 	/**
-	 * Create the isHistory Combo. It allows to select false or true
+	 * Create the isHistory Combo. It allows to select false or true.
 	 * 
 	 * @param parent
 	 *            the parent Composite
 	 */
 	private void createIsHistoryControl(Composite parent) {
-		Label kindLabel = getToolkit().createLabel(parent, "Is History: ");
+		Label kindLabel = getToolkit().createLabel(parent,
+				COMBO_LABEL_TRANSITION_IS_HISTORY);
 		GridDataFactory.fillDefaults().applyTo(kindLabel);
 		isHistoryKindViewer = new ComboViewer(parent, SWT.READ_ONLY
 				| SWT.SINGLE);
@@ -93,7 +124,9 @@ public class SyncTransitionPropertySection extends
 	}
 
 	/**
-	 * Bind the transition type
+	 * This method overrides the bindModel method from the
+	 * TransitionPropertySection class to bind additionally the TransitionType
+	 * and IsHistory controls.
 	 */
 	@Override
 	public void bindModel(EMFDataBindingContext context) {
@@ -107,12 +140,20 @@ public class SyncTransitionPropertySection extends
 		bindIsHistoryKindControl(context);
 	}
 
+	/**
+	 * Create the Transition Type combo box control and the IsHistory com box
+	 * control in the right column (right side) of the property section.
+	 */
 	@Override
 	protected void createRightColumnControls(Composite rightColumn) {
 		createTransitionTypeControl(rightColumn);
 		createIsHistoryControl(rightColumn);
 	}
 
+	/**
+	 * Create the Transition text control in the left column (left side) of the
+	 * property section.
+	 */
 	@Override
 	protected void createLeftColumnControls(Composite leftColumn) {
 		Injector injector = getInjector(SemanticTarget.TransitionSpecification);
@@ -131,7 +172,9 @@ public class SyncTransitionPropertySection extends
 	}
 
 	/**
-	 * This method enables to select the isHistory attribute
+	 * This method enables to select the isHistory attribute. This method binds
+	 * the IsHistory control to enable to change the transition as history if
+	 * the user changes the combo box value.
 	 * 
 	 * @param context
 	 */

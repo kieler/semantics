@@ -1,13 +1,13 @@
-fmod VARIABLE is 
-    sort Variable .
+fmod VALUATION is 
+    sort Valuation .
 endfm
 
-view Variable from TRIV to VARIABLE is
-    sort Elt to Variable .
+view Valuation from TRIV to VALUATION is
+    sort Elt to Valuation .
 endv
 
-fmod VARIABLES is
-    including SET{Variable} * (sort Set{Variable} to Variables, sort NeSet{Variable} to NeVariables) .
+fmod VALUATIONS is
+    including SET{Valuation} * (sort Set{Valuation} to Valuations, sort NeSet{Valuation} to NeValuations) .
 	
 	protecting STRING .
 	protecting INT .
@@ -21,22 +21,22 @@ fmod VARIABLES is
 	
 	var variableID1 variableID2 : VariableID .
 	var variableValue1 variableValue2 : Int . 
-	var natVar : Variable .
-	var variables : Variables . 
+	var natVar : Valuation .
+	var variables : Valuations . 
 	var str : String .
 	var varID1 varID2 : VariableID .
 	var exp : Expression .
 	
-	op NatVar(_,_) : VariableID Int -> Variable .
+	op NatVar(_,_) : VariableID Int -> Valuation .
 	
-	op assign _ to _ in _ : Int VariableID Variables -> Variables .
+	op assign _ to _ in _ : Int VariableID Valuations -> Valuations .
 	eq assign variableValue1 to variableID1 in (NatVar(variableID1 , variableValue2), variables) = (NatVar(variableID1 , variableValue1), variables) .
 	    
     op _ + _ : Expression Expression -> Expression [ditto] .
     op _ - _ : Expression Expression -> Expression [ditto] .
     
     *** this definiton has to be here because it is used for the evaluation of actions and guards 
-    op eval _ with _ : Expression Variables -> Int .
+    op eval _ with _ : Expression Valuations -> Int .
     eq eval variableValue1 with variables = variableValue1 .
     eq eval varID1 with (NatVar(varID1 , variableValue1) , variables) = variableValue1 .
     eq eval varID1 + exp with (NatVar(varID1 , variableValue1), variables) = variableValue1 + (eval exp with (NatVar(varID1 , variableValue1), variables)) .
@@ -60,14 +60,20 @@ endfm
 
 
 fmod ACTION is
-    protecting VARIABLES .
+    protecting VALUATIONS .
     sort Action .
 
+	var vid : VariableID .
+	vars exp1 : Expression .
+	vars VALUS : Valuations .
+	
     op assignAct _ := _ : VariableID Expression -> Action .
     op noac : -> Action .
     op absAct _ : String -> Action .
     
-
+    op applyAct2Valuation__ : Action Valuations -> Valuations .
+    eq applyAct2Valuation (assignAct vid := exp1) VALUS = assign (eval exp1 with VALUS) to vid in VALUS .
+	
 endfm
 red vID "a" .
 red (1).Expression .
@@ -107,14 +113,14 @@ endfm
 *** - gatherActions siehe unten
 ****************************************************************
 
-fmod VARIABLE is
+fmod VALUATION is
   including INT .
   including STRING .
   sort Variable .
   sort VarID .
   op Var-_ : String -> VarID [ctor] .
   
-  op (_->_) : VarID Int -> Variable .
+  op (_->_) : VarID Int -> Valuation .
      
 endfm
 
@@ -131,16 +137,16 @@ view Action from TRIV to ACTION is
   sort Elt to Action . 
 endv
 
-view Variable from TRIV to VARIABLE is
-  sort Elt to Variable . 
+view Valuation from TRIV to VALUATION is
+  sort Elt to Valuation . 
 endv
 
 
 fmod ACTIONSSYNTAX is 
   including ACTION .
-  including VARIABLE .
+  including VALUATION .
   including LIST{Action} * (sort List{Action} to Actions, sort NeList{Action} to NeActions) .
-  including SET{Variable} * (sort Set{Variable} to Variables, sort NeSet{Variable} to NeVariables) .
+  including SET{Valuation} * (sort Set{Valuation} to Valuations, sort NeSet{Valuation} to NeValuations) .
   
   op seq_ : Actions -> Action .
   op par_ : Actions -> Action .
@@ -152,8 +158,8 @@ fmod ACTIONSSYNTAX is
   vars int1 int2 : Int .
   vars exp1 exp2 : Expression .
   var varid : VarID .
-  var variable : Variable .
-  var variables : Variables .
+  var variable : Valuation .
+  var variables : Valuations .
   
   op _:=_ : VarID Expression -> Action . 
   
@@ -163,11 +169,11 @@ fmod ACTIONSSYNTAX is
          special (id-hook ACU_NumberOpSymbol (+)
                   op-hook succSymbol (s_ : Nat ~> NzNat)
                   op-hook minusSymbol (-_ : NzNat ~> Int))] .  
-  op evalEXP__ : Expression Variables -> Expression .
+  op evalEXP__ : Expression Valuations -> Expression .
   eq evalEXP (exp1 + varid) ((varid -> int2), variables) = evalEXP (exp1 + int2) ((varid -> int2), variables) .  
   eq evalEXP int1 variables = int1 .  
   
-  op evalAction__ : Action Variables -> Variables .
+  op evalAction__ : Action Valuations -> Valuations .
   eq evalAction (varid := exp1) ((varid -> int2), variables) = 
     (
     (varid -> (evalEXP exp1 ((varid -> int2), variables))), 

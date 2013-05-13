@@ -384,7 +384,10 @@ public class JavaEscape {
         
         if (TransitionLabel.contains("/[")) {
             if (TransitionLabel.substring(TransitionLabel.indexOf("/[") + 1) != "]") {
-                return resolveStateNames(TransitionLabel.substring(TransitionLabel.indexOf("[") + 1, TransitionLabel.indexOf("]")).trim(), rootElement);
+            	//FIXME: 2013 handle guards correctly
+            	System.out.println(TransitionLabel.substring(TransitionLabel.indexOf("[") + 1, TransitionLabel.indexOf("]")).trim());
+                //return resolveStateNames(TransitionLabel.substring(TransitionLabel.indexOf("[") + 1, TransitionLabel.indexOf("]")).trim(), rootElement);
+            	return "(" + TransitionLabel.substring(TransitionLabel.indexOf("[") + 1, TransitionLabel.indexOf("]")).trim() + ")";
             }
         }
         return "true";

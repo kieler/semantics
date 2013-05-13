@@ -560,7 +560,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             "red in MCBFPOOLANDSM : modelCheck(" + "readyBFPSM(ready <ready QUEUE "
                     + triggerEventsQuery + " ENDQUEUE > <ready (" + triggerEventsQuery
                     + ") tups >)" + "(maState (stableC<STATEC> " + currentStatesQuery
-                    + " <HISTC> empty <ENDCONF>)  (" + triggerEventsQuery + ")), " + checkingRule
+                    + " <HISTC> empty <VALUATIONS> empty <ENDCONF>)  (" + triggerEventsQuery + ")), " + checkingRule
                     + ") . \n"
 
             ;

@@ -1,24 +1,70 @@
 
+
+fmod GUARDS is
+  including VERTSSYNTAX .
+  including VALUATIONS .
+  
+  
+***  subsort Guard < Bool .
+  sorts Guard .
+  
+  vars exp1 exp2 : Expression .
+  vars agd bgd : Guard .
+  var gd1 gd2 : Guard .
+  var valuation : Valuations .
+  var verts1 verts2 : Verts .
+  
+  
+  op _>GD_ : Expression Expression -> Guard .
+  op _<GD_ : Expression Expression -> Guard .
+  eq exp1 <GD exp2 = exp2 >GD exp1 .
+  op _==GD_ : Expression Expression -> Guard .
+  eq exp1 ==GD exp2 = notGD(exp2 >GD exp1 orGD exp2 <GD exp1) .
+       
+  op trueGD : -> Guard [ctor] .
+  op falseGD : -> Guard .
+  eq falseGD = notGD trueGD . 
+
+  op inStates_ : Verts -> Guard .
+  op choiceelse : -> Guard .
+  op notGD_ : Guard -> Guard . 
+  op _andGD_ : Guard Guard -> Guard .
+  op _orGD_ : Guard Guard -> Guard .
+  eq agd orGD bgd = notGD ( (notGD agd) andGD (notGD bgd)) .
+  op _=>GD_ : Guard Guard -> Guard .
+  eq agd =>GD bgd = notGD agd orGD bgd .
+  
+  
+  op evalGD___ : Guard Verts Valuations -> Bool .
+  eq evalGD inStates verts1 verts2 valuation = verts1 subset verts2 .
+  eq evalGD trueGD verts1 valuation = true .
+  eq evalGD notGD gd1 verts1 valuation = not evalGD gd1 verts1 valuation .
+  eq evalGD gd1 andGD gd2 verts1 valuation = evalGD gd1 verts1 valuation and evalGD gd2 verts1 valuation .
+  eq evalGD exp1 >GD exp2 verts1 valuation = (eval exp1 with valuation) > (eval exp2 with valuation) .  
+endfm
+
+
+
 fmod TRANSITIONSYNTAX is
   including EVENTSET .
   including VERTSSYNTAX .
   including ACTIONSSYNTAX .
+  including GUARDS .
 
-  sorts Guard BasicTransition Fireset .
+  sorts BasicTransition Fireset .
 
   op basicTrans_____ : String Vert Guard Action Vert -> 
 	  BasicTransition [ctor] .
-  op ____ : Vert Guard Action Vert -> 
-      BasicTransition [ctor] .
-  
-  
-	  
+  	  
   var bv : Bool .
   vars src tgt conf states : Verts . 
   vars g g1 : Guard .
   vars lreg state : Vert .
   vars id strId : String .
+  vars VALUS : Valuations .
  
+ 
+***( 
   *** guards are abstract	  
   op Gd : -> Guard [ctor] .
   op true : -> Guard [ctor] .
@@ -30,15 +76,10 @@ fmod TRANSITIONSYNTAX is
   op _andGd_ : Guard Guard -> Guard .
   eq (true).Guard andGd g = g .
   eq g andGd (true).Guard = g .
-  op evalGuard__ : Guard Verts -> Bool .
-  eq evalGuard(notGd g) conf = not (evalGuard g conf) .
-  eq evalGuard(g andGd g1) conf = (evalGuard g conf) and (evalGuard g1 conf) .
-***  eq evalGuard(inStates states) conf = states subset conf . 
-  eq evalGuard(inState states) conf = states subset conf . 
-  eq evalGuard(inStates (state, states)) (state, conf) = true .
-  eq evalGuard(inStates states) conf = false [owise] .   
-  eq evalGuard true conf = true .
+ )***
   
+  op evalGuard___ : Guard Verts Valuations -> Bool .
+  eq evalGuard g conf VALUS = evalGD g conf VALUS .
   *** FIXME eq evalGuard g conf = g [owise] .
      
  
@@ -62,6 +103,7 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   vars g g1 : Guard .
   var e : Event .
   var t : BasicTransition .
+  var neT : NeBasicTransitions .
   var T : BasicTransitions .
   var ct : Compoundtransition .
   var reg : Region .
@@ -81,13 +123,15 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   
 
   op action_ : BasicTransition -> Action .
-  eq action (src g a tgt) = a .
+***  eq action (src g a tgt) = a .
   eq action (basicTrans strid src g a tgt) = a .
 
   op guard_ : BasicTransitions -> Guard .
-  eq guard ((src g a tgt), T) = g andGd (guard T) .
-  eq guard ((basicTrans strid src g a tgt), T) = g andGd (guard T) .
-  eq guard empty = true .
+***  eq guard ((src g a tgt), neT) = g andGD (guard neT) .
+  eq guard ((basicTrans strid src g a tgt), neT) = g andGD (guard neT) .
+***  eq guard (src g a tgt) = g .
+  eq guard (basicTrans strid src g a tgt) = g .
+***  eq guard empty = (true).Guard .
  
 
   op guard_ : Compoundtransition -> Guard .
@@ -125,7 +169,7 @@ fmod COMPOUNDTRANSITIONSYNTAX is
 
   op $$source_ : BasicTransition -> Verts .
   eq $$source (basicTrans strid src g a tgt) = src .
-  eq $$source (src g a tgt) = src .
+  ***eq $$source (src g a tgt) = src .
 
   op source_ : Compoundtransition -> Verts .
   eq source (simpleTrans e t reg) = ($$source t) .
@@ -143,7 +187,7 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   eq target empty = empty .
   
   op $target_ : BasicTransition -> Verts .
-  eq $target (src g a tgt) = tgt .
+***  eq $target (src g a tgt) = tgt .
   eq $target (basicTrans strid src g a tgt) = tgt .
 
   op target_ : Compoundtransition -> Verts .

@@ -1,29 +1,31 @@
+
 package de.cau.cs.kieler.synccharts.klighd
 
+import java.util.List
 import javax.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.LineStyle
-import de.cau.cs.kieler.core.krendering.KPolygon
 import de.cau.cs.kieler.core.krendering.KContainerRendering
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.core.krendering.KDecoratorPlacementData
+import de.cau.cs.kieler.core.krendering.KPolygon
+import de.cau.cs.kieler.core.krendering.KPolyline
 import de.cau.cs.kieler.core.krendering.KRendering
-import de.cau.cs.kieler.core.krendering.KTrigger
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
+import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klighd.transformations.AbstractTransformation
-import de.cau.cs.kieler.klighd.TransformationContext
+import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
 import de.cau.cs.kieler.synccharts.State
+import de.cau.cs.kieler.synccharts.StateType
 import de.cau.cs.kieler.synccharts.Region
 import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.TransitionType
@@ -33,14 +35,11 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.serializer.ISerializer
-import de.cau.cs.kieler.core.krendering.KPolyline
-import de.cau.cs.kieler.core.krendering.KDecoratorPlacementData
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
-class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
+class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
-    private static val KRenderingFactory factory = KRenderingFactory::eINSTANCE;
     private static val Injector i = ActionsStandaloneSetup::doSetup();
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
@@ -68,59 +67,61 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
     @Inject
     extension KColorExtensions
     
-    override transform(Region model, TransformationContext<Region, KNode> transformationContext) {
-        use(transformationContext);
-        return model.transform();
+    override transform(Region model) {
+        return model.translate();
     }
+    
+    
+    private static val float DASH_BLACK = 10;
+    private static val float DASH_WHITE = 5;
+    private static val List<Float> DASH_PATTERN = newArrayList(DASH_BLACK, DASH_WHITE); 
 
-    def dispatch KNode transform(Region r) {
+    def dispatch KNode translate(Region r) {
         return r.createNode().putToLookUpWith(r) => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
             node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT);
             node.addLayoutParam(LayoutOptions::SPACING, 40f);
             if (r.states.size > 1) {
-                // node.addLayoutParam(KlighdConstants::EXPAND, false);
+                //node.addLayoutParam(KlighdConstants::EXPAND, false);
             }
             node.transferAnnotationsOf(r);
             
-            for (s : r.states) node.children += s.transform;
+            for (s : r.states) node.children += s.translate;
                         
             if (r.eContainer == null) {
                 return;
             }
             
-            node.data += factory.createKRectangle() => [
+            node.addRectangle() => [
                 it.invisible = true;
                 // it.invisible = false;
                 it.foreground = "red".color;
-                it.children += factory.createKText => [
+                it.addText("Region:") => [
                     it.foreground = "gray".color
-                    it.text = "Region:";
-                    it.setPointPlacementData(createKPosition(LEFT, 1, 0, TOP, 0, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-                    // it.actions +=
-                    factory.createKExpandAction() => [
-                        it.trigger = KTrigger::DOUBLECLICK;
-                        it.id = KlighdConstants::ACTION_COLLAPSE_EXPAND; 
-                    ];
+                    it.fontSize = 11                    
+                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
-                it.addVerticalLine(LEFT, 1) => [
-                    it.lineStyle = LineStyle::DASH;
-                    it.lineWidth = 1;
+                it.addVerticalLine(LEFT, 1, 1) => [
+                    it.lineStyle = LineStyle::CUSTOM;
+                    it.lineStyle.dashPattern.clear;
+                    it.lineStyle.dashPattern += DASH_PATTERN;
                     it.invisible = true;
-                    it.invisible.functionId = "de.cau.cs.kieler.synccharts.klighd.regionLineModifier";
+                    it.invisible.modifierId = "de.cau.cs.kieler.synccharts.klighd.regionLineModifier";
                 ];
-                it.addHorizontalLine(TOP, 1) => [
-                    it.lineStyle = LineStyle::DASH;
-                    it.lineWidth = 1;
+                it.addHorizontalLine(TOP, 1, 1) => [
+                    it.lineStyle = LineStyle::CUSTOM;
+                    it.lineStyle.dashPattern.clear;
+                    it.lineStyle.dashPattern += DASH_PATTERN;
                     it.invisible = true;
-                    it.invisible.functionId = "de.cau.cs.kieler.synccharts.klighd.regionLineModifier";
+                    it.invisible.modifierId = "de.cau.cs.kieler.synccharts.klighd.regionLineModifier";
                 ];
-                it.children += factory.createKChildArea();
+                it.addChildArea();
             ];
         ];
     }
     
-    def dispatch KNode transform(State s) {
+    def dispatch KNode translate(State s) {
         return s.createNode().putToLookUpWith(s) => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             node.addLayoutParam(LayoutOptions::EXPAND_NODES, true);
@@ -128,68 +129,91 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
             node.addLayoutParam(LayoutOptions::SPACING, 0f);
             node.transferAnnotationsOf(s);
 
-            val figure = node.addRoundedRectangle(30, 30, if (s.isInitial) 4 else 1);
+            val conditional = s.type == StateType::CONDITIONAL;
+            val simpleState = s.signals.empty && s.regions.empty;
+            val cornerRadius = if (conditional) 10 else if (simpleState) 15 else 8;
+            val lineWidth = if (s.isInitial && s.isFinal) 2.1f else if (s.isInitial) 4 else 1;
+
+            val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
+                .background = "white".color;
             (
-                if (s.isFinal) figure.addRoundedRectangle(30, 30) => [
+                if (conditional) figure => [
+                    it.background = "black".color;
+                    it.addArc => [
+                        it.foreground = "white".color;
+                        it.startAngle = 45;
+                        it.arcAngle = 270;
+                        it.lineWidth = 2;
+                        it.setSurroundingSpace(0, 0.3f);
+                    ];
+                    node.setNodeSize(20,20);
+                ] else if (s.isFinal) figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
+                    // re-configure the outer rounded rectangle
+                    val offset = figure.lineWidthValue + 1;
+                    figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
+
+                    // configure the inner one
                     it.styleRef = figure;
-                    val offset = figure.lineWidthValue + 2;
-                    figure.setCornerSize(offset + 34f, offset + 34f)
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
                 ] else figure
+                
              ) => [
-                it.setGridPlacement(1);
-                it.children += factory.createKText().putToLookUpWith(s) => [
-                    val vSpace = 8 + figure.lineWidthValue;
-                    it.text = s.label;
-                    it.background = "white".color;
-                    it.setGridPlacementData().setMaxCellHeight(40).from(LEFT, 15, 0, TOP, vSpace, 0).to(RIGHT, 15, 0, BOTTOM, vSpace, 0);
+                node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
+                
+                if (conditional) {
+                    return;
+                }
+                
+                if (!simpleState) {
+                    it.setGridPlacement(1);
+                } 
+                
+                it.addText(s.label).putToLookUpWith(s) => [
+                    it.fontSize = 11;
+                    it.setGridPlacementData().setMaxCellHeight(40)
+                        .from(LEFT, 10, 0, TOP, 10, 0)
+                        .to(RIGHT, 10, 0, BOTTOM, 10, 0);
                 ];
+                
+                
                 if (!s.signals.empty) {
-                    it.children += factory.createKRectangle => [
+                    it.addRectangle => [
                         it.invisible = true;
                         it.setGridPlacementData.setMaxCellHeight(40);
                         it.setGridPlacement(s.signals.size + 2);
-                        it.children += factory.createKText() => [
-                            text = "Signals:"
-                            it.setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
-                        ];
+                        it.addText("Signals:")
+                            .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
                         for (sig : s.signals) {
-                            it.children += factory.createKText() => [
-                                it.text = sig.name + ";";
-                                it.setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
-                            ];
+                            it.addText(sig.name + ";")
+                                .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
                         }
-                        it.children += factory.createKRectangle() => [
-                            it.invisible = true;
-                        ];
+                        it.addRectangle().invisible = true;
                     ];
                 }
                 
                 if (!s.regions.empty) {
-                    it.addHorizontalLine(1) => [
-                        it.lineWidth = 1;
-                        it.setGridPlacementData().maxCellHeight = 1;
-                    ];
+                    it.addHorizontalLine(1, 1)
+                        .setGridPlacementData() //.from(LEFT, 0, 0, TOP, 30, 0).to(RIGHT, 0, 0, TOP, 30, 0)
+                        .maxCellHeight = 1;                        
                     
-                    it.children += factory.createKChildArea() => [
-                        it.setGridPlacementData() //.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                    ];
+                    it.addChildArea()
+                        .setGridPlacementData() //.from(LEFT, 0, 0, TOP, 30, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+                        .minCellHeight = 40;
                 }
             ];
 
-            for (r : s.regions) node.children += r.transform;
+            for (r : s.regions) node.children += r.translate;
             
-            for (t : s.outgoingTransitions) t.transformTransition();
+            for (t : s.outgoingTransitions) t.translateTransition();
         ];
     }
     
-    def KEdge transformTransition(Transition t) {
+    def KEdge translateTransition(Transition t) {
         return t.createEdge().putToLookUpWith(t) => [ edge |
             edge.source = t.sourceState.node;
             edge.target = t.targetState.node;
             edge.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.addSpline() => [
-                it.lineWidth = 2;
+            edge.addSpline(2) => [
                 it.addArrowDecorator() => [
                     if (t.isHistory) {
                         it.parent.addHistoryDecorator();
@@ -219,8 +243,7 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
     }
     
     def KRendering addStrongAbortionDecorator(KPolyline line) {
-        return factory.createKEllipse() => [
-            line.children += it;
+        return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "red".color
             it.setDecoratorPlacementData(7, 7, 3, 0, false);
@@ -236,13 +259,11 @@ class SyncChartsDiagramSynthesis extends AbstractTransformation<Region, KNode> {
     }
     
     def KRendering addHistoryDecorator(KContainerRendering line) {
-        return factory.createKEllipse() => [
-            line.children += it;
+        return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "gray".color
             it.setDecoratorPlacementData(12, 12, -6, 1, false);
-            it.children += factory.createKPolyline() => [
-                it.lineWidth = 1f;
+            it.addPolyline(1) => [
                 it.points += createKPosition(LEFT, 4, 0, TOP, 3, 0);
                 it.points += createKPosition(LEFT, 4, 0, BOTTOM, 3, 0);
                 it.points += createKPosition(LEFT, 4, 0, TOP, 0, 0.5f);

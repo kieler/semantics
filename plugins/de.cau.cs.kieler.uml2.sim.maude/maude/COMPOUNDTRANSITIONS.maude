@@ -21,6 +21,7 @@ fmod COMPOUNDTRANSITIONS is
   vars MN NN : Sets .
   vars NeMN : NeSets .
   var reg : Region .
+  var VALUS : Valuations .
    
   op mm_ : Compoundtransitions -> Menge .
           
@@ -29,17 +30,17 @@ fmod COMPOUNDTRANSITIONS is
      *** add valuations
 
 
-  op chooseChoice__ : Compoundtransition Verts -> Compoundtransition .
-  eq chooseChoice (choiceTrans strid e st sT reg) C = (choiceTrans strid e st ($chooseChoice empty C sT) reg) .
+  op chooseChoice___ : Compoundtransition Verts Valuations -> Compoundtransition .
+  eq chooseChoice (choiceTrans strid e st sT reg) C VALUS = (choiceTrans strid e st ($chooseChoice empty C VALUS sT) reg) .
   
-  op $chooseChoice___ : BasicTransition Verts BasicTransitions -> BasicTransition .
-  ceq $chooseChoice st C (st2, sT) = $chooseChoice st2 C sT if ((guard st2) == choiceelse) .
-  ceq $chooseChoice st C (st2, sT) = st2 if (evalGuard (guard st2) C) .
-  ceq $chooseChoice empty C (st2, sT) = $chooseChoice st2 C sT if ((guard st2) == choiceelse) .
-  ceq $chooseChoice empty C (st2, sT) = st2 if (evalGuard (guard st2) C) .
-  eq $chooseChoice empty C st2 = st2 .
-  ceq $chooseChoice st C st2 = st2 if (evalGuard (guard st2) C) .
-  eq $chooseChoice st C st2 = st [owise] .
+  op $chooseChoice____ : BasicTransition Verts Valuations BasicTransitions -> BasicTransition .
+  ceq $chooseChoice st C VALUS (st2, sT) = $chooseChoice st2 C VALUS sT if ((guard st2) == choiceelse) .
+  ceq $chooseChoice st C VALUS (st2, sT) = st2 if (evalGuard (guard st2) C VALUS) .
+  ceq $chooseChoice empty C VALUS (st2, sT) = $chooseChoice st2 C VALUS sT if ((guard st2) == choiceelse) .
+  ceq $chooseChoice empty C VALUS (st2, sT) = st2 if (evalGuard (guard st2) C VALUS) .
+  eq $chooseChoice empty C VALUS st2 = st2 .
+  ceq $chooseChoice st C VALUS st2 = st2 if (evalGuard (guard st2) C VALUS) .
+  eq $chooseChoice st C VALUS st2 = st [owise] .
 
   
     
@@ -60,19 +61,19 @@ fmod COMPOUNDTRANSITIONS is
   eq $remLowPrio T empty = T .
 
 
-  op enabled__ : Verts Event -> Compoundtransitions .    
-  eq enabled C e2 = $enabled C e2 (getTrans SMINT) .
+  op enabled___ : Verts Valuations Event -> Compoundtransitions .    
+  eq enabled C VALUS e2 = $enabled C VALUS e2 (getTrans SMINT) .
      
      
      *** optimize that   
-  op $enabled___ : Verts Event Compoundtransitions -> Compoundtransitions .
-  eq $enabled C e2 (T ,  t) = ($$enabled C e2 t) ,  ($enabled C e2 T) .
-  eq $enabled C e2 empty = empty .
-  op $$enabled___ : Verts Event Compoundtransition -> Compoundtransition .
-  ceq $$enabled C e2 t = t if ((source t) subset C) and (event t) == e2 
-  and (evalGuard (guard t) C) 
-  . 
-  eq $$enabled C e2 t = empty [owise] .
+  op $enabled____ : Verts Valuations Event Compoundtransitions -> Compoundtransitions .
+  eq $enabled C VALUS e2 (T ,  t) = ($$enabled C VALUS e2 t) ,  ($enabled C VALUS e2 T) .
+  eq $enabled C VALUS e2 empty = empty .
+  
+  op $$enabled____ : Verts Valuations Event Compoundtransition -> Compoundtransition .
+  ceq $$enabled C VALUS e2 t = t if ((source t) subset C) and (event t) == e2 
+  and (evalGuard (guard t) C VALUS) . 
+  eq $$enabled C VALUS e2 t = empty [owise] .
 
 
   op leave __ : Verts Compoundtransitions -> Verts .

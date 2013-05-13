@@ -1,13 +1,13 @@
-fmod VARIABLE is 
-    sort Variable .
+fmod VALUATION is 
+    sort Valuation .
 endfm
 
-view Variable from TRIV to VARIABLE is
-    sort Elt to Variable .
+view Valuation from TRIV to VALUATION is
+    sort Elt to Valuation .
 endv
 
-fmod VARIABLES is
-    including SET{Variable} * (sort Set{Variable} to Variables, sort NeSet{Variable} to NeVariables) .
+fmod VALUATIONS is
+    including SET{Valuation} * (sort Set{Valuation} to Valuations, sort NeSet{Valuation} to NeValuations) .
 	
 	protecting STRING .
 	protecting INT .
@@ -21,22 +21,22 @@ fmod VARIABLES is
 	
 	var variableID1 variableID2 : VariableID .
 	var variableValue1 variableValue2 : Int . 
-	var natVar : Variable .
-	var variables : Variables . 
+	var natVar : Valuation .
+	var variables : Valuations . 
 	var str : String .
 	var varID1 varID2 : VariableID .
 	var exp : Expression .
 	
-	op NatVar(_,_) : VariableID Int -> Variable .
+	op NatVar(_,_) : VariableID Int -> Valuation .
 	
-	op assign _ to _ in _ : Int VariableID Variables -> Variables .
+	op assign _ to _ in _ : Int VariableID Valuations -> Valuations .
 	eq assign variableValue1 to variableID1 in (NatVar(variableID1 , variableValue2), variables) = (NatVar(variableID1 , variableValue1), variables) .
 	    
     op _ + _ : Expression Expression -> Expression [ditto] .
     op _ - _ : Expression Expression -> Expression [ditto] .
     
     *** this definiton has to be here because it is used for the evaluation of actions and guards 
-    op eval _ with _ : Expression Variables -> Int .
+    op eval _ with _ : Expression Valuations -> Int .
     eq eval variableValue1 with variables = variableValue1 .
     eq eval varID1 with (NatVar(varID1 , variableValue1) , variables) = variableValue1 .
     eq eval varID1 + exp with (NatVar(varID1 , variableValue1), variables) = variableValue1 + (eval exp with (NatVar(varID1 , variableValue1), variables)) .
@@ -57,7 +57,7 @@ endfm
 *** red assign eval vID "c" - vID "b" with (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) to vID "a" in (NatVar(vID "a",0), NatVar (vID "b",2), NatVar (vID "c",6)) .
 
 fmod ACTION is
-    protecting VARIABLES .
+    protecting VALUATIONS .
     sort Action .
 
     op _ := _ : VariableID Expression -> Action .
@@ -92,7 +92,7 @@ load /cygdrive/c/Users/Jens/phd-workspace/maude-Variables/VERTSSYNTAX
 
 fmod GUARD is
   including VERTSSYNTAX .
-  including VARIABLES .
+  including VALUATIONS .
   
   
 ***  subsort Guard < Bool .
@@ -135,10 +135,10 @@ fmod EVALGUARD is
   
   var gd1 gd2 : Guard .
   var exp1 exp2 : Expression .
-  var valuation : Variables .
+  var valuation : Valuations .
   var verts1 verts2 : Verts .
   
-  op evalGD___ : Guard Verts Variables -> Bool .
+  op evalGD___ : Guard Verts Valuations -> Bool .
   eq evalGD inStates verts1 verts2 valuation = verts1 subset verts2 .
   eq evalGD notGD gd1 verts1 valuation = not evalGD gd1 verts1 valuation .
   eq evalGD gd1 andGD gd2 verts1 valuation = evalGD gd1 verts1 valuation and evalGD gd2 verts1 valuation .
