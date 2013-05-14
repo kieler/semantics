@@ -59,14 +59,14 @@ public interface SclPackage extends EPackage
   SclPackage eINSTANCE = de.cau.cs.kieler.scl.scl.impl.SclPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.AbstractThreadImpl <em>Abstract Thread</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementSequenceImpl <em>Statement Sequence</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.scl.scl.impl.AbstractThreadImpl
-   * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAbstractThread()
+   * @see de.cau.cs.kieler.scl.scl.impl.StatementSequenceImpl
+   * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getStatementSequence()
    * @generated
    */
-  int ABSTRACT_THREAD = 9;
+  int STATEMENT_SEQUENCE = 9;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -75,16 +75,16 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABSTRACT_THREAD__STATEMENTS = 0;
+  int STATEMENT_SEQUENCE__STATEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Abstract Thread</em>' class.
+   * The number of structural features of the '<em>Statement Sequence</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ABSTRACT_THREAD_FEATURE_COUNT = 1;
+  int STATEMENT_SEQUENCE_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl <em>Program</em>}' class.
@@ -103,7 +103,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM__STATEMENTS = ABSTRACT_THREAD__STATEMENTS;
+  int PROGRAM__STATEMENTS = STATEMENT_SEQUENCE__STATEMENTS;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -112,7 +112,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM__NAME = ABSTRACT_THREAD_FEATURE_COUNT + 0;
+  int PROGRAM__NAME = STATEMENT_SEQUENCE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -121,7 +121,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM__DECLARATIONS = ABSTRACT_THREAD_FEATURE_COUNT + 1;
+  int PROGRAM__DECLARATIONS = STATEMENT_SEQUENCE_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -130,7 +130,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM_FEATURE_COUNT = ABSTRACT_THREAD_FEATURE_COUNT + 2;
+  int PROGRAM_FEATURE_COUNT = STATEMENT_SEQUENCE_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
@@ -374,22 +374,22 @@ public interface SclPackage extends EPackage
   int CONDITIONAL = 7;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITIONAL__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONDITIONAL__STATEMENTS = INSTRUCTION_FEATURE_COUNT + 1;
+  int CONDITIONAL__STATEMENTS = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Conditional</em>' class.
@@ -445,7 +445,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int THREAD__STATEMENTS = ABSTRACT_THREAD__STATEMENTS;
+  int THREAD__STATEMENTS = STATEMENT_SEQUENCE__STATEMENTS;
 
   /**
    * The number of structural features of the '<em>Thread</em>' class.
@@ -454,7 +454,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int THREAD_FEATURE_COUNT = ABSTRACT_THREAD_FEATURE_COUNT + 0;
+  int THREAD_FEATURE_COUNT = STATEMENT_SEQUENCE_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.ParallelImpl <em>Parallel</em>}' class.
@@ -514,22 +514,22 @@ public interface SclPackage extends EPackage
   int STATEMENT_SCOPE = 13;
 
   /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATEMENT_SCOPE__DECLARATIONS = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATEMENT_SCOPE__STATEMENTS = INSTRUCTION_FEATURE_COUNT + 1;
+  int STATEMENT_SCOPE__STATEMENTS = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT_SCOPE__DECLARATIONS = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Statement Scope</em>' class.
@@ -743,17 +743,6 @@ public interface SclPackage extends EPackage
   EReference getConditional_Expression();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Conditional#getStatements <em>Statements</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Statements</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Conditional#getStatements()
-   * @see #getConditional()
-   * @generated
-   */
-  EReference getConditional_Statements();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Goto <em>Goto</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -775,25 +764,25 @@ public interface SclPackage extends EPackage
   EAttribute getGoto_TargetLabel();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.AbstractThread <em>Abstract Thread</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.StatementSequence <em>Statement Sequence</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Abstract Thread</em>'.
-   * @see de.cau.cs.kieler.scl.scl.AbstractThread
+   * @return the meta object for class '<em>Statement Sequence</em>'.
+   * @see de.cau.cs.kieler.scl.scl.StatementSequence
    * @generated
    */
-  EClass getAbstractThread();
+  EClass getStatementSequence();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.AbstractThread#getStatements <em>Statements</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementSequence#getStatements <em>Statements</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Statements</em>'.
-   * @see de.cau.cs.kieler.scl.scl.AbstractThread#getStatements()
-   * @see #getAbstractThread()
+   * @see de.cau.cs.kieler.scl.scl.StatementSequence#getStatements()
+   * @see #getStatementSequence()
    * @generated
    */
-  EReference getAbstractThread_Statements();
+  EReference getStatementSequence_Statements();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Thread <em>Thread</em>}'.
@@ -856,17 +845,6 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EReference getStatementScope_Declarations();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementScope#getStatements <em>Statements</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Statements</em>'.
-   * @see de.cau.cs.kieler.scl.scl.StatementScope#getStatements()
-   * @see #getStatementScope()
-   * @generated
-   */
-  EReference getStatementScope_Statements();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1060,14 +1038,6 @@ public interface SclPackage extends EPackage
     EReference CONDITIONAL__EXPRESSION = eINSTANCE.getConditional_Expression();
 
     /**
-     * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference CONDITIONAL__STATEMENTS = eINSTANCE.getConditional_Statements();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.GotoImpl <em>Goto</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1086,14 +1056,14 @@ public interface SclPackage extends EPackage
     EAttribute GOTO__TARGET_LABEL = eINSTANCE.getGoto_TargetLabel();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.AbstractThreadImpl <em>Abstract Thread</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementSequenceImpl <em>Statement Sequence</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scl.scl.impl.AbstractThreadImpl
-     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAbstractThread()
+     * @see de.cau.cs.kieler.scl.scl.impl.StatementSequenceImpl
+     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getStatementSequence()
      * @generated
      */
-    EClass ABSTRACT_THREAD = eINSTANCE.getAbstractThread();
+    EClass STATEMENT_SEQUENCE = eINSTANCE.getStatementSequence();
 
     /**
      * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
@@ -1101,7 +1071,7 @@ public interface SclPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ABSTRACT_THREAD__STATEMENTS = eINSTANCE.getAbstractThread_Statements();
+    EReference STATEMENT_SEQUENCE__STATEMENTS = eINSTANCE.getStatementSequence_Statements();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.ThreadImpl <em>Thread</em>}' class.
@@ -1158,14 +1128,6 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EReference STATEMENT_SCOPE__DECLARATIONS = eINSTANCE.getStatementScope_Declarations();
-
-    /**
-     * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATEMENT_SCOPE__STATEMENTS = eINSTANCE.getStatementScope_Statements();
 
   }
 

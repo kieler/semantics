@@ -2,8 +2,9 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementSequence;
 
 import java.util.Collection;
 
@@ -14,40 +15,42 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Parallel</b></em>'.
+ * An implementation of the model object '<em><b>Statement Sequence</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ParallelImpl#getThreads <em>Threads</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementSequenceImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ParallelImpl extends InstructionImpl implements Parallel
+public class StatementSequenceImpl extends MinimalEObjectImpl.Container implements StatementSequence
 {
   /**
-   * The cached value of the '{@link #getThreads() <em>Threads</em>}' containment reference list.
+   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getThreads()
+   * @see #getStatements()
    * @generated
    * @ordered
    */
-  protected EList<de.cau.cs.kieler.scl.scl.Thread> threads;
+  protected EList<Statement> statements;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ParallelImpl()
+  protected StatementSequenceImpl()
   {
     super();
   }
@@ -60,7 +63,7 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   @Override
   protected EClass eStaticClass()
   {
-    return SclPackage.Literals.PARALLEL;
+    return SclPackage.Literals.STATEMENT_SEQUENCE;
   }
 
   /**
@@ -68,13 +71,13 @@ public class ParallelImpl extends InstructionImpl implements Parallel
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<de.cau.cs.kieler.scl.scl.Thread> getThreads()
+  public EList<Statement> getStatements()
   {
-    if (threads == null)
+    if (statements == null)
     {
-      threads = new EObjectContainmentEList<de.cau.cs.kieler.scl.scl.Thread>(de.cau.cs.kieler.scl.scl.Thread.class, this, SclPackage.PARALLEL__THREADS);
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.STATEMENT_SEQUENCE__STATEMENTS);
     }
-    return threads;
+    return statements;
   }
 
   /**
@@ -87,8 +90,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
-      case SclPackage.PARALLEL__THREADS:
-        return ((InternalEList<?>)getThreads()).basicRemove(otherEnd, msgs);
+      case SclPackage.STATEMENT_SEQUENCE__STATEMENTS:
+        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -103,8 +106,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
-      case SclPackage.PARALLEL__THREADS:
-        return getThreads();
+      case SclPackage.STATEMENT_SEQUENCE__STATEMENTS:
+        return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -120,9 +123,9 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
-      case SclPackage.PARALLEL__THREADS:
-        getThreads().clear();
-        getThreads().addAll((Collection<? extends de.cau.cs.kieler.scl.scl.Thread>)newValue);
+      case SclPackage.STATEMENT_SEQUENCE__STATEMENTS:
+        getStatements().clear();
+        getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -138,8 +141,8 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
-      case SclPackage.PARALLEL__THREADS:
-        getThreads().clear();
+      case SclPackage.STATEMENT_SEQUENCE__STATEMENTS:
+        getStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -155,10 +158,10 @@ public class ParallelImpl extends InstructionImpl implements Parallel
   {
     switch (featureID)
     {
-      case SclPackage.PARALLEL__THREADS:
-        return threads != null && !threads.isEmpty();
+      case SclPackage.STATEMENT_SEQUENCE__STATEMENTS:
+        return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //ParallelImpl
+} //StatementSequenceImpl

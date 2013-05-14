@@ -13,6 +13,6 @@ package de.cau.cs.kieler.scl.scl;
  * @model
  * @generated
  */
-public interface Thread extends AbstractThread
+public interface Thread extends StatementSequence
 {
 } // Thread

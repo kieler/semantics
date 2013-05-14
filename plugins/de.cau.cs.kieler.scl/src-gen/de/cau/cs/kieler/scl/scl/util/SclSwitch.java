@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.scl.scl.util;
 
-import de.cau.cs.kieler.scl.scl.AbstractThread;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -15,6 +14,7 @@ import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
+import de.cau.cs.kieler.scl.scl.StatementSequence;
 import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EObject;
@@ -94,7 +94,7 @@ public class SclSwitch<T> extends Switch<T>
       {
         Program program = (Program)theEObject;
         T result = caseProgram(program);
-        if (result == null) result = caseAbstractThread(program);
+        if (result == null) result = caseStatementSequence(program);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -151,6 +151,7 @@ public class SclSwitch<T> extends Switch<T>
         Conditional conditional = (Conditional)theEObject;
         T result = caseConditional(conditional);
         if (result == null) result = caseInstruction(conditional);
+        if (result == null) result = caseStatementSequence(conditional);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -162,10 +163,10 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SclPackage.ABSTRACT_THREAD:
+      case SclPackage.STATEMENT_SEQUENCE:
       {
-        AbstractThread abstractThread = (AbstractThread)theEObject;
-        T result = caseAbstractThread(abstractThread);
+        StatementSequence statementSequence = (StatementSequence)theEObject;
+        T result = caseStatementSequence(statementSequence);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -173,7 +174,7 @@ public class SclSwitch<T> extends Switch<T>
       {
         de.cau.cs.kieler.scl.scl.Thread thread = (de.cau.cs.kieler.scl.scl.Thread)theEObject;
         T result = caseThread(thread);
-        if (result == null) result = caseAbstractThread(thread);
+        if (result == null) result = caseStatementSequence(thread);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -198,6 +199,7 @@ public class SclSwitch<T> extends Switch<T>
         StatementScope statementScope = (StatementScope)theEObject;
         T result = caseStatementScope(statementScope);
         if (result == null) result = caseInstruction(statementScope);
+        if (result == null) result = caseStatementSequence(statementScope);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -350,17 +352,17 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Abstract Thread</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Statement Sequence</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Abstract Thread</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Statement Sequence</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAbstractThread(AbstractThread object)
+  public T caseStatementSequence(StatementSequence object)
   {
     return null;
   }

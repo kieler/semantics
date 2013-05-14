@@ -217,13 +217,15 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="AbstractThread">
+    <rules xsi:type="xtext:ParserRule" name="StatementSequence">
       <type metamodel="/0/@metamodelDeclarations.6">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/scl/scl#//AbstractThread"/>
+        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/scl/scl#//StatementSequence"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.0"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Thread">

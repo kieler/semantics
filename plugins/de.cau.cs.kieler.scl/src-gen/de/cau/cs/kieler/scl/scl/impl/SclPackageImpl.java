@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.AbstractThread;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -16,6 +15,7 @@ import de.cau.cs.kieler.scl.scl.SclFactory;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
+import de.cau.cs.kieler.scl.scl.StatementSequence;
 import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -107,7 +107,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass abstractThreadEClass = null;
+  private EClass statementSequenceEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -398,16 +398,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConditional_Statements()
-  {
-    return (EReference)conditionalEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getGoto()
   {
     return gotoEClass;
@@ -428,9 +418,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getAbstractThread()
+  public EClass getStatementSequence()
   {
-    return abstractThreadEClass;
+    return statementSequenceEClass;
   }
 
   /**
@@ -438,9 +428,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAbstractThread_Statements()
+  public EReference getStatementSequence_Statements()
   {
-    return (EReference)abstractThreadEClass.getEStructuralFeatures().get(0);
+    return (EReference)statementSequenceEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -508,16 +498,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStatementScope_Statements()
-  {
-    return (EReference)statementScopeEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public SclFactory getSclFactory()
   {
     return (SclFactory)getEFactoryInstance();
@@ -569,13 +549,12 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     conditionalEClass = createEClass(CONDITIONAL);
     createEReference(conditionalEClass, CONDITIONAL__EXPRESSION);
-    createEReference(conditionalEClass, CONDITIONAL__STATEMENTS);
 
     gotoEClass = createEClass(GOTO);
     createEAttribute(gotoEClass, GOTO__TARGET_LABEL);
 
-    abstractThreadEClass = createEClass(ABSTRACT_THREAD);
-    createEReference(abstractThreadEClass, ABSTRACT_THREAD__STATEMENTS);
+    statementSequenceEClass = createEClass(STATEMENT_SEQUENCE);
+    createEReference(statementSequenceEClass, STATEMENT_SEQUENCE__STATEMENTS);
 
     threadEClass = createEClass(THREAD);
 
@@ -586,7 +565,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     statementScopeEClass = createEClass(STATEMENT_SCOPE);
     createEReference(statementScopeEClass, STATEMENT_SCOPE__DECLARATIONS);
-    createEReference(statementScopeEClass, STATEMENT_SCOPE__STATEMENTS);
   }
 
   /**
@@ -623,17 +601,19 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    programEClass.getESuperTypes().add(this.getAbstractThread());
+    programEClass.getESuperTypes().add(this.getStatementSequence());
     variableDeclarationEClass.getESuperTypes().add(theSGraphPackage.getVariable());
     emptyStatementEClass.getESuperTypes().add(this.getStatement());
     instructionStatementEClass.getESuperTypes().add(this.getStatement());
     assignmentEClass.getESuperTypes().add(this.getInstruction());
     conditionalEClass.getESuperTypes().add(this.getInstruction());
+    conditionalEClass.getESuperTypes().add(this.getStatementSequence());
     gotoEClass.getESuperTypes().add(this.getInstruction());
-    threadEClass.getESuperTypes().add(this.getAbstractThread());
+    threadEClass.getESuperTypes().add(this.getStatementSequence());
     parallelEClass.getESuperTypes().add(this.getInstruction());
     pauseEClass.getESuperTypes().add(this.getInstruction());
     statementScopeEClass.getESuperTypes().add(this.getInstruction());
+    statementScopeEClass.getESuperTypes().add(this.getStatementSequence());
 
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -662,13 +642,12 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConditional_Expression(), theStextPackage.getExpression(), null, "expression", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConditional_Statements(), this.getStatement(), null, "statements", null, 0, -1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGoto_TargetLabel(), ecorePackage.getEString(), "targetLabel", null, 0, 1, Goto.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(abstractThreadEClass, AbstractThread.class, "AbstractThread", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAbstractThread_Statements(), this.getStatement(), null, "statements", null, 0, -1, AbstractThread.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(statementSequenceEClass, StatementSequence.class, "StatementSequence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStatementSequence_Statements(), this.getStatement(), null, "statements", null, 0, -1, StatementSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(threadEClass, de.cau.cs.kieler.scl.scl.Thread.class, "Thread", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -679,7 +658,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     initEClass(statementScopeEClass, StatementScope.class, "StatementScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getStatementScope_Declarations(), this.getVariableDeclaration(), null, "declarations", null, 0, -1, StatementScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStatementScope_Statements(), this.getStatement(), null, "statements", null, 0, -1, StatementScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

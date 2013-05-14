@@ -31,13 +31,12 @@
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Conditional">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Conditional/expression"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Conditional/statements"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Goto">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Goto/targetLabel"/>
     </genClasses>
-    <genClasses ecoreClass="SCL.ecore#//AbstractThread">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//AbstractThread/statements"/>
+    <genClasses ecoreClass="SCL.ecore#//StatementSequence">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//StatementSequence/statements"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Thread"/>
     <genClasses ecoreClass="SCL.ecore#//Parallel">
@@ -46,7 +45,6 @@
     <genClasses ecoreClass="SCL.ecore#//Pause"/>
     <genClasses ecoreClass="SCL.ecore#//StatementScope">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//StatementScope/declarations"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//StatementScope/statements"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

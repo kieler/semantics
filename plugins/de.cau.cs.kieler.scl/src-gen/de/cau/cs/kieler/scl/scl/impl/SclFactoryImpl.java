@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.AbstractThread;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -16,6 +15,7 @@ import de.cau.cs.kieler.scl.scl.SclFactory;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
+import de.cau.cs.kieler.scl.scl.StatementSequence;
 import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EClass;
@@ -87,7 +87,7 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
       case SclPackage.ASSIGNMENT: return createAssignment();
       case SclPackage.CONDITIONAL: return createConditional();
       case SclPackage.GOTO: return createGoto();
-      case SclPackage.ABSTRACT_THREAD: return createAbstractThread();
+      case SclPackage.STATEMENT_SEQUENCE: return createStatementSequence();
       case SclPackage.THREAD: return createThread();
       case SclPackage.PARALLEL: return createParallel();
       case SclPackage.PAUSE: return createPause();
@@ -201,10 +201,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public AbstractThread createAbstractThread()
+  public StatementSequence createStatementSequence()
   {
-    AbstractThreadImpl abstractThread = new AbstractThreadImpl();
-    return abstractThread;
+    StatementSequenceImpl statementSequence = new StatementSequenceImpl();
+    return statementSequence;
   }
 
   /**

@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.scl.scl.util;
 
-import de.cau.cs.kieler.scl.scl.AbstractThread;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -15,6 +14,7 @@ import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
+import de.cau.cs.kieler.scl.scl.StatementSequence;
 import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -138,9 +138,9 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createGotoAdapter();
       }
       @Override
-      public Adapter caseAbstractThread(AbstractThread object)
+      public Adapter caseStatementSequence(StatementSequence object)
       {
-        return createAbstractThreadAdapter();
+        return createStatementSequenceAdapter();
       }
       @Override
       public Adapter caseThread(de.cau.cs.kieler.scl.scl.Thread object)
@@ -335,16 +335,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.AbstractThread <em>Abstract Thread</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.StatementSequence <em>Statement Sequence</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.AbstractThread
+   * @see de.cau.cs.kieler.scl.scl.StatementSequence
    * @generated
    */
-  public Adapter createAbstractThreadAdapter()
+  public Adapter createStatementSequenceAdapter()
   {
     return null;
   }

@@ -5,6 +5,7 @@ package de.cau.cs.kieler.scl.scl.impl;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementSequence;
 
 import java.util.Collection;
 
@@ -30,8 +31,8 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getStatements <em>Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,16 +40,6 @@ import org.yakindu.sct.model.stext.stext.Expression;
  */
 public class ConditionalImpl extends InstructionImpl implements Conditional
 {
-  /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpression()
-   * @generated
-   * @ordered
-   */
-  protected Expression expression;
-
   /**
    * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -58,6 +49,16 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * @ordered
    */
   protected EList<Statement> statements;
+
+  /**
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExpression()
+   * @generated
+   * @ordered
+   */
+  protected Expression expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -78,6 +79,20 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
   protected EClass eStaticClass()
   {
     return SclPackage.Literals.CONDITIONAL;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Statement> getStatements()
+  {
+    if (statements == null)
+    {
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.CONDITIONAL__STATEMENTS);
+    }
+    return statements;
   }
 
   /**
@@ -133,29 +148,15 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Statement> getStatements()
-  {
-    if (statements == null)
-    {
-      statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.CONDITIONAL__STATEMENTS);
-    }
-    return statements;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case SclPackage.CONDITIONAL__EXPRESSION:
-        return basicSetExpression(null, msgs);
       case SclPackage.CONDITIONAL__STATEMENTS:
         return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
+      case SclPackage.CONDITIONAL__EXPRESSION:
+        return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -170,10 +171,10 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
   {
     switch (featureID)
     {
-      case SclPackage.CONDITIONAL__EXPRESSION:
-        return getExpression();
       case SclPackage.CONDITIONAL__STATEMENTS:
         return getStatements();
+      case SclPackage.CONDITIONAL__EXPRESSION:
+        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -189,12 +190,12 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
   {
     switch (featureID)
     {
-      case SclPackage.CONDITIONAL__EXPRESSION:
-        setExpression((Expression)newValue);
-        return;
       case SclPackage.CONDITIONAL__STATEMENTS:
         getStatements().clear();
         getStatements().addAll((Collection<? extends Statement>)newValue);
+        return;
+      case SclPackage.CONDITIONAL__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -210,11 +211,11 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
   {
     switch (featureID)
     {
-      case SclPackage.CONDITIONAL__EXPRESSION:
-        setExpression((Expression)null);
-        return;
       case SclPackage.CONDITIONAL__STATEMENTS:
         getStatements().clear();
+        return;
+      case SclPackage.CONDITIONAL__EXPRESSION:
+        setExpression((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -230,12 +231,50 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
   {
     switch (featureID)
     {
-      case SclPackage.CONDITIONAL__EXPRESSION:
-        return expression != null;
       case SclPackage.CONDITIONAL__STATEMENTS:
         return statements != null && !statements.isEmpty();
+      case SclPackage.CONDITIONAL__EXPRESSION:
+        return expression != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == StatementSequence.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case SclPackage.CONDITIONAL__STATEMENTS: return SclPackage.STATEMENT_SEQUENCE__STATEMENTS;
+        default: return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == StatementSequence.class)
+    {
+      switch (baseFeatureID)
+      {
+        case SclPackage.STATEMENT_SEQUENCE__STATEMENTS: return SclPackage.CONDITIONAL__STATEMENTS;
+        default: return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
 } //ConditionalImpl

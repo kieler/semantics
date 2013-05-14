@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ProgramImpl extends AbstractThreadImpl implements Program
+public class ProgramImpl extends StatementSequenceImpl implements Program
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
