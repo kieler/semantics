@@ -1,7 +1,8 @@
 package de.cau.cs.kieler.scl.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.scl.scl.AbstractThread
+import de.cau.cs.kieler.scl.scl.StatementSequence
+import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Statement
@@ -31,7 +32,7 @@ class SCLGotoExtensions {
         getTargetStatement(goto, goto.getThread)
     }
     
-    def Statement getTargetStatement(Goto goto, AbstractThread thread) {
+    def Statement getTargetStatement(Goto goto, Thread thread) {
         thread.eAllContents.filter(typeof(Statement)).filter(e|e.label == goto.targetLabel).head
     }
     
@@ -40,7 +41,7 @@ class SCLGotoExtensions {
         targetExists(goto, goto.getThread)
     }
 
-    def boolean targetExists(Goto goto, AbstractThread thread) {
+    def boolean targetExists(Goto goto, Thread thread) {
         getTargetStatement(goto, thread) != null
     }
 

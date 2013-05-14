@@ -22,12 +22,12 @@ class SCLBasicBlockExtensions {
     def boolean isBasicBlockFirst(Statement statement) {
         if (statement.isEmpty) return false
         
-        val statements = statement.getStatementSequence
+        val sseq = statement.getParentStatementSequence
         val prevStatement = statement.previousStatementHierarchical
         
         if (statement.isGoto) return false
         if (statement.isPause) return true
-        if (statements.indexOf(statement) == 0) return true
+        if (sseq.statements.indexOf(statement) == 0) return true
         if (prevStatement.isConditional) return true
         if (prevStatement.isGoto) return true 
         if (statement.asInstructionStatement.getIncomingGotos.size==0) return false
@@ -41,11 +41,11 @@ class SCLBasicBlockExtensions {
         if (statement.isConditional) return true
         if (statement.isPause) return true
         
-        val statements = statement.getStatementSequence
-        var succIndex = statements.indexOf(statement) + 1 
+        val sseq = statement.getParentStatementSequence
+        var succIndex = sseq.statements.indexOf(statement) + 1 
         
-        while (succIndex < statements.size) {
-            val succStatement = statements.get(succIndex)
+        while (succIndex < sseq.statements.size) {
+            val succStatement = sseq.statements.get(succIndex)
             if (succStatement.isEmpty || succStatement.isGoto) succIndex = succIndex + 1
             else {
                 val incomingGotos = succStatement.asInstructionStatement.getIncomingGotos.size
@@ -64,7 +64,7 @@ class SCLBasicBlockExtensions {
     }
     
     def List<Statement> getBasicBlockStatements(Statement statement, boolean isDepth) {
-        val statements = statement.getStatementSequence
+        val sseq = statement.getParentStatementSequence
         val bBox = new ArrayList<Statement>
         
         if (statement.isGoto) { 
@@ -72,15 +72,15 @@ class SCLBasicBlockExtensions {
             return getBasicBlockStatements(statementHier, isDepth)
         }
         
-        val oIndex = statements.indexOf(statement)
+        val oIndex = sseq.statements.indexOf(statement)
         if (oIndex < 0) return bBox
-        val stmt = statements.get(oIndex)
+        val stmt = sseq.statements.get(oIndex)
         if (!stmt.isBasicBlockFirst || 
             (stmt.isPause && !isDepth && oIndex>0)) {
             val predStatements = new ArrayList<Statement>
             var predIndex = oIndex - 1
             while (predIndex >= 0) {
-                val predStmt = statements.get(predIndex)
+                val predStmt = sseq.statements.get(predIndex)
                 if (!predStmt.isEmpty) predStatements.add(predStmt) 
                 if (!predStmt.isBasicBlockFirst) predIndex = predIndex - 1
                 else predIndex = -1
@@ -90,11 +90,11 @@ class SCLBasicBlockExtensions {
         bBox.add(stmt)
         if (stmt.isBasicBlockLast && !isDepth) return bBox
         var succIndex = oIndex + 1
-        while (succIndex < statements.size) {
-            val succStmt = statements.get(succIndex)
+        while (succIndex < sseq.statements.size) {
+            val succStmt = sseq.statements.get(succIndex)
             if (!succStmt.isEmpty) bBox.add(succStmt) 
             if (!succStmt.isBasicBlockLast) succIndex = succIndex + 1
-            else succIndex = statements.size                    
+            else succIndex = sseq.statements.size                    
         }
         bBox
     }
@@ -141,8 +141,8 @@ class SCLBasicBlockExtensions {
     
     def List<BasicBlock> getBasicBlocks(Statement statement) {
         val basicBlocks = new ArrayList<BasicBlock>
-        val cf = statement.getStatementSequence
-        for(stmt : cf) {
+        val sseq = statement.getParentStatementSequence
+        for(stmt : sseq.statements) {
             val stmtBlock = stmt.getBasicBlockByAnyStatement
             if (stmtBlock != null && !basicBlocks.contains(stmtBlock)) basicBlocks.add(stmtBlock)
             if (stmt.isPause) {
@@ -156,7 +156,7 @@ class SCLBasicBlockExtensions {
     }
     
     def List<BasicBlock> getAllBasicBlocks(Statement statement) {
-        getBasicBlocks(statement.getMainThread.statements.head)
+        getBasicBlocks(statement.getProgram.statements.head)
     }
     
     def int getAllBasicBlocksCount(Statement statement) {

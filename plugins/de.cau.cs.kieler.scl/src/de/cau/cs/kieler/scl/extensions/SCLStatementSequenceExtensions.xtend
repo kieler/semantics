@@ -1,12 +1,13 @@
 package de.cau.cs.kieler.scl.extensions
 
-import de.cau.cs.kieler.scl.scl.AbstractThread
+import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.Thread
 import java.util.List
 import javax.inject.Inject
 
@@ -29,106 +30,105 @@ class SCLThreadExtensions {
      */
     
     // Retrieve the thread list of a given instruction
-    def AbstractThread getThread(Instruction instruction) {
+    def Thread getThread(Instruction instruction) {
         getThread(instruction.eContainer as Statement)
     }
     
-    def AbstractThread getThread(Statement statement) {
+    def Thread getThread(Statement statement) {
         var container = statement.eContainer
         while (container != null) {
-            if (container instanceof AbstractThread) return container as AbstractThread
+            if (container instanceof Thread) return (container as Thread)
             container = container.eContainer
         }
         return null
     }
 
-    def AbstractThread getMainThread(Instruction instruction) {
-        getMainThread(instruction.eContainer as Statement)
+    def Program getProgram(Instruction instruction) {
+        getProgram(instruction.eContainer as Statement)
     }
     
-    def AbstractThread getMainThread(Statement statement) {
+    def Program getProgram(Statement statement) {
         var container = statement.eContainer
         while (container != null) {
-            if (container instanceof Program) return container as AbstractThread
+            if (container instanceof Program) return container as Program
             container = container.eContainer
         }
         return null
     }
     
-    def List<Statement> getStatementSequence(Instruction instruction) {
-        getStatementSequence(instruction.eContainer as Statement)
+    def StatementSequence getParentStatementSequence(Instruction instruction) {
+        getParentStatementSequence(instruction.eContainer as Statement)
     }
     
-    def List<Statement> getStatementSequence(Statement statement) {
+    def StatementSequence getParentStatementSequence(Statement statement) {
         var container = statement.eContainer
         while (container != null) {
-            if (container instanceof AbstractThread) return (container as AbstractThread).statements
-            if (container instanceof Conditional) return (container as Conditional).statements
+            if (container instanceof StatementSequence) return (container as StatementSequence)
             container = container.eContainer
         }
         return null
     }
 
     // Checks if two instructions are in the same thread instruction list 
-    def dispatch boolean isInSameThreadAs(Instruction instruction, Instruction secondInstruction) {
-        getThread(instruction) == getThread(secondInstruction)
-    }
-
-    def dispatch boolean isInSameThreadAs(Statement statement, Statement secondStatement) {
-        getThread(statement) == getThread(secondStatement)
-    }
+//    def dispatch boolean isInSameThreadAs(Instruction instruction, Instruction secondInstruction) {
+//        getThread(instruction) == getThread(secondInstruction)
+//    }
+//
+//    def dispatch boolean isInSameThreadAs(Statement statement, Statement secondStatement) {
+//        getThread(statement) == getThread(secondStatement)
+//    }
     
     // Checks if an instruction is in the main thread list (program.instructions)
-    def dispatch boolean isInMainThread(Instruction instruction) {
-        getThread(instruction) == getMainThread(instruction)
-    }
-
-    def dispatch boolean isInMainThread(Statement statement) {
-        getThread(statement) == getMainThread(statement)
-    }
+//    def dispatch boolean isInMainThread(Instruction instruction) {
+//        getThread(instruction) == getMainThread(instruction)
+//    }
+//
+//    def dispatch boolean isInMainThread(Statement statement) {
+//        getThread(statement) == getMainThread(statement)
+//    }
 
     // Checks if an instruction is in the given thread
-    def dispatch boolean isInThread(Instruction instruction, AbstractThread thread) {
-        thread.eAllContents.filter(typeof(InstructionStatement)).exists(e|e.instruction == instruction)
-    }    
+//    def dispatch boolean isInThread(Instruction instruction, AbstractThread thread) {
+//        thread.eAllContents.filter(typeof(InstructionStatement)).exists(e|e.instruction == instruction)
+//    }    
 
     // Checks if a statement is in the given thread
-    def dispatch boolean isInThread(Statement statement, AbstractThread thread) {
-        thread.eAllContents.filter(typeof(Statement)).exists(e|e == statement)
-    }
+//    def dispatch boolean isInThread(Statement statement, AbstractThread thread) {
+//        thread.eAllContents.filter(typeof(Statement)).exists(e|e == statement)
+//    }
     
     // Checks if a thread contains the given instruction
-    def dispatch boolean contains(AbstractThread thread, Instruction instruction) {
-        instruction.isInThread(thread)
-    }    
+//    def dispatch boolean contains(AbstractThread thread, Instruction instruction) {
+//        instruction.isInThread(thread)
+//    }    
     
     // Checks if a thread contains the given statement
-    def dispatch boolean contains(AbstractThread thread, Statement statement) {
-        statement.isInThread(thread)
-    }
+//    def dispatch boolean contains(AbstractThread thread, Statement statement) {
+//        statement.isInThread(thread)
+//    }
     
     // Drop previous statements from a list of statements till the given statement
-    def dropPrevious(List<Statement> statements, Statement statement) {
-        var stmts = statements.copyAll
-        while(stmts != null && stmts.size>0 && stmts.head != statement) 
-            stmts = stmts.tail.toList
-        stmts
-    }
-    
-    def dropPrevious(AbstractThread thread, Statement statement) {
-        if (statement.eContainer instanceof Conditional) {
-            return dropPrevious((statement.eContainer as Conditional).statements, statement)    
-        } else {
-            return dropPrevious(thread.statements, statement)
-        }
-    }
+//    def dropPrevious(List<Statement> statements, Statement statement) {
+//        var stmts = statements.copyAll
+//        while(stmts != null && stmts.size>0 && stmts.head != statement) 
+//            stmts = stmts.tail.toList
+//        stmts
+//    }
+//    
+//    def dropPrevious(StatementSequence thread, Statement statement) {
+//        if (statement.eContainer instanceof Conditional) {
+//            return dropPrevious((statement.eContainer as Conditional).statements, statement)    
+//        } else {
+//            return dropPrevious(thread.statements, statement)
+//        }
+//    }
     
     def InstructionStatement getPreviousInstructionStatement(Statement statement) {
-        val statements = statement.getStatementSequence
-        var index = statements.indexOf(statement) - 1
+        val sseq = statement.getParentStatementSequence
+        var index = sseq.statements.indexOf(statement) - 1
         if (index<0) return null
         while(index>=0) {
-            val stmt = statements.get(index)
+            val stmt = sseq.statements.get(index)
             if (stmt.hasInstruction) { return stmt.asInstructionStatement }
             index = index - 1
         }
@@ -136,21 +136,21 @@ class SCLThreadExtensions {
     }
     
     def Statement getPreviousStatement(Statement statement) {
-        val statements = statement.getStatementSequence
-        var index = statements.indexOf(statement) - 1
+        val sseq = statement.getParentStatementSequence
+        var index = sseq.statements.indexOf(statement) - 1
         if (index<0) return null
-        statements.get(index)
+        sseq.statements.get(index)
     }
     
     def Statement getPreviousStatementHierarchical(Statement statement) {
-        val cf = statement.getStatementSequence
-        var index = cf.indexOf(statement) - 1
+        val sseq = statement.getParentStatementSequence
+        var index = sseq.statements.indexOf(statement) - 1
         if (index<0) {
             if (statement.eContainer instanceof Parallel) return (statement.eContainer as Parallel).getStatement
             if (statement.eContainer instanceof Conditional) return (statement.eContainer as Conditional).getStatement
             return null
         }
-        cf.get(index)
+        sseq.statements.get(index)
     }
 
     def Statement getPreviousInstructionStatementHierarchical(Statement statement) {
@@ -166,10 +166,10 @@ class SCLThreadExtensions {
     }
     
     def Statement getNextStatement(Statement statement, boolean resolveGotos) {
-        val statements = statement.getStatementSequence
-        var index = statements.indexOf(statement) + 1
-        if (index >= statements.size) return null
-        var result = statements.get(index)
+        val sseq = statement.getParentStatementSequence
+        var index = sseq.statements.indexOf(statement) + 1
+        if (index >= sseq.statements.size) return null
+        var result = sseq.statements.get(index)
         var int cyclebreaker = 64
         if (resolveGotos) while (result != null && result.isGoto && cyclebreaker > 0) {
             val goto = result.getInstruction as Goto
