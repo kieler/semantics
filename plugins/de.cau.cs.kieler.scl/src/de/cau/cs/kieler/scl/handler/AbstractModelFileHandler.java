@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.scl.handler;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +14,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
@@ -36,6 +39,8 @@ import org.eclipse.ui.part.FileEditorInput;
 
 import com.google.inject.Injector;
 // NEEDED for KIELER stand-alone
+
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -64,7 +69,7 @@ public abstract class AbstractModelFileHandler extends AbstractHandler {
 	
 	public abstract Injector CreateResourceInjector();
 	
-	public EObject doTransformation(EObject modelObject, String commandString) {
+	public Object doTransformation(EObject modelObject, String commandString) {
 		return modelObject;
 	}
 	
@@ -91,7 +96,13 @@ public abstract class AbstractModelFileHandler extends AbstractHandler {
             Resource resourceLoad=resourceSet.getResource(input, true);
                 
             EObject modelRoot = resourceLoad.getContents().get(0); 
-            EObject transformedModel = doTransformation(modelRoot, command);
+            
+            Object transformedModel = doTransformation(modelRoot, command);
+            EObject transformedEObject = null;
+            if (transformedModel instanceof EObject) {
+                transformedEObject = (EObject) transformedModel;
+            }
+            
             resourceLoad.unload();
             
             // Calculate output path
@@ -111,29 +122,51 @@ public abstract class AbstractModelFileHandler extends AbstractHandler {
                 // Create ouptut resource
                 Resource saveRes = resSet.createResource(output);
                 
-                // Create Diagram, if necessary
-                // Note: Diagrams created this way are empty
-                Diagram diagram = null;
-                if (ModelHandlerCreateDiagram()) {
-                    diagram = ViewService.createDiagram(transformedModel, 
-                                    ModelHandlerDiagramEditorID(), 
-                                    ModelHandlerDiagramPreferencesHint());
-                    if (diagram == null) { throw new NullPointerException(); }
-                    diagram.setElement(transformedModel);
-               
-                    // Save both the model and the diagram in one resource
-                    saveRes.getContents().add(transformedModel);
-                    saveRes.getContents().add(diagram);
-                } else {
-                    saveRes.getContents().add(transformedModel);
+                if (transformedEObject != null) {
+                    // Create Diagram, if necessary
+                    // Note: Diagrams created this way are empty
+                    Diagram diagram = null;
+                    if (ModelHandlerCreateDiagram()) {
+                        diagram = ViewService.createDiagram(transformedEObject, 
+                                        ModelHandlerDiagramEditorID(), 
+                                        ModelHandlerDiagramPreferencesHint());
+                        if (diagram == null) { throw new NullPointerException(); }
+                        diagram.setElement(transformedEObject);
+                   
+                        // Save both the model and the diagram in one resource
+                        saveRes.getContents().add(transformedEObject);
+                        saveRes.getContents().add(diagram);
+                    } else {
+                        saveRes.getContents().add(transformedEObject);
+                    }
+                    saveRes.save(getSaveOptions());
+                    setCharset(WorkspaceSynchronizer.getFile(saveRes));
                 }
                 
-                saveRes.save(getSaveOptions());
-                setCharset(WorkspaceSynchronizer.getFile(saveRes));
+                // Save text
+                if (transformedModel instanceof CharSequence) {
+                    IPath txtOutputPath = new Path(output.toPlatformString(false).replace("%20", " "));
+                    IFile txtOutputFile = KiemUtil.convertIPathToIFile(txtOutputPath);
+                    String txtOutputString = KiemUtil.getAbsoluteFilePath(txtOutputFile);
+                    
+                    CharSequence charSequenceContent = (CharSequence) transformedModel;
+                    String stringContent = charSequenceContent.toString();
+                    
+                    // Write out c program
+                    FileWriter fileWriter = new FileWriter(txtOutputString);
+                    if (fileWriter != null) {
+                        BufferedWriter out = new BufferedWriter(fileWriter);
+                        if (out != null) {
+                            out.write(stringContent);
+                            out.close();
+                        }
+                    }
+                    
+                }
 
                 // Open associated editor, if necessary
-                if (ModelHandlerOpenEditor()) {
-                    URI uri = EcoreUtil.getURI(transformedModel);
+                if (ModelHandlerOpenEditor() && transformedEObject != null) {
+                    URI uri = EcoreUtil.getURI(transformedEObject);
                     IFile file2 = ResourcesPlugin.getWorkspace().getRoot()
                                         .getFile(new Path(uri.toPlatformString(true)));
                 
@@ -147,7 +180,7 @@ public abstract class AbstractModelFileHandler extends AbstractHandler {
                                             desc.getId());
                 }
                 
-                doPostProcessing(transformedModel);
+                doPostProcessing(transformedEObject);
                
             } catch (IOException e) {
                 throw new ExecutionException("Cannot write output SCChart file.");
