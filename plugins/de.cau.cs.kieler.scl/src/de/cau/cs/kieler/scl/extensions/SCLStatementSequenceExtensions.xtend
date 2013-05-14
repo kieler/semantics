@@ -14,7 +14,7 @@ import javax.inject.Inject
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.Goto
 
-class SCLThreadExtensions {
+class SCLStatementSequenceExtensions {
         
     @Inject
     extension SCLStatementExtensions        
