@@ -16,7 +16,7 @@ class SCLGotoExtensions {
     @Inject
     extension SCLStatementExtensions
     @Inject
-    extension SCLThreadExtensions
+    extension SCLStatementSequenceExtensions
     
     // ======================================================================================================
     // ==                 G O T O  - L O O K U P   M E T A M O D E L   E X T E N S I O N                   ==

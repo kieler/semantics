@@ -16,7 +16,7 @@ class SCLBasicBlockExtensions {
     @Inject
     extension SCLStatementExtensions
     @Inject
-    extension SCLThreadExtensions
+    extension SCLStatementSequenceExtensions
     
     // Decides weather or not a statement is the beginning of a new basic block.
     def boolean isBasicBlockFirst(Statement statement) {
