@@ -72,10 +72,9 @@ class SCL2VHDL {
        val statementSequence = program as StatementSequence;
        val statements = statementSequence.statements;
    	'''    int tick(){
-«««       «FOR statement : statements»
-«««       «statement.expand»
-«««       «ENDFOR»
-       
+       «FOR statement : statements»
+       «statement.expand»
+       «ENDFOR»
 	   TICKEND;
     }
 	'''
@@ -91,7 +90,7 @@ class SCL2VHDL {
 
    // Expand an instruction statement
    def dispatch expand(InstructionStatement statement) {
-//        '''«statement.instruction.expand»'''
+        '''«statement.instruction.expand»'''
    }
    
    // Expand a PAUSE instruction.
