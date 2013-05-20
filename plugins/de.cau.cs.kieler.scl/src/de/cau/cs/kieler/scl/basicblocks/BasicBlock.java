@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.scl.basicblocks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.cau.cs.kieler.scl.scl.Statement;
@@ -22,27 +23,33 @@ import de.cau.cs.kieler.scl.scl.impl.StatementSequenceImpl;
  * @author ssm
  *
  */
-public class BasicBlock extends StatementSequenceImpl {
+public class BasicBlock {
+    
+    protected ArrayList<Statement> statements;
     
     public BasicBlock() {
-        super();
+        statements = new ArrayList<Statement>();
     }
     
     public BasicBlock(Statement headStatement) {
-        super();
+        statements = new ArrayList<Statement>();
         getStatements().add(headStatement);
     }
     
-//    public void add(Statement statement) {
-//        getStatements().add(statement);
-//    }
-//    
-//    public void addAll(List<Statement> statements) {
-//        getStatements().addAll(statements);
-//    }
+    public void add(Statement statement) {
+        statements.add(statement);
+    }
+    
+    public void addAll(List<Statement> statements) {
+        statements.addAll(statements);
+    }
     
     public Statement getHead() {
         return getStatements().get(0);
+    }
+    
+    public List<Statement> getStatements() {
+        return statements;
     }
     
     public boolean isEqual(BasicBlock basicBlock) {
