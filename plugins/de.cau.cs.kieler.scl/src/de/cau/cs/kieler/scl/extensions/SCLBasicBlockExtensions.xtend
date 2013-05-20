@@ -109,9 +109,12 @@ class SCLBasicBlockExtensions {
             var predIndex = oIndex - 1
             while (predIndex >= 0) {
                 val predStmt = sseq.statements.get(predIndex)
-                if (!predStmt.isEmpty) predStatements.add(predStmt) 
-                if (!predStmt.isBasicBlockFirst) predIndex = predIndex - 1
-                else predIndex = -1
+                if (stmt.isBasicBlockFirst && predStmt.isBasicBlockLast && (!predStmt.isPause)) predIndex = -1
+                else {
+                    if (!predStmt.isEmpty) predStatements.add(predStmt) 
+                    if (!predStmt.isBasicBlockFirst) predIndex = predIndex - 1
+                    else predIndex = -1
+                }
             }
             bBox.addAll(predStatements.reverse)
         }
