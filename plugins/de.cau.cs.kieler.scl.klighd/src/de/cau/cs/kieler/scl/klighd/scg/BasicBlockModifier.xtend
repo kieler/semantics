@@ -1,4 +1,17 @@
-package de.cau.cs.kieler.scl.klighd.scg
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+ package de.cau.cs.kieler.scl.klighd.scg
 
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.kgraph.KLabel
@@ -21,7 +34,7 @@ import static de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier.*
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 import java.util.ArrayList
-import de.cau.cs.kieler.scl.extensions.BasicBlock
+import de.cau.cs.kieler.scl.basicblocks.BasicBlock
 
 class BasicBlockModifier implements IStyleModifier {
     
@@ -136,7 +149,7 @@ class BasicBlockModifier implements IStyleModifier {
             var bbRight = 0.0f
             var bbBottom = 0.0f
             
-            for(bbStatement : basicBlock.StatementSequence) {
+            for(bbStatement : basicBlock.statements) {
                 if (!bbStatement.isEmpty) {
                 val bbNodePair = bBDH.NodeData.get(bbStatement.getInstruction)
                 if (bbNodePair != null) {
@@ -172,7 +185,7 @@ class BasicBlockModifier implements IStyleModifier {
     
     def float padTop(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
         var pad = shapeLayout.ypos
-        if (statement.isPause && basicBlock.getHead == statement && basicBlock.PauseHeadIsDepth) {
+        if (statement.isPause && basicBlock.getHead == statement && basicBlock.headIsDepth) {
             pad = pad + 43
         } else pad = pad - BBPADDING
         pad
@@ -180,8 +193,8 @@ class BasicBlockModifier implements IStyleModifier {
     
     def float padBottom(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
         var pad = shapeLayout.ypos + shapeLayout.height
-        val lastStatement = basicBlock.getHead.getBasicBlockStatements(basicBlock.PauseHeadIsDepth).last
-        if (statement.isPause && statement == lastStatement && (!(basicBlock.PauseHeadIsDepth && basicBlock.StatementSequence.size==1))) {
+        val lastStatement = basicBlock.getHead.getBasicBlockStatements(basicBlock.headIsDepth).last
+        if (statement.isPause && statement == lastStatement && (!(basicBlock.headIsDepth && basicBlock.statements.size==1))) {
             pad = pad - 43
         } else pad = pad + BBPADDING
         pad

@@ -1,16 +1,35 @@
-package de.cau.cs.kieler.scl.extensions
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+ package de.cau.cs.kieler.scl.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.scl.scl.Assignment
+import de.cau.cs.kieler.scl.basicblocks.BasicBlock
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Statement
 import java.util.ArrayList
 import java.util.List
-import de.cau.cs.kieler.scl.extensions.BasicBlock
+import de.cau.cs.kieler.scl.scl.Pause
+import de.cau.cs.kieler.scl.basicblocks.PauseDepthImpl
+import de.cau.cs.kieler.scl.scl.impl.StatementImpl
+import de.cau.cs.kieler.scl.basicblocks.PauseSurfaceImpl
+import de.cau.cs.kieler.scl.basicblocks.PauseDepth
 
 class SCLBasicBlockExtensions {
     
+    @Inject
+    extension SCLFactoryExtensions
     @Inject
     extension SCLGotoExtensions
     @Inject
@@ -102,12 +121,31 @@ class SCLBasicBlockExtensions {
     
     // Checks whether or not a statement exists in the given basic block
     def boolean isInBasicBlock(Statement statement, BasicBlock basicBlock) {
-        basicBlock.StatementSequence.contains(statement)
+        basicBlock.statements.contains(statement)
     }
     
-    // Retrievies the statement, that identifies the basic block
+    // Retrieves the statement, that identifies the basic block
     def Statement getBasicBlockHead(BasicBlock basicBlock) {
         basicBlock.getHead
+    }
+    
+    def List<Statement> separateSurfaceAndDepth(List<Statement> statements) {
+        val returnList = new ArrayList<Statement>
+        if (statements.head.isPause) {
+            val depth = SCL.createInstructionStatement
+            depth.instruction = new PauseDepthImpl(statements.head.instruction as Pause)
+            returnList.add(depth)
+        }
+        for (statement : statements) {
+            if (!statement.isPause) returnList.add(statement)
+        }
+        if (statements.size>1 && statements.last.isPause) {
+            val surface = SCL.createInstructionStatement
+            surface.instruction = new PauseSurfaceImpl(statements.last.instruction as Pause)
+            returnList.add(surface)
+        }
+        
+        returnList
     }
     
     def BasicBlock createBasicBlock() {
@@ -115,9 +153,8 @@ class SCLBasicBlockExtensions {
     } 
     
     def BasicBlock create basicBlock: createBasicBlock() getBasicBlockByHead(Statement basicBlockHead, boolean isDepth) {
-        val statements = basicBlockHead.getBasicBlockStatements(isDepth)
-        basicBlock.addAll(statements)
-        basicBlock.setPauseHeadIsDepth(isDepth)
+        val statements = basicBlockHead.getBasicBlockStatements(isDepth).separateSurfaceAndDepth
+        basicBlock.statements.addAll(statements)
     }
     
     def BasicBlock getBasicBlockByAnyStatement(Statement statement) {
@@ -140,7 +177,7 @@ class SCLBasicBlockExtensions {
     }
     
     def List<BasicBlock> getBasicBlocks(Statement statement) {
-        val basicBlocks = new ArrayList<BasicBlock>
+        val basicBlocks = new ArrayList<BasicBlock>;
         val sseq = statement.getParentStatementSequence
         for(stmt : sseq.statements) {
             val stmtBlock = stmt.getBasicBlockByAnyStatement
@@ -172,11 +209,15 @@ class SCLBasicBlockExtensions {
         c = -1
     }
     
+    def boolean headIsDepth(BasicBlock basicBlock) {
+        basicBlock.getHead.hasInstruction && basicBlock.getHead.getInstruction instanceof PauseDepth
+    } 
+    
     def List<BasicBlock> getBasicBlockPredecessor(BasicBlock basicBlock) {
         val predecessors = new ArrayList<BasicBlock>;
         val predStmt = basicBlock.getHead.getPreviousInstructionStatementHierarchical
-        if (predStmt == null || (predStmt.isConditional && basicBlock.PauseHeadIsDepth)) {
-            if (basicBlock.getHead.isPause && basicBlock.PauseHeadIsDepth) {
+        if (predStmt == null || (predStmt.isConditional && basicBlock.headIsDepth)) {
+            if (basicBlock.getHead.isPause && basicBlock.headIsDepth) {
                 val pauseSurface = basicBlock.getHead.getBasicBlockByAnyStatement
                 predecessors.add(pauseSurface)
             }
@@ -194,14 +235,14 @@ class SCLBasicBlockExtensions {
     def List<BasicBlock> getBasicBlockSuccessor(BasicBlock basicBlock) {
         val successors = new ArrayList<BasicBlock>;
         
-        if (basicBlock.StatementSequence.last.isConditional) 
-            successors.add((basicBlock.StatementSequence.last.getInstruction as Conditional).statements.head.getBasicBlockByAnyStatement)
+        if (basicBlock.statements.last.isConditional) 
+            successors.add((basicBlock.statements.last.getInstruction as Conditional).statements.head.getBasicBlockByAnyStatement)
         
-        val nextStmt = basicBlock.StatementSequence.last.getNextInstructionStatementHierarchical(true)
+        val nextStmt = basicBlock.statements.last.getNextInstructionStatementHierarchical(true)
         if (nextStmt != null) {
             successors.add(nextStmt.getBasicBlockByAnyStatement)
-        } else if (basicBlock.StatementSequence.last.isPause && 
-            (!basicBlock.PauseHeadIsDepth || basicBlock.getHead != basicBlock.StatementSequence.last)
+        } else if (basicBlock.statements.last.isPause && 
+            (!basicBlock.headIsDepth || basicBlock.getHead != basicBlock.statements.last)
         ) {
             val pauseDepth = basicBlock.getHead.getBasicBlockByAnyStatementDepth
             successors.add(pauseDepth)             

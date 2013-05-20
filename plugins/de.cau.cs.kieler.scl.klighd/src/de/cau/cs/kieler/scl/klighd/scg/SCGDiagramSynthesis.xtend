@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.scl.klighd.scg
 
 import com.google.common.collect.ImmutableList
@@ -33,8 +46,8 @@ import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
 import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
-import de.cau.cs.kieler.scl.extensions.SCLThreadExtensions
-import de.cau.cs.kieler.scl.scl.AbstractThread
+import de.cau.cs.kieler.scl.extensions.SCLStatementSequenceExtensions
+import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
@@ -87,7 +100,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	@Inject
 	extension SCLExpressionExtensions
 	@Inject
-	extension SCLThreadExtensions
+	extension SCLStatementSequenceExtensions
     @Inject
     extension SCLGotoExtensions	
     @Inject
@@ -112,7 +125,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
            SCGRAPH_WO_HIERARCHY, 
 //           SCGRAPH_AND_DEPENDENCIES, 
            SCGRAPH_AND_BASICBLOCKS
-       ), SCGRAPH_AND_BASICBLOCKS);
+       ), SCGRAPH);
+       
+       
+    private static val PARALLEL_HIERARCHY_EDGES = false
 
     /*
      * These maps link the scl program instructions to krendering nodes and ports.
@@ -126,7 +142,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * ParallelExitMap is used by the goto mapping to draw edges to the exit node.
      * Might be replaced by the edgeMapping in a later revision.
      */
-    private var HashMap<AbstractThread, KNode>ParallelExitMapping;
+    private var HashMap<StatementSequence, KNode>ParallelExitMapping;
     
     // To keep the code clean all edges are reserved and drawn once the program evaluation is complete.  
     private var HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>EdgeMapping;
@@ -153,7 +169,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 	    InstructionMapping = new HashMap<Instruction, Pair<KNode, KNode>>;
 	    PortMapping = new HashMap<KNode, HashMap<String, KPort>>;
 	    GotoMapping = new HashMap<Goto, Pair<KNode, String>>;
-	    ParallelExitMapping = new HashMap<AbstractThread, KNode>;
+	    ParallelExitMapping = new HashMap<StatementSequence, KNode>;
 	    EdgeMapping = new HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>;
 		
 		// Initialize root node
@@ -574,10 +590,13 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 createEdgeArrow(kForkNode, kEntryNode)
                 kExitNode.addEdge(kJoinNode)         
             } else {
-                createEdgeArrow(kForkNode, kContainerNode)
-//                createEdgeArrow(kForkNode, kEntryNode)
-                kContainerNode.addEdge(kJoinNode)
-//                createEdgeArrow(kExitNode, kJoinNode)         
+                if (!PARALLEL_HIERARCHY_EDGES) {
+                    createEdgeArrow(kForkNode, kContainerNode)
+                    kContainerNode.addEdge(kJoinNode)
+                } else {
+                    createEdgeArrow(kExitNode, kJoinNode)         
+                    createEdgeArrow(kForkNode, kEntryNode)
+                }
             }   
         }
             
@@ -631,13 +650,13 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val Object depthObj = new Object
 
         // Create container for the two nodes and set layout parameter            
-        val kContainerNode = containerObj.createRectangulareNode(70, 75).putToLookUpWith(instr);
-        kContainerNode.KRendering.invisible = true;
-        kContainerNode.addLayoutParam(LayoutOptions::SPACING, 25.0f);
-        kContainerNode.addLayoutParam(LayoutOptions::BORDER_SPACING, 0.0f);
-        kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
-        kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+//        val kContainerNode = containerObj.createRectangulareNode(70, 75).putToLookUpWith(instr);
+//        kContainerNode.KRendering.invisible = true;
+//        kContainerNode.addLayoutParam(LayoutOptions::SPACING, 25.0f);
+//        kContainerNode.addLayoutParam(LayoutOptions::BORDER_SPACING, 0.0f);
+//        kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
+//        kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+//        kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
 
         // Create surface node           
         val kNode = instr.createSurfaceNode(25, 75).putToLookUpWith(instr);
@@ -650,17 +669,23 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
             
         // Add all nodes to their parents 
-        rootNode.children.add(kContainerNode)
-        kContainerNode.children.add(kNode)
-        kContainerNode.children.add(kDepthNode)
+//        rootNode.children.add(kContainerNode)
+//        kContainerNode.children.add(kNode)
+//        kContainerNode.children.add(kDepthNode)
+        rootNode.children.add(kNode)
+        rootNode.children.add(kDepthNode)
 
         // Create default north/south ports
-        kContainerNode.addNSPortsFixed            
+        //kContainerNode.addNSPortsFixed
+        kNode.addNSPortsFixed
+        kDepthNode.addNSPortsFixed            
       
         // Create a dotted edge between the to nodes 
         createEdge() => [
             it.source = kNode
+            it.sourcePort = kNode.getPort('outgoing') 
             it.target = kDepthNode
+            it.targetPort = kDepthNode.getPort('incoming')
             it.data += renderingFactory.createKPolyline() => [
                 it.setLineWidth(2);
                 it.setLineStyle(LineStyle::DOT);
@@ -668,7 +693,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         ]
 
         // Add this instruction to the instruction mapping and return this instruction as list                
-        (instr as Instruction).addToMapping(kContainerNode, kContainerNode)           
+//        (instr as Instruction).addToMapping(kContainerNode, kContainerNode)
+        (instr as Instruction).addToMapping(kNode, kDepthNode)           
         val retList = new ArrayList<Instruction>
         retList.add(instr as Instruction);           
         return retList
