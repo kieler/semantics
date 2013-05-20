@@ -87,7 +87,7 @@ class SCLGotoExtensions {
         while (pStmt.isEmpty) {
             if (!pStmt.asEmptyStatement.label.nullOrEmpty) {
                 val indirectStatement = pStmt
-                val indirectGotos = statement.getThread.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == indirectStatement)
+                val indirectGotos = statement.parentStatementSequence.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == indirectStatement)
                 gotos.addAll(indirectGotos.toList)
             }
             pStmt = pStmt.getPreviousStatement

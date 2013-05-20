@@ -167,10 +167,12 @@ class SCLStatementSequenceExtensions {
     
     def Statement getPreviousStatementHierarchical(Statement statement) {
         val sseq = statement.getParentStatementSequence
-        var index = sseq.statements.indexOf(statement) - 1
+        var transformedStatement = statement
+        if (statement.hasInstruction) transformedStatement = statement.instruction.eContainer as Statement
+        var index = sseq.statements.indexOf(transformedStatement) - 1
         if (index<0) {
-            if (statement.eContainer instanceof Parallel) return (statement.eContainer as Parallel).getStatement
-            if (statement.eContainer instanceof Conditional) return (statement.eContainer as Conditional).getStatement
+            if (transformedStatement.eContainer instanceof Parallel) return (transformedStatement.eContainer as Parallel).getStatement
+            if (transformedStatement.eContainer instanceof Conditional) return (transformedStatement.eContainer as Conditional).getStatement
             return null
         }
         sseq.statements.get(index)

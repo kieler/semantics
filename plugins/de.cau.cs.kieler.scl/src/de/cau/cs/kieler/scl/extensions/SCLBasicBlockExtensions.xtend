@@ -39,7 +39,7 @@ class SCLBasicBlockExtensions {
     @Inject
     extension SCLStatementSequenceExtensions
     
-    // Decides weather or not a statement is the beginning of a new basic block.
+    // Decides whether or not a statement is the beginning of a new basic block.
     def boolean isBasicBlockFirst(Statement statement) {
         if (statement.isEmpty) return false
         
@@ -56,7 +56,7 @@ class SCLBasicBlockExtensions {
         return true
     }
     
-    // Decides weather or not a statement is the end of a basic block. 
+    // Decides whether or not a statement is the end of a basic block. 
     def boolean isBasicBlockLast(Statement statement) {
         if (statement.isEmpty) return false
         if (statement.isConditional) return true
@@ -90,8 +90,8 @@ class SCLBasicBlockExtensions {
         
         if (statement.isGoto) { 
             if (statement.instruction.asGoto.getTargetStatement?.getInstructionStatement?.instruction == null) return bBox
-//            var statementHier = statement.previousStatementHierarchical
-            var statementHier = statement.instruction.asGoto.getTargetStatement
+            var statementHier = statement.previousStatement
+            if (statementHier == null) statementHier = statement.instruction.asGoto.getTargetStatement
             return getBasicBlockStatements(statementHier, isDepth)
         }
         
@@ -111,7 +111,7 @@ class SCLBasicBlockExtensions {
                 val predStmt = sseq.statements.get(predIndex)
                 if (stmt.isBasicBlockFirst && predStmt.isBasicBlockLast && (!predStmt.isPause)) predIndex = -1
                 else {
-                    if (!predStmt.isEmpty) predStatements.add(predStmt) 
+                    if (!predStmt.isEmpty && !predStmt.isGoto) predStatements.add(predStmt) 
                     if (!predStmt.isBasicBlockFirst) predIndex = predIndex - 1
                     else predIndex = -1
                 }
@@ -123,7 +123,7 @@ class SCLBasicBlockExtensions {
         var succIndex = oIndex + 1
         while (succIndex < sseq.statements.size) {
             val succStmt = sseq.statements.get(succIndex)
-            if (!succStmt.isEmpty) bBox.add(succStmt) 
+            if (!succStmt.isEmpty && !succStmt.isGoto) bBox.add(succStmt) 
             if (!succStmt.isBasicBlockLast) succIndex = succIndex + 1
             else succIndex = sseq.statements.size                    
         }
@@ -261,9 +261,13 @@ class SCLBasicBlockExtensions {
             return predecessors
         }
         
-        if (!(predStmt.getInstruction instanceof Goto)) predecessors.add(predStmt.getBasicBlockByAnyStatement)
+        if (!(predStmt.getInstruction instanceof Goto)) {
+            val sourceBlock = predStmt.getBasicBlockByAnyStatement
+            predecessors.add(sourceBlock)
+        }
         for (goto : basicBlock.getHead.asInstructionStatement.getIncomingGotos) {
-            predecessors.add((goto.eContainer as Statement).getBasicBlockByAnyStatement)
+            val sourceBlock = (goto.eContainer as Statement).getBasicBlockByAnyStatementDepth
+            predecessors.add(sourceBlock)
         }
          
         predecessors
