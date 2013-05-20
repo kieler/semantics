@@ -190,7 +190,9 @@ class SCLStatementSequenceExtensions {
     
     def Statement getNextStatement(Statement statement, boolean resolveGotos) {
         val sseq = statement.getParentStatementSequence
-        var index = sseq.statements.indexOf(statement) + 1
+        var transformedStatement = statement
+        if (statement.hasInstruction) transformedStatement = statement.instruction.eContainer as Statement
+        var index = sseq.statements.indexOf(transformedStatement) + 1
         if (index >= sseq.statements.size) return null
         var result = sseq.statements.get(index)
         var int cyclebreaker = 64

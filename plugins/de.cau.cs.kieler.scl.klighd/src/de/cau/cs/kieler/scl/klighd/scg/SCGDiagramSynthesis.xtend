@@ -125,7 +125,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
            SCGRAPH_WO_HIERARCHY, 
 //           SCGRAPH_AND_DEPENDENCIES, 
            SCGRAPH_AND_BASICBLOCKS
-       ), SCGRAPH);
+       ), SCGRAPH_AND_BASICBLOCKS);
        
        
     private static val PARALLEL_HIERARCHY_EDGES = false

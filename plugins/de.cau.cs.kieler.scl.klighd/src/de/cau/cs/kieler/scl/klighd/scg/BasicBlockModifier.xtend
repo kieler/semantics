@@ -97,37 +97,37 @@ class BasicBlockModifier implements IStyleModifier {
         LSData.ypos = LSData.ypos - 4
         LSData.xpos = LSData.xpos + 5
         
-//        var gLT = ''
-//        var labelLines = 0
-//        for (pred : basicBlock.getBasicBlockPredecessor) {
-//            gLT = gLT + 'P' + pred.getBasicBlockIndex + "\n"
-//            labelLines = labelLines + 1
-//        } 
-//        val goLabelText = gLT
-//        val goLabel = node.createLabel() => [
-//            it.text = goLabelText
-//            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
-//                setFontSize(5).setForegroundColor(255, 0, 0);
-//        ]
-//        LSData = goLabel.getData(typeof(KShapeLayout))
-//        LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
-//        LSData.xpos = right - left + 8
-//
-//        var tLT = ''
-//        labelLines = 0
-//        for (pred : basicBlock.getBasicBlockSuccessor) {
-//            tLT = tLT + 'P' + pred.getBasicBlockIndex + "\n"
-//            labelLines = labelLines + 1
-//        } 
-//        val termLabelText = tLT
-//        val termLabel = node.createLabel() => [
-//            it.text = termLabelText
-//            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
-//                setFontSize(5).setForegroundColor(128, 0, 0);
-//        ]
-//        LSData = termLabel.getData(typeof(KShapeLayout))
-//        LSData.ypos = bottom - top - 5 * labelLines 
-//        LSData.xpos = right - left + 8
+        var gLT = ''
+        var labelLines = 0
+        for (pred : basicBlock.getBasicBlockPredecessor) {
+            gLT = gLT + 'P' + pred.getBasicBlockIndex + "\n"
+            labelLines = labelLines + 1
+        } 
+        val goLabelText = gLT
+        val goLabel = node.createLabel() => [
+            it.text = goLabelText
+            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+                setFontSize(5).setForegroundColor(255, 0, 0);
+        ]
+        LSData = goLabel.getData(typeof(KShapeLayout))
+        LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
+        LSData.xpos = right - left + 8
+
+        var tLT = ''
+        labelLines = 0
+        for (pred : basicBlock.getBasicBlockSuccessor) {
+            tLT = tLT + 'P' + pred.getBasicBlockIndex + "\n"
+            labelLines = labelLines + 1
+        } 
+        val termLabelText = tLT
+        val termLabel = node.createLabel() => [
+            it.text = termLabelText
+            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+                setFontSize(5).setForegroundColor(128, 0, 0);
+        ]
+        LSData = termLabel.getData(typeof(KShapeLayout))
+        LSData.ypos = bottom - top - 5 * labelLines 
+        LSData.xpos = right - left + 8
 
 
         return node;

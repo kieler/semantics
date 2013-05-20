@@ -89,11 +89,18 @@ class SCLBasicBlockExtensions {
         val bBox = new ArrayList<Statement>
         
         if (statement.isGoto) { 
-            var statementHier = statement.previousStatementHierarchical
+            if (statement.instruction.asGoto.getTargetStatement?.getInstructionStatement?.instruction == null) return bBox
+//            var statementHier = statement.previousStatementHierarchical
+            var statementHier = statement.instruction.asGoto.getTargetStatement
             return getBasicBlockStatements(statementHier, isDepth)
         }
         
-        val oIndex = sseq.statements.indexOf(statement)
+        // Transform statement to EObject Statement in case it is a statement that holds
+        // a surface or depth.
+        var transformedStatement = statement
+        if (statement.hasInstruction) transformedStatement = statement.instruction.eContainer as Statement
+        
+        val oIndex = sseq.statements.indexOf(transformedStatement)
         if (oIndex < 0) return bBox
         val stmt = sseq.statements.get(oIndex)
         if (!stmt.isBasicBlockFirst || 
@@ -175,14 +182,16 @@ class SCLBasicBlockExtensions {
     
     def BasicBlock getBasicBlockByAnyStatement(Statement statement) {
         val statements = statement.getBasicBlockStatements
-        if (statements.head.isPause && statements.head != statement) 
-            getBasicBlockByHead(statements.head, true)
-        else
+        if (statements.head == null) return null
+//        if (statements.head.isPause && statements.head != statement) 
+//            getBasicBlockByHead(statements.head, true)
+//        else
             getBasicBlockByHead(statements.head, false)
     }
     
     def BasicBlock getBasicBlockByAnyStatementDepth(Statement statement) {
         val statements = statement.getBasicBlockStatements(true)
+        if (statements.head == null) return null
         getBasicBlockByHead(statements.head, true)
     }
 
@@ -260,18 +269,23 @@ class SCLBasicBlockExtensions {
     def List<BasicBlock> getBasicBlockSuccessor(BasicBlock basicBlock) {
         val successors = new ArrayList<BasicBlock>;
         
-        if (basicBlock.statements.last.isConditional) 
-            successors.add((basicBlock.statements.last.getInstruction as Conditional).statements.head.getBasicBlockByAnyStatement)
+        if (basicBlock.statements.last.isConditional) {
+            val targetBlock = (basicBlock.statements.last.getInstruction as Conditional).statements.head.getBasicBlockByAnyStatement
+            if (targetBlock != null) successors.add(targetBlock)
+        }
+        
+        if (basicBlock.statements.last.isPause && 
+            (!basicBlock.headIsDepth || basicBlock.getHead != basicBlock.statements.last)
+        ) {
+            val pauseDepth = basicBlock.statements.last.getBasicBlockByAnyStatementDepth
+            successors.add(pauseDepth)
+            return successors             
+        }
         
         val nextStmt = basicBlock.statements.last.getNextInstructionStatementHierarchical(true)
         if (nextStmt != null) {
             successors.add(nextStmt.getBasicBlockByAnyStatement)
-        } else if (basicBlock.statements.last.isPause && 
-            (!basicBlock.headIsDepth || basicBlock.getHead != basicBlock.statements.last)
-        ) {
-            val pauseDepth = basicBlock.getHead.getBasicBlockByAnyStatementDepth
-            successors.add(pauseDepth)             
-        }
+        } 
         
         successors
     }
