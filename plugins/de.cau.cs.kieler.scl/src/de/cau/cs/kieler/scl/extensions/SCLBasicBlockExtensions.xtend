@@ -25,6 +25,8 @@ import de.cau.cs.kieler.scl.basicblocks.PauseDepthImpl
 import de.cau.cs.kieler.scl.scl.impl.StatementImpl
 import de.cau.cs.kieler.scl.basicblocks.PauseSurfaceImpl
 import de.cau.cs.kieler.scl.basicblocks.PauseDepth
+import de.cau.cs.kieler.scl.basicblocks.PauseSurface
+import de.cau.cs.kieler.scl.scl.Instruction
 
 class SCLBasicBlockExtensions {
     
@@ -129,9 +131,9 @@ class SCLBasicBlockExtensions {
         basicBlock.getHead
     }
     
-    def List<Statement> separateSurfaceAndDepth(List<Statement> statements) {
+    def List<Statement> separateSurfaceAndDepth(List<Statement> statements, boolean isDepth) {
         val returnList = new ArrayList<Statement>
-        if (statements.head.isPause) {
+        if (statements.head.isPause && (statements.size>1 || isDepth)) {
             val depth = SCL.createInstructionStatement
             depth.instruction = new PauseDepthImpl(statements.head.instruction as Pause)
             returnList.add(depth)
@@ -139,7 +141,7 @@ class SCLBasicBlockExtensions {
         for (statement : statements) {
             if (!statement.isPause) returnList.add(statement)
         }
-        if (statements.size>1 && statements.last.isPause) {
+        if (statements.last.isPause && (statements.size>1 || !isDepth)) {
             val surface = SCL.createInstructionStatement
             surface.instruction = new PauseSurfaceImpl(statements.last.instruction as Pause)
             returnList.add(surface)
@@ -148,12 +150,26 @@ class SCLBasicBlockExtensions {
         returnList
     }
     
+    def boolean isPauseSurface(Statement statement) {
+        statement.hasInstruction && statement.trueInstruction instanceof PauseSurface
+    }
+    
+    def boolean isPauseDepth(Statement statement) {
+        statement.hasInstruction && statement.trueInstruction instanceof PauseDepth
+    }
+    
+    def Instruction getPauseReference(Statement statement) {
+        if (statement.isPauseSurface) return (statement.instruction as PauseSurfaceImpl).PauseReference
+        if (statement.isPauseDepth) return (statement.instruction as PauseDepthImpl).PauseReference
+        return null
+    }
+    
     def BasicBlock createBasicBlock() {
         new BasicBlock()
     } 
     
     def BasicBlock create basicBlock: createBasicBlock() getBasicBlockByHead(Statement basicBlockHead, boolean isDepth) {
-        val statements = basicBlockHead.getBasicBlockStatements(isDepth).separateSurfaceAndDepth
+        val statements = basicBlockHead.getBasicBlockStatements(isDepth).separateSurfaceAndDepth(isDepth)
         basicBlock.statements.addAll(statements)
     }
     
@@ -186,14 +202,23 @@ class SCLBasicBlockExtensions {
                 val stmtBlockDepth = stmt.getBasicBlockByAnyStatementDepth
                 if (stmtBlockDepth != null && !basicBlocks.contains(stmtBlockDepth)) basicBlocks.add(stmtBlockDepth)
             }
-            if (stmt.hasInstruction && stmt.getInstruction instanceof Conditional) 
-                basicBlocks.addAll((stmt.getInstruction as Conditional).statements.head.getBasicBlocks) 
+            if (stmt.hasInstruction && stmt.getInstruction instanceof Conditional)
+                // ignore blocks that are already in the list 
+//                basicBlocks.addAll((stmt.getInstruction as Conditional).statements.head.getBasicBlocks)
+                for (block : (stmt.getInstruction as Conditional).statements.head.getBasicBlocks) {
+                    if (!basicBlocks.contains(block)) basicBlocks.add(block)  
+                } 
         }
         basicBlocks
     }
     
     def List<BasicBlock> getAllBasicBlocks(Statement statement) {
-        getBasicBlocks(statement.getProgram.statements.head)
+        // check if instruction is pausedepth or pausesurface
+//        if (statement.isEmpty) return getBasicBlocks(statement.getProgram.statements.head)
+//        var instruction = statement.instruction
+//        if (statement.isPauseSurface) instruction = (statement.instruction as PauseSurfaceImpl).PauseReference
+//        if (statement.isPauseDepth) instruction = (statement.instruction as PauseDepthImpl).PauseReference
+        getBasicBlocks(statement.getProgram.statements.head);
     }
     
     def int getAllBasicBlocksCount(Statement statement) {
@@ -210,7 +235,7 @@ class SCLBasicBlockExtensions {
     }
     
     def boolean headIsDepth(BasicBlock basicBlock) {
-        basicBlock.getHead.hasInstruction && basicBlock.getHead.getInstruction instanceof PauseDepth
+        basicBlock.getHead.hasInstruction && basicBlock.getHead.trueInstruction instanceof PauseDepth
     } 
     
     def List<BasicBlock> getBasicBlockPredecessor(BasicBlock basicBlock) {

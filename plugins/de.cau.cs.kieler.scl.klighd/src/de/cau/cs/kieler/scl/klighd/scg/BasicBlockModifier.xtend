@@ -97,37 +97,37 @@ class BasicBlockModifier implements IStyleModifier {
         LSData.ypos = LSData.ypos - 4
         LSData.xpos = LSData.xpos + 5
         
-        var gLT = ''
-        var labelLines = 0
-        for (pred : basicBlock.getBasicBlockPredecessor) {
-            gLT = gLT + 'P' + pred.getBasicBlockIndex + "\n"
-            labelLines = labelLines + 1
-        } 
-        val goLabelText = gLT
-        val goLabel = node.createLabel() => [
-            it.text = goLabelText
-            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
-                setFontSize(5).setForegroundColor(255, 0, 0);
-        ]
-        LSData = goLabel.getData(typeof(KShapeLayout))
-        LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
-        LSData.xpos = right - left + 8
-
-        var tLT = ''
-        labelLines = 0
-        for (pred : basicBlock.getBasicBlockSuccessor) {
-            tLT = tLT + 'P' + pred.getBasicBlockIndex + "\n"
-            labelLines = labelLines + 1
-        } 
-        val termLabelText = tLT
-        val termLabel = node.createLabel() => [
-            it.text = termLabelText
-            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
-                setFontSize(5).setForegroundColor(128, 0, 0);
-        ]
-        LSData = termLabel.getData(typeof(KShapeLayout))
-        LSData.ypos = bottom - top - 5 * labelLines 
-        LSData.xpos = right - left + 8
+//        var gLT = ''
+//        var labelLines = 0
+//        for (pred : basicBlock.getBasicBlockPredecessor) {
+//            gLT = gLT + 'P' + pred.getBasicBlockIndex + "\n"
+//            labelLines = labelLines + 1
+//        } 
+//        val goLabelText = gLT
+//        val goLabel = node.createLabel() => [
+//            it.text = goLabelText
+//            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+//                setFontSize(5).setForegroundColor(255, 0, 0);
+//        ]
+//        LSData = goLabel.getData(typeof(KShapeLayout))
+//        LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
+//        LSData.xpos = right - left + 8
+//
+//        var tLT = ''
+//        labelLines = 0
+//        for (pred : basicBlock.getBasicBlockSuccessor) {
+//            tLT = tLT + 'P' + pred.getBasicBlockIndex + "\n"
+//            labelLines = labelLines + 1
+//        } 
+//        val termLabelText = tLT
+//        val termLabel = node.createLabel() => [
+//            it.text = termLabelText
+//            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+//                setFontSize(5).setForegroundColor(128, 0, 0);
+//        ]
+//        LSData = termLabel.getData(typeof(KShapeLayout))
+//        LSData.ypos = bottom - top - 5 * labelLines 
+//        LSData.xpos = right - left + 8
 
 
         return node;
@@ -153,7 +153,10 @@ class BasicBlockModifier implements IStyleModifier {
                 if (!bbStatement.isEmpty) {
                 val bbNodePair = bBDH.NodeData.get(bbStatement.getInstruction)
                 if (bbNodePair != null) {
-                val bbNode = bbNodePair.first
+                var bbNode = bbNodePair.first
+                
+                if (bbStatement.isPause && bbStatement.isPauseDepth) bbNode = bbNodePair.second
+                
                 val bbNodeShapeLayout = bbNode.getData(typeof(KShapeLayout))
                 if (bbNodeShapeLayout.padLeft(basicBlock, bbStatement) < bbLeft) 
                     bbLeft = bbNodeShapeLayout.padLeft(basicBlock, bbStatement)
@@ -185,18 +188,20 @@ class BasicBlockModifier implements IStyleModifier {
     
     def float padTop(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
         var pad = shapeLayout.ypos
-        if (statement.isPause && basicBlock.getHead == statement && basicBlock.headIsDepth) {
-            pad = pad + 43
-        } else pad = pad - BBPADDING
+//        if (statement.isPause && basicBlock.getHead == statement && basicBlock.headIsDepth) {
+//            pad = pad + 43
+//        } else pad = pad - BBPADDING
+        pad = pad - BBPADDING
         pad
     }
     
     def float padBottom(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
-        var pad = shapeLayout.ypos + shapeLayout.height
-        val lastStatement = basicBlock.getHead.getBasicBlockStatements(basicBlock.headIsDepth).last
-        if (statement.isPause && statement == lastStatement && (!(basicBlock.headIsDepth && basicBlock.statements.size==1))) {
-            pad = pad - 43
-        } else pad = pad + BBPADDING
+        var pad = shapeLayout.ypos + shapeLayout.height;
+//        val lastStatement = basicBlock.getHead.getBasicBlockStatements(basicBlock.headIsDepth).last
+//        if (statement.isPause && statement == lastStatement && (!(basicBlock.headIsDepth && basicBlock.statements.size==1))) {
+//            pad = pad - 43
+//        } else pad = pad + BBPADDING
+        pad = pad + BBPADDING
         pad
     }
     

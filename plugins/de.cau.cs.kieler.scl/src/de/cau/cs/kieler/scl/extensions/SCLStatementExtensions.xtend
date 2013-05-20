@@ -23,6 +23,10 @@ import javax.inject.Inject
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Conditional
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scl.basicblocks.PauseSurface
+import de.cau.cs.kieler.scl.basicblocks.PauseDepth
+import de.cau.cs.kieler.scl.basicblocks.PauseSurfaceImpl
+import de.cau.cs.kieler.scl.basicblocks.PauseDepthImpl
 
 class SCLStatementExtensions {
     
@@ -58,7 +62,15 @@ class SCLStatementExtensions {
     }
     
     def Instruction getInstruction(Statement statement) {
-        (statement as InstructionStatement).instruction
+        var instruction = (statement as InstructionStatement).instruction
+        if (instruction instanceof PauseSurface) instruction = (instruction as PauseSurfaceImpl).PauseReference
+        if (instruction instanceof PauseDepth) instruction = (instruction as PauseDepthImpl).PauseReference
+        instruction
+    }
+
+    def Instruction getTrueInstruction(Statement statement) {
+        var instruction = (statement as InstructionStatement).instruction
+        instruction
     }
     
     def EmptyStatement removeInstruction(Statement statement) {

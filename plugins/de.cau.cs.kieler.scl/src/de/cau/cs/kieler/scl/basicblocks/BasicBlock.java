@@ -16,6 +16,8 @@ package de.cau.cs.kieler.scl.basicblocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.cau.cs.kieler.scl.scl.Instruction;
+import de.cau.cs.kieler.scl.scl.InstructionStatement;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.impl.StatementSequenceImpl;
 
@@ -55,6 +57,15 @@ public class BasicBlock {
     public boolean isEqual(BasicBlock basicBlock) {
         if (basicBlock.getStatements().size()!=this.getStatements().size()) return false;
         if (this.getStatements().size()>0) {
+            if (basicBlock.getHead() instanceof InstructionStatement) {
+                if (!(this.getHead() instanceof InstructionStatement)) return false;
+                Instruction bbInstruction = ((InstructionStatement)basicBlock.getHead()).getInstruction();
+                Instruction ownInstruction = ((InstructionStatement)this.getHead()).getInstruction();
+                if (bbInstruction instanceof PauseSurface && ownInstruction instanceof PauseSurface) 
+                    if (((PauseSurfaceImpl)bbInstruction).PauseReference.equals(((PauseSurfaceImpl)ownInstruction).PauseReference)) return true;
+                if (bbInstruction instanceof PauseDepth && ownInstruction instanceof PauseDepth) 
+                    if (((PauseDepthImpl)bbInstruction).PauseReference.equals(((PauseDepthImpl)ownInstruction).PauseReference)) return true;
+            }
             if (!basicBlock.getHead().equals(this.getHead())) return false;
         }
         return true;

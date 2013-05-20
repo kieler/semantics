@@ -26,6 +26,10 @@ import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.Goto
+import de.cau.cs.kieler.scl.basicblocks.PauseSurface
+import de.cau.cs.kieler.scl.basicblocks.PauseSurfaceImpl
+import de.cau.cs.kieler.scl.basicblocks.PauseDepth
+import de.cau.cs.kieler.scl.basicblocks.PauseDepthImpl
 
 class SCLStatementSequenceExtensions {
         
@@ -49,6 +53,7 @@ class SCLStatementSequenceExtensions {
     
     def Thread getThread(Statement statement) {
         var container = statement.eContainer
+        if (container == null && statement.hasInstruction) container = statement.getInstruction
         while (container != null) {
             if (container instanceof Thread) return (container as Thread)
             container = container.eContainer
@@ -57,11 +62,15 @@ class SCLStatementSequenceExtensions {
     }
 
     def Program getProgram(Instruction instruction) {
+//        var container = instruction
+//        if (container instanceof PauseSurface) container = (container as PauseSurfaceImpl).PauseReference
+//        else if (container instanceof PauseDepth) container = (container as PauseDepthImpl).PauseReference
         getProgram(instruction.eContainer as Statement)
     }
     
     def Program getProgram(Statement statement) {
         var container = statement.eContainer
+        if (container == null && statement.hasInstruction) container = statement.getInstruction
         while (container != null) {
             if (container instanceof Program) return container as Program
             container = container.eContainer
@@ -75,6 +84,7 @@ class SCLStatementSequenceExtensions {
     
     def StatementSequence getParentStatementSequence(Statement statement) {
         var container = statement.eContainer
+        if (container == null && statement.hasInstruction) container = statement.getInstruction
         while (container != null) {
             if (container instanceof StatementSequence) return (container as StatementSequence)
             container = container.eContainer
