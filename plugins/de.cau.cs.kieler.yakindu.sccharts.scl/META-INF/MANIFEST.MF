@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIELER SCCharts to SCL Transformation
+Bundle-Name: SCCharts to SCL Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.yakindu.sccharts.scl;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.yakindu.sccharts.scl.SCChartsSimSPlugin
+Bundle-Activator: de.cau.cs.kieler.yakindu.sccharts.scl.SCLPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtend.util.stdlib;bundle-version="1.2.0",
@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.ui,
  org.yakindu.sct.model.stext;bundle-version="2.0.0",
  org.yakindu.sct.model.stext.resource;bundle-version="2.0.0",
  org.yakindu.sct.model.stext.ui;bundle-version="2.0.0",
- org.yakindu.sct.ui.editor;bundle-version="2.0.0"
+ org.yakindu.sct.ui.editor;bundle-version="2.0.0",
+ de.cau.cs.kieler.yakindu.sccharts.sccharts;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: de.cau.cs.kieler.core,

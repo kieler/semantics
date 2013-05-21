@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.yakindu.sccharts.scl.xtend
+package de.cau.cs.kieler.yakindu.sccharts.sccharts.xtend
 
 import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
@@ -6,7 +6,6 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
-import java.util.ArrayList
 import java.util.List
 import org.yakindu.sct.model.sgraph.Effect
 import org.yakindu.sct.model.sgraph.Statechart

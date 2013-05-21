@@ -6,18 +6,18 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class SCChartsSimSPlugin extends AbstractUIPlugin {
+public class SCLPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.yakindu.sccharts.sim.s"; //$NON-NLS-1$
 
 	// The shared instance
-	private static SCChartsSimSPlugin plugin;
+	private static SCLPlugin plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public SCChartsSimSPlugin() {
+	public SCLPlugin() {
 	}
 
 	/*
@@ -46,7 +46,7 @@ public class SCChartsSimSPlugin extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static SCChartsSimSPlugin getDefault() {
+	public static SCLPlugin getDefault() {
 		return plugin;
 	}
 

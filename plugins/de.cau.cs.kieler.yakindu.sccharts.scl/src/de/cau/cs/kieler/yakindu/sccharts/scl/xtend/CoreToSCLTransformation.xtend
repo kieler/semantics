@@ -20,6 +20,7 @@ import org.yakindu.sct.model.sgraph.Region
 import org.yakindu.sct.model.sgraph.Statechart
 
 import static de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLTransformation.*
+import de.cau.cs.kieler.yakindu.sccharts.sccharts.xtend.SCCHelper
 
 class CoreToSCLTransformation {
     
