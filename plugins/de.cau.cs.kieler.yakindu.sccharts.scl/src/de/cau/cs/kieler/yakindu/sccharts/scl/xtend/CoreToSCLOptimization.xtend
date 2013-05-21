@@ -1,4 +1,17 @@
-package de.cau.cs.kieler.yakindu.sccharts.scl.xtend
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+ package de.cau.cs.kieler.yakindu.sccharts.scl.xtend
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.common.collect.ImmutableList
@@ -14,6 +27,10 @@ import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 import java.util.HashMap
 
+/**
+ * @author ssm
+ *
+ */
 class CoreToSCLOptimization {
    
     @Inject
@@ -43,7 +60,7 @@ class CoreToSCLOptimization {
     // OPTIMIZE_GOTO
     // (region context)
     //
-    // Removes a goto, if the succeeding instruction is already the target of that goto
+    // Removes a goto, if the succeeding instruction is already the target of that goto.
     def ArrayList<Statement> optimizeGoto(List<Statement> iList) {
         val iS = createNewStatementList()
         
