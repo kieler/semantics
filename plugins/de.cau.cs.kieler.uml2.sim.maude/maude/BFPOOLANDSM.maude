@@ -9,6 +9,7 @@ mod BFPOOLANDSM is
  op readyBFPSM__ : EpStatus MState -> BFPSMStatus .
  op scheduleBFPSM__ : EpStatus MState -> BFPSMStatus .
 
+ op SM_ : MState -> BFPSMStatus .
   vars queuest queuest' : QueueStatus .
   vars accsst accsst' : AccsStatus .
   var epstatus : EpStatus .
@@ -60,27 +61,35 @@ mod BFPOOLANDSM is
     vars dh : DeepDefault .
     vars str : String .
     vars MN : Sets .
+    vars VALUS : Valuations .
 
   crl readyBFPSM(ready <ready equeue > <ready eventset accs >)
-  		(maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES)) =>
+  		(maState (stableC<STATEC> V <HISTC> HC <VALUATIONS> VALUS <ENDCONF>) (e2, ES)) =>
   	scheduleBFPSM (schedule <schedule equeue e2 > <schedule eventset accs e2 > e2) 
-  		(maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (e2, ES))
+  		(maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2   <VALUATIONS> VALUS <ENDCONF>) (e2, ES))
   if ready <ready equeue > <ready eventset accs > => schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 /\  
-  	maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES) => 
-		maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (e2, ES) .
+  	maState (stableC<STATEC> V <HISTC> HC <VALUATIONS> VALUS <ENDCONF>) (e2, ES) => 
+		maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2   <VALUATIONS> VALUS <ENDCONF>) (e2, ES) .
  
   crl scheduleBFPSM(schedule <schedule equeue e2 > <schedule eventset accs e2 > e2) 
-		  (maState (doneC<STATEC> V <HISTC>  HC  <ENDCONF>) ES)
+		  (maState (doneC<STATEC> V <HISTC>  HC <VALUATIONS> VALUS <ENDCONF>) ES)
   => 
-    readyBFPSM(ready <ready equeue > <ready eventset accs >) (maState (stableC<STATEC> V <HISTC> (succHC V HC)  <ENDCONF>) ES)
+    readyBFPSM(ready <ready equeue > <ready eventset accs >) (maState (stableC<STATEC> V <HISTC> (succHC V HC) <VALUATIONS> VALUS <ENDCONF>) ES)
   if schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 =>
     ready <ready equeue > <ready eventset accs > .
     
   rl readyBFPSM(ready <ready equeue > <ready eventset accs >) 
-		  (maState (doneC<STATEC> V <HISTC>  HC  <ENDCONF>) ES)
+		  (maState (doneC<STATEC> V <HISTC>  HC <VALUATIONS> VALUS <ENDCONF>) ES)
   => 
     readyBFPSM(ready <ready equeue > <ready eventset accs >) 
-		  (maState (stableC<STATEC> V <HISTC>  HC  <ENDCONF>) ES) [label 'finishedRTCESINT] .
+		  (maState (stableC<STATEC> V <HISTC>  HC <VALUATIONS> VALUS <ENDCONF>) ES) [label 'finishedRTCESINT] .
+
+
+  rl SM (maState (stableC<STATEC> V <HISTC> HC <VALUATIONS> VALUS <ENDCONF>) (e2, ES)) =>
+  	SM (maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2 <VALUATIONS> VALUS <ENDCONF>) (e2, ES)) .
+  rl SM (maState (doneC<STATEC> V <HISTC>  HC <VALUATIONS> VALUS <ENDCONF>) ES)
+  => 
+    SM (maState (stableC<STATEC> V <HISTC> (succHC V HC) <VALUATIONS> VALUS <ENDCONF>) ES) .
 
 		  
   var eps : EpStatus .
@@ -88,7 +97,6 @@ mod BFPOOLANDSM is
   var bfps : BFPSMStatus .
   var conf : Verts .
   var hconf : HistoryConfs .
-  var mstate : MState .
   var qust : QueueStatus .
   var acst : AccsStatus .
   var acts : AcctupSet . 
@@ -142,16 +150,19 @@ mod MCBFPOOLANDSM is
 	vars msst mastate : BFPSMStatus .
 	vars V V2 : Verts .
 	vars HC : HistoryConfs .
-	
+	vars VALUS : Valuations .
 	var P : Prop .
 	
 	op inC : Verts -> Prop .
+	op isDone : -> Prop .
+	
     ceq readyBFPSM(ready queuest accsst)
-  		(maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) ES) |= inC(V2) = true if (V2 subset V)  .
+  		(maState (stableC<STATEC> V <HISTC> HC <VALUATIONS> VALUS <ENDCONF>) ES) |= inC(V2) = true if (V2 subset V)  .
+    eq maState (doneC<STATEC> V <HISTC> HC <VALUATIONS> VALUS <ENDCONF>) |= isDone = true .
   ***(
   	op doneC_ : BFPSMStatus -> Prop .
   	eq doneC (readyBFPSM(ready queuest accsst)
-  		(maState (doneC<STATEC> V <HISTC> HC  <ENDCONF>) ES)) .
+  		(maState (doneC<STATEC> V <HISTC> HC   <VALUATIONS> VALUS <ENDCONF>) ES)) .
   	eq doneC msst = false [owise] .
   		)***
   		

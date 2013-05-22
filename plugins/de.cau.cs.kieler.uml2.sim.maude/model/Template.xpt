@@ -167,6 +167,9 @@ fmod TRANSITIONSDEF is
 *******************
   «FOREACH this.getTransitions().select(e|e.isBasicCompound()) AS transition SEPARATOR '\n'-»«transition.genMaudeBasicCompound()-»«ENDFOREACH-»
 
+*******************
+*** basic transitions
+*******************
 
   «FOREACH this.getTransitions().select(e|e.isBasicTrans()) AS transition SEPARATOR '\n'-»«transition.genMaude2()-»«ENDFOREACH-»
 
@@ -228,7 +231,7 @@ load TRANSITIONSDEF«((String)(GLOBALVAR modelname))».maude
 load «((String)(GLOBALVAR maudebasecode))»STATEMACHINESYNTAX
 
 fmod eclipseInterface is
-  including VARIABLES .
+  including VALUATIONS .
   including ACTION .
   including ACTIONSSYNTAX .
   including STATEMACHINESYNTAX .
@@ -318,29 +321,30 @@ mod INIT is
 	including MODEL-CHECKER .
 	including LTL-SIMPLIFIER .
 	
-	
-	subsort MState < State .
-
 	vars msst mastate : MState .
 	vars V V2 : Verts .
 	var E : EventSet .
 	vars HC : HistoryConfs .
-	
+	vars conf1 conf2 : Configuration .
+	vars VALUS : Valuations .
 	subsort MState < State .
 	
 	op aCf : Actions -> Prop .
 	op inC : Verts -> Prop .
-    ceq maState (stableC<STATEC> V <HISTC> HC <ENDCONF>) E |= inC(V2) = true if (V2 subset V)  .
+    ceq maState (stableC<STATEC> V <HISTC> HC <VALUATIONS> VALUS <ENDCONF>) E |= inC(V2) = true if (V2 subset V)  .
 	eq msst |= inC(V) = false [owise] .
 
+	op isDoneSM_ : Configuration -> Bool .
+	eq isDoneSM doneC<STATEC> V <HISTC> HC <VALUATIONS> VALUS <ENDCONF>	= true .
+	eq isDoneSM conf1 = false [owise] .
 	
-	op isDone_ : MState -> Bool .
-	eq isDone (maState (doneC<STATEC> V <HISTC> HC <ENDCONF>) E) = true .
-	eq isDone msst = false [owise] .
+	op isDone_ : MState -> Prop .
+    ceq maState conf1 E |= isDone(maState conf1 E) = true if isDoneSM conf1 .
+	eq msst |= isDone(msst) = false [owise] .
 	
 endm
 
-
+***(
 load «((String)(GLOBALVAR maudebasecode))»QUEUESYNTAX
  mod QUEUESEMANTICS is 
  including eclipseInterface .
@@ -359,10 +363,10 @@ load «((String)(GLOBALVAR maudebasecode))»QUEUESYNTAX
  rl <initQueue> => <ready emptyQueue > . 
 
 endm
-
-load «((String)(GLOBALVAR maudebasecode))»ACCS
-load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
-load «((String)(GLOBALVAR maudebasecode))»BFPOOLANDSM
+)***
+*** load «((String)(GLOBALVAR maudebasecode))»ACCS
+*** load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
+*** load «((String)(GLOBALVAR maudebasecode))»BFPOOLANDSM
 
 *** set trace on .
 «REM»
@@ -411,7 +415,7 @@ load «((String)(GLOBALVAR maudebasecode))»EVENTSSYNTAX
 load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONSSYNTAX
 load «((String)(GLOBALVAR maudebasecode))»STATEMACHINESYNTAX
 load «((String)(GLOBALVAR maudebasecode))»SEMANTICSSYNTAX
-load «((String)(GLOBALVAR maudebasecode))»VARIABLES
+load «((String)(GLOBALVAR maudebasecode))»VALUATIONS
 
 
 fmod eclipseInterface is
@@ -507,11 +511,12 @@ fmod eclipseInterface is
 
       
 *******************
-*** compound transitions
+*** compound transitions decalration
 *******************
   «FOREACH this.getTransitions().select(e|e.isBasicCompound()) AS transition SEPARATOR '\n'-»«transition.genMaudeBasicCompound()-»«ENDFOREACH-»
-
-
+*******************
+*** basic transitions
+*******************
   «FOREACH this.getTransitions().select(e|e.isBasicTrans()) AS transition SEPARATOR '\n'-»«transition.genMaude2()-»«ENDFOREACH-»
 
   «REM» We now work thru the Fork and Join and Choice nodes. «ENDREM»
@@ -581,17 +586,18 @@ mod INIT is
 	vars V V2 : Verts .
 	var E : EventSet .
 	vars HC : HistoryConfs .
+	vars VALUS : Valuations .
 	
 	subsort MState < State .
 	
 	op aCf : Actions -> Prop .
 	op inC : Verts -> Prop .
-    ceq maState (stableC<STATEC> V <HISTC> HC <ENDCONF>) E |= inC(V2) = true if (V2 subset V)  .
+    ceq maState (stableC<STATEC> V <HISTC> HC <VALUATIONS> VALUS <ENDCONF>) E |= inC(V2) = true if (V2 subset V)  .
 	eq msst |= inC(V) = false [owise] .
 
 	
 	op isDone_ : MState -> Bool .
-	eq isDone (maState (doneC<STATEC> V <HISTC> HC <ENDCONF>) E) = true .
+	eq isDone (maState (doneC<STATEC> V <HISTC> HC <VALUATIONS> VALUS <ENDCONF>) E) = true .
 	eq isDone msst = false [owise] .
 	
 endm
