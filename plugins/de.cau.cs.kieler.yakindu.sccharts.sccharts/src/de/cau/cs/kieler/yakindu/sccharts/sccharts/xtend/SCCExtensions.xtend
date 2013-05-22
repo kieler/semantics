@@ -28,93 +28,69 @@ import org.yakindu.sct.model.sgraph.Trigger
  * @author ssm
  *
  */
-class SCCHelper {
+ 
+ /* This class provides common sccharts manipulation extensions. Since there are only a few, all extensions 
+  * are gathered in one class. Should be divided in several classes, if the list of methods grows.  
+  */
+class SCCExtensions {
     
     // ======================================================================================================
     // ==                T R A N S I T I O N    M E T A M O D E L   E X T E N S I O N S                    ==
     // ======================================================================================================
 
-    def boolean exists(SyncTransition transition) {
-        if (transition != null) { return true }
-        return false
+    // Common exists methods for transition, trigger and effect model instances.
+    def dispatch boolean exists(SyncTransition transition) {
+        transition != null
     }   
 
-    def boolean exists(ReactionTrigger trigger) {
-        if (trigger != null) { return true }
-        return false
+    def dispatch boolean exists(ReactionTrigger trigger) {
+        trigger != null
     }   
 
-    def boolean exists(Trigger trigger) {
-        if (trigger != null) { return true }
-        return false
+    def dispatch boolean exists(Trigger trigger) {
+        trigger != null
     }   
         
-    def boolean exists(ReactionEffect effect) {
-        if (effect != null) { return true }
-        return false
+    def dispatch boolean exists(ReactionEffect effect) {
+        effect != null
     }   
  
-    def boolean exists(Effect effect) {
-        if (effect != null) { return true }
-        return false
+    def dispatch boolean exists(Effect effect) {
+        effect != null
     }
        
-
-
-
-
-
+    // Retrieves all transitions as SyncTransitions.
     def getTransitions(SyncState state) {
-        val outgoingTransitions = state.outgoingTransitions.filter(typeof(SyncTransition))
-//        outgoingTransitions.sort(e1, e2 | compareSCCTransitionOrderFIXME(e1, e2));
-        outgoingTransitions
+        state.outgoingTransitions.filter(typeof(SyncTransition))
     }
     
+    // Retrieves all weak transitions as SyncTransitions.
     def List<SyncTransition> getWeakTransitions(SyncState state) {
         ImmutableList::copyOf(state.getTransitions.filter(e | e.type == TransitionType::WEAKABORT));
     }
     
+    // Retrieves all normal terminations as SyncTransitions.
     def List<SyncTransition> getNormalterminations(SyncState state) {
         ImmutableList::copyOf(state.getTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION));        
     }
     
+    /* Checks whether or not a transition is immediate.
+     * Since the flag of an immediate transition is stored in the trigger, trigger-less immediate
+     * transitions can not be identified in the way they should be.
+     * To check for these, a workaround tests the specification of the transition. 
+     * TODO: This meta-model problem should be evaluated soon. 
+     */ 
     def boolean isImmediate(SyncTransition transition) {
+        // Check the transition trigger for the immediate flag.
         var ret = (transition.trigger != null && 
-            (transition.trigger as ReactionTrigger).isImmediate
-        )
+            (transition.trigger as ReactionTrigger).isImmediate)
         
-        /* workaround for triggerless immediate transitions */
+        // Workaround for trigger-less immediate transitions
         if (transition.trigger == null) {
             ret = transition.specification.equals('#');
         }
         
         ret
     }        
-
-
-    def int compareSCCTransitionOrder(SyncTransition e1, SyncTransition e2) {
-        var order = 1;
-        if (e1.priority<e2.priority) { order = -1}
-        order;
-    }
-    
-    def int compareSCCTransitionOrderFIXME(SyncTransition e1, SyncTransition e2) {
-        var order = 1;
-        if (e2.trigger == null) { order = -1}
-        order;
-    }
-
-    def void statechartDistributePriorities(Statechart statechart) {
-        var states = statechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();
-        for (state : states) {
-            var int priority = 1
-            val transitions = ImmutableList::copyOf(state.outgoingTransitions.filter(typeof(SyncTransition))).
-                sort(e1, e2 | compareSCCTransitionOrderFIXME(e1, e2));
-            for (transition : transitions) {
-              transition.priority = priority
-              priority = priority + 1  
-            }  
-        }
-    }
              
 }

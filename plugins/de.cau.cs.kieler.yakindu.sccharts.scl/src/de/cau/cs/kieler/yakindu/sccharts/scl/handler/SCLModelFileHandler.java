@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.yakindu.sccharts.scl.handler;
 
 import org.eclipse.emf.ecore.EObject;
@@ -9,90 +22,101 @@ import org.yakindu.sct.model.stext.STextStandaloneSetup;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.properties.IPropertyHolder;
-import de.cau.cs.kieler.core.properties.MapPropertyHolder;
-import de.cau.cs.kieler.klighd.LightDiagramServices;
-import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy;
-import de.cau.cs.kieler.klighd.views.DiagramViewManager;
 import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLTransformation;
+import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLOptimization;
 import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
-import de.cau.cs.kieler.scl.scl.Program;
 
+/**
+ * @author ssm
+ *
+ */
+
+/* This class handles the ui context menu events on scl resources. */
 public class SCLModelFileHandler extends AbstractModelFileHandler {
-    
-        private static Injector injector = new STextStandaloneSetup().createInjectorAndDoEMFRegistration();
-        
-        public static final String SCGKLIGHDVIEWID = "de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis";
-        public static final String SCGKLIGHDVIEWTITLE = "SCG Light Diagram View";
-        
-        public static final String SCLTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformation";
-        public static final String SCLTRANSFORMATIONCOMMANDNOOPT = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationNoOpt";
-        public static final String SCLTRANSFORMATIONCOMMANDONLYGOTO = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyGoto";
-        public static final String SCLTRANSFORMATIONCOMMANDONLYLABEL = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyLabel";
-        public static final String SCLTRANSFORMATIONCOMMANDONLYSELFLOOP = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlySelfloop";
-        public static final String SCLTRANSFORMATIONCOMMANDONLYSTATEPOSITION = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyStatePosition";
 
-	public SCLModelFileHandler() {
-	}
+    // Create an injector to load the transformation via guice.
+    private static Injector injector = new STextStandaloneSetup()
+            .createInjectorAndDoEMFRegistration();
 
-	public String ModelHandlerFileExtension() {
-		return "scc";
-	}
+    // String command constants
+    public static final String SCLTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformation";
+    public static final String SCLTRANSFORMATIONCOMMANDNOOPT = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationNoOpt";
+    public static final String SCLTRANSFORMATIONCOMMANDONLYGOTO = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyGoto";
+    public static final String SCLTRANSFORMATIONCOMMANDONLYLABEL = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyLabel";
+    public static final String SCLTRANSFORMATIONCOMMANDONLYSELFLOOP = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlySelfloop";
+    public static final String SCLTRANSFORMATIONCOMMANDONLYSTATEPOSITION = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.CoreToSCLTransformationOnlyStatePosition";
 
-	public String ModelHandlerFileExtensionTransformed() {
-		return "scl";
-	}
+    // Constructor
+    public SCLModelFileHandler() {
+    }
 
-	public String ModelHandlerDiagramEditorID() {
-		return "de.cau.cs.kieler.scl.SCL";
-	}
+    // Source resource file extension
+    public String ModelHandlerFileExtension() {
+        return "scc";
+    }
 
-	public PreferencesHint ModelHandlerDiagramPreferencesHint() {
-		return new PreferencesHint("");
-	}
+    // Transformation target file extension
+    public String ModelHandlerFileExtensionTransformed() {
+        return "scl";
+    }
 
-	public boolean ModelHandlerCreateDiagram() {
-		return false;
-	}
+    // ID of the diagram editor
+    public String ModelHandlerDiagramEditorID() {
+        return "de.cau.cs.kieler.scl.SCL";
+    }
 
-	public boolean ModelHandlerOpenEditor() {
-		return false;
-	}
-	
-	public Injector CreateResourceInjector() {
-	    return injector;
-	}
+    // Preferences hint
+    public PreferencesHint ModelHandlerDiagramPreferencesHint() {
+        return new PreferencesHint("");
+    }
 
-	public EObject doTransformation(EObject modelObject,
-			String commandString) {
-	    int opt = CoreToSCLTransformation.OPTIMIZE_ALL;
-	    if (commandString.equals(SCLTRANSFORMATIONCOMMANDNOOPT)) {
-	        opt = CoreToSCLTransformation.OPTIMIZE_NONE;
-	    }
-            if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYGOTO)) {
-                opt = CoreToSCLTransformation.OPTIMIZE_GOTO;
-            }
-            if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYLABEL)) {
-                opt = CoreToSCLTransformation.OPTIMIZE_LABEL;
-            }
-            if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYSELFLOOP)) {
-                opt = CoreToSCLTransformation.OPTIMIZE_SELFLOOP;
-            }
-            if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYSTATEPOSITION)) {
-                opt = CoreToSCLTransformation.OPTIMIZE_STATEPOSITION;
-            }
+    // Do not create a diagram automatically.
+    public boolean ModelHandlerCreateDiagram() {
+        return false;
+    }
 
-            EObject transformed = Guice.createInjector().getInstance(CoreToSCLTransformation.class)
-                                .transformCoreToSCL((Statechart) modelObject, opt);
-            EcoreUtil.resolveAll(transformed);
-            return transformed;
-	}
-	
-	public void doPostProcessing(EObject modelObject) {
-//            IPropertyHolder p = new MapPropertyHolder();
-//            p.setProperty(LightDiagramServices.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
-//            DiagramViewManager.getInstance().createView(SCGKLIGHDVIEWID, SCGKLIGHDVIEWTITLE, 
-//                    (Program) modelObject, p); 
-	}
-		
+    // Do not open an editor automatically.
+    public boolean ModelHandlerOpenEditor() {
+        return false;
+    }
+
+    // Returns the static injector.
+    public Injector CreateResourceInjector() {
+        return injector;
+    }
+
+    // Executed when the transformation is invoked.
+    public EObject doTransformation(EObject modelObject, String commandString) {
+
+        // Use the default transformation optimizations or
+        // use the optimization selected in the context menu.
+        int opt = CoreToSCLOptimization.OPTIMIZE_DEFAULT;
+        if (commandString.equals(SCLTRANSFORMATIONCOMMANDNOOPT)) {
+            opt = CoreToSCLOptimization.OPTIMIZE_NONE;
+        }
+        if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYGOTO)) {
+            opt = CoreToSCLOptimization.OPTIMIZE_GOTO;
+        }
+        if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYLABEL)) {
+            opt = CoreToSCLOptimization.OPTIMIZE_LABEL;
+        }
+        if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYSELFLOOP)) {
+            opt = CoreToSCLOptimization.OPTIMIZE_SELFLOOP;
+        }
+        if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYSTATEPOSITION)) {
+            opt = CoreToSCLOptimization.OPTIMIZE_STATEPOSITION;
+        }
+
+        // Invoke the transformation via guice...
+        EObject transformed = Guice.createInjector().getInstance(CoreToSCLTransformation.class)
+                .transformCoreToSCL((Statechart) modelObject, opt);
+        // ... and resolve references.
+        EcoreUtil.resolveAll(transformed);
+        return transformed;
+    }
+
+    // No post-processing
+    public void doPostProcessing(EObject modelObject) {
+    }
+
 }
