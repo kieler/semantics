@@ -471,12 +471,12 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                 }
             }
 
-            // Calculate output path for SC-m2t
+            // Calculate output path for SJ-m2t
             scOutput = URI.createURI(input.toString());
             scOutput = scOutput.trimFragment();
             scOutput = scOutput.trimFileExtension();
-            String modelName = scOutput.lastSegment();
-            scOutput = scOutput.appendFileExtension("c");
+            String className = scOutput.lastSegment();
+            scOutput = scOutput.appendFileExtension("java");
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
@@ -485,22 +485,24 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             boolean alternativeSyntax = this.getProperties()[KIEM_PROPERTY_ALTERNATIVESYNTAX
                     + KIEM_PROPERTY_DIFF].getValueAsBoolean();
 
-            // Check whether SC compilation should generate additional debug output
+            // Check whether SJ compilation should generate additional debug output
             debugConsole = debugConsoleParam;
             benchmark = benchmarkParam;
+            
+            String packageName = "test";
 
-            // Generate SC code
+            // Generate SJ code
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SJPlugin.generateSJCode(transformedProgram, scOutputString, outputFolder);
+            S2SJPlugin.generateSJCode(transformedProgram, scOutputString, className, packageName);
 
             // Compile
             sjExecution = new SJExecution(outputFolder, benchmark);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(scOutputString);
             sjExecution.setDebug(debugConsole);
-            sjExecution.compile(generatedSCFiles, modelName);
+            sjExecution.compile(generatedSCFiles, className);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);

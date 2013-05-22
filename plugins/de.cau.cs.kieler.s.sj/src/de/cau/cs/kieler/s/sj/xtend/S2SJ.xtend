@@ -54,10 +54,10 @@ import java.util.List
 class S2SJ { 
     
     // General method to create the c simulation interface.
-    def transform (Program program, String outputFolder) {
+    def transform (Program program, String className, String packageName) {
        '''
 «/* Generate the C header */»
-       «sjHeader(outputFolder, program)»
+       «sjHeader(program, className, packageName)»
 
        «/* Signal Reset, Output */»
        «sResetSignals(program)»
@@ -67,6 +67,8 @@ class S2SJ {
 
        «/* Generate the tick function */»
        «sTickFunction(program)»
+
+       }
        '''
    }     
 
@@ -93,8 +95,10 @@ class S2SJ {
    // -------------------------------------------------------------------------   
 
    // Generate the Java header.
-   def sjHeader(String outputFolderm, Program program) {
+   def sjHeader(Program program, String className, String packageName) {
        '''
+       package ''' + packageName + ''';
+       
 /*
  *****************************************************************************
  *                 G E N E R A T E D     S J    C O D E                      *
@@ -114,10 +118,10 @@ class S2SJ {
 import java.io.IOException;
 import de.cau.cs.kieler.sjl.SJLProgram;
 
-import ''' + program.name + '''.State;
-import static ''' + program.name + '''.State.*;
+import ''' + packageName + '''.''' + className + '''.State;
+import static '''  + packageName + '''.''' + className + '''.State.*;
     
-public class ''' + program.name + ''' extends SJLProgram<State> {
+public class ''' + className + ''' extends SJLProgram<State> {
 
     enum State {
         ''' + program.eAllContents.filter(typeof(Continuation)).toList.listContinuations + '''
@@ -125,7 +129,7 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
 
 ''' + program.signals.listSignals + ''' 
 
-    public ''' + program.name + '''() {
+    public ''' + className + '''() {
         super(''' + program.states.head.name + ''', ''' + program.priority + ''', ''' + program.priority + ''');
     }
     
@@ -150,30 +154,12 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
 
    // Generate the main function.
    def mainFunction(Program program) {
-       '''int main(int argc, const char* argv[]) {
-        reset();
-        output = cJSON_CreateObject();
-        RESET();
-        totalResetSignals();
-        setInputs();
-        emitCount = 0;
-        tick();
-        while(1) {
-            callOutputs();
-            char* outString = cJSON_Print(output);
-            strip_white_spaces(outString);
-            printf("%s\n", outString);
-            fflush(stdout);
-            resetSignals();
-            output = cJSON_CreateObject();
-            setInputs();
-            emitCount = 0;
-            tick();
-        }
-    }
-    
-    void printOutputs() {
-        printf("%s \n", cJSON_Print(output));
+       '''    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
     }
     '''
    }
@@ -237,8 +223,9 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
    // -------------------------------------------------------------------------   
       
    // Expand a PAUSE instruction.
+       //«pauseInstruction.continuation.name»
    def dispatch expand(Pause pauseInstruction) {
-       '''pauseB();'''
+       '''pauseB(«pauseInstruction.continuation.name»);'''
    }   
    
    // Expand a TERM instruction.
@@ -299,7 +286,7 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
    
    // Expand a PRIO instruction.
    def dispatch expand(Prio prioInstruction) {
-       '''prioB(«prioInstruction.priority»);'''
+       '''prioB(«prioInstruction.priority», «prioInstruction.continuation.name»);'''
    }   
    
    // Expand SIGNAL instruction. This takes care of reincarnation

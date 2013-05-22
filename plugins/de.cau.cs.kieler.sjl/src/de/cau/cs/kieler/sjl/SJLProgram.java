@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * @author cmot
  * 
  */
-abstract class SJLProgram<State extends Enum<?>> {
+abstract public class SJLProgram<State extends Enum<?>> {
     
     // A flag indicating debug output should be printed
     static final boolean DEBUG = false; 
@@ -154,6 +154,12 @@ abstract class SJLProgram<State extends Enum<?>> {
     }
 
     // -------------------------------------------------------------------------
+    
+    public void haltB() {
+        termB();
+    }
+    
+    // -------------------------------------------------------------------------
 
     public void abort() {
         debug("Aborting children of", currentThread);
@@ -186,7 +192,9 @@ abstract class SJLProgram<State extends Enum<?>> {
 
     // -------------------------------------------------------------------------
     
-    public void prioB(int prio) {
+    public void prioB(int prio, State resumeState) {
+        // Update the state label
+        gotoB(resumeState);
         // Reorder elements
         activeThreads.update(prio, currentThread);
         aliveThreads.update(prio, currentThread);

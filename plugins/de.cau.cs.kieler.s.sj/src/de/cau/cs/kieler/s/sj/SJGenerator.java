@@ -84,13 +84,16 @@ public class SJGenerator implements IHandler {
             URI scOutput = URI.createURI("");
             scOutput = URI.createURI(input.toString());
             scOutput = scOutput.trimFragment();
+            String modelName = scOutput.trimFileExtension().lastSegment();
             scOutput = scOutput.trimFileExtension().appendFileExtension("java");
+            
+            String packageName = "test";
             
             // Generate SJ Code
             IPath sjOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile sjOutputFile = KiemUtil.convertIPathToIFile(sjOutputPath);
-            String sjOutputString = KiemUtil.getAbsoluteFilePath(sjOutputFile);
-            S2SJPlugin.generateSJCode(program, sjOutputString, sjOutputPath.toString());                    
+            String outputFile = KiemUtil.getAbsoluteFilePath(sjOutputFile);
+            S2SJPlugin.generateSJCode(program, outputFile, modelName, packageName);                    
 
         } catch (IOException e) {
             throw new ExecutionException("Cannot read input file.");

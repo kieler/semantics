@@ -46,7 +46,9 @@ public class SJExecution extends AbstractExecution {
     private static final String COMPILER_DEFAULT = "java";
 
     /** The Constant SJL_PATH to the SJLProgram.class for compilation. */
-    private static final String SJL_PATH = "src/de/cau/cs/kieler/sjl";
+//    private static final String SJL_PATH = "bin/de/cau/cs/kieler/sjl";
+    private static final String SJL_PATH_SRC = "src/de/cau/cs/kieler/sjl";
+    private static final String SJL_PATH_BIN = "bin/";
 
     // -------------------------------------------------------------------------
 
@@ -118,27 +120,38 @@ public class SJExecution extends AbstractExecution {
 
     // -------------------------------------------------------------------------
 
-    public void compile(final List<String> filePaths, final String modelName) throws IOException,
+    public void compile(final List<String> filePaths, final String className) throws IOException,
             InterruptedException {
 
         // building path to bundle
         Bundle bundle = Platform.getBundle(SJPlugin.PLUGIN_ID);
 
-        URL url = null;
+        URL url1 = null;
         try {
-            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SJL_PATH), null));
+            url1 = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SJL_PATH_SRC), null));
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
+        URL url2 = null;
+        try {
+            url2 = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SJL_PATH_BIN), null));
         } catch (IOException e2) {
             e2.printStackTrace();
         }
         // if (url == null) {
         // return;
         // }
-        String bundleLocation = url.getFile();
+        String bundleLocation1 = url1.getFile();
+        String bundleLocation2 = url2.getFile();
 
         // Windows vs. Linux: Exchange possibly wrong slash/backslash
-        bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
-        if (bundleLocation.startsWith("\\")) {
-            bundleLocation = bundleLocation.substring(1);
+        bundleLocation1 = bundleLocation1.replaceAll("[/\\\\]+", "\\" + File.separator);
+        if (bundleLocation1.startsWith("\\")) {
+            bundleLocation1 = bundleLocation1.substring(1);
+        }
+        bundleLocation2 = bundleLocation2.replaceAll("[/\\\\]+", "\\" + File.separator);
+        if (bundleLocation2.startsWith("\\")) {
+            bundleLocation2 = bundleLocation2.substring(1);
         }
         for (String filePath : filePaths) {
             filePath = filePath.replaceAll("[/\\\\]+", "\\" + File.separator);
@@ -156,8 +169,10 @@ public class SJExecution extends AbstractExecution {
 //        }
 
         
+        System.out.println("javac -classpath " + bundleLocation2 + " -source 1.5 -target 1.5 d:/test/test/TestClass.java");
+        
         BatchCompiler.compile(
-                "-classpath rt.jar -classpath " + bundleLocation + " -classpath d:/test/ d:/test/advanced.java",
+                "-verbose -classpath " + bundleLocation2 + " -source 1.5 -target 1.5 -classpath d:/test/ d:/test/simple.java",
                 new PrintWriter(System.out),
                 new PrintWriter(System.err),
                 null);
