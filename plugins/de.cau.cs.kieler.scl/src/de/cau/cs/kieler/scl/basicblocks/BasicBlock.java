@@ -65,6 +65,10 @@ public class BasicBlock {
                     if (((PauseSurfaceImpl)bbInstruction).PauseReference.equals(((PauseSurfaceImpl)ownInstruction).PauseReference)) return true;
                 if (bbInstruction instanceof PauseDepth && ownInstruction instanceof PauseDepth) 
                     if (((PauseDepthImpl)bbInstruction).PauseReference.equals(((PauseDepthImpl)ownInstruction).PauseReference)) return true;
+                if (bbInstruction instanceof ParallelFork && ownInstruction instanceof ParallelFork) 
+                    if (((ParallelForkImpl)bbInstruction).ParallelReference.equals(((ParallelForkImpl)ownInstruction).ParallelReference)) return true;
+                if (bbInstruction instanceof ParallelJoin && ownInstruction instanceof ParallelJoin) 
+                    if (((ParallelJoinImpl)bbInstruction).ParallelReference.equals(((ParallelJoinImpl)ownInstruction).ParallelReference)) return true;
             }
             if (!basicBlock.getHead().equals(this.getHead())) return false;
         }

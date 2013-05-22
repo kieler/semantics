@@ -27,6 +27,11 @@ import de.cau.cs.kieler.scl.basicblocks.PauseSurfaceImpl
 import de.cau.cs.kieler.scl.basicblocks.PauseDepth
 import de.cau.cs.kieler.scl.basicblocks.PauseSurface
 import de.cau.cs.kieler.scl.scl.Instruction
+import de.cau.cs.kieler.scl.basicblocks.ParallelFork
+import de.cau.cs.kieler.scl.basicblocks.ParallelJoin
+import de.cau.cs.kieler.scl.basicblocks.ParallelForkImpl
+import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.scl.basicblocks.ParallelJoinImpl
 
 class SCLBasicBlockExtensions {
     
@@ -46,6 +51,7 @@ class SCLBasicBlockExtensions {
         val sseq = statement.getParentStatementSequence
         val prevStatement = statement.previousStatementHierarchical
         
+        if (statement.isParallel) return true
         if (statement.isGoto) return false
         if (statement.isPause) return true
         if (sseq.statements.indexOf(statement) == 0) return true
@@ -59,6 +65,7 @@ class SCLBasicBlockExtensions {
     // Decides whether or not a statement is the end of a basic block. 
     def boolean isBasicBlockLast(Statement statement) {
         if (statement.isEmpty) return false
+        if (statement.isParallel) return true
         if (statement.isConditional) return true
         if (statement.isPause) return true
         
@@ -104,12 +111,13 @@ class SCLBasicBlockExtensions {
         if (oIndex < 0) return bBox
         val stmt = sseq.statements.get(oIndex)
         if (!stmt.isBasicBlockFirst || 
-            (stmt.isPause && !isDepth && oIndex>0)) {
+            (stmt.isPause && !isDepth && oIndex>0) ||
+            (stmt.isParallel && !isDepth && oIndex>0)) {
             val predStatements = new ArrayList<Statement>
             var predIndex = oIndex - 1
             while (predIndex >= 0) {
                 val predStmt = sseq.statements.get(predIndex)
-                if (stmt.isBasicBlockFirst && predStmt.isBasicBlockLast && (!predStmt.isPause)) predIndex = -1
+                if (stmt.isBasicBlockFirst && predStmt.isBasicBlockLast && (!predStmt.isPause) && (!predStmt.isParallel)) predIndex = -1
                 else {
                     if (!predStmt.isEmpty && !predStmt.isGoto) predStatements.add(predStmt) 
                     if (!predStmt.isBasicBlockFirst) predIndex = predIndex - 1
@@ -148,12 +156,25 @@ class SCLBasicBlockExtensions {
             depth.instruction = new PauseDepthImpl(statements.head.instruction as Pause)
             returnList.add(depth)
         }
-        for (statement : statements) {
-            if (!statement.isPause) returnList.add(statement)
+        else if (statements.head.isParallel && (statements.size>1 || isDepth)) {
+            val depth = SCL.createInstructionStatement
+            depth.instruction = new ParallelJoinImpl(statements.head.instruction as Parallel)
+            returnList.add(depth)
         }
+        
+        
+        for (statement : statements) {
+            if (!statement.isPause && !statement.isParallel) returnList.add(statement)
+        }
+        
         if (statements.last.isPause && (statements.size>1 || !isDepth)) {
             val surface = SCL.createInstructionStatement
             surface.instruction = new PauseSurfaceImpl(statements.last.instruction as Pause)
+            returnList.add(surface)
+        }
+        if (statements.last.isParallel && (statements.size>1 || !isDepth)) {
+            val surface = SCL.createInstructionStatement
+            surface.instruction = new ParallelForkImpl(statements.last.instruction as Parallel)
             returnList.add(surface)
         }
         
@@ -168,11 +189,20 @@ class SCLBasicBlockExtensions {
         statement.hasInstruction && statement.trueInstruction instanceof PauseDepth
     }
     
-    def Instruction getPauseReference(Statement statement) {
-        if (statement.isPauseSurface) return (statement.instruction as PauseSurfaceImpl).PauseReference
-        if (statement.isPauseDepth) return (statement.instruction as PauseDepthImpl).PauseReference
-        return null
+//    def Instruction getPauseReference(Statement statement) {
+//        if (statement.isPauseSurface) return (statement.instruction as PauseSurfaceImpl).PauseReference
+//        if (statement.isPauseDepth) return (statement.instruction as PauseDepthImpl).PauseReference
+//        return null
+//    }
+
+    def boolean isParallelFork(Statement statement) {
+        statement.hasInstruction && statement.trueInstruction instanceof ParallelFork
     }
+    
+    def boolean isParallelJoin(Statement statement) {
+        statement.hasInstruction && statement.trueInstruction instanceof ParallelJoin
+    }
+
     
     def BasicBlock createBasicBlock() {
         new BasicBlock()
@@ -214,11 +244,22 @@ class SCLBasicBlockExtensions {
                 val stmtBlockDepth = stmt.getBasicBlockByAnyStatementDepth
                 if (stmtBlockDepth != null && !basicBlocks.contains(stmtBlockDepth)) basicBlocks.add(stmtBlockDepth)
             }
+            if (stmt.isParallel) {
+                val stmtBlockDepth = stmt.getBasicBlockByAnyStatementDepth
+                if (stmtBlockDepth != null && !basicBlocks.contains(stmtBlockDepth)) basicBlocks.add(stmtBlockDepth)
+            }
             if (stmt.hasInstruction && stmt.getInstruction instanceof Conditional)
                 // ignore blocks that are already in the list 
 //                basicBlocks.addAll((stmt.getInstruction as Conditional).statements.head.getBasicBlocks)
                 for (block : (stmt.getInstruction as Conditional).statements.head.getBasicBlocks) {
                     if (!basicBlocks.contains(block)) basicBlocks.add(block)  
+                } 
+            if (stmt.hasInstruction && stmt.getInstruction instanceof Parallel)
+                // ignore blocks that are already in the list 
+                for (thread : (stmt.getInstruction as Parallel).threads) {
+                    for (block : thread.statements.head.getBasicBlocks) {
+                        if (!basicBlocks.contains(block)) basicBlocks.add(block)  
+                    }
                 } 
         }
         basicBlocks
@@ -252,6 +293,11 @@ class SCLBasicBlockExtensions {
     
     def List<BasicBlock> getBasicBlockPredecessor(BasicBlock basicBlock) {
         val predecessors = new ArrayList<BasicBlock>;
+
+        if (basicBlock.statements.head.isParallel) {
+            return predecessors;
+        }
+
         val predStmt = basicBlock.getHead.getPreviousInstructionStatementHierarchical
         if (predStmt == null || (predStmt.isConditional && basicBlock.headIsDepth)) {
             if (basicBlock.getHead.isPause && basicBlock.headIsDepth) {
@@ -275,6 +321,10 @@ class SCLBasicBlockExtensions {
     
     def List<BasicBlock> getBasicBlockSuccessor(BasicBlock basicBlock) {
         val successors = new ArrayList<BasicBlock>;
+        
+        if (basicBlock.statements.last.isParallel) {
+            return successors;
+        }
         
         if (basicBlock.statements.last.isConditional) {
             val targetBlock = (basicBlock.statements.last.getInstruction as Conditional).statements.head.getBasicBlockByAnyStatement

@@ -148,29 +148,39 @@ class BasicBlockModifier implements IStyleModifier {
             var bbTop = 100000.0f 
             var bbRight = 0.0f
             var bbBottom = 0.0f
+            var KNode bbNodeParent = null
             
             for(bbStatement : basicBlock.statements) {
                 if (!bbStatement.isEmpty) {
-                val bbNodePair = bBDH.NodeData.get(bbStatement.getInstruction)
-                if (bbNodePair != null) {
-                var bbNode = bbNodePair.first
+                    val bbNodePair = bBDH.NodeData.get(bbStatement.getInstruction)
+                    if (bbNodePair != null) {
+                        var bbNode = bbNodePair.first
                 
-                if (bbStatement.isPause && bbStatement.isPauseDepth) bbNode = bbNodePair.second
+                        bbNodeParent = bbNode.parent                       
+                        if (bbStatement.isPause && bbStatement.isPauseDepth) bbNode = bbNodePair.second
+                        if (bbStatement.isParallel && bbStatement.isParallelJoin) bbNode = bbNodePair.second
                 
-                val bbNodeShapeLayout = bbNode.getData(typeof(KShapeLayout))
-                if (bbNodeShapeLayout.padLeft(basicBlock, bbStatement) < bbLeft) 
-                    bbLeft = bbNodeShapeLayout.padLeft(basicBlock, bbStatement)
-                if (bbNodeShapeLayout.padTop(basicBlock, bbStatement) < bbTop) 
-                    bbTop = bbNodeShapeLayout.padTop(basicBlock, bbStatement)
-                if (bbNodeShapeLayout.padRight(basicBlock, bbStatement) > bbRight) 
-                    bbRight = bbNodeShapeLayout.padRight(basicBlock, bbStatement)
-                if (bbNodeShapeLayout.padBottom(basicBlock, bbStatement) > bbBottom) 
-                    bbBottom = bbNodeShapeLayout.padBottom(basicBlock, bbStatement)
-                }
-                
+                        val bbNodeShapeLayout = bbNode.getData(typeof(KShapeLayout))
+                        if (bbNodeShapeLayout.padLeft(basicBlock, bbStatement) < bbLeft) 
+                            bbLeft = bbNodeShapeLayout.padLeft(basicBlock, bbStatement)
+                        if (bbNodeShapeLayout.padTop(basicBlock, bbStatement) < bbTop) 
+                            bbTop = bbNodeShapeLayout.padTop(basicBlock, bbStatement)
+                        if (bbNodeShapeLayout.padRight(basicBlock, bbStatement) > bbRight) 
+                            bbRight = bbNodeShapeLayout.padRight(basicBlock, bbStatement)
+                        if (bbNodeShapeLayout.padBottom(basicBlock, bbStatement) > bbBottom) 
+                            bbBottom = bbNodeShapeLayout.padBottom(basicBlock, bbStatement)
+                    }
                 }
             }
-       
+         
+            while (bbNodeParent != null) {
+                val bbParentShapeLayout = bbNodeParent.getData(typeof(KShapeLayout))
+                bbLeft = bbLeft + bbParentShapeLayout.xpos
+                bbRight = bbRight + bbParentShapeLayout.xpos
+                bbTop = bbTop + bbParentShapeLayout.ypos
+                bbBottom = bbBottom + bbParentShapeLayout.ypos
+                bbNodeParent = bbNodeParent.parent
+            }       
             val kNode = obj.createFrameNode(basicBlock, bbLeft, bbTop, bbRight, bbBottom);
             rootNode.children.add(kNode)
         }        
@@ -188,19 +198,12 @@ class BasicBlockModifier implements IStyleModifier {
     
     def float padTop(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
         var pad = shapeLayout.ypos
-//        if (statement.isPause && basicBlock.getHead == statement && basicBlock.headIsDepth) {
-//            pad = pad + 43
-//        } else pad = pad - BBPADDING
         pad = pad - BBPADDING
         pad
     }
     
     def float padBottom(KShapeLayout shapeLayout, BasicBlock basicBlock, Statement statement) {
         var pad = shapeLayout.ypos + shapeLayout.height;
-//        val lastStatement = basicBlock.getHead.getBasicBlockStatements(basicBlock.headIsDepth).last
-//        if (statement.isPause && statement == lastStatement && (!(basicBlock.headIsDepth && basicBlock.statements.size==1))) {
-//            pad = pad - 43
-//        } else pad = pad + BBPADDING
         pad = pad + BBPADDING
         pad
     }

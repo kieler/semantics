@@ -27,6 +27,11 @@ import de.cau.cs.kieler.scl.basicblocks.PauseSurface
 import de.cau.cs.kieler.scl.basicblocks.PauseDepth
 import de.cau.cs.kieler.scl.basicblocks.PauseSurfaceImpl
 import de.cau.cs.kieler.scl.basicblocks.PauseDepthImpl
+import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.scl.basicblocks.ParallelFork
+import de.cau.cs.kieler.scl.basicblocks.ParallelJoin
+import de.cau.cs.kieler.scl.basicblocks.ParallelForkImpl
+import de.cau.cs.kieler.scl.basicblocks.ParallelJoinImpl
 
 class SCLStatementExtensions {
     
@@ -52,6 +57,10 @@ class SCLStatementExtensions {
     def boolean isConditional(Statement statement) {
         (statement.hasInstruction && statement.getInstruction instanceof Conditional)
     }
+
+    def boolean isParallel(Statement statement) {
+        (statement.hasInstruction && statement.getInstruction instanceof Parallel)
+    }
     
     def EmptyStatement asEmptyStatement(Statement statement) {
         statement as EmptyStatement
@@ -64,7 +73,9 @@ class SCLStatementExtensions {
     def Instruction getInstruction(Statement statement) {
         var instruction = (statement as InstructionStatement).instruction
         if (instruction instanceof PauseSurface) instruction = (instruction as PauseSurfaceImpl).PauseReference
-        if (instruction instanceof PauseDepth) instruction = (instruction as PauseDepthImpl).PauseReference
+        else if (instruction instanceof PauseDepth) instruction = (instruction as PauseDepthImpl).PauseReference
+        else if (instruction instanceof ParallelFork) instruction = (instruction as ParallelForkImpl).ParallelReference
+        else if (instruction instanceof ParallelJoin) instruction = (instruction as ParallelJoinImpl).ParallelReference
         instruction
     }
 
