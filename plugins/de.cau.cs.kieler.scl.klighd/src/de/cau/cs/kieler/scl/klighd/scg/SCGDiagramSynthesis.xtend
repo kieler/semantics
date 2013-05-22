@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kiml.options.SizeConstraint
 import de.cau.cs.kieler.kiml.util.KimlUtil
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.TransformationOption
 import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
@@ -129,6 +130,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
        
        
     private static val PARALLEL_HIERARCHY_EDGES = false
+    private static val NODEPLACEMENT_LINEARSEGMENTS = false
 
     /*
      * These maps link the scl program instructions to krendering nodes and ports.
@@ -181,6 +183,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
         rootNode.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
+        if (NODEPLACEMENT_LINEARSEGMENTS) 
+            rootNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
 
         // Evaluate the program beginning at the program root
         ProgramRootNode = rootNode
@@ -543,6 +547,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
             kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
             kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
+            if (NODEPLACEMENT_LINEARSEGMENTS) 
+                kContainerNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
             
             // Create entry node
             val kEntryNode = EntryObj.createEllipseNode(30,75).putToLookUpWith(EntryObj)
@@ -594,7 +600,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                     createEdgeArrow(kForkNode, kContainerNode)
                     kContainerNode.addEdge(kJoinNode)
                 } else {
-                    createEdgeArrow(kExitNode, kJoinNode)         
+//                    createEdgeArrow(kExitNode, kJoinNode)         
                     createEdgeArrow(kForkNode, kEntryNode)
                 }
             }   
@@ -902,10 +908,14 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     
     def KPort addAuxPort(KNode node) {
       node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
-      return unassignedObject.createPort() => [
+      val port = unassignedObject.createPort() => [
 //         it.addRectangle.invisible = true;
+         it.setPortPos(80, 0)
+         it.setPortSize(2, 2)
+         it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::UNDEFINED);
          node.ports += it
       ]
+      port
     }
 
     def KEdge createEdge(KNode sourceNode, KNode targetNode, String IDout, String IDin, boolean addArrow) {
