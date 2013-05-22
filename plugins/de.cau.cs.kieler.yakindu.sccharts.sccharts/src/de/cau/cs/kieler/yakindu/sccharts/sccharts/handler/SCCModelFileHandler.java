@@ -23,7 +23,7 @@ public class SCCModelFileHandler extends AbstractModelFileHandler {
 
         private static Injector injector = new STextStandaloneSetup().createInjectorAndDoEMFRegistration();
         
-	public static final String SCCTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.scl.commands.SCCToCoreTransformation";
+	public static final String SCCTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.sccharts.commands.SCCToCoreTransformation";
 
 	public SCCModelFileHandler() {
 	}
