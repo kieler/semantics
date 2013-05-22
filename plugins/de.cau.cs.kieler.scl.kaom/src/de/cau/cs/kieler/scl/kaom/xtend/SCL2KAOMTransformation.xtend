@@ -41,7 +41,7 @@ import org.eclipse.emf.ecore.EObject
 import com.google.common.collect.ImmutableList
 
 import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
-import de.cau.cs.kieler.scl.extensions.SCLThreadExtensions
+import de.cau.cs.kieler.scl.extensions.SCLStatementSequenceExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
 
 import de.cau.cs.kieler.scl.scl.Program
@@ -59,7 +59,7 @@ import de.cau.cs.kieler.kaom.Linkable
 import java.util.HashMap
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.InstructionStatement
-import de.cau.cs.kieler.scl.scl.AbstractThread
+import de.cau.cs.kieler.scl.scl.StatementSequence
 import java.util.ArrayList
 import org.eclipse.xtext.util.Pair
 
@@ -82,8 +82,8 @@ class SCL2KAOMTransformation {
             Guice::createInjector().getInstance(typeof(SCLExpressionExtensions))
      extension de.cau.cs.kieler.scl.extensions.SCLGotoExtensions SCLGotoExtensions = 
             Guice::createInjector().getInstance(typeof(SCLGotoExtensions))
-     extension de.cau.cs.kieler.scl.extensions.SCLThreadExtensions SCLThreadExtensions = 
-            Guice::createInjector().getInstance(typeof(SCLThreadExtensions))
+     extension de.cau.cs.kieler.scl.extensions.SCLStatementSequenceExtensions SCLStatementSequenceExtensions = 
+            Guice::createInjector().getInstance(typeof(SCLStatementSequenceExtensions))
 //     extension de.cau.cs.kieler.yakindu.sccharts.scl.xtend.SCCHelper SCCHelper = 
 //         Guice::createInjector().getInstance(typeof(SCCHelper))
  
@@ -613,11 +613,11 @@ class SCL2KAOMTransformation {
     // If there is a next statement according to the list
     def Statement getNextStatement(Statement statement) {
         val container = statement.eContainer;
-        if (container instanceof AbstractThread || container instanceof Conditional) {
+        if (container instanceof StatementSequence || container instanceof Conditional) {
             // This should ALWAYS be the case
             var EList<Statement> statementList = null;
-            if (container instanceof AbstractThread) {
-                val thread = container as AbstractThread;
+            if (container instanceof StatementSequence) {
+                val thread = container as StatementSequence;
                 statementList = thread.statements;
             } else {
                 val conditional = container as Conditional;
