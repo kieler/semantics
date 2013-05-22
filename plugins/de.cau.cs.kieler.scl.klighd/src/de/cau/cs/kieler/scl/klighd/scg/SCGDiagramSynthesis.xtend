@@ -494,19 +494,19 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val Object JoinObj = new Object
 
         // Create fork node            
-        val kForkNode = instr.createTriangleNode(50, 100).putToLookUpWith(instr);
+        val kForkNode = instr.createTriangleNode(37, 75).putToLookUpWith(instr);
         kForkNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextFork = "FORK";
         kForkNode.KRendering.add(factory.createKText.of(nodeTextFork)
-            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 20, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).putToLookUpWith(instr));
+            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 15, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).putToLookUpWith(instr));
         rootNode.children.add(kForkNode)
 
         // Create join node
-        val kJoinNode = JoinObj.createTriangleReversedNode(50, 100);
+        val kJoinNode = JoinObj.createTriangleReversedNode(37, 75);
         kJoinNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextJoin = "JOIN";
         kJoinNode.KRendering.add(factory.createKText.of(nodeTextJoin)
-            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 20, 0).putToLookUpWith(instr));
+            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 15, 0).putToLookUpWith(instr));
         rootNode.children.add(kJoinNode)
 
         /* 
