@@ -13,7 +13,7 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.scl.controlflow.handler.SCL2SCLCFFileHandler"
+            class="de.cau.cs.kieler.scl.controlflow.handler.SCLToSCLCFFileHandler"
             commandId="de.cau.cs.kieler.scl.controlflow.commands.SCLToSCLCFTransformation">
       </handler>
    </extension>

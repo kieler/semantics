@@ -19,14 +19,14 @@ import de.cau.cs.kieler.scl.scl.Program;
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-public class SCL2SCLCFFileHandler extends AbstractModelFileHandler {
+public class SCLToSCLCFFileHandler extends AbstractModelFileHandler {
 
     private static Injector injector = new STextStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
 
     public static final String SCCTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.scl.controlflow.commands.SCLToSCLCFTransformation";
 
-    public SCL2SCLCFFileHandler() {
+    public SCLToSCLCFFileHandler() {
     }
 
     public String ModelHandlerFileExtension() {
