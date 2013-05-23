@@ -20,6 +20,8 @@ import java.util.ArrayList;
  * SJLProgram.
  * 
  * @author cmot
+ * @kieler.design 2013-05-23 proposed cmot
+ * @kieler.rating 2013-05-23 proposed
  * 
  */
 abstract public class SJLProgram<State extends Enum<?>> {
@@ -69,34 +71,6 @@ abstract public class SJLProgram<State extends Enum<?>> {
     }
 
     // -------------------------------------------------------------------------
-    
-    public void setInput(String key, int value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        Field field = getClass().getDeclaredField(key);
-        field.setInt(this, value);
-    }
-    
-    public void setInput(String key, boolean value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        Field field = getClass().getDeclaredField(key);
-        field.setBoolean(this, value);
-    }
-
-    public void setInput(String key, long value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        Field field = getClass().getDeclaredField(key);
-        field.setLong(this, value);
-    }
-
-    public void setInput(String key, double value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        Field field = getClass().getDeclaredField(key);
-        field.setDouble(this, value);
-    }
-
-    // -------------------------------------------------------------------------
-
-    public Object getOutput(String key) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        Field field = getClass().getDeclaredField(key);
-        return field.get(this);
-    }
-    
     // -------------------------------------------------------------------------
 
     public boolean doTick() {

@@ -77,7 +77,7 @@ class S2SJ {
    def String listContinuations(List<Continuation> continuationList) {
        '''
     «FOR continuation : continuationList SEPARATOR ","» 
-         «continuation.name»
+             «continuation.name»
     «ENDFOR»
        '''
    }
@@ -116,20 +116,13 @@ class S2SJ {
  */
 
 import java.io.IOException;
-import de.cau.cs.kieler.sjl.SJLProgram;
+import de.cau.cs.kieler.sjl.SJLProgramWithSignals;
 
 import ''' + packageName + '''.''' + className + '''.State;
 import static '''  + packageName + '''.''' + className + '''.State.*;
     
-public class ''' + className + ''' extends SJLProgram<State> {
+public class ''' + className + ''' extends SJLProgramWithSignals<State> {
     
-    
-    // This is necessary to prevent a class cast exception when the class
-    // and its superclass are loaded with two different class loaders (i.e., 
-    // with the Eclpise class loader and the url class loader).
-    //static final long serialVersionUID = -7978489268769667877L;
-    
-
     enum State {
         ''' + program.eAllContents.filter(typeof(Continuation)).toList.listContinuations + '''
     }
@@ -148,8 +141,14 @@ public class ''' + className + ''' extends SJLProgram<State> {
    // Generate reset signals
    def sResetSignals(Program program) {
     '''
-    public void resetSignals() {    
-    «FOR signal : program.signals SEPARATOR ""»
+    public void resetInputSignals() {    
+    «FOR signal : program.signals.filter(e | e.isInput) SEPARATOR ""»
+        «signal.name» = false;
+    «ENDFOR»
+    }
+
+    public void resetOutputSignals() {    
+    «FOR signal : program.signals.filter(e | e.isOutput) SEPARATOR ""»
         «signal.name» = false;
     «ENDFOR»
     }

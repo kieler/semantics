@@ -212,10 +212,10 @@ public class SJExecution extends AbstractExecution {
             cls = Class.forName("test.simple", true, dynamicClassLoader);
             Object instance = cls.newInstance();
             Class superClass = instance.getClass().getSuperclass();
-            Class compareClass = SJLProgram.class;
+            Class compareClass = SJLProgramWithSignals.class;
             String className = superClass.getName();
-            if (instance instanceof SJLProgram) {
-                SJLProgram<?> program = (SJLProgram<?>) instance;
+            if (instance instanceof SJLProgramWithSignals) {
+                SJLProgramWithSignals<?> program = (SJLProgramWithSignals<?>) instance;
                 
                 System.out.println(program.getOutput("I"));
                 program.setInput("I", true);
