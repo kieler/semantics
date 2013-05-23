@@ -80,9 +80,9 @@ abstract public class SJLProgram<State extends Enum<?>> {
 
     // -------------------------------------------------------------------------
 
-    public void tick() {
-        // The default implementation does nothing
-    }
+    // This method must be defined by implementing classes. It defines the
+    // reaction of the SJLProgram.
+    abstract protected void tick();
 
     // -------------------------------------------------------------------------
 

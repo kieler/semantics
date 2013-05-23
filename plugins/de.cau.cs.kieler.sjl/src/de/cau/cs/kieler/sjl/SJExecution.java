@@ -203,20 +203,20 @@ public class SJExecution extends AbstractExecution {
             }
         }
         
-        dynamicClassLoader.addClassFileByName("test.test2");
-        dynamicClassLoader.addClassFileByName("test.test2$State");
+        dynamicClassLoader.addClassFileByName("test.simple");
+        dynamicClassLoader.addClassFileByName("test.simple$State");
         
         // Instantiate new class as SJProgram
         Class<?> cls;
         try {
-            cls = Class.forName("test.test2", true, dynamicClassLoader);
+            cls = Class.forName("test.simple", true, dynamicClassLoader);
             Object instance = cls.newInstance();
             Class superClass = instance.getClass().getSuperclass();
             Class compareClass = SJLProgram.class;
             String className = superClass.getName();
             if (instance instanceof SJLProgram) {
                 SJLProgram<?> sJLProgram = (SJLProgram<?>) instance;
-                sJLProgram.tick();
+                sJLProgram.doTick();
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

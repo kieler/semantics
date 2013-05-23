@@ -127,7 +127,7 @@ public class ''' + className + ''' extends SJLProgram<State> {
     // This is necessary to prevent a class cast exception when the class
     // and its superclass are loaded with two different class loaders (i.e., 
     // with the Eclpise class loader and the url class loader).
-    static final long serialVersionUID = -7978489268769667877L;
+    //static final long serialVersionUID = -7978489268769667877L;
     
 
     enum State {
@@ -176,7 +176,7 @@ public class ''' + className + ''' extends SJLProgram<State> {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''   @Override
-    public final void tick() {
+    protected final void tick() {
         while (!isTickDone()) {
             switch (state()) {
                 
