@@ -122,6 +122,13 @@ import ''' + packageName + '''.''' + className + '''.State;
 import static '''  + packageName + '''.''' + className + '''.State.*;
     
 public class ''' + className + ''' extends SJLProgram<State> {
+    
+    
+    // This is necessary to prevent a class cast exception when the class
+    // and its superclass are loaded with two different class loaders (i.e., 
+    // with the Eclpise class loader and the url class loader).
+    static final long serialVersionUID = -7978489268769667877L;
+    
 
     enum State {
         ''' + program.eAllContents.filter(typeof(Continuation)).toList.listContinuations + '''

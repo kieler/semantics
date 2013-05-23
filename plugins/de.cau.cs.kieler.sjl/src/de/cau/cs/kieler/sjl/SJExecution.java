@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.net.URLClassLoader;
+//import org.eclipse.core.internal.boot.PlatformClassLoader;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -120,38 +122,27 @@ public class SJExecution extends AbstractExecution {
 
     // -------------------------------------------------------------------------
 
-    public void compile(final List<String> filePaths, final String className) throws IOException,
+    public void compile(final List<String> filePaths, final String modelName) throws IOException,
             InterruptedException {
 
         // building path to bundle
         Bundle bundle = Platform.getBundle(SJPlugin.PLUGIN_ID);
 
-        URL url1 = null;
+        URL url = null;
         try {
-            url1 = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SJL_PATH_SRC), null));
-        } catch (IOException e2) {
-            e2.printStackTrace();
-        }
-        URL url2 = null;
-        try {
-            url2 = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SJL_PATH_BIN), null));
+            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SJL_PATH_BIN), null));
         } catch (IOException e2) {
             e2.printStackTrace();
         }
         // if (url == null) {
         // return;
         // }
-        String bundleLocation1 = url1.getFile();
-        String bundleLocation2 = url2.getFile();
+        String bundleLocation = url.getFile();
 
         // Windows vs. Linux: Exchange possibly wrong slash/backslash
-        bundleLocation1 = bundleLocation1.replaceAll("[/\\\\]+", "\\" + File.separator);
-        if (bundleLocation1.startsWith("\\")) {
-            bundleLocation1 = bundleLocation1.substring(1);
-        }
-        bundleLocation2 = bundleLocation2.replaceAll("[/\\\\]+", "\\" + File.separator);
-        if (bundleLocation2.startsWith("\\")) {
-            bundleLocation2 = bundleLocation2.substring(1);
+        bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
+        if (bundleLocation.startsWith("\\")) {
+            bundleLocation = bundleLocation.substring(1);
         }
         for (String filePath : filePaths) {
             filePath = filePath.replaceAll("[/\\\\]+", "\\" + File.separator);
@@ -169,14 +160,71 @@ public class SJExecution extends AbstractExecution {
 //        }
 
         
-        System.out.println("javac -classpath " + bundleLocation2 + " -source 1.5 -target 1.5 d:/test/test/TestClass.java");
+        System.out.println("-verbose -classpath " + bundleLocation + " -source 1.5 -target 1.5 -classpath d:/test/ d:/test/simple.java");
         
-        BatchCompiler.compile(
-                "-verbose -classpath " + bundleLocation2 + " -source 1.5 -target 1.5 -classpath d:/test/ d:/test/simple.java",
-                new PrintWriter(System.out),
-                new PrintWriter(System.err),
-                null);
         
+        // Compile all files
+//        BatchCompiler.compile(
+//                "-verbose -classpath " + bundleLocation + " -source 1.5 -target 1.5 -classpath d:/test/ d:/test/simple.java",
+//                new PrintWriter(System.out),
+//                new PrintWriter(System.err),
+//                null);
+        for (String filePath : filePaths) {
+            String filePathRoot = null;
+            if (filePath.lastIndexOf("/") > 0) {
+                filePathRoot = filePath.substring(0, filePath.lastIndexOf("/"));
+            }
+            if (filePath.lastIndexOf("\\") > 0) {
+                filePathRoot = filePath.substring(0, filePath.lastIndexOf("\\"));
+            }
+            BatchCompiler.compile(
+                    "-verbose -classpath " + bundleLocation + " -source 1.5 -target 1.5 -classpath "+ filePathRoot +" " + filePath,
+                    new PrintWriter(System.out),
+                    new PrintWriter(System.err),
+                    null);
+        }
+        
+        
+        DynamicClassLoader dynamicClassLoader = new DynamicClassLoader(this.getClass().getClassLoader());
+        
+        // Fill the class loader with all necessary file paths
+        for (String filePath : filePaths) {
+            String filePathRoot = null;
+            if (filePath.lastIndexOf("/") > 0) {
+                filePathRoot = filePath.substring(0, filePath.lastIndexOf("/"));
+            }
+            if (filePath.lastIndexOf("\\") > 0) {
+                filePathRoot = filePath.substring(0, filePath.lastIndexOf("\\"));
+            }
+            File classLoaderRoot = new File(filePathRoot);
+            if (classLoaderRoot.exists()) {
+                URL classLoaderRootURL = classLoaderRoot.toURI().toURL();
+                dynamicClassLoader.addClassPath(classLoaderRootURL);
+            }
+        }
+        
+        dynamicClassLoader.addClassFileByName("test.test2");
+        dynamicClassLoader.addClassFileByName("test.test2$State");
+        
+        // Instantiate new class as SJProgram
+        Class<?> cls;
+        try {
+            cls = Class.forName("test.test2", true, dynamicClassLoader);
+            Object instance = cls.newInstance();
+            Class superClass = instance.getClass().getSuperclass();
+            Class compareClass = SJLProgram.class;
+            String className = superClass.getName();
+            if (instance instanceof SJLProgram) {
+                SJLProgram<?> sJLProgram = (SJLProgram<?>) instance;
+                sJLProgram.tick();
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } 
         
 //        String compile = this.getCompiler();
 //
