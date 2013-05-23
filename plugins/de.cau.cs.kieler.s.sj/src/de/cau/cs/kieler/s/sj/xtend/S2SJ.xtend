@@ -198,8 +198,7 @@ public class ''' + className + ''' extends SJLProgram<State> {
            '''      case «state.name»:  
            «FOR instruction : state.instructions»
            «instruction.expand»
-           «ENDFOR»
-           break;'''
+           «ENDFOR»'''
    }
    
    // Expand an IF instruction traversing all instructions of that IF instruction.
@@ -232,30 +231,34 @@ public class ''' + className + ''' extends SJLProgram<State> {
    // Expand a PAUSE instruction.
        //«pauseInstruction.continuation.name»
    def dispatch expand(Pause pauseInstruction) {
-       '''pauseB(«pauseInstruction.continuation.name»);'''
+       '''pauseB(«pauseInstruction.continuation.name»);
+break;'''
    }   
    
    // Expand a TERM instruction.
    def dispatch expand(Term termInstruction) {
-       '''termB();'''
+       '''termB();
+break;'''
    }   
    
    // Expand a HALT instruction.
    def dispatch expand(Halt haltInstruction) {
-       '''haltB();'''
+       '''haltB();
+break;'''
    }   
    
    // Expand a JOIN instruction.
    def dispatch expand(Join joinInstruction) {
        '''if(!join()) {
                gotoB(«joinInstruction.continuation.name»);
-               break;
+break;
           };'''
    } 
    
    // Expand an ABORT instruction.  
    def dispatch expand(Abort abortInstruction) {
-       '''abortB();'''
+       '''abortB();
+break;'''
    }   
    
    // Retrieve the last FORK instruction because in SC the last fork
@@ -277,13 +280,15 @@ public class ''' + className + ''' extends SJLProgram<State> {
           «ENDIF»
           «IF forkInstruction.getLastFork == forkInstruction» 
              gotoB(«forkInstruction.thread.name»);
+break;
           «ENDIF»
        '''
    }   
 
    // Expand a TRANS instruction.    
    def dispatch expand(Trans transInstruction) {
-       '''gotoB(«transInstruction.continuation.name»);'''
+       '''gotoB(«transInstruction.continuation.name»);
+break;'''
    }   
    
    // Expand an AWAIT instruction.
@@ -293,7 +298,8 @@ public class ''' + className + ''' extends SJLProgram<State> {
    
    // Expand a PRIO instruction.
    def dispatch expand(Prio prioInstruction) {
-       '''prioB(«prioInstruction.priority», «prioInstruction.continuation.name»);'''
+       '''prioB(«prioInstruction.priority», «prioInstruction.continuation.name»);
+break;'''
    }   
    
    // Expand SIGNAL instruction. This takes care of reincarnation

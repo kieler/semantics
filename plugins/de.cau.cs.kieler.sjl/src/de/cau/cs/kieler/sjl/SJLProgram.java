@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sjl;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 abstract public class SJLProgram<State extends Enum<?>> {
     
     // A flag indicating debug output should be printed
-    static final boolean DEBUG = false; 
+    static final boolean DEBUG = true; 
     
     // Active means NOT-paused for a tick
     private PriorityQueue<Thread> activeThreads;
@@ -69,6 +70,35 @@ abstract public class SJLProgram<State extends Enum<?>> {
 
     // -------------------------------------------------------------------------
     
+    public void setInput(String key, int value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        Field field = getClass().getDeclaredField(key);
+        field.setInt(this, value);
+    }
+    
+    public void setInput(String key, boolean value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        Field field = getClass().getDeclaredField(key);
+        field.setBoolean(this, value);
+    }
+
+    public void setInput(String key, long value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        Field field = getClass().getDeclaredField(key);
+        field.setLong(this, value);
+    }
+
+    public void setInput(String key, double value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        Field field = getClass().getDeclaredField(key);
+        field.setDouble(this, value);
+    }
+
+    // -------------------------------------------------------------------------
+
+    public Object getOutput(String key) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        Field field = getClass().getDeclaredField(key);
+        return field.get(this);
+    }
+    
+    // -------------------------------------------------------------------------
+
     public boolean doTick() {
         // Clone the alive threads means making all alive threads active
         activeThreads = aliveThreads.clone();

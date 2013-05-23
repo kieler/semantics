@@ -34,7 +34,7 @@ import java.util.List;
  * <BR>
  * This is solved with this DynamicClassLoader. <BR>
  * <BR>
- * Before using this class loader one typically add other class paths to it using addClassPath().
+ * Before using this class loader one typically adds other class paths to it using addClassPath().
  * Then one specifically adds classes that the DynamicClassLoader should load directly using
  * addClassFileByName(). The corresponding *.class files for these classes should be accessible for
  * the DynamicClassLoader under the class paths added or visible by the parent class loader. Only

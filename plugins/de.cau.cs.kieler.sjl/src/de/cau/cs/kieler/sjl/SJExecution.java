@@ -215,14 +215,40 @@ public class SJExecution extends AbstractExecution {
             Class compareClass = SJLProgram.class;
             String className = superClass.getName();
             if (instance instanceof SJLProgram) {
-                SJLProgram<?> sJLProgram = (SJLProgram<?>) instance;
-                sJLProgram.doTick();
+                SJLProgram<?> program = (SJLProgram<?>) instance;
+                
+                System.out.println(program.getOutput("I"));
+                program.setInput("I", true);
+                System.out.println(program.getOutput("I"));
+                program.doTick();
+                System.out.println(program.getOutput("O"));
+                program.setInput("I", true);
+                program.doTick();
+                System.out.println(program.getOutput("O"));
+                program.setInput("I", true);
+                program.doTick();
+                System.out.println(program.getOutput("O"));
+                program.setInput("I", true);
+                program.doTick();
+                System.out.println(program.getOutput("O"));
+                program.setInput("I", true);
+                program.doTick();
+                System.out.println(program.getOutput("O"));
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         } 
         
