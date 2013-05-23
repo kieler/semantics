@@ -44,6 +44,18 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
     /**
      * {@inheritDoc}
      */
+    public boolean doTick() {
+        // Reset output signals before computing the reaction
+        resetOutputSignals();
+        // Delegate to doTick() of SJLProgram
+        return super.doTick();
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     abstract protected void tick();
     

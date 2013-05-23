@@ -134,9 +134,6 @@ public class SJExecution extends AbstractExecution {
         } catch (IOException e2) {
             e2.printStackTrace();
         }
-        // if (url == null) {
-        // return;
-        // }
         String bundleLocation = url.getFile();
 
         // Windows vs. Linux: Exchange possibly wrong slash/backslash
@@ -150,25 +147,11 @@ public class SJExecution extends AbstractExecution {
                 filePath = filePath.substring(1);
             }
         }
-
-//        for (String filePath : filePaths) {
-//            BatchCompiler.compile(
-//                    "-classpath " + bundleLocation + " " + filePath,
-//                    new PrintWriter(System.out),
-//                    new PrintWriter(System.err),
-//                    null);
-//        }
-
         
         System.out.println("-verbose -classpath " + bundleLocation + " -source 1.5 -target 1.5 -classpath d:/test/ d:/test/simple.java");
         
         
         // Compile all files
-//        BatchCompiler.compile(
-//                "-verbose -classpath " + bundleLocation + " -source 1.5 -target 1.5 -classpath d:/test/ d:/test/simple.java",
-//                new PrintWriter(System.out),
-//                new PrintWriter(System.err),
-//                null);
         for (String filePath : filePaths) {
             String filePathRoot = null;
             if (filePath.lastIndexOf("/") > 0) {
@@ -183,8 +166,8 @@ public class SJExecution extends AbstractExecution {
                     new PrintWriter(System.err),
                     null);
         }
-        
-        
+
+        // Instantiate the dynamic class loader
         DynamicClassLoader dynamicClassLoader = new DynamicClassLoader(this.getClass().getClassLoader());
         
         // Fill the class loader with all necessary file paths
@@ -203,37 +186,32 @@ public class SJExecution extends AbstractExecution {
             }
         }
         
+        // Register classes to be loaded specifically by the dynamic class loader
         dynamicClassLoader.addClassFileByName("test.simple");
         dynamicClassLoader.addClassFileByName("test.simple$State");
         
-        // Instantiate new class as SJProgram
+        // Instantiate new class as SJProgramWithSignals
         Class<?> cls;
         try {
             cls = Class.forName("test.simple", true, dynamicClassLoader);
             Object instance = cls.newInstance();
-            Class superClass = instance.getClass().getSuperclass();
-            Class compareClass = SJLProgramWithSignals.class;
-            String className = superClass.getName();
+//            Class superClass = instance.getClass().getSuperclass();
+//            Class compareClass = SJLProgramWithSignals.class;
+//            String className = superClass.getName();
             if (instance instanceof SJLProgramWithSignals) {
                 SJLProgramWithSignals<?> program = (SJLProgramWithSignals<?>) instance;
                 
-                System.out.println(program.getOutput("I"));
-                program.setInput("I", true);
-                System.out.println(program.getOutput("I"));
-                program.doTick();
-                System.out.println(program.getOutput("O"));
+                // Example sequence
                 program.setInput("I", true);
                 program.doTick();
-                System.out.println(program.getOutput("O"));
+                System.out.println("O:"+program.getOutput("O"));
                 program.setInput("I", true);
                 program.doTick();
-                System.out.println(program.getOutput("O"));
-                program.setInput("I", true);
+                System.out.println("O:"+program.getOutput("O"));
                 program.doTick();
-                System.out.println(program.getOutput("O"));
-                program.setInput("I", true);
+                System.out.println("O:"+program.getOutput("O"));
                 program.doTick();
-                System.out.println(program.getOutput("O"));
+                System.out.println("O:"+program.getOutput("O"));
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
