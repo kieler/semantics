@@ -32,6 +32,7 @@ import de.cau.cs.kieler.scl.basicblocks.ParallelJoin
 import de.cau.cs.kieler.scl.basicblocks.ParallelForkImpl
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.basicblocks.ParallelJoinImpl
+import org.yakindu.sct.model.stext.stext.Expression
 
 class SCLBasicBlockExtensions {
     
@@ -332,9 +333,22 @@ class SCLBasicBlockExtensions {
         predecessors
     }
     
-    def boolean isPauseSurface(BasicBlock predecessor) {
-        if (predecessor.statements.last.isPause) return true
+    def boolean isPauseSurface(BasicBlock basicBlock) {
+        if (basicBlock.statements.last.isPause) return true
         return false
+    }
+    
+    def boolean isConditionalPredecessor(BasicBlock basicBlock, BasicBlock predecessor) {
+        if (predecessor.statements.last.isConditional) {
+            if (predecessor.statements.last.getInstruction.asConditional.statements.head.getBasicBlockByHead(false).isEqual(basicBlock))
+                return true
+        }
+        
+        return false
+    }
+    
+    def Expression getConditionalExpression(BasicBlock basicBlock) {
+        
     }
     
     def List<BasicBlock> getBasicBlockSuccessor(BasicBlock basicBlock) {
