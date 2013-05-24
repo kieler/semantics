@@ -43,7 +43,6 @@ import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
-import de.cau.cs.kieler.s.sim.SSimPlugin;
 import de.cau.cs.kieler.s.sim.xtend.S2Simulation;
 import de.cau.cs.kieler.sc.SCExecution;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -653,21 +652,37 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
 
     // -------------------------------------------------------------------------
     
+    /**
+     * The Class DebugData.
+     */
     protected class DebugData implements Comparable<DebugData> {
+        
+        /** The name. */
         public String name;
+        
+        /** The prio. */
         public int prio;
+        
+        /** The order. */
         public int order;
 
+        /**
+         * Instantiates a new debug data.
+         */
         public DebugData() {
         }
         
-        public int compareTo(DebugData compareObject) {
-            if (order < compareObject.order)
+        /**
+         * {@inheritDoc}
+         */
+        public int compareTo(final DebugData compareObject) {
+            if (order < compareObject.order) {
                 return -1;
-            else if (order == compareObject.order)
+            } else if (order == compareObject.order) {
                 return 0;
-            else
+            } else {
                 return 1;
+            }
         }
     }
 
