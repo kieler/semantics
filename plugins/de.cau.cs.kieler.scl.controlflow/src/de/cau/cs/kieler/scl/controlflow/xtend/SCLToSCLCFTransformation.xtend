@@ -52,11 +52,24 @@ class SCLToSCLCFTransformation {
 
         for(basicBlock : basicBlocks) {
             targetProgram.declarations.add(createVariableDeclaration(basicBlock.basicBlockName, 'boolean'))
+            if (basicBlock.isPauseSurface)
+                targetProgram.declarations.add(createVariableDeclaration(basicBlock.basicBlockName + '_pre', 'boolean'))
         }
 
         for(basicBlock : basicBlocks) {
             targetProgram.statements.addAll(targetProgram.transformBasicBlock(program, basicBlock));    
         }        
+        
+        for(basicBlock : basicBlocks) {
+            if (basicBlock.isPauseSurface) {
+                targetProgram.statements.add(
+                    createSCLAssignment(
+                        targetProgram.getDeclarationByName(basicBlock.basicBlockName + '_pre'),
+                        targetProgram.getDeclarationByName(basicBlock.basicBlockName)
+                    ).createStatement
+                )
+            }
+        }
         
         targetProgram
     }
@@ -72,15 +85,21 @@ class SCLToSCLCFTransformation {
             expression.setReference(program.getDeclarationByName('GO'))
             guardConditional.expression = expression
         } else if (predecessors.size==1) {
+            var predID = predecessors.head.basicBlockName
+            if (predecessors.head.isPauseSurface) predID = predID + '_pre'
             val expression = SText.createElementReferenceExpression
-            expression.setReference(program.getDeclarationByName(predecessors.head.basicBlockName))
+            expression.setReference(program.getDeclarationByName(predID))
             guardConditional.expression = expression
         } else if (predecessors.size>1) {
+            var predID = predecessors.head.basicBlockName
+            if (predecessors.head.isPauseSurface) predID = predID + '_pre'
             var expression = SText.createElementReferenceExpression as Expression
-            (expression as ElementReferenceExpression).setReference(program.getDeclarationByName(predecessors.head.basicBlockName))
+            (expression as ElementReferenceExpression).setReference(program.getDeclarationByName(predID))
             for(Integer i: 1..(predecessors.size - 1)) {
+                var predIDi = predecessors.head.basicBlockName
+                if (predecessors.get(i).isPauseSurface) predIDi = predIDi + '_pre'
                 val exp2 = SText.createElementReferenceExpression 
-                exp2.setReference(program.getDeclarationByName(predecessors.get(i).basicBlockName))
+                exp2.setReference(program.getDeclarationByName(predIDi))
                 expression = createOrExpression(expression, exp2) 
             }
             guardConditional.expression = expression

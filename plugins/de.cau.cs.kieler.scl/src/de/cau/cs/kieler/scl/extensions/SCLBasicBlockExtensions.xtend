@@ -236,31 +236,38 @@ class SCLBasicBlockExtensions {
         basicBlock.getHead.hashCode.toString
     }
     
+    def containsEqual(List<BasicBlock> basicBlocks, BasicBlock basicBlock) {
+        for(bb : basicBlocks) {
+            if (bb.isEqual(basicBlock)) return true
+        }
+        return false
+    }
+    
     def List<BasicBlock> getBasicBlocks(Statement statement) {
         val basicBlocks = new ArrayList<BasicBlock>;
         val sseq = statement.getParentStatementSequence
         for(stmt : sseq.statements) {
             val stmtBlock = stmt.getBasicBlockByAnyStatement
-            if (stmtBlock != null && !basicBlocks.contains(stmtBlock)) basicBlocks.add(stmtBlock)
+            if (stmtBlock != null && !basicBlocks.containsEqual(stmtBlock)) basicBlocks.add(stmtBlock)
             if (stmt.isPause) {
                 val stmtBlockDepth = stmt.getBasicBlockByAnyStatementDepth
-                if (stmtBlockDepth != null && !basicBlocks.contains(stmtBlockDepth)) basicBlocks.add(stmtBlockDepth)
+                if (stmtBlockDepth != null && !basicBlocks.containsEqual(stmtBlockDepth)) basicBlocks.add(stmtBlockDepth)
             }
             if (stmt.isParallel) {
                 val stmtBlockDepth = stmt.getBasicBlockByAnyStatementDepth
-                if (stmtBlockDepth != null && !basicBlocks.contains(stmtBlockDepth)) basicBlocks.add(stmtBlockDepth)
+                if (stmtBlockDepth != null && !basicBlocks.containsEqual(stmtBlockDepth)) basicBlocks.add(stmtBlockDepth)
             }
             if (stmt.hasInstruction && stmt.getInstruction instanceof Conditional)
                 // ignore blocks that are already in the list 
 //                basicBlocks.addAll((stmt.getInstruction as Conditional).statements.head.getBasicBlocks)
                 for (block : (stmt.getInstruction as Conditional).statements.head.getBasicBlocks) {
-                    if (!basicBlocks.contains(block)) basicBlocks.add(block)  
+                    if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
                 } 
             if (stmt.hasInstruction && stmt.getInstruction instanceof Parallel)
                 // ignore blocks that are already in the list 
                 for (thread : (stmt.getInstruction as Parallel).threads) {
                     for (block : thread.statements.head.getBasicBlocks) {
-                        if (!basicBlocks.contains(block)) basicBlocks.add(block)  
+                        if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
                     }
                 } 
         }
@@ -323,6 +330,11 @@ class SCLBasicBlockExtensions {
         }
          
         predecessors
+    }
+    
+    def boolean isPauseSurface(BasicBlock predecessor) {
+        if (predecessor.statements.last.isPause) return true
+        return false
     }
     
     def List<BasicBlock> getBasicBlockSuccessor(BasicBlock basicBlock) {

@@ -38,6 +38,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.yakindu.base.types.impl.PrimitiveTypeImpl
 import org.yakindu.base.types.Type
 import org.yakindu.sct.model.stext.stext.Expression
+import org.yakindu.sct.model.stext.stext.AssignmentOperator
 
 class SCLCreateExtensions {
   
@@ -190,6 +191,25 @@ class SCLCreateExtensions {
             val varRef = (it.varRef as ElementReferenceExpression);
             varRef.reference = declRef
         ]
+        assignment
+    }
+    
+    def Assignment createSCLAssignment(VariableDeclaration firstDecl, VariableDeclaration secondDecl) {
+        val assignment = SCL.createAssignment()
+        
+        val elemRef1 = SText.createElementReferenceExpression()
+        elemRef1.setReference(firstDecl)
+        
+        val elemRef2 = SText.createElementReferenceExpression()
+        elemRef2.setReference(secondDecl);
+        
+        val assignmentExp = SText.createAssignmentExpression()
+        assignmentExp.setVarRef(elemRef1)
+        assignmentExp.setOperator(AssignmentOperator::ASSIGN)
+        assignmentExp.setExpression(elemRef2)
+        
+        assignment.assignment = assignmentExp
+        
         assignment
     }
     
