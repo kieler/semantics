@@ -62,6 +62,10 @@ class SCLStatementExtensions {
         (statement.hasInstruction && statement.getInstruction instanceof Parallel)
     }
     
+    def boolean isAssignment(Statement statement) {
+        (statement.hasInstruction && statement.getInstruction instanceof Assignment)
+    }
+    
     def EmptyStatement asEmptyStatement(Statement statement) {
         statement as EmptyStatement
     }

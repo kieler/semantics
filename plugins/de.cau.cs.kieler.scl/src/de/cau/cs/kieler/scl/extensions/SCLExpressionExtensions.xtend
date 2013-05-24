@@ -19,6 +19,7 @@ import org.yakindu.sct.model.stext.stext.RegularEventSpec
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
+import org.yakindu.sct.model.stext.stext.AssignmentOperator
 
 class SCLExpressionExtensions {
    
@@ -71,6 +72,36 @@ class SCLExpressionExtensions {
 //        not.setOperand(par);
 //        not  
 //    }    
+
+    def Expression createOrExpression(Expression op1, Expression op2) {
+        val or = SText.createLogicalOrExpression()
+        or.setLeftOperand(op1)
+        or.setRightOperand(op2)
+        or
+    } 
+
+    def Expression createAndExpression(Expression op1, Expression op2) {
+        val and = SText.createLogicalAndExpression()
+        and.setLeftOperand(op1)
+        and.setRightOperand(op2)
+        and
+    } 
+    
+    def Expression createAssignmentExpression(ElementReferenceExpression varRef, Expression expression) {
+        val assignment = SText.createAssignmentExpression()
+        assignment.setVarRef(varRef)
+        assignment.setOperator(AssignmentOperator::ASSIGN)
+        assignment.setExpression(expression);
+        assignment
+    }
+    
+    def Expression assignBoolean(boolean bool) {
+        val primitiveValueExpression = SText.createPrimitiveValueExpression()
+        val literal = SText.createBoolLiteral()
+        literal.setValue(bool)
+        primitiveValueExpression.setValue(literal)        
+        primitiveValueExpression
+    }
 
     // Because expression serialization, serializes ALL text until the preceding ";",
     // one needs to filter this maybe wrongly serialized text away. 

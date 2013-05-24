@@ -35,6 +35,9 @@ import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.yakindu.base.types.impl.PrimitiveTypeImpl
+import org.yakindu.base.types.Type
+import org.yakindu.sct.model.stext.stext.Expression
 
 class SCLCreateExtensions {
   
@@ -146,7 +149,21 @@ class SCLCreateExtensions {
             }
         }
     }
-    
+
+    def VariableDeclaration create varDef: SCL.createVariableDeclaration()
+        createVariableDeclaration(String name, String type) {
+
+        varDef.setName(name);
+        varDef.setInput(false);
+        varDef.setOutput(false);
+//        if (!type.nullOrEmpty) {
+//            val primitiveType = YakinduBase.createNamedElement()
+//            primitiveType.setName(type)
+//            varDef.setType(primitiveType as Type)
+//        }
+    }
+
+   
     // Create a new SCL assignment statement and copy the first action in the given stext effect as 
     // expression.
     def ArrayList<Assignment> createSCLAssignment(Effect effect) {
@@ -164,6 +181,16 @@ class SCLCreateExtensions {
         }
         
         assignments;    
+    }
+    
+    def Assignment createSCLAssignment(Expression expression, VariableDeclaration declRef) {
+        val assignment = SCL.createAssignment()
+        assignment.assignment = expression
+        assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
+            val varRef = (it.varRef as ElementReferenceExpression);
+            varRef.reference = declRef
+        ]
+        assignment
     }
     
     // Create a new scl conditional statement

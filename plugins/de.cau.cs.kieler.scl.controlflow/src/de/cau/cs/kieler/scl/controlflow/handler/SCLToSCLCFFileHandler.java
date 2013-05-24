@@ -24,7 +24,7 @@ public class SCLToSCLCFFileHandler extends AbstractModelFileHandler {
     private static Injector injector = new STextStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
 
-    public static final String SCCTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.scl.controlflow.commands.SCLToSCLCFTransformation";
+    public static final String SCLTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.scl.controlflow.commands.SCLToSCLCFTransformation";
 
     public SCLToSCLCFFileHandler() {
     }
@@ -58,7 +58,7 @@ public class SCLToSCLCFFileHandler extends AbstractModelFileHandler {
     }
 
     public EObject doTransformation(EObject modelObject, String commandString) {
-        if (commandString.equals(SCCTRANSFORMATIONCOMMAND)) {
+        if (commandString.equals(SCLTRANSFORMATIONCOMMAND)) {
             EObject transformed = (new SCLToSCLCFTransformation())
                     .transformSCLToSCLControlflow((Program) modelObject);
             return transformed;

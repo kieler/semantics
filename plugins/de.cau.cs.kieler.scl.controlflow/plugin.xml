@@ -21,18 +21,6 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="de.cau.cs.kieler.scl.controlflow.coretransformations"
-               label="SCL to SCL Controlflow"
-               mnemonic="T">
-            <separator
-                  name="de.cau.cs.kieler.core.ui.separator1"
-                  visible="true">
-            </separator>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scl.controlflow.coretransformations">
          <command
                commandId="de.cau.cs.kieler.scl.controlflow.commands.SCLToSCLCFTransformation"
                label="SCL to SCL Controlflow"

@@ -44,6 +44,8 @@ class SCLBasicBlockExtensions {
     @Inject
     extension SCLStatementSequenceExtensions
     
+    public val BASICBLOCKPREFIX = 'g';
+    
     // Decides whether or not a statement is the beginning of a new basic block.
     def boolean isBasicBlockFirst(Statement statement) {
         if (statement.isEmpty) return false
@@ -285,6 +287,10 @@ class SCLBasicBlockExtensions {
             c = c + 1
         }
         c = -1
+    }
+    
+    def String getBasicBlockName(BasicBlock basicBlock) {
+        BASICBLOCKPREFIX + basicBlock.getBasicBlockIndex.toString
     }
     
     def boolean headIsDepth(BasicBlock basicBlock) {
