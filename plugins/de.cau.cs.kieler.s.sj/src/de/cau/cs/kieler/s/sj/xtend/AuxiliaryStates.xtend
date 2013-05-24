@@ -93,10 +93,10 @@ class AuxiliaryStates {
         //SIMPLE TEST
         if (
                (instruction instanceof Prio)
-               ||(instruction instanceof Term)
-               ||(instruction instanceof Pause)
+               || (instruction instanceof Term)
+               || (instruction instanceof Pause)
         ) {
-            // geth the parent state      
+            // get the parent state      
             val parentState = instruction.eContainer as State;
                   
             // auxiliary state/label
@@ -104,19 +104,25 @@ class AuxiliaryStates {
             auxiliaryState.setName(parentState.name + UID)
             
             // auxiliary transition to auxiliary state
-            var auxiliaryTransition = SFactory::eINSTANCE.createTrans;
-            auxiliaryTransition.setContinuation(auxiliaryState);
+            //var auxiliaryTransition = SFactory::eINSTANCE.createTrans;
+            if (instruction instanceof Pause) {
+                (instruction as Pause).setContinuation(auxiliaryState);
+            }
+            if (instruction instanceof Prio) {
+                (instruction as Prio).setContinuation(auxiliaryState);
+            }
             
-            // now move every instruction BEFORE (including) the instruction into the NEW
+            // now move every instruction AFTER (excluding) the instruction into the NEW
             // state
             var found = false;
             for (otherInstruction : ImmutableList::copyOf(parentState.instructions)) {
-                if (! found) {
-                    auxiliaryState.instructions.add(otherInstruction);
+                if (!found) {
                     if (otherInstruction.equals(instruction)) {
-                        auxiliaryState.instructions.add(auxiliaryTransition);
+//                      auxiliaryState.instructions.add(auxiliaryTransition);
                         found = true;
                     }
+                } else {
+                    auxiliaryState.instructions.add(otherInstruction);
                 }
             }
             
@@ -124,7 +130,7 @@ class AuxiliaryStates {
             val parentParent = parentState.eContainer as Program;
             val instructionList = parentParent.states;
             val parentIndex = instructionList.indexOf(parentState);
-            instructionList.add(parentIndex, auxiliaryState);
+            instructionList.add(parentIndex+1, auxiliaryState);
         }
             
       }

@@ -54,10 +54,10 @@ import java.util.List
 class S2SJ { 
     
     // General method to create the c simulation interface.
-    def transform (Program program, String outputFolder) {
+    def transform (Program program, String className, String packageName) {
        '''
 «/* Generate the C header */»
-       «sjHeader(outputFolder, program)»
+       «sjHeader(program, className, packageName)»
 
        «/* Signal Reset, Output */»
        «sResetSignals(program)»
@@ -67,6 +67,8 @@ class S2SJ {
 
        «/* Generate the tick function */»
        «sTickFunction(program)»
+
+       }
        '''
    }     
 
@@ -75,7 +77,7 @@ class S2SJ {
    def String listContinuations(List<Continuation> continuationList) {
        '''
     «FOR continuation : continuationList SEPARATOR ","» 
-         «continuation.name»
+             «continuation.name»
     «ENDFOR»
        '''
    }
@@ -93,8 +95,10 @@ class S2SJ {
    // -------------------------------------------------------------------------   
 
    // Generate the Java header.
-   def sjHeader(String outputFolderm, Program program) {
+   def sjHeader(Program program, String className, String packageName) {
        '''
+       package ''' + packageName + ''';
+       
 /*
  *****************************************************************************
  *                 G E N E R A T E D     S J    C O D E                      *
@@ -112,20 +116,20 @@ class S2SJ {
  */
 
 import java.io.IOException;
-import de.cau.cs.kieler.sjl.SJLProgram;
+import de.cau.cs.kieler.sjl.SJLProgramWithSignals;
 
-import ''' + program.name + '''.State;
-import static ''' + program.name + '''.State.*;
+import ''' + packageName + '''.''' + className + '''.State;
+import static '''  + packageName + '''.''' + className + '''.State.*;
     
-public class ''' + program.name + ''' extends SJLProgram<State> {
-
+public class ''' + className + ''' extends SJLProgramWithSignals<State> {
+    
     enum State {
         ''' + program.eAllContents.filter(typeof(Continuation)).toList.listContinuations + '''
     }
 
 ''' + program.signals.listSignals + ''' 
 
-    public ''' + program.name + '''() {
+    public ''' + className + '''() {
         super(''' + program.states.head.name + ''', ''' + program.priority + ''', ''' + program.priority + ''');
     }
     
@@ -137,8 +141,14 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
    // Generate reset signals
    def sResetSignals(Program program) {
     '''
-    public void resetSignals() {    
-    «FOR signal : program.signals SEPARATOR ""»
+    public void resetInputSignals() {    
+    «FOR signal : program.signals.filter(e | e.isInput) SEPARATOR ""»
+        «signal.name» = false;
+    «ENDFOR»
+    }
+
+    public void resetOutputSignals() {    
+    «FOR signal : program.signals.filter(e | e.isOutput) SEPARATOR ""»
         «signal.name» = false;
     «ENDFOR»
     }
@@ -150,30 +160,12 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
 
    // Generate the main function.
    def mainFunction(Program program) {
-       '''int main(int argc, const char* argv[]) {
-        reset();
-        output = cJSON_CreateObject();
-        RESET();
-        totalResetSignals();
-        setInputs();
-        emitCount = 0;
-        tick();
-        while(1) {
-            callOutputs();
-            char* outString = cJSON_Print(output);
-            strip_white_spaces(outString);
-            printf("%s\n", outString);
-            fflush(stdout);
-            resetSignals();
-            output = cJSON_CreateObject();
-            setInputs();
-            emitCount = 0;
-            tick();
-        }
-    }
-    
-    void printOutputs() {
-        printf("%s \n", cJSON_Print(output));
+       '''    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
     }
     '''
    }
@@ -183,7 +175,7 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''   @Override
-    public final void tick() {
+    protected final void tick() {
         while (!isTickDone()) {
             switch (state()) {
                 
@@ -205,8 +197,7 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
            '''      case «state.name»:  
            «FOR instruction : state.instructions»
            «instruction.expand»
-           «ENDFOR»
-           break;'''
+           «ENDFOR»'''
    }
    
    // Expand an IF instruction traversing all instructions of that IF instruction.
@@ -237,31 +228,36 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
    // -------------------------------------------------------------------------   
       
    // Expand a PAUSE instruction.
+       //«pauseInstruction.continuation.name»
    def dispatch expand(Pause pauseInstruction) {
-       '''pauseB();'''
+       '''pauseB(«pauseInstruction.continuation.name»);
+break;'''
    }   
    
    // Expand a TERM instruction.
    def dispatch expand(Term termInstruction) {
-       '''termB();'''
+       '''termB();
+break;'''
    }   
    
    // Expand a HALT instruction.
    def dispatch expand(Halt haltInstruction) {
-       '''haltB();'''
+       '''haltB();
+break;'''
    }   
    
    // Expand a JOIN instruction.
    def dispatch expand(Join joinInstruction) {
        '''if(!join()) {
                gotoB(«joinInstruction.continuation.name»);
-               break;
+break;
           };'''
    } 
    
    // Expand an ABORT instruction.  
    def dispatch expand(Abort abortInstruction) {
-       '''abortB();'''
+       '''abortB();
+break;'''
    }   
    
    // Retrieve the last FORK instruction because in SC the last fork
@@ -283,13 +279,15 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
           «ENDIF»
           «IF forkInstruction.getLastFork == forkInstruction» 
              gotoB(«forkInstruction.thread.name»);
+break;
           «ENDIF»
        '''
    }   
 
    // Expand a TRANS instruction.    
    def dispatch expand(Trans transInstruction) {
-       '''gotoB(«transInstruction.continuation.name»);'''
+       '''gotoB(«transInstruction.continuation.name»);
+break;'''
    }   
    
    // Expand an AWAIT instruction.
@@ -299,7 +297,8 @@ public class ''' + program.name + ''' extends SJLProgram<State> {
    
    // Expand a PRIO instruction.
    def dispatch expand(Prio prioInstruction) {
-       '''prioB(«prioInstruction.priority»);'''
+       '''prioB(«prioInstruction.priority», «prioInstruction.continuation.name»);
+break;'''
    }   
    
    // Expand SIGNAL instruction. This takes care of reincarnation
