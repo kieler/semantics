@@ -89,7 +89,7 @@ class BasicBlockModifier implements IStyleModifier {
         node.KRendering.background = "red".color
 
         val headLabel = node.createLabel() => [
-            it.text = 'P' + basicBlock.getBasicBlockIndex
+            it.text = 'g' + basicBlock.getBasicBlockIndex
             it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
                 setFontSize(5).setForegroundColor(255, 0, 0);
         ]
@@ -99,8 +99,14 @@ class BasicBlockModifier implements IStyleModifier {
         
         var gLT = ''
         var labelLines = 0
+        var wide = false
         for (pred : basicBlock.getBasicBlockPredecessor) {
-            gLT = gLT + 'P' + pred.getBasicBlockIndex + "\n"
+            gLT = gLT + 'g' + pred.getBasicBlockIndex
+            if (pred.isPauseSurface) { 
+                gLT = gLT + '_pre'
+                wide = true
+            }
+            gLT = gLT +  "\n"
             labelLines = labelLines + 1
         } 
         val goLabelText = gLT
@@ -111,12 +117,19 @@ class BasicBlockModifier implements IStyleModifier {
         ]
         LSData = goLabel.getData(typeof(KShapeLayout))
         LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
-        LSData.xpos = right - left + 8
+        LSData.xpos = right - left + 7
+        if (wide) LSData.xpos = right - left + 14
 
         var tLT = ''
         labelLines = 0
+        wide = false
         for (pred : basicBlock.getBasicBlockSuccessor) {
-            tLT = tLT + 'P' + pred.getBasicBlockIndex + "\n"
+            tLT = tLT + 'g' + pred.getBasicBlockIndex
+            if (basicBlock.isPauseSurface) { 
+                tLT = tLT + '_pre'
+                wide = true
+            }
+            tLT = tLT + "\n"
             labelLines = labelLines + 1
         } 
         val termLabelText = tLT
@@ -127,7 +140,8 @@ class BasicBlockModifier implements IStyleModifier {
         ]
         LSData = termLabel.getData(typeof(KShapeLayout))
         LSData.ypos = bottom - top - 5 * labelLines 
-        LSData.xpos = right - left + 8
+        LSData.xpos = right - left + 7
+        if (wide) LSData.xpos = right - left + 14
 
 
         return node;
