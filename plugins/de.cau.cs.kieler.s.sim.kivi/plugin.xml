@@ -10,17 +10,6 @@
       </content>
    </extension>
    <extension
-         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
-      <executionFile
-            file="execution/s_sc.execution">
-         <editor
-               id="de.cau.cs.kieler.s.S"
-               name="KIELER S Editor"
-               priority="10">
-         </editor>
-      </executionFile>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.sim.instructions.provider">
       <provider
             class="de.cau.cs.kieler.s.sim.kivi.SInstructionsDataProvider">

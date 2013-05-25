@@ -19,6 +19,14 @@
                priority="7">
          </editor>
       </executionFile>
+      <executionFile
+            file="execution/s_sc.execution">
+         <editor
+               id="de.cau.cs.kieler.s.S"
+               name="KIELER S Editor"
+               priority="10">
+         </editor>
+      </executionFile>
    </extension>
 
 </plugin>
