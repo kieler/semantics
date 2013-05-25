@@ -62,9 +62,6 @@ class S2SJ {
        «/* Signal Reset, Output */»
        «sResetSignals(program)»
 
-       «/* Generate the main function */»
-       «mainFunction(program)»
-
        «/* Generate the tick function */»
        «sTickFunction(program)»
 
@@ -155,22 +152,7 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> {
     ''';
    }
 
-   
    // -------------------------------------------------------------------------
-
-   // Generate the main function.
-   def mainFunction(Program program) {
-       '''    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-
-    }
-    '''
-   }
-      
-   // -------------------------------------------------------------------------   
    
    // Generate the  tick function.
    def sTickFunction(Program program) {
