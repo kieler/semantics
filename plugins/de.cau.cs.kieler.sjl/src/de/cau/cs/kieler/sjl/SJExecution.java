@@ -13,27 +13,20 @@
  */
 package de.cau.cs.kieler.sjl;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.net.URLClassLoader;
-//import org.eclipse.core.internal.boot.PlatformClassLoader;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jdt.core.compiler.batch.BatchCompiler;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.kiem.util.AbstractExecution;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
-
-import org.eclipse.jdt.core.compiler.batch.BatchCompiler;
+//import org.eclipse.core.internal.boot.PlatformClassLoader;
 
 /**
  * This class is intended to compile and execute SJ code.
@@ -48,9 +41,13 @@ public class SJExecution extends AbstractExecution {
     private static final String COMPILER_DEFAULT = "java";
 
     /** The Constant SJL_PATH to the SJLProgram.class for compilation. */
-//    private static final String SJL_PATH = "bin/de/cau/cs/kieler/sjl";
-    private static final String SJL_PATH_SRC = "src/de/cau/cs/kieler/sjl";
     private static final String SJL_PATH_BIN = "bin/";
+    
+    /** The model name used when compile() was called. */
+    private String modelName;
+    
+    /** The program set after successful compilation. */
+    private SJLProgramWithSignals<?> program;
 
     // -------------------------------------------------------------------------
 
@@ -122,10 +119,21 @@ public class SJExecution extends AbstractExecution {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     public void compile(final List<String> filePaths, final String modelName) throws IOException,
             InterruptedException {
-
-        // building path to bundle
+        // Reset flag that compilation was NOT successful at this point
+        super.setCompiled(false);
+        
+        // Reset program
+        this.program = null;
+                
+        // Set modelName
+        this.setModelName(modelName);
+        
+        // Building path to bundle
         Bundle bundle = Platform.getBundle(SJPlugin.PLUGIN_ID);
 
         URL url = null;
@@ -148,8 +156,8 @@ public class SJExecution extends AbstractExecution {
             }
         }
         
-        System.out.println("-verbose -classpath " + bundleLocation + " -source 1.5 -target 1.5 -classpath d:/test/ d:/test/simple.java");
-        
+        //DEBUG OUTPUT
+        //System.out.println("-verbose -classpath " + bundleLocation + " -source 1.5 -target 1.5 -classpath d:/test/ d:/test/simple.java");
         
         // Compile all files
         for (String filePath : filePaths) {
@@ -187,83 +195,93 @@ public class SJExecution extends AbstractExecution {
         }
         
         // Register classes to be loaded specifically by the dynamic class loader
-        dynamicClassLoader.addClassFileByName("test.simple");
-        dynamicClassLoader.addClassFileByName("test.simple$State");
+        dynamicClassLoader.addClassFileByName("test." + modelName);
+        dynamicClassLoader.addClassFileByName("test." + modelName +"$State");
         
         // Instantiate new class as SJProgramWithSignals
         Class<?> cls;
         try {
-            cls = Class.forName("test.simple", true, dynamicClassLoader);
+            cls = Class.forName("test." + modelName, true, dynamicClassLoader);
             Object instance = cls.newInstance();
-//            Class superClass = instance.getClass().getSuperclass();
-//            Class compareClass = SJLProgramWithSignals.class;
-//            String className = superClass.getName();
             if (instance instanceof SJLProgramWithSignals) {
                 SJLProgramWithSignals<?> program = (SJLProgramWithSignals<?>) instance;
                 
-                // Example sequence
-                program.setInput("I", true);
-                program.doTick();
-                System.out.println("O:"+program.getOutput("O"));
-                program.setInput("I", true);
-                program.doTick();
-                System.out.println("O:"+program.getOutput("O"));
-                program.doTick();
-                System.out.println("O:"+program.getOutput("O"));
-                program.doTick();
-                System.out.println("O:"+program.getOutput("O"));
+                // Set this program to be used
+                this.program = program;
+
+                // Flag that compilation was successful
+                super.setCompiled(true);
+
+//                // Example sequence
+//                program.setInput("I", true);
+//                program.doTick();
+//                System.out.println("O:"+program.getOutput("O"));
+//                program.setInput("I", true);
+//                program.doTick();
+//                System.out.println("O:"+program.getOutput("O"));
+//                program.doTick();
+//                System.out.println("O:"+program.getOutput("O"));
+//                program.doTick();
+//                System.out.println("O:"+program.getOutput("O"));
             }
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new IOException(e.getMessage());
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            throw new IOException(e.getMessage());
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new IOException(e.getMessage());
         } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new IOException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new IOException(e.getMessage());
         } 
         
-//        String compile = this.getCompiler();
-//
-//        StringBuffer compileBuf = new StringBuffer();
-//        for (String filePath : filePaths) {
-//            compileBuf.append(" " + filePath);
-//        }
-//
-//        compile += compileBuf.toString();
-//
-//        compile += " -jar -classpath " + bundleLocation + "SJLProgram.class " + bundleLocation
-//                + "cJSON.c " + " -I " + bundleLocation + " " + "-o " + this.getOutputPath()
-//                + getExecutableName()
-//                // -m32 = 32 bit compatibility mode to prevent compiler errors on
-//                // 64bit machines/architectures.
-//                // + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
-//                + " -lm  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
-//
-//        super.
         return;
     }
 
     // -------------------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     public void startExecution() throws IOException {
-
+        if (super.isCompiled() && program != null) {
+            setStarted(true);
+        }
     }
 
     // -------------------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     public void stopExecution(final boolean tryToDelete) {
-        // reset successful started flag
+        // Reset successful started flag
         setStarted(false);
-
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * Gets the model name.
+     *
+     * @return the model name
+     */
+    public String getModelName() {
+        return modelName;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Sets the model name.
+     *
+     * @param modelName the new model name
+     */
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    // -------------------------------------------------------------------------
+    
 }

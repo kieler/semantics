@@ -1,11 +1,12 @@
-package de.cau.cs.kieler.sjl;
+package de.cau.cs.kieler.sjl.example;
 
 import java.io.IOException;
 
+import de.cau.cs.kieler.sjl.example.Abro;
 import de.cau.cs.kieler.sjl.SJLProgram;
 
-import de.cau.cs.kieler.sjl.Abro.State;
-import static de.cau.cs.kieler.sjl.Abro.State.*;
+import de.cau.cs.kieler.sjl.example.Abro.State;
+import static de.cau.cs.kieler.sjl.example.Abro.State.*;
 
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
@@ -22,8 +23,12 @@ import static de.cau.cs.kieler.sjl.Abro.State.*;
  */
 
 /**
- * @author cmot
+ * This implements the classical ABRO synchronous program, an example taken originally from
+ * Charles Andrè: http://www-sop.inria.fr/members/Charles.Andre/SyncCharts/RR200324.pdf
  * 
+ * @author cmot
+ * @kieler.design 2013-05-23 proposed cmot
+ * @kieler.rating 2013-05-23 proposed * 
  */
 public class Abro extends SJLProgram<State> {
 
@@ -99,6 +104,7 @@ public class Abro extends SJLProgram<State> {
     
     // ------------------------------------------------------------------------
     
+    @SuppressWarnings("deprecation")
     public static void main(final String[] args) {
         java.io.DataInputStream in = 
                 new java.io.DataInputStream(System.in);

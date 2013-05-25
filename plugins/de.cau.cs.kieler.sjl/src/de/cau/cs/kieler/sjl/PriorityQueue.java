@@ -15,58 +15,117 @@ package de.cau.cs.kieler.sjl;
 
 import java.util.Hashtable;
 
-
 /**
  * Fast and simple priority queue implementation (KISS principle).
  * 
  * @author cmot
- *
+ * @kieler.design 2013-05-23 proposed cmot
+ * @kieler.rating 2013-05-23 proposed *
  */
 public class PriorityQueue<T> {
-    
+
     public int maxPrio;
     public T firstElement;
     public int firstPrio = -1;
-    public Object[] elements;
+    public T[] elements;
     public int size;
     public Hashtable<T, Integer> elements2prio;
-    
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new priority queue. Unchecked type because Java does not support generic type
+     * arrays (there would no runtime type information available which is necessary for Arrays).
+     * 
+     * @param maxPrio
+     *            the max prio
+     */
+    @SuppressWarnings("unchecked")
     public PriorityQueue(int maxPrio) {
         this.maxPrio = maxPrio + 1;
-        elements = new Object[this.maxPrio];
+        elements = (T[]) new Object[this.maxPrio];
         elements2prio = new Hashtable<T, Integer>();
     }
-    
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the first element of the priority queue.
+     * 
+     * @return the first
+     */
     public T getFirst() {
-       return firstElement;
+        return firstElement;
     }
-    
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the size of the priority queue.
+     * 
+     * @return the int
+     */
     public int size() {
         return size;
     }
-    
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
     public PriorityQueue<T> clone() {
-        PriorityQueue clone = new PriorityQueue<T>(maxPrio);
+        PriorityQueue<T> clone = new PriorityQueue<T>(maxPrio);
         for (int prio = 0; prio < maxPrio; prio++) {
-            clone.insert(prio, elements[prio]);
+            clone.insert(elements[prio], prio);
         }
         return clone;
     }
-    
-    public void update(int prio, T element) {
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Updates the priority of an element in the priority queue. This might be a costly operation.
+     * 
+     * @param element
+     *            the element to update
+     * @param prio
+     *            the new prio to set for the element
+     */
+    public void update(T element, int prio) {
         int oldPrio = getPrio(element);
         remove(oldPrio);
-        insert(prio, element);
+        insert(element, prio);
     }
-    
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the priority of an element.
+     * 
+     * @param element
+     *            the element to search for
+     * @return the priority of the element
+     */
     public int getPrio(T element) {
         if (elements2prio.containsKey(element)) {
             return elements2prio.get(element);
         }
         return -1;
     }
-    
-    public void insert(int prio, T element) {
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Insert an element with a specific priority into the queue. If the element was the
+     * first element (head) of the priority queue, then the first element is updated.
+     * 
+     * @param element
+     *            the element
+     * @param prio
+     *            the priority
+     */
+    public void insert(T element, int prio) {
         if (element != null) {
             elements[prio] = element;
             elements2prio.put(element, prio);
@@ -77,6 +136,15 @@ public class PriorityQueue<T> {
         }
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Removes the element with the specific priority. If the element was the
+     * first element (head) of the priority queue, then the first element is updated.
+     * 
+     * @param prio
+     *            the priority of the element to be removed
+     */
     public void remove(int prio) {
         if (prio > 0) {
             elements2prio.remove(elements[prio]);
@@ -87,19 +155,38 @@ public class PriorityQueue<T> {
             size--;
         }
     }
-    
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Removes a specific element. If the priority of the element is known then remove(int prio)
+     * should be used instead.
+     * 
+     * @param element
+     *            the element to be removed
+     */
     public void remove(T element) {
         remove(getPrio(element));
-    }    
-     
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Update firstElement. This method is used internally only. It searches for the first array
+     * element that is not null - this represents the head (first) element which is then cached in
+     * firstElement where firstPrio contains its specific priority. The search starts with the
+     * maxPrio array index and then goes down to zero.
+     */
     private void updateFirst() {
-        for (int prio = maxPrio-1; prio >= 0; prio--) {
+        for (int prio = maxPrio - 1; prio >= 0; prio--) {
             if (elements[prio] != null) {
-                firstElement = (T)elements[prio];
+                firstElement = (T) elements[prio];
                 firstPrio = prio;
                 return;
             }
         }
     }
+
+    // -------------------------------------------------------------------------
 
 }
