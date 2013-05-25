@@ -16,6 +16,7 @@ package de.cau.cs.kieler.s.sim.sj;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -45,6 +46,7 @@ import de.cau.cs.kieler.s.sim.SSimPlugin;
 import de.cau.cs.kieler.s.sj.S2SJPlugin;
 import de.cau.cs.kieler.s.sim.xtend.S2Simulation;
 import de.cau.cs.kieler.sjl.SJExecution;
+import de.cau.cs.kieler.sjl.SJLProgramWithSignals;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -208,37 +210,64 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
-            String out = jSONObject.toString();
-            sjExecution.getInterfaceToExecution().write(out + "\n");
-            sjExecution.getInterfaceToExecution().flush();
-            while (sjExecution.getInterfaceError().ready()) {
-                // Error output, if any
-                System.out.print(sjExecution.getInterfaceError().read());
+            SJLProgramWithSignals<?> program = sjExecution.getSJLProgram();
+            
+            // Turn on/off debug
+            program.setDebug(debugConsole);
+            
+            // Feed inputs into the program
+            JSONArray sSignalInputArray = jSONObject.names();
+            for (int i = 0; i < sSignalInputArray.length(); i++) {
+                String sSignalInputName = sSignalInputArray.getString(i);
+                Object object = jSONObject.get(sSignalInputName);
+                if (object instanceof JSONObject) {
+                    JSONObject sSignalInput = (JSONObject) object;
+                    boolean sSignalInputIsPresent = JSONSignalValues.isPresent(sSignalInput);
+                    if (sSignalInputIsPresent) {
+                        program.setInput(sSignalInputName, true);
+                    } else {
+                        program.setInput(sSignalInputName, false);
+                    }
+                }
             }
-
-            String receivedMessage = sjExecution.getInterfaceFromExecution().readLine();
+                
+            // Make a tick
+            program.doTick();
+            
+            // Inspect the output
+            
+//            sjExecution.getInterfaceToExecution().write(out + "\n");
+//            sjExecution.getInterfaceToExecution().flush();
+//            while (sjExecution.getInterfaceError().ready()) {
+//                // Error output, if any
+//                System.out.print(sjExecution.getInterfaceError().read());
+//            }
+//            String receivedMessage = sjExecution.getInterfaceFromExecution().readLine();
 
             if (debugConsole) {
                 printConsole("==============| TICK " + computedTick++ + " |==============");
-                while (!receivedMessage.startsWith("{\"")) {
-                    printConsole(receivedMessage);
-                    receivedMessage = sjExecution.getInterfaceFromExecution().readLine();
-                }
+                printConsole(program.getLastDebugMessage());
                 printConsole("\n");
             }
+            
+            List<String> sSignalOutputNames = program.getSignalNames();
 
-            if (receivedMessage != null) {
-                JSONObject sSignalOutput = new JSONObject(receivedMessage);
-                JSONArray sSignalOutputArray = sSignalOutput.names();
+//                JSONObject sSignalOutput = new JSONObject(receivedMessage);
+//                JSONArray sSignalOutputArray = sSignalOutput.names();
 
-                if (sSignalOutputArray != null) {
                     // First add auxiliary signals
-                    for (int i = 0; i < sSignalOutputArray.length(); i++) {
-                        String sSignalOutputName = sSignalOutputArray.getString(i);
-                        if (sSignalOutput.get(sSignalOutputName) instanceof JSONObject) {
-                            boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput
-                                    .getJSONObject(sSignalOutputName));
-
+                    for (String sSignalOutputName : sSignalOutputNames) {
+                        
+                        boolean sSignalIsPresent = false;
+                        boolean sSignalIsSignal = false;
+                        if (program.getOutput(sSignalOutputName) instanceof Boolean) {
+                            sSignalIsSignal = true;
+                            if ((Boolean) program.getOutput(sSignalOutputName)) {
+                                sSignalIsPresent = true;
+                            }
+                        }
+                        
+                        if (sSignalIsSignal) {
                             // Test if the output variable is an auxiliary signal
                             // that is only there to mark the current S statement
                             // in full_simulation mode of the simulator.
@@ -266,10 +295,11 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                             }
                         }
                     }
-                }
                 activeStatements = activeStatementsBuf.toString();
 
                 if (this.benchmark) {
+                    // TODO: benchmark currently not supported
+                    
                     // if (sSignalOutput.has(SJExecution.BENCHMARK_SIGNAL_CYCLES)) {
                     // Object bench = sSignalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
                     // returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
@@ -283,33 +313,30 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                 }
 
                 // Then add normal output signals
-                for (String outputSignal : outputSignalList) {
-                    if (sSignalOutput.has(outputSignal)) {
+                for (String sSignalOutputName : outputSignalList) {
 
-                        // retrieve jsonSignal
-                        JSONObject jsonSignal = sSignalOutput.getJSONObject(outputSignal);
-                        boolean sSignalIsPresent = JSONSignalValues.isPresent(jsonSignal);
-
-                        if (JSONSignalValues.isSignalValue(jsonSignal)) {
-                            Object value = JSONSignalValues.getSignalValue(jsonSignal);
-                            // valued signals
-                            if (sSignalIsPresent) {
-                                returnObj.accumulate(outputSignal,
-                                        JSONSignalValues.newValue(value, true));
-                            }
-                        } else {
-                            // pure signals
-                            returnObj.accumulate(outputSignal,
-                                    JSONSignalValues.newValue(sSignalIsPresent));
+                    // retrieve jsonSignal
+                    boolean sSignalIsPresent = false;
+                    if (program.getOutput(sSignalOutputName) instanceof Boolean) {
+                        if ((Boolean) program.getOutput(sSignalOutputName)) {
+                            sSignalIsPresent = true;
                         }
-                    } else {
-                        returnObj.accumulate(outputSignal, JSONSignalValues.newValue(false));
                     }
+                        
+                    // TODO: Valued signals currently not supported
+//                        if (JSONSignalValues.isSignalValue(jsonSignal)) {
+//                            Object value = JSONSignalValues.getSignalValue(jsonSignal);
+//                            // valued signals
+//                            if (sSignalIsPresent) {
+//                                returnObj.accumulate(sSignalOutputName,
+//                                        JSONSignalValues.newValue(value, true));
+//                            }
+//                        } else {
+                            // pure signals
+                            returnObj.accumulate(sSignalOutputName,
+                                    JSONSignalValues.newValue(sSignalIsPresent));
+//                        }
                 }
-            } else {
-                throw new KiemExecutionException("No S simulation is running", true, null);
-
-            }
 
             // Finally accumulate all active Statements (activeStatements)
             // under the statementName
@@ -317,11 +344,16 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     + KIEM_PROPERTY_DIFF].getValue();
             returnObj.accumulate(statementName, activeStatements);
 
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            sjExecution.stopExecution(false);
         } catch (JSONException e) {
             e.printStackTrace();
+            sjExecution.stopExecution(false);
+        } catch (NoSuchFieldException e) {
+            sjExecution.stopExecution(false);
+        } catch (SecurityException e) {
+            sjExecution.stopExecution(false);
+        } catch (IllegalArgumentException e) {
+            sjExecution.stopExecution(false);
+        } catch (IllegalAccessException e) {
             sjExecution.stopExecution(false);
         }
 
@@ -488,7 +520,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             // Check whether SJ compilation should generate additional debug output
             debugConsole = debugConsoleParam;
             benchmark = benchmarkParam;
-            
+
             String packageName = "test";
 
             // Generate SJ code

@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sjl;
 
 import java.lang.reflect.Field;
+import java.util.LinkedList;
 
 /**
  * The SJLProgramWithSignals class is meant to be implemented for a better simulation interface that
@@ -30,10 +31,13 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
 
     /**
      * Instantiates a new SJLProgramWithSignals.
-     *
-     * @param startState the start state
-     * @param startPrio the start prio
-     * @param maxPrio the max prio
+     * 
+     * @param startState
+     *            the start state
+     * @param startPrio
+     *            the start prio
+     * @param maxPrio
+     *            the max prio
      */
     public SJLProgramWithSignals(State startState, int startPrio, int maxPrio) {
         super(startState, startPrio, maxPrio);
@@ -50,7 +54,7 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
         // Delegate to doTick() of SJLProgram
         return super.doTick();
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -58,10 +62,12 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
      */
     @Override
     abstract protected void tick();
-    
+
     // -------------------------------------------------------------------------
 
-    // This method resets both the input and the output signals.
+    /**
+     * This method resets both the input and the output signals.
+     */
     final public void resetSignals() {
         resetInputSignals();
         resetOutputSignals();
@@ -69,37 +75,109 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
 
     // -------------------------------------------------------------------------
 
-    // This method should be implemented (overwritten) and should reset all
-    // output signals only. It is called before the computation of the reaction
-    // starts in the doTick() method.
+    /**
+     * This method should be implemented (overwritten) and should reset all output signals only. It
+     * is called before the computation of the reaction starts in the doTick() method.
+     */
     abstract public void resetOutputSignals();
 
     // -------------------------------------------------------------------------
 
-    // This method should be implemented (overwritten) and should reset all
-    // output signals only.
+    /**
+     * This method should be implemented (overwritten) and should reset all output signals only.
+     */
     abstract public void resetInputSignals();
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Sets the input of type int.
+     * 
+     * @param key
+     *            the key
+     * @param value
+     *            the value
+     * @throws NoSuchFieldException
+     *             the no such field exception
+     * @throws SecurityException
+     *             the security exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     */
     public void setInput(String key, int value) throws NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
         Field field = getClass().getDeclaredField(key);
         field.setInt(this, value);
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the input of type boolean.
+     * 
+     * @param key
+     *            the key
+     * @param value
+     *            the value
+     * @throws NoSuchFieldException
+     *             the no such field exception
+     * @throws SecurityException
+     *             the security exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     */
     public void setInput(String key, boolean value) throws NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
         Field field = getClass().getDeclaredField(key);
         field.setBoolean(this, value);
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the input of type long.
+     * 
+     * @param key
+     *            the key
+     * @param value
+     *            the value
+     * @throws NoSuchFieldException
+     *             the no such field exception
+     * @throws SecurityException
+     *             the security exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     */
     public void setInput(String key, long value) throws NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
         Field field = getClass().getDeclaredField(key);
         field.setLong(this, value);
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the input of type double.
+     * 
+     * @param key
+     *            the key
+     * @param value
+     *            the value
+     * @throws NoSuchFieldException
+     *             the no such field exception
+     * @throws SecurityException
+     *             the security exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     */
     public void setInput(String key, double value) throws NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
         Field field = getClass().getDeclaredField(key);
@@ -108,10 +186,56 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Gets the output.
+     * 
+     * @param key
+     *            the key
+     * @return the output
+     * @throws NoSuchFieldException
+     *             the no such field exception
+     * @throws SecurityException
+     *             the security exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     */
     public Object getOutput(String key) throws NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
         Field field = getClass().getDeclaredField(key);
         return field.get(this);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets all signal names declared.
+     * 
+     * @return the signal names
+     */
+    public LinkedList<String> getSignalNames() {
+        Field[] fields = getClass().getFields();
+        Field[] originalFields = SJLProgram.class.getFields();
+
+        LinkedList<String> returnList = new LinkedList<String>();
+        // Signal fields are assumed to be the differece
+        for (Field field : fields) {
+            String fieldName = field.getName();
+            boolean foundOriginalField = false;
+            for (Field originalField : originalFields) {
+                if (originalField.getName().equals(fieldName)) {
+                    foundOriginalField = true;
+                    break;
+                }
+            }
+            // If the field is not found in the original field list
+            // then this is assumed to be a signal
+            if (!foundOriginalField) {
+                returnList.add(fieldName);
+            }
+        }
+        return returnList;
     }
 
     // -------------------------------------------------------------------------
