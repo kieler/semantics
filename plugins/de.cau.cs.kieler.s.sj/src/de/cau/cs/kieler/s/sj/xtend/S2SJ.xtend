@@ -467,7 +467,7 @@ break;'''
 
    // Expand a boolean expression value (true or false).
    def dispatch expand(BooleanValue expression) {
-        '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
+        '''«IF expression.value == true »true«ENDIF»«IF expression.value == false»false«ENDIF»'''
    }
 
    
