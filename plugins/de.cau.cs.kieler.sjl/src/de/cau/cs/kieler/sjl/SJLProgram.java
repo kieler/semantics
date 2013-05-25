@@ -25,16 +25,19 @@ import java.util.ArrayList;
  */
 abstract public class SJLProgram<State extends Enum<?>> {
 
-    // A flag indicating debug output should be printed
-    static final boolean DEBUG = true;
+    /** A flag indicating debug output should be collected. */
+    private boolean debug = false;
+    
+    /** The debug message of the latest executed tick. */
+    private String debugMessage = "";
 
-    // Active means NOT-paused for a tick
+    /**  Active means NOT-paused for a tick. */
     private PriorityQueue<Thread> activeThreads;
 
-    // Alive means NOT-aborted and NOT-terminated
+    /** Alive means NOT-aborted and NOT-terminated. */
     private PriorityQueue<Thread> aliveThreads;
 
-    // The current thread that is executed
+    /** The current thread that is executed. */
     private Thread currentThread;
 
     // -------------------------------------------------------------------------
@@ -85,7 +88,7 @@ abstract public class SJLProgram<State extends Enum<?>> {
     public boolean isTickDone() {
         // Return whether there are no more active threads
         if (activeThreads.size == 0) {
-            if (DEBUG) {
+            if (debug) {
                 System.out.println("\n");
                 for (Object object : aliveThreads.elements) {
                     if (object != null && object instanceof SJLProgram.Thread) {
@@ -301,17 +304,39 @@ abstract public class SJLProgram<State extends Enum<?>> {
      *            the forked or resumed state
      */
     private void debug(String action, Thread thread, State forkedOrResumedState) {
-        if (DEBUG) {
+        if (debug) {
             if (forkedOrResumedState == null) {
-                System.out.println(action + " " + thread.state + " ("
+                debugMessage += (action + " " + thread.state + " ("
                         + aliveThreads.getPrio(thread) + ")");
             } else {
-                System.out.println(action + " " + thread.state + " ("
+                debugMessage += (action + " " + thread.state + " ("
                         + aliveThreads.getPrio(thread) + ")" + " ->" + forkedOrResumedState);
             }
         }
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Turn debug messages on or off.
+     *
+     * @param turnDebugOnOff the new debug
+     */
+    public void setDebug(boolean turnDebugOnOff) {
+        debug = turnDebugOnOff;
+    }
 
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the debug message of the latest executed tick. Note that this will return
+     * an empty String if debug (setDebug()) is not turned on.
+     *
+     * @return the last debug message
+     */
+    public String getLastDebugMessage() {
+        return debugMessage;
+    }
+
+    // -------------------------------------------------------------------------
 }

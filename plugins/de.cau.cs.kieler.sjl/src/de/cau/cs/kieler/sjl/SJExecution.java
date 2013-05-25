@@ -48,7 +48,7 @@ public class SJExecution extends AbstractExecution {
     
     /** The program set after successful compilation. */
     private SJLProgramWithSignals<?> program;
-
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -131,7 +131,7 @@ public class SJExecution extends AbstractExecution {
         this.program = null;
                 
         // Set modelName
-        this.setModelName(modelName);
+        this.modelName = modelName;
         
         // Building path to bundle
         Bundle bundle = Platform.getBundle(SJPlugin.PLUGIN_ID);
@@ -274,12 +274,14 @@ public class SJExecution extends AbstractExecution {
     // -------------------------------------------------------------------------
     
     /**
-     * Sets the model name.
+     * Gets the SJLProgram that has been compiled and loaded when
+     * compile() hass been called. It is null if compilation failed or
+     * compile() has not been called before.
      *
-     * @param modelName the new model name
+     * @return the model name
      */
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
+    public SJLProgramWithSignals<?> getSJLProgram() {
+        return program;
     }
 
     // -------------------------------------------------------------------------
