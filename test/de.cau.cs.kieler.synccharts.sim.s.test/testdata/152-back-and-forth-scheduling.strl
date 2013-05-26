@@ -1,3 +1,4 @@
+//From: http://www.cs.columbia.edu/~sedwards/papers/edwards2003compiling.pdf
 module Example:
 
 input S, I;
