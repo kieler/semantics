@@ -495,18 +495,22 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
         // Create fork node            
         val kForkNode = instr.createTriangleNode(37, 75).putToLookUpWith(instr);
+//        kForkNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_RATIO);
         kForkNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextFork = "FORK";
         kForkNode.KRendering.add(factory.createKText.of(nodeTextFork)
             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 15, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).putToLookUpWith(instr));
+        kForkNode.addPort(unassignedObject, 'incoming', kForkNode.width / 2, 0, 2, PortSide::NORTH)
         rootNode.children.add(kForkNode)
-
+        
         // Create join node
         val kJoinNode = JoinObj.createTriangleReversedNode(37, 75);
+//        kJoinNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER);
         kJoinNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextJoin = "JOIN";
         kJoinNode.KRendering.add(factory.createKText.of(nodeTextJoin)
             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 15, 0).putToLookUpWith(instr));
+        kJoinNode.addPort(unassignedObject, 'outgoing', kJoinNode.width / 2, kJoinNode.height, 2, PortSide::SOUTH)
         rootNode.children.add(kJoinNode)
 
         /* 
