@@ -45,7 +45,7 @@ class SCLBasicBlockExtensions {
     @Inject
     extension SCLStatementSequenceExtensions
     
-    public val BASICBLOCKPREFIX = 'g';
+    public static val BASICBLOCKPREFIX = 'g';
     
     // Decides whether or not a statement is the beginning of a new basic block.
     def boolean isBasicBlockFirst(Statement statement) {
@@ -95,20 +95,22 @@ class SCLBasicBlockExtensions {
     }
     
     def List<Statement> getBasicBlockStatements(Statement statement, boolean isDepth) {
-        val sseq = statement.getParentStatementSequence
+        val instructionStatement = statement.instructionStatement
         val bBox = new ArrayList<Statement>
+        if (instructionStatement == null) return bBox
+        val sseq = instructionStatement.getParentStatementSequence
         
-        if (statement.isGoto) { 
-            if (statement.instruction.asGoto.getTargetStatement?.getInstructionStatement?.instruction == null) return bBox
-            var statementHier = statement.previousStatement
-            if (statementHier == null) statementHier = statement.instruction.asGoto.getTargetStatement
+        if (instructionStatement.isGoto) { 
+            if (instructionStatement.instruction.asGoto.getTargetStatement?.getInstructionStatement?.instruction == null) return bBox
+            var statementHier = instructionStatement.previousStatement
+            if (statementHier == null) statementHier = instructionStatement.instruction.asGoto.getTargetStatement
             return getBasicBlockStatements(statementHier, isDepth)
         }
         
         // Transform statement to EObject Statement in case it is a statement that holds
         // a surface or depth.
-        var transformedStatement = statement
-        if (statement.hasInstruction) transformedStatement = statement.instruction.eContainer as Statement
+        var Statement transformedStatement = instructionStatement
+        if (instructionStatement.hasInstruction) transformedStatement = (instructionStatement as Statement).getInstruction.eContainer as Statement
         
         val oIndex = sseq.statements.indexOf(transformedStatement)
         if (oIndex < 0) return bBox
