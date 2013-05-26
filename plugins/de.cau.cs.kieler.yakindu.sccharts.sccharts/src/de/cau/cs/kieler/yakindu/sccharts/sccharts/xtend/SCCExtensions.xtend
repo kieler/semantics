@@ -39,23 +39,23 @@ class SCCExtensions {
     // ======================================================================================================
 
     // Common exists methods for transition, trigger and effect model instances.
-    def dispatch boolean exists(SyncTransition transition) {
+    def boolean exists(SyncTransition transition) {
         transition != null
     }   
 
-    def dispatch boolean exists(ReactionTrigger trigger) {
+    def boolean exists(ReactionTrigger trigger) {
         trigger != null
     }   
 
-    def dispatch boolean exists(Trigger trigger) {
+    def boolean exists(Trigger trigger) {
         trigger != null
     }   
         
-    def dispatch boolean exists(ReactionEffect effect) {
+    def boolean exists(ReactionEffect effect) {
         effect != null
     }   
  
-    def dispatch boolean exists(Effect effect) {
+    def boolean exists(Effect effect) {
         effect != null
     }
        
