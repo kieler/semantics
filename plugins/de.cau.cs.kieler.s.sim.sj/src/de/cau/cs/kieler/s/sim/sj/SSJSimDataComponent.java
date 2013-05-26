@@ -66,8 +66,8 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 public class SSJSimDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
 
-    /** The constant name of the SC console. */
-    private static final String SCCONSOLENAME = "SC Console";
+    /** The constant name of the SJ console. */
+    private static final String SJCONSOLENAME = "SJ Console";
 
     /** The S program is the considered model to simulate. */
     private Program myModel = null;
@@ -217,16 +217,19 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             
             // Feed inputs into the program
             JSONArray sSignalInputArray = jSONObject.names();
-            for (int i = 0; i < sSignalInputArray.length(); i++) {
-                String sSignalInputName = sSignalInputArray.getString(i);
-                Object object = jSONObject.get(sSignalInputName);
-                if (object instanceof JSONObject) {
-                    JSONObject sSignalInput = (JSONObject) object;
-                    boolean sSignalInputIsPresent = JSONSignalValues.isPresent(sSignalInput);
-                    if (sSignalInputIsPresent) {
-                        program.setInput(sSignalInputName, true);
-                    } else {
-                        program.setInput(sSignalInputName, false);
+            // Test if there are any input signals to set
+            if (sSignalInputArray != null) {
+                for (int i = 0; i < sSignalInputArray.length(); i++) {
+                    String sSignalInputName = sSignalInputArray.getString(i);
+                    Object object = jSONObject.get(sSignalInputName);
+                    if (object instanceof JSONObject) {
+                        JSONObject sSignalInput = (JSONObject) object;
+                        boolean sSignalInputIsPresent = JSONSignalValues.isPresent(sSignalInput);
+                        if (sSignalInputIsPresent) {
+                            program.setInput(sSignalInputName, true);
+                        } else {
+                            program.setInput(sSignalInputName, false);
+                        }
                     }
                 }
             }
@@ -260,11 +263,18 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                         
                         boolean sSignalIsPresent = false;
                         boolean sSignalIsSignal = false;
+                        int sSignalIsSignalPrio = -1;
                         if (program.getOutput(sSignalOutputName) instanceof Boolean) {
                             sSignalIsSignal = true;
                             if ((Boolean) program.getOutput(sSignalOutputName)) {
                                 sSignalIsPresent = true;
                             }
+                            
+                            // Find out about priority
+                            if (program.getOutput(sSignalOutputName + "_prio") instanceof Integer) {
+                                sSignalIsSignalPrio =  (Integer) program.getOutput(sSignalOutputName + "_prio");
+                            }
+
                         }
                         
                         if (sSignalIsSignal) {
@@ -286,6 +296,9 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
 
                                     activeStatementsBuf
                                             .append(statementWithoutAuxiliaryVariableTag);
+                                    if (sSignalIsSignalPrio != -1) {
+                                        activeStatementsBuf.append("(" + sSignalIsSignalPrio + ")");
+                                    }
 
                                 } catch (Exception e) {
                                     // ignore error
@@ -507,15 +520,16 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             scOutput = URI.createURI(input.toString());
             scOutput = scOutput.trimFragment();
             scOutput = scOutput.trimFileExtension();
-            String className = scOutput.lastSegment();
+            
+            // The file name could contain illegal characters not allowed for naming a Java class
+            // therefore take the S-model name instead
+            String className =  model.getName(); //scOutput.lastSegment();
+            
             scOutput = scOutput.appendFileExtension("java");
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 
-            // Check whether alternative SC syntax is requested
-            boolean alternativeSyntax = this.getProperties()[KIEM_PROPERTY_ALTERNATIVESYNTAX
-                    + KIEM_PROPERTY_DIFF].getValueAsBoolean();
 
             // Check whether SJ compilation should generate additional debug output
             debugConsole = debugConsoleParam;
@@ -524,10 +538,11 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             String packageName = "test";
 
             // Generate SJ code
+            scOutput = scOutput.trimSegments(1).appendSegment(className).appendFileExtension("java");
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SJPlugin.generateSJCode(transformedProgram, scOutputString, className, packageName);
+            S2SJPlugin.generateSJCode(transformedProgram, scOutputString, className, packageName, debug);
 
             // Compile
             sjExecution = new SJExecution(outputFolder, benchmark);
@@ -635,7 +650,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
         IConsoleManager conMan = plugin.getConsoleManager();
         IConsole[] existing = conMan.getConsoles();
         for (int i = 0; i < existing.length; i++) {
-            if (SSJSimDataComponent.SCCONSOLENAME.equals(existing[i].getName())) {
+            if (SSJSimDataComponent.SJCONSOLENAME.equals(existing[i].getName())) {
                 scConsole = (MessageConsole) existing[i];
                 found = true;
                 break;
@@ -643,7 +658,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
         }
         if (!found) {
             // if no console found, so create a new one
-            scConsole = new MessageConsole(SSJSimDataComponent.SCCONSOLENAME, null);
+            scConsole = new MessageConsole(SSJSimDataComponent.SJCONSOLENAME, null);
             conMan.addConsoles(new IConsole[] { scConsole });
         }
 

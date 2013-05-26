@@ -239,6 +239,10 @@ abstract public class SJLProgram<State extends Enum<?>> {
         abort();
         gotoB(stateLabel);
     }
+    
+    protected int currentPrio() {
+        return activeThreads.getPrio(currentThread);
+    }
 
     // -------------------------------------------------------------------------
     // -- INTERNAL METHODS / CLASSES
@@ -307,10 +311,10 @@ abstract public class SJLProgram<State extends Enum<?>> {
         if (debug) {
             if (forkedOrResumedState == null) {
                 debugMessage += (action + " " + thread.state + " ("
-                        + aliveThreads.getPrio(thread) + ")");
+                        + aliveThreads.getPrio(thread) + ")\n");
             } else {
                 debugMessage += (action + " " + thread.state + " ("
-                        + aliveThreads.getPrio(thread) + ")" + " ->" + forkedOrResumedState);
+                        + aliveThreads.getPrio(thread) + ")" + " ->" + forkedOrResumedState) + "\n";
             }
         }
     }

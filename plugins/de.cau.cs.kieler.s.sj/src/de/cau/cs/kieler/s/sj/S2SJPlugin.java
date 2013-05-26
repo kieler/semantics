@@ -97,7 +97,7 @@ public class S2SJPlugin extends AbstractUIPlugin {
      *             Signals that an I/O exception has occurred.
      */
     public static void generateSJCode(final Program program, final String outputFile,
-            final String className, final String packageName) throws IOException {
+            final String className, final String packageName, final boolean debug) throws IOException {
 
         // Pre-transformation, add auxiliary states
         AuxiliaryStates auxiliaryStates = new AuxiliaryStates();
@@ -107,6 +107,7 @@ public class S2SJPlugin extends AbstractUIPlugin {
         String ccode;
         S2SJ s2SJ = new S2SJ();
         outputFile2.replace(".c", ".java");
+        S2SJ.debug = debug;
         ccode = s2SJ.transform(transformedProgram, className, packageName).toString();
 
         // Write out c program

@@ -93,7 +93,7 @@ public class SJGenerator implements IHandler {
             IPath sjOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile sjOutputFile = KiemUtil.convertIPathToIFile(sjOutputPath);
             String outputFile = KiemUtil.getAbsoluteFilePath(sjOutputFile);
-            S2SJPlugin.generateSJCode(program, outputFile, modelName, packageName);                    
+            S2SJPlugin.generateSJCode(program, outputFile, modelName, packageName, false);                    
 
         } catch (IOException e) {
             throw new ExecutionException("Cannot read input file.");

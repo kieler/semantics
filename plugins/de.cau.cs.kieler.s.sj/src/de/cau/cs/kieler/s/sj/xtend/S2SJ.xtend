@@ -53,6 +53,8 @@ import java.util.List
  */
 class S2SJ { 
     
+    public static boolean debug = false;
+    
     // General method to create the c simulation interface.
     def transform (Program program, String className, String packageName) {
        '''
@@ -86,6 +88,14 @@ class S2SJ {
     «FOR signal : signalList SEPARATOR ""»
         public boolean «signal.name» = false;
     «ENDFOR»
+    «FOR signal : signalList SEPARATOR ""»
+        public Object «signal.name»_value = null;
+    «ENDFOR»
+    «IF debug»
+        «FOR signal : signalList SEPARATOR ""»
+            public int «signal.name»_prio = -1;
+        «ENDFOR»
+    «ENDIF»
        '''
    }
    
@@ -238,8 +248,7 @@ break;
    
    // Expand an ABORT instruction.  
    def dispatch expand(Abort abortInstruction) {
-       '''abortB();
-break;'''
+       '''abort();'''
    }   
    
    // Retrieve the last FORK instruction because in SC the last fork
@@ -287,19 +296,24 @@ break;'''
    // by resetting local signals when the state is re-entered.
    // Also reset the value of valued signals (test 139).
    def dispatch expand(LocalSignal signalInstruction) {
-       '''presentSigInt[«signalInstruction.signal.name»] = 0;
-          valSigInt[«signalInstruction.signal.name»] = «signalInstruction.signal.combineOperator.initialValue»;'''   
+       '''«signalInstruction.signal.name» = false;
+          «signalInstruction.signal.name»_value = «signalInstruction.signal.combineOperator.initialValue»;'''
+       //valSigInt[«signalInstruction.signal.name»] = «signalInstruction.signal.combineOperator.initialValue»;'''   
    }
    
    // Expand an EMIT instruction.
    def dispatch expand(Emit emitInstruction) {
        if (emitInstruction.value != null) {
-           '''EMIT_VAL_SCC(«emitInstruction.signal.name», «emitInstruction.value.expand»,
-               «emitInstruction.signal.combineOperator.macro», 
-               «emitInstruction.signal.combineOperator.initialValue»);'''
+       '''«emitInstruction.signal.name» = true;
+          «emitInstruction.signal.name»_value = «emitInstruction.signal.combineOperator.macro»(«emitInstruction.signal.name»_value,  «emitInstruction.value.expand»);
+          «IF debug»«emitInstruction.signal.name»_prio = currentPrio();«ENDIF»'''
+//           '''EMIT_VAL_SCC(«emitInstruction.signal.name», «emitInstruction.value.expand»,
+//               «emitInstruction.signal.combineOperator.macro», 
+//               «emitInstruction.signal.combineOperator.initialValue»);'''
        }
        else {
-           '''«emitInstruction.signal.name» = true;'''
+           '''«emitInstruction.signal.name» = true;          
+              «IF debug»«emitInstruction.signal.name»_prio = currentPrio();«ENDIF»'''
        }
    }   
    
@@ -312,25 +326,25 @@ break;'''
    // Combine operator
    def macro(CombineOperator combineOperator) {
        if (combineOperator.equals(CombineOperator::ADD)) {
-          return '''COMBINE_ADD'''
+          return '''combineAdd'''
        }
        else if (combineOperator.equals(CombineOperator::MULT)) {
-          return '''COMBINE_MULT'''
+          return '''combineMult'''
        }
        else if (combineOperator.equals(CombineOperator::MAX)) {
-          return '''COMBINE_MAX'''
+          return '''combineMax'''
        }
        else if (combineOperator.equals(CombineOperator::MIN)) {
-          return '''COMBINE_MIN'''
+          return '''combineMin'''
        }
        else if (combineOperator.equals(CombineOperator::OR)) {
-          return '''COMBINE_OR'''
+          return '''combineOr'''
        }
        else if (combineOperator.equals(CombineOperator::AND)) {
-          return '''COMBINE_AND'''
+          return '''combineAnd'''
        }
        // default case combine with +
-       return '''COMBINE_ADD''';
+       return '''combineAdd''';
    }
 
    def initialValue(CombineOperator combineOperator) {
@@ -347,10 +361,10 @@ break;'''
           return '''999999'''
        }
        else if (combineOperator.equals(CombineOperator::OR)) {
-          return '''0'''
+          return '''false'''
        }
        else if (combineOperator.equals(CombineOperator::AND)) {
-          return '''1'''
+          return '''true'''
        }
        // default case combine with +
        return '''0''';
