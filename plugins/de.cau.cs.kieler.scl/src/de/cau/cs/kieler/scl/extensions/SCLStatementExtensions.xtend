@@ -46,6 +46,14 @@ class SCLStatementExtensions {
         statement instanceof InstructionStatement
     }
     
+    def String getLabel(Statement statement) {
+        if (statement.isEmpty) (statement as EmptyStatement).label else null
+    }
+    
+    def setLabel(Statement statement, String label) {
+        if (statement.isEmpty) (statement as EmptyStatement).label = label
+    }
+    
     def boolean isGoto(Statement statement) {
         (statement.hasInstruction && statement.getInstruction instanceof Goto)
     }

@@ -68,27 +68,27 @@ class SCLNamingExtensions {
                 var regionId = state.parentRegion.getName().removeSpecialCharacters();
                 var stateId = state.getName().removeSpecialCharacters();
                 if (stateId.nullOrEmpty) {
-                    stateId = state.hashCode + "";
+                    stateId = state.hashCode + ""
                 }
                 if (regionId.nullOrEmpty) {
-                    regionId = state.parentRegion.hashCode + "";
+                    regionId = state.parentRegion.hashCode + ""
                 }
                 if (!higherHierarchyReturnedName.nullOrEmpty) {
-                    higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
+                    higherHierarchyReturnedName = higherHierarchyReturnedName + "_"
                 }
                 if ((state.parentRegion.eContainer as SyncState).regions.size > 1) {
                     return higherHierarchyReturnedName 
-                           + regionId  + "_" +  stateId;
+                           + regionId  + "_" +  stateId
                 }
                 else {
                     // this is the simplified case, where there is just one region and we can
                     // omit the region id
                     return higherHierarchyReturnedName  
-                           + stateId;
+                           + stateId
                 }
             }
         }
-        return StartSymbol + "_";
+        return StartSymbol + "_"
     }  
     
 }

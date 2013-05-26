@@ -216,22 +216,13 @@ public interface SclPackage extends EPackage
   int STATEMENT__ANNOTATION = 0;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATEMENT__LABEL = 1;
-
-  /**
    * The number of structural features of the '<em>Statement</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATEMENT_FEATURE_COUNT = 2;
+  int STATEMENT_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.EmptyStatementImpl <em>Empty Statement</em>}' class.
@@ -259,7 +250,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EMPTY_STATEMENT__LABEL = STATEMENT__LABEL;
+  int EMPTY_STATEMENT__LABEL = STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Empty Statement</em>' class.
@@ -268,7 +259,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EMPTY_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 0;
+  int EMPTY_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.InstructionStatementImpl <em>Instruction Statement</em>}' class.
@@ -288,15 +279,6 @@ public interface SclPackage extends EPackage
    * @ordered
    */
   int INSTRUCTION_STATEMENT__ANNOTATION = STATEMENT__ANNOTATION;
-
-  /**
-   * The feature id for the '<em><b>Label</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_STATEMENT__LABEL = STATEMENT__LABEL;
 
   /**
    * The feature id for the '<em><b>Instruction</b></em>' containment reference.
@@ -649,17 +631,6 @@ public interface SclPackage extends EPackage
   EAttribute getStatement_Annotation();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.Statement#getLabel <em>Label</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Label</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Statement#getLabel()
-   * @see #getStatement()
-   * @generated
-   */
-  EAttribute getStatement_Label();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.EmptyStatement <em>Empty Statement</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -668,6 +639,17 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EClass getEmptyStatement();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.EmptyStatement#getLabel <em>Label</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Label</em>'.
+   * @see de.cau.cs.kieler.scl.scl.EmptyStatement#getLabel()
+   * @see #getEmptyStatement()
+   * @generated
+   */
+  EAttribute getEmptyStatement_Label();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.InstructionStatement <em>Instruction Statement</em>}'.
@@ -956,14 +938,6 @@ public interface SclPackage extends EPackage
     EAttribute STATEMENT__ANNOTATION = eINSTANCE.getStatement_Annotation();
 
     /**
-     * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute STATEMENT__LABEL = eINSTANCE.getStatement_Label();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.EmptyStatementImpl <em>Empty Statement</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -972,6 +946,14 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EClass EMPTY_STATEMENT = eINSTANCE.getEmptyStatement();
+
+    /**
+     * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EMPTY_STATEMENT__LABEL = eINSTANCE.getEmptyStatement_Label();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.InstructionStatementImpl <em>Instruction Statement</em>}' class.

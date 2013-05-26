@@ -195,8 +195,13 @@ class CoreToSCLTransformation {
         } 
 
         // If no statement is in the list, add an empty statement to enable the addition of a label.       
-        if (newStatements.size==0) newStatements.add(createSCLEmptyStatement)
-        newStatements.head.label = stateID;
+//        if (newStatements.size==0) newStatements.add(createSCLEmptyStatement)
+//        newStatements.head.label = stateID;
+        if (stateID != "_") {  
+            val emptyStatement = createSCLEmptyStatement
+            emptyStatement.label = stateID
+            newStatements.add(0, emptyStatement)
+        }
         
         newStatements        
     }
