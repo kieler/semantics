@@ -50,6 +50,10 @@ class BasicBlockModifier implements IStyleModifier {
     extension SCLStatementExtensions SCLStatementExtensions = 
          Guice::createInjector().getInstance(typeof(SCLStatementExtensions))  
          
+    private static val BASICBLOCK_COLOR_RED = 180         
+    private static val BASICBLOCK_COLOR_GREEN = 64         
+    private static val BASICBLOCK_COLOR_BLUE = 180         
+         
     private float BBPADDING = 5.0f  
 
     def KNode create node: KimlUtil::createInitializedNode getNode(Object o) {
@@ -70,7 +74,7 @@ class BasicBlockModifier implements IStyleModifier {
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0);
-            it.foreground = "red".color
+            it.setForegroundColor(BASICBLOCK_COLOR_RED, BASICBLOCK_COLOR_GREEN, BASICBLOCK_COLOR_BLUE)
          ];        
     }
 
@@ -91,7 +95,7 @@ class BasicBlockModifier implements IStyleModifier {
         val headLabel = node.createLabel() => [
             it.text = 'g' + basicBlock.getBasicBlockIndex
             it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
-                setFontSize(5).setForegroundColor(255, 0, 0);
+                setFontSize(5).setForegroundColor(BASICBLOCK_COLOR_RED, BASICBLOCK_COLOR_GREEN, BASICBLOCK_COLOR_BLUE);
         ]
         var LSData = headLabel.getData(typeof(KShapeLayout))
         LSData.ypos = LSData.ypos - 4
@@ -113,7 +117,7 @@ class BasicBlockModifier implements IStyleModifier {
         val goLabel = node.createLabel() => [
             it.text = goLabelText
             it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
-                setFontSize(5).setForegroundColor(255, 0, 0);
+                setFontSize(5).setForegroundColor(BASICBLOCK_COLOR_RED, BASICBLOCK_COLOR_GREEN, BASICBLOCK_COLOR_BLUE);
         ]
         LSData = goLabel.getData(typeof(KShapeLayout))
         LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
@@ -136,7 +140,7 @@ class BasicBlockModifier implements IStyleModifier {
         val termLabel = node.createLabel() => [
             it.text = termLabelText
             it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
-                setFontSize(5).setForegroundColor(128, 0, 0);
+                setFontSize(5).setForegroundColor(BASICBLOCK_COLOR_RED / 2, BASICBLOCK_COLOR_GREEN / 2, BASICBLOCK_COLOR_BLUE / 2);
         ]
         LSData = termLabel.getData(typeof(KShapeLayout))
         LSData.ypos = bottom - top - 5 * labelLines 

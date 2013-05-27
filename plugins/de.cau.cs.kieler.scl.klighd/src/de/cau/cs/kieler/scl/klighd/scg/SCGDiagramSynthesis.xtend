@@ -66,6 +66,9 @@ import org.eclipse.xtext.serializer.ISerializer
 import org.yakindu.sct.model.stext.stext.Expression
 
 import static de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis.*
+import de.cau.cs.kieler.scl.extensions.SCLDependencyExtensions
+import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
+import de.cau.cs.kieler.core.krendering.KColor
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -108,6 +111,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     extension SCLStatementExtensions
     @Inject
     extension SCLBasicBlockExtensions
+    @Inject
+    extension SCLDependencyExtensions
+    @Inject
+    extension SCLFactoryExtensions
 	
 	
     // Constants for the klighd content filter
@@ -115,6 +122,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     private static val SCGRAPH_WO_HIERARCHY = "Draw SC Graph without hierarchy";
     private static val SCGRAPH_AND_DEPENDENCIES = "Draw SC Graph && dependencies";
     private static val SCGRAPH_AND_BASICBLOCKS = "Draw SC Graph && basic blocks"
+    private static val SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS = "Draw SC Graph, dependencies && basic blocks";
     
     private static val String SCG_FILTER_NAME = "SC Graph Filter";
 
@@ -124,13 +132,15 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     private static val TransformationOption SCGRAPH_FILTER = TransformationOption::createChoiceOption(SCG_FILTER_NAME,
        ImmutableList::of(SCGRAPH, 
            SCGRAPH_WO_HIERARCHY, 
-//           SCGRAPH_AND_DEPENDENCIES, 
-           SCGRAPH_AND_BASICBLOCKS
-       ), SCGRAPH_AND_BASICBLOCKS);
-       
+           SCGRAPH_AND_DEPENDENCIES, 
+           SCGRAPH_AND_BASICBLOCKS,
+           SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS
+       ), SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS);
        
     private static val PARALLEL_HIERARCHY_EDGES = false
     private static val NODEPLACEMENT_LINEARSEGMENTS = false
+
+    private static val DEPENDENCY_COLOR = "red"
 
     /*
      * These maps link the scl program instructions to krendering nodes and ports.
@@ -188,7 +198,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
         // Evaluate the program beginning at the program root
         ProgramRootNode = rootNode
-        program.statements.createProgramFigure(rootNode);        		
+        program.createProgramFigure(rootNode);        		
         
         rootNode
 	}
@@ -200,7 +210,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * for the root instruction list of a scl program. 
      * Subsequently, all reserved goto statements are evaluated and finally all edges are drawn.    
      */
-    def createProgramFigure(EList<Statement> iList, KNode rootNode) {
+    def createProgramFigure(Program program, KNode rootNode) {
         
         // Create objects for the entry and exit nodes
         val EntryObj = new Object
@@ -237,8 +247,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         ]).addToPortMapping(kExitNode, 'incoming')
                     
         // Evaluate the root instruction list
-        createInstructionListFigure(iList, rootNode, kEntryNode, kExitNode, '')
-        ParallelExitMapping.put(iList.head.getThread, kExitNode);
+        createInstructionListFigure(program.statements, rootNode, kEntryNode, kExitNode, '')
+        ParallelExitMapping.put(program.statements.head.getThread, kExitNode);
 
         // Process all reserved goto statements
         for(goto : GotoMapping.keySet) {
@@ -277,32 +287,36 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             }
         }
 
-        if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_BASICBLOCKS) {
+        if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_BASICBLOCKS ||
+            SCGRAPH_FILTER.optionValue == SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS
+        ) {
             kExitNode.data += renderingFactory.createKRoundedBendsPolyline() => [
                 it.invisible = true
                 it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
             ];       
             val bbDataHolder = new BasicBlockDataHolder()
             bbDataHolder.NodeData = InstructionMapping.clone as HashMap<Instruction, Pair<KNode, KNode>>
-            bbDataHolder.BasicBlockData.addAll(iList.head.getAllBasicBlocks)
+            bbDataHolder.BasicBlockData.addAll(program.statements.head.getAllBasicBlocks)
             kExitNode.data += bbDataHolder        
         }
 
-        if (SCGRAPH_FILTER.optionValue == SCGRAPH) return
+        if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_DEPENDENCIES ||
+            SCGRAPH_FILTER.optionValue == SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS
+        ) {
 
-/*         val markedEdges = new HashMap<KNode, KNode>
-        for(instruction : iList.flatten) {
+        val markedEdges = new HashMap<KNode, KNode>
+        for(instruction : program.eAllContents.filter(typeof(Instruction)).toList) {
             val sourceNode = InstructionMapping.get(instruction)?.first
-            val depList = instruction.dependencyInstructions(iList)
+            val depList = instruction.dependencyInstructions(program)
             for (targetInstruction : depList) {
-                if (!instruction.inSameThreadAs(targetInstruction) && !instruction.isInMainThread &&
+                if (!instruction.isInSameThreadAs(targetInstruction.getInstruction) && !instruction.isInMainThread &&
                     !targetInstruction.isInMainThread
                 ) {
-                val targetNode = InstructionMapping.get(targetInstruction)?.first
+                val targetNode = InstructionMapping.get(targetInstruction.getInstruction)?.first
                 if (sourceNode != targetNode && sourceNode != null && targetNode != null &&
                     !((markedEdges.containsKey(targetNode) && markedEdges.get(targetNode) == sourceNode))) {
                         
-                    var depType = instruction.dependencyType(targetInstruction)
+                    var depType = instruction.dependencyType(targetInstruction.getInstruction)
                         
                     if (depType!=null) {
                     val edge = createEdge() => [
@@ -312,8 +326,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                         it.targetPort = targetNode.getPort('dependency')
                         it.data += renderingFactory.createKRoundedBendsPolyline() => [
                             it.bendRadius = 5;
-                            it.setLineWidth(2);
-                            it.foreground = "red".color
+                            it.setLineWidth(0.9f);
+                            it.foreground = DEPENDENCY_COLOR.color
                             it.setLineStyle(LineStyle::DASH);
                         ];          
                     ]
@@ -324,7 +338,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 }   
             }
             }
-        }*/
+        }
+        
+        }
     }
 	
     /**

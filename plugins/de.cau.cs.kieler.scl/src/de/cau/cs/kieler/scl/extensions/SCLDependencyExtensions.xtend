@@ -24,8 +24,17 @@ import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import org.yakindu.sct.model.stext.stext.BoolLiteral
 import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import java.util.List
+import de.cau.cs.kieler.scl.scl.Instruction
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.scl.scl.StatementSequence
+import javax.inject.Inject
+import de.cau.cs.kieler.scl.scl.Statement
 
 class SCLDependencyExtensions {
+    
+    @Inject
+    extension SCLCreateExtensions;
     
     // ======================================================================================================
     // ==                   D E P E N D E N C Y   M E T A M O D E L   E X T E N S I O N                    ==
@@ -92,35 +101,35 @@ class SCLDependencyExtensions {
     
     // Retrieves a list of all instructions in a given instruction list which depend on the given 
     // ElementReferenceExpression.
-//    def ArrayList<EObject> dependencyInstructions(List<EObject> iList, ElementReferenceExpression varRef) {
-//        val iS = createNewInstructionList()
-//        
-//        for(instr : iList.flatten) {
-//            if ((instr instanceof Assignment) || (instr instanceof Conditional)) {
-//                val references = (instr as EObject).dependencyReferences 
-//                for (reference : references) {
-//                    if (reference.reference.equals(varRef.reference))
-//                        if (!iS.contains(instr)) iS.add((instr as EObject));
-//                }
-//            }    
-//        }
-//        
-//        iS
-//    }
+    def List<Statement> dependencyInstructions(StatementSequence iList, ElementReferenceExpression varRef) {
+        val iS = createNewStatementList()
+        
+        for(instr : iList.eAllContents.filter(typeof(Instruction)).toList) {
+            if ((instr instanceof Assignment) || (instr instanceof Conditional)) {
+                val references = (instr as EObject).dependencyReferences 
+                for (reference : references) {
+                    if (reference.reference.equals(varRef.reference))
+                        if (!iS.contains(instr)) iS.add((instr.eContainer as Statement));
+                }
+            }    
+        }
+        
+        iS
+    }
     
     // Retrieves a list of all instructions in a given instruction list which depend on a 
     // ElementReferenceExpression which is also a dependency for a given instruction.
-//    def ArrayList<EObject> dependencyInstructions(EObject instruction, EList<EObject> iList) {
-//        val iS = createNewInstructionList()
-//        val references = instruction.dependencyReferences
-//        if (references == null) return iS
-//        
-//        for(reference : references) {
-//            iS.addAll(iList.dependencyInstructions(reference).filter(e | e!=instruction))
-//        }
-//        
-//        iS
-//    }
+    def List<Statement> dependencyInstructions(Instruction instruction, StatementSequence iList) {
+        val iS = createNewStatementList()
+        val references = instruction.dependencyReferences
+        if (references == null) return iS
+        
+        for(reference : references) {
+            iS.addAll(iList.dependencyInstructions(reference).filter(e | e!=instruction))
+        }
+        
+        iS
+    }
     
     
     
