@@ -139,7 +139,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
        ), SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS);
        
     private static val PARALLEL_HIERARCHY_EDGES = false
-    private static val NODEPLACEMENT_LINEARSEGMENTS = true
+    private static val NODEPLACEMENT_LINEARSEGMENTS = false
+    private static val PAUSEDEPTH_FIRST = true
 
     private static val DEPENDENCY_COLOR = "red"
 
@@ -333,6 +334,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                         ];          
                     ]
                     edge.createLabel.configureCenteralLabel(depType, 9, KlighdConstants::DEFAULT_FONT_NAME)
+                    edge.putToLookUpWith(targetInstruction.getInstruction)
                     Debug("Dependency found! Type: " + depType)
                     markedEdges.put(sourceNode, targetNode)
                     }
@@ -694,6 +696,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val kDepthNode = depthObj.createDepthNode(25, 75).putToLookUpWith(instr);
         kDepthNode.KRendering.add(factory.createKLineWidth.of(2));
         kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
+        if (PAUSEDEPTH_FIRST)
+            kDepthNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             
         // Add all nodes to their parents 
 //        rootNode.children.add(kContainerNode)
