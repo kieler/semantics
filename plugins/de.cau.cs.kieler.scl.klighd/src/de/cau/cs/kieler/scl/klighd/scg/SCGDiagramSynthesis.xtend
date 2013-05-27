@@ -69,6 +69,7 @@ import static de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis.*
 import de.cau.cs.kieler.scl.extensions.SCLDependencyExtensions
 import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
 import de.cau.cs.kieler.core.krendering.KColor
+import de.cau.cs.kieler.scl.klighd.scg.KRenderingUtil
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -138,7 +139,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
        ), SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS);
        
     private static val PARALLEL_HIERARCHY_EDGES = false
-    private static val NODEPLACEMENT_LINEARSEGMENTS = false
+    private static val NODEPLACEMENT_LINEARSEGMENTS = true
 
     private static val DEPENDENCY_COLOR = "red"
 
@@ -511,12 +512,12 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
         // Create fork node            
         val kForkNode = instr.createTriangleNode(37, 75).putToLookUpWith(instr);
-//        kForkNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_RATIO);
+//        kForkNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
         kForkNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextFork = "FORK";
         kForkNode.KRendering.add(factory.createKText.of(nodeTextFork)
             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 15, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).putToLookUpWith(instr));
-        kForkNode.addPort(unassignedObject, 'incoming', kForkNode.width / 2, 0, 2, PortSide::NORTH)
+//        kForkNode.addPort(unassignedObject, 'incoming', kForkNode.width / 2, 0, 2, PortSide::NORTH)
         rootNode.children.add(kForkNode)
         
         // Create join node
