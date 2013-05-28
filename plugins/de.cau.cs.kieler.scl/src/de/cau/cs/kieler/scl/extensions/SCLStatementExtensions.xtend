@@ -120,7 +120,7 @@ class SCLStatementExtensions {
     def Conditional asConditional(Instruction instruction) {
         instruction as Conditional
     }
-    
+
     def Statement getParentStatement(Instruction instruction) {
         var EObject stmt = instruction.eContainer
         while (!(stmt.eContainer instanceof Statement)) {
