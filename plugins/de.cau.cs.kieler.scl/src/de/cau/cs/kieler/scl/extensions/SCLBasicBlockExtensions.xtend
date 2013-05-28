@@ -221,9 +221,9 @@ class SCLBasicBlockExtensions {
     def BasicBlock getBasicBlockByAnyStatement(Statement statement) {
         val statements = statement.getBasicBlockStatements
         if (statements.head == null) return null
-//        if (statements.head.isPause && statements.head != statement) 
-//            getBasicBlockByHead(statements.head, true)
-//        else
+        if (statement.isPause && statements.head.isPause && statements.head.getInstruction != statement.getInstruction) 
+            getBasicBlockByHead(statements.head, true)
+        else
             getBasicBlockByHead(statements.head, false)
     }
     
@@ -317,20 +317,20 @@ class SCLBasicBlockExtensions {
         if (basicBlock.getHead.isPause && basicBlock.headIsDepth) {
             val pauseSurface = basicBlock.getHead.getBasicBlockByAnyStatement
             predecessors.add(pauseSurface)
-        }
-        
-        val predStmt = basicBlock.getHead.getPreviousInstructionStatementHierarchical
-        if (predStmt != null && predStmt.isConditional) {
-            val cond = predStmt.getBasicBlockByAnyStatement
-            predecessors.add(cond)
         } else {
-        
-            if (predStmt != null && !(predStmt.getInstruction instanceof Goto)) {
-                val sourceBlock = predStmt.getBasicBlockByAnyStatementDepth
-                predecessors.add(sourceBlock)
+            val predStmt = basicBlock.getHead.getPreviousInstructionStatementHierarchical
+            if (predStmt != null && predStmt.isConditional) {
+                val cond = predStmt.getBasicBlockByAnyStatement
+                predecessors.add(cond)
+            } else {
+                if (predStmt != null && !(predStmt.getInstruction instanceof Goto)) {
+                    val sourceBlock = predStmt.getBasicBlockByAnyStatement
+                    predecessors.add(sourceBlock)
+                }
             }
         }
         
+        if (!basicBlock.getHead.isPause || !basicBlock.headIsDepth)
         for (goto : basicBlock.getHead.asInstructionStatement.getIncomingGotos) {
             val sourceBlock = (goto.eContainer as Statement).getBasicBlockByAnyStatementDepth
             predecessors.add(sourceBlock)
