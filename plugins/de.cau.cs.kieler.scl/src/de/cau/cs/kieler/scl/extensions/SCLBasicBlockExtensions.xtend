@@ -320,13 +320,15 @@ class SCLBasicBlockExtensions {
                 val pauseSurface = basicBlock.getHead.getBasicBlockByAnyStatement
                 predecessors.add(pauseSurface)
             }
-            return predecessors;
+//            return predecessors
+        } else {
+        
+            if (!(predStmt.getInstruction instanceof Goto)) {
+                val sourceBlock = predStmt.getBasicBlockByAnyStatementDepth
+                predecessors.add(sourceBlock)
+            }
         }
         
-        if (!(predStmt.getInstruction instanceof Goto)) {
-            val sourceBlock = predStmt.getBasicBlockByAnyStatement
-            predecessors.add(sourceBlock)
-        }
         for (goto : basicBlock.getHead.asInstructionStatement.getIncomingGotos) {
             val sourceBlock = (goto.eContainer as Statement).getBasicBlockByAnyStatementDepth
             predecessors.add(sourceBlock)

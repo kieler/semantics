@@ -82,12 +82,13 @@ class SCLGotoExtensions {
     
     def ArrayList<Goto> getIncomingGotos(Statement statement) {
         val gotos = new ArrayList<Goto>;
-        val directGotos = statement.getParentStatementSequence.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == statement)
-        var pStmt = statement.getPreviousStatement
+        val transformedStatement = statement.getInstruction.eContainer as Statement
+        val directGotos = transformedStatement.getParentStatementSequence.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == transformedStatement)
+        var pStmt = transformedStatement.getPreviousStatement
         while (pStmt.isEmpty) {
             if (!pStmt.asEmptyStatement.label.nullOrEmpty) {
                 val indirectStatement = pStmt
-                val indirectGotos = statement.parentStatementSequence.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == indirectStatement)
+                val indirectGotos = transformedStatement.parentStatementSequence.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == indirectStatement)
                 gotos.addAll(indirectGotos.toList)
             }
             pStmt = pStmt.getPreviousStatement
