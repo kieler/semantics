@@ -35,6 +35,10 @@ class SCLDependencyExtensions {
     
     @Inject
     extension SCLCreateExtensions;
+    @Inject
+    extension SCLStatementExtensions;
+    @Inject
+    extension SCLStatementSequenceExtensions;
     
     public static val DEPENDENCY_TYPE_UNKNOWN = 0
     public static val DEPENDENCY_TYPE_WW = 1
@@ -196,6 +200,20 @@ class SCLDependencyExtensions {
         }
         return false
     }
+    
+    
+    def boolean hasConcurrentDependencies(Instruction instruction) {
+        val depList = instruction.dependencyInstructions(instruction.getProgram)
+        for (targetStatement : depList) {
+            if (!instruction.isInSameThreadAs(targetStatement.getInstruction) && !instruction.isInMainThread &&
+                    !targetStatement.isInMainThread
+                ) {        
+                    return true;
+                }
+        }
+        false
+    } 
+    
     
     
     def int dependencyType(EObject firstInst, EObject secondInst) {

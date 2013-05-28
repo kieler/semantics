@@ -44,6 +44,8 @@ class SCLBasicBlockExtensions {
     extension SCLStatementExtensions
     @Inject
     extension SCLStatementSequenceExtensions
+    @Inject
+    extension SCLDependencyExtensions
     
     public static val SPLIT_BLOCKS_AT_DEPENDENCY = true
     
@@ -62,6 +64,10 @@ class SCLBasicBlockExtensions {
         if (sseq.statements.indexOf(statement) == 0) return true
         if (prevStatement.isConditional) return true
         if (prevStatement.isGoto) return true 
+        if (SPLIT_BLOCKS_AT_DEPENDENCY) {
+            if (prevStatement.isAssignment && prevStatement.getInstruction.hasConcurrentDependencies) return true;
+        }
+
         if (statement.asInstructionStatement.getIncomingGotos.size==0) return false
         
         return true
@@ -73,6 +79,10 @@ class SCLBasicBlockExtensions {
         if (statement.isParallel) return true
         if (statement.isConditional) return true
         if (statement.isPause) return true
+        
+        if (SPLIT_BLOCKS_AT_DEPENDENCY) {
+            if (statement.isAssignment && statement.getInstruction.hasConcurrentDependencies) return true;
+        }
         
         val sseq = statement.getParentStatementSequence
         var succIndex = sseq.statements.indexOf(statement) + 1 
