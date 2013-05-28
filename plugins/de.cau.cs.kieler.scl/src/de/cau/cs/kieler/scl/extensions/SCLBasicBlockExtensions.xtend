@@ -320,7 +320,7 @@ class SCLBasicBlockExtensions {
                 val pauseSurface = basicBlock.getHead.getBasicBlockByAnyStatement
                 predecessors.add(pauseSurface)
             }
-            return predecessors
+            return predecessors;
         }
         
         if (!(predStmt.getInstruction instanceof Goto)) {
