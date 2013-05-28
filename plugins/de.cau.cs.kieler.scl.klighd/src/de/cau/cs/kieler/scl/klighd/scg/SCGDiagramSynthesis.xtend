@@ -529,17 +529,17 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
         // Create fork node            
         val kForkNode = instr.createTriangleNode(37, 75).putToLookUpWith(instr);
-//        kForkNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+        kForkNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
         kForkNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextFork = "FORK";
         kForkNode.KRendering.add(factory.createKText.of(nodeTextFork)
             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 15, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).putToLookUpWith(instr));
-//        kForkNode.addPort(unassignedObject, 'incoming', kForkNode.width / 2, 0, 2, PortSide::NORTH)
+        kForkNode.addPort(unassignedObject, 'incoming', kForkNode.width / 2, 0, 2, PortSide::NORTH)
         rootNode.children.add(kForkNode)
         
         // Create join node
         val kJoinNode = JoinObj.createTriangleReversedNode(37, 75);
-//        kJoinNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER);
+        kJoinNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
         kJoinNode.KRendering.add(factory.createKLineWidth.of(2));
         val nodeTextJoin = "JOIN";
         kJoinNode.KRendering.add(factory.createKText.of(nodeTextJoin)
@@ -587,6 +587,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
             if (NODEPLACEMENT_LINEARSEGMENTS) 
                 kContainerNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
+            kContainerNode.addNSPortsFixed
+            kContainerNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             
             // Create entry node
             val kEntryNode = EntryObj.createEllipseNode(30,75).putToLookUpWith(EntryObj)
@@ -635,8 +637,26 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 kExitNode.addEdge(kJoinNode)         
             } else {
                 if (!PARALLEL_HIERARCHY_EDGES) {
-                    createEdgeArrow(kForkNode, kContainerNode)
-                    kContainerNode.addEdge(kJoinNode)
+                    val fPort = unassignedObject.createPort() => [
+                        it.setPortSize(2,2)
+                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+                        it.addRectangle.invisible = true;
+                        kForkNode.ports += it
+                    ]
+                    fPort.addToPortMapping(kForkNode, 'outgoing' + thread.hashCode.toString)
+                    
+                    createEdgeArrow(kForkNode, kContainerNode, 'outgoing' + thread.hashCode.toString, 'incoming')
+                    //kContainerNode.addEdge(kJoinNode)
+                    
+                    val jPort = unassignedObject.createPort() => [
+                        it.setPortSize(2,2)
+                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+                        it.addRectangle.invisible = true;
+                        kJoinNode.ports += it
+                    ]
+                    jPort.addToPortMapping(kJoinNode, 'incoming' + thread.hashCode.toString)
+                    
+                    createEdgeArrow(kContainerNode, kJoinNode, 'outgoing', 'incoming' + thread.hashCode.toString)
                 } else {
 //                    createEdgeArrow(kExitNode, kJoinNode)         
                     createEdgeArrow(kForkNode, kEntryNode)
