@@ -45,6 +45,8 @@ class SCLBasicBlockExtensions {
     @Inject
     extension SCLStatementSequenceExtensions
     
+    public static val SPLIT_BLOCKS_AT_DEPENDENCY = true
+    
     public static val BASICBLOCKPREFIX = 'g';
     
     // Decides whether or not a statement is the beginning of a new basic block.
