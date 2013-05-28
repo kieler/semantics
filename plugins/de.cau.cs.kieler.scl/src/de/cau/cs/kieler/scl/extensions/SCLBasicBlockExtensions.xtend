@@ -319,13 +319,19 @@ class SCLBasicBlockExtensions {
             predecessors.add(pauseSurface)
         } else {
             val predStmt = basicBlock.getHead.getPreviousInstructionStatementHierarchical
-            if (predStmt != null && predStmt.isConditional) {
-                val cond = predStmt.getBasicBlockByAnyStatement
+            val predStmtDirect = basicBlock.getHead.previousInstructionStatement
+            if (predStmt != null && predStmt.isConditional && predStmtDirect == null) {
+                val cond = predStmt.getBasicBlockByAnyStatement;
                 predecessors.add(cond)
             } else {
                 if (predStmt != null && !(predStmt.getInstruction instanceof Goto)) {
                     val sourceBlock = predStmt.getBasicBlockByAnyStatement
-                    predecessors.add(sourceBlock)
+                    if (!sourceBlock.statements.contains(predStmt)) {
+                        val sourceBlockDepth = predStmt.basicBlockByAnyStatementDepth
+                        predecessors.add(sourceBlockDepth)    
+                    } else {
+                        predecessors.add(sourceBlock)
+                    }
                 }
             }
         }
