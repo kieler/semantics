@@ -32,5 +32,5 @@ class SCLOrderingExtensions {
         if (e2.isFinal) {order = -1}
         order;
     }
-    
+        
 }

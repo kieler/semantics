@@ -143,6 +143,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     private static val PAUSEDEPTH_FIRST = true
 
     private static val DEPENDENCY_COLOR = "red"
+    private static val DEPENDENCY_COLOR_WR = "darkOrange"
 
     /*
      * These maps link the scl program instructions to krendering nodes and ports.
@@ -307,20 +308,22 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         ) {
 
         val markedEdges = new HashMap<KNode, KNode>
-        for(instruction : program.eAllContents.filter(typeof(Instruction)).toList) {
+        val depInstrList = program.eAllContents.filter(typeof(Assignment)).toList
+            for(instruction : depInstrList) {
             val sourceNode = InstructionMapping.get(instruction)?.first
             val depList = instruction.dependencyInstructions(program)
             for (targetInstruction : depList) {
                 if (!instruction.isInSameThreadAs(targetInstruction.getInstruction) && !instruction.isInMainThread &&
-                    !targetInstruction.isInMainThread
+                    !targetInstruction.isInMainThread /* && instruction.hasSameThreadParentAs(targetInstruction.getInstruction)*/
                 ) {
                 val targetNode = InstructionMapping.get(targetInstruction.getInstruction)?.first
                 if (sourceNode != targetNode && sourceNode != null && targetNode != null &&
                     !((markedEdges.containsKey(targetNode) && markedEdges.get(targetNode) == sourceNode))) {
                         
-                    var depType = instruction.dependencyType(targetInstruction.getInstruction)
+                    val depType = instruction.dependencyType(targetInstruction.getInstruction)
+                    val depTypeString = depType.dependencyTypeToString
                         
-                    if (depType!=null) {
+                    if (depType>0) {
                     val edge = createEdge() => [
                         it.source = sourceNode
                         it.sourcePort = sourceNode.getPort('dependency')
@@ -328,12 +331,24 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                         it.targetPort = targetNode.getPort('dependency')
                         it.data += renderingFactory.createKRoundedBendsPolyline() => [
                             it.bendRadius = 5;
-                            it.setLineWidth(0.9f);
+                            it.setLineWidth(1.25f);
                             it.foreground = DEPENDENCY_COLOR.color
+                            if (depType == SCLDependencyExtensions::DEPENDENCY_TYPE_WI) {
+                                it.foreground = "blue".color
+                                it.addArrowDecorator();                                
+                            }
+                            if (depType == SCLDependencyExtensions::DEPENDENCY_TYPE_WR) {
+                                it.setForegroundColor(0, 192, 0)
+                                it.addArrowDecorator();                                
+                            }
+                            if (depType == SCLDependencyExtensions::DEPENDENCY_TYPE_RI) {
+                                it.setForegroundColor(0, 168, 168)
+                                it.addArrowDecorator();                                
+                            }
                             it.setLineStyle(LineStyle::DASH);
                         ];          
                     ]
-                    edge.createLabel.configureCenteralLabel(depType, 9, KlighdConstants::DEFAULT_FONT_NAME)
+                    edge.createLabel.configureCenteralLabel(depTypeString, 9, KlighdConstants::DEFAULT_FONT_NAME)
                     edge.putToLookUpWith(targetInstruction.getInstruction)
                     Debug("Dependency found! Type: " + depType)
                     markedEdges.put(sourceNode, targetNode)

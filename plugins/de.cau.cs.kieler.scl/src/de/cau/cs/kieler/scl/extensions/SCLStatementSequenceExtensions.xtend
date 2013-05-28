@@ -109,6 +109,14 @@ class SCLStatementSequenceExtensions {
     def dispatch boolean isInMainThread(Statement statement) {
         getThread(statement) == getProgram(statement)
     }
+    
+    def boolean hasSameThreadParentAs(Instruction instruction, Instruction secondInstruction) {
+        (instruction.eContainer as Statement).hasSameThreadParentAs((secondInstruction.eContainer as Statement))
+    }
+    
+    def boolean hasSameThreadParentAs(Statement statement, Statement secondStatement) {
+        statement.getThread?.eContainer == secondStatement.getThread?.eContainer
+    }
 
     // Checks if an instruction is in the given thread
 //    def dispatch boolean isInThread(Instruction instruction, AbstractThread thread) {

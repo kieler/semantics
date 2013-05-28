@@ -36,6 +36,12 @@ class SCLDependencyExtensions {
     @Inject
     extension SCLCreateExtensions;
     
+    public static val DEPENDENCY_TYPE_UNKNOWN = 0
+    public static val DEPENDENCY_TYPE_WW = 1
+    public static val DEPENDENCY_TYPE_WI = 2
+    public static val DEPENDENCY_TYPE_WR = 3
+    public static val DEPENDENCY_TYPE_RI = 4
+    
     // ======================================================================================================
     // ==                   D E P E N D E N C Y   M E T A M O D E L   E X T E N S I O N                    ==
     // ======================================================================================================
@@ -192,14 +198,29 @@ class SCLDependencyExtensions {
     }
     
     
-    def String dependencyType(EObject firstInst, EObject secondInst) {
+    def int dependencyType(EObject firstInst, EObject secondInst) {
         if (firstInst.isWriterAbs && secondInst.isWriterAbs && firstInst.getWriteRef==secondInst.getWriteRef &&
-            !isConfluentWriterAbs(firstInst, secondInst)) return "ww"
-        if (firstInst.isWriterAbs && secondInst.isReader(firstInst.getWriteRef)) return "wr"
+            !isConfluentWriterAbs(firstInst, secondInst)) return DEPENDENCY_TYPE_WW
         if (firstInst.isWriterAbs && secondInst.isWriterRel && firstInst.getWriteRef==secondInst.getWriteRef)
-            return "wi"
-        if (firstInst.isWriterRel && secondInst.isReader(firstInst.getWriteRef)) return "ir"
-        return null
+            return DEPENDENCY_TYPE_WI
+        if (firstInst.isWriterAbs && secondInst.isReader(firstInst.getWriteRef)) return DEPENDENCY_TYPE_WR
+        if (firstInst.isWriterRel && secondInst.isReader(firstInst.getWriteRef)) return DEPENDENCY_TYPE_RI
+        return DEPENDENCY_TYPE_UNKNOWN
     }
     
+    def String dependencyTypeToString(int type) {
+        if (type == DEPENDENCY_TYPE_WW) return "ww"
+        if (type == DEPENDENCY_TYPE_WR) return "wr"
+        if (type == DEPENDENCY_TYPE_WI) return "wi"
+        if (type == DEPENDENCY_TYPE_RI) return "ri"
+        return "null"
+    }
+    
+    def int compareSCLDependencyOrder(Instruction i1, Instruction i2) {
+        var order = 1
+        if (i1 instanceof Assignment) order = -1
+        if (i1 instanceof Conditional && (!(i2 instanceof Assignment))) order = -1
+        order
+    }
+   
 }
