@@ -309,7 +309,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
         val markedEdges = new HashMap<KNode, KNode>
         val depInstrList = program.eAllContents.filter(typeof(Assignment)).toList
-            for(instruction : depInstrList) {
+        for(instruction : depInstrList) {
             val sourceNode = InstructionMapping.get(instruction)?.first
             val depList = instruction.dependencyInstructions(program)
             for (targetInstruction : depList) {
@@ -531,9 +531,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val kForkNode = instr.createTriangleNode(37, 75).putToLookUpWith(instr);
         kForkNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
         kForkNode.KRendering.add(factory.createKLineWidth.of(2));
-        val nodeTextFork = "FORK";
+        val nodeTextFork = "fork";
         kForkNode.KRendering.add(factory.createKText.of(nodeTextFork)
-            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 15, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).putToLookUpWith(instr));
+            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 15, 0).to(RIGHT, 0, 0, BOTTOM, 07, 0).putToLookUpWith(instr));
         kForkNode.addPort(unassignedObject, 'incoming', kForkNode.width / 2, 0, 2, PortSide::NORTH)
         rootNode.children.add(kForkNode)
         
@@ -541,7 +541,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val kJoinNode = JoinObj.createTriangleReversedNode(37, 75);
         kJoinNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
         kJoinNode.KRendering.add(factory.createKLineWidth.of(2));
-        val nodeTextJoin = "JOIN";
+        val nodeTextJoin = "join";
         kJoinNode.KRendering.add(factory.createKText.of(nodeTextJoin)
             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 15, 0).putToLookUpWith(instr));
         kJoinNode.addPort(unassignedObject, 'outgoing', kJoinNode.width / 2, kJoinNode.height, 2, PortSide::SOUTH)
