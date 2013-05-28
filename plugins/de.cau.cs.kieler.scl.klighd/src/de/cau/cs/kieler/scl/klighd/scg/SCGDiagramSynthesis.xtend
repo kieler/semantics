@@ -585,6 +585,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
             kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
             kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
+            kContainerNode.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
             if (NODEPLACEMENT_LINEARSEGMENTS) 
                 kContainerNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
             kContainerNode.addNSPortsFixed
