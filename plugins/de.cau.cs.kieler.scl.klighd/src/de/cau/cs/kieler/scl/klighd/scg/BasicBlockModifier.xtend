@@ -99,8 +99,8 @@ class BasicBlockModifier implements IStyleModifier {
                 setFontSize(5).setForegroundColor(BASICBLOCK_COLOR_RED, BASICBLOCK_COLOR_GREEN, BASICBLOCK_COLOR_BLUE);
         ]
         var LSData = headLabel.getData(typeof(KShapeLayout))
-        LSData.ypos = LSData.ypos - 4
-        LSData.xpos = LSData.xpos + 5
+        LSData.ypos = LSData.ypos - 5
+        LSData.xpos = LSData.xpos + 6
         
         var gLT = ''
         var labelLines = 0
@@ -108,7 +108,7 @@ class BasicBlockModifier implements IStyleModifier {
         for (pred : basicBlock.getBasicBlockPredecessor) {
             gLT = gLT + 'g' + pred.getBasicBlockIndex
             if (pred.isPauseSurface) { 
-                gLT = gLT + '_pre'
+                gLT = 'pre_' + gLT 
                 wide = true
             }
             gLT = gLT +  "\n"
@@ -122,8 +122,8 @@ class BasicBlockModifier implements IStyleModifier {
         ]
         LSData = goLabel.getData(typeof(KShapeLayout))
         LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
-        LSData.xpos = right - left + 7
-        if (wide) LSData.xpos = right - left + 14
+        LSData.xpos = - 7 
+        if (wide) LSData.xpos = - 14 
 
         var tLT = ''
         labelLines = 0
@@ -131,7 +131,7 @@ class BasicBlockModifier implements IStyleModifier {
         for (pred : basicBlock.getBasicBlockSuccessor) {
             tLT = tLT + 'g' + pred.getBasicBlockIndex
             if (basicBlock.isPauseSurface) { 
-                tLT = tLT + '_pre'
+                tLT = 'suc_' + tLT
                 wide = true
             }
             tLT = tLT + "\n"
@@ -145,8 +145,8 @@ class BasicBlockModifier implements IStyleModifier {
         ]
         LSData = termLabel.getData(typeof(KShapeLayout))
         LSData.ypos = bottom - top - 5 * labelLines 
-        LSData.xpos = right - left + 7
-        if (wide) LSData.xpos = right - left + 14
+        LSData.xpos = right - left + 8
+        if (wide) LSData.xpos = right - left + 15
 
 
         return node;
