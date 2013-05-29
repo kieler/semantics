@@ -241,7 +241,7 @@ break;'''
    // Expand a JOIN instruction.
    def dispatch expand(Join joinInstruction) {
        '''if(!join()) {
-               gotoB(«joinInstruction.continuation.name»);
+               pauseB(«joinInstruction.continuation.name»);
 break;
           };'''
    } 

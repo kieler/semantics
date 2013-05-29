@@ -84,8 +84,13 @@ public class SJGenerator implements IHandler {
             URI scOutput = URI.createURI("");
             scOutput = URI.createURI(input.toString());
             scOutput = scOutput.trimFragment();
-            String modelName = scOutput.trimFileExtension().lastSegment();
             scOutput = scOutput.trimFileExtension().appendFileExtension("java");
+            
+            // The file name could contain illegal characters not allowed for naming a Java class
+            // therefore take the S-model name instead
+            String className =  program.getName(); //scOutput.lastSegment();
+            // Generate SJ code
+            scOutput = scOutput.trimSegments(1).appendSegment(className).appendFileExtension("java");
             
             String packageName = "test";
             
@@ -93,7 +98,7 @@ public class SJGenerator implements IHandler {
             IPath sjOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile sjOutputFile = KiemUtil.convertIPathToIFile(sjOutputPath);
             String outputFile = KiemUtil.getAbsoluteFilePath(sjOutputFile);
-            S2SJPlugin.generateSJCode(program, outputFile, modelName, packageName, false);                    
+            S2SJPlugin.generateSJCode(program, outputFile, className, packageName, false);                    
 
         } catch (IOException e) {
             throw new ExecutionException("Cannot read input file.");
