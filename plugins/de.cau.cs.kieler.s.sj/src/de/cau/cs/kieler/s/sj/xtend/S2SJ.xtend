@@ -95,6 +95,10 @@ class S2SJ {
         «FOR signal : signalList SEPARATOR ""»
             public int «signal.name»_prio = -1;
         «ENDFOR»
+        int order = 0;
+        «FOR signal : signalList SEPARATOR ""»
+            public int «signal.name»_order = -1;
+        «ENDFOR»
     «ENDIF»
        '''
    }
@@ -306,14 +310,16 @@ break;'''
        if (emitInstruction.value != null) {
        '''«emitInstruction.signal.name» = true;
           «emitInstruction.signal.name»_value = «emitInstruction.signal.combineOperator.macro»(«emitInstruction.signal.name»_value,  «emitInstruction.value.expand»);
-          «IF debug»«emitInstruction.signal.name»_prio = currentPrio();«ENDIF»'''
+          «IF debug»«emitInstruction.signal.name»_prio = currentPrio();«ENDIF»
+          «IF debug»«emitInstruction.signal.name»_order = order++;«ENDIF»'''
 //           '''EMIT_VAL_SCC(«emitInstruction.signal.name», «emitInstruction.value.expand»,
 //               «emitInstruction.signal.combineOperator.macro», 
 //               «emitInstruction.signal.combineOperator.initialValue»);'''
        }
        else {
            '''«emitInstruction.signal.name» = true;          
-              «IF debug»«emitInstruction.signal.name»_prio = currentPrio();«ENDIF»'''
+              «IF debug»«emitInstruction.signal.name»_prio = currentPrio();«ENDIF»
+              «IF debug»«emitInstruction.signal.name»_order = order++;«ENDIF»'''
        }
    }   
    
