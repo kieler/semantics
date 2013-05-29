@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sjl;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
