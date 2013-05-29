@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sjl;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -126,8 +127,75 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
     protected long combineOr(long a, long b) {
         return a | b;
     }
+    
     // -------------------------------------------------------------------------
 
+    @SuppressWarnings("deprecation")
+    public static void main(final String[] args, SJLProgramWithSignals<?> program) {
+        java.io.DataInputStream in = 
+                new java.io.DataInputStream(System.in);
+
+        for (int tick = 0; tick < 20; tick++) {
+            
+            // Set input signals
+            String input;
+            program.resetSignals();
+            
+            try {
+                input = in.readLine().toLowerCase();
+                for(String signalName : program.getSignalNames()) {
+                    if (input.contains(signalName.toLowerCase())) {
+                        try {
+                            program.setInput(signalName, true);
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        } catch (SecurityException e) {
+                            e.printStackTrace();
+                        } catch (IllegalArgumentException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            // Do tick
+            program.doTick();
+            
+            // Debug output
+            if (program.isDebug()) {
+                System.out.println(program.getLastDebugMessage());
+            }
+            
+            // Inspect output signals
+            for(String signalName : program.getSignalNames()) {
+                try {
+                    if (program.getOutput(signalName) instanceof Boolean && ((Boolean)program.getOutput(signalName)).booleanValue()) {
+                        System.out.print(signalName + " ");
+                    }
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("");
+            
+            if(program.isTerminated()) {
+                break;
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    
     /**
      * Instantiates a new SJLProgramWithSignals.
      * 

@@ -1,9 +1,7 @@
 package de.cau.cs.kieler.sjl.example;
 
-import java.io.IOException;
-
 import de.cau.cs.kieler.sjl.example.Abro;
-import de.cau.cs.kieler.sjl.SJLProgram;
+import de.cau.cs.kieler.sjl.SJLProgramWithSignals;
 
 import de.cau.cs.kieler.sjl.example.Abro.State;
 import static de.cau.cs.kieler.sjl.example.Abro.State.*;
@@ -30,7 +28,7 @@ import static de.cau.cs.kieler.sjl.example.Abro.State.*;
  * @kieler.design 2013-05-23 proposed cmot
  * @kieler.rating 2013-05-23 proposed * 
  */
-public class Abro extends SJLProgram<State> {
+public class Abro extends SJLProgramWithSignals<State> {
 
     enum State {
         ABOEntry, ABO, AB, WaitA, WaitB, ABMain, ABOMain 
@@ -104,50 +102,32 @@ public class Abro extends SJLProgram<State> {
     
     // ------------------------------------------------------------------------
     
-    @SuppressWarnings("deprecation")
     public static void main(final String[] args) {
-        java.io.DataInputStream in = 
-                new java.io.DataInputStream(System.in);
-
-        Abro abro = new Abro();
-        for (int tick = 0; tick < 20; tick++) {
-            
-            // Set input signals
-            String input;
-            abro.a = false;
-            abro.b = false;
-            abro.r = false;
-            try {
-                input = in.readLine().toLowerCase();
-                if (input.contains("a")) {
-                    abro.a = true;
-                }
-                if (input.contains("b")) {
-                    abro.b = true;
-                }
-                if (input.contains("r")) {
-                    abro.r = true;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
-            // Rest output signals
-            abro.o = false;
-            
-            
-            // Do tick
-            abro.doTick();
-            
-            // Inspect output signals
-            if (abro.o) {
-                System.out.println("o");
-            }
-            
-            if(abro.isTerminated()) {
-                break;
-            }
-        }
+        Abro program = new Abro();
+        SJLProgramWithSignals.main(args, program);
     }
 
+    // ------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resetInputSignals() {
+       a = false;
+       b = false;
+       r = false;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resetOutputSignals() {
+        o = false;
+    }
+
+    // ------------------------------------------------------------------------
 }

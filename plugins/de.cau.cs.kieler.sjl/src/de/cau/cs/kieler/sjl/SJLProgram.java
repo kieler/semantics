@@ -331,6 +331,17 @@ abstract public class SJLProgram<State extends Enum<?>> {
     }
 
     // -------------------------------------------------------------------------
+ 
+    /**
+     * Checks if debugging is turned on.
+     *
+     * @return true, if is debug
+     */
+    public boolean isDebug() {
+        return debug;
+    }
+    
+    // -------------------------------------------------------------------------
     
     /**
      * Gets the debug message of the latest executed tick. Note that this will return
