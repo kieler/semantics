@@ -273,16 +273,20 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                         sSignalIsPresent = true;
                     }
 
-                    // Find out about priority
-                    if (program.getOutput(sSignalOutputName + "_prio") instanceof Integer) {
-                        sSignalIsSignalPrio = (Integer) program.getOutput(sSignalOutputName
-                                + "_prio");
-                    }
+                    try {
+                        // Find out about priority
+                        if (program.getOutput(sSignalOutputName + "_prio") instanceof Integer) {
+                            sSignalIsSignalPrio = (Integer) program.getOutput(sSignalOutputName
+                                    + "_prio");
+                        }
 
-                    // Find out about execution order
-                    if (program.getOutput(sSignalOutputName + "_order") instanceof Integer) {
-                        sSignalIsSignalOrder = (Integer) program.getOutput(sSignalOutputName
-                                + "_order");
+                        // Find out about execution order
+                        if (program.getOutput(sSignalOutputName + "_order") instanceof Integer) {
+                            sSignalIsSignalOrder = (Integer) program.getOutput(sSignalOutputName
+                                    + "_order");
+                        }
+                    } catch (NoSuchFieldException e) {
+                        // ignore misssing fields
                     }
                 }
 
