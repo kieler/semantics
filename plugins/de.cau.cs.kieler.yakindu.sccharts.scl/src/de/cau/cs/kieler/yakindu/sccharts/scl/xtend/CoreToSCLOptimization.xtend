@@ -70,7 +70,7 @@ class CoreToSCLOptimization {
     def List<Statement> optimizeSelfLoop(List<Statement> originalStatements, List<Statement> stateStatements) {
         var newStatements = createNewStatementList()
         
-        var conditional = originalStatements.head as Conditional
+        var conditional = originalStatements.head.getInstruction as Conditional
         val newConditional = createSCLConditional()
         newConditional.expression = conditional.expression.negate
         newConditional.statements.addAll(stateStatements)

@@ -42,7 +42,7 @@ EmptyStatement:
 InstructionStatement:    
     (
         (annotation += SL_COMMENT)*
-        (label = ID ':')?
+//        (label = ID ':')?
         instruction = (Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
     )
 ;

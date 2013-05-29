@@ -93,22 +93,30 @@ class SCLStatementSequenceExtensions {
     }
 
     // Checks if two instructions are in the same thread instruction list 
-//    def dispatch boolean isInSameThreadAs(Instruction instruction, Instruction secondInstruction) {
-//        getThread(instruction) == getThread(secondInstruction)
-//    }
-//
-//    def dispatch boolean isInSameThreadAs(Statement statement, Statement secondStatement) {
-//        getThread(statement) == getThread(secondStatement)
-//    }
+    def dispatch boolean isInSameThreadAs(Instruction instruction, Instruction secondInstruction) {
+        getThread(instruction) == getThread(secondInstruction)
+    }
+
+    def dispatch boolean isInSameThreadAs(Statement statement, Statement secondStatement) {
+        getThread(statement) == getThread(secondStatement)
+    }
     
     // Checks if an instruction is in the main thread list (program.instructions)
-//    def dispatch boolean isInMainThread(Instruction instruction) {
-//        getThread(instruction) == getMainThread(instruction)
-//    }
-//
-//    def dispatch boolean isInMainThread(Statement statement) {
-//        getThread(statement) == getMainThread(statement)
-//    }
+    def dispatch boolean isInMainThread(Instruction instruction) {
+        getThread(instruction) == getProgram(instruction)
+    }
+
+    def dispatch boolean isInMainThread(Statement statement) {
+        getThread(statement) == getProgram(statement)
+    }
+    
+    def boolean hasSameThreadParentAs(Instruction instruction, Instruction secondInstruction) {
+        (instruction.eContainer as Statement).hasSameThreadParentAs((secondInstruction.eContainer as Statement))
+    }
+    
+    def boolean hasSameThreadParentAs(Statement statement, Statement secondStatement) {
+        statement.getThread?.eContainer == secondStatement.getThread?.eContainer
+    }
 
     // Checks if an instruction is in the given thread
 //    def dispatch boolean isInThread(Instruction instruction, AbstractThread thread) {

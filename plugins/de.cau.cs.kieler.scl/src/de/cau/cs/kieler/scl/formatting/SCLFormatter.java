@@ -49,7 +49,7 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             
             c.setNoSpace().before(f.getEmptyStatementAccess().getColonKeyword_1_1());
             c.setLinewrap(1).after(f.getEmptyStatementAccess().getColonKeyword_1_1());
-            c.setLinewrap(1).after(f.getInstructionStatementAccess().getColonKeyword_1_1());
+//            c.setLinewrap(1).after(f.getInstructionStatementAccess().getColonKeyword_1_1());
           
             // Conditional
             c.setLinewrap(1).after(f.getConditionalAccess().getThenKeyword_2());

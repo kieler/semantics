@@ -44,8 +44,12 @@ class SCLBasicBlockExtensions {
     extension SCLStatementExtensions
     @Inject
     extension SCLStatementSequenceExtensions
+    @Inject
+    extension SCLDependencyExtensions
     
-    public val BASICBLOCKPREFIX = 'g';
+    public static val SPLIT_BLOCKS_AT_DEPENDENCY = true
+    
+    public static val BASICBLOCKPREFIX = 'g';
     
     // Decides whether or not a statement is the beginning of a new basic block.
     def boolean isBasicBlockFirst(Statement statement) {
@@ -60,6 +64,10 @@ class SCLBasicBlockExtensions {
         if (sseq.statements.indexOf(statement) == 0) return true
         if (prevStatement.isConditional) return true
         if (prevStatement.isGoto) return true 
+        if (SPLIT_BLOCKS_AT_DEPENDENCY) {
+            if (prevStatement.isAssignment && prevStatement.getInstruction.hasConcurrentDependencies) return true;
+        }
+
         if (statement.asInstructionStatement.getIncomingGotos.size==0) return false
         
         return true
@@ -71,6 +79,10 @@ class SCLBasicBlockExtensions {
         if (statement.isParallel) return true
         if (statement.isConditional) return true
         if (statement.isPause) return true
+        
+        if (SPLIT_BLOCKS_AT_DEPENDENCY) {
+            if (statement.isAssignment && statement.getInstruction.hasConcurrentDependencies) return true;
+        }
         
         val sseq = statement.getParentStatementSequence
         var succIndex = sseq.statements.indexOf(statement) + 1 
@@ -95,20 +107,22 @@ class SCLBasicBlockExtensions {
     }
     
     def List<Statement> getBasicBlockStatements(Statement statement, boolean isDepth) {
-        val sseq = statement.getParentStatementSequence
+        val instructionStatement = statement.instructionStatement
         val bBox = new ArrayList<Statement>
+        if (instructionStatement == null) return bBox
+        val sseq = instructionStatement.getParentStatementSequence
         
-        if (statement.isGoto) { 
-            if (statement.instruction.asGoto.getTargetStatement?.getInstructionStatement?.instruction == null) return bBox
-            var statementHier = statement.previousStatement
-            if (statementHier == null) statementHier = statement.instruction.asGoto.getTargetStatement
+        if (instructionStatement.isGoto) { 
+            if (instructionStatement.instruction.asGoto.getTargetStatement?.getInstructionStatement?.instruction == null) return bBox
+            var statementHier = instructionStatement.previousStatementHierarchical
+            if (statementHier == null) statementHier = instructionStatement.instruction.asGoto.getTargetStatement
             return getBasicBlockStatements(statementHier, isDepth)
         }
         
         // Transform statement to EObject Statement in case it is a statement that holds
         // a surface or depth.
-        var transformedStatement = statement
-        if (statement.hasInstruction) transformedStatement = statement.instruction.eContainer as Statement
+        var Statement transformedStatement = instructionStatement
+        if (instructionStatement.hasInstruction) transformedStatement = (instructionStatement as Statement).getInstruction.eContainer as Statement
         
         val oIndex = sseq.statements.indexOf(transformedStatement)
         if (oIndex < 0) return bBox
@@ -219,9 +233,9 @@ class SCLBasicBlockExtensions {
     def BasicBlock getBasicBlockByAnyStatement(Statement statement) {
         val statements = statement.getBasicBlockStatements
         if (statements.head == null) return null
-//        if (statements.head.isPause && statements.head != statement) 
-//            getBasicBlockByHead(statements.head, true)
-//        else
+        if (statement.isPause && statements.head.isPause && statements.head.getInstruction != statement.getInstruction) 
+            getBasicBlockByHead(statements.head, true)
+        else
             getBasicBlockByHead(statements.head, false)
     }
     
@@ -309,22 +323,32 @@ class SCLBasicBlockExtensions {
         val predecessors = new ArrayList<BasicBlock>;
 
         if (basicBlock.statements.head.isParallel) {
-            return predecessors;
-        }
-
-        val predStmt = basicBlock.getHead.getPreviousInstructionStatementHierarchical
-        if (predStmt == null || (predStmt.isConditional && basicBlock.headIsDepth)) {
-            if (basicBlock.getHead.isPause && basicBlock.headIsDepth) {
-                val pauseSurface = basicBlock.getHead.getBasicBlockByAnyStatement
-                predecessors.add(pauseSurface)
-            }
             return predecessors
         }
-        
-        if (!(predStmt.getInstruction instanceof Goto)) {
-            val sourceBlock = predStmt.getBasicBlockByAnyStatement
-            predecessors.add(sourceBlock)
+
+        if (basicBlock.getHead.isPause && basicBlock.headIsDepth) {
+            val pauseSurface = basicBlock.getHead.getBasicBlockByAnyStatement
+            predecessors.add(pauseSurface)
+        } else {
+            val predStmt = basicBlock.getHead.getPreviousInstructionStatementHierarchical
+            val predStmtDirect = basicBlock.getHead.previousInstructionStatement
+            if (predStmt != null && predStmt.isConditional && predStmtDirect == null) {
+                val cond = predStmt.getBasicBlockByAnyStatement;
+                predecessors.add(cond)
+            } else {
+                if (predStmt != null && !(predStmt.getInstruction instanceof Goto)) {
+                    val sourceBlock = predStmt.getBasicBlockByAnyStatement
+                    if (!sourceBlock.statements.contains(predStmt)) {
+                        val sourceBlockDepth = predStmt.basicBlockByAnyStatementDepth
+                        predecessors.add(sourceBlockDepth)    
+                    } else {
+                        predecessors.add(sourceBlock)
+                    }
+                }
+            }
         }
+        
+        if (!basicBlock.getHead.isPause || !basicBlock.headIsDepth)
         for (goto : basicBlock.getHead.asInstructionStatement.getIncomingGotos) {
             val sourceBlock = (goto.eContainer as Statement).getBasicBlockByAnyStatementDepth
             predecessors.add(sourceBlock)
@@ -359,8 +383,17 @@ class SCLBasicBlockExtensions {
         }
         
         if (basicBlock.statements.last.isConditional) {
-            val targetBlock = (basicBlock.statements.last.getInstruction as Conditional).statements.head.getBasicBlockByAnyStatement
-            if (targetBlock != null) successors.add(targetBlock)
+            val condHead = (basicBlock.statements.last.getInstruction as Conditional).statements.head
+            if (condHead.isGoto) {
+                val targetStatement = condHead.getInstruction.asGoto.getTargetStatement?.getInstructionStatement;
+                if (targetStatement != null) {
+                    val targetBlock = targetStatement.getBasicBlockByAnyStatement
+                    if (targetBlock != null) successors.add(targetBlock)
+                }
+            } else {
+                val targetBlock = condHead.getBasicBlockByAnyStatement
+                if (targetBlock != null) successors.add(targetBlock)
+            }
         }
         
         if (basicBlock.statements.last.isPause && 

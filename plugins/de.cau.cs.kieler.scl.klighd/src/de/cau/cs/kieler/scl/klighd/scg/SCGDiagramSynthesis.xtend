@@ -66,6 +66,10 @@ import org.eclipse.xtext.serializer.ISerializer
 import org.yakindu.sct.model.stext.stext.Expression
 
 import static de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis.*
+import de.cau.cs.kieler.scl.extensions.SCLDependencyExtensions
+import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
+import de.cau.cs.kieler.core.krendering.KColor
+import de.cau.cs.kieler.scl.klighd.scg.KRenderingUtil
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -108,6 +112,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     extension SCLStatementExtensions
     @Inject
     extension SCLBasicBlockExtensions
+    @Inject
+    extension SCLDependencyExtensions
+    @Inject
+    extension SCLFactoryExtensions
 	
 	
     // Constants for the klighd content filter
@@ -115,6 +123,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     private static val SCGRAPH_WO_HIERARCHY = "Draw SC Graph without hierarchy";
     private static val SCGRAPH_AND_DEPENDENCIES = "Draw SC Graph && dependencies";
     private static val SCGRAPH_AND_BASICBLOCKS = "Draw SC Graph && basic blocks"
+    private static val SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS = "Draw SC Graph, dependencies && basic blocks";
     
     private static val String SCG_FILTER_NAME = "SC Graph Filter";
 
@@ -124,13 +133,17 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     private static val TransformationOption SCGRAPH_FILTER = TransformationOption::createChoiceOption(SCG_FILTER_NAME,
        ImmutableList::of(SCGRAPH, 
            SCGRAPH_WO_HIERARCHY, 
-//           SCGRAPH_AND_DEPENDENCIES, 
-           SCGRAPH_AND_BASICBLOCKS
-       ), SCGRAPH_AND_BASICBLOCKS);
-       
+           SCGRAPH_AND_DEPENDENCIES, 
+           SCGRAPH_AND_BASICBLOCKS,
+           SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS
+       ), SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS);
        
     private static val PARALLEL_HIERARCHY_EDGES = false
     private static val NODEPLACEMENT_LINEARSEGMENTS = false
+    private static val PAUSEDEPTH_FIRST = true
+
+    private static val DEPENDENCY_COLOR = "red"
+    private static val DEPENDENCY_COLOR_WR = "darkOrange"
 
     /*
      * These maps link the scl program instructions to krendering nodes and ports.
@@ -188,7 +201,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
         // Evaluate the program beginning at the program root
         ProgramRootNode = rootNode
-        program.statements.createProgramFigure(rootNode);        		
+        program.createProgramFigure(rootNode);        		
         
         rootNode
 	}
@@ -200,7 +213,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      * for the root instruction list of a scl program. 
      * Subsequently, all reserved goto statements are evaluated and finally all edges are drawn.    
      */
-    def createProgramFigure(EList<Statement> iList, KNode rootNode) {
+    def createProgramFigure(Program program, KNode rootNode) {
         
         // Create objects for the entry and exit nodes
         val EntryObj = new Object
@@ -237,8 +250,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         ]).addToPortMapping(kExitNode, 'incoming')
                     
         // Evaluate the root instruction list
-        createInstructionListFigure(iList, rootNode, kEntryNode, kExitNode, '')
-        ParallelExitMapping.put(iList.head.getThread, kExitNode);
+        createInstructionListFigure(program.statements, rootNode, kEntryNode, kExitNode, '')
+        ParallelExitMapping.put(program.statements.head.getThread, kExitNode);
 
         // Process all reserved goto statements
         for(goto : GotoMapping.keySet) {
@@ -277,34 +290,40 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             }
         }
 
-        if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_BASICBLOCKS) {
+        if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_BASICBLOCKS ||
+            SCGRAPH_FILTER.optionValue == SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS
+        ) {
             kExitNode.data += renderingFactory.createKRoundedBendsPolyline() => [
                 it.invisible = true
                 it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
             ];       
             val bbDataHolder = new BasicBlockDataHolder()
             bbDataHolder.NodeData = InstructionMapping.clone as HashMap<Instruction, Pair<KNode, KNode>>
-            bbDataHolder.BasicBlockData.addAll(iList.head.getAllBasicBlocks)
+            bbDataHolder.BasicBlockData.addAll(program.statements.head.getAllBasicBlocks)
             kExitNode.data += bbDataHolder        
         }
 
-        if (SCGRAPH_FILTER.optionValue == SCGRAPH) return
+        if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_DEPENDENCIES ||
+            SCGRAPH_FILTER.optionValue == SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS
+        ) {
 
-/*         val markedEdges = new HashMap<KNode, KNode>
-        for(instruction : iList.flatten) {
+        val markedEdges = new HashMap<KNode, KNode>
+        val depInstrList = program.eAllContents.filter(typeof(Assignment)).toList
+        for(instruction : depInstrList) {
             val sourceNode = InstructionMapping.get(instruction)?.first
-            val depList = instruction.dependencyInstructions(iList)
+            val depList = instruction.dependencyInstructions(program)
             for (targetInstruction : depList) {
-                if (!instruction.inSameThreadAs(targetInstruction) && !instruction.isInMainThread &&
-                    !targetInstruction.isInMainThread
+                if (!instruction.isInSameThreadAs(targetInstruction.getInstruction) && !instruction.isInMainThread &&
+                    !targetInstruction.isInMainThread /* && instruction.hasSameThreadParentAs(targetInstruction.getInstruction)*/
                 ) {
-                val targetNode = InstructionMapping.get(targetInstruction)?.first
+                val targetNode = InstructionMapping.get(targetInstruction.getInstruction)?.first
                 if (sourceNode != targetNode && sourceNode != null && targetNode != null &&
                     !((markedEdges.containsKey(targetNode) && markedEdges.get(targetNode) == sourceNode))) {
                         
-                    var depType = instruction.dependencyType(targetInstruction)
+                    val depType = instruction.dependencyType(targetInstruction.getInstruction)
+                    val depTypeString = depType.dependencyTypeToString
                         
-                    if (depType!=null) {
+                    if (depType>0) {
                     val edge = createEdge() => [
                         it.source = sourceNode
                         it.sourcePort = sourceNode.getPort('dependency')
@@ -312,19 +331,34 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                         it.targetPort = targetNode.getPort('dependency')
                         it.data += renderingFactory.createKRoundedBendsPolyline() => [
                             it.bendRadius = 5;
-                            it.setLineWidth(2);
-                            it.foreground = "red".color
+                            it.setLineWidth(1.25f);
+                            it.foreground = DEPENDENCY_COLOR.color
+                            if (depType == SCLDependencyExtensions::DEPENDENCY_TYPE_WI) {
+                                it.foreground = "blue".color
+                                it.addArrowDecorator();                                
+                            }
+                            if (depType == SCLDependencyExtensions::DEPENDENCY_TYPE_WR) {
+                                it.setForegroundColor(0, 192, 0)
+                                it.addArrowDecorator();                                
+                            }
+                            if (depType == SCLDependencyExtensions::DEPENDENCY_TYPE_RI) {
+                                it.setForegroundColor(0, 168, 168)
+                                it.addArrowDecorator();                                
+                            }
                             it.setLineStyle(LineStyle::DASH);
                         ];          
                     ]
-                    edge.createLabel.configureCenteralLabel(depType, 9, KlighdConstants::DEFAULT_FONT_NAME)
+                    edge.createLabel.configureCenteralLabel(depTypeString, 9, KlighdConstants::DEFAULT_FONT_NAME)
+                    edge.putToLookUpWith(targetInstruction.getInstruction)
                     Debug("Dependency found! Type: " + depType)
                     markedEdges.put(sourceNode, targetNode)
                     }
                 }   
             }
             }
-        }*/
+        }
+        
+        }
     }
 	
     /**
@@ -495,18 +529,22 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
         // Create fork node            
         val kForkNode = instr.createTriangleNode(37, 75).putToLookUpWith(instr);
+        kForkNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
         kForkNode.KRendering.add(factory.createKLineWidth.of(2));
-        val nodeTextFork = "FORK";
+        val nodeTextFork = "fork";
         kForkNode.KRendering.add(factory.createKText.of(nodeTextFork)
-            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 15, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).putToLookUpWith(instr));
+            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 15, 0).to(RIGHT, 0, 0, BOTTOM, 07, 0).putToLookUpWith(instr));
+        kForkNode.addPort(unassignedObject, 'incoming', kForkNode.width / 2, 0, 2, PortSide::NORTH)
         rootNode.children.add(kForkNode)
-
+        
         // Create join node
         val kJoinNode = JoinObj.createTriangleReversedNode(37, 75);
+        kJoinNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
         kJoinNode.KRendering.add(factory.createKLineWidth.of(2));
-        val nodeTextJoin = "JOIN";
+        val nodeTextJoin = "join";
         kJoinNode.KRendering.add(factory.createKText.of(nodeTextJoin)
             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 15, 0).putToLookUpWith(instr));
+        kJoinNode.addPort(unassignedObject, 'outgoing', kJoinNode.width / 2, kJoinNode.height, 2, PortSide::SOUTH)
         rootNode.children.add(kJoinNode)
 
         /* 
@@ -547,8 +585,11 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
             kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
             kContainerNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
+            kContainerNode.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
             if (NODEPLACEMENT_LINEARSEGMENTS) 
                 kContainerNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
+            kContainerNode.addNSPortsFixed
+            kContainerNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             
             // Create entry node
             val kEntryNode = EntryObj.createEllipseNode(30,75).putToLookUpWith(EntryObj)
@@ -597,8 +638,26 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 kExitNode.addEdge(kJoinNode)         
             } else {
                 if (!PARALLEL_HIERARCHY_EDGES) {
-                    createEdgeArrow(kForkNode, kContainerNode)
-                    kContainerNode.addEdge(kJoinNode)
+                    val fPort = unassignedObject.createPort() => [
+                        it.setPortSize(2,2)
+                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+                        it.addRectangle.invisible = true;
+                        kForkNode.ports += it
+                    ]
+                    fPort.addToPortMapping(kForkNode, 'outgoing' + thread.hashCode.toString)
+                    
+                    createEdgeArrow(kForkNode, kContainerNode, 'outgoing' + thread.hashCode.toString, 'incoming')
+                    //kContainerNode.addEdge(kJoinNode)
+                    
+                    val jPort = unassignedObject.createPort() => [
+                        it.setPortSize(2,2)
+                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+                        it.addRectangle.invisible = true;
+                        kJoinNode.ports += it
+                    ]
+                    jPort.addToPortMapping(kJoinNode, 'incoming' + thread.hashCode.toString)
+                    
+                    createEdgeArrow(kContainerNode, kJoinNode, 'outgoing', 'incoming' + thread.hashCode.toString)
                 } else {
 //                    createEdgeArrow(kExitNode, kJoinNode)         
                     createEdgeArrow(kForkNode, kEntryNode)
@@ -673,6 +732,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         val kDepthNode = depthObj.createDepthNode(25, 75).putToLookUpWith(instr);
         kDepthNode.KRendering.add(factory.createKLineWidth.of(2));
         kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
+        if (PAUSEDEPTH_FIRST)
+            kDepthNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             
         // Add all nodes to their parents 
 //        rootNode.children.add(kContainerNode)

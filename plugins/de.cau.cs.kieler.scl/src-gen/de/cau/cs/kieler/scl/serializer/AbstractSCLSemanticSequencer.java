@@ -926,7 +926,6 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         annotation+=SL_COMMENT* 
-	 *         label=ID? 
 	 *         (
 	 *             instruction=Assignment | 
 	 *             instruction=Conditional | 

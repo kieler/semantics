@@ -308,9 +308,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getStatement_Label()
+  public EClass getEmptyStatement()
   {
-    return (EAttribute)statementEClass.getEStructuralFeatures().get(1);
+    return emptyStatementEClass;
   }
 
   /**
@@ -318,9 +318,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getEmptyStatement()
+  public EAttribute getEmptyStatement_Label()
   {
-    return emptyStatementEClass;
+    return (EAttribute)emptyStatementEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -535,9 +535,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     statementEClass = createEClass(STATEMENT);
     createEAttribute(statementEClass, STATEMENT__ANNOTATION);
-    createEAttribute(statementEClass, STATEMENT__LABEL);
 
     emptyStatementEClass = createEClass(EMPTY_STATEMENT);
+    createEAttribute(emptyStatementEClass, EMPTY_STATEMENT__LABEL);
 
     instructionStatementEClass = createEClass(INSTRUCTION_STATEMENT);
     createEReference(instructionStatementEClass, INSTRUCTION_STATEMENT__INSTRUCTION);
@@ -628,9 +628,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getStatement_Annotation(), ecorePackage.getEString(), "annotation", null, 0, -1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStatement_Label(), ecorePackage.getEString(), "label", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(emptyStatementEClass, EmptyStatement.class, "EmptyStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEmptyStatement_Label(), ecorePackage.getEString(), "label", null, 0, 1, EmptyStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(instructionStatementEClass, InstructionStatement.class, "InstructionStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInstructionStatement_Instruction(), this.getInstruction(), null, "instruction", null, 0, 1, InstructionStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -171,13 +171,15 @@ class SCLCreateExtensions {
         val assignments = new ArrayList<Assignment>
         if (effect instanceof ReactionEffect) {
             for(action : (effect as ReactionEffect).actions) {
-                val assignment = SCL.createAssignment();
-                assignment.assignment = action.copy
-                assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
-                    val varRef = (it.varRef as ElementReferenceExpression);
-                    varRef.reference = (varRef.reference as Event).createVariableDeclaration();
-                ]
+                action.eAllContents.filter(typeof(AssignmentExpression)).forEach [
+                    val assignment = SCL.createAssignment();
+                    assignment.assignment = it.copy
+                    assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
+                        val varRef = (it.varRef as ElementReferenceExpression);
+                        varRef.reference = (varRef.reference as Event).createVariableDeclaration();
+                    ]
                 assignments.add(assignment)
+                ]
             }
         }
         
