@@ -69,7 +69,7 @@ public abstract class AbstractModelFileHandler extends AbstractHandler {
 	
 	public abstract Injector CreateResourceInjector();
 	
-	public Object doTransformation(EObject modelObject, String commandString) {
+	public Object doTransformation(EObject modelObject, String commandString, ISelection selection) {
 		return modelObject;
 	}
 	
@@ -97,7 +97,7 @@ public abstract class AbstractModelFileHandler extends AbstractHandler {
                 
             EObject modelRoot = resourceLoad.getContents().get(0); 
             
-            Object transformedModel = doTransformation(modelRoot, command);
+            Object transformedModel = doTransformation(modelRoot, command, selection);
             EObject transformedEObject = null;
             if (transformedModel instanceof EObject) {
                 transformedEObject = (EObject) transformedModel;
