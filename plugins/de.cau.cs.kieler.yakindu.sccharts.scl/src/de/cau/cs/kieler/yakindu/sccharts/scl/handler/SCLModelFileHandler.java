@@ -16,6 +16,7 @@ package de.cau.cs.kieler.yakindu.sccharts.scl.handler;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
+import org.eclipse.jface.viewers.ISelection;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
 
@@ -86,7 +87,7 @@ public class SCLModelFileHandler extends AbstractModelFileHandler {
     }
 
     // Executed when the transformation is invoked.
-    public EObject doTransformation(EObject modelObject, String commandString) {
+    public EObject doTransformation(EObject modelObject, String commandString, ISelection selection) {
 
         // Use the default transformation optimizations or
         // use the optimization selected in the context menu.

@@ -2,6 +2,7 @@ package de.cau.cs.kieler.yakindu.sccharts.sccharts.handler;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
+import org.eclipse.jface.viewers.ISelection;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
 import org.yakindu.sct.ui.editor.DiagramActivator;
@@ -57,7 +58,7 @@ public class SCCModelFileHandler extends AbstractModelFileHandler {
 	}
 
 	public EObject doTransformation(EObject modelObject,
-			String commandString) {
+			String commandString, ISelection selection) {
 		if (commandString.equals(SCCTRANSFORMATIONCOMMAND)) {
 	                System.out.println("scc core transformation: " + commandString);
 			EObject transformed = (new SCCToCoreTransformation())
