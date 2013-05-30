@@ -87,7 +87,7 @@ class SCCExtensions {
         
         // Workaround for trigger-less immediate transitions
         if (transition.trigger == null) {
-            ret = transition.specification.equals('#');
+            ret = transition.specification.contains('#');
         }
         
         ret

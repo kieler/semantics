@@ -171,15 +171,23 @@ class SCLCreateExtensions {
         val assignments = new ArrayList<Assignment>
         if (effect instanceof ReactionEffect) {
             for(action : (effect as ReactionEffect).actions) {
-                action.eAllContents.filter(typeof(AssignmentExpression)).forEach [
-                    val assignment = SCL.createAssignment();
-                    assignment.assignment = it.copy
-                    assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
-                        val varRef = (it.varRef as ElementReferenceExpression);
-                        varRef.reference = (varRef.reference as Event).createVariableDeclaration();
+//                 action.eAllContents.filter(typeof(AssignmentExpression)).forEach [
+//                    val assignment = SCL.createAssignment();
+//                    assignment.assignment = it.copy
+//                    assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
+//                        val varRef = (it.varRef as ElementReferenceExpression);
+//                        varRef.reference = (varRef.reference as Event).createVariableDeclaration();
+//                    ]
+//                    assignments.add(assignment)
+//                ]
+                    val assignment = SCL.createAssignment()
+                    assignment.assignment = action.copy as AssignmentExpression
+                    assignment.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [
+                        it.reference = (it.reference as Event).createVariableDeclaration();
                     ]
-                assignments.add(assignment)
-                ]
+//                    ((assignment.assignment as AssignmentExpression).varRef as ElementReferenceExpression).reference = 
+//                        (((action as AssignmentExpression).varRef as ElementReferenceExpression).reference as Event).createVariableDeclaration();
+                    assignments.add(assignment)
             }
         }
         

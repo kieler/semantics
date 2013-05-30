@@ -102,7 +102,8 @@ class CoreToSCLOptimization {
                 // ... search the next instruction statement.
                 var Integer nextIndex = new Integer(i + 1)
                 var nextStatement = statements.get(nextIndex)
-                while ((nextIndex < statements.size - 1) && (nextStatement instanceof EmptyStatement)) { 
+//                while ((nextIndex < statements.size - 1) && (nextStatement instanceof EmptyStatement)) { 
+                while ((nextIndex < statements.size - 1) && (nextStatement.label.nullOrEmpty)) { 
                     nextIndex = nextIndex + 1;
                     nextStatement = statements.get(nextIndex) 
                 }
