@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sim.kiem.util;
+package de.cau.cs.kieler.sim.benchmark;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,6 +23,8 @@ import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
+
 /**
  * This class is intended to compile and execute SC or SJ code.
  * 
@@ -30,7 +32,7 @@ import java.util.List;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow cmot
  */
-public abstract class AbstractExecution {
+public abstract class AbstractExecution implements IBenchmarkExecution {
 
     /** The execution process. */
     private Process executionProcess = null;

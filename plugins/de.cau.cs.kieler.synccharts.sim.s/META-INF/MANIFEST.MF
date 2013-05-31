@@ -17,6 +17,10 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.synccharts.codegen.s;bundle-version="0.2.0",
  de.cau.cs.kieler.s;bundle-version="0.2.0",
  de.cau.cs.kieler.s.sim.sc;bundle-version="0.2.0",
- de.cau.cs.kieler.sc;bundle-version="0.3.0"
+ de.cau.cs.kieler.sc;bundle-version="0.3.0",
+ de.cau.cs.kieler.s.sim.sj;bundle-version="0.1.0",
+ de.cau.cs.kieler.s.sj;bundle-version="0.1.0",
+ de.cau.cs.kieler.sjl;bundle-version="1.0.0",
+ de.cau.cs.kieler.sim.benchmark;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

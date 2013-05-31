@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.103.0",
  org.json,
  de.cau.cs.kieler.sim.signals,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent;bundle-version="0.4.0"
+Export-Package: de.cau.cs.kieler.sim.benchmark

@@ -45,6 +45,7 @@ import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
 import de.cau.cs.kieler.s.sim.xtend.S2Simulation;
 import de.cau.cs.kieler.sc.SCExecution;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -296,13 +297,13 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
                 activeStatements = activeStatementsBuf.toString();
 
                 if (this.benchmark) {
-                    if (sSignalOutput.has(SCExecution.BENCHMARK_SIGNAL_CYCLES)) {
-                        Object bench = sSignalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
+                    if (sSignalOutput.has(Benchmark.BENCHMARK_SIGNAL_CYCLES)) {
+                        Object bench = sSignalOutput.get(Benchmark.BENCHMARK_SIGNAL_CYCLES);
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_CYCLES, bench);
 
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_SOURCE,
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,
                                 this.scExecution.getSourceFileSize());
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_EXECUTABLE,
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE,
                                 this.scExecution.getExecutableFileSize());
 
                     }

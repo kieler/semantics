@@ -25,7 +25,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.core.compiler.batch.BatchCompiler;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kiem.util.AbstractExecution;
+import de.cau.cs.kieler.sim.benchmark.AbstractExecution;
+
 //import org.eclipse.core.internal.boot.PlatformClassLoader;
 
 /**

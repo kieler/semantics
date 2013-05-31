@@ -28,7 +28,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kiem.util.AbstractExecution;
+import de.cau.cs.kieler.sim.benchmark.AbstractExecution;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
@@ -45,15 +46,6 @@ public class SCExecution extends AbstractExecution {
 
     /** The Constant EXECUTABLE_PREFIX. */
     private static final String EXECUTABLE_PREFIX = "SC-GENERATED-EXECUTABLE-";
-
-    /** The Constant BENCHMARK_SIGNAL. */
-    public static final String BENCHMARK_SIGNAL_CYCLES = "benchCycles";
-
-    /** The Constant BENCHMARK_SIGNAL. */
-    public static final String BENCHMARK_SIGNAL_SOURCE = "benchSource";
-
-    /** The Constant BENCHMARK_SIGNAL. */
-    public static final String BENCHMARK_SIGNAL_EXECUTABLE = "benchExecutable";
 
     /** The path for sc. */
     private static final String SC_PATH = "sc";
@@ -289,7 +281,7 @@ public class SCExecution extends AbstractExecution {
                 // fileContent.add("cJSON_AddItemToObject(value, \"value\", "
                 // + "cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
                 // fileContent.add("cJSON_AddItemToObject(value, \"present\", cJSON_CreateTrue());");
-                fileContent.add("cJSON_AddItemToObject(output, \"" + BENCHMARK_SIGNAL_CYCLES + "\""
+                fileContent.add("cJSON_AddItemToObject(output, \"" + Benchmark.BENCHMARK_SIGNAL_CYCLES + "\""
                         + ", cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
             } else {
                 fileContent.add(lineIn);
