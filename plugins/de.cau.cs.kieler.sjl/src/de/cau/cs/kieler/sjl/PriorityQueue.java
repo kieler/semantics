@@ -94,8 +94,11 @@ public class PriorityQueue<T> {
      */
     public void update(T element, int prio) {
         int oldPrio = getPrio(element);
-        remove(oldPrio);
-        insert(element, prio);
+        // Runtime optimization
+        if (prio < oldPrio) {
+            remove(oldPrio);
+            insert(element, prio);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -170,6 +173,25 @@ public class PriorityQueue<T> {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String toString() {
+        String debugString = "";
+        for (int prio = maxPrio - 1; prio >= 0; prio--) {
+            if (elements[prio] != null) {
+                Object object = (Object) elements[prio];
+                if (debugString.length() > 0) {
+                    debugString += ", ";
+                }
+                debugString += object.toString(); 
+            }
+        }
+        return debugString;
+    }
+    
+    // -------------------------------------------------------------------------
 
     /**
      * Update firstElement. This method is used internally only. It searches for the first array
@@ -178,10 +200,13 @@ public class PriorityQueue<T> {
      * maxPrio array index and then goes down to zero.
      */
     private void updateFirst() {
+        firstPrio = -1;
+        firstElement = null;
         for (int prio = maxPrio - 1; prio >= 0; prio--) {
             if (elements[prio] != null) {
                 firstElement = (T) elements[prio];
                 firstPrio = prio;
+                System.out.println("Updating "+firstElement.toString() + " to PRIO " + prio);
                 return;
             }
         }

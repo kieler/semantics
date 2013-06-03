@@ -158,8 +158,10 @@ abstract public class SJLProgram<State extends Enum<?>> {
         // Set the terminated flag for the current thread
         currentThread.terminated = true;
         // Remove the thread from the active and the alive ones
+        System.out.println("Active (before term): " + activeThreads.toString());
         activeThreads.remove(currentThread);
         aliveThreads.remove(currentThread);
+        System.out.println("Active (after term): " + activeThreads.toString());
         // Remove the thread from its parents children list
         if (currentThread.parent != null) {
             currentThread.parent.children.remove(currentThread);
@@ -243,6 +245,10 @@ abstract public class SJLProgram<State extends Enum<?>> {
     protected int currentPrio() {
         return activeThreads.getPrio(currentThread);
     }
+    
+    protected Thread getCurrentThread() {
+        return currentThread;
+    }
 
     // -------------------------------------------------------------------------
     // -- INTERNAL METHODS / CLASSES
@@ -268,11 +274,15 @@ abstract public class SJLProgram<State extends Enum<?>> {
      * The internal Thread class encompasses the parent-child relations. Fields have been declared
      * public for direct access to them.
      */
-    private class Thread {
+    protected class Thread {
         public boolean terminated;
         public State state;
         public ArrayList<Thread> children = new ArrayList<Thread>();
         public Thread parent;
+        
+        public String toString() {
+           return this.state.name() + " (term:"+this.terminated+", children:"+this.children.size()+")";
+        }
 
         public Thread(State state, Thread parent) {
             this.state = state;
