@@ -77,7 +77,7 @@ class SCLDependencyExtensions {
 
     // Checks if the given instruction is an assignment or a conditional statement and retrieves a list
     // of ElementReferenceExpressions on which this statement depends on. 
-    def ArrayList<ElementReferenceExpression> dependencyReferences(EObject instruction) {
+    def ArrayList<ElementReferenceExpression> dependencyReferences(Instruction instruction) {
         if (instruction instanceof Assignment) return dependencyReferences(instruction as Assignment) 
         if (instruction instanceof Conditional) return dependencyReferences(instruction as Conditional)
         return new ArrayList<ElementReferenceExpression>
@@ -116,7 +116,7 @@ class SCLDependencyExtensions {
         
         for(instr : iList.eAllContents.filter(typeof(Instruction)).toList) {
             if ((instr instanceof Assignment) || (instr instanceof Conditional)) {
-                val references = (instr as EObject).dependencyReferences 
+                val references = instr.dependencyReferences 
                 for (reference : references) {
                     if (reference.reference.equals(varRef.reference))
                         if (!iS.contains(instr)) iS.add((instr.eContainer as Statement));
@@ -143,7 +143,7 @@ class SCLDependencyExtensions {
     
     
     
-    def boolean isConfluentWriterAbs(EObject firstInst, EObject secondInst) {
+    def boolean isConfluentWriterAbs(Instruction firstInst, Instruction secondInst) {
         if ((!(firstInst instanceof Assignment)) || (!(secondInst instanceof Assignment))) return false
         val asgn1 = (firstInst as Assignment).assignment as AssignmentExpression
         val asgn2 = (secondInst as Assignment).assignment as AssignmentExpression
@@ -160,7 +160,7 @@ class SCLDependencyExtensions {
         return false
     }
     
-    def boolean isWriterAbs(EObject instruction) {
+    def boolean isWriterAbs(Instruction instruction) {
         if (!(instruction instanceof Assignment)) return false
         val asgn = (instruction as Assignment).assignment as AssignmentExpression
         val varRef = asgn.varRef
@@ -170,7 +170,7 @@ class SCLDependencyExtensions {
         return false
     }
 
-    def boolean isWriterRel(EObject instruction) {
+    def boolean isWriterRel(Instruction instruction) {
         if (!(instruction instanceof Assignment)) return false
         val asgn = (instruction as Assignment).assignment as AssignmentExpression
         val varRef = asgn.varRef
@@ -180,13 +180,13 @@ class SCLDependencyExtensions {
         return false
     }
     
-    def VariableDeclaration getWriteRef(EObject instruction) {
+    def VariableDeclaration getWriteRef(Instruction instruction) {
         if (!(instruction instanceof Assignment)) return null
         val asgn = (instruction as Assignment).assignment as AssignmentExpression
         return ((asgn.varRef as ElementReferenceExpression).reference as VariableDeclaration)
     }
     
-    def boolean isReader(EObject instruction, VariableDeclaration vardec) {
+    def boolean isReader(Instruction instruction, VariableDeclaration vardec) {
         if (instruction instanceof Assignment) {
             val asgn = (instruction as Assignment).assignment as AssignmentExpression
             if (asgn.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
@@ -216,7 +216,7 @@ class SCLDependencyExtensions {
     
     
     
-    def int dependencyType(EObject firstInst, EObject secondInst) {
+    def int dependencyType(Instruction firstInst, Instruction secondInst) {
         if (firstInst.isWriterAbs && secondInst.isWriterAbs && firstInst.getWriteRef==secondInst.getWriteRef &&
             !isConfluentWriterAbs(firstInst, secondInst)) return DEPENDENCY_TYPE_WW
         if (firstInst.isWriterAbs && secondInst.isWriterRel && firstInst.getWriteRef==secondInst.getWriteRef)
@@ -224,6 +224,10 @@ class SCLDependencyExtensions {
         if (firstInst.isWriterAbs && secondInst.isReader(firstInst.getWriteRef)) return DEPENDENCY_TYPE_WR
         if (firstInst.isWriterRel && secondInst.isReader(firstInst.getWriteRef)) return DEPENDENCY_TYPE_RI
         return DEPENDENCY_TYPE_UNKNOWN
+    }
+    
+    def boolean isDependencyTarget(Instruction target, Instruction source) {
+        dependencyType(source, target) != DEPENDENCY_TYPE_UNKNOWN
     }
     
     def String dependencyTypeToString(int type) {
