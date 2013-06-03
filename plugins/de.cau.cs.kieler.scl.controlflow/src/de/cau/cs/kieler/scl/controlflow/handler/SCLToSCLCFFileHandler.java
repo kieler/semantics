@@ -2,6 +2,7 @@ package de.cau.cs.kieler.scl.controlflow.handler;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
+import org.eclipse.jface.viewers.ISelection;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
 import org.yakindu.sct.ui.editor.DiagramActivator;
@@ -57,7 +58,7 @@ public class SCLToSCLCFFileHandler extends AbstractModelFileHandler {
         return injector;
     }
 
-    public EObject doTransformation(EObject modelObject, String commandString) {
+    public EObject doTransformation(EObject modelObject, String commandString, ISelection select) {
         if (commandString.equals(SCLTRANSFORMATIONCOMMAND)) {
             EObject transformed = (new SCLToSCLCFTransformation())
                     .transformSCLToSCLControlflow((Program) modelObject);
