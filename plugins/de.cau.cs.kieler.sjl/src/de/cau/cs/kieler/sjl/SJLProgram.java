@@ -158,10 +158,8 @@ abstract public class SJLProgram<State extends Enum<?>> {
         // Set the terminated flag for the current thread
         currentThread.terminated = true;
         // Remove the thread from the active and the alive ones
-        System.out.println("Active (before term): " + activeThreads.toString());
         activeThreads.remove(currentThread);
         aliveThreads.remove(currentThread);
-        System.out.println("Active (after term): " + activeThreads.toString());
         // Remove the thread from its parents children list
         if (currentThread.parent != null) {
             currentThread.parent.children.remove(currentThread);
