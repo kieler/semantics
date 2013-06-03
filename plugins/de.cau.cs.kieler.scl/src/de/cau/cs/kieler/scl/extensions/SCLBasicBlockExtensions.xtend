@@ -375,6 +375,27 @@ class SCLBasicBlockExtensions {
         
     }
     
+    def List<BasicBlock> getBasicBlockDependencyPredecessors(BasicBlock basicBlock) {
+        val predecessors = new ArrayList<BasicBlock>;
+        
+        if (!SPLIT_BLOCKS_AT_DEPENDENCY) return predecessors
+        if (!basicBlock.getHead.getInstruction.hasConcurrentDependencies) return predecessors;
+        
+        val bbInstruction = basicBlock.getHead().getInstruction
+        val depList = bbInstruction.dependencyInstructions(bbInstruction.getProgram)
+        for (targetStatement : depList) {
+            if (!bbInstruction.isInSameThreadAs(targetStatement.getInstruction) && !bbInstruction.isInMainThread &&
+                    !targetStatement.isInMainThread && bbInstruction.isDependencyTarget(targetStatement.getInstruction)
+                ) {        
+                    val sourceBlock = targetStatement.getBasicBlockByAnyStatement
+                    if (!predecessors.containsEqual(sourceBlock)) predecessors.add(sourceBlock)
+                }
+        }         
+              
+        predecessors
+    }
+    
+    
     def List<BasicBlock> getBasicBlockSuccessor(BasicBlock basicBlock) {
         val successors = new ArrayList<BasicBlock>;
         

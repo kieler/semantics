@@ -53,6 +53,10 @@ class BasicBlockModifier implements IStyleModifier {
     private static val BASICBLOCK_COLOR_RED = 180         
     private static val BASICBLOCK_COLOR_GREEN = 64         
     private static val BASICBLOCK_COLOR_BLUE = 180         
+
+    private static val BASICBLOCK_COLOR_RED2 = 255         
+    private static val BASICBLOCK_COLOR_GREEN2 = 64         
+    private static val BASICBLOCK_COLOR_BLUE2 = 128         
          
     private float BBPADDING = 5.0f  
 
@@ -124,6 +128,27 @@ class BasicBlockModifier implements IStyleModifier {
         LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines 
         LSData.xpos = - 7 
         if (wide) LSData.xpos = - 14 
+        
+        
+        var dLT = ''
+        var labelLines2 = 0
+        wide = true
+        for (dep : basicBlock.getBasicBlockDependencyPredecessors) {
+            dLT = dLT + 'dep_g' + dep.getBasicBlockIndex
+            dLT = dLT +  "\n"
+            labelLines2 = labelLines + 1
+        } 
+        val depLabelText = dLT
+        val depLabel = node.createLabel() => [
+            it.text = depLabelText
+            it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
+                setFontSize(5).setForegroundColor(BASICBLOCK_COLOR_RED2, BASICBLOCK_COLOR_GREEN2, BASICBLOCK_COLOR_BLUE2);
+        ]
+        LSData = depLabel.getData(typeof(KShapeLayout))
+        LSData.ypos = bottom - top - shapeLayout.height + 5 * labelLines2 + 5 * labelLines  
+        LSData.xpos = - 7 
+        if (wide) LSData.xpos = - 14         
+        
 
         var tLT = ''
         labelLines = 0
