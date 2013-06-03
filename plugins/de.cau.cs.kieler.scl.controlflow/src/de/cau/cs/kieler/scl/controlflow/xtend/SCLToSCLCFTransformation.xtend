@@ -77,19 +77,19 @@ class SCLToSCLCFTransformation {
     def List<Statement> transformBasicBlock(Program program, Program sourceProgram, BasicBlock basicBlock) {
         var newStatements = createNewStatementList
         val predecessors = basicBlock.getBasicBlockPredecessor;
-        
-        val guardConditional = createSCLConditional
-        
-        if (predecessors.size==0) {
+ 
+ 
+        var Expression guardExpression = null        
+         if (predecessors.size==0) {
             val expression = SText.createElementReferenceExpression
             expression.setReference(program.getDeclarationByName('GO'))
-            guardConditional.expression = expression
+            guardExpression = expression
         } else if (predecessors.size==1) {
             var predID = predecessors.head.basicBlockName
             if (predecessors.head.isPauseSurface) predID = predID + '_pre'
             val expression = SText.createElementReferenceExpression
             expression.setReference(program.getDeclarationByName(predID))
-            guardConditional.expression = expression
+            guardExpression = expression
         } else if (predecessors.size>1) {
             var predID = predecessors.head.basicBlockName
             if (predecessors.head.isPauseSurface) predID = predID + '_pre'
@@ -102,11 +102,20 @@ class SCLToSCLCFTransformation {
                 exp2.setReference(program.getDeclarationByName(predIDi))
                 expression = createOrExpression(expression, exp2) 
             }
-            guardConditional.expression = expression
+            guardExpression = expression
         }
+ 
+        val guardAssignment = createSCLAssignment(
+            createAssignmentExpression(program.getDeclarationByNameAsElemRef(basicBlock.basicBlockName),
+                guardExpression),
+            program.getDeclarationByName(basicBlock.basicBlockName)              
+        ).createStatement;
+        
+        
+        newStatements.add(guardAssignment)
 
-//        val stmt = createSCLEmptyStatement
-//        stmt.setLabel("Test")
+        val guardConditional = createSCLConditional
+        guardConditional.expression = program.getDeclarationByNameAsElemRef(basicBlock.basicBlockName)
         for(statement : basicBlock.statements) {
             if (statement.isAssignment) {
                 val stmt = statement.copy.transformVarRef(program, sourceProgram)
@@ -114,12 +123,6 @@ class SCLToSCLCFTransformation {
                 guardConditional.statements.add(stmt);
             }
         }    
-        val guardAssignment = createSCLAssignment(
-            createAssignmentExpression(program.getDeclarationByNameAsElemRef(basicBlock.basicBlockName),
-                assignBoolean(true)),
-            program.getDeclarationByName(basicBlock.basicBlockName)              
-        ).createStatement;
-        guardConditional.statements.add(guardAssignment);    
                 
         newStatements.add(guardConditional.createStatement)
         
