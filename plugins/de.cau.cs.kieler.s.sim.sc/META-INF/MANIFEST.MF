@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.annotations,
  de.cau.cs.kieler.s.sc,
  de.cau.cs.kieler.sc,
- de.cau.cs.kieler.s.sim;visibility:=reexport
+ de.cau.cs.kieler.s.sim;visibility:=reexport,
+ de.cau.cs.kieler.sim.benchmark;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.s.sim.sc

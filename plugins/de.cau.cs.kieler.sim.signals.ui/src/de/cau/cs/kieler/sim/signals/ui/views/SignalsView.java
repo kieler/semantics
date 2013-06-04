@@ -107,7 +107,7 @@ public class SignalsView extends ViewPart {
      * The default color scheme flag. The default color scheme has the black background the other
      * has a white background.
      */
-    private boolean defaultColorScheme = true;
+    private boolean defaultColorScheme = false;
 
     /** The default mode flag. The default mode has a line for each signal. */
     private int drawMode = 0;

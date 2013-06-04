@@ -13,11 +13,10 @@
  */
 package de.cau.cs.kieler.sjl;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
- * SJLProgram.
+ * The SJLProgram implements a light version of SynchronousJava (SJ) Programs.
  * 
  * @author cmot
  * @kieler.design 2013-05-23 proposed cmot
@@ -25,61 +24,45 @@ import java.util.ArrayList;
  * 
  */
 abstract public class SJLProgram<State extends Enum<?>> {
+
+    /** A flag indicating debug output should be collected. */
+    private boolean debug = false;
     
-    // A flag indicating debug output should be printed
-    static final boolean DEBUG = true; 
-    
-    // Active means NOT-paused for a tick
+    /** The debug message of the latest executed tick. */
+    private String debugMessage = "";
+
+    /**  Active means NOT-paused for a tick. */
     private PriorityQueue<Thread> activeThreads;
-    
-    // Alive means NOT-aborted and NOT-termed 
+
+    /** Alive means NOT-aborted and NOT-terminated. */
     private PriorityQueue<Thread> aliveThreads;
-    
-    // The current thread that is executed
-    Thread currentThread;
+
+    /** The current thread that is executed. */
+    private Thread currentThread;
 
     // -------------------------------------------------------------------------
 
-    public void debug(String action, Thread thread) {
-        debug(action, thread, null);
-    }
-    
-    public void debug(String action, Thread thread, State forkedOrResumedState) {
-        if (DEBUG) {
-            if (forkedOrResumedState == null) {
-                System.out.println(action + " " + thread.state + " (" +aliveThreads.getPrio(thread) + ")" );
-            }
-            else {
-                System.out.println(action + " " + thread.state + " (" +aliveThreads.getPrio(thread) + ")" + " ->" + forkedOrResumedState);
-            }
-        }
-    }
-    
-    // -------------------------------------------------------------------------
-    
+    /**
+     * Instantiates a new SJLProgram.
+     * 
+     * @param startState
+     *            the start state
+     * @param startPrio
+     *            the start priority
+     * @param maxPrio
+     *            the max priority
+     */
     public SJLProgram(State startState, int startPrio, int maxPrio) {
         // Create new active and alive priority queues
-        aliveThreads  = new PriorityQueue<Thread>(maxPrio);
+        aliveThreads = new PriorityQueue<Thread>(maxPrio);
         // Create the main thread
         Thread startThread = new Thread(startState, null);
         // Add the main thread as an alive thread
-        aliveThreads.insert(startPrio, startThread);
+        aliveThreads.insert(startThread, startPrio);
         // Set the start thread as the current thread
         currentThread = startThread;
         // Note that the active threads will be cloned from the alive threads
         // in the doTick() method
-    }
-
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-
-    public boolean doTick() {
-        // Clone the alive threads means making all alive threads active
-        activeThreads = aliveThreads.clone();
-        // Run the tick() method
-        tick();
-        // Return whether the program terminated 
-        return isTerminated();
     }
 
     // -------------------------------------------------------------------------
@@ -89,17 +72,31 @@ abstract public class SJLProgram<State extends Enum<?>> {
     abstract protected void tick();
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    public boolean doTick() {
+        // Clone the alive threads means making all alive threads active
+        activeThreads = aliveThreads.clone();
+        // Run the tick() method
+        tick();
+        // Return whether the program terminated
+        return isTerminated();
+    }
+
+    // -------------------------------------------------------------------------
 
     public boolean isTickDone() {
-        // Return whether there are no more active threads 
+        // Return whether there are no more active threads
         if (activeThreads.size == 0) {
-            if (DEBUG) {
+            if (debug) {
                 System.out.println("\n");
-                for (Object object: aliveThreads.elements) {
-                    if (object != null) {
+                for (Object object : aliveThreads.elements) {
+                    if (object != null && object instanceof SJLProgram.Thread) {
+                        // Parameterized type check is not possible
+                        @SuppressWarnings("unchecked")
                         Thread thread = (Thread) object;
                         debug("Children of", thread);
-                        for (Thread child: thread.childs) {
+                        for (Thread child : thread.children) {
                             debug("   -", child);
                         }
                     }
@@ -112,14 +109,26 @@ abstract public class SJLProgram<State extends Enum<?>> {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Checks if the whole SJLProgram has terminated. This is the case if there are no more alive
+     * threads.
+     * 
+     * @return true, if is terminated
+     */
     public boolean isTerminated() {
-        // Return whether there are no more active threads 
+        // Return whether there are no more active threads
         return (aliveThreads.size == 0);
     }
 
     // -------------------------------------------------------------------------
 
-    public State state() {
+    /**
+     * The central state() method should be used within the tick() method of derived classes
+     * to switch to the current thread.
+     *
+     * @return the state
+     */
+    protected State state() {
         // Update the current thread
         currentThread = activeThreads.getFirst();
         // Find the new currentState
@@ -128,57 +137,59 @@ abstract public class SJLProgram<State extends Enum<?>> {
     }
 
     // -------------------------------------------------------------------------
+    // -- SJ STATEMENT IMPLEMENTATIONS
+    // -------------------------------------------------------------------------
 
-    public void fork(State forkedState, int prio) {
-         debug("Forking", currentThread, forkedState);
-         // Create a new thread
-         Thread forkedThread = new Thread(forkedState, currentThread);
-         // Add child-dependency to current one
-         currentThread.childs.add(forkedThread);
-         // Add new thread as an alive & active one
-         aliveThreads.insert(prio, forkedThread);
-         activeThreads.insert(prio, forkedThread);
+    protected void fork(State forkedState, int prio) {
+        debug("Forking", currentThread, forkedState);
+        // Create a new thread
+        Thread forkedThread = new Thread(forkedState, currentThread);
+        // Add child-dependency to current one
+        currentThread.children.add(forkedThread);
+        // Add new thread as an alive & active one
+        aliveThreads.insert(forkedThread, prio);
+        activeThreads.insert(forkedThread, prio);
     }
 
     // -------------------------------------------------------------------------
 
-    public void termB() {
+    protected void termB() {
         debug("Terminating", currentThread);
-        // Set the termed flag for the current thread
-        currentThread.termed = true;
+        // Set the terminated flag for the current thread
+        currentThread.terminated = true;
         // Remove the thread from the active and the alive ones
         activeThreads.remove(currentThread);
         aliveThreads.remove(currentThread);
-        // Remove the thread from its parents childs list
+        // Remove the thread from its parents children list
         if (currentThread.parent != null) {
-            currentThread.parent.childs.remove(currentThread);
+            currentThread.parent.children.remove(currentThread);
         }
         // Note that at this point there may be descendant child threads
         // that are still active and alive!
     }
 
     // -------------------------------------------------------------------------
-    
-    public void haltB() {
+
+    protected void haltB() {
         termB();
     }
-    
+
     // -------------------------------------------------------------------------
 
-    public void abort() {
+    protected void abort() {
         debug("Aborting children of", currentThread);
         // Abort all descendants (all children and children of children...)
-        for (Thread childThread: currentThread.childs) {
+        for (Thread childThread : currentThread.children) {
             // Recursively abort children
             abort(childThread);
         }
         // Remove children
-        currentThread.childs.clear();
+        currentThread.children.clear();
     }
 
     // -------------------------------------------------------------------------
 
-    public void gotoB(State resumeState) {
+    protected void gotoB(State resumeState) {
         debug("Goto of", currentThread, resumeState);
         // Update the state label
         currentThread.state = resumeState;
@@ -186,7 +197,7 @@ abstract public class SJLProgram<State extends Enum<?>> {
 
     // -------------------------------------------------------------------------
 
-    public void pauseB(State resumeState) {
+    protected void pauseB(State resumeState) {
         // Update the state label
         gotoB(resumeState);
         // Remove the thread from the active ones (it is paused now)
@@ -195,42 +206,50 @@ abstract public class SJLProgram<State extends Enum<?>> {
     }
 
     // -------------------------------------------------------------------------
-    
-    public void prioB(int prio, State resumeState) {
+
+    protected void prioB(int prio, State resumeState) {
         // Update the state label
         gotoB(resumeState);
         // Reorder elements
-        activeThreads.update(prio, currentThread);
-        aliveThreads.update(prio, currentThread);
+        activeThreads.update(currentThread, prio);
+        aliveThreads.update(currentThread, prio);
     }
 
     // -------------------------------------------------------------------------
 
-    public boolean join() {
-        // Go thru all (direct) children and check whether they have termed
-        for (Thread child : currentThread.childs) {
-            if (!child.termed) {
+    protected boolean join() {
+        // Go thru all (direct) children and check whether they have terminated
+        for (Thread child : currentThread.children) {
+            if (!child.terminated) {
                 debug("Join failed of", currentThread);
-                // If any child not termed yet, return false
+                // If any child not terminated yet, return false
                 return false;
             }
         }
         debug("Join sucessfull of", currentThread);
-        // Return true if all childs termed
+        // Return true if all children terminated
         return true;
     }
 
     // -------------------------------------------------------------------------
-    // -- CONVENIENT METHODS
+    // -- SJ CONVENIENT STATEMENT IMPLEMENTATIONS
     // -------------------------------------------------------------------------
 
-    public void transB(State stateLabel) {
+    protected void transB(State stateLabel) {
         abort();
         gotoB(stateLabel);
     }
+    
+    protected int currentPrio() {
+        return activeThreads.getPrio(currentThread);
+    }
+    
+    protected Thread getCurrentThread() {
+        return currentThread;
+    }
 
     // -------------------------------------------------------------------------
-    // -- INTERNAL METHODS
+    // -- INTERNAL METHODS / CLASSES
     // -------------------------------------------------------------------------
 
     private void abort(Thread thread) {
@@ -239,29 +258,108 @@ abstract public class SJLProgram<State extends Enum<?>> {
         activeThreads.remove(thread);
         aliveThreads.remove(thread);
         // Abort all descendants (all children and children of children...)
-        for (Thread childThread: thread.childs) {
+        for (Thread childThread : thread.children) {
             // Recursively abort children
             abort(childThread);
         }
         // Remove children
-        thread.childs.clear();
+        thread.children.clear();
     }
-    
+
     // -------------------------------------------------------------------------
 
-    private class Thread {
-        public boolean termed;
+    /**
+     * The internal Thread class encompasses the parent-child relations. Fields have been declared
+     * public for direct access to them.
+     */
+    protected class Thread {
+        public boolean terminated;
         public State state;
-        public ArrayList<Thread> childs = new ArrayList<Thread>();
+        public ArrayList<Thread> children = new ArrayList<Thread>();
         public Thread parent;
         
-        public Thread(State state, Thread parent) {
-            this.state = state; 
-            this.parent = parent;
-            this.termed = false;
+        public String toString() {
+           return this.state.name() + " (term:"+this.terminated+", children:"+this.children.size()+")";
         }
+
+        public Thread(State state, Thread parent) {
+            this.state = state;
+            this.parent = parent;
+            this.terminated = false;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create debug messages during SJ program execution. This is internally used.
+     * 
+     * @param action
+     *            the action
+     * @param thread
+     *            the thread
+     */
+    private void debug(String action, Thread thread) {
+        debug(action, thread, null);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create debug messages during SJ program execution. This is internally used.
+     * 
+     * @param action
+     *            the action
+     * @param thread
+     *            the thread
+     * @param forkedOrResumedState
+     *            the forked or resumed state
+     */
+    private void debug(String action, Thread thread, State forkedOrResumedState) {
+        if (debug) {
+            if (forkedOrResumedState == null) {
+                debugMessage += (action + " " + thread.state + " ("
+                        + aliveThreads.getPrio(thread) + ")\n");
+            } else {
+                debugMessage += (action + " " + thread.state + " ("
+                        + aliveThreads.getPrio(thread) + ")" + " ->" + forkedOrResumedState) + "\n";
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Turn debug messages on or off.
+     *
+     * @param turnDebugOnOff the new debug
+     */
+    public void setDebug(boolean turnDebugOnOff) {
+        debug = turnDebugOnOff;
+    }
+
+    // -------------------------------------------------------------------------
+ 
+    /**
+     * Checks if debugging is turned on.
+     *
+     * @return true, if is debug
+     */
+    public boolean isDebug() {
+        return debug;
     }
     
     // -------------------------------------------------------------------------
     
+    /**
+     * Gets the debug message of the latest executed tick. Note that this will return
+     * an empty String if debug (setDebug()) is not turned on.
+     *
+     * @return the last debug message
+     */
+    public String getLastDebugMessage() {
+        return debugMessage;
+    }
+
+    // -------------------------------------------------------------------------
 }

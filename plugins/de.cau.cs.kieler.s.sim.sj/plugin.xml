@@ -11,6 +11,14 @@
                priority="6">
          </editor>
       </executionFile>
+      <executionFile
+            file="execution/s_sj.execution">
+         <editor
+               id="de.cau.cs.kieler.s.S"
+               name="KIELER S Editor"
+               priority="8">
+         </editor>
+      </executionFile>
    </extension>
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">

@@ -31,11 +31,15 @@ import org.json.JSONObject;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sim.sc.SSCSimDataComponent;
+import de.cau.cs.kieler.s.sim.sj.SSJSimDataComponent;
 import de.cau.cs.kieler.sc.SCExecution;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
+import de.cau.cs.kieler.sim.benchmark.IBenchmarkExecution;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.synccharts.Region;
@@ -63,17 +67,24 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     private static final int KIEM_PROPERTY_TRANSITIONNAME = 1;
     private static final int KIEM_PROPERTY_FULLDEBUGMODE = 2;
     private static final int KIEM_PROPERTY_BENCHMARK = 3;
-    private static final int KIEM_PROPERTY_SCDEBUGCONSOLE = 4;
+    private static final int KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE = 4;
     private static final int KIEM_PROPERTY_EXPOSELOCALSIGNALS = 5;
-    private static final int KIEM_PROPERTY_SCL = 6;
+    private static final int KIEM_PROPERTY_RUNTIME = 6; // Can be SC / SCL (SC Light) / SJ
 
     private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
     private static final String KIEM_PROPERTY_NAME_TRANSITIONNAME = "Transition Name";
     private static final String KIEM_PROPERTY_NAME_FULLDEBUGMODE = "Full Debug Mode";
     private static final String KIEM_PROPERTY_NAME_BENCHMARK = "Benchmark Mode";
-    private static final String KIEM_PROPERTY_NAME_SCDEBUGCONSOLE = "SC Debug Console";
+    private static final String KIEM_PROPERTY_NAME_RUNTIMEDEBUGCONSOLE = "Runtime Debug Console";
     private static final String KIEM_PROPERTY_NAME_EXPOSELOCALSIGNALS = "Expose Local Signals";
-    private static final String KIEM_PROPERTY_NAME_SCL = "SCL (SC Light)";
+    private static final String KIEM_PROPERTY_NAME_RUNTIME = "Runtime Environment";
+    private static final String KIEM_RUNTIME_SJ = "SJ";
+    private static final String KIEM_RUNTIME_SJL = "SJL (SJ Light)";
+    private static final String KIEM_RUNTIME_SC = "SC";
+    private static final String KIEM_RUNTIME_SCL = "SCL (SC Light)";
+    
+    /** The currently selected/used runtime. */
+    private String runtime;
 
     /** A flag indicating that debug console output is generated and should be handled. */
     private boolean debugConsole = true;
@@ -84,7 +95,11 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
-    private SSCSimDataComponent sSCSimDataComponent = new SSCSimDataComponent();
+    /** The simulation DataComponent. */
+    private JSONObjectSimulationDataComponent sSimDataComponent = null;
+    
+    /** The simulation execution. */
+    private IBenchmarkExecution sSimExecution = null;
 
     // -------------------------------------------------------------------------
 
@@ -134,7 +149,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        sSCSimDataComponent.initialize();
+        getSSimDataComponent().initialize();
     }
 
     // -------------------------------------------------------------------------
@@ -152,20 +167,20 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
         StringBuffer activeStatesBuf = new StringBuffer();
         StringBuffer activeTransitionsBuf = new StringBuffer();
 
-        JSONObject signalOutput = sSCSimDataComponent.doStep(jSONObject);
+        JSONObject signalOutput = getSSimDataComponent().doStep(jSONObject);
         if (signalOutput != null) {
             JSONArray signalOutputArray = signalOutput.names();
 
             if (this.benchmark) {
-                if (signalOutput.has(SCExecution.BENCHMARK_SIGNAL_CYCLES)) {
+                if (signalOutput.has(Benchmark.BENCHMARK_SIGNAL_CYCLES)) {
                     Object bench;
                     try {
-                        bench = signalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_SOURCE,
-                                sSCSimDataComponent.getSCExecution().getSourceFileSize());
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_EXECUTABLE,
-                                sSCSimDataComponent.getSCExecution().getExecutableFileSize());
+                        bench = signalOutput.get(Benchmark.BENCHMARK_SIGNAL_CYCLES);
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_CYCLES, bench);
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,
+                                sSimExecution.getSourceFileSize());
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE,
+                                sSimExecution.getExecutableFileSize());
                     } catch (JSONException e) {
                         // do nothing if this signal is not provided
                         // or JSON data cannot be added
@@ -288,11 +303,12 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
         properties[KIEM_PROPERTY_FULLDEBUGMODE] = new KiemProperty(
                 KIEM_PROPERTY_NAME_FULLDEBUGMODE, true);
         properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK, false);
-        properties[KIEM_PROPERTY_SCDEBUGCONSOLE] = new KiemProperty(
-                KIEM_PROPERTY_NAME_SCDEBUGCONSOLE, true);
+        properties[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE] = new KiemProperty(
+                KIEM_PROPERTY_NAME_RUNTIMEDEBUGCONSOLE, true);
         properties[KIEM_PROPERTY_EXPOSELOCALSIGNALS] = new KiemProperty(
                 KIEM_PROPERTY_NAME_EXPOSELOCALSIGNALS, false);
-        properties[KIEM_PROPERTY_SCL] = new KiemProperty(KIEM_PROPERTY_NAME_SCL, false);
+        String[] items = {KIEM_RUNTIME_SJ, KIEM_RUNTIME_SJL, KIEM_RUNTIME_SC, KIEM_RUNTIME_SCL};
+        properties[KIEM_PROPERTY_RUNTIME] = new KiemProperty(KIEM_PROPERTY_NAME_RUNTIME, new KiemPropertyTypeChoice(items), items[0]);
 
         return properties;
     }
@@ -303,7 +319,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        sSCSimDataComponent.wrapup();
+        getSSimDataComponent().wrapup();
+        sSimDataComponent = null;
+        sSimExecution = null;
     }
 
     // -------------------------------------------------------------------------
@@ -346,14 +364,14 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             syncChartOutput = URI.createURI(input.toString());
 
-            debugConsole = this.getProperties()[KIEM_PROPERTY_SCDEBUGCONSOLE + KIEM_PROPERTY_DIFF]
+            debugConsole = this.getProperties()[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE + KIEM_PROPERTY_DIFF]
                     .getValueAsBoolean();
 
             benchmark = this.getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
                     .getValueAsBoolean();
 
-            boolean scl = this.getProperties()[KIEM_PROPERTY_SCL + KIEM_PROPERTY_DIFF]
-                    .getValueAsBoolean();
+            runtime = this.getProperties()[KIEM_PROPERTY_RUNTIME + KIEM_PROPERTY_DIFF]
+                    .getValue();
 
             // If 'Full Debug Mode' is turned on then the user wants to have
             // also states visualized.
@@ -406,7 +424,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // Normal Pre operator (@requires: none)
             transformedModel = (new SyncCharts2Simulation()).transformPreOperator(transformedModel);
 
-            if (!scl) {
+            // If a LIGHT runtime is selected, that makes use of normal termination, then
+            // do NOT transform these away.
+            if (! (runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL))) {
                 // Normal Termination transitions (@requires: during actions, @before: exit actions)
                 transformedModel = (new SyncCharts2Simulation())
                         .transformNormalTermination(transformedModel);
@@ -431,7 +451,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             transformedModel = (new SyncCharts2Simulation())
                     .transformDuringAction(transformedModel);
             
-            if (scl) {
+            // If a LIGHT runtime is selected, that cannot handle weak/strong aborts, then
+            // transform these away.
+            if (runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL)) {
                 // Normal SCC Aborts (@requires: none)
                 transformedModel = (new SyncCharts2Simulation())
                         .transformSCCAborts(transformedModel);
@@ -458,10 +480,28 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 throw new KiemInitializationException("Cannot write output S file.", true, null);
             }
 
-            // Use the SSCSimulationDataComponent
-            sSCSimDataComponent.doModel2ModelTransform(monitor, program, false, this
-                    .getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
-                    .getValueAsBoolean(), debugConsole, scl);
+            
+            // If a LIGHT runtime is selected, that makes use of normal termination, then
+            // do NOT transform these away
+            boolean lightRuntime = false;
+            if (runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL)) {
+                lightRuntime = true;
+            }   
+            if (runtime.equals(KIEM_RUNTIME_SJ) || runtime.equals(KIEM_RUNTIME_SJL)) {
+                // Use the SSJSimulationDataComponent
+                SSJSimDataComponent sSJSimDataComponent = (SSJSimDataComponent) getSSimDataComponent();
+                sSJSimDataComponent.doModel2ModelTransform(monitor, program, false, this
+                        .getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
+                        .getValueAsBoolean(), debugConsole, lightRuntime);
+            }
+            if (runtime.equals(KIEM_RUNTIME_SC) || runtime.equals(KIEM_RUNTIME_SCL)) {
+                // Use the SSCSimulationDataComponent
+                SSCSimDataComponent sSCSimDataComponent = (SSCSimDataComponent) getSSimDataComponent();
+                sSCSimDataComponent.doModel2ModelTransform(monitor, program, false, this
+                        .getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
+                        .getValueAsBoolean(), debugConsole, lightRuntime);
+            }
+                
 
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
@@ -472,11 +512,38 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     // -------------------------------------------------------------------------
 
     /**
+     * Retrieves the SJ or SC simulation data component (cached in sSimDataComponent).
+     *
+     * @return the JSONObjectSimulationDataComponent of SJ or SC
+     */
+    protected JSONObjectSimulationDataComponent getSSimDataComponent() {
+        if (sSimDataComponent == null) {
+            if (runtime.equals(KIEM_RUNTIME_SJ )|| runtime.equals(KIEM_RUNTIME_SJL)) {
+                // Use the SSJSimulationDataComponent
+                SSJSimDataComponent sSJSimDataComponent = new SSJSimDataComponent();
+                // Set the global sSimDataComponent / sSimExecution
+                sSimDataComponent = sSJSimDataComponent;
+                sSimExecution = sSJSimDataComponent.getSJExecution();
+            }
+            if (runtime.equals(KIEM_RUNTIME_SC) || runtime.equals(KIEM_RUNTIME_SCL)) {
+                // Use the SSCSimulationDataComponent
+                SSCSimDataComponent sSCSimDataComponent = new SSCSimDataComponent();
+                // Set the global sSimDataComponent / sSimExecution
+                sSimDataComponent = sSCSimDataComponent;
+                sSimExecution = sSCSimDataComponent.getSCExecution();
+            }
+        }
+        return sSimDataComponent;
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
-        JSONObject initialSignals = sSCSimDataComponent.doProvideInitialVariables();
+        JSONObject initialSignals = getSSimDataComponent().doProvideInitialVariables();
 
         // filter away signals used for debugging
         // The return object to construct
