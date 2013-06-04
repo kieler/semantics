@@ -219,6 +219,24 @@ class SCLDependencyExtensions {
         getConcurrentDependencies(instruction).size > 0
     }
     
+    def List<Statement> getConcurrentTargetDependencies(Instruction instruction) {
+        val dList = new ArrayList<Statement>
+        val depList = instruction.dependencyInstructions(instruction.getProgram)
+        for (targetStatement : depList) {
+            if (!instruction.isInSameThreadAs(targetStatement.getInstruction) && !instruction.isInMainThread &&
+                    !targetStatement.isInMainThread
+                ) {
+                    if (instruction.isDependencyTarget(targetStatement.getInstruction))        
+                        dList.add(targetStatement)
+                }
+        }
+        dList
+    }
+    
+    def boolean hasConcurrentTargetDependencies(Instruction instruction) {
+        getConcurrentTargetDependencies(instruction).size != 0
+    }
+    
     
     
     

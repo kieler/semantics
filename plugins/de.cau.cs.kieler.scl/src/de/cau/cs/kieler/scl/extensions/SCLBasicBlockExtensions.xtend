@@ -65,7 +65,8 @@ class SCLBasicBlockExtensions {
         if (prevStatement.isConditional) return true
         if (prevStatement.isGoto) return true 
         if (SPLIT_BLOCKS_AT_DEPENDENCY) {
-            if (prevStatement.isAssignment && prevStatement.getInstruction.hasConcurrentDependencies) return true;
+            if (prevStatement.isAssignment && prevStatement.getInstruction.hasConcurrentTargetDependencies) return true;
+            if (statement.isAssignment && statement.getInstruction.hasConcurrentTargetDependencies) return true;
         }
 
         if (statement.asInstructionStatement.getIncomingGotos.size==0) return false
@@ -80,8 +81,11 @@ class SCLBasicBlockExtensions {
         if (statement.isConditional) return true
         if (statement.isPause) return true
         
+        var nextStatement = statement.nextStatement
+        
         if (SPLIT_BLOCKS_AT_DEPENDENCY) {
-            if (statement.isAssignment && statement.getInstruction.hasConcurrentDependencies) return true;
+            if (statement.isAssignment && statement.getInstruction.hasConcurrentTargetDependencies) return true;
+            if (nextStatement.isAssignment && nextStatement.getInstruction.hasConcurrentTargetDependencies) return true;
         }
         
         val sseq = statement.getParentStatementSequence
