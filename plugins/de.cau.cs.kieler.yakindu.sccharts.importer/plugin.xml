@@ -3,7 +3,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.category"
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.importer.commands.category"
             id="de.cau.cs.kieler.yakindu.sccharts.importer.KIXS2SCCTransformation"
             name="KIXS2SCCTransformation">
       </command>
