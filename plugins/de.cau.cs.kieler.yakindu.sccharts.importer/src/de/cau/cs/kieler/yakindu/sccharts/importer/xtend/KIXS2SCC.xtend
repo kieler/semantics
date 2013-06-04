@@ -1,24 +1,40 @@
-package de.cau.cs.kieler.yakindu.synccharts.importer.xtend
+package de.cau.cs.kieler.yakindu.sccharts.importer.xtend
 
 import de.cau.cs.kieler.synccharts.Region
 import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.SyncchartsFactory
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState
-import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition
+//import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState
+//import de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncTransition
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.yakindu.sct.model.sgraph.Choice
 import org.yakindu.sct.model.sgraph.Statechart
 import org.yakindu.sct.model.sgraph.Transition
 import de.cau.cs.kieler.synccharts.StateType
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
+import org.yakindu.sct.model.sgraph.SGraphFactory
 
-class SyncChartsExporter {
+class KIXS2SCC {
 	
+    
     
     /**
      *  Transform the scc SyncChart to a kixs SyncCharts
      */
-    def Region transformStatechart(Statechart sourceRootStatechart) {
+    def Statechart transform(Region rootRegion) {
+        val target = SGraphFactory::eINSTANCE.createStatechart();
+        target
+    }
+    
+        
+    //---------------------------------------------------------------------------------------------
+    
+    /**
+     *  Transform the scc SyncChart to a kixs SyncCharts
+     */
+    def Region transform(Statechart sourceRootStatechart) {
     	// The root Region
     	val targetRootRegion = SyncchartsFactory::eINSTANCE.createRegion()
     	// The root State
