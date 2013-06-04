@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.yakindu.synccharts.exporter;
+package de.cau.cs.kieler.yakindu.synccharts.importer.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -6,18 +6,18 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class SyncChartsExportPlugin extends AbstractUIPlugin {
+public class SyncChartsUICommands extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.yakindu.sccharts.synccharts.exporter"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "de.cau.cs.kieler.yakindu.sccharts.synccharts.importer"; //$NON-NLS-1$
 
 	// The shared instance
-	private static SyncChartsExportPlugin plugin;
-	
+	private static SyncChartsUICommands plugin;
+
 	/**
 	 * The constructor
 	 */
-	public SyncChartsExportPlugin() {
+	public SyncChartsUICommands() {
 	}
 
 	/*
@@ -27,9 +27,6 @@ public class SyncChartsExportPlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		
-		// DEBUG
-		System.out.println("==== SCL Plugin loaded ====");
 	}
 
 	/*
@@ -46,7 +43,7 @@ public class SyncChartsExportPlugin extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static SyncChartsExportPlugin getDefault() {
+	public static SyncChartsUICommands getDefault() {
 		return plugin;
 	}
 

@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SCCharts to old SyncCharts Exporter
-Bundle-SymbolicName: de.cau.cs.kieler.yakindu.synccharts.exporter;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.yakindu.synccharts.importer;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.yakindu.synccharts.exporter.SyncChartsExportPlugin
+Bundle-Activator: de.cau.cs.kieler.yakindu.synccharts.importer.SyncChartsExportPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;bundle-version="3.8.0",
  com.google.guava,

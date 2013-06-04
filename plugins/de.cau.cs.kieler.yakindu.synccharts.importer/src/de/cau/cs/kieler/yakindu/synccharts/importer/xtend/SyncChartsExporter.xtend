@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.yakindu.synccharts.exporter.xtend
+package de.cau.cs.kieler.yakindu.synccharts.importer.xtend
 
 import de.cau.cs.kieler.synccharts.Region
 import de.cau.cs.kieler.synccharts.State

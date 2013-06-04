@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.yakindu.synccharts.exporter.ui;
+package de.cau.cs.kieler.yakindu.synccharts.importer.ui;
 
 
 import org.eclipse.emf.ecore.EObject;
@@ -6,7 +6,7 @@ import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.yakindu.sct.model.sgraph.Statechart;
 
 import de.cau.cs.kieler.yakindu.sccharts.sim.s.ui.SCChartsGenericFileCommandHandler;
-import de.cau.cs.kieler.yakindu.synccharts.exporter.xtend.SyncChartsExporter;
+import de.cau.cs.kieler.yakindu.synccharts.importer.xtend.SyncChartsExporter;
 
 
 /**
@@ -19,22 +19,22 @@ public class SyncChartsExporterCommandHandler extends SCChartsGenericFileCommand
 //	 * The constructor.
 //	 */
 //	public SCChartsExporterCommandHandler() {
-//		ModelHandlerSetDiagramEditor(StatechartDiagramEditor.ID, 
-//				DiagramActivator.DIAGRAM_PREFERENCES_HINT, 
+//		ModelHandlerSetDiagramEditor(StatechartDiagramEditor.ID,
+//				DiagramActivator.DIAGRAM_PREFERENCES_HINT,
 //				true);
 //	}
-	
+
 	@Override
 	public String ModelHandlerFileExtension() {
 		return "ysc";
 	}
 
-	
+
 	@Override
 	public String ModelHandlerFileExtensionTransformed() {
 		return "kixs";
 	}
-	
+
 	public EObject SCChartsDoTransformation(EObject modelObject, String commandString) {
 		EObject transformed = (new SyncChartsExporter()).transformStatechart((Statechart) modelObject);
 		return transformed;
