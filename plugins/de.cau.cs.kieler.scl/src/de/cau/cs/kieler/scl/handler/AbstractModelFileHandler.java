@@ -169,7 +169,7 @@ public abstract class AbstractModelFileHandler extends AbstractHandler {
                                         .getFile(new Path(uri.toPlatformString(true)));
                 
                     IEditorDescriptor desc = PlatformUI.getWorkbench()
-                                            .getEditorRegistry().getDefaultEditor(file.getName());
+                                            .getEditorRegistry().getDefaultEditor(file2.getName());
              
                     final IWorkbenchPage wbPage = PlatformUI.getWorkbench()
                                             .getActiveWorkbenchWindow().getActivePage();
