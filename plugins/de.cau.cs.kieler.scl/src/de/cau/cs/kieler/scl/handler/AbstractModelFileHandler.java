@@ -69,9 +69,7 @@ public abstract class AbstractModelFileHandler extends AbstractHandler {
 	
 	public abstract Injector CreateResourceInjector();
 	
-	public Object doTransformation(EObject modelObject, String commandString, ISelection selection) {
-		return modelObject;
-	}
+	public abstract Object doTransformation(EObject modelObject, String commandString, ISelection selection);
 	
 	public void doPostProcessing(EObject modelObject) { 
 	    
