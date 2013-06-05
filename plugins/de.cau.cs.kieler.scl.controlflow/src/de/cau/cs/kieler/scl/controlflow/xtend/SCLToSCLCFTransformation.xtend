@@ -20,6 +20,7 @@ import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 import de.cau.cs.kieler.scl.scl.Assignment
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
+import java.util.ArrayList
 
 class SCLToSCLCFTransformation {
 
@@ -48,7 +49,7 @@ class SCLToSCLCFTransformation {
         targetProgram.declarations.addAll(program.declarations.copyAll)
         targetProgram.declarations.add(createVariableDeclaration('GO', 'boolean'))
         
-        val List<BasicBlock> basicBlocks = program.statements.head.getAllBasicBlocks
+        var List<BasicBlock> basicBlocks = program.statements.head.getAllBasicBlocks
 
         for(basicBlock : basicBlocks) {
             targetProgram.declarations.add(createVariableDeclaration(basicBlock.basicBlockName, 'boolean'))
@@ -56,9 +57,37 @@ class SCLToSCLCFTransformation {
                 targetProgram.declarations.add(createVariableDeclaration(basicBlock.basicBlockName + '_pre', 'boolean'))
         }
 
-        for(basicBlock : basicBlocks) {
-            targetProgram.statements.addAll(targetProgram.transformBasicBlock(program, basicBlock));    
-        }        
+
+        var changed = false
+        var basicBlockPool = program.statements.head.getAllBasicBlocks 
+        while(basicBlockPool.size>0) {
+            changed = false
+            val tempPool = ImmutableList::copyOf(basicBlockPool)
+            for(basicBlock : tempPool) {
+                var predecessors = basicBlock.getBasicBlockPredecessor
+                var depPredecessors = basicBlock.getBasicBlockDependencyPredecessors 
+                var ready = true
+                
+                for (pred : predecessors) {
+                    if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred)) {ready = false}     
+                }
+                for (pred : depPredecessors) {
+                    if (!pred.head.isPauseSurface && basicBlockPool.containsEqual(pred)) {ready = false}     
+                }
+                
+                if (ready) {
+                    targetProgram.statements.addAll(targetProgram.transformBasicBlock(program, basicBlock));
+                    basicBlockPool.removeEqual(basicBlock)
+                    changed = true
+                }    
+            }        
+            if (!changed) {
+                Debug("SCL ERROR: Program not schedulable!")
+                return targetProgram
+            }
+        }
+
+
         
         for(basicBlock : basicBlocks) {
             if (basicBlock.isPauseSurface) {
@@ -96,7 +125,7 @@ class SCLToSCLCFTransformation {
             var expression = SText.createElementReferenceExpression as Expression
             (expression as ElementReferenceExpression).setReference(program.getDeclarationByName(predID))
             for(Integer i: 1..(predecessors.size - 1)) {
-                var predIDi = predecessors.head.basicBlockName
+                var predIDi = predecessors.get(i).basicBlockName
                 if (predecessors.get(i).isPauseSurface) predIDi = predIDi + '_pre'
                 val exp2 = SText.createElementReferenceExpression 
                 exp2.setReference(program.getDeclarationByName(predIDi))
@@ -123,8 +152,10 @@ class SCLToSCLCFTransformation {
                 guardConditional.statements.add(stmt);
             }
         }    
-                
-        newStatements.add(guardConditional.createStatement)
+         
+        if (guardConditional.statements.size>0) {       
+            newStatements.add(guardConditional.createStatement)
+        }
         
         newStatements
     }
@@ -143,11 +174,17 @@ class SCLToSCLCFTransformation {
     def Statement transformVarRef(Statement statement, Program targetProgram, Program sourceProgram) {
         val instr = (statement.getInstruction as Assignment)
         val aExp = (instr.assignment as AssignmentExpression)
-        val varRef = aExp.varRef as ElementReferenceExpression
-        val varDec = sourceProgram.declarations.filter(e | e == varRef.reference).head
+//        val varRef = aExp.varRef as ElementReferenceExpression
+//        val varDec = sourceProgram.declarations.filter(e | e == varRef.reference).head
+//        
+//        val tarDec = targetProgram.getDeclarationByName(varDec.name)
+//        varRef.reference = tarDec
         
-        val tarDec = targetProgram.getDeclarationByName(varDec.name)
-        varRef.reference = tarDec
+        aExp.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[
+            val vD = sourceProgram.declarations.filter(e | e == it.reference).head
+            val tD = targetProgram.getDeclarationByName(vD.name)
+            it.reference = tD
+        ]
         
         statement 
     }

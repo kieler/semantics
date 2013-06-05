@@ -262,6 +262,18 @@ class SCLBasicBlockExtensions {
         return false
     }
     
+    def removeEqual(List<BasicBlock> basicBlocks, BasicBlock basicBlock) {
+        var i = 0
+        while (i<basicBlocks.size) {
+            val bb = basicBlocks.get(i)
+            if (bb.isEqual(basicBlock)) {
+                basicBlocks.remove(bb)
+            } else {
+                i = i + 1
+            }
+        }
+    }
+    
     def List<BasicBlock> getBasicBlocks(Statement statement) {
         val basicBlocks = new ArrayList<BasicBlock>;
         val sseq = statement.getParentStatementSequence
