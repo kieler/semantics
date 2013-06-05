@@ -15,8 +15,12 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -29,6 +33,7 @@ import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorPart;
@@ -45,6 +50,10 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
  * @see org.eclipse.core.commands.AbstractHandler
+ * 
+ * ssm: This abstract handler looks similar to the ConvertModelHandler in kieler.core.model.
+ * Should be revisited and derived from that class.
+ * 
  */
 @SuppressWarnings("restriction")
 public abstract class AbstractModelFileHandler extends AbstractHandler {
@@ -83,7 +92,46 @@ public abstract class AbstractModelFileHandler extends AbstractHandler {
             // Get input model from currently selected file in Explorer
             ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                     .getSelectionService().getSelection();
-            File file = (File) ((TreeSelection) selection).getFirstElement();
+            
+            if (selection instanceof IStructuredSelection) {
+                final Object[] elements = ((IStructuredSelection) selection).toArray();
+                final ExecutionEvent fEvent = event;
+                final ISelection fSelection = selection;
+
+                Job job = new Job("Processing model") {
+                    protected IStatus run(final IProgressMonitor monitor) {
+                        monitor.beginTask("Processing model", elements.length);
+                        for (Object object : elements) {
+                            if (monitor.isCanceled()) {
+                                break;
+                            }
+                            if (object instanceof IFile) {
+                                try {
+                                    transform(fEvent, (IFile) object, fSelection);
+                                } catch (ExecutionException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                            }
+                            monitor.worked(1);
+                        }
+                        monitor.done();
+                        return Status.OK_STATUS;
+                    }
+                    
+                };
+                job.setUser(true);
+                job.schedule();
+            }
+            
+            
+//            File file = (File) ((TreeSelection) selection).getFirstElement();
+//            transform(event, file, selection);
+            
+            return null;
+        }
+            
+        public void transform(ExecutionEvent event, IFile file, ISelection selection) throws ExecutionException {
             URI input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
             URI output = URI.createURI("");
 
@@ -193,7 +241,7 @@ public abstract class AbstractModelFileHandler extends AbstractHandler {
                 e2.printStackTrace();
             }
             
-            return null;
+//            return null;
     }
 	
     protected Map<String, String> getSaveOptions() {
