@@ -30,7 +30,7 @@ import org.yakindu.sct.model.sgraph.Event
 import org.yakindu.sct.model.sgraph.Region
 import org.yakindu.sct.model.sgraph.Statechart
 
-import de.cau.cs.kieler.yakindu.sccharts.sccharts.xtend.SCCExtensions
+import de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCExtensions
 import java.util.List
 
 /**
