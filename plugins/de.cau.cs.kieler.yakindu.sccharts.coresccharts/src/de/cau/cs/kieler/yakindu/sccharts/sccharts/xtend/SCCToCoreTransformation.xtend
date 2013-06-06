@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.yakindu.sccharts.sccharts.xtend
+package de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend
 
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 import com.google.common.collect.ImmutableList

@@ -25,7 +25,7 @@
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
                commandId="de.cau.cs.kieler.yakindu.sccharts.importer.KIXS2SCCTransformation"
-               label="Transform to Yakindu SCCharts (*.scc)"
+               label="Transform to Yakindu SCChart (scc)"
                mnemonic="K"
                style="push">
             <visibleWhen>
