@@ -4,16 +4,16 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="de.cau.cs.kieler.yakindu.sccharts.sccharts.commands.category"
-            id="de.cau.cs.kieler.yakindu.sccharts.sccharts.commands.SCCToCoreTransformation"
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.category"
+            id="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SCCToCoreTransformation"
             name="SCCToCoreTransformation">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.yakindu.sccharts.sccharts.handler.SCCModelFileHandler"
-            commandId="de.cau.cs.kieler.yakindu.sccharts.sccharts.commands.SCCToCoreTransformation">
+            class="de.cau.cs.kieler.yakindu.sccharts.coresccharts.handler.SCCModelFileHandler"
+            commandId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SCCToCoreTransformation">
       </handler>
    </extension>
    <extension
@@ -21,7 +21,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
-               id="de.cau.cs.kieler.yakindu.sccharts.sccharts.coretransformations"
+               id="de.cau.cs.kieler.yakindu.sccharts.coresccharts.coretransformations"
                label="SCCharts to Core"
                mnemonic="T">
             <separator
@@ -31,9 +31,9 @@
          </menu>
       </menuContribution>
       <menuContribution
-            locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.sccharts.coretransformations">
+            locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.yakindu.sccharts.sccharts.commands.SCCToCoreTransformation"
+               commandId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SCCToCoreTransformation"
                label="SCC to Core Transformation"
                mnemonic="A"
                style="push">

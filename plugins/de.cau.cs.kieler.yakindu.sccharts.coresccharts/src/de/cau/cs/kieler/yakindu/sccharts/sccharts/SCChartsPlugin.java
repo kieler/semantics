@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.yakindu.sccharts.sccharts;
+package de.cau.cs.kieler.yakindu.sccharts.coresccharts;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -9,11 +9,11 @@ import org.osgi.framework.BundleContext;
 public class SCChartsPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.yakindu.sccharts.sccharts"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "de.cau.cs.kieler.yakindu.sccharts.coresccharts"; //$NON-NLS-1$
 
 	// The shared instance
 	private static SCChartsPlugin plugin;
-	
+
 	/**
 	 * The constructor
 	 */

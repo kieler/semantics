@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.yakindu.sccharts.sccharts.handler;
+package de.cau.cs.kieler.yakindu.sccharts.coresccharts.handler;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
@@ -11,11 +11,11 @@ import org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
-import de.cau.cs.kieler.yakindu.sccharts.sccharts.xtend.SCCToCoreTransformation;
+import de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCToCoreTransformation;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
- * 
+ *
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
@@ -23,8 +23,8 @@ import de.cau.cs.kieler.yakindu.sccharts.sccharts.xtend.SCCToCoreTransformation;
 public class SCCModelFileHandler extends AbstractModelFileHandler {
 
         private static Injector injector = new STextStandaloneSetup().createInjectorAndDoEMFRegistration();
-        
-	public static final String SCCTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.sccharts.commands.SCCToCoreTransformation";
+
+	public static final String SCCTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SCCToCoreTransformation";
 
 	public SCCModelFileHandler() {
 	}
@@ -52,7 +52,7 @@ public class SCCModelFileHandler extends AbstractModelFileHandler {
 	public boolean ModelHandlerOpenEditor() {
 		return true;
 	}
-	
+
 	public Injector CreateResourceInjector() {
 	    return injector;
 	}
@@ -67,7 +67,7 @@ public class SCCModelFileHandler extends AbstractModelFileHandler {
 					.transformSCCConditional((Statechart) transformed);
 			return transformed;
 		}
-                
+
 		return null;
 	}
 
