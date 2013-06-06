@@ -388,7 +388,10 @@ class SCLBasicBlockExtensions {
     }
     
     def Expression getConditionalExpression(BasicBlock basicBlock) {
-        
+        if (basicBlock.statements.last.isConditional) {
+            return basicBlock.statements.last.getInstruction.asConditional.expression
+        }
+        return null
     }
     
     def List<BasicBlock> getBasicBlockDependencyPredecessors(BasicBlock basicBlock) {

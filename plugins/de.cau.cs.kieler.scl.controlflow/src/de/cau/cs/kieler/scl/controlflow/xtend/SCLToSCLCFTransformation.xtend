@@ -118,7 +118,13 @@ class SCLToSCLCFTransformation {
             if (predecessors.head.isPauseSurface) predID = predID + '_pre'
             val expression = SText.createElementReferenceExpression
             expression.setReference(program.getDeclarationByName(predID))
-            guardExpression = expression
+            if (basicBlock.isConditionalPredecessor(predecessors.head)) {
+                var andExp = predecessors.head.getConditionalExpression.copy;
+                andExp = andExp.transformExpression(program, sourceProgram);
+                guardExpression = createAndExpression(expression, andExp);                
+            } else {
+                guardExpression = expression
+            }
         } else if (predecessors.size>1) {
             var predID = predecessors.head.basicBlockName
             if (predecessors.head.isPauseSurface) predID = predID + '_pre'
@@ -187,6 +193,22 @@ class SCLToSCLCFTransformation {
         ]
         
         statement 
+    }
+    
+    def transformExpression(Expression exp, Program targetProgram, Program sourceProgram) {
+        if (exp instanceof ElementReferenceExpression) {
+            val ere = exp as ElementReferenceExpression
+            val vD = sourceProgram.declarations.filter(e | e == ere.reference).head
+                val tD = targetProgram.getDeclarationByName(vD.name)
+                ere.reference = tD
+        } else {
+            exp.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[
+                val vD = sourceProgram.declarations.filter(e | e == it.reference).head
+                val tD = targetProgram.getDeclarationByName(vD.name)
+                it.reference = tD
+            ]
+        }
+        exp
     }
      
 }
