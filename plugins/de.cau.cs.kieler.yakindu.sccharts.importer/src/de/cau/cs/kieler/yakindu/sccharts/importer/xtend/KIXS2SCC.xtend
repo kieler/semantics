@@ -13,40 +13,57 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
 import java.util.HashMap
 import org.yakindu.sct.model.sgraph.SGraphFactory
 import org.yakindu.sct.model.sgraph.Statechart
-//import de.cau.cs.kieler.synccharts.TransitionType
 
-//import org.yakindu.sct.model.sgrap.Region
-
-
-class KIXS2SCC {
-	
+/**
+ * Transformation from original KIELER (ThinkCHartsEditor) SyncCharts to the newer
+ * KIELER Yakindu based SSCCharts.
+ * 
+ * In this transformation implementation transition labels of original KIELER SyncCharts are
+ * just serialized (using functions like serializeInterface(), serializeTransitionLabel()) 
+ * and NOT build using the Yakindu SText (Synctext.xtext) grammar. When using the model the
+ * Xtext parsers automatically process the labels (this also holds for the interfaces of states).
+ * 
+ * @author cmot
+ * @kieler.design 2013-06-06 proposed cmot
+ * @kieler.rating 2013-06-06 proposed *
+ * 
+ */
+class KIXS2SCC { 
+    
+    // The following HashMaps are used to remember the mapping between
+    // original SyncCharts (S) and new Yakindu based SyncCharts (Y) in
+    // both directions S to Y (S2Y) and Y to S (Y2S).
     private var HashMap<Region, org.yakindu.sct.model.sgraph.Region>RegionS2Y;
     private var HashMap<org.yakindu.sct.model.sgraph.Region, Region>RegionY2S;
     private var HashMap<State, SyncState>StateS2Y;
     private var HashMap<SyncState, State>StateY2S;
-    //private var HashMap<Entity, Instruction>TransitionS2Y;
-    //private var HashMap<Entity, Instruction>TransitionY2S;
     
+    //---------------------------------------------------------------------------------------------
     
     /**
-     *  Transform the scc SyncChart to a kixs SyncCharts
+     * Transform the S SyncChart (kixs) to a Y SCChart (scc).
      */
     def Statechart transform(Region rootRegion) {
-        // initialize mapping
+        // Initialize mapping
         RegionS2Y = new HashMap<Region, org.yakindu.sct.model.sgraph.Region>;
         RegionY2S = new HashMap<org.yakindu.sct.model.sgraph.Region, Region>;
         StateS2Y = new HashMap<State, SyncState>;
         StateY2S = new HashMap<SyncState, State>;
         
+        // Create a new Yakindu (Y) Statechart (the SCChart) and a main region and a main state
         val targetStatechart = SGraphFactory::eINSTANCE.createStatechart();
         val mainRegion = SGraphFactory::eINSTANCE.createRegion();
         val mainState = SyncgraphFactory::eINSTANCE.createSyncState();
-        val rootState = rootRegion.states.get(0);
         targetStatechart.regions.add(mainRegion);
         mainRegion.vertices.add(mainState);
+        
+        // Get a handle to the main/root state of the SyncChart (S)
+        val rootState = rootRegion.states.get(0);
+
+        // Name the Y Statechart, get the name from the S root state
         mainState.setName(rootState.label);
         
-        val interface = rootState.interface;
+        val interface = rootState.serializeInterface;
         mainState.setSpecification(interface);
         
         // First create all states
@@ -54,16 +71,21 @@ class KIXS2SCC {
             region.transform(mainState);
         }
         
-        // Now create all transitions
+        // Then create all transitions
         val allTransitions = rootState.eAllContents.filter(typeof(Transition)).toIterable;
         for (transition : allTransitions) {
             transition.transform;
         }
         
+        // After all return the new created Y Statechart (SCChart)
         targetStatechart
     }
     
+    //---------------------------------------------------------------------------------------------
     
+    /**
+     * Transform a S state and put it into a target Y region. Also fill the mappings of states here.
+     */
     def void transform(State state, org.yakindu.sct.model.sgraph.Region target) {
         
         val newState = SyncgraphFactory::eINSTANCE.createSyncState();
@@ -75,14 +97,19 @@ class KIXS2SCC {
         newState.setIsFinal(state.isFinal);
         newState.setIsInitial(state.isInitial);
         
-        newState.setSpecification(state.interface);
+        newState.setSpecification(state.serializeInterface);
 
         for (region : state.regions) {
             region.transform(newState);
         }
         
     }
+
+    //---------------------------------------------------------------------------------------------
     
+    /**
+     * Transform a S region and put it into a target Y state. Also fill the mappings of regions here.
+     */
     def void transform(Region region, SyncState target) {
         val newRegion = SGraphFactory::eINSTANCE.createRegion();
         RegionY2S.put(newRegion, region);
@@ -95,7 +122,12 @@ class KIXS2SCC {
         }
     }
     
-    
+    //---------------------------------------------------------------------------------------------
+
+    /**
+     * Transform a S transition and connect the transformation result, a Y transition accordingly
+     * using the mapping (transformedState()).
+     */
     def void transform(Transition transition) {
         
         val newTransition = SyncgraphFactory::eINSTANCE.createSyncTransition();
@@ -116,24 +148,30 @@ class KIXS2SCC {
         }
         
         // Transition serialization
-        newTransition.setSpecification(transition.transitionLabel);                          
+        newTransition.setSpecification(transition.serializeTransitionLabel);                          
     }
     
+    //---------------------------------------------------------------------------------------------
     
-    // Interface serialization
-    def String getInterface(State state) {
+    /**
+     * Interface serialization.
+     */
+    def String serializeInterface(State state) {
         '''
     «FOR signal : state.signals SEPARATOR ""»
-        «IF (signal.isInput)»input «ENDIF»«IF (signal.isOutput)»output «ENDIF»signal «signal.name»«IF (signal.type != ValueType::PURE)»:«signal.transformSignalType»«ENDIF»«IF (!signal.initialValue.nullOrEmpty)» = «signal.initialValue»«ENDIF»«IF (signal.combineOperator != CombineOperator::NONE)» with «signal.transformCombineOperator»«ENDIF»;
+        «IF (signal.isInput)»input «ENDIF»«IF (signal.isOutput)»output «ENDIF»signal «signal.name»«IF (signal.type != ValueType::PURE)»:«signal.serializeSignalType»«ENDIF»«IF (!signal.initialValue.nullOrEmpty)» = «signal.initialValue»«ENDIF»«IF (signal.combineOperator != CombineOperator::NONE)» with «signal.serializeCombineOperator»«ENDIF»;
     «ENDFOR»
         '''
     }
     
  
    //---------------------------------------------------------------------------------------------
+   //---------------------------------------------------------------------------------------------
      
-    
-    def String transformCombineOperator(Signal signal) {
+    /**
+     * Combine operator function serialization.
+     */
+    def String serializeCombineOperator(Signal signal) {
         if (signal.combineOperator == CombineOperator::ADD) return {"'+'"}
         if (signal.combineOperator == CombineOperator::MULT) return {"'*'"}
         if (signal.combineOperator == CombineOperator::MAX) return {"'max'"}
@@ -141,23 +179,31 @@ class KIXS2SCC {
         if (signal.combineOperator == CombineOperator::OR) return {"'or'"}
         if (signal.combineOperator == CombineOperator::AND) return {"'and'"}
         if (signal.combineOperator == CombineOperator::HOST) return {"'host'"}
-        // not supported
+        // Not supported
         return null;
     }
 
+    //---------------------------------------------------------------------------------------------
     
-    def String transformSignalType(Signal signal) {
+    /**
+     * Signal type serialization.
+     */
+    def String serializeSignalType(Signal signal) {
         if (signal.type == ValueType::INT) return {"integer"}
         if (signal.type == ValueType::BOOL) return {"boolean"}
         if (signal.type == ValueType::STRING) return {"string"}
         //if (signal.type == ValueType::FLOAT) return {"real"}
         //if (signal.type == ValueType::DOUBLE) return {"real"}
-        // not supported
+        // Not supported
         return null;
     }
     
-    // Transition serialization
-    def String getTransitionLabel(Transition transition) {
+    //---------------------------------------------------------------------------------------------
+
+    /**
+     * Transition label serialization.
+     */
+    def String serializeTransitionLabel(Transition transition) {
         if (transition.label.nullOrEmpty) {
             return "";
         }
@@ -165,18 +211,18 @@ class KIXS2SCC {
         var newLabel = transition.label.replaceAll(" and ", " && ").replace(" or ", " || ").replace(" = ", " == ").replace("#", "");
         if (!(transition.trigger instanceof ValuedObjectReference)) {
             if (newLabel.contains("/")) {
-                // effect
+                // Effect
                 if (newLabel.trim.indexOf("/") == 0) {
-                    // no trigger but effect
-                    // nothing to change to newLabel                         
+                    // No trigger but effect
+                    // Nothing to change to newLabel                         
                 }
                 else {
-                    // trigger and effect
+                    // Trigger and effect
                     newLabel = "[" + newLabel.substring(0, newLabel.indexOf("/")) + "] " + newLabel.substring(newLabel.indexOf("/"));
                 }
             }
             else {
-                // no effect
+                // No effect
                 newLabel = "[" + newLabel.substring(0) + "]";
             }
         }
@@ -186,7 +232,12 @@ class KIXS2SCC {
         }
         return newLabel;
     }
+
+    //---------------------------------------------------------------------------------------------
     
+    /**
+     *  Convert serialization of a label containing ?-Function to valueof-Function.
+     */
     def String convertValueOf(String label) {
         var returnLabel = "";
         if (!label.contains("?")) {
@@ -202,7 +253,13 @@ class KIXS2SCC {
         return returnLabel
     }
     
+    //---------------------------------------------------------------------------------------------
     
+    /**
+     * Helper function that returns the next of the tests characters that should indicate that
+     * an signal/variable name has ended (because these characters are forbidden inside
+     * signal/variable names).
+     */
     def int getIndexOfSeparator(String text) {
         val i1 = text.indexOf(" ");
         val i2 = text.indexOf(")");
@@ -214,6 +271,10 @@ class KIXS2SCC {
         val i8 = text.indexOf("&");
         val i9 = text.indexOf("|");
         val i10 = text.indexOf("*");
+        val i11 = text.indexOf(",");
+        val i12 = text.indexOf("}");
+        val i13 = text.indexOf("\\");
+        val i14 = text.indexOf("=");
         var returnIndex = text.length;
         if (i1 > 0) {returnIndex = returnIndex.min(i1);}
         if (i2 > 0) {returnIndex = returnIndex.min(i2);}
@@ -225,9 +286,18 @@ class KIXS2SCC {
         if (i8 > 0) {returnIndex = returnIndex.min(i8);}
         if (i9 > 0) {returnIndex = returnIndex.min(i9);}
         if (i10 > 0) {returnIndex = returnIndex.min(i10);}
+        if (i11 > 0) {returnIndex = returnIndex.min(i11);}
+        if (i12 > 0) {returnIndex = returnIndex.min(i12);}
+        if (i13 > 0) {returnIndex = returnIndex.min(i13);}
+        if (i14 > 0) {returnIndex = returnIndex.min(i14);}
         return returnIndex;
     }
     
+    //---------------------------------------------------------------------------------------------
+
+    /**
+     *  Helper function to realize a minimum function for two integer values.
+     */
     def int min(int first, int second) {
         if (second < first) {
             return second
@@ -235,6 +305,11 @@ class KIXS2SCC {
         return first;
     }
         
+    //---------------------------------------------------------------------------------------------
+
+    /**
+     *  Helper function that searches for a test string inside a text string.
+     */
     def boolean contains(String text, String test) {
         if (text.nullOrEmpty) {
             return false;
@@ -243,19 +318,32 @@ class KIXS2SCC {
     }
         
     //---------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------
     
+    /**
+     *  Return a SyncChart state from a Yakindu SCChart state.
+     */
     def State getOriginalState(SyncState state) {
         StateY2S.get(state);
     }
 
+    /**
+     *  Return a Yakindu SCChart state from a SyncChart state.
+     */
     def SyncState getTransformedState(State state) {
         StateS2Y.get(state);
     }
     
+    /**
+     *  Return a SyncChart region from a Yakindu SCChart region.
+     */
     def Region getOriginalRegion(org.yakindu.sct.model.sgraph.Region region) {
         RegionY2S.get(region);
     }
 
+    /**
+     *  Return a Yakindu SCChart region from a SyncChart region.
+     */
     def org.yakindu.sct.model.sgraph.Region getTransformedRegion(Region region) {
         RegionS2Y.get(region);
     }
