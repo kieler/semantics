@@ -13,6 +13,7 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
 import java.util.HashMap
 import org.yakindu.sct.model.sgraph.SGraphFactory
 import org.yakindu.sct.model.sgraph.Statechart
+import de.cau.cs.kieler.synccharts.Action
 
 /**
  * Transformation from original KIELER (ThinkCHartsEditor) SyncCharts to the newer
@@ -98,6 +99,28 @@ class KIXS2SCC {
         newState.setIsInitial(state.isInitial);
         
         newState.setSpecification(state.serializeInterface);
+        
+        // Convert suspend, during, entry and exit actions
+        var localReactions = "";
+        if (state.suspensionTrigger != null) {
+               localReactions = localReactions.concat("Suspend: ").concat(state.suspensionTrigger.serializeActionLabel).concat(";\n");
+        }
+        if (!state.entryActions.nullOrEmpty) {
+            for (action : state.entryActions) {
+               localReactions = localReactions.concat("Entry: ").concat(action.serializeActionLabel).concat(";\n");
+            }
+        }
+        if (!state.innerActions.nullOrEmpty) {
+            for (action : state.innerActions) {
+               localReactions = localReactions.concat("During: ").concat(action.serializeActionLabel).concat(";\n");
+            }
+        }
+        if (!state.exitActions.nullOrEmpty) {
+            for (action : state.exitActions) {
+               localReactions = localReactions.concat("Exit: ").concat(action.serializeActionLabel).concat(";\n");
+            }
+        }
+        newState.setSpecification(newState.specification + "\n" + localReactions);
 
         for (region : state.regions) {
             region.transform(newState);
@@ -148,11 +171,11 @@ class KIXS2SCC {
         }
         
         // Transition serialization
-        newTransition.setSpecification(transition.serializeTransitionLabel);                          
+        newTransition.setSpecification(transition.serializeActionLabel(""));                          
     }
     
     //---------------------------------------------------------------------------------------------
-    
+
     /**
      * Interface serialization.
      */
@@ -201,15 +224,18 @@ class KIXS2SCC {
     //---------------------------------------------------------------------------------------------
 
     /**
-     * Transition label serialization.
+     * Action/Transition label serialization.
      */
-    def String serializeTransitionLabel(Transition transition) {
-        if (transition.label.nullOrEmpty) {
+    def String serializeActionLabel(Action action) {
+        return action.serializeActionLabel("");
+    }
+    def String serializeActionLabel(Action action, String prefix) {
+        if (action.label.nullOrEmpty) {
             return "";
         }
-        val immediate = transition.label.contains("#");
-        var newLabel = transition.label.replaceAll(" and ", " && ").replace(" or ", " || ").replace(" = ", " == ").replace("#", "");
-        if (!(transition.trigger instanceof ValuedObjectReference)) {
+        val immediate = action.label.contains("#");
+        var newLabel = prefix + action.label.replaceAll(" and ", " && ").replace(" or ", " || ").replace(" = ", " == ").replace("#", "");
+        if (!(action.trigger instanceof ValuedObjectReference)) {
             if (newLabel.contains("/")) {
                 // Effect
                 if (newLabel.trim.indexOf("/") == 0) {
