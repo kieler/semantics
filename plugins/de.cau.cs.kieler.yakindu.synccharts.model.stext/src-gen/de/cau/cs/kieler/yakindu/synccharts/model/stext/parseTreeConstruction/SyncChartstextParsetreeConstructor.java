@@ -1662,11 +1662,11 @@ protected class SuspendEffect_SuspendKeyword_1 extends KeywordToken  {
  *
  * LocalReactionTrigger returns sgraph::Trigger:
  * 
- * 	{ReactionTrigger} stateReaction=StateReaction ("&&" reactionTrigger=ReactionTrigger?)?;
+ * 	{ReactionTrigger} stateReaction=StateReaction (":" reactionTrigger=ReactionTrigger?)?;
  *
  **/
 
-// {ReactionTrigger} stateReaction=StateReaction ("&&" reactionTrigger=ReactionTrigger?)?
+// {ReactionTrigger} stateReaction=StateReaction (":" reactionTrigger=ReactionTrigger?)?
 protected class LocalReactionTrigger_Group extends GroupToken {
 	
 	public LocalReactionTrigger_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1768,7 +1768,7 @@ protected class LocalReactionTrigger_StateReactionAssignment_1 extends Assignmen
 	}	
 }
 
-// ("&&" reactionTrigger=ReactionTrigger?)?
+// (":" reactionTrigger=ReactionTrigger?)?
 protected class LocalReactionTrigger_Group_2 extends GroupToken {
 	
 	public LocalReactionTrigger_Group_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1790,16 +1790,16 @@ protected class LocalReactionTrigger_Group_2 extends GroupToken {
 
 }
 
-// "&&"
-protected class LocalReactionTrigger_AmpersandAmpersandKeyword_2_0 extends KeywordToken  {
+// ":"
+protected class LocalReactionTrigger_ColonKeyword_2_0 extends KeywordToken  {
 	
-	public LocalReactionTrigger_AmpersandAmpersandKeyword_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public LocalReactionTrigger_ColonKeyword_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getLocalReactionTriggerAccess().getAmpersandAmpersandKeyword_2_0();
+		return grammarAccess.getLocalReactionTriggerAccess().getColonKeyword_2_0();
 	}
 
     @Override
@@ -1852,7 +1852,7 @@ protected class LocalReactionTrigger_ReactionTriggerAssignment_2_1 extends Assig
 	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
 		if(value == inst.getEObject() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new LocalReactionTrigger_AmpersandAmpersandKeyword_2_0(lastRuleCallOrigin, next, actIndex, consumed);
+			case 0: return new LocalReactionTrigger_ColonKeyword_2_0(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	

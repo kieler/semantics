@@ -229,7 +229,7 @@ public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} stateReaction=StateReaction ("&&" reactionTrigger=ReactionTrigger?)?;
+	//	{ReactionTrigger} stateReaction=StateReaction (":" reactionTrigger=ReactionTrigger?)?;
 	public SynctextGrammarAccess.LocalReactionTriggerElements getLocalReactionTriggerAccess() {
 		return gaSynctext.getLocalReactionTriggerAccess();
 	}

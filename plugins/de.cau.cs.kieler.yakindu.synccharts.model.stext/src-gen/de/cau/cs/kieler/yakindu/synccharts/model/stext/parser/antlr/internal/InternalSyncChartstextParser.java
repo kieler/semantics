@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_BOOL", "RULE_FLOAT", "RULE_HEX", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'static'", "'='", "';'", "'input'", "'output'", "'signal'", "':'", "'with'", "'extern'", "'('", "')'", "'/'", "'Suspend'", "'&&'", "'Entry'", "'During'", "'Exit'", "'#'", "'['", "']'", "','", "'pre'", "'@@statechart@@'", "'@@state@@'", "'@@transition@@'", "'namespace'", "'interface'", "'internal'", "'event'", "'local'", "'in'", "'out'", "'var'", "'readonly'", "'external'", "'operation'", "'default'", "'else'", "'entry'", "'exit'", "'always'", "'oncycle'", "'raise'", "'valueof'", "'active'", "'.'", "'>'", "'?'", "'||'", "'!'", "'^'", "'|'", "'&'", "'\\'none\\''", "'\\'+\\''", "'\\'*\\''", "'\\'max\\''", "'\\'min\\''", "'\\'or\\''", "'\\'and\\''", "'\\'host\\''", "'after'", "'every'", "'*='", "'/='", "'%='", "'+='", "'-='", "'<<='", "'>>='", "'&='", "'^='", "'|='", "'<<'", "'>>'", "'+'", "'-'", "'*'", "'%'", "'~'", "'<'", "'<='", "'>='", "'=='", "'!='", "'s'", "'ms'", "'us'", "'ns'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_BOOL", "RULE_FLOAT", "RULE_HEX", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'static'", "'='", "';'", "'input'", "'output'", "'signal'", "':'", "'with'", "'extern'", "'('", "')'", "'/'", "'Suspend'", "'Entry'", "'During'", "'Exit'", "'#'", "'['", "']'", "','", "'pre'", "'@@statechart@@'", "'@@state@@'", "'@@transition@@'", "'namespace'", "'interface'", "'internal'", "'event'", "'local'", "'in'", "'out'", "'var'", "'readonly'", "'external'", "'operation'", "'default'", "'else'", "'entry'", "'exit'", "'always'", "'oncycle'", "'raise'", "'valueof'", "'active'", "'.'", "'>'", "'?'", "'||'", "'&&'", "'!'", "'^'", "'|'", "'&'", "'\\'none\\''", "'\\'+\\''", "'\\'*\\''", "'\\'max\\''", "'\\'min\\''", "'\\'or\\''", "'\\'and\\''", "'\\'host\\''", "'after'", "'every'", "'*='", "'/='", "'%='", "'+='", "'-='", "'<<='", "'>>='", "'&='", "'^='", "'|='", "'<<'", "'>>'", "'+'", "'-'", "'*'", "'%'", "'~'", "'<'", "'<='", "'>='", "'=='", "'!='", "'s'", "'ms'", "'us'", "'ns'"
     };
     public static final int RULE_ID=4;
     public static final int T__29=29;
@@ -507,7 +507,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( ((LA4_0>=RULE_ID && LA4_0<=RULE_INT)||LA4_0==14||(LA4_0>=17 && LA4_0<=19)||LA4_0==22||LA4_0==25||(LA4_0>=28 && LA4_0<=32)||(LA4_0>=39 && LA4_0<=58)) ) {
+                if ( ((LA4_0>=RULE_ID && LA4_0<=RULE_INT)||LA4_0==14||(LA4_0>=17 && LA4_0<=19)||LA4_0==22||LA4_0==25||(LA4_0>=27 && LA4_0<=31)||(LA4_0>=38 && LA4_0<=57)) ) {
                     alt4=1;
                 }
 
@@ -1448,7 +1448,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt11=2;
             int LA11_0 = input.LA(1);
 
-            if ( ((LA11_0>=RULE_ID && LA11_0<=RULE_INT)||(LA11_0>=28 && LA11_0<=32)) ) {
+            if ( ((LA11_0>=RULE_ID && LA11_0<=RULE_INT)||(LA11_0>=27 && LA11_0<=31)) ) {
                 alt11=1;
             }
             switch (alt11) {
@@ -1462,10 +1462,10 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
-                    if ( ((LA10_0>=28 && LA10_0<=30)) ) {
+                    if ( ((LA10_0>=27 && LA10_0<=29)) ) {
                         alt10=1;
                     }
-                    else if ( ((LA10_0>=RULE_ID && LA10_0<=RULE_INT)||(LA10_0>=31 && LA10_0<=32)) ) {
+                    else if ( ((LA10_0>=RULE_ID && LA10_0<=RULE_INT)||(LA10_0>=30 && LA10_0<=31)) ) {
                         alt10=2;
                     }
                     else {
@@ -1565,7 +1565,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt12=2;
             int LA12_0 = input.LA(1);
 
-            if ( ((LA12_0>=RULE_ID && LA12_0<=RULE_STRING)||LA12_0==23||LA12_0==35||(LA12_0>=57 && LA12_0<=58)||LA12_0==63||(LA12_0>=89 && LA12_0<=90)||LA12_0==93) ) {
+            if ( ((LA12_0>=RULE_ID && LA12_0<=RULE_STRING)||LA12_0==23||LA12_0==34||(LA12_0>=56 && LA12_0<=57)||LA12_0==63||(LA12_0>=89 && LA12_0<=90)||LA12_0==93) ) {
                 alt12=1;
             }
             else if ( (LA12_0==26) ) {
@@ -1815,7 +1815,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLocalReactionTrigger"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:670:1: ruleLocalReactionTrigger returns [EObject current=null] : ( () ( (lv_stateReaction_1_0= ruleStateReaction ) ) (otherlv_2= '&&' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )? ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:670:1: ruleLocalReactionTrigger returns [EObject current=null] : ( () ( (lv_stateReaction_1_0= ruleStateReaction ) ) (otherlv_2= ':' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )? ) ;
     public final EObject ruleLocalReactionTrigger() throws RecognitionException {
         EObject current = null;
 
@@ -1828,11 +1828,11 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:673:28: ( ( () ( (lv_stateReaction_1_0= ruleStateReaction ) ) (otherlv_2= '&&' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )? ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:674:1: ( () ( (lv_stateReaction_1_0= ruleStateReaction ) ) (otherlv_2= '&&' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )? )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:673:28: ( ( () ( (lv_stateReaction_1_0= ruleStateReaction ) ) (otherlv_2= ':' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )? ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:674:1: ( () ( (lv_stateReaction_1_0= ruleStateReaction ) ) (otherlv_2= ':' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )? )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:674:1: ( () ( (lv_stateReaction_1_0= ruleStateReaction ) ) (otherlv_2= '&&' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )? )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:674:2: () ( (lv_stateReaction_1_0= ruleStateReaction ) ) (otherlv_2= '&&' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )?
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:674:1: ( () ( (lv_stateReaction_1_0= ruleStateReaction ) ) (otherlv_2= ':' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )? )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:674:2: () ( (lv_stateReaction_1_0= ruleStateReaction ) ) (otherlv_2= ':' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )?
             {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:674:2: ()
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:675:5: 
@@ -1882,28 +1882,28 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:698:2: (otherlv_2= '&&' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )?
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:698:2: (otherlv_2= ':' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )? )?
             int alt14=2;
             int LA14_0 = input.LA(1);
 
-            if ( (LA14_0==27) ) {
+            if ( (LA14_0==20) ) {
                 alt14=1;
             }
             switch (alt14) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:698:4: otherlv_2= '&&' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )?
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:698:4: otherlv_2= ':' ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )?
                     {
-                    otherlv_2=(Token)match(input,27,FOLLOW_27_in_ruleLocalReactionTrigger1387); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,20,FOLLOW_20_in_ruleLocalReactionTrigger1387); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_2, grammarAccess.getLocalReactionTriggerAccess().getAmpersandAmpersandKeyword_2_0());
+                          	newLeafNode(otherlv_2, grammarAccess.getLocalReactionTriggerAccess().getColonKeyword_2_0());
                           
                     }
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:702:1: ( (lv_reactionTrigger_3_0= ruleReactionTrigger ) )?
                     int alt13=2;
                     int LA13_0 = input.LA(1);
 
-                    if ( ((LA13_0>=RULE_ID && LA13_0<=RULE_INT)||(LA13_0>=31 && LA13_0<=32)) ) {
+                    if ( ((LA13_0>=RULE_ID && LA13_0<=RULE_INT)||(LA13_0>=30 && LA13_0<=31)) ) {
                         alt13=1;
                     }
                     switch (alt13) {
@@ -2034,17 +2034,17 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:741:1: (this_Entry_0= ruleEntry | this_Inside_1= ruleInside | this_Exit_2= ruleExit )
             int alt15=3;
             switch ( input.LA(1) ) {
-            case 28:
+            case 27:
                 {
                 alt15=1;
                 }
                 break;
-            case 29:
+            case 28:
                 {
                 alt15=2;
                 }
                 break;
-            case 30:
+            case 29:
                 {
                 alt15=3;
                 }
@@ -2215,7 +2215,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,28,FOLLOW_28_in_ruleEntry1649); if (state.failed) return current;
+            otherlv_1=(Token)match(input,27,FOLLOW_27_in_ruleEntry1649); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getEntryAccess().getEntryKeyword_1());
@@ -2312,7 +2312,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,29,FOLLOW_29_in_ruleInside1741); if (state.failed) return current;
+            otherlv_1=(Token)match(input,28,FOLLOW_28_in_ruleInside1741); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getInsideAccess().getDuringKeyword_1());
@@ -2409,7 +2409,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,30,FOLLOW_30_in_ruleExit1833); if (state.failed) return current;
+            otherlv_1=(Token)match(input,29,FOLLOW_29_in_ruleExit1833); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getExitAccess().getExitKeyword_1());
@@ -2517,7 +2517,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt16=2;
             int LA16_0 = input.LA(1);
 
-            if ( (LA16_0==31) ) {
+            if ( (LA16_0==30) ) {
                 alt16=1;
             }
             switch (alt16) {
@@ -2527,7 +2527,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:891:1: (lv_isImmediate_1_0= '#' )
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:892:3: lv_isImmediate_1_0= '#'
                     {
-                    lv_isImmediate_1_0=(Token)match(input,31,FOLLOW_31_in_ruleReactionTrigger1931); if (state.failed) return current;
+                    lv_isImmediate_1_0=(Token)match(input,30,FOLLOW_30_in_ruleReactionTrigger1931); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_isImmediate_1_0, grammarAccess.getReactionTriggerAccess().getIsImmediateNumberSignKeyword_1_0());
@@ -2598,7 +2598,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( (LA18_0==RULE_ID) ) {
                 alt18=1;
             }
-            else if ( (LA18_0==32) ) {
+            else if ( (LA18_0==31) ) {
                 alt18=2;
             }
             else {
@@ -2656,7 +2656,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:942:6: (otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']' )
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:942:8: otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']'
                     {
-                    otherlv_4=(Token)match(input,32,FOLLOW_32_in_ruleReactionTrigger2009); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,31,FOLLOW_31_in_ruleReactionTrigger2009); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getReactionTriggerAccess().getLeftSquareBracketKeyword_3_1_0());
@@ -2697,7 +2697,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_6=(Token)match(input,33,FOLLOW_33_in_ruleReactionTrigger2042); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,32,FOLLOW_32_in_ruleReactionTrigger2042); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_6, grammarAccess.getReactionTriggerAccess().getRightSquareBracketKeyword_3_1_2());
@@ -2848,7 +2848,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 int alt19=2;
                 int LA19_0 = input.LA(1);
 
-                if ( (LA19_0==34) && (synpred1_InternalSyncChartstext())) {
+                if ( (LA19_0==33) && (synpred1_InternalSyncChartstext())) {
                     alt19=1;
                 }
 
@@ -2860,7 +2860,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1013:3: ( ( ',' )=>otherlv_2= ',' )
             	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1013:4: ( ',' )=>otherlv_2= ','
             	    {
-            	    otherlv_2=(Token)match(input,34,FOLLOW_34_in_ruleReactionEffect2166); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,33,FOLLOW_33_in_ruleReactionEffect2166); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getReactionEffectAccess().getCommaKeyword_2_0());
@@ -3016,12 +3016,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 alt20=2;
                 }
                 break;
-            case 58:
+            case 57:
                 {
                 alt20=3;
                 }
                 break;
-            case 35:
+            case 34:
                 {
                 alt20=4;
                 }
@@ -3031,7 +3031,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 alt20=5;
                 }
                 break;
-            case 57:
+            case 56:
                 {
                 alt20=6;
                 }
@@ -3272,7 +3272,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,35,FOLLOW_35_in_rulePreValueExpression2509); if (state.failed) return current;
+            otherlv_1=(Token)match(input,34,FOLLOW_34_in_rulePreValueExpression2509); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getPreValueExpressionAccess().getPreKeyword_1());
@@ -3408,17 +3408,17 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1196:1: (this_StatechartRoot_0= ruleStatechartRoot | this_StateRoot_1= ruleStateRoot | this_TransitionRoot_2= ruleTransitionRoot )
             int alt21=3;
             switch ( input.LA(1) ) {
-            case 36:
+            case 35:
                 {
                 alt21=1;
                 }
                 break;
-            case 37:
+            case 36:
                 {
                 alt21=2;
                 }
                 break;
-            case 38:
+            case 37:
                 {
                 alt21=3;
                 }
@@ -3578,7 +3578,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1246:1: (otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) ) )
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1246:3: otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) )
             {
-            otherlv_0=(Token)match(input,36,FOLLOW_36_in_ruleStatechartRoot2785); if (state.failed) return current;
+            otherlv_0=(Token)match(input,35,FOLLOW_35_in_ruleStatechartRoot2785); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getStatechartRootAccess().getStatechartKeyword_0());
@@ -3699,7 +3699,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1289:1: (otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) ) )
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1289:3: otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) )
             {
-            otherlv_0=(Token)match(input,37,FOLLOW_37_in_ruleStateRoot2889); if (state.failed) return current;
+            otherlv_0=(Token)match(input,36,FOLLOW_36_in_ruleStateRoot2889); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getStateRootAccess().getStateKeyword_0());
@@ -3820,7 +3820,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1332:1: (otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) ) )
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1332:3: otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) )
             {
-            otherlv_0=(Token)match(input,38,FOLLOW_38_in_ruleTransitionRoot2993); if (state.failed) return current;
+            otherlv_0=(Token)match(input,37,FOLLOW_37_in_ruleTransitionRoot2993); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getTransitionRootAccess().getTransitionKeyword_0());
@@ -3960,14 +3960,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt22=2;
             int LA22_0 = input.LA(1);
 
-            if ( (LA22_0==39) ) {
+            if ( (LA22_0==38) ) {
                 alt22=1;
             }
             switch (alt22) {
                 case 1 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1383:4: otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) )
                     {
-                    otherlv_1=(Token)match(input,39,FOLLOW_39_in_ruleStatechartSpecification3109); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,38,FOLLOW_38_in_ruleStatechartSpecification3109); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getStatechartSpecificationAccess().getNamespaceKeyword_1_0());
@@ -4020,7 +4020,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 int alt23=2;
                 int LA23_0 = input.LA(1);
 
-                if ( ((LA23_0>=40 && LA23_0<=41)) ) {
+                if ( ((LA23_0>=39 && LA23_0<=40)) ) {
                     alt23=1;
                 }
 
@@ -4365,10 +4365,10 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt24=2;
             int LA24_0 = input.LA(1);
 
-            if ( (LA24_0==40) ) {
+            if ( (LA24_0==39) ) {
                 alt24=1;
             }
-            else if ( (LA24_0==41) ) {
+            else if ( (LA24_0==40) ) {
                 alt24=2;
             }
             else {
@@ -4523,7 +4523,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,40,FOLLOW_40_in_ruleInterfaceScope3549); if (state.failed) return current;
+            otherlv_1=(Token)match(input,39,FOLLOW_39_in_ruleInterfaceScope3549); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getInterfaceScopeAccess().getInterfaceKeyword_1());
@@ -4533,7 +4533,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt25=2;
             int LA25_0 = input.LA(1);
 
-            if ( (LA25_0==RULE_ID||(LA25_0>=39 && LA25_0<=58)) ) {
+            if ( (LA25_0==RULE_ID||(LA25_0>=38 && LA25_0<=57)) ) {
                 alt25=1;
             }
             switch (alt25) {
@@ -4586,11 +4586,11 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             do {
                 int alt27=2;
                 switch ( input.LA(1) ) {
-                case 40:
+                case 39:
                     {
                     int LA27_2 = input.LA(2);
 
-                    if ( (LA27_2==59) ) {
+                    if ( (LA27_2==58) ) {
                         alt27=1;
                     }
                     else if ( (LA27_2==RULE_ID) ) {
@@ -4606,11 +4606,11 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
                     break;
-                case 41:
+                case 40:
                     {
                     int LA27_3 = input.LA(2);
 
-                    if ( (LA27_3==RULE_ID||LA27_3==59) ) {
+                    if ( (LA27_3==RULE_ID||LA27_3==58) ) {
                         alt27=1;
                     }
 
@@ -4620,7 +4620,8 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case RULE_ID:
                 case 14:
                 case 22:
-                case 39:
+                case 38:
+                case 41:
                 case 42:
                 case 43:
                 case 44:
@@ -4637,7 +4638,6 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 55:
                 case 56:
                 case 57:
-                case 58:
                     {
                     alt27=1;
                     }
@@ -4655,14 +4655,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1600:1: (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration )
             	    int alt26=3;
             	    switch ( input.LA(1) ) {
-            	    case 43:
+            	    case 42:
             	        {
             	        int LA26_1 = input.LA(2);
 
-            	        if ( (LA26_1==42) ) {
+            	        if ( (LA26_1==41) ) {
             	            alt26=1;
             	        }
-            	        else if ( (LA26_1==RULE_ID||LA26_1==59) ) {
+            	        else if ( (LA26_1==RULE_ID||LA26_1==58) ) {
             	            alt26=2;
             	        }
             	        else {
@@ -4674,14 +4674,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	        }
             	        }
             	        break;
-            	    case 44:
+            	    case 43:
             	        {
             	        int LA26_2 = input.LA(2);
 
-            	        if ( (LA26_2==RULE_ID||LA26_2==59) ) {
+            	        if ( (LA26_2==RULE_ID||LA26_2==58) ) {
             	            alt26=2;
             	        }
-            	        else if ( (LA26_2==42) ) {
+            	        else if ( (LA26_2==41) ) {
             	            alt26=1;
             	        }
             	        else {
@@ -4693,14 +4693,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	        }
             	        }
             	        break;
-            	    case 45:
+            	    case 44:
             	        {
             	        int LA26_3 = input.LA(2);
 
-            	        if ( (LA26_3==RULE_ID||LA26_3==59) ) {
+            	        if ( (LA26_3==RULE_ID||LA26_3==58) ) {
             	            alt26=2;
             	        }
-            	        else if ( (LA26_3==42) ) {
+            	        else if ( (LA26_3==41) ) {
             	            alt26=1;
             	        }
             	        else {
@@ -4712,14 +4712,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	        }
             	        }
             	        break;
-            	    case 42:
+            	    case 41:
             	        {
             	        switch ( input.LA(2) ) {
             	        case RULE_ID:
             	            {
             	            int LA26_8 = input.LA(3);
 
-            	            if ( (LA26_8==EOF||LA26_8==RULE_ID||LA26_8==14||LA26_8==20||LA26_8==22||(LA26_8>=39 && LA26_8<=58)) ) {
+            	            if ( (LA26_8==EOF||LA26_8==RULE_ID||LA26_8==14||LA26_8==20||LA26_8==22||(LA26_8>=38 && LA26_8<=57)) ) {
             	                alt26=1;
             	            }
             	            else if ( ((LA26_8>=15 && LA26_8<=16)) ) {
@@ -4734,6 +4734,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	            }
             	            }
             	            break;
+            	        case 38:
             	        case 39:
             	        case 40:
             	        case 41:
@@ -4753,12 +4754,11 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	        case 55:
             	        case 56:
             	        case 57:
-            	        case 58:
             	            {
             	            alt26=1;
             	            }
             	            break;
-            	        case 59:
+            	        case 58:
             	            {
             	            alt26=2;
             	            }
@@ -4775,9 +4775,10 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	        break;
             	    case RULE_ID:
             	    case 14:
+            	    case 38:
             	    case 39:
             	    case 40:
-            	    case 41:
+            	    case 45:
             	    case 46:
             	    case 47:
             	    case 48:
@@ -4790,7 +4791,6 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    case 55:
             	    case 56:
             	    case 57:
-            	    case 58:
             	        {
             	        alt26=2;
             	        }
@@ -5011,7 +5011,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,41,FOLLOW_41_in_ruleInternalScope3740); if (state.failed) return current;
+            otherlv_1=(Token)match(input,40,FOLLOW_40_in_ruleInternalScope3740); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getInternalScopeAccess().getInternalKeyword_1());
@@ -5028,11 +5028,11 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             do {
                 int alt29=2;
                 switch ( input.LA(1) ) {
-                case 40:
+                case 39:
                     {
                     int LA29_2 = input.LA(2);
 
-                    if ( (LA29_2==59) ) {
+                    if ( (LA29_2==58) ) {
                         alt29=1;
                     }
                     else if ( (LA29_2==RULE_ID) ) {
@@ -5048,11 +5048,11 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
                     break;
-                case 41:
+                case 40:
                     {
                     int LA29_3 = input.LA(2);
 
-                    if ( (LA29_3==RULE_ID||LA29_3==59) ) {
+                    if ( (LA29_3==RULE_ID||LA29_3==58) ) {
                         alt29=1;
                     }
 
@@ -5064,12 +5064,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 14:
                 case 22:
                 case 25:
+                case 27:
                 case 28:
                 case 29:
                 case 30:
                 case 31:
-                case 32:
-                case 39:
+                case 38:
+                case 41:
                 case 42:
                 case 43:
                 case 44:
@@ -5086,7 +5087,6 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 55:
                 case 56:
                 case 57:
-                case 58:
                     {
                     alt29=1;
                     }
@@ -5412,7 +5412,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt30=2;
             int LA30_0 = input.LA(1);
 
-            if ( ((LA30_0>=43 && LA30_0<=45)) ) {
+            if ( ((LA30_0>=42 && LA30_0<=44)) ) {
                 alt30=1;
             }
             switch (alt30) {
@@ -5454,7 +5454,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,42,FOLLOW_42_in_ruleEventDefinition4035); if (state.failed) return current;
+            otherlv_1=(Token)match(input,41,FOLLOW_41_in_ruleEventDefinition4035); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getEventDefinitionAccess().getEventKeyword_1());
@@ -5814,102 +5814,102 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 alt32=1;
                 }
                 break;
-            case 39:
+            case 38:
                 {
                 alt32=2;
                 }
                 break;
-            case 40:
+            case 39:
                 {
                 alt32=3;
                 }
                 break;
-            case 41:
+            case 40:
                 {
                 alt32=4;
                 }
                 break;
-            case 42:
+            case 41:
                 {
                 alt32=5;
                 }
                 break;
-            case 43:
+            case 42:
                 {
                 alt32=6;
                 }
                 break;
-            case 44:
+            case 43:
                 {
                 alt32=7;
                 }
                 break;
-            case 45:
+            case 44:
                 {
                 alt32=8;
                 }
                 break;
-            case 46:
+            case 45:
                 {
                 alt32=9;
                 }
                 break;
-            case 47:
+            case 46:
                 {
                 alt32=10;
                 }
                 break;
-            case 48:
+            case 47:
                 {
                 alt32=11;
                 }
                 break;
-            case 49:
+            case 48:
                 {
                 alt32=12;
                 }
                 break;
-            case 50:
+            case 49:
                 {
                 alt32=13;
                 }
                 break;
-            case 51:
+            case 50:
                 {
                 alt32=14;
                 }
                 break;
-            case 52:
+            case 51:
                 {
                 alt32=15;
                 }
                 break;
-            case 53:
+            case 52:
                 {
                 alt32=16;
                 }
                 break;
-            case 54:
+            case 53:
                 {
                 alt32=17;
                 }
                 break;
-            case 55:
+            case 54:
                 {
                 alt32=18;
                 }
                 break;
-            case 56:
+            case 55:
                 {
                 alt32=19;
                 }
                 break;
-            case 57:
+            case 56:
                 {
                 alt32=20;
                 }
                 break;
-            case 58:
+            case 57:
                 {
                 alt32=21;
                 }
@@ -5943,7 +5943,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1960:2: kw= 'namespace'
                     {
-                    kw=(Token)match(input,39,FOLLOW_39_in_ruleXID4392); if (state.failed) return current;
+                    kw=(Token)match(input,38,FOLLOW_38_in_ruleXID4392); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5956,7 +5956,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 3 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1967:2: kw= 'interface'
                     {
-                    kw=(Token)match(input,40,FOLLOW_40_in_ruleXID4411); if (state.failed) return current;
+                    kw=(Token)match(input,39,FOLLOW_39_in_ruleXID4411); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5969,7 +5969,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 4 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1974:2: kw= 'internal'
                     {
-                    kw=(Token)match(input,41,FOLLOW_41_in_ruleXID4430); if (state.failed) return current;
+                    kw=(Token)match(input,40,FOLLOW_40_in_ruleXID4430); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5982,7 +5982,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 5 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1981:2: kw= 'event'
                     {
-                    kw=(Token)match(input,42,FOLLOW_42_in_ruleXID4449); if (state.failed) return current;
+                    kw=(Token)match(input,41,FOLLOW_41_in_ruleXID4449); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5995,7 +5995,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 6 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1988:2: kw= 'local'
                     {
-                    kw=(Token)match(input,43,FOLLOW_43_in_ruleXID4468); if (state.failed) return current;
+                    kw=(Token)match(input,42,FOLLOW_42_in_ruleXID4468); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6008,7 +6008,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 7 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1995:2: kw= 'in'
                     {
-                    kw=(Token)match(input,44,FOLLOW_44_in_ruleXID4487); if (state.failed) return current;
+                    kw=(Token)match(input,43,FOLLOW_43_in_ruleXID4487); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6021,7 +6021,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 8 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2002:2: kw= 'out'
                     {
-                    kw=(Token)match(input,45,FOLLOW_45_in_ruleXID4506); if (state.failed) return current;
+                    kw=(Token)match(input,44,FOLLOW_44_in_ruleXID4506); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6034,7 +6034,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 9 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2009:2: kw= 'var'
                     {
-                    kw=(Token)match(input,46,FOLLOW_46_in_ruleXID4525); if (state.failed) return current;
+                    kw=(Token)match(input,45,FOLLOW_45_in_ruleXID4525); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6047,7 +6047,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 10 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2016:2: kw= 'readonly'
                     {
-                    kw=(Token)match(input,47,FOLLOW_47_in_ruleXID4544); if (state.failed) return current;
+                    kw=(Token)match(input,46,FOLLOW_46_in_ruleXID4544); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6060,7 +6060,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 11 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2023:2: kw= 'external'
                     {
-                    kw=(Token)match(input,48,FOLLOW_48_in_ruleXID4563); if (state.failed) return current;
+                    kw=(Token)match(input,47,FOLLOW_47_in_ruleXID4563); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6073,7 +6073,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 12 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2030:2: kw= 'operation'
                     {
-                    kw=(Token)match(input,49,FOLLOW_49_in_ruleXID4582); if (state.failed) return current;
+                    kw=(Token)match(input,48,FOLLOW_48_in_ruleXID4582); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6086,7 +6086,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 13 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2037:2: kw= 'default'
                     {
-                    kw=(Token)match(input,50,FOLLOW_50_in_ruleXID4601); if (state.failed) return current;
+                    kw=(Token)match(input,49,FOLLOW_49_in_ruleXID4601); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6099,7 +6099,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 14 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2044:2: kw= 'else'
                     {
-                    kw=(Token)match(input,51,FOLLOW_51_in_ruleXID4620); if (state.failed) return current;
+                    kw=(Token)match(input,50,FOLLOW_50_in_ruleXID4620); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6112,7 +6112,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 15 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2051:2: kw= 'entry'
                     {
-                    kw=(Token)match(input,52,FOLLOW_52_in_ruleXID4639); if (state.failed) return current;
+                    kw=(Token)match(input,51,FOLLOW_51_in_ruleXID4639); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6125,7 +6125,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 16 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2058:2: kw= 'exit'
                     {
-                    kw=(Token)match(input,53,FOLLOW_53_in_ruleXID4658); if (state.failed) return current;
+                    kw=(Token)match(input,52,FOLLOW_52_in_ruleXID4658); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6138,7 +6138,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 17 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2065:2: kw= 'always'
                     {
-                    kw=(Token)match(input,54,FOLLOW_54_in_ruleXID4677); if (state.failed) return current;
+                    kw=(Token)match(input,53,FOLLOW_53_in_ruleXID4677); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6151,7 +6151,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 18 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2072:2: kw= 'oncycle'
                     {
-                    kw=(Token)match(input,55,FOLLOW_55_in_ruleXID4696); if (state.failed) return current;
+                    kw=(Token)match(input,54,FOLLOW_54_in_ruleXID4696); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6164,7 +6164,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 19 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2079:2: kw= 'raise'
                     {
-                    kw=(Token)match(input,56,FOLLOW_56_in_ruleXID4715); if (state.failed) return current;
+                    kw=(Token)match(input,55,FOLLOW_55_in_ruleXID4715); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6177,7 +6177,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 20 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2086:2: kw= 'valueof'
                     {
-                    kw=(Token)match(input,57,FOLLOW_57_in_ruleXID4734); if (state.failed) return current;
+                    kw=(Token)match(input,56,FOLLOW_56_in_ruleXID4734); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6190,7 +6190,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 21 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2093:2: kw= 'active'
                     {
-                    kw=(Token)match(input,58,FOLLOW_58_in_ruleXID4753); if (state.failed) return current;
+                    kw=(Token)match(input,57,FOLLOW_57_in_ruleXID4753); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6308,7 +6308,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 int alt33=2;
                 int LA33_0 = input.LA(1);
 
-                if ( (LA33_0==59) ) {
+                if ( (LA33_0==58) ) {
                     alt33=1;
                 }
 
@@ -6317,7 +6317,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2131:2: kw= '.' this_XID_2= ruleXID
             	    {
-            	    kw=(Token)match(input,59,FOLLOW_59_in_ruleFQN4871); if (state.failed) return current;
+            	    kw=(Token)match(input,58,FOLLOW_58_in_ruleFQN4871); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	              current.merge(kw);
@@ -6455,21 +6455,21 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt34=2;
             int LA34_0 = input.LA(1);
 
-            if ( (LA34_0==31) ) {
+            if ( (LA34_0==30) ) {
                 int LA34_1 = input.LA(2);
 
-                if ( (LA34_1==RULE_INT||LA34_1==32) ) {
+                if ( (LA34_1==RULE_INT||LA34_1==31) ) {
                     alt34=1;
                 }
                 else if ( (LA34_1==RULE_ID) ) {
                     int LA34_4 = input.LA(3);
 
-                    if ( (LA34_4==EOF||LA34_4==23||LA34_4==25||LA34_4==31||LA34_4==59) ) {
+                    if ( (LA34_4==EOF||LA34_4==23||LA34_4==25||LA34_4==30||LA34_4==58) ) {
                         alt34=1;
                     }
                 }
             }
-            else if ( ((LA34_0>=RULE_ID && LA34_0<=RULE_INT)||LA34_0==32||(LA34_0>=50 && LA34_0<=51)) ) {
+            else if ( ((LA34_0>=RULE_ID && LA34_0<=RULE_INT)||LA34_0==31||(LA34_0>=49 && LA34_0<=50)) ) {
                 alt34=1;
             }
             switch (alt34) {
@@ -6573,14 +6573,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt37=2;
             int LA37_0 = input.LA(1);
 
-            if ( (LA37_0==31) ) {
+            if ( (LA37_0==30) ) {
                 alt37=1;
             }
             switch (alt37) {
                 case 1 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2216:6: otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )*
                     {
-                    otherlv_4=(Token)match(input,31,FOLLOW_31_in_ruleTransitionReaction5057); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,30,FOLLOW_30_in_ruleTransitionReaction5057); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getTransitionReactionAccess().getNumberSignKeyword_3_0());
@@ -6592,7 +6592,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                         int alt36=2;
                         int LA36_0 = input.LA(1);
 
-                        if ( (LA36_0==RULE_ID||LA36_0==60) ) {
+                        if ( (LA36_0==RULE_ID||LA36_0==59) ) {
                             alt36=1;
                         }
 
@@ -6727,10 +6727,10 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt38=2;
             int LA38_0 = input.LA(1);
 
-            if ( ((LA38_0>=RULE_ID && LA38_0<=RULE_INT)||(LA38_0>=31 && LA38_0<=32)) ) {
+            if ( ((LA38_0>=RULE_ID && LA38_0<=RULE_INT)||(LA38_0>=30 && LA38_0<=31)) ) {
                 alt38=1;
             }
-            else if ( ((LA38_0>=50 && LA38_0<=51)) ) {
+            else if ( ((LA38_0>=49 && LA38_0<=50)) ) {
                 alt38=2;
             }
             else {
@@ -6881,10 +6881,10 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt39=2;
             int LA39_0 = input.LA(1);
 
-            if ( (LA39_0==50) ) {
+            if ( (LA39_0==49) ) {
                 alt39=1;
             }
-            else if ( (LA39_0==51) ) {
+            else if ( (LA39_0==50) ) {
                 alt39=2;
             }
             else {
@@ -6898,7 +6898,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2305:4: otherlv_1= 'default'
                     {
-                    otherlv_1=(Token)match(input,50,FOLLOW_50_in_ruleDefaultTrigger5293); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,49,FOLLOW_49_in_ruleDefaultTrigger5293); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getDefaultTriggerAccess().getDefaultKeyword_1_0());
@@ -6910,7 +6910,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2310:7: otherlv_2= 'else'
                     {
-                    otherlv_2=(Token)match(input,51,FOLLOW_51_in_ruleDefaultTrigger5311); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,50,FOLLOW_50_in_ruleDefaultTrigger5311); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getDefaultTriggerAccess().getElseKeyword_1_1());
@@ -7004,7 +7004,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt40=2;
             int LA40_0 = input.LA(1);
 
-            if ( (LA40_0==60) ) {
+            if ( (LA40_0==59) ) {
                 alt40=1;
             }
             else if ( (LA40_0==RULE_ID) ) {
@@ -7141,7 +7141,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2375:1: (otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) ) )
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2375:3: otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) )
             {
-            otherlv_0=(Token)match(input,60,FOLLOW_60_in_ruleEntryPointSpec5514); if (state.failed) return current;
+            otherlv_0=(Token)match(input,59,FOLLOW_59_in_ruleEntryPointSpec5514); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getEntryPointSpecAccess().getGreaterThanSignKeyword_0());
@@ -7286,7 +7286,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,60,FOLLOW_60_in_ruleExitPointSpec5641); if (state.failed) return current;
+            otherlv_1=(Token)match(input,59,FOLLOW_59_in_ruleExitPointSpec5641); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getExitPointSpecAccess().getGreaterThanSignKeyword_1());
@@ -7671,18 +7671,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2577:1: (this_EntryEvent_0= ruleEntryEvent | this_ExitEvent_1= ruleExitEvent | this_AlwaysEvent_2= ruleAlwaysEvent )
             int alt41=3;
             switch ( input.LA(1) ) {
-            case 52:
+            case 51:
                 {
                 alt41=1;
                 }
                 break;
-            case 53:
+            case 52:
                 {
                 alt41=2;
                 }
                 break;
+            case 53:
             case 54:
-            case 55:
                 {
                 alt41=3;
                 }
@@ -7853,7 +7853,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,52,FOLLOW_52_in_ruleEntryEvent6105); if (state.failed) return current;
+            otherlv_1=(Token)match(input,51,FOLLOW_51_in_ruleEntryEvent6105); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getEntryEventAccess().getEntryKeyword_1());
@@ -7950,7 +7950,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,53,FOLLOW_53_in_ruleExitEvent6197); if (state.failed) return current;
+            otherlv_1=(Token)match(input,52,FOLLOW_52_in_ruleExitEvent6197); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getExitEventAccess().getExitKeyword_1());
@@ -8052,10 +8052,10 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt42=2;
             int LA42_0 = input.LA(1);
 
-            if ( (LA42_0==54) ) {
+            if ( (LA42_0==53) ) {
                 alt42=1;
             }
-            else if ( (LA42_0==55) ) {
+            else if ( (LA42_0==54) ) {
                 alt42=2;
             }
             else {
@@ -8069,7 +8069,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2695:4: otherlv_1= 'always'
                     {
-                    otherlv_1=(Token)match(input,54,FOLLOW_54_in_ruleAlwaysEvent6290); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,53,FOLLOW_53_in_ruleAlwaysEvent6290); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getAlwaysEventAccess().getAlwaysKeyword_1_0());
@@ -8081,7 +8081,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2700:7: otherlv_2= 'oncycle'
                     {
-                    otherlv_2=(Token)match(input,55,FOLLOW_55_in_ruleAlwaysEvent6308); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,54,FOLLOW_54_in_ruleAlwaysEvent6308); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getAlwaysEventAccess().getOncycleKeyword_1_1());
@@ -8493,7 +8493,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt44=2;
             int LA44_0 = input.LA(1);
 
-            if ( (LA44_0==61) ) {
+            if ( (LA44_0==60) ) {
                 alt44=1;
             }
             switch (alt44) {
@@ -8513,7 +8513,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,61,FOLLOW_61_in_ruleConditionalExpression6663); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,60,FOLLOW_60_in_ruleConditionalExpression6663); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getConditionalExpressionAccess().getQuestionMarkKeyword_1_1());
@@ -8705,7 +8705,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 int alt45=2;
                 int LA45_0 = input.LA(1);
 
-                if ( (LA45_0==62) ) {
+                if ( (LA45_0==61) ) {
                     alt45=1;
                 }
 
@@ -8727,7 +8727,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_2=(Token)match(input,62,FOLLOW_62_in_ruleLogicalOrExpression6833); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,61,FOLLOW_61_in_ruleLogicalOrExpression6833); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getLogicalOrExpressionAccess().getVerticalLineVerticalLineKeyword_1_1());
@@ -8881,7 +8881,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 int alt46=2;
                 int LA46_0 = input.LA(1);
 
-                if ( (LA46_0==27) ) {
+                if ( (LA46_0==62) ) {
                     alt46=1;
                 }
 
@@ -8903,7 +8903,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_2=(Token)match(input,27,FOLLOW_27_in_ruleLogicalAndExpression6970); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,62,FOLLOW_62_in_ruleLogicalAndExpression6970); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getLogicalAndExpressionAccess().getAmpersandAmpersandKeyword_1_1());
@@ -9036,7 +9036,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt47=2;
             int LA47_0 = input.LA(1);
 
-            if ( ((LA47_0>=RULE_ID && LA47_0<=RULE_STRING)||LA47_0==23||LA47_0==35||(LA47_0>=57 && LA47_0<=58)||(LA47_0>=89 && LA47_0<=90)||LA47_0==93) ) {
+            if ( ((LA47_0>=RULE_ID && LA47_0<=RULE_STRING)||LA47_0==23||LA47_0==34||(LA47_0>=56 && LA47_0<=57)||(LA47_0>=89 && LA47_0<=90)||LA47_0==93) ) {
                 alt47=1;
             }
             else if ( (LA47_0==63) ) {
@@ -9771,7 +9771,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 int alt51=2;
                 int LA51_0 = input.LA(1);
 
-                if ( (LA51_0==60||(LA51_0>=94 && LA51_0<=98)) ) {
+                if ( (LA51_0==59||(LA51_0>=94 && LA51_0<=98)) ) {
                     alt51=1;
                 }
 
@@ -10574,7 +10574,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt55=2;
             int LA55_0 = input.LA(1);
 
-            if ( ((LA55_0>=RULE_ID && LA55_0<=RULE_STRING)||LA55_0==23||LA55_0==35||(LA55_0>=57 && LA55_0<=58)) ) {
+            if ( ((LA55_0>=RULE_ID && LA55_0<=RULE_STRING)||LA55_0==23||LA55_0==34||(LA55_0>=56 && LA55_0<=57)) ) {
                 alt55=1;
             }
             else if ( ((LA55_0>=89 && LA55_0<=90)||LA55_0==93) ) {
@@ -10942,7 +10942,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 int alt59=2;
                 int LA59_0 = input.LA(1);
 
-                if ( (LA59_0==59) ) {
+                if ( (LA59_0==58) ) {
                     alt59=1;
                 }
 
@@ -10964,7 +10964,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_2=(Token)match(input,59,FOLLOW_59_in_ruleFeatureCall8496); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,58,FOLLOW_58_in_ruleFeatureCall8496); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getFeatureCallAccess().getFullStopKeyword_1_1());
@@ -11036,7 +11036,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	            int alt57=2;
             	            int LA57_0 = input.LA(1);
 
-            	            if ( ((LA57_0>=RULE_ID && LA57_0<=RULE_STRING)||LA57_0==23||LA57_0==35||(LA57_0>=57 && LA57_0<=58)||LA57_0==63||(LA57_0>=89 && LA57_0<=90)||LA57_0==93) ) {
+            	            if ( ((LA57_0>=RULE_ID && LA57_0<=RULE_STRING)||LA57_0==23||LA57_0==34||(LA57_0>=56 && LA57_0<=57)||LA57_0==63||(LA57_0>=89 && LA57_0<=90)||LA57_0==93) ) {
             	                alt57=1;
             	            }
             	            switch (alt57) {
@@ -11084,7 +11084,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	                        int alt56=2;
             	                        int LA56_0 = input.LA(1);
 
-            	                        if ( (LA56_0==34) ) {
+            	                        if ( (LA56_0==33) ) {
             	                            alt56=1;
             	                        }
 
@@ -11093,7 +11093,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	                    	case 1 :
             	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3737:4: otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) )
             	                    	    {
-            	                    	    otherlv_6=(Token)match(input,34,FOLLOW_34_in_ruleFeatureCall8598); if (state.failed) return current;
+            	                    	    otherlv_6=(Token)match(input,33,FOLLOW_33_in_ruleFeatureCall8598); if (state.failed) return current;
             	                    	    if ( state.backtracking==0 ) {
 
             	                    	          	newLeafNode(otherlv_6, grammarAccess.getFeatureCallAccess().getCommaKeyword_1_3_1_1_0());
@@ -11334,7 +11334,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     int alt61=2;
                     int LA61_0 = input.LA(1);
 
-                    if ( ((LA61_0>=RULE_ID && LA61_0<=RULE_STRING)||LA61_0==23||LA61_0==35||(LA61_0>=57 && LA61_0<=58)||LA61_0==63||(LA61_0>=89 && LA61_0<=90)||LA61_0==93) ) {
+                    if ( ((LA61_0>=RULE_ID && LA61_0<=RULE_STRING)||LA61_0==23||LA61_0==34||(LA61_0>=56 && LA61_0<=57)||LA61_0==63||(LA61_0>=89 && LA61_0<=90)||LA61_0==93) ) {
                         alt61=1;
                     }
                     switch (alt61) {
@@ -11382,7 +11382,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                                 int alt60=2;
                                 int LA60_0 = input.LA(1);
 
-                                if ( (LA60_0==34) ) {
+                                if ( (LA60_0==33) ) {
                                     alt60=1;
                                 }
 
@@ -11391,7 +11391,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                             	case 1 :
                             	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3842:4: otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) )
                             	    {
-                            	    otherlv_4=(Token)match(input,34,FOLLOW_34_in_ruleElementReferenceExpression8821); if (state.failed) return current;
+                            	    otherlv_4=(Token)match(input,33,FOLLOW_33_in_ruleElementReferenceExpression8821); if (state.failed) return current;
                             	    if ( state.backtracking==0 ) {
 
                             	          	newLeafNode(otherlv_4, grammarAccess.getElementReferenceExpressionAccess().getCommaKeyword_2_1_1_0());
@@ -11554,7 +11554,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,57,FOLLOW_57_in_ruleEventValueReferenceExpression8952); if (state.failed) return current;
+            otherlv_1=(Token)match(input,56,FOLLOW_56_in_ruleEventValueReferenceExpression8952); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getEventValueReferenceExpressionAccess().getValueofKeyword_1());
@@ -11700,7 +11700,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,58,FOLLOW_58_in_ruleActiveStateReferenceExpression9089); if (state.failed) return current;
+            otherlv_1=(Token)match(input,57,FOLLOW_57_in_ruleActiveStateReferenceExpression9089); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getActiveStateReferenceExpressionAccess().getActiveKeyword_1());
@@ -13013,17 +13013,17 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4393:1: ( (enumLiteral_0= 'local' ) | (enumLiteral_1= 'in' ) | (enumLiteral_2= 'out' ) )
             int alt65=3;
             switch ( input.LA(1) ) {
-            case 43:
+            case 42:
                 {
                 alt65=1;
                 }
                 break;
-            case 44:
+            case 43:
                 {
                 alt65=2;
                 }
                 break;
-            case 45:
+            case 44:
                 {
                 alt65=3;
                 }
@@ -13043,7 +13043,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4393:2: (enumLiteral_0= 'local' )
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4393:4: enumLiteral_0= 'local'
                     {
-                    enumLiteral_0=(Token)match(input,43,FOLLOW_43_in_ruleDirection10185); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,42,FOLLOW_42_in_ruleDirection10185); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getDirectionAccess().getLOCALEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13062,7 +13062,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4399:6: (enumLiteral_1= 'in' )
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4399:8: enumLiteral_1= 'in'
                     {
-                    enumLiteral_1=(Token)match(input,44,FOLLOW_44_in_ruleDirection10202); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,43,FOLLOW_43_in_ruleDirection10202); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getDirectionAccess().getINEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -13081,7 +13081,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4405:6: (enumLiteral_2= 'out' )
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4405:8: enumLiteral_2= 'out'
                     {
-                    enumLiteral_2=(Token)match(input,45,FOLLOW_45_in_ruleDirection10219); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,44,FOLLOW_44_in_ruleDirection10219); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getDirectionAccess().getOUTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -13979,7 +13979,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 alt72=2;
                 }
                 break;
-            case 60:
+            case 59:
                 {
                 alt72=3;
                 }
@@ -14052,7 +14052,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4610:6: (enumLiteral_2= '>' )
                     // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4610:8: enumLiteral_2= '>'
                     {
-                    enumLiteral_2=(Token)match(input,60,FOLLOW_60_in_ruleRelationalOperator10857); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,59,FOLLOW_59_in_ruleRelationalOperator10857); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getRelationalOperatorAccess().getGreaterEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -14293,7 +14293,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1013:4: ( ',' )
         // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1013:6: ','
         {
-        match(input,34,FOLLOW_34_in_synpred1_InternalSyncChartstext2158); if (state.failed) return ;
+        match(input,33,FOLLOW_33_in_synpred1_InternalSyncChartstext2158); if (state.failed) return ;
 
         }
     }
@@ -14388,21 +14388,21 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     static final String DFA3_minS =
         "\1\4\1\uffff\1\4\3\uffff\2\4";
     static final String DFA3_maxS =
-        "\1\72\1\uffff\1\73\3\uffff\1\72\1\73";
+        "\1\71\1\uffff\1\72\3\uffff\1\71\1\72";
     static final String DFA3_acceptS =
         "\1\uffff\1\1\1\uffff\1\2\1\3\1\4\2\uffff";
     static final String DFA3_specialS =
         "\10\uffff}>";
     static final String[] DFA3_transitionS = {
-            "\1\2\1\5\10\uffff\1\1\2\uffff\3\3\2\uffff\1\4\2\uffff\1\5\2"+
+            "\1\2\1\5\10\uffff\1\1\2\uffff\3\3\2\uffff\1\4\2\uffff\1\5\1"+
             "\uffff\5\5\6\uffff\24\1",
             "",
-            "\1\1\22\uffff\1\5\1\uffff\1\5\41\uffff\1\6",
+            "\1\1\22\uffff\1\5\1\uffff\1\5\40\uffff\1\6",
             "",
             "",
             "",
-            "\1\7\42\uffff\24\1",
-            "\1\1\22\uffff\1\5\1\uffff\1\5\41\uffff\1\6"
+            "\1\7\41\uffff\24\1",
+            "\1\1\22\uffff\1\5\1\uffff\1\5\40\uffff\1\6"
     };
 
     static final short[] DFA3_eot = DFA.unpackEncodedString(DFA3_eotS);
@@ -14445,27 +14445,27 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     static final String DFA28_minS =
         "\5\4\1\uffff\1\4\3\uffff\3\4";
     static final String DFA28_maxS =
-        "\1\72\4\73\1\uffff\1\73\3\uffff\2\72\1\73";
+        "\1\71\4\72\1\uffff\1\72\3\uffff\2\71\1\72";
     static final String DFA28_acceptS =
         "\5\uffff\1\2\1\uffff\1\3\1\4\1\1\3\uffff";
     static final String DFA28_specialS =
         "\15\uffff}>";
     static final String[] DFA28_transitionS = {
-            "\1\6\1\10\10\uffff\1\5\7\uffff\1\7\2\uffff\1\10\2\uffff\5\10"+
+            "\1\6\1\10\10\uffff\1\5\7\uffff\1\7\2\uffff\1\10\1\uffff\5\10"+
             "\6\uffff\3\5\1\4\1\1\1\2\1\3\15\5",
-            "\1\5\45\uffff\1\11\20\uffff\1\5",
-            "\1\5\45\uffff\1\11\20\uffff\1\5",
-            "\1\5\45\uffff\1\11\20\uffff\1\5",
-            "\1\12\42\uffff\24\11\1\5",
+            "\1\5\44\uffff\1\11\20\uffff\1\5",
+            "\1\5\44\uffff\1\11\20\uffff\1\5",
+            "\1\5\44\uffff\1\11\20\uffff\1\5",
+            "\1\12\41\uffff\24\11\1\5",
             "",
-            "\1\5\22\uffff\1\10\1\uffff\1\10\41\uffff\1\13",
+            "\1\5\22\uffff\1\10\1\uffff\1\10\40\uffff\1\13",
             "",
             "",
             "",
             "\2\11\10\uffff\1\11\2\5\3\uffff\1\11\1\uffff\1\11\2\uffff"+
-            "\1\11\2\uffff\5\11\6\uffff\24\11",
-            "\1\14\42\uffff\24\5",
-            "\1\5\22\uffff\1\10\1\uffff\1\10\41\uffff\1\13"
+            "\1\11\1\uffff\5\11\6\uffff\24\11",
+            "\1\14\41\uffff\24\5",
+            "\1\5\22\uffff\1\10\1\uffff\1\10\40\uffff\1\13"
     };
 
     static final short[] DFA28_eot = DFA.unpackEncodedString(DFA28_eotS);
@@ -14505,18 +14505,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
     public static final BitSet FOLLOW_ruleVariableDefinition_in_entryRuleVariableDefinition75 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleVariableDefinition85 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_ruleVariableDefinition137 = new BitSet(new long[]{0x07FFFF8000000010L});
+    public static final BitSet FOLLOW_14_in_ruleVariableDefinition137 = new BitSet(new long[]{0x03FFFFC000000010L});
     public static final BitSet FOLLOW_ruleFQN_in_ruleVariableDefinition174 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleVariableDefinition191 = new BitSet(new long[]{0x0000000000018000L});
-    public static final BitSet FOLLOW_15_in_ruleVariableDefinition209 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_15_in_ruleVariableDefinition209 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleExpression_in_ruleVariableDefinition230 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_16_in_ruleVariableDefinition244 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStateScope_in_entryRuleStateScope280 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStateScope290 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleStateScope347 = new BitSet(new long[]{0x07FFFF81F24E4032L});
-    public static final BitSet FOLLOW_ruleSignalDeclaration_in_ruleStateScope366 = new BitSet(new long[]{0x07FFFF81F24E4032L});
-    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleStateScope385 = new BitSet(new long[]{0x07FFFF81F24E4032L});
-    public static final BitSet FOLLOW_ruleLocalReaction_in_ruleStateScope404 = new BitSet(new long[]{0x07FFFF81F24E4032L});
+    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleStateScope347 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
+    public static final BitSet FOLLOW_ruleSignalDeclaration_in_ruleStateScope366 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
+    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleStateScope385 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
+    public static final BitSet FOLLOW_ruleLocalReaction_in_ruleStateScope404 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
     public static final BitSet FOLLOW_ruleSignalDeclaration_in_entryRuleSignalDeclaration444 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSignalDeclaration454 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSignalDefinition_in_ruleSignalDeclaration500 = new BitSet(new long[]{0x0000000000000002L});
@@ -14526,19 +14526,19 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_18_in_ruleSignalDefinition628 = new BitSet(new long[]{0x0000000000080000L});
     public static final BitSet FOLLOW_19_in_ruleSignalDefinition654 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleSignalDefinition671 = new BitSet(new long[]{0x0000000000110000L});
-    public static final BitSet FOLLOW_20_in_ruleSignalDefinition689 = new BitSet(new long[]{0x07FFFF8000000010L});
+    public static final BitSet FOLLOW_20_in_ruleSignalDefinition689 = new BitSet(new long[]{0x03FFFFC000000010L});
     public static final BitSet FOLLOW_ruleFQN_in_ruleSignalDefinition712 = new BitSet(new long[]{0x0000000000218000L});
-    public static final BitSet FOLLOW_15_in_ruleSignalDefinition725 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_15_in_ruleSignalDefinition725 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleExpression_in_ruleSignalDefinition746 = new BitSet(new long[]{0x0000000000210000L});
     public static final BitSet FOLLOW_21_in_ruleSignalDefinition761 = new BitSet(new long[]{0x0000000000000000L,0x00000000000007F8L});
     public static final BitSet FOLLOW_ruleCombineOperator_in_ruleSignalDefinition782 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_16_in_ruleSignalDefinition798 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleOperationDefinition_in_entryRuleOperationDefinition834 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleOperationDefinition844 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_ruleOperationDefinition890 = new BitSet(new long[]{0x07FFFF8000000010L});
-    public static final BitSet FOLLOW_ruleFQN_in_ruleOperationDefinition913 = new BitSet(new long[]{0x07FFFF8000000010L});
+    public static final BitSet FOLLOW_22_in_ruleOperationDefinition890 = new BitSet(new long[]{0x03FFFFC000000010L});
+    public static final BitSet FOLLOW_ruleFQN_in_ruleOperationDefinition913 = new BitSet(new long[]{0x03FFFFC000000010L});
     public static final BitSet FOLLOW_ruleXID_in_ruleOperationDefinition934 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ruleOperationDefinition946 = new BitSet(new long[]{0x07FFFF8000000010L});
+    public static final BitSet FOLLOW_23_in_ruleOperationDefinition946 = new BitSet(new long[]{0x03FFFFC000000010L});
     public static final BitSet FOLLOW_ruleFQN_in_ruleOperationDefinition969 = new BitSet(new long[]{0x0000000001000000L});
     public static final BitSet FOLLOW_24_in_ruleOperationDefinition981 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_16_in_ruleOperationDefinition993 = new BitSet(new long[]{0x0000000000000002L});
@@ -14546,7 +14546,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_EOF_in_entryRuleLocalReaction1039 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLocalReactionTrigger_in_ruleLocalReaction1087 = new BitSet(new long[]{0x0000000002000000L});
     public static final BitSet FOLLOW_ruleReactionTrigger_in_ruleLocalReaction1106 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_25_in_ruleLocalReaction1123 = new BitSet(new long[]{0x86000008048003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_25_in_ruleLocalReaction1123 = new BitSet(new long[]{0x83000004048003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleReactionEffect_in_ruleLocalReaction1146 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_ruleSuspendEffect_in_ruleLocalReaction1165 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_16_in_ruleLocalReaction1181 = new BitSet(new long[]{0x0000000000000002L});
@@ -14555,8 +14555,8 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_26_in_ruleSuspendEffect1273 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLocalReactionTrigger_in_entryRuleLocalReactionTrigger1309 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLocalReactionTrigger1319 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStateReaction_in_ruleLocalReactionTrigger1374 = new BitSet(new long[]{0x0000000008000002L});
-    public static final BitSet FOLLOW_27_in_ruleLocalReactionTrigger1387 = new BitSet(new long[]{0x00000001F0000032L});
+    public static final BitSet FOLLOW_ruleStateReaction_in_ruleLocalReactionTrigger1374 = new BitSet(new long[]{0x0000000000100002L});
+    public static final BitSet FOLLOW_20_in_ruleLocalReactionTrigger1387 = new BitSet(new long[]{0x00000000F8000032L});
     public static final BitSet FOLLOW_ruleReactionTrigger_in_ruleLocalReactionTrigger1408 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStateReaction_in_entryRuleStateReaction1447 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStateReaction1457 = new BitSet(new long[]{0x0000000000000002L});
@@ -14565,26 +14565,26 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleExit_in_ruleStateReaction1558 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEntry_in_entryRuleEntry1593 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleEntry1603 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_ruleEntry1649 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_ruleEntry1649 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleInside_in_entryRuleInside1685 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleInside1695 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_ruleInside1741 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_ruleInside1741 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExit_in_entryRuleExit1777 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleExit1787 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_ruleExit1833 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_ruleExit1833 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleReactionTrigger_in_entryRuleReactionTrigger1869 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleReactionTrigger1879 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_ruleReactionTrigger1931 = new BitSet(new long[]{0x0000000100000030L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleReactionTrigger1962 = new BitSet(new long[]{0x0000000100000010L});
+    public static final BitSet FOLLOW_30_in_ruleReactionTrigger1931 = new BitSet(new long[]{0x0000000080000030L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleReactionTrigger1962 = new BitSet(new long[]{0x0000000080000010L});
     public static final BitSet FOLLOW_ruleRegularEventSpec_in_ruleReactionTrigger1990 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_ruleReactionTrigger2009 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionTrigger2030 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_33_in_ruleReactionTrigger2042 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_ruleReactionTrigger2009 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionTrigger2030 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_32_in_ruleReactionTrigger2042 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleReactionEffect_in_entryRuleReactionEffect2080 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleReactionEffect2090 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionEffect2145 = new BitSet(new long[]{0x0000000400000002L});
-    public static final BitSet FOLLOW_34_in_ruleReactionEffect2166 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionEffect2188 = new BitSet(new long[]{0x0000000400000002L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionEffect2145 = new BitSet(new long[]{0x0000000200000002L});
+    public static final BitSet FOLLOW_33_in_ruleReactionEffect2166 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionEffect2188 = new BitSet(new long[]{0x0000000200000002L});
     public static final BitSet FOLLOW_rulePrimaryExpression_in_entryRulePrimaryExpression2226 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRulePrimaryExpression2236 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePrimitiveValueExpression_in_rulePrimaryExpression2283 = new BitSet(new long[]{0x0000000000000002L});
@@ -14595,7 +14595,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleEventValueReferenceExpression_in_rulePrimaryExpression2418 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePreValueExpression_in_entryRulePreValueExpression2453 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRulePreValueExpression2463 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_35_in_rulePreValueExpression2509 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_34_in_rulePreValueExpression2509 = new BitSet(new long[]{0x0000000000800000L});
     public static final BitSet FOLLOW_23_in_rulePreValueExpression2521 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_ruleFeatureCall_in_rulePreValueExpression2542 = new BitSet(new long[]{0x0000000001000000L});
     public static final BitSet FOLLOW_24_in_rulePreValueExpression2554 = new BitSet(new long[]{0x0000000000000002L});
@@ -14606,21 +14606,21 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleTransitionRoot_in_ruleDefRoot2703 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStatechartRoot_in_entryRuleStatechartRoot2738 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStatechartRoot2748 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_ruleStatechartRoot2785 = new BitSet(new long[]{0x0000038000000000L});
+    public static final BitSet FOLLOW_35_in_ruleStatechartRoot2785 = new BitSet(new long[]{0x000001C000000000L});
     public static final BitSet FOLLOW_ruleStatechartSpecification_in_ruleStatechartRoot2806 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStateRoot_in_entryRuleStateRoot2842 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStateRoot2852 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_37_in_ruleStateRoot2889 = new BitSet(new long[]{0x07FFFF81F24E4030L});
+    public static final BitSet FOLLOW_36_in_ruleStateRoot2889 = new BitSet(new long[]{0x03FFFFC0FA4E4030L});
     public static final BitSet FOLLOW_ruleStateSpecification_in_ruleStateRoot2910 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTransitionRoot_in_entryRuleTransitionRoot2946 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTransitionRoot2956 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_38_in_ruleTransitionRoot2993 = new BitSet(new long[]{0x000C0001F2000030L});
+    public static final BitSet FOLLOW_37_in_ruleTransitionRoot2993 = new BitSet(new long[]{0x00060000FA000030L});
     public static final BitSet FOLLOW_ruleTransitionSpecification_in_ruleTransitionRoot3014 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStatechartSpecification_in_entryRuleStatechartSpecification3052 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStatechartSpecification3062 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_ruleStatechartSpecification3109 = new BitSet(new long[]{0x07FFFF8000000010L});
-    public static final BitSet FOLLOW_ruleFQN_in_ruleStatechartSpecification3130 = new BitSet(new long[]{0x0000030000000002L});
-    public static final BitSet FOLLOW_ruleStatechartScope_in_ruleStatechartSpecification3153 = new BitSet(new long[]{0x0000030000000002L});
+    public static final BitSet FOLLOW_38_in_ruleStatechartSpecification3109 = new BitSet(new long[]{0x03FFFFC000000010L});
+    public static final BitSet FOLLOW_ruleFQN_in_ruleStatechartSpecification3130 = new BitSet(new long[]{0x0000018000000002L});
+    public static final BitSet FOLLOW_ruleStatechartScope_in_ruleStatechartSpecification3153 = new BitSet(new long[]{0x0000018000000002L});
     public static final BitSet FOLLOW_ruleStateSpecification_in_entryRuleStateSpecification3190 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStateSpecification3200 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStateScope_in_ruleStateSpecification3245 = new BitSet(new long[]{0x0000000000000002L});
@@ -14633,29 +14633,29 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleInternalScope_in_ruleStatechartScope3456 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleInterfaceScope_in_entryRuleInterfaceScope3493 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleInterfaceScope3503 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_ruleInterfaceScope3549 = new BitSet(new long[]{0x07FFFF8000100010L});
+    public static final BitSet FOLLOW_39_in_ruleInterfaceScope3549 = new BitSet(new long[]{0x03FFFFC000100010L});
     public static final BitSet FOLLOW_ruleXID_in_ruleInterfaceScope3570 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_ruleInterfaceScope3583 = new BitSet(new long[]{0x07FFFF8000404012L});
-    public static final BitSet FOLLOW_ruleEventDeclarartion_in_ruleInterfaceScope3606 = new BitSet(new long[]{0x07FFFF8000404012L});
-    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleInterfaceScope3625 = new BitSet(new long[]{0x07FFFF8000404012L});
-    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleInterfaceScope3644 = new BitSet(new long[]{0x07FFFF8000404012L});
+    public static final BitSet FOLLOW_20_in_ruleInterfaceScope3583 = new BitSet(new long[]{0x03FFFFC000404012L});
+    public static final BitSet FOLLOW_ruleEventDeclarartion_in_ruleInterfaceScope3606 = new BitSet(new long[]{0x03FFFFC000404012L});
+    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleInterfaceScope3625 = new BitSet(new long[]{0x03FFFFC000404012L});
+    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleInterfaceScope3644 = new BitSet(new long[]{0x03FFFFC000404012L});
     public static final BitSet FOLLOW_ruleInternalScope_in_entryRuleInternalScope3684 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleInternalScope3694 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_ruleInternalScope3740 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_ruleInternalScope3752 = new BitSet(new long[]{0x07FFFF81F24E4030L});
-    public static final BitSet FOLLOW_ruleEventDeclarartion_in_ruleInternalScope3775 = new BitSet(new long[]{0x07FFFF81F24E4032L});
-    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleInternalScope3794 = new BitSet(new long[]{0x07FFFF81F24E4032L});
-    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleInternalScope3813 = new BitSet(new long[]{0x07FFFF81F24E4032L});
-    public static final BitSet FOLLOW_ruleLocalReaction_in_ruleInternalScope3832 = new BitSet(new long[]{0x07FFFF81F24E4032L});
+    public static final BitSet FOLLOW_40_in_ruleInternalScope3740 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_20_in_ruleInternalScope3752 = new BitSet(new long[]{0x03FFFFC0FA4E4030L});
+    public static final BitSet FOLLOW_ruleEventDeclarartion_in_ruleInternalScope3775 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
+    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleInternalScope3794 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
+    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleInternalScope3813 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
+    public static final BitSet FOLLOW_ruleLocalReaction_in_ruleInternalScope3832 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
     public static final BitSet FOLLOW_ruleEventDeclarartion_in_entryRuleEventDeclarartion3874 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleEventDeclarartion3884 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEventDefinition_in_ruleEventDeclarartion3930 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEventDefinition_in_entryRuleEventDefinition3966 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleEventDefinition3976 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDirection_in_ruleEventDefinition4022 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_42_in_ruleEventDefinition4035 = new BitSet(new long[]{0x07FFFF8000000010L});
+    public static final BitSet FOLLOW_ruleDirection_in_ruleEventDefinition4022 = new BitSet(new long[]{0x0000020000000000L});
+    public static final BitSet FOLLOW_41_in_ruleEventDefinition4035 = new BitSet(new long[]{0x03FFFFC000000010L});
     public static final BitSet FOLLOW_ruleXID_in_ruleEventDefinition4056 = new BitSet(new long[]{0x0000000000100002L});
-    public static final BitSet FOLLOW_20_in_ruleEventDefinition4069 = new BitSet(new long[]{0x07FFFF8000000010L});
+    public static final BitSet FOLLOW_20_in_ruleEventDefinition4069 = new BitSet(new long[]{0x03FFFFC000000010L});
     public static final BitSet FOLLOW_ruleFQN_in_ruleEventDefinition4092 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVariableDeclaration_in_entryRuleVariableDeclaration4130 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleVariableDeclaration4140 = new BitSet(new long[]{0x0000000000000002L});
@@ -14666,64 +14666,64 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleXID_in_entryRuleXID4317 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleXID4328 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleXID4368 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_ruleXID4392 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_ruleXID4411 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_ruleXID4430 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_ruleXID4449 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_43_in_ruleXID4468 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_ruleXID4487 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_ruleXID4506 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_ruleXID4525 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_ruleXID4544 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_48_in_ruleXID4563 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_ruleXID4582 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_ruleXID4601 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_51_in_ruleXID4620 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_ruleXID4639 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_ruleXID4658 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_ruleXID4677 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_55_in_ruleXID4696 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_56_in_ruleXID4715 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_57_in_ruleXID4734 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_58_in_ruleXID4753 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_ruleXID4392 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_ruleXID4411 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_ruleXID4430 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_ruleXID4449 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_ruleXID4468 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_43_in_ruleXID4487 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_44_in_ruleXID4506 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_45_in_ruleXID4525 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_ruleXID4544 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_ruleXID4563 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_ruleXID4582 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_49_in_ruleXID4601 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_ruleXID4620 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_51_in_ruleXID4639 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_52_in_ruleXID4658 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_ruleXID4677 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_ruleXID4696 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_55_in_ruleXID4715 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_56_in_ruleXID4734 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_57_in_ruleXID4753 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFQN_in_entryRuleFQN4794 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleFQN4805 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleXID_in_ruleFQN4852 = new BitSet(new long[]{0x0800000000000002L});
-    public static final BitSet FOLLOW_59_in_ruleFQN4871 = new BitSet(new long[]{0x07FFFF8000000010L});
-    public static final BitSet FOLLOW_ruleXID_in_ruleFQN4893 = new BitSet(new long[]{0x0800000000000002L});
+    public static final BitSet FOLLOW_ruleXID_in_ruleFQN4852 = new BitSet(new long[]{0x0400000000000002L});
+    public static final BitSet FOLLOW_58_in_ruleFQN4871 = new BitSet(new long[]{0x03FFFFC000000010L});
+    public static final BitSet FOLLOW_ruleXID_in_ruleFQN4893 = new BitSet(new long[]{0x0400000000000002L});
     public static final BitSet FOLLOW_ruleTransitionReaction_in_entryRuleTransitionReaction4942 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTransitionReaction4952 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStextTrigger_in_ruleTransitionReaction5007 = new BitSet(new long[]{0x0000000082000002L});
-    public static final BitSet FOLLOW_25_in_ruleTransitionReaction5021 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleReactionEffect_in_ruleTransitionReaction5042 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_31_in_ruleTransitionReaction5057 = new BitSet(new long[]{0x1000000000000012L});
-    public static final BitSet FOLLOW_ruleTransitionProperty_in_ruleTransitionReaction5078 = new BitSet(new long[]{0x1000000000000012L});
+    public static final BitSet FOLLOW_ruleStextTrigger_in_ruleTransitionReaction5007 = new BitSet(new long[]{0x0000000042000002L});
+    public static final BitSet FOLLOW_25_in_ruleTransitionReaction5021 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleReactionEffect_in_ruleTransitionReaction5042 = new BitSet(new long[]{0x0000000040000002L});
+    public static final BitSet FOLLOW_30_in_ruleTransitionReaction5057 = new BitSet(new long[]{0x0800000000000012L});
+    public static final BitSet FOLLOW_ruleTransitionProperty_in_ruleTransitionReaction5078 = new BitSet(new long[]{0x0800000000000012L});
     public static final BitSet FOLLOW_ruleStextTrigger_in_entryRuleStextTrigger5117 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStextTrigger5127 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleReactionTrigger_in_ruleStextTrigger5174 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDefaultTrigger_in_ruleStextTrigger5201 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDefaultTrigger_in_entryRuleDefaultTrigger5236 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDefaultTrigger5246 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_ruleDefaultTrigger5293 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_51_in_ruleDefaultTrigger5311 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_49_in_ruleDefaultTrigger5293 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_ruleDefaultTrigger5311 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTransitionProperty_in_entryRuleTransitionProperty5348 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTransitionProperty5358 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEntryPointSpec_in_ruleTransitionProperty5405 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExitPointSpec_in_ruleTransitionProperty5432 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEntryPointSpec_in_entryRuleEntryPointSpec5467 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleEntryPointSpec5477 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_60_in_ruleEntryPointSpec5514 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_59_in_ruleEntryPointSpec5514 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleEntryPointSpec5531 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExitPointSpec_in_entryRuleExitPointSpec5572 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleExitPointSpec5582 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleExitPointSpec5624 = new BitSet(new long[]{0x1000000000000000L});
-    public static final BitSet FOLLOW_60_in_ruleExitPointSpec5641 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleExitPointSpec5624 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_59_in_ruleExitPointSpec5641 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleRegularEventSpec_in_entryRuleRegularEventSpec5679 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleRegularEventSpec5689 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFeatureCall_in_ruleRegularEventSpec5734 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTimeEventSpec_in_entryRuleTimeEventSpec5769 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTimeEventSpec5779 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTimeEventType_in_ruleTimeEventSpec5825 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleTimeEventType_in_ruleTimeEventSpec5825 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleConditionalExpression_in_ruleTimeEventSpec5846 = new BitSet(new long[]{0x0000000000000000L,0x0000007800000000L});
     public static final BitSet FOLLOW_ruleTimeUnit_in_ruleTimeEventSpec5867 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleBuiltinEventSpec_in_entryRuleBuiltinEventSpec5903 = new BitSet(new long[]{0x0000000000000000L});
@@ -14733,120 +14733,120 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleAlwaysEvent_in_ruleBuiltinEventSpec6014 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEntryEvent_in_entryRuleEntryEvent6049 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleEntryEvent6059 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_ruleEntryEvent6105 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_51_in_ruleEntryEvent6105 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExitEvent_in_entryRuleExitEvent6141 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleExitEvent6151 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_ruleExitEvent6197 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_52_in_ruleExitEvent6197 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAlwaysEvent_in_entryRuleAlwaysEvent6233 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAlwaysEvent6243 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_ruleAlwaysEvent6290 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_55_in_ruleAlwaysEvent6308 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_ruleAlwaysEvent6290 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_ruleAlwaysEvent6308 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_entryRuleExpression6349 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleExpression6359 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAssignmentExpression_in_ruleExpression6405 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAssignmentExpression_in_entryRuleAssignmentExpression6439 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAssignmentExpression6449 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleConditionalExpression_in_ruleAssignmentExpression6496 = new BitSet(new long[]{0x0000000000008002L,0x00000000007FE000L});
-    public static final BitSet FOLLOW_ruleAssignmentOperator_in_ruleAssignmentExpression6526 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleAssignmentOperator_in_ruleAssignmentExpression6526 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleConditionalExpression_in_ruleAssignmentExpression6547 = new BitSet(new long[]{0x0000000000008002L,0x00000000007FE000L});
     public static final BitSet FOLLOW_ruleConditionalExpression_in_entryRuleConditionalExpression6585 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleConditionalExpression6595 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6642 = new BitSet(new long[]{0x2000000000000002L});
-    public static final BitSet FOLLOW_61_in_ruleConditionalExpression6663 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6642 = new BitSet(new long[]{0x1000000000000002L});
+    public static final BitSet FOLLOW_60_in_ruleConditionalExpression6663 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6684 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_ruleConditionalExpression6696 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_20_in_ruleConditionalExpression6696 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6717 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLogicalOrExpression_in_entryRuleLogicalOrExpression6755 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLogicalOrExpression6765 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6812 = new BitSet(new long[]{0x4000000000000002L});
-    public static final BitSet FOLLOW_62_in_ruleLogicalOrExpression6833 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6854 = new BitSet(new long[]{0x4000000000000002L});
+    public static final BitSet FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6812 = new BitSet(new long[]{0x2000000000000002L});
+    public static final BitSet FOLLOW_61_in_ruleLogicalOrExpression6833 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6854 = new BitSet(new long[]{0x2000000000000002L});
     public static final BitSet FOLLOW_ruleLogicalAndExpression_in_entryRuleLogicalAndExpression6892 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLogicalAndExpression6902 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression6949 = new BitSet(new long[]{0x0000000008000002L});
-    public static final BitSet FOLLOW_27_in_ruleLogicalAndExpression6970 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression6991 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression6949 = new BitSet(new long[]{0x4000000000000002L});
+    public static final BitSet FOLLOW_62_in_ruleLogicalAndExpression6970 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression6991 = new BitSet(new long[]{0x4000000000000002L});
     public static final BitSet FOLLOW_ruleLogicalNotExpression_in_entryRuleLogicalNotExpression7029 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLogicalNotExpression7039 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleBitwiseXorExpression_in_ruleLogicalNotExpression7086 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_63_in_ruleLogicalNotExpression7113 = new BitSet(new long[]{0x06000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_63_in_ruleLogicalNotExpression7113 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleBitwiseXorExpression_in_ruleLogicalNotExpression7134 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleBitwiseXorExpression_in_entryRuleBitwiseXorExpression7171 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseXorExpression7181 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_ruleBitwiseXorExpression7228 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_ruleBitwiseXorExpression7249 = new BitSet(new long[]{0x06000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_64_in_ruleBitwiseXorExpression7249 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_ruleBitwiseXorExpression7270 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000001L});
     public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_entryRuleBitwiseOrExpression7308 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseOrExpression7318 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression7365 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000002L});
-    public static final BitSet FOLLOW_65_in_ruleBitwiseOrExpression7386 = new BitSet(new long[]{0x06000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_65_in_ruleBitwiseOrExpression7386 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression7407 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000002L});
     public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_entryRuleBitwiseAndExpression7445 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseAndExpression7455 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLogicalRelationExpression_in_ruleBitwiseAndExpression7502 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000004L});
-    public static final BitSet FOLLOW_66_in_ruleBitwiseAndExpression7523 = new BitSet(new long[]{0x06000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_66_in_ruleBitwiseAndExpression7523 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleLogicalRelationExpression_in_ruleBitwiseAndExpression7544 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000004L});
     public static final BitSet FOLLOW_ruleLogicalRelationExpression_in_entryRuleLogicalRelationExpression7582 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLogicalRelationExpression7592 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7639 = new BitSet(new long[]{0x1000000000000002L,0x00000007C0000000L});
-    public static final BitSet FOLLOW_ruleRelationalOperator_in_ruleLogicalRelationExpression7669 = new BitSet(new long[]{0x06000008008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7690 = new BitSet(new long[]{0x1000000000000002L,0x00000007C0000000L});
+    public static final BitSet FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7639 = new BitSet(new long[]{0x0800000000000002L,0x00000007C0000000L});
+    public static final BitSet FOLLOW_ruleRelationalOperator_in_ruleLogicalRelationExpression7669 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7690 = new BitSet(new long[]{0x0800000000000002L,0x00000007C0000000L});
     public static final BitSet FOLLOW_ruleShiftExpression_in_entryRuleShiftExpression7728 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleShiftExpression7738 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleNumericalAddSubtractExpression_in_ruleShiftExpression7785 = new BitSet(new long[]{0x0000000000000002L,0x0000000001800000L});
-    public static final BitSet FOLLOW_ruleShiftOperator_in_ruleShiftExpression7815 = new BitSet(new long[]{0x06000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleShiftOperator_in_ruleShiftExpression7815 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleNumericalAddSubtractExpression_in_ruleShiftExpression7836 = new BitSet(new long[]{0x0000000000000002L,0x0000000001800000L});
     public static final BitSet FOLLOW_ruleNumericalAddSubtractExpression_in_entryRuleNumericalAddSubtractExpression7874 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleNumericalAddSubtractExpression7884 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleNumericalMultiplyDivideExpression_in_ruleNumericalAddSubtractExpression7931 = new BitSet(new long[]{0x0000000000000002L,0x0000000006000000L});
-    public static final BitSet FOLLOW_ruleAdditiveOperator_in_ruleNumericalAddSubtractExpression7961 = new BitSet(new long[]{0x06000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleAdditiveOperator_in_ruleNumericalAddSubtractExpression7961 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleNumericalMultiplyDivideExpression_in_ruleNumericalAddSubtractExpression7982 = new BitSet(new long[]{0x0000000000000002L,0x0000000006000000L});
     public static final BitSet FOLLOW_ruleNumericalMultiplyDivideExpression_in_entryRuleNumericalMultiplyDivideExpression8020 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleNumericalMultiplyDivideExpression8030 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleNumericalUnaryExpression_in_ruleNumericalMultiplyDivideExpression8077 = new BitSet(new long[]{0x0000000002000002L,0x0000000018000000L});
-    public static final BitSet FOLLOW_ruleMultiplicativeOperator_in_ruleNumericalMultiplyDivideExpression8107 = new BitSet(new long[]{0x06000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleMultiplicativeOperator_in_ruleNumericalMultiplyDivideExpression8107 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleNumericalUnaryExpression_in_ruleNumericalMultiplyDivideExpression8128 = new BitSet(new long[]{0x0000000002000002L,0x0000000018000000L});
     public static final BitSet FOLLOW_ruleNumericalUnaryExpression_in_entryRuleNumericalUnaryExpression8166 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleNumericalUnaryExpression8176 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePrimaryExpression_in_ruleNumericalUnaryExpression8223 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleUnaryOperator_in_ruleNumericalUnaryExpression8259 = new BitSet(new long[]{0x06000008008003F0L});
+    public static final BitSet FOLLOW_ruleUnaryOperator_in_ruleNumericalUnaryExpression8259 = new BitSet(new long[]{0x03000004008003F0L});
     public static final BitSet FOLLOW_rulePrimaryExpression_in_ruleNumericalUnaryExpression8280 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePrimitiveValueExpression_in_entryRulePrimitiveValueExpression8317 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRulePrimitiveValueExpression8327 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLiteral_in_rulePrimitiveValueExpression8382 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFeatureCall_in_entryRuleFeatureCall8418 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleFeatureCall8428 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleElementReferenceExpression_in_ruleFeatureCall8475 = new BitSet(new long[]{0x0800000000000002L});
-    public static final BitSet FOLLOW_59_in_ruleFeatureCall8496 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleFeatureCall8516 = new BitSet(new long[]{0x0800000000800002L});
-    public static final BitSet FOLLOW_23_in_ruleFeatureCall8550 = new BitSet(new long[]{0x86000008018003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleFeatureCall8585 = new BitSet(new long[]{0x0000000401000000L});
-    public static final BitSet FOLLOW_34_in_ruleFeatureCall8598 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleFeatureCall8619 = new BitSet(new long[]{0x0000000401000000L});
-    public static final BitSet FOLLOW_24_in_ruleFeatureCall8635 = new BitSet(new long[]{0x0800000000000002L});
+    public static final BitSet FOLLOW_ruleElementReferenceExpression_in_ruleFeatureCall8475 = new BitSet(new long[]{0x0400000000000002L});
+    public static final BitSet FOLLOW_58_in_ruleFeatureCall8496 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleFeatureCall8516 = new BitSet(new long[]{0x0400000000800002L});
+    public static final BitSet FOLLOW_23_in_ruleFeatureCall8550 = new BitSet(new long[]{0x83000004018003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleFeatureCall8585 = new BitSet(new long[]{0x0000000201000000L});
+    public static final BitSet FOLLOW_33_in_ruleFeatureCall8598 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleFeatureCall8619 = new BitSet(new long[]{0x0000000201000000L});
+    public static final BitSet FOLLOW_24_in_ruleFeatureCall8635 = new BitSet(new long[]{0x0400000000000002L});
     public static final BitSet FOLLOW_ruleElementReferenceExpression_in_entryRuleElementReferenceExpression8675 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleElementReferenceExpression8685 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleElementReferenceExpression8739 = new BitSet(new long[]{0x0000000000800002L});
-    public static final BitSet FOLLOW_23_in_ruleElementReferenceExpression8773 = new BitSet(new long[]{0x86000008018003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleElementReferenceExpression8808 = new BitSet(new long[]{0x0000000401000000L});
-    public static final BitSet FOLLOW_34_in_ruleElementReferenceExpression8821 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleElementReferenceExpression8842 = new BitSet(new long[]{0x0000000401000000L});
+    public static final BitSet FOLLOW_23_in_ruleElementReferenceExpression8773 = new BitSet(new long[]{0x83000004018003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleElementReferenceExpression8808 = new BitSet(new long[]{0x0000000201000000L});
+    public static final BitSet FOLLOW_33_in_ruleElementReferenceExpression8821 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleElementReferenceExpression8842 = new BitSet(new long[]{0x0000000201000000L});
     public static final BitSet FOLLOW_24_in_ruleElementReferenceExpression8858 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEventValueReferenceExpression_in_entryRuleEventValueReferenceExpression8896 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleEventValueReferenceExpression8906 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_57_in_ruleEventValueReferenceExpression8952 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_56_in_ruleEventValueReferenceExpression8952 = new BitSet(new long[]{0x0000000000800000L});
     public static final BitSet FOLLOW_23_in_ruleEventValueReferenceExpression8964 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_ruleFeatureCall_in_ruleEventValueReferenceExpression8985 = new BitSet(new long[]{0x0000000001000000L});
     public static final BitSet FOLLOW_24_in_ruleEventValueReferenceExpression8997 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleActiveStateReferenceExpression_in_entryRuleActiveStateReferenceExpression9033 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleActiveStateReferenceExpression9043 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_58_in_ruleActiveStateReferenceExpression9089 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ruleActiveStateReferenceExpression9101 = new BitSet(new long[]{0x07FFFF8000000010L});
+    public static final BitSet FOLLOW_57_in_ruleActiveStateReferenceExpression9089 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_ruleActiveStateReferenceExpression9101 = new BitSet(new long[]{0x03FFFFC000000010L});
     public static final BitSet FOLLOW_ruleFQN_in_ruleActiveStateReferenceExpression9124 = new BitSet(new long[]{0x0000000001000000L});
     public static final BitSet FOLLOW_24_in_ruleActiveStateReferenceExpression9136 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleParenthesizedExpression_in_entryRuleParenthesizedExpression9172 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleParenthesizedExpression9182 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_ruleParenthesizedExpression9228 = new BitSet(new long[]{0x86000008008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_23_in_ruleParenthesizedExpression9228 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
     public static final BitSet FOLLOW_ruleExpression_in_ruleParenthesizedExpression9249 = new BitSet(new long[]{0x0000000001000000L});
     public static final BitSet FOLLOW_24_in_ruleParenthesizedExpression9261 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLiteral_in_entryRuleLiteral9297 = new BitSet(new long[]{0x0000000000000000L});
@@ -14879,9 +14879,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_72_in_ruleCombineOperator10106 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_73_in_ruleCombineOperator10123 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_74_in_ruleCombineOperator10140 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_43_in_ruleDirection10185 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_ruleDirection10202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_ruleDirection10219 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_ruleDirection10185 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_43_in_ruleDirection10202 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_44_in_ruleDirection10219 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_75_in_ruleTimeEventType10264 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_76_in_ruleTimeEventType10281 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_15_in_ruleAssignmentOperator10326 = new BitSet(new long[]{0x0000000000000002L});
@@ -14907,7 +14907,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_93_in_ruleUnaryOperator10778 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_94_in_ruleRelationalOperator10823 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_95_in_ruleRelationalOperator10840 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_60_in_ruleRelationalOperator10857 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_59_in_ruleRelationalOperator10857 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_96_in_ruleRelationalOperator10874 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_97_in_ruleRelationalOperator10891 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_98_in_ruleRelationalOperator10908 = new BitSet(new long[]{0x0000000000000002L});
@@ -14915,7 +14915,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_100_in_ruleTimeUnit10970 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_101_in_ruleTimeUnit10987 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_102_in_ruleTimeUnit11004 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_synpred1_InternalSyncChartstext2158 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_synpred1_InternalSyncChartstext2158 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_23_in_synpred2_InternalSyncChartstext8532 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_23_in_synpred3_InternalSyncChartstext8755 = new BitSet(new long[]{0x0000000000000002L});
 

@@ -695,9 +695,9 @@ ruleLocalReactionTrigger returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_2='&&' 
+)(	otherlv_2=':' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getLocalReactionTriggerAccess().getAmpersandAmpersandKeyword_2_0());
+    	newLeafNode(otherlv_2, grammarAccess.getLocalReactionTriggerAccess().getColonKeyword_2_0());
     }
 (
 (
