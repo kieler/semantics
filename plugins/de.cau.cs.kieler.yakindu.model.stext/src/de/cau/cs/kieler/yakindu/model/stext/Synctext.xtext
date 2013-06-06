@@ -45,7 +45,7 @@ SuspendEffect returns sgraph::Effect:
 	{SuspendEffect} 'Suspend';
 
 LocalReactionTrigger returns sgraph::Trigger:
-	{ReactionTrigger} stateReaction=StateReaction ('&&' reactionTrigger=ReactionTrigger?)?;
+	{ReactionTrigger} stateReaction=StateReaction (':' reactionTrigger=ReactionTrigger?)?;
 
 StateReaction:
 	Entry | Inside | Exit;

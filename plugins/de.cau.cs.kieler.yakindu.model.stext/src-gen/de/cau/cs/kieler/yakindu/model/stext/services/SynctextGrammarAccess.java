@@ -371,16 +371,16 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStateReactionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cStateReactionStateReactionParserRuleCall_1_0 = (RuleCall)cStateReactionAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cAmpersandAmpersandKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cColonKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cReactionTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cReactionTriggerReactionTriggerParserRuleCall_2_1_0 = (RuleCall)cReactionTriggerAssignment_2_1.eContents().get(0);
 		
 		//LocalReactionTrigger returns sgraph::Trigger:
 		//
-		//	{ReactionTrigger} stateReaction=StateReaction ("&&" reactionTrigger=ReactionTrigger?)?;
+		//	{ReactionTrigger} stateReaction=StateReaction (":" reactionTrigger=ReactionTrigger?)?;
 		public ParserRule getRule() { return rule; }
 
-		//{ReactionTrigger} stateReaction=StateReaction ("&&" reactionTrigger=ReactionTrigger?)?
+		//{ReactionTrigger} stateReaction=StateReaction (":" reactionTrigger=ReactionTrigger?)?
 		public Group getGroup() { return cGroup; }
 
 		//{ReactionTrigger}
@@ -392,11 +392,11 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//StateReaction
 		public RuleCall getStateReactionStateReactionParserRuleCall_1_0() { return cStateReactionStateReactionParserRuleCall_1_0; }
 
-		//("&&" reactionTrigger=ReactionTrigger?)?
+		//(":" reactionTrigger=ReactionTrigger?)?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"&&"
-		public Keyword getAmpersandAmpersandKeyword_2_0() { return cAmpersandAmpersandKeyword_2_0; }
+		//":"
+		public Keyword getColonKeyword_2_0() { return cColonKeyword_2_0; }
 
 		//reactionTrigger=ReactionTrigger?
 		public Assignment getReactionTriggerAssignment_2_1() { return cReactionTriggerAssignment_2_1; }
@@ -926,7 +926,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} stateReaction=StateReaction ("&&" reactionTrigger=ReactionTrigger?)?;
+	//	{ReactionTrigger} stateReaction=StateReaction (":" reactionTrigger=ReactionTrigger?)?;
 	public LocalReactionTriggerElements getLocalReactionTriggerAccess() {
 		return (pLocalReactionTrigger != null) ? pLocalReactionTrigger : (pLocalReactionTrigger = new LocalReactionTriggerElements());
 	}

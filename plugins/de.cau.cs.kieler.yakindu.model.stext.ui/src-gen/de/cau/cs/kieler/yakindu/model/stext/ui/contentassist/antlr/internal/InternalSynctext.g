@@ -4574,11 +4574,11 @@ rule__LocalReactionTrigger__Group_2__0__Impl
     }
 :
 (
-{ before(grammarAccess.getLocalReactionTriggerAccess().getAmpersandAmpersandKeyword_2_0()); }
+{ before(grammarAccess.getLocalReactionTriggerAccess().getColonKeyword_2_0()); }
 
-	'&&' 
+	':' 
 
-{ after(grammarAccess.getLocalReactionTriggerAccess().getAmpersandAmpersandKeyword_2_0()); }
+{ after(grammarAccess.getLocalReactionTriggerAccess().getColonKeyword_2_0()); }
 )
 
 ;
