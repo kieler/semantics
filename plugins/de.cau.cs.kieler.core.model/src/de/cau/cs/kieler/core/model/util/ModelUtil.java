@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  */
 
-package de.cau.cs.kieler.sim.kiem.util;
+package de.cau.cs.kieler.core.model.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,8 +46,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-
 /**
  * This is a utility class for File inputs, opening and URL conversion of bundle and workspace
  * files.
@@ -56,7 +54,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * @kieler.rating 2012-10-08 proposed yellow
  * 
  */
-public final class KiemUtil {
+public final class ModelUtil {
 
     /** The Constant HEADLESS_PROPERTY to dected a headless run by program/VM parameters. */
     public static final String HEADLESS_PROPERTY = "surefire";
@@ -66,7 +64,7 @@ public final class KiemUtil {
     /**
      * KiemUtil should not be instantiate.
      */
-    private KiemUtil() {
+    private ModelUtil() {
     }
 
     // -------------------------------------------------------------------------
@@ -77,8 +75,6 @@ public final class KiemUtil {
      * @param fileAbsolute
      *            the file absolute
      * @return true, if is bundle file
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static boolean isBundleFile(final URL fileAbsolute) {
         return (fileAbsolute.toString().contains("bundleentry"));
@@ -95,8 +91,6 @@ public final class KiemUtil {
      * @return the plugin id
      * @throws IOException
      *             Signals that an I/O exception has occurred.
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static String getPluginID(final URL fileAbsolute) throws IOException {
         // if bundle entry then just to string
@@ -121,8 +115,6 @@ public final class KiemUtil {
      * @param pluginID the plugin id
      * @return the input stream
      * @throws FileNotFoundException the file not found exception
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static InputStream openBundleOrWorkspaceFile(final IPath relativeFilePath,
             final String pluginID) throws FileNotFoundException {
@@ -143,8 +135,6 @@ public final class KiemUtil {
      * @param relativeFilePath the relative file path
      * @return the input stream
      * @throws FileNotFoundException the file not found exception
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static OutputStream createWorkspaceFile(final IPath relativeFilePath) 
             throws FileNotFoundException {
@@ -164,8 +154,6 @@ public final class KiemUtil {
      * @param relativeFilePath the relative file path
      * @return the input stream
      * @throws FileNotFoundException the file not found exception
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static InputStream openWorkspaceFile(final IPath relativeFilePath) 
             throws FileNotFoundException {
@@ -189,16 +177,14 @@ public final class KiemUtil {
      * @return the input stream
      * @throws IOException
      *             Signals that an I/O exception has occurred.
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static InputStream openBundleFile(final IPath relativeFilePath, final String pluginID)
             throws IOException {
         final Bundle bundle = Platform.getBundle(pluginID);
         URL bundleFileUrl = bundle.getEntry(relativeFilePath.toString());
 
-        URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(bundleFileUrl);
-        String absoluteBundlePathString = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
+        URL absoluteBundleUrl = getAbsoluteBundlePath(bundleFileUrl);
+        String absoluteBundlePathString = getAbsoluteFilePath(absoluteBundleUrl);
 
         FileInputStream fileInputStream = new FileInputStream(absoluteBundlePathString);
 
@@ -215,8 +201,6 @@ public final class KiemUtil {
      * @return the resolved absolute file path
      * @throws IOException
      *             Signals that an I/O exception has occurred.
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static URL getAbsoluteBundlePath(final URL fullBundleUrl) throws IOException {
         URL absoluteBundlePath = FileLocator.resolve(fullBundleUrl);
@@ -231,8 +215,6 @@ public final class KiemUtil {
      * @param url
      *            the url
      * @return the absolute file path
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static String getAbsoluteFilePath(final URL url) {
         // if bundle entry then just to string
@@ -250,8 +232,6 @@ public final class KiemUtil {
      *
      * @param path the path
      * @return the i file
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static IFile convertIPathToIFile(final IPath path) {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
@@ -266,8 +246,6 @@ public final class KiemUtil {
      * @param ifile
      *            the file
      * @return the absolute file path
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     // To resolve references to locations outside the workspace
     // org.eclipse.core.internal.resources.Resource seems to be needed.
@@ -292,8 +270,6 @@ public final class KiemUtil {
      * @param resolvedPathString
      *            the resolved path string
      * @return the absolute java io path
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static String getAbsoluteJavaIOPath(final String resolvedPathString) {
         java.io.File javaFile = new File(resolvedPathString.replaceAll("%20", " "));
@@ -312,8 +288,6 @@ public final class KiemUtil {
      *
      * @param resolvedPath the resolved path
      * @return the absolute file path
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static String getAbsoluteFilePath(final IPath resolvedPath) {
         // if bundle entry then just to string
@@ -346,11 +320,11 @@ public final class KiemUtil {
      * @throws URISyntaxException
      *             the uRI syntax exception
      */
-    public static URL resolveBundleOrWorkspaceFile(final String fileLocation)
-            throws MalformedURLException, URISyntaxException {
-        String pluginID = KiemPlugin.PLUGIN_ID;
-        return resolveBundleOrWorkspaceFile(fileLocation, pluginID);
-    }
+//    public static URL resolveBundleOrWorkspaceFile(final String fileLocation)
+//            throws MalformedURLException, URISyntaxException {
+//        String pluginID = KiemPlugin.PLUGIN_ID;
+//        return resolveBundleOrWorkspaceFile(fileLocation, pluginID);
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -368,8 +342,6 @@ public final class KiemUtil {
      *             the malformed url exception
      * @throws URISyntaxException
      *             the uRI syntax exception
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static URL resolveBundleOrWorkspaceFile(final String fileLocation, final String pluginID)
             throws MalformedURLException, URISyntaxException {
@@ -417,8 +389,6 @@ public final class KiemUtil {
      *             the malformed url exception
      * @throws URISyntaxException
      *             the uRI syntax exception
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static URL resolveWorkspaceFile(final String fileLocation) throws MalformedURLException,
             URISyntaxException {
@@ -463,8 +433,6 @@ public final class KiemUtil {
      *             the uRI syntax exception
      * @throws IOException
      *             Signals that an I/O exception has occurred.
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static IFile createLinkedWorkspaceFile(final URL fullBundleUrl,
             final String workspaceProjectName, final boolean cleanProject, final boolean override)
@@ -487,8 +455,8 @@ public final class KiemUtil {
 
         IFile workspaceLinkFile = null;
 
-        URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(fullBundleUrl);
-        String absoluteBundlePathString = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
+        URL absoluteBundleUrl = getAbsoluteBundlePath(fullBundleUrl);
+        String absoluteBundlePathString = getAbsoluteFilePath(absoluteBundleUrl);
         IPath absoluteBundlePath = new Path(absoluteBundlePathString);
         workspaceLinkFile = project.getFile(absoluteBundlePath.lastSegment());
         if (override && workspaceLinkFile.exists()) {
@@ -509,8 +477,6 @@ public final class KiemUtil {
      * @param fileString
      *            the file string
      * @return the input model as uri
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static org.eclipse.emf.common.util.URI getFileStringAsEMFURI(final String fileString) {
         if (fileString == null) {
@@ -533,17 +499,17 @@ public final class KiemUtil {
      * 
      * @return the currently active editor, or null
      */
-    public static IEditorSite getActiveEditor() {
-        IEditorSite editorSite = null;
-        IPath currentModelPath = KiemPlugin.getCurrentModelFile();
-        if (currentModelPath != null) {
-            IEditorPart editor = KiemPlugin.getOpenedModelEditors().get(currentModelPath);
-            if (editor != null) {
-                editorSite = editor.getEditorSite();
-            }
-        }
-        return editorSite;
-    }
+//    public static IEditorSite getActiveEditor() {
+//        IEditorSite editorSite = null;
+//        IPath currentModelPath = KiemPlugin.getCurrentModelFile();
+//        if (currentModelPath != null) {
+//            IEditorPart editor = KiemPlugin.getOpenedModelEditors().get(currentModelPath);
+//            if (editor != null) {
+//                editorSite = editor.getEditorSite();
+//            }
+//        }
+//        return editorSite;
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -555,8 +521,6 @@ public final class KiemUtil {
      * @return the e object
      * @throws IOException
      *             Signals that an I/O exception has occurred.
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static EObject loadEObjectFromModelFile(final IPath modelFilePath) throws IOException {
         // try to load it
@@ -578,8 +542,6 @@ public final class KiemUtil {
      * Checks if this is a headless run.
      * 
      * @return true, if is headless run
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static boolean isHeadlessRun() {
         for (String arg : Platform.getApplicationArgs()) {
@@ -598,8 +560,6 @@ public final class KiemUtil {
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static String generateRandomTempOutputFolder() throws IOException {
         String folderName = System.getProperty("java.io.tmpdir");
@@ -619,8 +579,6 @@ public final class KiemUtil {
      * Create random string of 16 letters/numbers.
      * 
      * @return the string
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static String randomString() {
         final int folderLength = 16;
@@ -643,8 +601,6 @@ public final class KiemUtil {
      * @param directory
      *            the directory to be deleted
      * @return true, if successful
-     * 
-     * @deprecated moved to kieler.core.model.util.ModelUtil
      */
     public static boolean deleteFolder(final File directory) {
         if (directory.isDirectory()) {

@@ -11,7 +11,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -41,7 +40,10 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+
 import com.google.inject.Injector;
+
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 
 
 /**
@@ -162,8 +164,8 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
                 // Save text
                 if (transformedObject instanceof CharSequence) {
                     IPath txtOutputPath = new Path(output.toPlatformString(false).replace("%20", " "));
-                    IFile txtOutputFile = convertIPathToIFile(txtOutputPath);
-                    String txtOutputString = getAbsoluteFilePath(txtOutputFile);
+                    IFile txtOutputFile = ModelUtil.convertIPathToIFile(txtOutputPath);
+                    String txtOutputString = ModelUtil.getAbsoluteFilePath(txtOutputFile);
                     
                     CharSequence charSequenceContent = (CharSequence) transformedObject;
                     String stringContent = charSequenceContent.toString();
@@ -248,39 +250,5 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
             e.printStackTrace();
         }
     }
-    
-    private IFile convertIPathToIFile(final IPath path) {
-        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-        IFile file = myWorkspaceRoot.getFile(path);
-        return file;
-    }
-    
-    @SuppressWarnings({ "restriction" })
-    private String getAbsoluteFilePath(final IFile ifile) {
-        IPath fullPath = ifile.getLocation();
-        // If we have spaces, try it like this...
-        if (fullPath == null && ifile instanceof org.eclipse.core.internal.resources.Resource) {
-            org.eclipse.core.internal.resources.Resource resource = null;
-            resource = (org.eclipse.core.internal.resources.Resource) ifile;
-            fullPath = resource.getLocalManager().locationFor(resource);
-        }
-        return (getAbsoluteFilePath(ifile.getLocation()));
-    }
-   
-   private String getAbsoluteFilePath(final IPath resolvedPath) {
-       // if bundle entry then just to string
-       if (resolvedPath.toString().contains("bundleentry")) {
-           return resolvedPath.toString();
-       }
-       // Ensure it is absolute
-       resolvedPath.makeAbsolute();
-       java.io.File javaFile = new java.io.File(resolvedPath.toString().replaceAll("%20", " "));
-       if (javaFile.exists()) {
-           String fileString = javaFile.getAbsolutePath();
-           return fileString;
-       }
-       // Something went wrong, we could not resolve the file location
-       return resolvedPath.toString();
-   }
 
 }
