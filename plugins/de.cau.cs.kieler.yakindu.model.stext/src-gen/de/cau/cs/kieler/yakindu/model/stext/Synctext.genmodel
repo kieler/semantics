@@ -43,7 +43,7 @@
     <genClasses ecoreClass="Synctext.ecore#//ReactionTrigger">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//ReactionTrigger/stateReaction"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//ReactionTrigger/reactionTrigger"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//ReactionTrigger/isImmediate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//ReactionTrigger/labelPriority"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//ReactionTrigger/delay"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//ReactionTrigger/trigger"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//ReactionTrigger/guardExpression"/>

@@ -579,13 +579,13 @@ public interface SynctextPackage extends EPackage
   int REACTION_TRIGGER__REACTION_TRIGGER = SGraphPackage.TRIGGER_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+   * The feature id for the '<em><b>Label Priority</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REACTION_TRIGGER__IS_IMMEDIATE = SGraphPackage.TRIGGER_FEATURE_COUNT + 2;
+  int REACTION_TRIGGER__LABEL_PRIORITY = SGraphPackage.TRIGGER_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' attribute.
@@ -920,15 +920,15 @@ public interface SynctextPackage extends EPackage
   EReference getReactionTrigger_ReactionTrigger();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getLabelPriority <em>Label Priority</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Immediate</em>'.
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#isIsImmediate()
+   * @return the meta object for the attribute '<em>Label Priority</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getLabelPriority()
    * @see #getReactionTrigger()
    * @generated
    */
-  EAttribute getReactionTrigger_IsImmediate();
+  EAttribute getReactionTrigger_LabelPriority();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getDelay <em>Delay</em>}'.
@@ -1241,12 +1241,12 @@ public interface SynctextPackage extends EPackage
     EReference REACTION_TRIGGER__REACTION_TRIGGER = eINSTANCE.getReactionTrigger_ReactionTrigger();
 
     /**
-     * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Label Priority</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute REACTION_TRIGGER__IS_IMMEDIATE = eINSTANCE.getReactionTrigger_IsImmediate();
+    EAttribute REACTION_TRIGGER__LABEL_PRIORITY = eINSTANCE.getReactionTrigger_LabelPriority();
 
     /**
      * The meta object literal for the '<em><b>Delay</b></em>' attribute feature.

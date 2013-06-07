@@ -30,7 +30,7 @@ import org.yakindu.sct.model.stext.stext.RegularEventSpec;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getStateReaction <em>State Reaction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getReactionTrigger <em>Reaction Trigger</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#isIsImmediate <em>Is Immediate</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getLabelPriority <em>Label Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getTrigger <em>Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getGuardExpression <em>Guard Expression</em>}</li>
@@ -62,24 +62,24 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   protected Trigger reactionTrigger;
 
   /**
-   * The default value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
+   * The default value of the '{@link #getLabelPriority() <em>Label Priority</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsImmediate()
+   * @see #getLabelPriority()
    * @generated
    * @ordered
    */
-  protected static final boolean IS_IMMEDIATE_EDEFAULT = false;
+  protected static final int LABEL_PRIORITY_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
+   * The cached value of the '{@link #getLabelPriority() <em>Label Priority</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isIsImmediate()
+   * @see #getLabelPriority()
    * @generated
    * @ordered
    */
-  protected boolean isImmediate = IS_IMMEDIATE_EDEFAULT;
+  protected int labelPriority = LABEL_PRIORITY_EDEFAULT;
 
   /**
    * The default value of the '{@link #getDelay() <em>Delay</em>}' attribute.
@@ -243,9 +243,9 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isIsImmediate()
+  public int getLabelPriority()
   {
-    return isImmediate;
+    return labelPriority;
   }
 
   /**
@@ -253,12 +253,12 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setIsImmediate(boolean newIsImmediate)
+  public void setLabelPriority(int newLabelPriority)
   {
-    boolean oldIsImmediate = isImmediate;
-    isImmediate = newIsImmediate;
+    int oldLabelPriority = labelPriority;
+    labelPriority = newLabelPriority;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.REACTION_TRIGGER__IS_IMMEDIATE, oldIsImmediate, isImmediate));
+      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.REACTION_TRIGGER__LABEL_PRIORITY, oldLabelPriority, labelPriority));
   }
 
   /**
@@ -416,8 +416,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return getStateReaction();
       case SynctextPackage.REACTION_TRIGGER__REACTION_TRIGGER:
         return getReactionTrigger();
-      case SynctextPackage.REACTION_TRIGGER__IS_IMMEDIATE:
-        return isIsImmediate();
+      case SynctextPackage.REACTION_TRIGGER__LABEL_PRIORITY:
+        return getLabelPriority();
       case SynctextPackage.REACTION_TRIGGER__DELAY:
         return getDelay();
       case SynctextPackage.REACTION_TRIGGER__TRIGGER:
@@ -444,8 +444,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
       case SynctextPackage.REACTION_TRIGGER__REACTION_TRIGGER:
         setReactionTrigger((Trigger)newValue);
         return;
-      case SynctextPackage.REACTION_TRIGGER__IS_IMMEDIATE:
-        setIsImmediate((Boolean)newValue);
+      case SynctextPackage.REACTION_TRIGGER__LABEL_PRIORITY:
+        setLabelPriority((Integer)newValue);
         return;
       case SynctextPackage.REACTION_TRIGGER__DELAY:
         setDelay((Integer)newValue);
@@ -476,8 +476,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
       case SynctextPackage.REACTION_TRIGGER__REACTION_TRIGGER:
         setReactionTrigger((Trigger)null);
         return;
-      case SynctextPackage.REACTION_TRIGGER__IS_IMMEDIATE:
-        setIsImmediate(IS_IMMEDIATE_EDEFAULT);
+      case SynctextPackage.REACTION_TRIGGER__LABEL_PRIORITY:
+        setLabelPriority(LABEL_PRIORITY_EDEFAULT);
         return;
       case SynctextPackage.REACTION_TRIGGER__DELAY:
         setDelay(DELAY_EDEFAULT);
@@ -506,8 +506,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return stateReaction != null;
       case SynctextPackage.REACTION_TRIGGER__REACTION_TRIGGER:
         return reactionTrigger != null;
-      case SynctextPackage.REACTION_TRIGGER__IS_IMMEDIATE:
-        return isImmediate != IS_IMMEDIATE_EDEFAULT;
+      case SynctextPackage.REACTION_TRIGGER__LABEL_PRIORITY:
+        return labelPriority != LABEL_PRIORITY_EDEFAULT;
       case SynctextPackage.REACTION_TRIGGER__DELAY:
         return delay != DELAY_EDEFAULT;
       case SynctextPackage.REACTION_TRIGGER__TRIGGER:
@@ -529,8 +529,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (isImmediate: ");
-    result.append(isImmediate);
+    result.append(" (labelPriority: ");
+    result.append(labelPriority);
     result.append(", delay: ");
     result.append(delay);
     result.append(')');

@@ -17,7 +17,7 @@ import org.yakindu.sct.model.stext.stext.RegularEventSpec;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getStateReaction <em>State Reaction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getReactionTrigger <em>Reaction Trigger</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getLabelPriority <em>Label Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getTrigger <em>Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}</li>
@@ -83,30 +83,30 @@ public interface ReactionTrigger extends Trigger
   void setReactionTrigger(Trigger value);
 
   /**
-   * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
+   * Returns the value of the '<em><b>Label Priority</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Is Immediate</em>' attribute isn't clear,
+   * If the meaning of the '<em>Label Priority</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Is Immediate</em>' attribute.
-   * @see #setIsImmediate(boolean)
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage#getReactionTrigger_IsImmediate()
+   * @return the value of the '<em>Label Priority</em>' attribute.
+   * @see #setLabelPriority(int)
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage#getReactionTrigger_LabelPriority()
    * @model
    * @generated
    */
-  boolean isIsImmediate();
+  int getLabelPriority();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#isIsImmediate <em>Is Immediate</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getLabelPriority <em>Label Priority</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Is Immediate</em>' attribute.
-   * @see #isIsImmediate()
+   * @param value the new value of the '<em>Label Priority</em>' attribute.
+   * @see #getLabelPriority()
    * @generated
    */
-  void setIsImmediate(boolean value);
+  void setLabelPriority(int value);
 
   /**
    * Returns the value of the '<em><b>Delay</b></em>' attribute.

@@ -941,24 +941,31 @@ ruleReactionTrigger returns [EObject current=null]
     }
 )(
 (
-		lv_isImmediate_1_0=	'#' 
-    {
-        newLeafNode(lv_isImmediate_1_0, grammarAccess.getReactionTriggerAccess().getIsImmediateNumberSignKeyword_1_0());
-    }
- 
-	    {
+		lv_labelPriority_1_0=RULE_INT
+		{
+			newLeafNode(lv_labelPriority_1_0, grammarAccess.getReactionTriggerAccess().getLabelPriorityINTTerminalRuleCall_1_0()); 
+		}
+		{
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getReactionTriggerRule());
 	        }
-       		setWithLastConsumed($current, "isImmediate", true, "#");
+       		setWithLastConsumed(
+       			$current, 
+       			"labelPriority",
+        		lv_labelPriority_1_0, 
+        		"INT");
 	    }
 
 )
-)?(
+)	otherlv_2=':' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getReactionTriggerAccess().getColonKeyword_2());
+    }
 (
-		lv_delay_2_0=RULE_INT
+(
+		lv_delay_3_0=RULE_INT
 		{
-			newLeafNode(lv_delay_2_0, grammarAccess.getReactionTriggerAccess().getDelayINTTerminalRuleCall_2_0()); 
+			newLeafNode(lv_delay_3_0, grammarAccess.getReactionTriggerAccess().getDelayINTTerminalRuleCall_3_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -967,7 +974,7 @@ ruleReactionTrigger returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"delay",
-        		lv_delay_2_0, 
+        		lv_delay_3_0, 
         		"INT");
 	    }
 
@@ -975,49 +982,49 @@ ruleReactionTrigger returns [EObject current=null]
 )?((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_3_0_0()); 
+	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_4_0_0()); 
 	    }
-		lv_trigger_3_0=ruleRegularEventSpec		{
+		lv_trigger_4_0=ruleRegularEventSpec		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getReactionTriggerRule());
 	        }
        		set(
        			$current, 
        			"trigger",
-        		lv_trigger_3_0, 
+        		lv_trigger_4_0, 
         		"RegularEventSpec");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 )
-    |(	otherlv_4='[' 
+    |(	otherlv_5='(' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getReactionTriggerAccess().getLeftSquareBracketKeyword_3_1_0());
+    	newLeafNode(otherlv_5, grammarAccess.getReactionTriggerAccess().getLeftParenthesisKeyword_4_1_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getGuardExpressionExpressionParserRuleCall_3_1_1_0()); 
+	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getGuardExpressionExpressionParserRuleCall_4_1_1_0()); 
 	    }
-		lv_guardExpression_5_0=ruleExpression		{
+		lv_guardExpression_6_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getReactionTriggerRule());
 	        }
        		set(
        			$current, 
        			"guardExpression",
-        		lv_guardExpression_5_0, 
+        		lv_guardExpression_6_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_6=']' 
+)	otherlv_7=')' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getReactionTriggerAccess().getRightSquareBracketKeyword_3_1_2());
+    	newLeafNode(otherlv_7, grammarAccess.getReactionTriggerAccess().getRightParenthesisKeyword_4_1_2());
     }
-)))
+))?)
 ;
 
 

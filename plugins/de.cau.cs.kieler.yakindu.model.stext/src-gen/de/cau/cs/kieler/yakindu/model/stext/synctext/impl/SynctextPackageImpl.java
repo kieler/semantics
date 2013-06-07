@@ -446,7 +446,7 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getReactionTrigger_IsImmediate()
+  public EAttribute getReactionTrigger_LabelPriority()
   {
     return (EAttribute)reactionTriggerEClass.getEStructuralFeatures().get(2);
   }
@@ -595,7 +595,7 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     reactionTriggerEClass = createEClass(REACTION_TRIGGER);
     createEReference(reactionTriggerEClass, REACTION_TRIGGER__STATE_REACTION);
     createEReference(reactionTriggerEClass, REACTION_TRIGGER__REACTION_TRIGGER);
-    createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__IS_IMMEDIATE);
+    createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__LABEL_PRIORITY);
     createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__DELAY);
     createEReference(reactionTriggerEClass, REACTION_TRIGGER__TRIGGER);
     createEReference(reactionTriggerEClass, REACTION_TRIGGER__GUARD_EXPRESSION);
@@ -694,7 +694,7 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     initEClass(reactionTriggerEClass, ReactionTrigger.class, "ReactionTrigger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getReactionTrigger_StateReaction(), this.getStateReaction(), null, "stateReaction", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getReactionTrigger_ReactionTrigger(), theSGraphPackage.getTrigger(), null, "reactionTrigger", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getReactionTrigger_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getReactionTrigger_LabelPriority(), ecorePackage.getEInt(), "labelPriority", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReactionTrigger_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getReactionTrigger_Trigger(), theStextPackage.getRegularEventSpec(), null, "trigger", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getReactionTrigger_GuardExpression(), theStextPackage.getExpression(), null, "guardExpression", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

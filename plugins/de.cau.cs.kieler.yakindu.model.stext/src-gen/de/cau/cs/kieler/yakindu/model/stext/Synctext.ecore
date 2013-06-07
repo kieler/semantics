@@ -38,7 +38,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reactionTrigger" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelPriority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//RegularEventSpec"
         containment="true"/>

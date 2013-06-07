@@ -322,7 +322,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//ReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "[" guardExpression=Expression "]");
+	//	{ReactionTrigger} labelPriority=INT ":" delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression ")")?;
 	public SynctextGrammarAccess.ReactionTriggerElements getReactionTriggerAccess() {
 		return gaSynctext.getReactionTriggerAccess();
 	}
