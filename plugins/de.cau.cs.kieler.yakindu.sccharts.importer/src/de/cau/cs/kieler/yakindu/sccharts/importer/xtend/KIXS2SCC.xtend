@@ -234,7 +234,7 @@ class KIXS2SCC {
         if (action.label.nullOrEmpty) {
             return "";
         }
-        var newLabel = prefix + action.label.replace(" not ", " ! ").replace(" and ", " && ").replace(" or ", " || ").replace(" = ", " == ").replace("#", "");
+        var newLabel = prefix + action.label.replace("(not ", "(! ").replace(" not ", " ! ").replace(" and ", " && ").replace(" or ", " || ").replace(" = ", " == ").replace("#", "");
         if (!(action.trigger instanceof ValuedObjectReference)) {
             if (newLabel.contains("/")) {
                 // Effect
