@@ -252,6 +252,7 @@ class KIXS2SCC {
                 newLabel = "(" + newLabel.substring(0) + ")";
             }
         }
+        newLabel = newLabel.replace("(not ", "(! ").replace(" not ", " ! ");
         newLabel = newLabel.convertValueOf;
         return newLabel;
     }
