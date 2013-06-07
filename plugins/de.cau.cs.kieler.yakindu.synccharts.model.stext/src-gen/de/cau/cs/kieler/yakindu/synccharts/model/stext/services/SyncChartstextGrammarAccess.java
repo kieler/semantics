@@ -288,7 +288,9 @@ public class SyncChartstextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//ReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | "[" guardExpression=Expression "]");
+	//	{ReactionTrigger} labelPriority=INT ":" isImmediate?="#"? delay=INT? (trigger=RegularEventSpec | ("("
+	//
+	//	guardExpression=Expression ")")?);
 	public SynctextGrammarAccess.ReactionTriggerElements getReactionTriggerAccess() {
 		return gaSynctext.getReactionTriggerAccess();
 	}

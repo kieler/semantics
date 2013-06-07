@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_BOOL", "RULE_FLOAT", "RULE_HEX", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'static'", "'='", "';'", "'input'", "'output'", "'signal'", "':'", "'with'", "'extern'", "'('", "')'", "'/'", "'Suspend'", "'Entry'", "'During'", "'Exit'", "'#'", "'['", "']'", "','", "'pre'", "'@@statechart@@'", "'@@state@@'", "'@@transition@@'", "'namespace'", "'interface'", "'internal'", "'event'", "'local'", "'in'", "'out'", "'var'", "'readonly'", "'external'", "'operation'", "'default'", "'else'", "'entry'", "'exit'", "'always'", "'oncycle'", "'raise'", "'valueof'", "'active'", "'.'", "'>'", "'?'", "'||'", "'&&'", "'!'", "'^'", "'|'", "'&'", "'\\'none\\''", "'\\'+\\''", "'\\'*\\''", "'\\'max\\''", "'\\'min\\''", "'\\'or\\''", "'\\'and\\''", "'\\'host\\''", "'after'", "'every'", "'*='", "'/='", "'%='", "'+='", "'-='", "'<<='", "'>>='", "'&='", "'^='", "'|='", "'<<'", "'>>'", "'+'", "'-'", "'*'", "'%'", "'~'", "'<'", "'<='", "'>='", "'=='", "'!='", "'s'", "'ms'", "'us'", "'ns'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_BOOL", "RULE_FLOAT", "RULE_HEX", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'static'", "'='", "';'", "'input'", "'output'", "'signal'", "':'", "'with'", "'extern'", "'('", "')'", "'/'", "'Suspend'", "'Entry'", "'During'", "'Exit'", "'#'", "','", "'pre'", "'@@statechart@@'", "'@@state@@'", "'@@transition@@'", "'namespace'", "'interface'", "'internal'", "'event'", "'local'", "'in'", "'out'", "'var'", "'readonly'", "'external'", "'operation'", "'default'", "'else'", "'entry'", "'exit'", "'always'", "'oncycle'", "'raise'", "'valueof'", "'active'", "'.'", "'>'", "'?'", "'||'", "'&&'", "'!'", "'^'", "'|'", "'&'", "'\\'none\\''", "'\\'+\\''", "'\\'*\\''", "'\\'max\\''", "'\\'min\\''", "'\\'or\\''", "'\\'and\\''", "'\\'host\\''", "'after'", "'every'", "'*='", "'/='", "'%='", "'+='", "'-='", "'<<='", "'>>='", "'&='", "'^='", "'|='", "'<<'", "'>>'", "'+'", "'-'", "'*'", "'%'", "'~'", "'<'", "'<='", "'>='", "'=='", "'!='", "'s'", "'ms'", "'us'", "'ns'"
     };
     public static final int RULE_ID=4;
     public static final int T__29=29;
@@ -109,8 +109,6 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final int T__45=45;
     public static final int T__48=48;
     public static final int T__49=49;
-    public static final int T__102=102;
-    public static final int T__101=101;
     public static final int T__100=100;
     public static final int RULE_FLOAT=7;
     public static final int RULE_SL_COMMENT=11;
@@ -507,7 +505,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( ((LA4_0>=RULE_ID && LA4_0<=RULE_INT)||LA4_0==14||(LA4_0>=17 && LA4_0<=19)||LA4_0==22||LA4_0==25||(LA4_0>=27 && LA4_0<=31)||(LA4_0>=38 && LA4_0<=57)) ) {
+                if ( ((LA4_0>=RULE_ID && LA4_0<=RULE_INT)||LA4_0==14||(LA4_0>=17 && LA4_0<=19)||LA4_0==22||LA4_0==25||(LA4_0>=27 && LA4_0<=29)||(LA4_0>=36 && LA4_0<=55)) ) {
                     alt4=1;
                 }
 
@@ -521,7 +519,62 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    {
             	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:190:1: (lv_declarations_1_1= ruleVariableDeclaration | lv_declarations_1_2= ruleSignalDeclaration | lv_declarations_1_3= ruleOperationDeclaration | lv_declarations_1_4= ruleLocalReaction )
             	    int alt3=4;
-            	    alt3 = dfa3.predict(input);
+            	    switch ( input.LA(1) ) {
+            	    case RULE_ID:
+            	    case 14:
+            	    case 36:
+            	    case 37:
+            	    case 38:
+            	    case 39:
+            	    case 40:
+            	    case 41:
+            	    case 42:
+            	    case 43:
+            	    case 44:
+            	    case 45:
+            	    case 46:
+            	    case 47:
+            	    case 48:
+            	    case 49:
+            	    case 50:
+            	    case 51:
+            	    case 52:
+            	    case 53:
+            	    case 54:
+            	    case 55:
+            	        {
+            	        alt3=1;
+            	        }
+            	        break;
+            	    case 17:
+            	    case 18:
+            	    case 19:
+            	        {
+            	        alt3=2;
+            	        }
+            	        break;
+            	    case 22:
+            	        {
+            	        alt3=3;
+            	        }
+            	        break;
+            	    case RULE_INT:
+            	    case 25:
+            	    case 27:
+            	    case 28:
+            	    case 29:
+            	        {
+            	        alt3=4;
+            	        }
+            	        break;
+            	    default:
+            	        if (state.backtracking>0) {state.failed=true; return current;}
+            	        NoViableAltException nvae =
+            	            new NoViableAltException("", 3, 0, input);
+
+            	        throw nvae;
+            	    }
+
             	    switch (alt3) {
             	        case 1 :
             	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:191:3: lv_declarations_1_1= ruleVariableDeclaration
@@ -1448,7 +1501,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt11=2;
             int LA11_0 = input.LA(1);
 
-            if ( ((LA11_0>=RULE_ID && LA11_0<=RULE_INT)||(LA11_0>=27 && LA11_0<=31)) ) {
+            if ( (LA11_0==RULE_INT||(LA11_0>=27 && LA11_0<=29)) ) {
                 alt11=1;
             }
             switch (alt11) {
@@ -1465,7 +1518,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     if ( ((LA10_0>=27 && LA10_0<=29)) ) {
                         alt10=1;
                     }
-                    else if ( ((LA10_0>=RULE_ID && LA10_0<=RULE_INT)||(LA10_0>=30 && LA10_0<=31)) ) {
+                    else if ( (LA10_0==RULE_INT) ) {
                         alt10=2;
                     }
                     else {
@@ -1565,7 +1618,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             int alt12=2;
             int LA12_0 = input.LA(1);
 
-            if ( ((LA12_0>=RULE_ID && LA12_0<=RULE_STRING)||LA12_0==23||LA12_0==34||(LA12_0>=56 && LA12_0<=57)||LA12_0==63||(LA12_0>=89 && LA12_0<=90)||LA12_0==93) ) {
+            if ( ((LA12_0>=RULE_ID && LA12_0<=RULE_STRING)||LA12_0==23||LA12_0==32||(LA12_0>=54 && LA12_0<=55)||LA12_0==61||(LA12_0>=87 && LA12_0<=88)||LA12_0==91) ) {
                 alt12=1;
             }
             else if ( (LA12_0==26) ) {
@@ -1903,7 +1956,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     int alt13=2;
                     int LA13_0 = input.LA(1);
 
-                    if ( ((LA13_0>=RULE_ID && LA13_0<=RULE_INT)||(LA13_0>=30 && LA13_0<=31)) ) {
+                    if ( (LA13_0==RULE_INT) ) {
                         alt13=1;
                     }
                     switch (alt13) {
@@ -2478,27 +2531,29 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReactionTrigger"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:880:1: ruleReactionTrigger returns [EObject current=null] : ( () ( (lv_isImmediate_1_0= '#' ) )? ( (lv_delay_2_0= RULE_INT ) )? ( ( (lv_trigger_3_0= ruleRegularEventSpec ) ) | (otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']' ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:880:1: ruleReactionTrigger returns [EObject current=null] : ( () ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' ( (lv_isImmediate_3_0= '#' ) )? ( (lv_delay_4_0= RULE_INT ) )? ( ( (lv_trigger_5_0= ruleRegularEventSpec ) ) | (otherlv_6= '(' ( (lv_guardExpression_7_0= ruleExpression ) ) otherlv_8= ')' )? ) ) ;
     public final EObject ruleReactionTrigger() throws RecognitionException {
         EObject current = null;
 
-        Token lv_isImmediate_1_0=null;
-        Token lv_delay_2_0=null;
-        Token otherlv_4=null;
+        Token lv_labelPriority_1_0=null;
+        Token otherlv_2=null;
+        Token lv_isImmediate_3_0=null;
+        Token lv_delay_4_0=null;
         Token otherlv_6=null;
-        EObject lv_trigger_3_0 = null;
+        Token otherlv_8=null;
+        EObject lv_trigger_5_0 = null;
 
-        EObject lv_guardExpression_5_0 = null;
+        EObject lv_guardExpression_7_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:883:28: ( ( () ( (lv_isImmediate_1_0= '#' ) )? ( (lv_delay_2_0= RULE_INT ) )? ( ( (lv_trigger_3_0= ruleRegularEventSpec ) ) | (otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']' ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:884:1: ( () ( (lv_isImmediate_1_0= '#' ) )? ( (lv_delay_2_0= RULE_INT ) )? ( ( (lv_trigger_3_0= ruleRegularEventSpec ) ) | (otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:883:28: ( ( () ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' ( (lv_isImmediate_3_0= '#' ) )? ( (lv_delay_4_0= RULE_INT ) )? ( ( (lv_trigger_5_0= ruleRegularEventSpec ) ) | (otherlv_6= '(' ( (lv_guardExpression_7_0= ruleExpression ) ) otherlv_8= ')' )? ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:884:1: ( () ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' ( (lv_isImmediate_3_0= '#' ) )? ( (lv_delay_4_0= RULE_INT ) )? ( ( (lv_trigger_5_0= ruleRegularEventSpec ) ) | (otherlv_6= '(' ( (lv_guardExpression_7_0= ruleExpression ) ) otherlv_8= ')' )? ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:884:1: ( () ( (lv_isImmediate_1_0= '#' ) )? ( (lv_delay_2_0= RULE_INT ) )? ( ( (lv_trigger_3_0= ruleRegularEventSpec ) ) | (otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:884:2: () ( (lv_isImmediate_1_0= '#' ) )? ( (lv_delay_2_0= RULE_INT ) )? ( ( (lv_trigger_3_0= ruleRegularEventSpec ) ) | (otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:884:1: ( () ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' ( (lv_isImmediate_3_0= '#' ) )? ( (lv_delay_4_0= RULE_INT ) )? ( ( (lv_trigger_5_0= ruleRegularEventSpec ) ) | (otherlv_6= '(' ( (lv_guardExpression_7_0= ruleExpression ) ) otherlv_8= ')' )? ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:884:2: () ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' ( (lv_isImmediate_3_0= '#' ) )? ( (lv_delay_4_0= RULE_INT ) )? ( ( (lv_trigger_5_0= ruleRegularEventSpec ) ) | (otherlv_6= '(' ( (lv_guardExpression_7_0= ruleExpression ) ) otherlv_8= ')' )? )
             {
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:884:2: ()
             // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:885:5: 
@@ -2513,7 +2568,43 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:890:2: ( (lv_isImmediate_1_0= '#' ) )?
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:890:2: ( (lv_labelPriority_1_0= RULE_INT ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:891:1: (lv_labelPriority_1_0= RULE_INT )
+            {
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:891:1: (lv_labelPriority_1_0= RULE_INT )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:892:3: lv_labelPriority_1_0= RULE_INT
+            {
+            lv_labelPriority_1_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleReactionTrigger1930); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(lv_labelPriority_1_0, grammarAccess.getReactionTriggerAccess().getLabelPriorityINTTerminalRuleCall_1_0()); 
+              		
+            }
+            if ( state.backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = createModelElement(grammarAccess.getReactionTriggerRule());
+              	        }
+                     		setWithLastConsumed(
+                     			current, 
+                     			"labelPriority",
+                      		lv_labelPriority_1_0, 
+                      		"INT");
+              	    
+            }
+
+            }
+
+
+            }
+
+            otherlv_2=(Token)match(input,20,FOLLOW_20_in_ruleReactionTrigger1947); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+                  	newLeafNode(otherlv_2, grammarAccess.getReactionTriggerAccess().getColonKeyword_2());
+                  
+            }
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:912:1: ( (lv_isImmediate_3_0= '#' ) )?
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -2522,15 +2613,15 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             }
             switch (alt16) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:891:1: (lv_isImmediate_1_0= '#' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:913:1: (lv_isImmediate_3_0= '#' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:891:1: (lv_isImmediate_1_0= '#' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:892:3: lv_isImmediate_1_0= '#'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:913:1: (lv_isImmediate_3_0= '#' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:914:3: lv_isImmediate_3_0= '#'
                     {
-                    lv_isImmediate_1_0=(Token)match(input,30,FOLLOW_30_in_ruleReactionTrigger1931); if (state.failed) return current;
+                    lv_isImmediate_3_0=(Token)match(input,30,FOLLOW_30_in_ruleReactionTrigger1965); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_isImmediate_1_0, grammarAccess.getReactionTriggerAccess().getIsImmediateNumberSignKeyword_1_0());
+                              newLeafNode(lv_isImmediate_3_0, grammarAccess.getReactionTriggerAccess().getIsImmediateNumberSignKeyword_3_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -2550,7 +2641,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:905:3: ( (lv_delay_2_0= RULE_INT ) )?
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:927:3: ( (lv_delay_4_0= RULE_INT ) )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -2559,15 +2650,15 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             }
             switch (alt17) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:906:1: (lv_delay_2_0= RULE_INT )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:928:1: (lv_delay_4_0= RULE_INT )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:906:1: (lv_delay_2_0= RULE_INT )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:907:3: lv_delay_2_0= RULE_INT
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:928:1: (lv_delay_4_0= RULE_INT )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:929:3: lv_delay_4_0= RULE_INT
                     {
-                    lv_delay_2_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleReactionTrigger1962); if (state.failed) return current;
+                    lv_delay_4_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleReactionTrigger1996); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_delay_2_0, grammarAccess.getReactionTriggerAccess().getDelayINTTerminalRuleCall_2_0()); 
+                      			newLeafNode(lv_delay_4_0, grammarAccess.getReactionTriggerAccess().getDelayINTTerminalRuleCall_4_0()); 
                       		
                     }
                     if ( state.backtracking==0 ) {
@@ -2578,7 +2669,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                              		setWithLastConsumed(
                              			current, 
                              			"delay",
-                              		lv_delay_2_0, 
+                              		lv_delay_4_0, 
                               		"INT");
                       	    
                     }
@@ -2591,40 +2682,40 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:923:3: ( ( (lv_trigger_3_0= ruleRegularEventSpec ) ) | (otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']' ) )
-            int alt18=2;
-            int LA18_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:945:3: ( ( (lv_trigger_5_0= ruleRegularEventSpec ) ) | (otherlv_6= '(' ( (lv_guardExpression_7_0= ruleExpression ) ) otherlv_8= ')' )? )
+            int alt19=2;
+            int LA19_0 = input.LA(1);
 
-            if ( (LA18_0==RULE_ID) ) {
-                alt18=1;
+            if ( (LA19_0==RULE_ID) ) {
+                alt19=1;
             }
-            else if ( (LA18_0==31) ) {
-                alt18=2;
+            else if ( (LA19_0==EOF||LA19_0==23||LA19_0==25||LA19_0==30) ) {
+                alt19=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 18, 0, input);
+                    new NoViableAltException("", 19, 0, input);
 
                 throw nvae;
             }
-            switch (alt18) {
+            switch (alt19) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:923:4: ( (lv_trigger_3_0= ruleRegularEventSpec ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:945:4: ( (lv_trigger_5_0= ruleRegularEventSpec ) )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:923:4: ( (lv_trigger_3_0= ruleRegularEventSpec ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:924:1: (lv_trigger_3_0= ruleRegularEventSpec )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:945:4: ( (lv_trigger_5_0= ruleRegularEventSpec ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:946:1: (lv_trigger_5_0= ruleRegularEventSpec )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:924:1: (lv_trigger_3_0= ruleRegularEventSpec )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:925:3: lv_trigger_3_0= ruleRegularEventSpec
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:946:1: (lv_trigger_5_0= ruleRegularEventSpec )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:947:3: lv_trigger_5_0= ruleRegularEventSpec
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_3_0_0()); 
+                      	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_5_0_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleRegularEventSpec_in_ruleReactionTrigger1990);
-                    lv_trigger_3_0=ruleRegularEventSpec();
+                    pushFollow(FOLLOW_ruleRegularEventSpec_in_ruleReactionTrigger2024);
+                    lv_trigger_5_0=ruleRegularEventSpec();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -2636,7 +2727,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                              		set(
                              			current, 
                              			"trigger",
-                              		lv_trigger_3_0, 
+                              		lv_trigger_5_0, 
                               		"RegularEventSpec");
                       	        afterParserOrEnumRuleCall();
                       	    
@@ -2651,58 +2742,69 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:942:6: (otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:964:6: (otherlv_6= '(' ( (lv_guardExpression_7_0= ruleExpression ) ) otherlv_8= ')' )?
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:942:6: (otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:942:8: otherlv_4= '[' ( (lv_guardExpression_5_0= ruleExpression ) ) otherlv_6= ']'
-                    {
-                    otherlv_4=(Token)match(input,31,FOLLOW_31_in_ruleReactionTrigger2009); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:964:6: (otherlv_6= '(' ( (lv_guardExpression_7_0= ruleExpression ) ) otherlv_8= ')' )?
+                    int alt18=2;
+                    int LA18_0 = input.LA(1);
 
-                          	newLeafNode(otherlv_4, grammarAccess.getReactionTriggerAccess().getLeftSquareBracketKeyword_3_1_0());
-                          
+                    if ( (LA18_0==23) ) {
+                        alt18=1;
                     }
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:946:1: ( (lv_guardExpression_5_0= ruleExpression ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:947:1: (lv_guardExpression_5_0= ruleExpression )
-                    {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:947:1: (lv_guardExpression_5_0= ruleExpression )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:948:3: lv_guardExpression_5_0= ruleExpression
-                    {
-                    if ( state.backtracking==0 ) {
-                       
-                      	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getGuardExpressionExpressionParserRuleCall_3_1_1_0()); 
-                      	    
-                    }
-                    pushFollow(FOLLOW_ruleExpression_in_ruleReactionTrigger2030);
-                    lv_guardExpression_5_0=ruleExpression();
+                    switch (alt18) {
+                        case 1 :
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:964:8: otherlv_6= '(' ( (lv_guardExpression_7_0= ruleExpression ) ) otherlv_8= ')'
+                            {
+                            otherlv_6=(Token)match(input,23,FOLLOW_23_in_ruleReactionTrigger2043); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
 
-                    state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                                  	newLeafNode(otherlv_6, grammarAccess.getReactionTriggerAccess().getLeftParenthesisKeyword_5_1_0());
+                                  
+                            }
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:968:1: ( (lv_guardExpression_7_0= ruleExpression ) )
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:969:1: (lv_guardExpression_7_0= ruleExpression )
+                            {
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:969:1: (lv_guardExpression_7_0= ruleExpression )
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:970:3: lv_guardExpression_7_0= ruleExpression
+                            {
+                            if ( state.backtracking==0 ) {
+                               
+                              	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getGuardExpressionExpressionParserRuleCall_5_1_1_0()); 
+                              	    
+                            }
+                            pushFollow(FOLLOW_ruleExpression_in_ruleReactionTrigger2064);
+                            lv_guardExpression_7_0=ruleExpression();
 
-                      	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getReactionTriggerRule());
-                      	        }
-                             		set(
-                             			current, 
-                             			"guardExpression",
-                              		lv_guardExpression_5_0, 
-                              		"Expression");
-                      	        afterParserOrEnumRuleCall();
-                      	    
-                    }
+                            state._fsp--;
+                            if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
 
-                    }
+                              	        if (current==null) {
+                              	            current = createModelElementForParent(grammarAccess.getReactionTriggerRule());
+                              	        }
+                                     		set(
+                                     			current, 
+                                     			"guardExpression",
+                                      		lv_guardExpression_7_0, 
+                                      		"Expression");
+                              	        afterParserOrEnumRuleCall();
+                              	    
+                            }
+
+                            }
 
 
-                    }
+                            }
 
-                    otherlv_6=(Token)match(input,32,FOLLOW_32_in_ruleReactionTrigger2042); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                            otherlv_8=(Token)match(input,24,FOLLOW_24_in_ruleReactionTrigger2076); if (state.failed) return current;
+                            if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_6, grammarAccess.getReactionTriggerAccess().getRightSquareBracketKeyword_3_1_2());
-                          
-                    }
+                                  	newLeafNode(otherlv_8, grammarAccess.getReactionTriggerAccess().getRightParenthesisKeyword_5_1_2());
+                                  
+                            }
+
+                            }
+                            break;
 
                     }
 
@@ -2735,7 +2837,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleReactionEffect"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:976:1: entryRuleReactionEffect returns [EObject current=null] : iv_ruleReactionEffect= ruleReactionEffect EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:998:1: entryRuleReactionEffect returns [EObject current=null] : iv_ruleReactionEffect= ruleReactionEffect EOF ;
     public final EObject entryRuleReactionEffect() throws RecognitionException {
         EObject current = null;
 
@@ -2743,13 +2845,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:977:2: (iv_ruleReactionEffect= ruleReactionEffect EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:978:2: iv_ruleReactionEffect= ruleReactionEffect EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:999:2: (iv_ruleReactionEffect= ruleReactionEffect EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1000:2: iv_ruleReactionEffect= ruleReactionEffect EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getReactionEffectRule()); 
             }
-            pushFollow(FOLLOW_ruleReactionEffect_in_entryRuleReactionEffect2080);
+            pushFollow(FOLLOW_ruleReactionEffect_in_entryRuleReactionEffect2115);
             iv_ruleReactionEffect=ruleReactionEffect();
 
             state._fsp--;
@@ -2757,7 +2859,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleReactionEffect; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleReactionEffect2090); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleReactionEffect2125); if (state.failed) return current;
 
             }
 
@@ -2775,7 +2877,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReactionEffect"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:985:1: ruleReactionEffect returns [EObject current=null] : ( () ( (lv_actions_1_0= ruleExpression ) ) ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )* ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1007:1: ruleReactionEffect returns [EObject current=null] : ( () ( (lv_actions_1_0= ruleExpression ) ) ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )* ) ;
     public final EObject ruleReactionEffect() throws RecognitionException {
         EObject current = null;
 
@@ -2788,14 +2890,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:988:28: ( ( () ( (lv_actions_1_0= ruleExpression ) ) ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:989:1: ( () ( (lv_actions_1_0= ruleExpression ) ) ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1010:28: ( ( () ( (lv_actions_1_0= ruleExpression ) ) ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1011:1: ( () ( (lv_actions_1_0= ruleExpression ) ) ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:989:1: ( () ( (lv_actions_1_0= ruleExpression ) ) ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:989:2: () ( (lv_actions_1_0= ruleExpression ) ) ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1011:1: ( () ( (lv_actions_1_0= ruleExpression ) ) ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1011:2: () ( (lv_actions_1_0= ruleExpression ) ) ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )*
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:989:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:990:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1011:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1012:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -2807,18 +2909,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:995:2: ( (lv_actions_1_0= ruleExpression ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:996:1: (lv_actions_1_0= ruleExpression )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1017:2: ( (lv_actions_1_0= ruleExpression ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1018:1: (lv_actions_1_0= ruleExpression )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:996:1: (lv_actions_1_0= ruleExpression )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:997:3: lv_actions_1_0= ruleExpression
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1018:1: (lv_actions_1_0= ruleExpression )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1019:3: lv_actions_1_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getReactionEffectAccess().getActionsExpressionParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleExpression_in_ruleReactionEffect2145);
+            pushFollow(FOLLOW_ruleExpression_in_ruleReactionEffect2180);
             lv_actions_1_0=ruleExpression();
 
             state._fsp--;
@@ -2842,25 +2944,25 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1013:2: ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )*
-            loop19:
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1035:2: ( ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) ) )*
+            loop20:
             do {
-                int alt19=2;
-                int LA19_0 = input.LA(1);
+                int alt20=2;
+                int LA20_0 = input.LA(1);
 
-                if ( (LA19_0==33) && (synpred1_InternalSyncChartstext())) {
-                    alt19=1;
+                if ( (LA20_0==31) && (synpred1_InternalSyncChartstext())) {
+                    alt20=1;
                 }
 
 
-                switch (alt19) {
+                switch (alt20) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1013:3: ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1035:3: ( ( ',' )=>otherlv_2= ',' ) ( (lv_actions_3_0= ruleExpression ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1013:3: ( ( ',' )=>otherlv_2= ',' )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1013:4: ( ',' )=>otherlv_2= ','
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1035:3: ( ( ',' )=>otherlv_2= ',' )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1035:4: ( ',' )=>otherlv_2= ','
             	    {
-            	    otherlv_2=(Token)match(input,33,FOLLOW_33_in_ruleReactionEffect2166); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,31,FOLLOW_31_in_ruleReactionEffect2201); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getReactionEffectAccess().getCommaKeyword_2_0());
@@ -2869,18 +2971,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1018:2: ( (lv_actions_3_0= ruleExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1019:1: (lv_actions_3_0= ruleExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1040:2: ( (lv_actions_3_0= ruleExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1041:1: (lv_actions_3_0= ruleExpression )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1019:1: (lv_actions_3_0= ruleExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1020:3: lv_actions_3_0= ruleExpression
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1041:1: (lv_actions_3_0= ruleExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1042:3: lv_actions_3_0= ruleExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
             	      	        newCompositeNode(grammarAccess.getReactionEffectAccess().getActionsExpressionParserRuleCall_2_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleExpression_in_ruleReactionEffect2188);
+            	    pushFollow(FOLLOW_ruleExpression_in_ruleReactionEffect2223);
             	    lv_actions_3_0=ruleExpression();
 
             	    state._fsp--;
@@ -2909,7 +3011,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop19;
+            	    break loop20;
                 }
             } while (true);
 
@@ -2936,7 +3038,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrimaryExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1044:1: entryRulePrimaryExpression returns [EObject current=null] : iv_rulePrimaryExpression= rulePrimaryExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1066:1: entryRulePrimaryExpression returns [EObject current=null] : iv_rulePrimaryExpression= rulePrimaryExpression EOF ;
     public final EObject entryRulePrimaryExpression() throws RecognitionException {
         EObject current = null;
 
@@ -2944,13 +3046,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1045:2: (iv_rulePrimaryExpression= rulePrimaryExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1046:2: iv_rulePrimaryExpression= rulePrimaryExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1067:2: (iv_rulePrimaryExpression= rulePrimaryExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1068:2: iv_rulePrimaryExpression= rulePrimaryExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPrimaryExpressionRule()); 
             }
-            pushFollow(FOLLOW_rulePrimaryExpression_in_entryRulePrimaryExpression2226);
+            pushFollow(FOLLOW_rulePrimaryExpression_in_entryRulePrimaryExpression2261);
             iv_rulePrimaryExpression=rulePrimaryExpression();
 
             state._fsp--;
@@ -2958,7 +3060,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_rulePrimaryExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRulePrimaryExpression2236); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRulePrimaryExpression2271); if (state.failed) return current;
 
             }
 
@@ -2976,7 +3078,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrimaryExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1053:1: rulePrimaryExpression returns [EObject current=null] : (this_PrimitiveValueExpression_0= rulePrimitiveValueExpression | this_FeatureCall_1= ruleFeatureCall | this_ActiveStateReferenceExpression_2= ruleActiveStateReferenceExpression | this_PreValueExpression_3= rulePreValueExpression | this_ParenthesizedExpression_4= ruleParenthesizedExpression | this_EventValueReferenceExpression_5= ruleEventValueReferenceExpression ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1075:1: rulePrimaryExpression returns [EObject current=null] : (this_PrimitiveValueExpression_0= rulePrimitiveValueExpression | this_FeatureCall_1= ruleFeatureCall | this_ActiveStateReferenceExpression_2= ruleActiveStateReferenceExpression | this_PreValueExpression_3= rulePreValueExpression | this_ParenthesizedExpression_4= ruleParenthesizedExpression | this_EventValueReferenceExpression_5= ruleEventValueReferenceExpression ) ;
     public final EObject rulePrimaryExpression() throws RecognitionException {
         EObject current = null;
 
@@ -2996,11 +3098,11 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1056:28: ( (this_PrimitiveValueExpression_0= rulePrimitiveValueExpression | this_FeatureCall_1= ruleFeatureCall | this_ActiveStateReferenceExpression_2= ruleActiveStateReferenceExpression | this_PreValueExpression_3= rulePreValueExpression | this_ParenthesizedExpression_4= ruleParenthesizedExpression | this_EventValueReferenceExpression_5= ruleEventValueReferenceExpression ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1057:1: (this_PrimitiveValueExpression_0= rulePrimitiveValueExpression | this_FeatureCall_1= ruleFeatureCall | this_ActiveStateReferenceExpression_2= ruleActiveStateReferenceExpression | this_PreValueExpression_3= rulePreValueExpression | this_ParenthesizedExpression_4= ruleParenthesizedExpression | this_EventValueReferenceExpression_5= ruleEventValueReferenceExpression )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1078:28: ( (this_PrimitiveValueExpression_0= rulePrimitiveValueExpression | this_FeatureCall_1= ruleFeatureCall | this_ActiveStateReferenceExpression_2= ruleActiveStateReferenceExpression | this_PreValueExpression_3= rulePreValueExpression | this_ParenthesizedExpression_4= ruleParenthesizedExpression | this_EventValueReferenceExpression_5= ruleEventValueReferenceExpression ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1079:1: (this_PrimitiveValueExpression_0= rulePrimitiveValueExpression | this_FeatureCall_1= ruleFeatureCall | this_ActiveStateReferenceExpression_2= ruleActiveStateReferenceExpression | this_PreValueExpression_3= rulePreValueExpression | this_ParenthesizedExpression_4= ruleParenthesizedExpression | this_EventValueReferenceExpression_5= ruleEventValueReferenceExpression )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1057:1: (this_PrimitiveValueExpression_0= rulePrimitiveValueExpression | this_FeatureCall_1= ruleFeatureCall | this_ActiveStateReferenceExpression_2= ruleActiveStateReferenceExpression | this_PreValueExpression_3= rulePreValueExpression | this_ParenthesizedExpression_4= ruleParenthesizedExpression | this_EventValueReferenceExpression_5= ruleEventValueReferenceExpression )
-            int alt20=6;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1079:1: (this_PrimitiveValueExpression_0= rulePrimitiveValueExpression | this_FeatureCall_1= ruleFeatureCall | this_ActiveStateReferenceExpression_2= ruleActiveStateReferenceExpression | this_PreValueExpression_3= rulePreValueExpression | this_ParenthesizedExpression_4= ruleParenthesizedExpression | this_EventValueReferenceExpression_5= ruleEventValueReferenceExpression )
+            int alt21=6;
             switch ( input.LA(1) ) {
             case RULE_INT:
             case RULE_BOOL:
@@ -3008,52 +3110,52 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             case RULE_HEX:
             case RULE_STRING:
                 {
-                alt20=1;
+                alt21=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt20=2;
+                alt21=2;
                 }
                 break;
-            case 57:
+            case 55:
                 {
-                alt20=3;
+                alt21=3;
                 }
                 break;
-            case 34:
+            case 32:
                 {
-                alt20=4;
+                alt21=4;
                 }
                 break;
             case 23:
                 {
-                alt20=5;
+                alt21=5;
                 }
                 break;
-            case 56:
+            case 54:
                 {
-                alt20=6;
+                alt21=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 20, 0, input);
+                    new NoViableAltException("", 21, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt20) {
+            switch (alt21) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1058:5: this_PrimitiveValueExpression_0= rulePrimitiveValueExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1080:5: this_PrimitiveValueExpression_0= rulePrimitiveValueExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getPrimitiveValueExpressionParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_rulePrimitiveValueExpression_in_rulePrimaryExpression2283);
+                    pushFollow(FOLLOW_rulePrimitiveValueExpression_in_rulePrimaryExpression2318);
                     this_PrimitiveValueExpression_0=rulePrimitiveValueExpression();
 
                     state._fsp--;
@@ -3068,14 +3170,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1068:5: this_FeatureCall_1= ruleFeatureCall
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1090:5: this_FeatureCall_1= ruleFeatureCall
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getFeatureCallParserRuleCall_1()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleFeatureCall_in_rulePrimaryExpression2310);
+                    pushFollow(FOLLOW_ruleFeatureCall_in_rulePrimaryExpression2345);
                     this_FeatureCall_1=ruleFeatureCall();
 
                     state._fsp--;
@@ -3090,14 +3192,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1078:5: this_ActiveStateReferenceExpression_2= ruleActiveStateReferenceExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1100:5: this_ActiveStateReferenceExpression_2= ruleActiveStateReferenceExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getActiveStateReferenceExpressionParserRuleCall_2()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleActiveStateReferenceExpression_in_rulePrimaryExpression2337);
+                    pushFollow(FOLLOW_ruleActiveStateReferenceExpression_in_rulePrimaryExpression2372);
                     this_ActiveStateReferenceExpression_2=ruleActiveStateReferenceExpression();
 
                     state._fsp--;
@@ -3112,14 +3214,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1088:5: this_PreValueExpression_3= rulePreValueExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1110:5: this_PreValueExpression_3= rulePreValueExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getPreValueExpressionParserRuleCall_3()); 
                           
                     }
-                    pushFollow(FOLLOW_rulePreValueExpression_in_rulePrimaryExpression2364);
+                    pushFollow(FOLLOW_rulePreValueExpression_in_rulePrimaryExpression2399);
                     this_PreValueExpression_3=rulePreValueExpression();
 
                     state._fsp--;
@@ -3134,14 +3236,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1098:5: this_ParenthesizedExpression_4= ruleParenthesizedExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1120:5: this_ParenthesizedExpression_4= ruleParenthesizedExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getParenthesizedExpressionParserRuleCall_4()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleParenthesizedExpression_in_rulePrimaryExpression2391);
+                    pushFollow(FOLLOW_ruleParenthesizedExpression_in_rulePrimaryExpression2426);
                     this_ParenthesizedExpression_4=ruleParenthesizedExpression();
 
                     state._fsp--;
@@ -3156,14 +3258,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1108:5: this_EventValueReferenceExpression_5= ruleEventValueReferenceExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1130:5: this_EventValueReferenceExpression_5= ruleEventValueReferenceExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getEventValueReferenceExpressionParserRuleCall_5()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleEventValueReferenceExpression_in_rulePrimaryExpression2418);
+                    pushFollow(FOLLOW_ruleEventValueReferenceExpression_in_rulePrimaryExpression2453);
                     this_EventValueReferenceExpression_5=ruleEventValueReferenceExpression();
 
                     state._fsp--;
@@ -3200,7 +3302,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePreValueExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1124:1: entryRulePreValueExpression returns [EObject current=null] : iv_rulePreValueExpression= rulePreValueExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1146:1: entryRulePreValueExpression returns [EObject current=null] : iv_rulePreValueExpression= rulePreValueExpression EOF ;
     public final EObject entryRulePreValueExpression() throws RecognitionException {
         EObject current = null;
 
@@ -3208,13 +3310,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1125:2: (iv_rulePreValueExpression= rulePreValueExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1126:2: iv_rulePreValueExpression= rulePreValueExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1147:2: (iv_rulePreValueExpression= rulePreValueExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1148:2: iv_rulePreValueExpression= rulePreValueExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPreValueExpressionRule()); 
             }
-            pushFollow(FOLLOW_rulePreValueExpression_in_entryRulePreValueExpression2453);
+            pushFollow(FOLLOW_rulePreValueExpression_in_entryRulePreValueExpression2488);
             iv_rulePreValueExpression=rulePreValueExpression();
 
             state._fsp--;
@@ -3222,7 +3324,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_rulePreValueExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRulePreValueExpression2463); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRulePreValueExpression2498); if (state.failed) return current;
 
             }
 
@@ -3240,7 +3342,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePreValueExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1133:1: rulePreValueExpression returns [EObject current=null] : ( () otherlv_1= 'pre' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1155:1: rulePreValueExpression returns [EObject current=null] : ( () otherlv_1= 'pre' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' ) ;
     public final EObject rulePreValueExpression() throws RecognitionException {
         EObject current = null;
 
@@ -3253,14 +3355,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1136:28: ( ( () otherlv_1= 'pre' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1137:1: ( () otherlv_1= 'pre' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1158:28: ( ( () otherlv_1= 'pre' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1159:1: ( () otherlv_1= 'pre' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1137:1: ( () otherlv_1= 'pre' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1137:2: () otherlv_1= 'pre' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')'
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1159:1: ( () otherlv_1= 'pre' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1159:2: () otherlv_1= 'pre' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')'
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1137:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1138:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1159:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1160:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -3272,30 +3374,30 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,34,FOLLOW_34_in_rulePreValueExpression2509); if (state.failed) return current;
+            otherlv_1=(Token)match(input,32,FOLLOW_32_in_rulePreValueExpression2544); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getPreValueExpressionAccess().getPreKeyword_1());
                   
             }
-            otherlv_2=(Token)match(input,23,FOLLOW_23_in_rulePreValueExpression2521); if (state.failed) return current;
+            otherlv_2=(Token)match(input,23,FOLLOW_23_in_rulePreValueExpression2556); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getPreValueExpressionAccess().getLeftParenthesisKeyword_2());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1151:1: ( (lv_value_3_0= ruleFeatureCall ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1152:1: (lv_value_3_0= ruleFeatureCall )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1173:1: ( (lv_value_3_0= ruleFeatureCall ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1174:1: (lv_value_3_0= ruleFeatureCall )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1152:1: (lv_value_3_0= ruleFeatureCall )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1153:3: lv_value_3_0= ruleFeatureCall
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1174:1: (lv_value_3_0= ruleFeatureCall )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1175:3: lv_value_3_0= ruleFeatureCall
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getPreValueExpressionAccess().getValueFeatureCallParserRuleCall_3_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleFeatureCall_in_rulePreValueExpression2542);
+            pushFollow(FOLLOW_ruleFeatureCall_in_rulePreValueExpression2577);
             lv_value_3_0=ruleFeatureCall();
 
             state._fsp--;
@@ -3319,7 +3421,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,24,FOLLOW_24_in_rulePreValueExpression2554); if (state.failed) return current;
+            otherlv_4=(Token)match(input,24,FOLLOW_24_in_rulePreValueExpression2589); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getPreValueExpressionAccess().getRightParenthesisKeyword_4());
@@ -3348,7 +3450,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDefRoot"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1183:1: entryRuleDefRoot returns [EObject current=null] : iv_ruleDefRoot= ruleDefRoot EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1205:1: entryRuleDefRoot returns [EObject current=null] : iv_ruleDefRoot= ruleDefRoot EOF ;
     public final EObject entryRuleDefRoot() throws RecognitionException {
         EObject current = null;
 
@@ -3356,13 +3458,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1184:2: (iv_ruleDefRoot= ruleDefRoot EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1185:2: iv_ruleDefRoot= ruleDefRoot EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1206:2: (iv_ruleDefRoot= ruleDefRoot EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1207:2: iv_ruleDefRoot= ruleDefRoot EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getDefRootRule()); 
             }
-            pushFollow(FOLLOW_ruleDefRoot_in_entryRuleDefRoot2592);
+            pushFollow(FOLLOW_ruleDefRoot_in_entryRuleDefRoot2627);
             iv_ruleDefRoot=ruleDefRoot();
 
             state._fsp--;
@@ -3370,7 +3472,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleDefRoot; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDefRoot2602); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDefRoot2637); if (state.failed) return current;
 
             }
 
@@ -3388,7 +3490,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDefRoot"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1192:1: ruleDefRoot returns [EObject current=null] : (this_StatechartRoot_0= ruleStatechartRoot | this_StateRoot_1= ruleStateRoot | this_TransitionRoot_2= ruleTransitionRoot ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1214:1: ruleDefRoot returns [EObject current=null] : (this_StatechartRoot_0= ruleStatechartRoot | this_StateRoot_1= ruleStateRoot | this_TransitionRoot_2= ruleTransitionRoot ) ;
     public final EObject ruleDefRoot() throws RecognitionException {
         EObject current = null;
 
@@ -3402,45 +3504,45 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1195:28: ( (this_StatechartRoot_0= ruleStatechartRoot | this_StateRoot_1= ruleStateRoot | this_TransitionRoot_2= ruleTransitionRoot ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1196:1: (this_StatechartRoot_0= ruleStatechartRoot | this_StateRoot_1= ruleStateRoot | this_TransitionRoot_2= ruleTransitionRoot )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1217:28: ( (this_StatechartRoot_0= ruleStatechartRoot | this_StateRoot_1= ruleStateRoot | this_TransitionRoot_2= ruleTransitionRoot ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1218:1: (this_StatechartRoot_0= ruleStatechartRoot | this_StateRoot_1= ruleStateRoot | this_TransitionRoot_2= ruleTransitionRoot )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1196:1: (this_StatechartRoot_0= ruleStatechartRoot | this_StateRoot_1= ruleStateRoot | this_TransitionRoot_2= ruleTransitionRoot )
-            int alt21=3;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1218:1: (this_StatechartRoot_0= ruleStatechartRoot | this_StateRoot_1= ruleStateRoot | this_TransitionRoot_2= ruleTransitionRoot )
+            int alt22=3;
             switch ( input.LA(1) ) {
+            case 33:
+                {
+                alt22=1;
+                }
+                break;
+            case 34:
+                {
+                alt22=2;
+                }
+                break;
             case 35:
                 {
-                alt21=1;
-                }
-                break;
-            case 36:
-                {
-                alt21=2;
-                }
-                break;
-            case 37:
-                {
-                alt21=3;
+                alt22=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 21, 0, input);
+                    new NoViableAltException("", 22, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt21) {
+            switch (alt22) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1197:5: this_StatechartRoot_0= ruleStatechartRoot
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1219:5: this_StatechartRoot_0= ruleStatechartRoot
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getDefRootAccess().getStatechartRootParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleStatechartRoot_in_ruleDefRoot2649);
+                    pushFollow(FOLLOW_ruleStatechartRoot_in_ruleDefRoot2684);
                     this_StatechartRoot_0=ruleStatechartRoot();
 
                     state._fsp--;
@@ -3455,14 +3557,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1207:5: this_StateRoot_1= ruleStateRoot
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1229:5: this_StateRoot_1= ruleStateRoot
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getDefRootAccess().getStateRootParserRuleCall_1()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleStateRoot_in_ruleDefRoot2676);
+                    pushFollow(FOLLOW_ruleStateRoot_in_ruleDefRoot2711);
                     this_StateRoot_1=ruleStateRoot();
 
                     state._fsp--;
@@ -3477,14 +3579,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1217:5: this_TransitionRoot_2= ruleTransitionRoot
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1239:5: this_TransitionRoot_2= ruleTransitionRoot
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getDefRootAccess().getTransitionRootParserRuleCall_2()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleTransitionRoot_in_ruleDefRoot2703);
+                    pushFollow(FOLLOW_ruleTransitionRoot_in_ruleDefRoot2738);
                     this_TransitionRoot_2=ruleTransitionRoot();
 
                     state._fsp--;
@@ -3521,7 +3623,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStatechartRoot"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1233:1: entryRuleStatechartRoot returns [EObject current=null] : iv_ruleStatechartRoot= ruleStatechartRoot EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1255:1: entryRuleStatechartRoot returns [EObject current=null] : iv_ruleStatechartRoot= ruleStatechartRoot EOF ;
     public final EObject entryRuleStatechartRoot() throws RecognitionException {
         EObject current = null;
 
@@ -3529,13 +3631,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1234:2: (iv_ruleStatechartRoot= ruleStatechartRoot EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1235:2: iv_ruleStatechartRoot= ruleStatechartRoot EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1256:2: (iv_ruleStatechartRoot= ruleStatechartRoot EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1257:2: iv_ruleStatechartRoot= ruleStatechartRoot EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStatechartRootRule()); 
             }
-            pushFollow(FOLLOW_ruleStatechartRoot_in_entryRuleStatechartRoot2738);
+            pushFollow(FOLLOW_ruleStatechartRoot_in_entryRuleStatechartRoot2773);
             iv_ruleStatechartRoot=ruleStatechartRoot();
 
             state._fsp--;
@@ -3543,7 +3645,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleStatechartRoot; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleStatechartRoot2748); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleStatechartRoot2783); if (state.failed) return current;
 
             }
 
@@ -3561,7 +3663,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStatechartRoot"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1242:1: ruleStatechartRoot returns [EObject current=null] : (otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1264:1: ruleStatechartRoot returns [EObject current=null] : (otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) ) ) ;
     public final EObject ruleStatechartRoot() throws RecognitionException {
         EObject current = null;
 
@@ -3572,30 +3674,30 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1245:28: ( (otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1246:1: (otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1267:28: ( (otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1268:1: (otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1246:1: (otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1246:3: otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1268:1: (otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1268:3: otherlv_0= '@@statechart@@' ( (lv_def_1_0= ruleStatechartSpecification ) )
             {
-            otherlv_0=(Token)match(input,35,FOLLOW_35_in_ruleStatechartRoot2785); if (state.failed) return current;
+            otherlv_0=(Token)match(input,33,FOLLOW_33_in_ruleStatechartRoot2820); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getStatechartRootAccess().getStatechartKeyword_0());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1250:1: ( (lv_def_1_0= ruleStatechartSpecification ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1251:1: (lv_def_1_0= ruleStatechartSpecification )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1272:1: ( (lv_def_1_0= ruleStatechartSpecification ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1273:1: (lv_def_1_0= ruleStatechartSpecification )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1251:1: (lv_def_1_0= ruleStatechartSpecification )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1252:3: lv_def_1_0= ruleStatechartSpecification
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1273:1: (lv_def_1_0= ruleStatechartSpecification )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1274:3: lv_def_1_0= ruleStatechartSpecification
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getStatechartRootAccess().getDefStatechartSpecificationParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleStatechartSpecification_in_ruleStatechartRoot2806);
+            pushFollow(FOLLOW_ruleStatechartSpecification_in_ruleStatechartRoot2841);
             lv_def_1_0=ruleStatechartSpecification();
 
             state._fsp--;
@@ -3642,7 +3744,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStateRoot"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1276:1: entryRuleStateRoot returns [EObject current=null] : iv_ruleStateRoot= ruleStateRoot EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1298:1: entryRuleStateRoot returns [EObject current=null] : iv_ruleStateRoot= ruleStateRoot EOF ;
     public final EObject entryRuleStateRoot() throws RecognitionException {
         EObject current = null;
 
@@ -3650,13 +3752,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1277:2: (iv_ruleStateRoot= ruleStateRoot EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1278:2: iv_ruleStateRoot= ruleStateRoot EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1299:2: (iv_ruleStateRoot= ruleStateRoot EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1300:2: iv_ruleStateRoot= ruleStateRoot EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStateRootRule()); 
             }
-            pushFollow(FOLLOW_ruleStateRoot_in_entryRuleStateRoot2842);
+            pushFollow(FOLLOW_ruleStateRoot_in_entryRuleStateRoot2877);
             iv_ruleStateRoot=ruleStateRoot();
 
             state._fsp--;
@@ -3664,7 +3766,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleStateRoot; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleStateRoot2852); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleStateRoot2887); if (state.failed) return current;
 
             }
 
@@ -3682,7 +3784,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStateRoot"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1285:1: ruleStateRoot returns [EObject current=null] : (otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1307:1: ruleStateRoot returns [EObject current=null] : (otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) ) ) ;
     public final EObject ruleStateRoot() throws RecognitionException {
         EObject current = null;
 
@@ -3693,30 +3795,30 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1288:28: ( (otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1289:1: (otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1310:28: ( (otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1311:1: (otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1289:1: (otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1289:3: otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1311:1: (otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1311:3: otherlv_0= '@@state@@' ( (lv_def_1_0= ruleStateSpecification ) )
             {
-            otherlv_0=(Token)match(input,36,FOLLOW_36_in_ruleStateRoot2889); if (state.failed) return current;
+            otherlv_0=(Token)match(input,34,FOLLOW_34_in_ruleStateRoot2924); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getStateRootAccess().getStateKeyword_0());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1293:1: ( (lv_def_1_0= ruleStateSpecification ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1294:1: (lv_def_1_0= ruleStateSpecification )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1315:1: ( (lv_def_1_0= ruleStateSpecification ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1316:1: (lv_def_1_0= ruleStateSpecification )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1294:1: (lv_def_1_0= ruleStateSpecification )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1295:3: lv_def_1_0= ruleStateSpecification
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1316:1: (lv_def_1_0= ruleStateSpecification )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1317:3: lv_def_1_0= ruleStateSpecification
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getStateRootAccess().getDefStateSpecificationParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleStateSpecification_in_ruleStateRoot2910);
+            pushFollow(FOLLOW_ruleStateSpecification_in_ruleStateRoot2945);
             lv_def_1_0=ruleStateSpecification();
 
             state._fsp--;
@@ -3763,7 +3865,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTransitionRoot"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1319:1: entryRuleTransitionRoot returns [EObject current=null] : iv_ruleTransitionRoot= ruleTransitionRoot EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1341:1: entryRuleTransitionRoot returns [EObject current=null] : iv_ruleTransitionRoot= ruleTransitionRoot EOF ;
     public final EObject entryRuleTransitionRoot() throws RecognitionException {
         EObject current = null;
 
@@ -3771,13 +3873,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1320:2: (iv_ruleTransitionRoot= ruleTransitionRoot EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1321:2: iv_ruleTransitionRoot= ruleTransitionRoot EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1342:2: (iv_ruleTransitionRoot= ruleTransitionRoot EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1343:2: iv_ruleTransitionRoot= ruleTransitionRoot EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTransitionRootRule()); 
             }
-            pushFollow(FOLLOW_ruleTransitionRoot_in_entryRuleTransitionRoot2946);
+            pushFollow(FOLLOW_ruleTransitionRoot_in_entryRuleTransitionRoot2981);
             iv_ruleTransitionRoot=ruleTransitionRoot();
 
             state._fsp--;
@@ -3785,7 +3887,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleTransitionRoot; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTransitionRoot2956); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTransitionRoot2991); if (state.failed) return current;
 
             }
 
@@ -3803,7 +3905,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTransitionRoot"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1328:1: ruleTransitionRoot returns [EObject current=null] : (otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1350:1: ruleTransitionRoot returns [EObject current=null] : (otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) ) ) ;
     public final EObject ruleTransitionRoot() throws RecognitionException {
         EObject current = null;
 
@@ -3814,30 +3916,30 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1331:28: ( (otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1332:1: (otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1353:28: ( (otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1354:1: (otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1332:1: (otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1332:3: otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1354:1: (otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1354:3: otherlv_0= '@@transition@@' ( (lv_def_1_0= ruleTransitionSpecification ) )
             {
-            otherlv_0=(Token)match(input,37,FOLLOW_37_in_ruleTransitionRoot2993); if (state.failed) return current;
+            otherlv_0=(Token)match(input,35,FOLLOW_35_in_ruleTransitionRoot3028); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getTransitionRootAccess().getTransitionKeyword_0());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1336:1: ( (lv_def_1_0= ruleTransitionSpecification ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1337:1: (lv_def_1_0= ruleTransitionSpecification )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1358:1: ( (lv_def_1_0= ruleTransitionSpecification ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1359:1: (lv_def_1_0= ruleTransitionSpecification )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1337:1: (lv_def_1_0= ruleTransitionSpecification )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1338:3: lv_def_1_0= ruleTransitionSpecification
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1359:1: (lv_def_1_0= ruleTransitionSpecification )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1360:3: lv_def_1_0= ruleTransitionSpecification
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getTransitionRootAccess().getDefTransitionSpecificationParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleTransitionSpecification_in_ruleTransitionRoot3014);
+            pushFollow(FOLLOW_ruleTransitionSpecification_in_ruleTransitionRoot3049);
             lv_def_1_0=ruleTransitionSpecification();
 
             state._fsp--;
@@ -3884,7 +3986,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStatechartSpecification"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1364:1: entryRuleStatechartSpecification returns [EObject current=null] : iv_ruleStatechartSpecification= ruleStatechartSpecification EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1386:1: entryRuleStatechartSpecification returns [EObject current=null] : iv_ruleStatechartSpecification= ruleStatechartSpecification EOF ;
     public final EObject entryRuleStatechartSpecification() throws RecognitionException {
         EObject current = null;
 
@@ -3892,13 +3994,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1365:2: (iv_ruleStatechartSpecification= ruleStatechartSpecification EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1366:2: iv_ruleStatechartSpecification= ruleStatechartSpecification EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1387:2: (iv_ruleStatechartSpecification= ruleStatechartSpecification EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1388:2: iv_ruleStatechartSpecification= ruleStatechartSpecification EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStatechartSpecificationRule()); 
             }
-            pushFollow(FOLLOW_ruleStatechartSpecification_in_entryRuleStatechartSpecification3052);
+            pushFollow(FOLLOW_ruleStatechartSpecification_in_entryRuleStatechartSpecification3087);
             iv_ruleStatechartSpecification=ruleStatechartSpecification();
 
             state._fsp--;
@@ -3906,7 +4008,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleStatechartSpecification; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleStatechartSpecification3062); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleStatechartSpecification3097); if (state.failed) return current;
 
             }
 
@@ -3924,7 +4026,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStatechartSpecification"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1373:1: ruleStatechartSpecification returns [EObject current=null] : ( () (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )? ( (lv_scopes_3_0= ruleStatechartScope ) )* ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1395:1: ruleStatechartSpecification returns [EObject current=null] : ( () (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )? ( (lv_scopes_3_0= ruleStatechartScope ) )* ) ;
     public final EObject ruleStatechartSpecification() throws RecognitionException {
         EObject current = null;
 
@@ -3937,14 +4039,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1376:28: ( ( () (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )? ( (lv_scopes_3_0= ruleStatechartScope ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1377:1: ( () (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )? ( (lv_scopes_3_0= ruleStatechartScope ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1398:28: ( ( () (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )? ( (lv_scopes_3_0= ruleStatechartScope ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1399:1: ( () (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )? ( (lv_scopes_3_0= ruleStatechartScope ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1377:1: ( () (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )? ( (lv_scopes_3_0= ruleStatechartScope ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1377:2: () (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )? ( (lv_scopes_3_0= ruleStatechartScope ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1399:1: ( () (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )? ( (lv_scopes_3_0= ruleStatechartScope ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1399:2: () (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )? ( (lv_scopes_3_0= ruleStatechartScope ) )*
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1377:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1378:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1399:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1400:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -3956,35 +4058,35 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1383:2: (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )?
-            int alt22=2;
-            int LA22_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1405:2: (otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) ) )?
+            int alt23=2;
+            int LA23_0 = input.LA(1);
 
-            if ( (LA22_0==38) ) {
-                alt22=1;
+            if ( (LA23_0==36) ) {
+                alt23=1;
             }
-            switch (alt22) {
+            switch (alt23) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1383:4: otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1405:4: otherlv_1= 'namespace' ( (lv_namespace_2_0= ruleFQN ) )
                     {
-                    otherlv_1=(Token)match(input,38,FOLLOW_38_in_ruleStatechartSpecification3109); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,36,FOLLOW_36_in_ruleStatechartSpecification3144); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getStatechartSpecificationAccess().getNamespaceKeyword_1_0());
                           
                     }
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1387:1: ( (lv_namespace_2_0= ruleFQN ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1388:1: (lv_namespace_2_0= ruleFQN )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1409:1: ( (lv_namespace_2_0= ruleFQN ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1410:1: (lv_namespace_2_0= ruleFQN )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1388:1: (lv_namespace_2_0= ruleFQN )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1389:3: lv_namespace_2_0= ruleFQN
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1410:1: (lv_namespace_2_0= ruleFQN )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1411:3: lv_namespace_2_0= ruleFQN
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getStatechartSpecificationAccess().getNamespaceFQNParserRuleCall_1_1_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleFQN_in_ruleStatechartSpecification3130);
+                    pushFollow(FOLLOW_ruleFQN_in_ruleStatechartSpecification3165);
                     lv_namespace_2_0=ruleFQN();
 
                     state._fsp--;
@@ -4014,30 +4116,30 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1405:4: ( (lv_scopes_3_0= ruleStatechartScope ) )*
-            loop23:
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1427:4: ( (lv_scopes_3_0= ruleStatechartScope ) )*
+            loop24:
             do {
-                int alt23=2;
-                int LA23_0 = input.LA(1);
+                int alt24=2;
+                int LA24_0 = input.LA(1);
 
-                if ( ((LA23_0>=39 && LA23_0<=40)) ) {
-                    alt23=1;
+                if ( ((LA24_0>=37 && LA24_0<=38)) ) {
+                    alt24=1;
                 }
 
 
-                switch (alt23) {
+                switch (alt24) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1406:1: (lv_scopes_3_0= ruleStatechartScope )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1428:1: (lv_scopes_3_0= ruleStatechartScope )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1406:1: (lv_scopes_3_0= ruleStatechartScope )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1407:3: lv_scopes_3_0= ruleStatechartScope
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1428:1: (lv_scopes_3_0= ruleStatechartScope )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1429:3: lv_scopes_3_0= ruleStatechartScope
             	    {
             	    if ( state.backtracking==0 ) {
             	       
             	      	        newCompositeNode(grammarAccess.getStatechartSpecificationAccess().getScopesStatechartScopeParserRuleCall_2_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleStatechartScope_in_ruleStatechartSpecification3153);
+            	    pushFollow(FOLLOW_ruleStatechartScope_in_ruleStatechartSpecification3188);
             	    lv_scopes_3_0=ruleStatechartScope();
 
             	    state._fsp--;
@@ -4063,7 +4165,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop23;
+            	    break loop24;
                 }
             } while (true);
 
@@ -4090,7 +4192,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStateSpecification"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1431:1: entryRuleStateSpecification returns [EObject current=null] : iv_ruleStateSpecification= ruleStateSpecification EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1453:1: entryRuleStateSpecification returns [EObject current=null] : iv_ruleStateSpecification= ruleStateSpecification EOF ;
     public final EObject entryRuleStateSpecification() throws RecognitionException {
         EObject current = null;
 
@@ -4098,13 +4200,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1432:2: (iv_ruleStateSpecification= ruleStateSpecification EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1433:2: iv_ruleStateSpecification= ruleStateSpecification EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1454:2: (iv_ruleStateSpecification= ruleStateSpecification EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1455:2: iv_ruleStateSpecification= ruleStateSpecification EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStateSpecificationRule()); 
             }
-            pushFollow(FOLLOW_ruleStateSpecification_in_entryRuleStateSpecification3190);
+            pushFollow(FOLLOW_ruleStateSpecification_in_entryRuleStateSpecification3225);
             iv_ruleStateSpecification=ruleStateSpecification();
 
             state._fsp--;
@@ -4112,7 +4214,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleStateSpecification; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleStateSpecification3200); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleStateSpecification3235); if (state.failed) return current;
 
             }
 
@@ -4130,7 +4232,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStateSpecification"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1440:1: ruleStateSpecification returns [EObject current=null] : ( (lv_scope_0_0= ruleStateScope ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1462:1: ruleStateSpecification returns [EObject current=null] : ( (lv_scope_0_0= ruleStateScope ) ) ;
     public final EObject ruleStateSpecification() throws RecognitionException {
         EObject current = null;
 
@@ -4140,21 +4242,21 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1443:28: ( ( (lv_scope_0_0= ruleStateScope ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1444:1: ( (lv_scope_0_0= ruleStateScope ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1465:28: ( ( (lv_scope_0_0= ruleStateScope ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1466:1: ( (lv_scope_0_0= ruleStateScope ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1444:1: ( (lv_scope_0_0= ruleStateScope ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1445:1: (lv_scope_0_0= ruleStateScope )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1466:1: ( (lv_scope_0_0= ruleStateScope ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1467:1: (lv_scope_0_0= ruleStateScope )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1445:1: (lv_scope_0_0= ruleStateScope )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1446:3: lv_scope_0_0= ruleStateScope
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1467:1: (lv_scope_0_0= ruleStateScope )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1468:3: lv_scope_0_0= ruleStateScope
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getStateSpecificationAccess().getScopeStateScopeParserRuleCall_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleStateScope_in_ruleStateSpecification3245);
+            pushFollow(FOLLOW_ruleStateScope_in_ruleStateSpecification3280);
             lv_scope_0_0=ruleStateScope();
 
             state._fsp--;
@@ -4198,7 +4300,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTransitionSpecification"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1470:1: entryRuleTransitionSpecification returns [EObject current=null] : iv_ruleTransitionSpecification= ruleTransitionSpecification EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1492:1: entryRuleTransitionSpecification returns [EObject current=null] : iv_ruleTransitionSpecification= ruleTransitionSpecification EOF ;
     public final EObject entryRuleTransitionSpecification() throws RecognitionException {
         EObject current = null;
 
@@ -4206,13 +4308,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1471:2: (iv_ruleTransitionSpecification= ruleTransitionSpecification EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1472:2: iv_ruleTransitionSpecification= ruleTransitionSpecification EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1493:2: (iv_ruleTransitionSpecification= ruleTransitionSpecification EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1494:2: iv_ruleTransitionSpecification= ruleTransitionSpecification EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTransitionSpecificationRule()); 
             }
-            pushFollow(FOLLOW_ruleTransitionSpecification_in_entryRuleTransitionSpecification3280);
+            pushFollow(FOLLOW_ruleTransitionSpecification_in_entryRuleTransitionSpecification3315);
             iv_ruleTransitionSpecification=ruleTransitionSpecification();
 
             state._fsp--;
@@ -4220,7 +4322,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleTransitionSpecification; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTransitionSpecification3290); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTransitionSpecification3325); if (state.failed) return current;
 
             }
 
@@ -4238,7 +4340,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTransitionSpecification"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1479:1: ruleTransitionSpecification returns [EObject current=null] : ( (lv_reaction_0_0= ruleTransitionReaction ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1501:1: ruleTransitionSpecification returns [EObject current=null] : ( (lv_reaction_0_0= ruleTransitionReaction ) ) ;
     public final EObject ruleTransitionSpecification() throws RecognitionException {
         EObject current = null;
 
@@ -4248,21 +4350,21 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1482:28: ( ( (lv_reaction_0_0= ruleTransitionReaction ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1483:1: ( (lv_reaction_0_0= ruleTransitionReaction ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1504:28: ( ( (lv_reaction_0_0= ruleTransitionReaction ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1505:1: ( (lv_reaction_0_0= ruleTransitionReaction ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1483:1: ( (lv_reaction_0_0= ruleTransitionReaction ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1484:1: (lv_reaction_0_0= ruleTransitionReaction )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1505:1: ( (lv_reaction_0_0= ruleTransitionReaction ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1506:1: (lv_reaction_0_0= ruleTransitionReaction )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1484:1: (lv_reaction_0_0= ruleTransitionReaction )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1485:3: lv_reaction_0_0= ruleTransitionReaction
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1506:1: (lv_reaction_0_0= ruleTransitionReaction )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1507:3: lv_reaction_0_0= ruleTransitionReaction
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getTransitionSpecificationAccess().getReactionTransitionReactionParserRuleCall_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleTransitionReaction_in_ruleTransitionSpecification3335);
+            pushFollow(FOLLOW_ruleTransitionReaction_in_ruleTransitionSpecification3370);
             lv_reaction_0_0=ruleTransitionReaction();
 
             state._fsp--;
@@ -4306,7 +4408,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStatechartScope"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1511:1: entryRuleStatechartScope returns [EObject current=null] : iv_ruleStatechartScope= ruleStatechartScope EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1533:1: entryRuleStatechartScope returns [EObject current=null] : iv_ruleStatechartScope= ruleStatechartScope EOF ;
     public final EObject entryRuleStatechartScope() throws RecognitionException {
         EObject current = null;
 
@@ -4314,13 +4416,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1512:2: (iv_ruleStatechartScope= ruleStatechartScope EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1513:2: iv_ruleStatechartScope= ruleStatechartScope EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1534:2: (iv_ruleStatechartScope= ruleStatechartScope EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1535:2: iv_ruleStatechartScope= ruleStatechartScope EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStatechartScopeRule()); 
             }
-            pushFollow(FOLLOW_ruleStatechartScope_in_entryRuleStatechartScope3372);
+            pushFollow(FOLLOW_ruleStatechartScope_in_entryRuleStatechartScope3407);
             iv_ruleStatechartScope=ruleStatechartScope();
 
             state._fsp--;
@@ -4328,7 +4430,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleStatechartScope; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleStatechartScope3382); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleStatechartScope3417); if (state.failed) return current;
 
             }
 
@@ -4346,7 +4448,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStatechartScope"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1520:1: ruleStatechartScope returns [EObject current=null] : (this_InterfaceScope_0= ruleInterfaceScope | this_InternalScope_1= ruleInternalScope ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1542:1: ruleStatechartScope returns [EObject current=null] : (this_InterfaceScope_0= ruleInterfaceScope | this_InternalScope_1= ruleInternalScope ) ;
     public final EObject ruleStatechartScope() throws RecognitionException {
         EObject current = null;
 
@@ -4358,36 +4460,36 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1523:28: ( (this_InterfaceScope_0= ruleInterfaceScope | this_InternalScope_1= ruleInternalScope ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1524:1: (this_InterfaceScope_0= ruleInterfaceScope | this_InternalScope_1= ruleInternalScope )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1545:28: ( (this_InterfaceScope_0= ruleInterfaceScope | this_InternalScope_1= ruleInternalScope ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1546:1: (this_InterfaceScope_0= ruleInterfaceScope | this_InternalScope_1= ruleInternalScope )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1524:1: (this_InterfaceScope_0= ruleInterfaceScope | this_InternalScope_1= ruleInternalScope )
-            int alt24=2;
-            int LA24_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1546:1: (this_InterfaceScope_0= ruleInterfaceScope | this_InternalScope_1= ruleInternalScope )
+            int alt25=2;
+            int LA25_0 = input.LA(1);
 
-            if ( (LA24_0==39) ) {
-                alt24=1;
+            if ( (LA25_0==37) ) {
+                alt25=1;
             }
-            else if ( (LA24_0==40) ) {
-                alt24=2;
+            else if ( (LA25_0==38) ) {
+                alt25=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 24, 0, input);
+                    new NoViableAltException("", 25, 0, input);
 
                 throw nvae;
             }
-            switch (alt24) {
+            switch (alt25) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1525:5: this_InterfaceScope_0= ruleInterfaceScope
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1547:5: this_InterfaceScope_0= ruleInterfaceScope
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getStatechartScopeAccess().getInterfaceScopeParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleInterfaceScope_in_ruleStatechartScope3429);
+                    pushFollow(FOLLOW_ruleInterfaceScope_in_ruleStatechartScope3464);
                     this_InterfaceScope_0=ruleInterfaceScope();
 
                     state._fsp--;
@@ -4402,14 +4504,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1535:5: this_InternalScope_1= ruleInternalScope
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1557:5: this_InternalScope_1= ruleInternalScope
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getStatechartScopeAccess().getInternalScopeParserRuleCall_1()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleInternalScope_in_ruleStatechartScope3456);
+                    pushFollow(FOLLOW_ruleInternalScope_in_ruleStatechartScope3491);
                     this_InternalScope_1=ruleInternalScope();
 
                     state._fsp--;
@@ -4446,7 +4548,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInterfaceScope"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1553:1: entryRuleInterfaceScope returns [EObject current=null] : iv_ruleInterfaceScope= ruleInterfaceScope EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1575:1: entryRuleInterfaceScope returns [EObject current=null] : iv_ruleInterfaceScope= ruleInterfaceScope EOF ;
     public final EObject entryRuleInterfaceScope() throws RecognitionException {
         EObject current = null;
 
@@ -4454,13 +4556,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1554:2: (iv_ruleInterfaceScope= ruleInterfaceScope EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1555:2: iv_ruleInterfaceScope= ruleInterfaceScope EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1576:2: (iv_ruleInterfaceScope= ruleInterfaceScope EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1577:2: iv_ruleInterfaceScope= ruleInterfaceScope EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getInterfaceScopeRule()); 
             }
-            pushFollow(FOLLOW_ruleInterfaceScope_in_entryRuleInterfaceScope3493);
+            pushFollow(FOLLOW_ruleInterfaceScope_in_entryRuleInterfaceScope3528);
             iv_ruleInterfaceScope=ruleInterfaceScope();
 
             state._fsp--;
@@ -4468,7 +4570,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleInterfaceScope; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleInterfaceScope3503); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleInterfaceScope3538); if (state.failed) return current;
 
             }
 
@@ -4486,7 +4588,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInterfaceScope"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1562:1: ruleInterfaceScope returns [EObject current=null] : ( () otherlv_1= 'interface' ( (lv_name_2_0= ruleXID ) )? otherlv_3= ':' ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )* ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1584:1: ruleInterfaceScope returns [EObject current=null] : ( () otherlv_1= 'interface' ( (lv_name_2_0= ruleXID ) )? otherlv_3= ':' ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )* ) ;
     public final EObject ruleInterfaceScope() throws RecognitionException {
         EObject current = null;
 
@@ -4504,14 +4606,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1565:28: ( ( () otherlv_1= 'interface' ( (lv_name_2_0= ruleXID ) )? otherlv_3= ':' ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1566:1: ( () otherlv_1= 'interface' ( (lv_name_2_0= ruleXID ) )? otherlv_3= ':' ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1587:28: ( ( () otherlv_1= 'interface' ( (lv_name_2_0= ruleXID ) )? otherlv_3= ':' ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1588:1: ( () otherlv_1= 'interface' ( (lv_name_2_0= ruleXID ) )? otherlv_3= ':' ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1566:1: ( () otherlv_1= 'interface' ( (lv_name_2_0= ruleXID ) )? otherlv_3= ':' ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1566:2: () otherlv_1= 'interface' ( (lv_name_2_0= ruleXID ) )? otherlv_3= ':' ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1588:1: ( () otherlv_1= 'interface' ( (lv_name_2_0= ruleXID ) )? otherlv_3= ':' ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1588:2: () otherlv_1= 'interface' ( (lv_name_2_0= ruleXID ) )? otherlv_3= ':' ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )*
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1566:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1567:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1588:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1589:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -4523,32 +4625,32 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,39,FOLLOW_39_in_ruleInterfaceScope3549); if (state.failed) return current;
+            otherlv_1=(Token)match(input,37,FOLLOW_37_in_ruleInterfaceScope3584); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getInterfaceScopeAccess().getInterfaceKeyword_1());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1576:1: ( (lv_name_2_0= ruleXID ) )?
-            int alt25=2;
-            int LA25_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1598:1: ( (lv_name_2_0= ruleXID ) )?
+            int alt26=2;
+            int LA26_0 = input.LA(1);
 
-            if ( (LA25_0==RULE_ID||(LA25_0>=38 && LA25_0<=57)) ) {
-                alt25=1;
+            if ( (LA26_0==RULE_ID||(LA26_0>=36 && LA26_0<=55)) ) {
+                alt26=1;
             }
-            switch (alt25) {
+            switch (alt26) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1577:1: (lv_name_2_0= ruleXID )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1599:1: (lv_name_2_0= ruleXID )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1577:1: (lv_name_2_0= ruleXID )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1578:3: lv_name_2_0= ruleXID
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1599:1: (lv_name_2_0= ruleXID )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1600:3: lv_name_2_0= ruleXID
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getInterfaceScopeAccess().getNameXIDParserRuleCall_2_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleXID_in_ruleInterfaceScope3570);
+                    pushFollow(FOLLOW_ruleXID_in_ruleInterfaceScope3605);
                     lv_name_2_0=ruleXID();
 
                     state._fsp--;
@@ -4575,29 +4677,29 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,20,FOLLOW_20_in_ruleInterfaceScope3583); if (state.failed) return current;
+            otherlv_3=(Token)match(input,20,FOLLOW_20_in_ruleInterfaceScope3618); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getInterfaceScopeAccess().getColonKeyword_3());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1598:1: ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )*
-            loop27:
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1620:1: ( ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) ) )*
+            loop28:
             do {
-                int alt27=2;
+                int alt28=2;
                 switch ( input.LA(1) ) {
-                case 39:
+                case 37:
                     {
-                    int LA27_2 = input.LA(2);
+                    int LA28_2 = input.LA(2);
 
-                    if ( (LA27_2==58) ) {
-                        alt27=1;
+                    if ( (LA28_2==56) ) {
+                        alt28=1;
                     }
-                    else if ( (LA27_2==RULE_ID) ) {
-                        int LA27_5 = input.LA(3);
+                    else if ( (LA28_2==RULE_ID) ) {
+                        int LA28_5 = input.LA(3);
 
-                        if ( ((LA27_5>=15 && LA27_5<=16)) ) {
-                            alt27=1;
+                        if ( ((LA28_5>=15 && LA28_5<=16)) ) {
+                            alt28=1;
                         }
 
 
@@ -4606,12 +4708,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
                     break;
-                case 40:
+                case 38:
                     {
-                    int LA27_3 = input.LA(2);
+                    int LA28_3 = input.LA(2);
 
-                    if ( (LA27_3==RULE_ID||LA27_3==58) ) {
-                        alt27=1;
+                    if ( (LA28_3==RULE_ID||LA28_3==56) ) {
+                        alt28=1;
                     }
 
 
@@ -4620,7 +4722,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case RULE_ID:
                 case 14:
                 case 22:
-                case 38:
+                case 36:
+                case 39:
+                case 40:
                 case 41:
                 case 42:
                 case 43:
@@ -4636,77 +4740,37 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 53:
                 case 54:
                 case 55:
-                case 56:
-                case 57:
                     {
-                    alt27=1;
+                    alt28=1;
                     }
                     break;
 
                 }
 
-                switch (alt27) {
+                switch (alt28) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1599:1: ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1621:1: ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1599:1: ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1600:1: (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1621:1: ( (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1622:1: (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1600:1: (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration )
-            	    int alt26=3;
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1622:1: (lv_declarations_4_1= ruleEventDeclarartion | lv_declarations_4_2= ruleVariableDeclaration | lv_declarations_4_3= ruleOperationDeclaration )
+            	    int alt27=3;
             	    switch ( input.LA(1) ) {
-            	    case 42:
+            	    case 40:
             	        {
-            	        int LA26_1 = input.LA(2);
+            	        int LA27_1 = input.LA(2);
 
-            	        if ( (LA26_1==41) ) {
-            	            alt26=1;
+            	        if ( (LA27_1==RULE_ID||LA27_1==56) ) {
+            	            alt27=2;
             	        }
-            	        else if ( (LA26_1==RULE_ID||LA26_1==58) ) {
-            	            alt26=2;
+            	        else if ( (LA27_1==39) ) {
+            	            alt27=1;
             	        }
             	        else {
             	            if (state.backtracking>0) {state.failed=true; return current;}
             	            NoViableAltException nvae =
-            	                new NoViableAltException("", 26, 1, input);
-
-            	            throw nvae;
-            	        }
-            	        }
-            	        break;
-            	    case 43:
-            	        {
-            	        int LA26_2 = input.LA(2);
-
-            	        if ( (LA26_2==RULE_ID||LA26_2==58) ) {
-            	            alt26=2;
-            	        }
-            	        else if ( (LA26_2==41) ) {
-            	            alt26=1;
-            	        }
-            	        else {
-            	            if (state.backtracking>0) {state.failed=true; return current;}
-            	            NoViableAltException nvae =
-            	                new NoViableAltException("", 26, 2, input);
-
-            	            throw nvae;
-            	        }
-            	        }
-            	        break;
-            	    case 44:
-            	        {
-            	        int LA26_3 = input.LA(2);
-
-            	        if ( (LA26_3==RULE_ID||LA26_3==58) ) {
-            	            alt26=2;
-            	        }
-            	        else if ( (LA26_3==41) ) {
-            	            alt26=1;
-            	        }
-            	        else {
-            	            if (state.backtracking>0) {state.failed=true; return current;}
-            	            NoViableAltException nvae =
-            	                new NoViableAltException("", 26, 3, input);
+            	                new NoViableAltException("", 27, 1, input);
 
             	            throw nvae;
             	        }
@@ -4714,26 +4778,71 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	        break;
             	    case 41:
             	        {
+            	        int LA27_2 = input.LA(2);
+
+            	        if ( (LA27_2==39) ) {
+            	            alt27=1;
+            	        }
+            	        else if ( (LA27_2==RULE_ID||LA27_2==56) ) {
+            	            alt27=2;
+            	        }
+            	        else {
+            	            if (state.backtracking>0) {state.failed=true; return current;}
+            	            NoViableAltException nvae =
+            	                new NoViableAltException("", 27, 2, input);
+
+            	            throw nvae;
+            	        }
+            	        }
+            	        break;
+            	    case 42:
+            	        {
+            	        int LA27_3 = input.LA(2);
+
+            	        if ( (LA27_3==39) ) {
+            	            alt27=1;
+            	        }
+            	        else if ( (LA27_3==RULE_ID||LA27_3==56) ) {
+            	            alt27=2;
+            	        }
+            	        else {
+            	            if (state.backtracking>0) {state.failed=true; return current;}
+            	            NoViableAltException nvae =
+            	                new NoViableAltException("", 27, 3, input);
+
+            	            throw nvae;
+            	        }
+            	        }
+            	        break;
+            	    case 39:
+            	        {
             	        switch ( input.LA(2) ) {
+            	        case 56:
+            	            {
+            	            alt27=2;
+            	            }
+            	            break;
             	        case RULE_ID:
             	            {
-            	            int LA26_8 = input.LA(3);
+            	            int LA27_8 = input.LA(3);
 
-            	            if ( (LA26_8==EOF||LA26_8==RULE_ID||LA26_8==14||LA26_8==20||LA26_8==22||(LA26_8>=38 && LA26_8<=57)) ) {
-            	                alt26=1;
+            	            if ( ((LA27_8>=15 && LA27_8<=16)) ) {
+            	                alt27=2;
             	            }
-            	            else if ( ((LA26_8>=15 && LA26_8<=16)) ) {
-            	                alt26=2;
+            	            else if ( (LA27_8==EOF||LA27_8==RULE_ID||LA27_8==14||LA27_8==20||LA27_8==22||(LA27_8>=36 && LA27_8<=55)) ) {
+            	                alt27=1;
             	            }
             	            else {
             	                if (state.backtracking>0) {state.failed=true; return current;}
             	                NoViableAltException nvae =
-            	                    new NoViableAltException("", 26, 8, input);
+            	                    new NoViableAltException("", 27, 8, input);
 
             	                throw nvae;
             	            }
             	            }
             	            break;
+            	        case 36:
+            	        case 37:
             	        case 38:
             	        case 39:
             	        case 40:
@@ -4752,21 +4861,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	        case 53:
             	        case 54:
             	        case 55:
-            	        case 56:
-            	        case 57:
             	            {
-            	            alt26=1;
-            	            }
-            	            break;
-            	        case 58:
-            	            {
-            	            alt26=2;
+            	            alt27=1;
             	            }
             	            break;
             	        default:
             	            if (state.backtracking>0) {state.failed=true; return current;}
             	            NoViableAltException nvae =
-            	                new NoViableAltException("", 26, 4, input);
+            	                new NoViableAltException("", 27, 4, input);
 
             	            throw nvae;
             	        }
@@ -4775,9 +4877,11 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	        break;
             	    case RULE_ID:
             	    case 14:
+            	    case 36:
+            	    case 37:
             	    case 38:
-            	    case 39:
-            	    case 40:
+            	    case 43:
+            	    case 44:
             	    case 45:
             	    case 46:
             	    case 47:
@@ -4789,35 +4893,33 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    case 53:
             	    case 54:
             	    case 55:
-            	    case 56:
-            	    case 57:
             	        {
-            	        alt26=2;
+            	        alt27=2;
             	        }
             	        break;
             	    case 22:
             	        {
-            	        alt26=3;
+            	        alt27=3;
             	        }
             	        break;
             	    default:
             	        if (state.backtracking>0) {state.failed=true; return current;}
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 26, 0, input);
+            	            new NoViableAltException("", 27, 0, input);
 
             	        throw nvae;
             	    }
 
-            	    switch (alt26) {
+            	    switch (alt27) {
             	        case 1 :
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1601:3: lv_declarations_4_1= ruleEventDeclarartion
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1623:3: lv_declarations_4_1= ruleEventDeclarartion
             	            {
             	            if ( state.backtracking==0 ) {
             	               
             	              	        newCompositeNode(grammarAccess.getInterfaceScopeAccess().getDeclarationsEventDeclarartionParserRuleCall_4_0_0()); 
             	              	    
             	            }
-            	            pushFollow(FOLLOW_ruleEventDeclarartion_in_ruleInterfaceScope3606);
+            	            pushFollow(FOLLOW_ruleEventDeclarartion_in_ruleInterfaceScope3641);
             	            lv_declarations_4_1=ruleEventDeclarartion();
 
             	            state._fsp--;
@@ -4839,14 +4941,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 2 :
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1616:8: lv_declarations_4_2= ruleVariableDeclaration
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1638:8: lv_declarations_4_2= ruleVariableDeclaration
             	            {
             	            if ( state.backtracking==0 ) {
             	               
             	              	        newCompositeNode(grammarAccess.getInterfaceScopeAccess().getDeclarationsVariableDeclarationParserRuleCall_4_0_1()); 
             	              	    
             	            }
-            	            pushFollow(FOLLOW_ruleVariableDeclaration_in_ruleInterfaceScope3625);
+            	            pushFollow(FOLLOW_ruleVariableDeclaration_in_ruleInterfaceScope3660);
             	            lv_declarations_4_2=ruleVariableDeclaration();
 
             	            state._fsp--;
@@ -4868,14 +4970,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 3 :
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1631:8: lv_declarations_4_3= ruleOperationDeclaration
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1653:8: lv_declarations_4_3= ruleOperationDeclaration
             	            {
             	            if ( state.backtracking==0 ) {
             	               
             	              	        newCompositeNode(grammarAccess.getInterfaceScopeAccess().getDeclarationsOperationDeclarationParserRuleCall_4_0_2()); 
             	              	    
             	            }
-            	            pushFollow(FOLLOW_ruleOperationDeclaration_in_ruleInterfaceScope3644);
+            	            pushFollow(FOLLOW_ruleOperationDeclaration_in_ruleInterfaceScope3679);
             	            lv_declarations_4_3=ruleOperationDeclaration();
 
             	            state._fsp--;
@@ -4907,7 +5009,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop27;
+            	    break loop28;
                 }
             } while (true);
 
@@ -4934,7 +5036,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInternalScope"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1657:1: entryRuleInternalScope returns [EObject current=null] : iv_ruleInternalScope= ruleInternalScope EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1679:1: entryRuleInternalScope returns [EObject current=null] : iv_ruleInternalScope= ruleInternalScope EOF ;
     public final EObject entryRuleInternalScope() throws RecognitionException {
         EObject current = null;
 
@@ -4942,13 +5044,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1658:2: (iv_ruleInternalScope= ruleInternalScope EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1659:2: iv_ruleInternalScope= ruleInternalScope EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1680:2: (iv_ruleInternalScope= ruleInternalScope EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1681:2: iv_ruleInternalScope= ruleInternalScope EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getInternalScopeRule()); 
             }
-            pushFollow(FOLLOW_ruleInternalScope_in_entryRuleInternalScope3684);
+            pushFollow(FOLLOW_ruleInternalScope_in_entryRuleInternalScope3719);
             iv_ruleInternalScope=ruleInternalScope();
 
             state._fsp--;
@@ -4956,7 +5058,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleInternalScope; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleInternalScope3694); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleInternalScope3729); if (state.failed) return current;
 
             }
 
@@ -4974,7 +5076,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInternalScope"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1666:1: ruleInternalScope returns [EObject current=null] : ( () otherlv_1= 'internal' otherlv_2= ':' ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )* ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1688:1: ruleInternalScope returns [EObject current=null] : ( () otherlv_1= 'internal' otherlv_2= ':' ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )* ) ;
     public final EObject ruleInternalScope() throws RecognitionException {
         EObject current = null;
 
@@ -4992,14 +5094,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1669:28: ( ( () otherlv_1= 'internal' otherlv_2= ':' ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1670:1: ( () otherlv_1= 'internal' otherlv_2= ':' ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1691:28: ( ( () otherlv_1= 'internal' otherlv_2= ':' ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1692:1: ( () otherlv_1= 'internal' otherlv_2= ':' ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1670:1: ( () otherlv_1= 'internal' otherlv_2= ':' ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1670:2: () otherlv_1= 'internal' otherlv_2= ':' ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1692:1: ( () otherlv_1= 'internal' otherlv_2= ':' ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1692:2: () otherlv_1= 'internal' otherlv_2= ':' ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )*
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1670:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1671:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1692:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1693:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -5011,35 +5113,35 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,40,FOLLOW_40_in_ruleInternalScope3740); if (state.failed) return current;
+            otherlv_1=(Token)match(input,38,FOLLOW_38_in_ruleInternalScope3775); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getInternalScopeAccess().getInternalKeyword_1());
                   
             }
-            otherlv_2=(Token)match(input,20,FOLLOW_20_in_ruleInternalScope3752); if (state.failed) return current;
+            otherlv_2=(Token)match(input,20,FOLLOW_20_in_ruleInternalScope3787); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getInternalScopeAccess().getColonKeyword_2());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1684:1: ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )*
-            loop29:
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1706:1: ( ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) ) )*
+            loop30:
             do {
-                int alt29=2;
+                int alt30=2;
                 switch ( input.LA(1) ) {
-                case 39:
+                case 37:
                     {
-                    int LA29_2 = input.LA(2);
+                    int LA30_2 = input.LA(2);
 
-                    if ( (LA29_2==58) ) {
-                        alt29=1;
+                    if ( (LA30_2==56) ) {
+                        alt30=1;
                     }
-                    else if ( (LA29_2==RULE_ID) ) {
-                        int LA29_5 = input.LA(3);
+                    else if ( (LA30_2==RULE_ID) ) {
+                        int LA30_5 = input.LA(3);
 
-                        if ( ((LA29_5>=15 && LA29_5<=16)) ) {
-                            alt29=1;
+                        if ( ((LA30_5>=15 && LA30_5<=16)) ) {
+                            alt30=1;
                         }
 
 
@@ -5048,12 +5150,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
                     break;
-                case 40:
+                case 38:
                     {
-                    int LA29_3 = input.LA(2);
+                    int LA30_3 = input.LA(2);
 
-                    if ( (LA29_3==RULE_ID||LA29_3==58) ) {
-                        alt29=1;
+                    if ( (LA30_3==RULE_ID||LA30_3==56) ) {
+                        alt30=1;
                     }
 
 
@@ -5067,9 +5169,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 27:
                 case 28:
                 case 29:
-                case 30:
-                case 31:
-                case 38:
+                case 36:
+                case 39:
+                case 40:
                 case 41:
                 case 42:
                 case 43:
@@ -5085,35 +5187,33 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                 case 53:
                 case 54:
                 case 55:
-                case 56:
-                case 57:
                     {
-                    alt29=1;
+                    alt30=1;
                     }
                     break;
 
                 }
 
-                switch (alt29) {
+                switch (alt30) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1685:1: ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1707:1: ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1685:1: ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1686:1: (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1707:1: ( (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1708:1: (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1686:1: (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction )
-            	    int alt28=4;
-            	    alt28 = dfa28.predict(input);
-            	    switch (alt28) {
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1708:1: (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction )
+            	    int alt29=4;
+            	    alt29 = dfa29.predict(input);
+            	    switch (alt29) {
             	        case 1 :
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1687:3: lv_declarations_3_1= ruleEventDeclarartion
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1709:3: lv_declarations_3_1= ruleEventDeclarartion
             	            {
             	            if ( state.backtracking==0 ) {
             	               
             	              	        newCompositeNode(grammarAccess.getInternalScopeAccess().getDeclarationsEventDeclarartionParserRuleCall_3_0_0()); 
             	              	    
             	            }
-            	            pushFollow(FOLLOW_ruleEventDeclarartion_in_ruleInternalScope3775);
+            	            pushFollow(FOLLOW_ruleEventDeclarartion_in_ruleInternalScope3810);
             	            lv_declarations_3_1=ruleEventDeclarartion();
 
             	            state._fsp--;
@@ -5135,14 +5235,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 2 :
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1702:8: lv_declarations_3_2= ruleVariableDeclaration
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1724:8: lv_declarations_3_2= ruleVariableDeclaration
             	            {
             	            if ( state.backtracking==0 ) {
             	               
             	              	        newCompositeNode(grammarAccess.getInternalScopeAccess().getDeclarationsVariableDeclarationParserRuleCall_3_0_1()); 
             	              	    
             	            }
-            	            pushFollow(FOLLOW_ruleVariableDeclaration_in_ruleInternalScope3794);
+            	            pushFollow(FOLLOW_ruleVariableDeclaration_in_ruleInternalScope3829);
             	            lv_declarations_3_2=ruleVariableDeclaration();
 
             	            state._fsp--;
@@ -5164,14 +5264,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 3 :
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1717:8: lv_declarations_3_3= ruleOperationDeclaration
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1739:8: lv_declarations_3_3= ruleOperationDeclaration
             	            {
             	            if ( state.backtracking==0 ) {
             	               
             	              	        newCompositeNode(grammarAccess.getInternalScopeAccess().getDeclarationsOperationDeclarationParserRuleCall_3_0_2()); 
             	              	    
             	            }
-            	            pushFollow(FOLLOW_ruleOperationDeclaration_in_ruleInternalScope3813);
+            	            pushFollow(FOLLOW_ruleOperationDeclaration_in_ruleInternalScope3848);
             	            lv_declarations_3_3=ruleOperationDeclaration();
 
             	            state._fsp--;
@@ -5193,14 +5293,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 4 :
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1732:8: lv_declarations_3_4= ruleLocalReaction
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1754:8: lv_declarations_3_4= ruleLocalReaction
             	            {
             	            if ( state.backtracking==0 ) {
             	               
             	              	        newCompositeNode(grammarAccess.getInternalScopeAccess().getDeclarationsLocalReactionParserRuleCall_3_0_3()); 
             	              	    
             	            }
-            	            pushFollow(FOLLOW_ruleLocalReaction_in_ruleInternalScope3832);
+            	            pushFollow(FOLLOW_ruleLocalReaction_in_ruleInternalScope3867);
             	            lv_declarations_3_4=ruleLocalReaction();
 
             	            state._fsp--;
@@ -5232,7 +5332,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop29;
+            	    break loop30;
                 }
             } while (true);
 
@@ -5259,7 +5359,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEventDeclarartion"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1760:1: entryRuleEventDeclarartion returns [EObject current=null] : iv_ruleEventDeclarartion= ruleEventDeclarartion EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1782:1: entryRuleEventDeclarartion returns [EObject current=null] : iv_ruleEventDeclarartion= ruleEventDeclarartion EOF ;
     public final EObject entryRuleEventDeclarartion() throws RecognitionException {
         EObject current = null;
 
@@ -5267,13 +5367,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1761:2: (iv_ruleEventDeclarartion= ruleEventDeclarartion EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1762:2: iv_ruleEventDeclarartion= ruleEventDeclarartion EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1783:2: (iv_ruleEventDeclarartion= ruleEventDeclarartion EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1784:2: iv_ruleEventDeclarartion= ruleEventDeclarartion EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEventDeclarartionRule()); 
             }
-            pushFollow(FOLLOW_ruleEventDeclarartion_in_entryRuleEventDeclarartion3874);
+            pushFollow(FOLLOW_ruleEventDeclarartion_in_entryRuleEventDeclarartion3909);
             iv_ruleEventDeclarartion=ruleEventDeclarartion();
 
             state._fsp--;
@@ -5281,7 +5381,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleEventDeclarartion; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleEventDeclarartion3884); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEventDeclarartion3919); if (state.failed) return current;
 
             }
 
@@ -5299,7 +5399,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEventDeclarartion"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1769:1: ruleEventDeclarartion returns [EObject current=null] : this_EventDefinition_0= ruleEventDefinition ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1791:1: ruleEventDeclarartion returns [EObject current=null] : this_EventDefinition_0= ruleEventDefinition ;
     public final EObject ruleEventDeclarartion() throws RecognitionException {
         EObject current = null;
 
@@ -5309,15 +5409,15 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1772:28: (this_EventDefinition_0= ruleEventDefinition )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1774:5: this_EventDefinition_0= ruleEventDefinition
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1794:28: (this_EventDefinition_0= ruleEventDefinition )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1796:5: this_EventDefinition_0= ruleEventDefinition
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getEventDeclarartionAccess().getEventDefinitionParserRuleCall()); 
                   
             }
-            pushFollow(FOLLOW_ruleEventDefinition_in_ruleEventDeclarartion3930);
+            pushFollow(FOLLOW_ruleEventDefinition_in_ruleEventDeclarartion3965);
             this_EventDefinition_0=ruleEventDefinition();
 
             state._fsp--;
@@ -5348,7 +5448,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEventDefinition"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1792:1: entryRuleEventDefinition returns [EObject current=null] : iv_ruleEventDefinition= ruleEventDefinition EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1814:1: entryRuleEventDefinition returns [EObject current=null] : iv_ruleEventDefinition= ruleEventDefinition EOF ;
     public final EObject entryRuleEventDefinition() throws RecognitionException {
         EObject current = null;
 
@@ -5356,13 +5456,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1793:2: (iv_ruleEventDefinition= ruleEventDefinition EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1794:2: iv_ruleEventDefinition= ruleEventDefinition EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1815:2: (iv_ruleEventDefinition= ruleEventDefinition EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1816:2: iv_ruleEventDefinition= ruleEventDefinition EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEventDefinitionRule()); 
             }
-            pushFollow(FOLLOW_ruleEventDefinition_in_entryRuleEventDefinition3966);
+            pushFollow(FOLLOW_ruleEventDefinition_in_entryRuleEventDefinition4001);
             iv_ruleEventDefinition=ruleEventDefinition();
 
             state._fsp--;
@@ -5370,7 +5470,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleEventDefinition; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleEventDefinition3976); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEventDefinition4011); if (state.failed) return current;
 
             }
 
@@ -5388,7 +5488,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEventDefinition"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1801:1: ruleEventDefinition returns [EObject current=null] : ( ( (lv_direction_0_0= ruleDirection ) )? otherlv_1= 'event' ( (lv_name_2_0= ruleXID ) ) (otherlv_3= ':' ( ( ruleFQN ) ) )? ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1823:1: ruleEventDefinition returns [EObject current=null] : ( ( (lv_direction_0_0= ruleDirection ) )? otherlv_1= 'event' ( (lv_name_2_0= ruleXID ) ) (otherlv_3= ':' ( ( ruleFQN ) ) )? ) ;
     public final EObject ruleEventDefinition() throws RecognitionException {
         EObject current = null;
 
@@ -5402,32 +5502,32 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1804:28: ( ( ( (lv_direction_0_0= ruleDirection ) )? otherlv_1= 'event' ( (lv_name_2_0= ruleXID ) ) (otherlv_3= ':' ( ( ruleFQN ) ) )? ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1805:1: ( ( (lv_direction_0_0= ruleDirection ) )? otherlv_1= 'event' ( (lv_name_2_0= ruleXID ) ) (otherlv_3= ':' ( ( ruleFQN ) ) )? )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1826:28: ( ( ( (lv_direction_0_0= ruleDirection ) )? otherlv_1= 'event' ( (lv_name_2_0= ruleXID ) ) (otherlv_3= ':' ( ( ruleFQN ) ) )? ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1827:1: ( ( (lv_direction_0_0= ruleDirection ) )? otherlv_1= 'event' ( (lv_name_2_0= ruleXID ) ) (otherlv_3= ':' ( ( ruleFQN ) ) )? )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1805:1: ( ( (lv_direction_0_0= ruleDirection ) )? otherlv_1= 'event' ( (lv_name_2_0= ruleXID ) ) (otherlv_3= ':' ( ( ruleFQN ) ) )? )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1805:2: ( (lv_direction_0_0= ruleDirection ) )? otherlv_1= 'event' ( (lv_name_2_0= ruleXID ) ) (otherlv_3= ':' ( ( ruleFQN ) ) )?
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1827:1: ( ( (lv_direction_0_0= ruleDirection ) )? otherlv_1= 'event' ( (lv_name_2_0= ruleXID ) ) (otherlv_3= ':' ( ( ruleFQN ) ) )? )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1827:2: ( (lv_direction_0_0= ruleDirection ) )? otherlv_1= 'event' ( (lv_name_2_0= ruleXID ) ) (otherlv_3= ':' ( ( ruleFQN ) ) )?
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1805:2: ( (lv_direction_0_0= ruleDirection ) )?
-            int alt30=2;
-            int LA30_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1827:2: ( (lv_direction_0_0= ruleDirection ) )?
+            int alt31=2;
+            int LA31_0 = input.LA(1);
 
-            if ( ((LA30_0>=42 && LA30_0<=44)) ) {
-                alt30=1;
+            if ( ((LA31_0>=40 && LA31_0<=42)) ) {
+                alt31=1;
             }
-            switch (alt30) {
+            switch (alt31) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1806:1: (lv_direction_0_0= ruleDirection )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1828:1: (lv_direction_0_0= ruleDirection )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1806:1: (lv_direction_0_0= ruleDirection )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1807:3: lv_direction_0_0= ruleDirection
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1828:1: (lv_direction_0_0= ruleDirection )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1829:3: lv_direction_0_0= ruleDirection
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getEventDefinitionAccess().getDirectionDirectionEnumRuleCall_0_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleDirection_in_ruleEventDefinition4022);
+                    pushFollow(FOLLOW_ruleDirection_in_ruleEventDefinition4057);
                     lv_direction_0_0=ruleDirection();
 
                     state._fsp--;
@@ -5454,24 +5554,24 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,41,FOLLOW_41_in_ruleEventDefinition4035); if (state.failed) return current;
+            otherlv_1=(Token)match(input,39,FOLLOW_39_in_ruleEventDefinition4070); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getEventDefinitionAccess().getEventKeyword_1());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1827:1: ( (lv_name_2_0= ruleXID ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1828:1: (lv_name_2_0= ruleXID )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1849:1: ( (lv_name_2_0= ruleXID ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1850:1: (lv_name_2_0= ruleXID )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1828:1: (lv_name_2_0= ruleXID )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1829:3: lv_name_2_0= ruleXID
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1850:1: (lv_name_2_0= ruleXID )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1851:3: lv_name_2_0= ruleXID
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getEventDefinitionAccess().getNameXIDParserRuleCall_2_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleXID_in_ruleEventDefinition4056);
+            pushFollow(FOLLOW_ruleXID_in_ruleEventDefinition4091);
             lv_name_2_0=ruleXID();
 
             state._fsp--;
@@ -5495,28 +5595,28 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1845:2: (otherlv_3= ':' ( ( ruleFQN ) ) )?
-            int alt31=2;
-            int LA31_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1867:2: (otherlv_3= ':' ( ( ruleFQN ) ) )?
+            int alt32=2;
+            int LA32_0 = input.LA(1);
 
-            if ( (LA31_0==20) ) {
-                alt31=1;
+            if ( (LA32_0==20) ) {
+                alt32=1;
             }
-            switch (alt31) {
+            switch (alt32) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1845:4: otherlv_3= ':' ( ( ruleFQN ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1867:4: otherlv_3= ':' ( ( ruleFQN ) )
                     {
-                    otherlv_3=(Token)match(input,20,FOLLOW_20_in_ruleEventDefinition4069); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,20,FOLLOW_20_in_ruleEventDefinition4104); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getEventDefinitionAccess().getColonKeyword_3_0());
                           
                     }
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1849:1: ( ( ruleFQN ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1850:1: ( ruleFQN )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1871:1: ( ( ruleFQN ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1872:1: ( ruleFQN )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1850:1: ( ruleFQN )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1851:3: ruleFQN
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1872:1: ( ruleFQN )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1873:3: ruleFQN
                     {
                     if ( state.backtracking==0 ) {
 
@@ -5530,7 +5630,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                       	        newCompositeNode(grammarAccess.getEventDefinitionAccess().getTypeTypeCrossReference_3_1_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleFQN_in_ruleEventDefinition4092);
+                    pushFollow(FOLLOW_ruleFQN_in_ruleEventDefinition4127);
                     ruleFQN();
 
                     state._fsp--;
@@ -5575,7 +5675,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVariableDeclaration"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1872:1: entryRuleVariableDeclaration returns [EObject current=null] : iv_ruleVariableDeclaration= ruleVariableDeclaration EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1894:1: entryRuleVariableDeclaration returns [EObject current=null] : iv_ruleVariableDeclaration= ruleVariableDeclaration EOF ;
     public final EObject entryRuleVariableDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -5583,13 +5683,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1873:2: (iv_ruleVariableDeclaration= ruleVariableDeclaration EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1874:2: iv_ruleVariableDeclaration= ruleVariableDeclaration EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1895:2: (iv_ruleVariableDeclaration= ruleVariableDeclaration EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1896:2: iv_ruleVariableDeclaration= ruleVariableDeclaration EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVariableDeclarationRule()); 
             }
-            pushFollow(FOLLOW_ruleVariableDeclaration_in_entryRuleVariableDeclaration4130);
+            pushFollow(FOLLOW_ruleVariableDeclaration_in_entryRuleVariableDeclaration4165);
             iv_ruleVariableDeclaration=ruleVariableDeclaration();
 
             state._fsp--;
@@ -5597,7 +5697,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleVariableDeclaration; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleVariableDeclaration4140); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleVariableDeclaration4175); if (state.failed) return current;
 
             }
 
@@ -5615,7 +5715,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVariableDeclaration"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1881:1: ruleVariableDeclaration returns [EObject current=null] : this_VariableDefinition_0= ruleVariableDefinition ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1903:1: ruleVariableDeclaration returns [EObject current=null] : this_VariableDefinition_0= ruleVariableDefinition ;
     public final EObject ruleVariableDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -5625,15 +5725,15 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1884:28: (this_VariableDefinition_0= ruleVariableDefinition )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1886:5: this_VariableDefinition_0= ruleVariableDefinition
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1906:28: (this_VariableDefinition_0= ruleVariableDefinition )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1908:5: this_VariableDefinition_0= ruleVariableDefinition
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getVariableDeclarationAccess().getVariableDefinitionParserRuleCall()); 
                   
             }
-            pushFollow(FOLLOW_ruleVariableDefinition_in_ruleVariableDeclaration4186);
+            pushFollow(FOLLOW_ruleVariableDefinition_in_ruleVariableDeclaration4221);
             this_VariableDefinition_0=ruleVariableDefinition();
 
             state._fsp--;
@@ -5664,7 +5764,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleOperationDeclaration"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1904:1: entryRuleOperationDeclaration returns [EObject current=null] : iv_ruleOperationDeclaration= ruleOperationDeclaration EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1926:1: entryRuleOperationDeclaration returns [EObject current=null] : iv_ruleOperationDeclaration= ruleOperationDeclaration EOF ;
     public final EObject entryRuleOperationDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -5672,13 +5772,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1905:2: (iv_ruleOperationDeclaration= ruleOperationDeclaration EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1906:2: iv_ruleOperationDeclaration= ruleOperationDeclaration EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1927:2: (iv_ruleOperationDeclaration= ruleOperationDeclaration EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1928:2: iv_ruleOperationDeclaration= ruleOperationDeclaration EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getOperationDeclarationRule()); 
             }
-            pushFollow(FOLLOW_ruleOperationDeclaration_in_entryRuleOperationDeclaration4222);
+            pushFollow(FOLLOW_ruleOperationDeclaration_in_entryRuleOperationDeclaration4257);
             iv_ruleOperationDeclaration=ruleOperationDeclaration();
 
             state._fsp--;
@@ -5686,7 +5786,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleOperationDeclaration; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleOperationDeclaration4232); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleOperationDeclaration4267); if (state.failed) return current;
 
             }
 
@@ -5704,7 +5804,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOperationDeclaration"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1913:1: ruleOperationDeclaration returns [EObject current=null] : this_OperationDefinition_0= ruleOperationDefinition ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1935:1: ruleOperationDeclaration returns [EObject current=null] : this_OperationDefinition_0= ruleOperationDefinition ;
     public final EObject ruleOperationDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -5714,15 +5814,15 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1916:28: (this_OperationDefinition_0= ruleOperationDefinition )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1918:5: this_OperationDefinition_0= ruleOperationDefinition
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1938:28: (this_OperationDefinition_0= ruleOperationDefinition )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1940:5: this_OperationDefinition_0= ruleOperationDefinition
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getOperationDeclarationAccess().getOperationDefinitionParserRuleCall()); 
                   
             }
-            pushFollow(FOLLOW_ruleOperationDefinition_in_ruleOperationDeclaration4278);
+            pushFollow(FOLLOW_ruleOperationDefinition_in_ruleOperationDeclaration4313);
             this_OperationDefinition_0=ruleOperationDefinition();
 
             state._fsp--;
@@ -5753,7 +5853,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleXID"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1938:1: entryRuleXID returns [String current=null] : iv_ruleXID= ruleXID EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1960:1: entryRuleXID returns [String current=null] : iv_ruleXID= ruleXID EOF ;
     public final String entryRuleXID() throws RecognitionException {
         String current = null;
 
@@ -5761,13 +5861,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1939:2: (iv_ruleXID= ruleXID EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1940:2: iv_ruleXID= ruleXID EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1961:2: (iv_ruleXID= ruleXID EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1962:2: iv_ruleXID= ruleXID EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getXIDRule()); 
             }
-            pushFollow(FOLLOW_ruleXID_in_entryRuleXID4317);
+            pushFollow(FOLLOW_ruleXID_in_entryRuleXID4352);
             iv_ruleXID=ruleXID();
 
             state._fsp--;
@@ -5775,7 +5875,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleXID.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleXID4328); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleXID4363); if (state.failed) return current;
 
             }
 
@@ -5793,7 +5893,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleXID"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1947:1: ruleXID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID | kw= 'namespace' | kw= 'interface' | kw= 'internal' | kw= 'event' | kw= 'local' | kw= 'in' | kw= 'out' | kw= 'var' | kw= 'readonly' | kw= 'external' | kw= 'operation' | kw= 'default' | kw= 'else' | kw= 'entry' | kw= 'exit' | kw= 'always' | kw= 'oncycle' | kw= 'raise' | kw= 'valueof' | kw= 'active' ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1969:1: ruleXID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID | kw= 'namespace' | kw= 'interface' | kw= 'internal' | kw= 'event' | kw= 'local' | kw= 'in' | kw= 'out' | kw= 'var' | kw= 'readonly' | kw= 'external' | kw= 'operation' | kw= 'default' | kw= 'else' | kw= 'entry' | kw= 'exit' | kw= 'always' | kw= 'oncycle' | kw= 'raise' | kw= 'valueof' | kw= 'active' ) ;
     public final AntlrDatatypeRuleToken ruleXID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -5803,130 +5903,130 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1950:28: ( (this_ID_0= RULE_ID | kw= 'namespace' | kw= 'interface' | kw= 'internal' | kw= 'event' | kw= 'local' | kw= 'in' | kw= 'out' | kw= 'var' | kw= 'readonly' | kw= 'external' | kw= 'operation' | kw= 'default' | kw= 'else' | kw= 'entry' | kw= 'exit' | kw= 'always' | kw= 'oncycle' | kw= 'raise' | kw= 'valueof' | kw= 'active' ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1951:1: (this_ID_0= RULE_ID | kw= 'namespace' | kw= 'interface' | kw= 'internal' | kw= 'event' | kw= 'local' | kw= 'in' | kw= 'out' | kw= 'var' | kw= 'readonly' | kw= 'external' | kw= 'operation' | kw= 'default' | kw= 'else' | kw= 'entry' | kw= 'exit' | kw= 'always' | kw= 'oncycle' | kw= 'raise' | kw= 'valueof' | kw= 'active' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1972:28: ( (this_ID_0= RULE_ID | kw= 'namespace' | kw= 'interface' | kw= 'internal' | kw= 'event' | kw= 'local' | kw= 'in' | kw= 'out' | kw= 'var' | kw= 'readonly' | kw= 'external' | kw= 'operation' | kw= 'default' | kw= 'else' | kw= 'entry' | kw= 'exit' | kw= 'always' | kw= 'oncycle' | kw= 'raise' | kw= 'valueof' | kw= 'active' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1973:1: (this_ID_0= RULE_ID | kw= 'namespace' | kw= 'interface' | kw= 'internal' | kw= 'event' | kw= 'local' | kw= 'in' | kw= 'out' | kw= 'var' | kw= 'readonly' | kw= 'external' | kw= 'operation' | kw= 'default' | kw= 'else' | kw= 'entry' | kw= 'exit' | kw= 'always' | kw= 'oncycle' | kw= 'raise' | kw= 'valueof' | kw= 'active' )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1951:1: (this_ID_0= RULE_ID | kw= 'namespace' | kw= 'interface' | kw= 'internal' | kw= 'event' | kw= 'local' | kw= 'in' | kw= 'out' | kw= 'var' | kw= 'readonly' | kw= 'external' | kw= 'operation' | kw= 'default' | kw= 'else' | kw= 'entry' | kw= 'exit' | kw= 'always' | kw= 'oncycle' | kw= 'raise' | kw= 'valueof' | kw= 'active' )
-            int alt32=21;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1973:1: (this_ID_0= RULE_ID | kw= 'namespace' | kw= 'interface' | kw= 'internal' | kw= 'event' | kw= 'local' | kw= 'in' | kw= 'out' | kw= 'var' | kw= 'readonly' | kw= 'external' | kw= 'operation' | kw= 'default' | kw= 'else' | kw= 'entry' | kw= 'exit' | kw= 'always' | kw= 'oncycle' | kw= 'raise' | kw= 'valueof' | kw= 'active' )
+            int alt33=21;
             switch ( input.LA(1) ) {
             case RULE_ID:
                 {
-                alt32=1;
+                alt33=1;
+                }
+                break;
+            case 36:
+                {
+                alt33=2;
+                }
+                break;
+            case 37:
+                {
+                alt33=3;
                 }
                 break;
             case 38:
                 {
-                alt32=2;
+                alt33=4;
                 }
                 break;
             case 39:
                 {
-                alt32=3;
+                alt33=5;
                 }
                 break;
             case 40:
                 {
-                alt32=4;
+                alt33=6;
                 }
                 break;
             case 41:
                 {
-                alt32=5;
+                alt33=7;
                 }
                 break;
             case 42:
                 {
-                alt32=6;
+                alt33=8;
                 }
                 break;
             case 43:
                 {
-                alt32=7;
+                alt33=9;
                 }
                 break;
             case 44:
                 {
-                alt32=8;
+                alt33=10;
                 }
                 break;
             case 45:
                 {
-                alt32=9;
+                alt33=11;
                 }
                 break;
             case 46:
                 {
-                alt32=10;
+                alt33=12;
                 }
                 break;
             case 47:
                 {
-                alt32=11;
+                alt33=13;
                 }
                 break;
             case 48:
                 {
-                alt32=12;
+                alt33=14;
                 }
                 break;
             case 49:
                 {
-                alt32=13;
+                alt33=15;
                 }
                 break;
             case 50:
                 {
-                alt32=14;
+                alt33=16;
                 }
                 break;
             case 51:
                 {
-                alt32=15;
+                alt33=17;
                 }
                 break;
             case 52:
                 {
-                alt32=16;
+                alt33=18;
                 }
                 break;
             case 53:
                 {
-                alt32=17;
+                alt33=19;
                 }
                 break;
             case 54:
                 {
-                alt32=18;
+                alt33=20;
                 }
                 break;
             case 55:
                 {
-                alt32=19;
-                }
-                break;
-            case 56:
-                {
-                alt32=20;
-                }
-                break;
-            case 57:
-                {
-                alt32=21;
+                alt33=21;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 32, 0, input);
+                    new NoViableAltException("", 33, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt32) {
+            switch (alt33) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1951:6: this_ID_0= RULE_ID
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1973:6: this_ID_0= RULE_ID
                     {
-                    this_ID_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleXID4368); if (state.failed) return current;
+                    this_ID_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleXID4403); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       		current.merge(this_ID_0);
@@ -5941,9 +6041,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1960:2: kw= 'namespace'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1982:2: kw= 'namespace'
                     {
-                    kw=(Token)match(input,38,FOLLOW_38_in_ruleXID4392); if (state.failed) return current;
+                    kw=(Token)match(input,36,FOLLOW_36_in_ruleXID4427); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5954,9 +6054,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1967:2: kw= 'interface'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1989:2: kw= 'interface'
                     {
-                    kw=(Token)match(input,39,FOLLOW_39_in_ruleXID4411); if (state.failed) return current;
+                    kw=(Token)match(input,37,FOLLOW_37_in_ruleXID4446); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5967,9 +6067,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1974:2: kw= 'internal'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1996:2: kw= 'internal'
                     {
-                    kw=(Token)match(input,40,FOLLOW_40_in_ruleXID4430); if (state.failed) return current;
+                    kw=(Token)match(input,38,FOLLOW_38_in_ruleXID4465); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5980,9 +6080,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1981:2: kw= 'event'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2003:2: kw= 'event'
                     {
-                    kw=(Token)match(input,41,FOLLOW_41_in_ruleXID4449); if (state.failed) return current;
+                    kw=(Token)match(input,39,FOLLOW_39_in_ruleXID4484); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -5993,9 +6093,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1988:2: kw= 'local'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2010:2: kw= 'local'
                     {
-                    kw=(Token)match(input,42,FOLLOW_42_in_ruleXID4468); if (state.failed) return current;
+                    kw=(Token)match(input,40,FOLLOW_40_in_ruleXID4503); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6006,9 +6106,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1995:2: kw= 'in'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2017:2: kw= 'in'
                     {
-                    kw=(Token)match(input,43,FOLLOW_43_in_ruleXID4487); if (state.failed) return current;
+                    kw=(Token)match(input,41,FOLLOW_41_in_ruleXID4522); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6019,9 +6119,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2002:2: kw= 'out'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2024:2: kw= 'out'
                     {
-                    kw=(Token)match(input,44,FOLLOW_44_in_ruleXID4506); if (state.failed) return current;
+                    kw=(Token)match(input,42,FOLLOW_42_in_ruleXID4541); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6032,9 +6132,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2009:2: kw= 'var'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2031:2: kw= 'var'
                     {
-                    kw=(Token)match(input,45,FOLLOW_45_in_ruleXID4525); if (state.failed) return current;
+                    kw=(Token)match(input,43,FOLLOW_43_in_ruleXID4560); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6045,9 +6145,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2016:2: kw= 'readonly'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2038:2: kw= 'readonly'
                     {
-                    kw=(Token)match(input,46,FOLLOW_46_in_ruleXID4544); if (state.failed) return current;
+                    kw=(Token)match(input,44,FOLLOW_44_in_ruleXID4579); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6058,9 +6158,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2023:2: kw= 'external'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2045:2: kw= 'external'
                     {
-                    kw=(Token)match(input,47,FOLLOW_47_in_ruleXID4563); if (state.failed) return current;
+                    kw=(Token)match(input,45,FOLLOW_45_in_ruleXID4598); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6071,9 +6171,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2030:2: kw= 'operation'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2052:2: kw= 'operation'
                     {
-                    kw=(Token)match(input,48,FOLLOW_48_in_ruleXID4582); if (state.failed) return current;
+                    kw=(Token)match(input,46,FOLLOW_46_in_ruleXID4617); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6084,9 +6184,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 13 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2037:2: kw= 'default'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2059:2: kw= 'default'
                     {
-                    kw=(Token)match(input,49,FOLLOW_49_in_ruleXID4601); if (state.failed) return current;
+                    kw=(Token)match(input,47,FOLLOW_47_in_ruleXID4636); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6097,9 +6197,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 14 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2044:2: kw= 'else'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2066:2: kw= 'else'
                     {
-                    kw=(Token)match(input,50,FOLLOW_50_in_ruleXID4620); if (state.failed) return current;
+                    kw=(Token)match(input,48,FOLLOW_48_in_ruleXID4655); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6110,9 +6210,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 15 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2051:2: kw= 'entry'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2073:2: kw= 'entry'
                     {
-                    kw=(Token)match(input,51,FOLLOW_51_in_ruleXID4639); if (state.failed) return current;
+                    kw=(Token)match(input,49,FOLLOW_49_in_ruleXID4674); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6123,9 +6223,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 16 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2058:2: kw= 'exit'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2080:2: kw= 'exit'
                     {
-                    kw=(Token)match(input,52,FOLLOW_52_in_ruleXID4658); if (state.failed) return current;
+                    kw=(Token)match(input,50,FOLLOW_50_in_ruleXID4693); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6136,9 +6236,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 17 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2065:2: kw= 'always'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2087:2: kw= 'always'
                     {
-                    kw=(Token)match(input,53,FOLLOW_53_in_ruleXID4677); if (state.failed) return current;
+                    kw=(Token)match(input,51,FOLLOW_51_in_ruleXID4712); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6149,9 +6249,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 18 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2072:2: kw= 'oncycle'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2094:2: kw= 'oncycle'
                     {
-                    kw=(Token)match(input,54,FOLLOW_54_in_ruleXID4696); if (state.failed) return current;
+                    kw=(Token)match(input,52,FOLLOW_52_in_ruleXID4731); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6162,9 +6262,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 19 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2079:2: kw= 'raise'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2101:2: kw= 'raise'
                     {
-                    kw=(Token)match(input,55,FOLLOW_55_in_ruleXID4715); if (state.failed) return current;
+                    kw=(Token)match(input,53,FOLLOW_53_in_ruleXID4750); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6175,9 +6275,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 20 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2086:2: kw= 'valueof'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2108:2: kw= 'valueof'
                     {
-                    kw=(Token)match(input,56,FOLLOW_56_in_ruleXID4734); if (state.failed) return current;
+                    kw=(Token)match(input,54,FOLLOW_54_in_ruleXID4769); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6188,9 +6288,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 21 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2093:2: kw= 'active'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2115:2: kw= 'active'
                     {
-                    kw=(Token)match(input,57,FOLLOW_57_in_ruleXID4753); if (state.failed) return current;
+                    kw=(Token)match(input,55,FOLLOW_55_in_ruleXID4788); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -6223,7 +6323,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFQN"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2106:1: entryRuleFQN returns [String current=null] : iv_ruleFQN= ruleFQN EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2128:1: entryRuleFQN returns [String current=null] : iv_ruleFQN= ruleFQN EOF ;
     public final String entryRuleFQN() throws RecognitionException {
         String current = null;
 
@@ -6231,13 +6331,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2107:2: (iv_ruleFQN= ruleFQN EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2108:2: iv_ruleFQN= ruleFQN EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2129:2: (iv_ruleFQN= ruleFQN EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2130:2: iv_ruleFQN= ruleFQN EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFQNRule()); 
             }
-            pushFollow(FOLLOW_ruleFQN_in_entryRuleFQN4794);
+            pushFollow(FOLLOW_ruleFQN_in_entryRuleFQN4829);
             iv_ruleFQN=ruleFQN();
 
             state._fsp--;
@@ -6245,7 +6345,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleFQN.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleFQN4805); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleFQN4840); if (state.failed) return current;
 
             }
 
@@ -6263,7 +6363,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFQN"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2115:1: ruleFQN returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_XID_0= ruleXID (kw= '.' this_XID_2= ruleXID )* ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2137:1: ruleFQN returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_XID_0= ruleXID (kw= '.' this_XID_2= ruleXID )* ) ;
     public final AntlrDatatypeRuleToken ruleFQN() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -6276,18 +6376,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2118:28: ( (this_XID_0= ruleXID (kw= '.' this_XID_2= ruleXID )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2119:1: (this_XID_0= ruleXID (kw= '.' this_XID_2= ruleXID )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2140:28: ( (this_XID_0= ruleXID (kw= '.' this_XID_2= ruleXID )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2141:1: (this_XID_0= ruleXID (kw= '.' this_XID_2= ruleXID )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2119:1: (this_XID_0= ruleXID (kw= '.' this_XID_2= ruleXID )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2120:5: this_XID_0= ruleXID (kw= '.' this_XID_2= ruleXID )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2141:1: (this_XID_0= ruleXID (kw= '.' this_XID_2= ruleXID )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2142:5: this_XID_0= ruleXID (kw= '.' this_XID_2= ruleXID )*
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getFQNAccess().getXIDParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleXID_in_ruleFQN4852);
+            pushFollow(FOLLOW_ruleXID_in_ruleFQN4887);
             this_XID_0=ruleXID();
 
             state._fsp--;
@@ -6302,22 +6402,22 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2130:1: (kw= '.' this_XID_2= ruleXID )*
-            loop33:
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2152:1: (kw= '.' this_XID_2= ruleXID )*
+            loop34:
             do {
-                int alt33=2;
-                int LA33_0 = input.LA(1);
+                int alt34=2;
+                int LA34_0 = input.LA(1);
 
-                if ( (LA33_0==58) ) {
-                    alt33=1;
+                if ( (LA34_0==56) ) {
+                    alt34=1;
                 }
 
 
-                switch (alt33) {
+                switch (alt34) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2131:2: kw= '.' this_XID_2= ruleXID
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2153:2: kw= '.' this_XID_2= ruleXID
             	    {
-            	    kw=(Token)match(input,58,FOLLOW_58_in_ruleFQN4871); if (state.failed) return current;
+            	    kw=(Token)match(input,56,FOLLOW_56_in_ruleFQN4906); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	              current.merge(kw);
@@ -6329,7 +6429,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	              newCompositeNode(grammarAccess.getFQNAccess().getXIDParserRuleCall_1_1()); 
             	          
             	    }
-            	    pushFollow(FOLLOW_ruleXID_in_ruleFQN4893);
+            	    pushFollow(FOLLOW_ruleXID_in_ruleFQN4928);
             	    this_XID_2=ruleXID();
 
             	    state._fsp--;
@@ -6349,7 +6449,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop33;
+            	    break loop34;
                 }
             } while (true);
 
@@ -6376,7 +6476,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTransitionReaction"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2157:1: entryRuleTransitionReaction returns [EObject current=null] : iv_ruleTransitionReaction= ruleTransitionReaction EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2179:1: entryRuleTransitionReaction returns [EObject current=null] : iv_ruleTransitionReaction= ruleTransitionReaction EOF ;
     public final EObject entryRuleTransitionReaction() throws RecognitionException {
         EObject current = null;
 
@@ -6384,13 +6484,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2158:2: (iv_ruleTransitionReaction= ruleTransitionReaction EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2159:2: iv_ruleTransitionReaction= ruleTransitionReaction EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2180:2: (iv_ruleTransitionReaction= ruleTransitionReaction EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2181:2: iv_ruleTransitionReaction= ruleTransitionReaction EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTransitionReactionRule()); 
             }
-            pushFollow(FOLLOW_ruleTransitionReaction_in_entryRuleTransitionReaction4942);
+            pushFollow(FOLLOW_ruleTransitionReaction_in_entryRuleTransitionReaction4977);
             iv_ruleTransitionReaction=ruleTransitionReaction();
 
             state._fsp--;
@@ -6398,7 +6498,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleTransitionReaction; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTransitionReaction4952); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTransitionReaction4987); if (state.failed) return current;
 
             }
 
@@ -6416,7 +6516,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTransitionReaction"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2166:1: ruleTransitionReaction returns [EObject current=null] : ( () ( (lv_trigger_1_0= ruleStextTrigger ) )? (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )? (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )? ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2188:1: ruleTransitionReaction returns [EObject current=null] : ( () ( (lv_trigger_1_0= ruleStextTrigger ) )? (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )? (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )? ) ;
     public final EObject ruleTransitionReaction() throws RecognitionException {
         EObject current = null;
 
@@ -6432,14 +6532,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2169:28: ( ( () ( (lv_trigger_1_0= ruleStextTrigger ) )? (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )? (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )? ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2170:1: ( () ( (lv_trigger_1_0= ruleStextTrigger ) )? (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )? (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )? )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2191:28: ( ( () ( (lv_trigger_1_0= ruleStextTrigger ) )? (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )? (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )? ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2192:1: ( () ( (lv_trigger_1_0= ruleStextTrigger ) )? (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )? (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )? )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2170:1: ( () ( (lv_trigger_1_0= ruleStextTrigger ) )? (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )? (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )? )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2170:2: () ( (lv_trigger_1_0= ruleStextTrigger ) )? (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )? (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )?
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2192:1: ( () ( (lv_trigger_1_0= ruleStextTrigger ) )? (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )? (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )? )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2192:2: () ( (lv_trigger_1_0= ruleStextTrigger ) )? (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )? (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )?
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2170:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2171:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2192:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2193:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -6451,40 +6551,26 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2176:2: ( (lv_trigger_1_0= ruleStextTrigger ) )?
-            int alt34=2;
-            int LA34_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2198:2: ( (lv_trigger_1_0= ruleStextTrigger ) )?
+            int alt35=2;
+            int LA35_0 = input.LA(1);
 
-            if ( (LA34_0==30) ) {
-                int LA34_1 = input.LA(2);
-
-                if ( (LA34_1==RULE_INT||LA34_1==31) ) {
-                    alt34=1;
-                }
-                else if ( (LA34_1==RULE_ID) ) {
-                    int LA34_4 = input.LA(3);
-
-                    if ( (LA34_4==EOF||LA34_4==23||LA34_4==25||LA34_4==30||LA34_4==58) ) {
-                        alt34=1;
-                    }
-                }
+            if ( (LA35_0==RULE_INT||(LA35_0>=47 && LA35_0<=48)) ) {
+                alt35=1;
             }
-            else if ( ((LA34_0>=RULE_ID && LA34_0<=RULE_INT)||LA34_0==31||(LA34_0>=49 && LA34_0<=50)) ) {
-                alt34=1;
-            }
-            switch (alt34) {
+            switch (alt35) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2177:1: (lv_trigger_1_0= ruleStextTrigger )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2199:1: (lv_trigger_1_0= ruleStextTrigger )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2177:1: (lv_trigger_1_0= ruleStextTrigger )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2178:3: lv_trigger_1_0= ruleStextTrigger
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2199:1: (lv_trigger_1_0= ruleStextTrigger )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2200:3: lv_trigger_1_0= ruleStextTrigger
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getTransitionReactionAccess().getTriggerStextTriggerParserRuleCall_1_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleStextTrigger_in_ruleTransitionReaction5007);
+                    pushFollow(FOLLOW_ruleStextTrigger_in_ruleTransitionReaction5042);
                     lv_trigger_1_0=ruleStextTrigger();
 
                     state._fsp--;
@@ -6511,35 +6597,35 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2194:3: (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )?
-            int alt35=2;
-            int LA35_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2216:3: (otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) ) )?
+            int alt36=2;
+            int LA36_0 = input.LA(1);
 
-            if ( (LA35_0==25) ) {
-                alt35=1;
+            if ( (LA36_0==25) ) {
+                alt36=1;
             }
-            switch (alt35) {
+            switch (alt36) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2194:5: otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2216:5: otherlv_2= '/' ( (lv_effect_3_0= ruleReactionEffect ) )
                     {
-                    otherlv_2=(Token)match(input,25,FOLLOW_25_in_ruleTransitionReaction5021); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,25,FOLLOW_25_in_ruleTransitionReaction5056); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getTransitionReactionAccess().getSolidusKeyword_2_0());
                           
                     }
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2198:1: ( (lv_effect_3_0= ruleReactionEffect ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2199:1: (lv_effect_3_0= ruleReactionEffect )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2220:1: ( (lv_effect_3_0= ruleReactionEffect ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2221:1: (lv_effect_3_0= ruleReactionEffect )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2199:1: (lv_effect_3_0= ruleReactionEffect )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2200:3: lv_effect_3_0= ruleReactionEffect
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2221:1: (lv_effect_3_0= ruleReactionEffect )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2222:3: lv_effect_3_0= ruleReactionEffect
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getTransitionReactionAccess().getEffectReactionEffectParserRuleCall_2_1_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleReactionEffect_in_ruleTransitionReaction5042);
+                    pushFollow(FOLLOW_ruleReactionEffect_in_ruleTransitionReaction5077);
                     lv_effect_3_0=ruleReactionEffect();
 
                     state._fsp--;
@@ -6569,47 +6655,47 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2216:4: (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )?
-            int alt37=2;
-            int LA37_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2238:4: (otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )* )?
+            int alt38=2;
+            int LA38_0 = input.LA(1);
 
-            if ( (LA37_0==30) ) {
-                alt37=1;
+            if ( (LA38_0==30) ) {
+                alt38=1;
             }
-            switch (alt37) {
+            switch (alt38) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2216:6: otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )*
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2238:6: otherlv_4= '#' ( (lv_properties_5_0= ruleTransitionProperty ) )*
                     {
-                    otherlv_4=(Token)match(input,30,FOLLOW_30_in_ruleTransitionReaction5057); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,30,FOLLOW_30_in_ruleTransitionReaction5092); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getTransitionReactionAccess().getNumberSignKeyword_3_0());
                           
                     }
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2220:1: ( (lv_properties_5_0= ruleTransitionProperty ) )*
-                    loop36:
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2242:1: ( (lv_properties_5_0= ruleTransitionProperty ) )*
+                    loop37:
                     do {
-                        int alt36=2;
-                        int LA36_0 = input.LA(1);
+                        int alt37=2;
+                        int LA37_0 = input.LA(1);
 
-                        if ( (LA36_0==RULE_ID||LA36_0==59) ) {
-                            alt36=1;
+                        if ( (LA37_0==RULE_ID||LA37_0==57) ) {
+                            alt37=1;
                         }
 
 
-                        switch (alt36) {
+                        switch (alt37) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2221:1: (lv_properties_5_0= ruleTransitionProperty )
+                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2243:1: (lv_properties_5_0= ruleTransitionProperty )
                     	    {
-                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2221:1: (lv_properties_5_0= ruleTransitionProperty )
-                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2222:3: lv_properties_5_0= ruleTransitionProperty
+                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2243:1: (lv_properties_5_0= ruleTransitionProperty )
+                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2244:3: lv_properties_5_0= ruleTransitionProperty
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
                     	      	        newCompositeNode(grammarAccess.getTransitionReactionAccess().getPropertiesTransitionPropertyParserRuleCall_3_1_0()); 
                     	      	    
                     	    }
-                    	    pushFollow(FOLLOW_ruleTransitionProperty_in_ruleTransitionReaction5078);
+                    	    pushFollow(FOLLOW_ruleTransitionProperty_in_ruleTransitionReaction5113);
                     	    lv_properties_5_0=ruleTransitionProperty();
 
                     	    state._fsp--;
@@ -6635,7 +6721,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop36;
+                    	    break loop37;
                         }
                     } while (true);
 
@@ -6668,7 +6754,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStextTrigger"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2246:1: entryRuleStextTrigger returns [EObject current=null] : iv_ruleStextTrigger= ruleStextTrigger EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2268:1: entryRuleStextTrigger returns [EObject current=null] : iv_ruleStextTrigger= ruleStextTrigger EOF ;
     public final EObject entryRuleStextTrigger() throws RecognitionException {
         EObject current = null;
 
@@ -6676,13 +6762,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2247:2: (iv_ruleStextTrigger= ruleStextTrigger EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2248:2: iv_ruleStextTrigger= ruleStextTrigger EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2269:2: (iv_ruleStextTrigger= ruleStextTrigger EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2270:2: iv_ruleStextTrigger= ruleStextTrigger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStextTriggerRule()); 
             }
-            pushFollow(FOLLOW_ruleStextTrigger_in_entryRuleStextTrigger5117);
+            pushFollow(FOLLOW_ruleStextTrigger_in_entryRuleStextTrigger5152);
             iv_ruleStextTrigger=ruleStextTrigger();
 
             state._fsp--;
@@ -6690,7 +6776,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleStextTrigger; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleStextTrigger5127); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleStextTrigger5162); if (state.failed) return current;
 
             }
 
@@ -6708,7 +6794,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStextTrigger"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2255:1: ruleStextTrigger returns [EObject current=null] : (this_ReactionTrigger_0= ruleReactionTrigger | this_DefaultTrigger_1= ruleDefaultTrigger ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2277:1: ruleStextTrigger returns [EObject current=null] : (this_ReactionTrigger_0= ruleReactionTrigger | this_DefaultTrigger_1= ruleDefaultTrigger ) ;
     public final EObject ruleStextTrigger() throws RecognitionException {
         EObject current = null;
 
@@ -6720,36 +6806,36 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2258:28: ( (this_ReactionTrigger_0= ruleReactionTrigger | this_DefaultTrigger_1= ruleDefaultTrigger ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2259:1: (this_ReactionTrigger_0= ruleReactionTrigger | this_DefaultTrigger_1= ruleDefaultTrigger )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2280:28: ( (this_ReactionTrigger_0= ruleReactionTrigger | this_DefaultTrigger_1= ruleDefaultTrigger ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2281:1: (this_ReactionTrigger_0= ruleReactionTrigger | this_DefaultTrigger_1= ruleDefaultTrigger )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2259:1: (this_ReactionTrigger_0= ruleReactionTrigger | this_DefaultTrigger_1= ruleDefaultTrigger )
-            int alt38=2;
-            int LA38_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2281:1: (this_ReactionTrigger_0= ruleReactionTrigger | this_DefaultTrigger_1= ruleDefaultTrigger )
+            int alt39=2;
+            int LA39_0 = input.LA(1);
 
-            if ( ((LA38_0>=RULE_ID && LA38_0<=RULE_INT)||(LA38_0>=30 && LA38_0<=31)) ) {
-                alt38=1;
+            if ( (LA39_0==RULE_INT) ) {
+                alt39=1;
             }
-            else if ( ((LA38_0>=49 && LA38_0<=50)) ) {
-                alt38=2;
+            else if ( ((LA39_0>=47 && LA39_0<=48)) ) {
+                alt39=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 38, 0, input);
+                    new NoViableAltException("", 39, 0, input);
 
                 throw nvae;
             }
-            switch (alt38) {
+            switch (alt39) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2260:5: this_ReactionTrigger_0= ruleReactionTrigger
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2282:5: this_ReactionTrigger_0= ruleReactionTrigger
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getStextTriggerAccess().getReactionTriggerParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleReactionTrigger_in_ruleStextTrigger5174);
+                    pushFollow(FOLLOW_ruleReactionTrigger_in_ruleStextTrigger5209);
                     this_ReactionTrigger_0=ruleReactionTrigger();
 
                     state._fsp--;
@@ -6764,14 +6850,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2270:5: this_DefaultTrigger_1= ruleDefaultTrigger
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2292:5: this_DefaultTrigger_1= ruleDefaultTrigger
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getStextTriggerAccess().getDefaultTriggerParserRuleCall_1()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleDefaultTrigger_in_ruleStextTrigger5201);
+                    pushFollow(FOLLOW_ruleDefaultTrigger_in_ruleStextTrigger5236);
                     this_DefaultTrigger_1=ruleDefaultTrigger();
 
                     state._fsp--;
@@ -6808,7 +6894,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDefaultTrigger"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2286:1: entryRuleDefaultTrigger returns [EObject current=null] : iv_ruleDefaultTrigger= ruleDefaultTrigger EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2308:1: entryRuleDefaultTrigger returns [EObject current=null] : iv_ruleDefaultTrigger= ruleDefaultTrigger EOF ;
     public final EObject entryRuleDefaultTrigger() throws RecognitionException {
         EObject current = null;
 
@@ -6816,13 +6902,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2287:2: (iv_ruleDefaultTrigger= ruleDefaultTrigger EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2288:2: iv_ruleDefaultTrigger= ruleDefaultTrigger EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2309:2: (iv_ruleDefaultTrigger= ruleDefaultTrigger EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2310:2: iv_ruleDefaultTrigger= ruleDefaultTrigger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getDefaultTriggerRule()); 
             }
-            pushFollow(FOLLOW_ruleDefaultTrigger_in_entryRuleDefaultTrigger5236);
+            pushFollow(FOLLOW_ruleDefaultTrigger_in_entryRuleDefaultTrigger5271);
             iv_ruleDefaultTrigger=ruleDefaultTrigger();
 
             state._fsp--;
@@ -6830,7 +6916,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleDefaultTrigger; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDefaultTrigger5246); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDefaultTrigger5281); if (state.failed) return current;
 
             }
 
@@ -6848,7 +6934,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDefaultTrigger"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2295:1: ruleDefaultTrigger returns [EObject current=null] : ( () (otherlv_1= 'default' | otherlv_2= 'else' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2317:1: ruleDefaultTrigger returns [EObject current=null] : ( () (otherlv_1= 'default' | otherlv_2= 'else' ) ) ;
     public final EObject ruleDefaultTrigger() throws RecognitionException {
         EObject current = null;
 
@@ -6858,14 +6944,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2298:28: ( ( () (otherlv_1= 'default' | otherlv_2= 'else' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2299:1: ( () (otherlv_1= 'default' | otherlv_2= 'else' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2320:28: ( ( () (otherlv_1= 'default' | otherlv_2= 'else' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2321:1: ( () (otherlv_1= 'default' | otherlv_2= 'else' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2299:1: ( () (otherlv_1= 'default' | otherlv_2= 'else' ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2299:2: () (otherlv_1= 'default' | otherlv_2= 'else' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2321:1: ( () (otherlv_1= 'default' | otherlv_2= 'else' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2321:2: () (otherlv_1= 'default' | otherlv_2= 'else' )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2299:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2300:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2321:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2322:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -6877,28 +6963,28 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2305:2: (otherlv_1= 'default' | otherlv_2= 'else' )
-            int alt39=2;
-            int LA39_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2327:2: (otherlv_1= 'default' | otherlv_2= 'else' )
+            int alt40=2;
+            int LA40_0 = input.LA(1);
 
-            if ( (LA39_0==49) ) {
-                alt39=1;
+            if ( (LA40_0==47) ) {
+                alt40=1;
             }
-            else if ( (LA39_0==50) ) {
-                alt39=2;
+            else if ( (LA40_0==48) ) {
+                alt40=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 39, 0, input);
+                    new NoViableAltException("", 40, 0, input);
 
                 throw nvae;
             }
-            switch (alt39) {
+            switch (alt40) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2305:4: otherlv_1= 'default'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2327:4: otherlv_1= 'default'
                     {
-                    otherlv_1=(Token)match(input,49,FOLLOW_49_in_ruleDefaultTrigger5293); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,47,FOLLOW_47_in_ruleDefaultTrigger5328); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getDefaultTriggerAccess().getDefaultKeyword_1_0());
@@ -6908,9 +6994,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2310:7: otherlv_2= 'else'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2332:7: otherlv_2= 'else'
                     {
-                    otherlv_2=(Token)match(input,50,FOLLOW_50_in_ruleDefaultTrigger5311); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,48,FOLLOW_48_in_ruleDefaultTrigger5346); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getDefaultTriggerAccess().getElseKeyword_1_1());
@@ -6945,7 +7031,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTransitionProperty"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2322:1: entryRuleTransitionProperty returns [EObject current=null] : iv_ruleTransitionProperty= ruleTransitionProperty EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2344:1: entryRuleTransitionProperty returns [EObject current=null] : iv_ruleTransitionProperty= ruleTransitionProperty EOF ;
     public final EObject entryRuleTransitionProperty() throws RecognitionException {
         EObject current = null;
 
@@ -6953,13 +7039,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2323:2: (iv_ruleTransitionProperty= ruleTransitionProperty EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2324:2: iv_ruleTransitionProperty= ruleTransitionProperty EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2345:2: (iv_ruleTransitionProperty= ruleTransitionProperty EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2346:2: iv_ruleTransitionProperty= ruleTransitionProperty EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTransitionPropertyRule()); 
             }
-            pushFollow(FOLLOW_ruleTransitionProperty_in_entryRuleTransitionProperty5348);
+            pushFollow(FOLLOW_ruleTransitionProperty_in_entryRuleTransitionProperty5383);
             iv_ruleTransitionProperty=ruleTransitionProperty();
 
             state._fsp--;
@@ -6967,7 +7053,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleTransitionProperty; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTransitionProperty5358); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTransitionProperty5393); if (state.failed) return current;
 
             }
 
@@ -6985,7 +7071,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTransitionProperty"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2331:1: ruleTransitionProperty returns [EObject current=null] : (this_EntryPointSpec_0= ruleEntryPointSpec | this_ExitPointSpec_1= ruleExitPointSpec ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2353:1: ruleTransitionProperty returns [EObject current=null] : (this_EntryPointSpec_0= ruleEntryPointSpec | this_ExitPointSpec_1= ruleExitPointSpec ) ;
     public final EObject ruleTransitionProperty() throws RecognitionException {
         EObject current = null;
 
@@ -6997,36 +7083,36 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2334:28: ( (this_EntryPointSpec_0= ruleEntryPointSpec | this_ExitPointSpec_1= ruleExitPointSpec ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2335:1: (this_EntryPointSpec_0= ruleEntryPointSpec | this_ExitPointSpec_1= ruleExitPointSpec )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2356:28: ( (this_EntryPointSpec_0= ruleEntryPointSpec | this_ExitPointSpec_1= ruleExitPointSpec ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2357:1: (this_EntryPointSpec_0= ruleEntryPointSpec | this_ExitPointSpec_1= ruleExitPointSpec )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2335:1: (this_EntryPointSpec_0= ruleEntryPointSpec | this_ExitPointSpec_1= ruleExitPointSpec )
-            int alt40=2;
-            int LA40_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2357:1: (this_EntryPointSpec_0= ruleEntryPointSpec | this_ExitPointSpec_1= ruleExitPointSpec )
+            int alt41=2;
+            int LA41_0 = input.LA(1);
 
-            if ( (LA40_0==59) ) {
-                alt40=1;
+            if ( (LA41_0==57) ) {
+                alt41=1;
             }
-            else if ( (LA40_0==RULE_ID) ) {
-                alt40=2;
+            else if ( (LA41_0==RULE_ID) ) {
+                alt41=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 40, 0, input);
+                    new NoViableAltException("", 41, 0, input);
 
                 throw nvae;
             }
-            switch (alt40) {
+            switch (alt41) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2336:5: this_EntryPointSpec_0= ruleEntryPointSpec
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2358:5: this_EntryPointSpec_0= ruleEntryPointSpec
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getTransitionPropertyAccess().getEntryPointSpecParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleEntryPointSpec_in_ruleTransitionProperty5405);
+                    pushFollow(FOLLOW_ruleEntryPointSpec_in_ruleTransitionProperty5440);
                     this_EntryPointSpec_0=ruleEntryPointSpec();
 
                     state._fsp--;
@@ -7041,14 +7127,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2346:5: this_ExitPointSpec_1= ruleExitPointSpec
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2368:5: this_ExitPointSpec_1= ruleExitPointSpec
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getTransitionPropertyAccess().getExitPointSpecParserRuleCall_1()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleExitPointSpec_in_ruleTransitionProperty5432);
+                    pushFollow(FOLLOW_ruleExitPointSpec_in_ruleTransitionProperty5467);
                     this_ExitPointSpec_1=ruleExitPointSpec();
 
                     state._fsp--;
@@ -7085,7 +7171,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEntryPointSpec"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2362:1: entryRuleEntryPointSpec returns [EObject current=null] : iv_ruleEntryPointSpec= ruleEntryPointSpec EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2384:1: entryRuleEntryPointSpec returns [EObject current=null] : iv_ruleEntryPointSpec= ruleEntryPointSpec EOF ;
     public final EObject entryRuleEntryPointSpec() throws RecognitionException {
         EObject current = null;
 
@@ -7093,13 +7179,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2363:2: (iv_ruleEntryPointSpec= ruleEntryPointSpec EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2364:2: iv_ruleEntryPointSpec= ruleEntryPointSpec EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2385:2: (iv_ruleEntryPointSpec= ruleEntryPointSpec EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2386:2: iv_ruleEntryPointSpec= ruleEntryPointSpec EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEntryPointSpecRule()); 
             }
-            pushFollow(FOLLOW_ruleEntryPointSpec_in_entryRuleEntryPointSpec5467);
+            pushFollow(FOLLOW_ruleEntryPointSpec_in_entryRuleEntryPointSpec5502);
             iv_ruleEntryPointSpec=ruleEntryPointSpec();
 
             state._fsp--;
@@ -7107,7 +7193,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleEntryPointSpec; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleEntryPointSpec5477); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEntryPointSpec5512); if (state.failed) return current;
 
             }
 
@@ -7125,7 +7211,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEntryPointSpec"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2371:1: ruleEntryPointSpec returns [EObject current=null] : (otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2393:1: ruleEntryPointSpec returns [EObject current=null] : (otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) ) ) ;
     public final EObject ruleEntryPointSpec() throws RecognitionException {
         EObject current = null;
 
@@ -7135,25 +7221,25 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2374:28: ( (otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2375:1: (otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2396:28: ( (otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2397:1: (otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2375:1: (otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2375:3: otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2397:1: (otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2397:3: otherlv_0= '>' ( (lv_entrypoint_1_0= RULE_ID ) )
             {
-            otherlv_0=(Token)match(input,59,FOLLOW_59_in_ruleEntryPointSpec5514); if (state.failed) return current;
+            otherlv_0=(Token)match(input,57,FOLLOW_57_in_ruleEntryPointSpec5549); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getEntryPointSpecAccess().getGreaterThanSignKeyword_0());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2379:1: ( (lv_entrypoint_1_0= RULE_ID ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2380:1: (lv_entrypoint_1_0= RULE_ID )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2401:1: ( (lv_entrypoint_1_0= RULE_ID ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2402:1: (lv_entrypoint_1_0= RULE_ID )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2380:1: (lv_entrypoint_1_0= RULE_ID )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2381:3: lv_entrypoint_1_0= RULE_ID
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2402:1: (lv_entrypoint_1_0= RULE_ID )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2403:3: lv_entrypoint_1_0= RULE_ID
             {
-            lv_entrypoint_1_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleEntryPointSpec5531); if (state.failed) return current;
+            lv_entrypoint_1_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleEntryPointSpec5566); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(lv_entrypoint_1_0, grammarAccess.getEntryPointSpecAccess().getEntrypointIDTerminalRuleCall_1_0()); 
@@ -7200,7 +7286,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExitPointSpec"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2405:1: entryRuleExitPointSpec returns [EObject current=null] : iv_ruleExitPointSpec= ruleExitPointSpec EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2427:1: entryRuleExitPointSpec returns [EObject current=null] : iv_ruleExitPointSpec= ruleExitPointSpec EOF ;
     public final EObject entryRuleExitPointSpec() throws RecognitionException {
         EObject current = null;
 
@@ -7208,13 +7294,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2406:2: (iv_ruleExitPointSpec= ruleExitPointSpec EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2407:2: iv_ruleExitPointSpec= ruleExitPointSpec EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2428:2: (iv_ruleExitPointSpec= ruleExitPointSpec EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2429:2: iv_ruleExitPointSpec= ruleExitPointSpec EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExitPointSpecRule()); 
             }
-            pushFollow(FOLLOW_ruleExitPointSpec_in_entryRuleExitPointSpec5572);
+            pushFollow(FOLLOW_ruleExitPointSpec_in_entryRuleExitPointSpec5607);
             iv_ruleExitPointSpec=ruleExitPointSpec();
 
             state._fsp--;
@@ -7222,7 +7308,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleExitPointSpec; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleExitPointSpec5582); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleExitPointSpec5617); if (state.failed) return current;
 
             }
 
@@ -7240,7 +7326,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExitPointSpec"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2414:1: ruleExitPointSpec returns [EObject current=null] : ( ( (lv_exitpoint_0_0= RULE_ID ) ) otherlv_1= '>' ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2436:1: ruleExitPointSpec returns [EObject current=null] : ( ( (lv_exitpoint_0_0= RULE_ID ) ) otherlv_1= '>' ) ;
     public final EObject ruleExitPointSpec() throws RecognitionException {
         EObject current = null;
 
@@ -7250,19 +7336,19 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2417:28: ( ( ( (lv_exitpoint_0_0= RULE_ID ) ) otherlv_1= '>' ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2418:1: ( ( (lv_exitpoint_0_0= RULE_ID ) ) otherlv_1= '>' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2439:28: ( ( ( (lv_exitpoint_0_0= RULE_ID ) ) otherlv_1= '>' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2440:1: ( ( (lv_exitpoint_0_0= RULE_ID ) ) otherlv_1= '>' )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2418:1: ( ( (lv_exitpoint_0_0= RULE_ID ) ) otherlv_1= '>' )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2418:2: ( (lv_exitpoint_0_0= RULE_ID ) ) otherlv_1= '>'
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2440:1: ( ( (lv_exitpoint_0_0= RULE_ID ) ) otherlv_1= '>' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2440:2: ( (lv_exitpoint_0_0= RULE_ID ) ) otherlv_1= '>'
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2418:2: ( (lv_exitpoint_0_0= RULE_ID ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2419:1: (lv_exitpoint_0_0= RULE_ID )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2440:2: ( (lv_exitpoint_0_0= RULE_ID ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2441:1: (lv_exitpoint_0_0= RULE_ID )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2419:1: (lv_exitpoint_0_0= RULE_ID )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2420:3: lv_exitpoint_0_0= RULE_ID
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2441:1: (lv_exitpoint_0_0= RULE_ID )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2442:3: lv_exitpoint_0_0= RULE_ID
             {
-            lv_exitpoint_0_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleExitPointSpec5624); if (state.failed) return current;
+            lv_exitpoint_0_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleExitPointSpec5659); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(lv_exitpoint_0_0, grammarAccess.getExitPointSpecAccess().getExitpointIDTerminalRuleCall_0_0()); 
@@ -7286,7 +7372,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,59,FOLLOW_59_in_ruleExitPointSpec5641); if (state.failed) return current;
+            otherlv_1=(Token)match(input,57,FOLLOW_57_in_ruleExitPointSpec5676); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getExitPointSpecAccess().getGreaterThanSignKeyword_1());
@@ -7315,7 +7401,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRegularEventSpec"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2450:1: entryRuleRegularEventSpec returns [EObject current=null] : iv_ruleRegularEventSpec= ruleRegularEventSpec EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2472:1: entryRuleRegularEventSpec returns [EObject current=null] : iv_ruleRegularEventSpec= ruleRegularEventSpec EOF ;
     public final EObject entryRuleRegularEventSpec() throws RecognitionException {
         EObject current = null;
 
@@ -7323,13 +7409,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2451:2: (iv_ruleRegularEventSpec= ruleRegularEventSpec EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2452:2: iv_ruleRegularEventSpec= ruleRegularEventSpec EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2473:2: (iv_ruleRegularEventSpec= ruleRegularEventSpec EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2474:2: iv_ruleRegularEventSpec= ruleRegularEventSpec EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getRegularEventSpecRule()); 
             }
-            pushFollow(FOLLOW_ruleRegularEventSpec_in_entryRuleRegularEventSpec5679);
+            pushFollow(FOLLOW_ruleRegularEventSpec_in_entryRuleRegularEventSpec5714);
             iv_ruleRegularEventSpec=ruleRegularEventSpec();
 
             state._fsp--;
@@ -7337,7 +7423,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleRegularEventSpec; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleRegularEventSpec5689); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleRegularEventSpec5724); if (state.failed) return current;
 
             }
 
@@ -7355,7 +7441,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRegularEventSpec"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2459:1: ruleRegularEventSpec returns [EObject current=null] : ( (lv_event_0_0= ruleFeatureCall ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2481:1: ruleRegularEventSpec returns [EObject current=null] : ( (lv_event_0_0= ruleFeatureCall ) ) ;
     public final EObject ruleRegularEventSpec() throws RecognitionException {
         EObject current = null;
 
@@ -7365,21 +7451,21 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2462:28: ( ( (lv_event_0_0= ruleFeatureCall ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2463:1: ( (lv_event_0_0= ruleFeatureCall ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2484:28: ( ( (lv_event_0_0= ruleFeatureCall ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2485:1: ( (lv_event_0_0= ruleFeatureCall ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2463:1: ( (lv_event_0_0= ruleFeatureCall ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2464:1: (lv_event_0_0= ruleFeatureCall )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2485:1: ( (lv_event_0_0= ruleFeatureCall ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2486:1: (lv_event_0_0= ruleFeatureCall )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2464:1: (lv_event_0_0= ruleFeatureCall )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2465:3: lv_event_0_0= ruleFeatureCall
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2486:1: (lv_event_0_0= ruleFeatureCall )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2487:3: lv_event_0_0= ruleFeatureCall
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getRegularEventSpecAccess().getEventFeatureCallParserRuleCall_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleFeatureCall_in_ruleRegularEventSpec5734);
+            pushFollow(FOLLOW_ruleFeatureCall_in_ruleRegularEventSpec5769);
             lv_event_0_0=ruleFeatureCall();
 
             state._fsp--;
@@ -7423,7 +7509,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTimeEventSpec"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2489:1: entryRuleTimeEventSpec returns [EObject current=null] : iv_ruleTimeEventSpec= ruleTimeEventSpec EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2511:1: entryRuleTimeEventSpec returns [EObject current=null] : iv_ruleTimeEventSpec= ruleTimeEventSpec EOF ;
     public final EObject entryRuleTimeEventSpec() throws RecognitionException {
         EObject current = null;
 
@@ -7431,13 +7517,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2490:2: (iv_ruleTimeEventSpec= ruleTimeEventSpec EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2491:2: iv_ruleTimeEventSpec= ruleTimeEventSpec EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2512:2: (iv_ruleTimeEventSpec= ruleTimeEventSpec EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2513:2: iv_ruleTimeEventSpec= ruleTimeEventSpec EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTimeEventSpecRule()); 
             }
-            pushFollow(FOLLOW_ruleTimeEventSpec_in_entryRuleTimeEventSpec5769);
+            pushFollow(FOLLOW_ruleTimeEventSpec_in_entryRuleTimeEventSpec5804);
             iv_ruleTimeEventSpec=ruleTimeEventSpec();
 
             state._fsp--;
@@ -7445,7 +7531,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleTimeEventSpec; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTimeEventSpec5779); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTimeEventSpec5814); if (state.failed) return current;
 
             }
 
@@ -7463,7 +7549,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTimeEventSpec"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2498:1: ruleTimeEventSpec returns [EObject current=null] : ( ( (lv_type_0_0= ruleTimeEventType ) ) ( (lv_value_1_0= ruleConditionalExpression ) ) ( (lv_unit_2_0= ruleTimeUnit ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2520:1: ruleTimeEventSpec returns [EObject current=null] : ( ( (lv_type_0_0= ruleTimeEventType ) ) ( (lv_value_1_0= ruleConditionalExpression ) ) ( (lv_unit_2_0= ruleTimeUnit ) ) ) ;
     public final EObject ruleTimeEventSpec() throws RecognitionException {
         EObject current = null;
 
@@ -7477,24 +7563,24 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2501:28: ( ( ( (lv_type_0_0= ruleTimeEventType ) ) ( (lv_value_1_0= ruleConditionalExpression ) ) ( (lv_unit_2_0= ruleTimeUnit ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2502:1: ( ( (lv_type_0_0= ruleTimeEventType ) ) ( (lv_value_1_0= ruleConditionalExpression ) ) ( (lv_unit_2_0= ruleTimeUnit ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2523:28: ( ( ( (lv_type_0_0= ruleTimeEventType ) ) ( (lv_value_1_0= ruleConditionalExpression ) ) ( (lv_unit_2_0= ruleTimeUnit ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2524:1: ( ( (lv_type_0_0= ruleTimeEventType ) ) ( (lv_value_1_0= ruleConditionalExpression ) ) ( (lv_unit_2_0= ruleTimeUnit ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2502:1: ( ( (lv_type_0_0= ruleTimeEventType ) ) ( (lv_value_1_0= ruleConditionalExpression ) ) ( (lv_unit_2_0= ruleTimeUnit ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2502:2: ( (lv_type_0_0= ruleTimeEventType ) ) ( (lv_value_1_0= ruleConditionalExpression ) ) ( (lv_unit_2_0= ruleTimeUnit ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2524:1: ( ( (lv_type_0_0= ruleTimeEventType ) ) ( (lv_value_1_0= ruleConditionalExpression ) ) ( (lv_unit_2_0= ruleTimeUnit ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2524:2: ( (lv_type_0_0= ruleTimeEventType ) ) ( (lv_value_1_0= ruleConditionalExpression ) ) ( (lv_unit_2_0= ruleTimeUnit ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2502:2: ( (lv_type_0_0= ruleTimeEventType ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2503:1: (lv_type_0_0= ruleTimeEventType )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2524:2: ( (lv_type_0_0= ruleTimeEventType ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2525:1: (lv_type_0_0= ruleTimeEventType )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2503:1: (lv_type_0_0= ruleTimeEventType )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2504:3: lv_type_0_0= ruleTimeEventType
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2525:1: (lv_type_0_0= ruleTimeEventType )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2526:3: lv_type_0_0= ruleTimeEventType
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getTimeEventSpecAccess().getTypeTimeEventTypeEnumRuleCall_0_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleTimeEventType_in_ruleTimeEventSpec5825);
+            pushFollow(FOLLOW_ruleTimeEventType_in_ruleTimeEventSpec5860);
             lv_type_0_0=ruleTimeEventType();
 
             state._fsp--;
@@ -7518,18 +7604,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2520:2: ( (lv_value_1_0= ruleConditionalExpression ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2521:1: (lv_value_1_0= ruleConditionalExpression )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2542:2: ( (lv_value_1_0= ruleConditionalExpression ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2543:1: (lv_value_1_0= ruleConditionalExpression )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2521:1: (lv_value_1_0= ruleConditionalExpression )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2522:3: lv_value_1_0= ruleConditionalExpression
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2543:1: (lv_value_1_0= ruleConditionalExpression )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2544:3: lv_value_1_0= ruleConditionalExpression
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getTimeEventSpecAccess().getValueConditionalExpressionParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleConditionalExpression_in_ruleTimeEventSpec5846);
+            pushFollow(FOLLOW_ruleConditionalExpression_in_ruleTimeEventSpec5881);
             lv_value_1_0=ruleConditionalExpression();
 
             state._fsp--;
@@ -7553,18 +7639,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2538:2: ( (lv_unit_2_0= ruleTimeUnit ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2539:1: (lv_unit_2_0= ruleTimeUnit )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2560:2: ( (lv_unit_2_0= ruleTimeUnit ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2561:1: (lv_unit_2_0= ruleTimeUnit )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2539:1: (lv_unit_2_0= ruleTimeUnit )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2540:3: lv_unit_2_0= ruleTimeUnit
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2561:1: (lv_unit_2_0= ruleTimeUnit )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2562:3: lv_unit_2_0= ruleTimeUnit
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getTimeEventSpecAccess().getUnitTimeUnitEnumRuleCall_2_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleTimeUnit_in_ruleTimeEventSpec5867);
+            pushFollow(FOLLOW_ruleTimeUnit_in_ruleTimeEventSpec5902);
             lv_unit_2_0=ruleTimeUnit();
 
             state._fsp--;
@@ -7611,7 +7697,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBuiltinEventSpec"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2564:1: entryRuleBuiltinEventSpec returns [EObject current=null] : iv_ruleBuiltinEventSpec= ruleBuiltinEventSpec EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2586:1: entryRuleBuiltinEventSpec returns [EObject current=null] : iv_ruleBuiltinEventSpec= ruleBuiltinEventSpec EOF ;
     public final EObject entryRuleBuiltinEventSpec() throws RecognitionException {
         EObject current = null;
 
@@ -7619,13 +7705,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2565:2: (iv_ruleBuiltinEventSpec= ruleBuiltinEventSpec EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2566:2: iv_ruleBuiltinEventSpec= ruleBuiltinEventSpec EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2587:2: (iv_ruleBuiltinEventSpec= ruleBuiltinEventSpec EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2588:2: iv_ruleBuiltinEventSpec= ruleBuiltinEventSpec EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBuiltinEventSpecRule()); 
             }
-            pushFollow(FOLLOW_ruleBuiltinEventSpec_in_entryRuleBuiltinEventSpec5903);
+            pushFollow(FOLLOW_ruleBuiltinEventSpec_in_entryRuleBuiltinEventSpec5938);
             iv_ruleBuiltinEventSpec=ruleBuiltinEventSpec();
 
             state._fsp--;
@@ -7633,7 +7719,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleBuiltinEventSpec; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleBuiltinEventSpec5913); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleBuiltinEventSpec5948); if (state.failed) return current;
 
             }
 
@@ -7651,7 +7737,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBuiltinEventSpec"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2573:1: ruleBuiltinEventSpec returns [EObject current=null] : (this_EntryEvent_0= ruleEntryEvent | this_ExitEvent_1= ruleExitEvent | this_AlwaysEvent_2= ruleAlwaysEvent ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2595:1: ruleBuiltinEventSpec returns [EObject current=null] : (this_EntryEvent_0= ruleEntryEvent | this_ExitEvent_1= ruleExitEvent | this_AlwaysEvent_2= ruleAlwaysEvent ) ;
     public final EObject ruleBuiltinEventSpec() throws RecognitionException {
         EObject current = null;
 
@@ -7665,46 +7751,46 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2576:28: ( (this_EntryEvent_0= ruleEntryEvent | this_ExitEvent_1= ruleExitEvent | this_AlwaysEvent_2= ruleAlwaysEvent ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2577:1: (this_EntryEvent_0= ruleEntryEvent | this_ExitEvent_1= ruleExitEvent | this_AlwaysEvent_2= ruleAlwaysEvent )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2598:28: ( (this_EntryEvent_0= ruleEntryEvent | this_ExitEvent_1= ruleExitEvent | this_AlwaysEvent_2= ruleAlwaysEvent ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2599:1: (this_EntryEvent_0= ruleEntryEvent | this_ExitEvent_1= ruleExitEvent | this_AlwaysEvent_2= ruleAlwaysEvent )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2577:1: (this_EntryEvent_0= ruleEntryEvent | this_ExitEvent_1= ruleExitEvent | this_AlwaysEvent_2= ruleAlwaysEvent )
-            int alt41=3;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2599:1: (this_EntryEvent_0= ruleEntryEvent | this_ExitEvent_1= ruleExitEvent | this_AlwaysEvent_2= ruleAlwaysEvent )
+            int alt42=3;
             switch ( input.LA(1) ) {
-            case 51:
+            case 49:
                 {
-                alt41=1;
+                alt42=1;
                 }
                 break;
+            case 50:
+                {
+                alt42=2;
+                }
+                break;
+            case 51:
             case 52:
                 {
-                alt41=2;
-                }
-                break;
-            case 53:
-            case 54:
-                {
-                alt41=3;
+                alt42=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 41, 0, input);
+                    new NoViableAltException("", 42, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt41) {
+            switch (alt42) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2578:5: this_EntryEvent_0= ruleEntryEvent
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2600:5: this_EntryEvent_0= ruleEntryEvent
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getBuiltinEventSpecAccess().getEntryEventParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleEntryEvent_in_ruleBuiltinEventSpec5960);
+                    pushFollow(FOLLOW_ruleEntryEvent_in_ruleBuiltinEventSpec5995);
                     this_EntryEvent_0=ruleEntryEvent();
 
                     state._fsp--;
@@ -7719,14 +7805,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2588:5: this_ExitEvent_1= ruleExitEvent
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2610:5: this_ExitEvent_1= ruleExitEvent
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getBuiltinEventSpecAccess().getExitEventParserRuleCall_1()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleExitEvent_in_ruleBuiltinEventSpec5987);
+                    pushFollow(FOLLOW_ruleExitEvent_in_ruleBuiltinEventSpec6022);
                     this_ExitEvent_1=ruleExitEvent();
 
                     state._fsp--;
@@ -7741,14 +7827,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2598:5: this_AlwaysEvent_2= ruleAlwaysEvent
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2620:5: this_AlwaysEvent_2= ruleAlwaysEvent
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getBuiltinEventSpecAccess().getAlwaysEventParserRuleCall_2()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleAlwaysEvent_in_ruleBuiltinEventSpec6014);
+                    pushFollow(FOLLOW_ruleAlwaysEvent_in_ruleBuiltinEventSpec6049);
                     this_AlwaysEvent_2=ruleAlwaysEvent();
 
                     state._fsp--;
@@ -7785,7 +7871,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEntryEvent"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2614:1: entryRuleEntryEvent returns [EObject current=null] : iv_ruleEntryEvent= ruleEntryEvent EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2636:1: entryRuleEntryEvent returns [EObject current=null] : iv_ruleEntryEvent= ruleEntryEvent EOF ;
     public final EObject entryRuleEntryEvent() throws RecognitionException {
         EObject current = null;
 
@@ -7793,13 +7879,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2615:2: (iv_ruleEntryEvent= ruleEntryEvent EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2616:2: iv_ruleEntryEvent= ruleEntryEvent EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2637:2: (iv_ruleEntryEvent= ruleEntryEvent EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2638:2: iv_ruleEntryEvent= ruleEntryEvent EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEntryEventRule()); 
             }
-            pushFollow(FOLLOW_ruleEntryEvent_in_entryRuleEntryEvent6049);
+            pushFollow(FOLLOW_ruleEntryEvent_in_entryRuleEntryEvent6084);
             iv_ruleEntryEvent=ruleEntryEvent();
 
             state._fsp--;
@@ -7807,7 +7893,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleEntryEvent; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleEntryEvent6059); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEntryEvent6094); if (state.failed) return current;
 
             }
 
@@ -7825,7 +7911,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEntryEvent"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2623:1: ruleEntryEvent returns [EObject current=null] : ( () otherlv_1= 'entry' ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2645:1: ruleEntryEvent returns [EObject current=null] : ( () otherlv_1= 'entry' ) ;
     public final EObject ruleEntryEvent() throws RecognitionException {
         EObject current = null;
 
@@ -7834,14 +7920,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2626:28: ( ( () otherlv_1= 'entry' ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2627:1: ( () otherlv_1= 'entry' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2648:28: ( ( () otherlv_1= 'entry' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2649:1: ( () otherlv_1= 'entry' )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2627:1: ( () otherlv_1= 'entry' )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2627:2: () otherlv_1= 'entry'
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2649:1: ( () otherlv_1= 'entry' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2649:2: () otherlv_1= 'entry'
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2627:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2628:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2649:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2650:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -7853,7 +7939,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,51,FOLLOW_51_in_ruleEntryEvent6105); if (state.failed) return current;
+            otherlv_1=(Token)match(input,49,FOLLOW_49_in_ruleEntryEvent6140); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getEntryEventAccess().getEntryKeyword_1());
@@ -7882,7 +7968,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExitEvent"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2645:1: entryRuleExitEvent returns [EObject current=null] : iv_ruleExitEvent= ruleExitEvent EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2667:1: entryRuleExitEvent returns [EObject current=null] : iv_ruleExitEvent= ruleExitEvent EOF ;
     public final EObject entryRuleExitEvent() throws RecognitionException {
         EObject current = null;
 
@@ -7890,13 +7976,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2646:2: (iv_ruleExitEvent= ruleExitEvent EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2647:2: iv_ruleExitEvent= ruleExitEvent EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2668:2: (iv_ruleExitEvent= ruleExitEvent EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2669:2: iv_ruleExitEvent= ruleExitEvent EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExitEventRule()); 
             }
-            pushFollow(FOLLOW_ruleExitEvent_in_entryRuleExitEvent6141);
+            pushFollow(FOLLOW_ruleExitEvent_in_entryRuleExitEvent6176);
             iv_ruleExitEvent=ruleExitEvent();
 
             state._fsp--;
@@ -7904,7 +7990,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleExitEvent; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleExitEvent6151); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleExitEvent6186); if (state.failed) return current;
 
             }
 
@@ -7922,7 +8008,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExitEvent"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2654:1: ruleExitEvent returns [EObject current=null] : ( () otherlv_1= 'exit' ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2676:1: ruleExitEvent returns [EObject current=null] : ( () otherlv_1= 'exit' ) ;
     public final EObject ruleExitEvent() throws RecognitionException {
         EObject current = null;
 
@@ -7931,14 +8017,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2657:28: ( ( () otherlv_1= 'exit' ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2658:1: ( () otherlv_1= 'exit' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2679:28: ( ( () otherlv_1= 'exit' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2680:1: ( () otherlv_1= 'exit' )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2658:1: ( () otherlv_1= 'exit' )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2658:2: () otherlv_1= 'exit'
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2680:1: ( () otherlv_1= 'exit' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2680:2: () otherlv_1= 'exit'
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2658:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2659:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2680:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2681:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -7950,7 +8036,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,52,FOLLOW_52_in_ruleExitEvent6197); if (state.failed) return current;
+            otherlv_1=(Token)match(input,50,FOLLOW_50_in_ruleExitEvent6232); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getExitEventAccess().getExitKeyword_1());
@@ -7979,7 +8065,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAlwaysEvent"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2676:1: entryRuleAlwaysEvent returns [EObject current=null] : iv_ruleAlwaysEvent= ruleAlwaysEvent EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2698:1: entryRuleAlwaysEvent returns [EObject current=null] : iv_ruleAlwaysEvent= ruleAlwaysEvent EOF ;
     public final EObject entryRuleAlwaysEvent() throws RecognitionException {
         EObject current = null;
 
@@ -7987,13 +8073,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2677:2: (iv_ruleAlwaysEvent= ruleAlwaysEvent EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2678:2: iv_ruleAlwaysEvent= ruleAlwaysEvent EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2699:2: (iv_ruleAlwaysEvent= ruleAlwaysEvent EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2700:2: iv_ruleAlwaysEvent= ruleAlwaysEvent EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAlwaysEventRule()); 
             }
-            pushFollow(FOLLOW_ruleAlwaysEvent_in_entryRuleAlwaysEvent6233);
+            pushFollow(FOLLOW_ruleAlwaysEvent_in_entryRuleAlwaysEvent6268);
             iv_ruleAlwaysEvent=ruleAlwaysEvent();
 
             state._fsp--;
@@ -8001,7 +8087,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleAlwaysEvent; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleAlwaysEvent6243); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleAlwaysEvent6278); if (state.failed) return current;
 
             }
 
@@ -8019,7 +8105,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAlwaysEvent"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2685:1: ruleAlwaysEvent returns [EObject current=null] : ( () (otherlv_1= 'always' | otherlv_2= 'oncycle' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2707:1: ruleAlwaysEvent returns [EObject current=null] : ( () (otherlv_1= 'always' | otherlv_2= 'oncycle' ) ) ;
     public final EObject ruleAlwaysEvent() throws RecognitionException {
         EObject current = null;
 
@@ -8029,14 +8115,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2688:28: ( ( () (otherlv_1= 'always' | otherlv_2= 'oncycle' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2689:1: ( () (otherlv_1= 'always' | otherlv_2= 'oncycle' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2710:28: ( ( () (otherlv_1= 'always' | otherlv_2= 'oncycle' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2711:1: ( () (otherlv_1= 'always' | otherlv_2= 'oncycle' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2689:1: ( () (otherlv_1= 'always' | otherlv_2= 'oncycle' ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2689:2: () (otherlv_1= 'always' | otherlv_2= 'oncycle' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2711:1: ( () (otherlv_1= 'always' | otherlv_2= 'oncycle' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2711:2: () (otherlv_1= 'always' | otherlv_2= 'oncycle' )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2689:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2690:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2711:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2712:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -8048,28 +8134,28 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2695:2: (otherlv_1= 'always' | otherlv_2= 'oncycle' )
-            int alt42=2;
-            int LA42_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2717:2: (otherlv_1= 'always' | otherlv_2= 'oncycle' )
+            int alt43=2;
+            int LA43_0 = input.LA(1);
 
-            if ( (LA42_0==53) ) {
-                alt42=1;
+            if ( (LA43_0==51) ) {
+                alt43=1;
             }
-            else if ( (LA42_0==54) ) {
-                alt42=2;
+            else if ( (LA43_0==52) ) {
+                alt43=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 42, 0, input);
+                    new NoViableAltException("", 43, 0, input);
 
                 throw nvae;
             }
-            switch (alt42) {
+            switch (alt43) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2695:4: otherlv_1= 'always'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2717:4: otherlv_1= 'always'
                     {
-                    otherlv_1=(Token)match(input,53,FOLLOW_53_in_ruleAlwaysEvent6290); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,51,FOLLOW_51_in_ruleAlwaysEvent6325); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getAlwaysEventAccess().getAlwaysKeyword_1_0());
@@ -8079,9 +8165,9 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2700:7: otherlv_2= 'oncycle'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2722:7: otherlv_2= 'oncycle'
                     {
-                    otherlv_2=(Token)match(input,54,FOLLOW_54_in_ruleAlwaysEvent6308); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,52,FOLLOW_52_in_ruleAlwaysEvent6343); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getAlwaysEventAccess().getOncycleKeyword_1_1());
@@ -8116,7 +8202,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2716:1: entryRuleExpression returns [EObject current=null] : iv_ruleExpression= ruleExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2738:1: entryRuleExpression returns [EObject current=null] : iv_ruleExpression= ruleExpression EOF ;
     public final EObject entryRuleExpression() throws RecognitionException {
         EObject current = null;
 
@@ -8124,13 +8210,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2717:2: (iv_ruleExpression= ruleExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2718:2: iv_ruleExpression= ruleExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2739:2: (iv_ruleExpression= ruleExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2740:2: iv_ruleExpression= ruleExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleExpression_in_entryRuleExpression6349);
+            pushFollow(FOLLOW_ruleExpression_in_entryRuleExpression6384);
             iv_ruleExpression=ruleExpression();
 
             state._fsp--;
@@ -8138,7 +8224,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleExpression6359); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleExpression6394); if (state.failed) return current;
 
             }
 
@@ -8156,7 +8242,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2725:1: ruleExpression returns [EObject current=null] : this_AssignmentExpression_0= ruleAssignmentExpression ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2747:1: ruleExpression returns [EObject current=null] : this_AssignmentExpression_0= ruleAssignmentExpression ;
     public final EObject ruleExpression() throws RecognitionException {
         EObject current = null;
 
@@ -8166,15 +8252,15 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2728:28: (this_AssignmentExpression_0= ruleAssignmentExpression )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2730:5: this_AssignmentExpression_0= ruleAssignmentExpression
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2750:28: (this_AssignmentExpression_0= ruleAssignmentExpression )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2752:5: this_AssignmentExpression_0= ruleAssignmentExpression
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getExpressionAccess().getAssignmentExpressionParserRuleCall()); 
                   
             }
-            pushFollow(FOLLOW_ruleAssignmentExpression_in_ruleExpression6405);
+            pushFollow(FOLLOW_ruleAssignmentExpression_in_ruleExpression6440);
             this_AssignmentExpression_0=ruleAssignmentExpression();
 
             state._fsp--;
@@ -8205,7 +8291,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAssignmentExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2746:1: entryRuleAssignmentExpression returns [EObject current=null] : iv_ruleAssignmentExpression= ruleAssignmentExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2768:1: entryRuleAssignmentExpression returns [EObject current=null] : iv_ruleAssignmentExpression= ruleAssignmentExpression EOF ;
     public final EObject entryRuleAssignmentExpression() throws RecognitionException {
         EObject current = null;
 
@@ -8213,13 +8299,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2747:2: (iv_ruleAssignmentExpression= ruleAssignmentExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2748:2: iv_ruleAssignmentExpression= ruleAssignmentExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2769:2: (iv_ruleAssignmentExpression= ruleAssignmentExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2770:2: iv_ruleAssignmentExpression= ruleAssignmentExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAssignmentExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleAssignmentExpression_in_entryRuleAssignmentExpression6439);
+            pushFollow(FOLLOW_ruleAssignmentExpression_in_entryRuleAssignmentExpression6474);
             iv_ruleAssignmentExpression=ruleAssignmentExpression();
 
             state._fsp--;
@@ -8227,7 +8313,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleAssignmentExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleAssignmentExpression6449); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleAssignmentExpression6484); if (state.failed) return current;
 
             }
 
@@ -8245,7 +8331,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAssignmentExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2755:1: ruleAssignmentExpression returns [EObject current=null] : (this_ConditionalExpression_0= ruleConditionalExpression ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )* ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2777:1: ruleAssignmentExpression returns [EObject current=null] : (this_ConditionalExpression_0= ruleConditionalExpression ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )* ) ;
     public final EObject ruleAssignmentExpression() throws RecognitionException {
         EObject current = null;
 
@@ -8259,18 +8345,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2758:28: ( (this_ConditionalExpression_0= ruleConditionalExpression ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2759:1: (this_ConditionalExpression_0= ruleConditionalExpression ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2780:28: ( (this_ConditionalExpression_0= ruleConditionalExpression ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2781:1: (this_ConditionalExpression_0= ruleConditionalExpression ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2759:1: (this_ConditionalExpression_0= ruleConditionalExpression ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2760:5: this_ConditionalExpression_0= ruleConditionalExpression ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2781:1: (this_ConditionalExpression_0= ruleConditionalExpression ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2782:5: this_ConditionalExpression_0= ruleConditionalExpression ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )*
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getAssignmentExpressionAccess().getConditionalExpressionParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleConditionalExpression_in_ruleAssignmentExpression6496);
+            pushFollow(FOLLOW_ruleConditionalExpression_in_ruleAssignmentExpression6531);
             this_ConditionalExpression_0=ruleConditionalExpression();
 
             state._fsp--;
@@ -8281,23 +8367,23 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2768:1: ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )*
-            loop43:
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2790:1: ( () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) ) )*
+            loop44:
             do {
-                int alt43=2;
-                int LA43_0 = input.LA(1);
+                int alt44=2;
+                int LA44_0 = input.LA(1);
 
-                if ( (LA43_0==15||(LA43_0>=77 && LA43_0<=86)) ) {
-                    alt43=1;
+                if ( (LA44_0==15||(LA44_0>=75 && LA44_0<=84)) ) {
+                    alt44=1;
                 }
 
 
-                switch (alt43) {
+                switch (alt44) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2768:2: () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2790:2: () ( (lv_operator_2_0= ruleAssignmentOperator ) ) ( (lv_expression_3_0= ruleConditionalExpression ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2768:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2769:5: 
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2790:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2791:5: 
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -8309,18 +8395,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2774:2: ( (lv_operator_2_0= ruleAssignmentOperator ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2775:1: (lv_operator_2_0= ruleAssignmentOperator )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2796:2: ( (lv_operator_2_0= ruleAssignmentOperator ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2797:1: (lv_operator_2_0= ruleAssignmentOperator )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2775:1: (lv_operator_2_0= ruleAssignmentOperator )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2776:3: lv_operator_2_0= ruleAssignmentOperator
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2797:1: (lv_operator_2_0= ruleAssignmentOperator )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2798:3: lv_operator_2_0= ruleAssignmentOperator
             	    {
             	    if ( state.backtracking==0 ) {
             	       
             	      	        newCompositeNode(grammarAccess.getAssignmentExpressionAccess().getOperatorAssignmentOperatorEnumRuleCall_1_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleAssignmentOperator_in_ruleAssignmentExpression6526);
+            	    pushFollow(FOLLOW_ruleAssignmentOperator_in_ruleAssignmentExpression6561);
             	    lv_operator_2_0=ruleAssignmentOperator();
 
             	    state._fsp--;
@@ -8344,18 +8430,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2792:2: ( (lv_expression_3_0= ruleConditionalExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2793:1: (lv_expression_3_0= ruleConditionalExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2814:2: ( (lv_expression_3_0= ruleConditionalExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2815:1: (lv_expression_3_0= ruleConditionalExpression )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2793:1: (lv_expression_3_0= ruleConditionalExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2794:3: lv_expression_3_0= ruleConditionalExpression
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2815:1: (lv_expression_3_0= ruleConditionalExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2816:3: lv_expression_3_0= ruleConditionalExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
             	      	        newCompositeNode(grammarAccess.getAssignmentExpressionAccess().getExpressionConditionalExpressionParserRuleCall_1_2_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleConditionalExpression_in_ruleAssignmentExpression6547);
+            	    pushFollow(FOLLOW_ruleConditionalExpression_in_ruleAssignmentExpression6582);
             	    lv_expression_3_0=ruleConditionalExpression();
 
             	    state._fsp--;
@@ -8384,7 +8470,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop43;
+            	    break loop44;
                 }
             } while (true);
 
@@ -8411,7 +8497,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleConditionalExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2818:1: entryRuleConditionalExpression returns [EObject current=null] : iv_ruleConditionalExpression= ruleConditionalExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2840:1: entryRuleConditionalExpression returns [EObject current=null] : iv_ruleConditionalExpression= ruleConditionalExpression EOF ;
     public final EObject entryRuleConditionalExpression() throws RecognitionException {
         EObject current = null;
 
@@ -8419,13 +8505,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2819:2: (iv_ruleConditionalExpression= ruleConditionalExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2820:2: iv_ruleConditionalExpression= ruleConditionalExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2841:2: (iv_ruleConditionalExpression= ruleConditionalExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2842:2: iv_ruleConditionalExpression= ruleConditionalExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getConditionalExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleConditionalExpression_in_entryRuleConditionalExpression6585);
+            pushFollow(FOLLOW_ruleConditionalExpression_in_entryRuleConditionalExpression6620);
             iv_ruleConditionalExpression=ruleConditionalExpression();
 
             state._fsp--;
@@ -8433,7 +8519,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleConditionalExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleConditionalExpression6595); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleConditionalExpression6630); if (state.failed) return current;
 
             }
 
@@ -8451,7 +8537,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2827:1: ruleConditionalExpression returns [EObject current=null] : (this_LogicalOrExpression_0= ruleLogicalOrExpression ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )? ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2849:1: ruleConditionalExpression returns [EObject current=null] : (this_LogicalOrExpression_0= ruleLogicalOrExpression ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )? ) ;
     public final EObject ruleConditionalExpression() throws RecognitionException {
         EObject current = null;
 
@@ -8467,18 +8553,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2830:28: ( (this_LogicalOrExpression_0= ruleLogicalOrExpression ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )? ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2831:1: (this_LogicalOrExpression_0= ruleLogicalOrExpression ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )? )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2852:28: ( (this_LogicalOrExpression_0= ruleLogicalOrExpression ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )? ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2853:1: (this_LogicalOrExpression_0= ruleLogicalOrExpression ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )? )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2831:1: (this_LogicalOrExpression_0= ruleLogicalOrExpression ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )? )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2832:5: this_LogicalOrExpression_0= ruleLogicalOrExpression ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )?
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2853:1: (this_LogicalOrExpression_0= ruleLogicalOrExpression ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )? )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2854:5: this_LogicalOrExpression_0= ruleLogicalOrExpression ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )?
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getConditionalExpressionAccess().getLogicalOrExpressionParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6642);
+            pushFollow(FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6677);
             this_LogicalOrExpression_0=ruleLogicalOrExpression();
 
             state._fsp--;
@@ -8489,19 +8575,19 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2840:1: ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )?
-            int alt44=2;
-            int LA44_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2862:1: ( () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) ) )?
+            int alt45=2;
+            int LA45_0 = input.LA(1);
 
-            if ( (LA44_0==60) ) {
-                alt44=1;
+            if ( (LA45_0==58) ) {
+                alt45=1;
             }
-            switch (alt44) {
+            switch (alt45) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2840:2: () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2862:2: () otherlv_2= '?' ( (lv_trueCase_3_0= ruleLogicalOrExpression ) ) otherlv_4= ':' ( (lv_falseCase_5_0= ruleLogicalOrExpression ) )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2840:2: ()
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2841:5: 
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2862:2: ()
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2863:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -8513,24 +8599,24 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,60,FOLLOW_60_in_ruleConditionalExpression6663); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,58,FOLLOW_58_in_ruleConditionalExpression6698); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getConditionalExpressionAccess().getQuestionMarkKeyword_1_1());
                           
                     }
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2850:1: ( (lv_trueCase_3_0= ruleLogicalOrExpression ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2851:1: (lv_trueCase_3_0= ruleLogicalOrExpression )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2872:1: ( (lv_trueCase_3_0= ruleLogicalOrExpression ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2873:1: (lv_trueCase_3_0= ruleLogicalOrExpression )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2851:1: (lv_trueCase_3_0= ruleLogicalOrExpression )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2852:3: lv_trueCase_3_0= ruleLogicalOrExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2873:1: (lv_trueCase_3_0= ruleLogicalOrExpression )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2874:3: lv_trueCase_3_0= ruleLogicalOrExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getConditionalExpressionAccess().getTrueCaseLogicalOrExpressionParserRuleCall_1_2_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6684);
+                    pushFollow(FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6719);
                     lv_trueCase_3_0=ruleLogicalOrExpression();
 
                     state._fsp--;
@@ -8554,24 +8640,24 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_4=(Token)match(input,20,FOLLOW_20_in_ruleConditionalExpression6696); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,20,FOLLOW_20_in_ruleConditionalExpression6731); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getConditionalExpressionAccess().getColonKeyword_1_3());
                           
                     }
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2872:1: ( (lv_falseCase_5_0= ruleLogicalOrExpression ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2873:1: (lv_falseCase_5_0= ruleLogicalOrExpression )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2894:1: ( (lv_falseCase_5_0= ruleLogicalOrExpression ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2895:1: (lv_falseCase_5_0= ruleLogicalOrExpression )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2873:1: (lv_falseCase_5_0= ruleLogicalOrExpression )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2874:3: lv_falseCase_5_0= ruleLogicalOrExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2895:1: (lv_falseCase_5_0= ruleLogicalOrExpression )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2896:3: lv_falseCase_5_0= ruleLogicalOrExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getConditionalExpressionAccess().getFalseCaseLogicalOrExpressionParserRuleCall_1_4_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6717);
+                    pushFollow(FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6752);
                     lv_falseCase_5_0=ruleLogicalOrExpression();
 
                     state._fsp--;
@@ -8624,7 +8710,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLogicalOrExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2898:1: entryRuleLogicalOrExpression returns [EObject current=null] : iv_ruleLogicalOrExpression= ruleLogicalOrExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2920:1: entryRuleLogicalOrExpression returns [EObject current=null] : iv_ruleLogicalOrExpression= ruleLogicalOrExpression EOF ;
     public final EObject entryRuleLogicalOrExpression() throws RecognitionException {
         EObject current = null;
 
@@ -8632,13 +8718,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2899:2: (iv_ruleLogicalOrExpression= ruleLogicalOrExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2900:2: iv_ruleLogicalOrExpression= ruleLogicalOrExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2921:2: (iv_ruleLogicalOrExpression= ruleLogicalOrExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2922:2: iv_ruleLogicalOrExpression= ruleLogicalOrExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getLogicalOrExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleLogicalOrExpression_in_entryRuleLogicalOrExpression6755);
+            pushFollow(FOLLOW_ruleLogicalOrExpression_in_entryRuleLogicalOrExpression6790);
             iv_ruleLogicalOrExpression=ruleLogicalOrExpression();
 
             state._fsp--;
@@ -8646,7 +8732,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleLogicalOrExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleLogicalOrExpression6765); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleLogicalOrExpression6800); if (state.failed) return current;
 
             }
 
@@ -8664,7 +8750,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalOrExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2907:1: ruleLogicalOrExpression returns [EObject current=null] : (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )* ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2929:1: ruleLogicalOrExpression returns [EObject current=null] : (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )* ) ;
     public final EObject ruleLogicalOrExpression() throws RecognitionException {
         EObject current = null;
 
@@ -8677,18 +8763,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2910:28: ( (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2911:1: (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2932:28: ( (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2933:1: (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2911:1: (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2912:5: this_LogicalAndExpression_0= ruleLogicalAndExpression ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2933:1: (this_LogicalAndExpression_0= ruleLogicalAndExpression ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2934:5: this_LogicalAndExpression_0= ruleLogicalAndExpression ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )*
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getLogicalOrExpressionAccess().getLogicalAndExpressionParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6812);
+            pushFollow(FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6847);
             this_LogicalAndExpression_0=ruleLogicalAndExpression();
 
             state._fsp--;
@@ -8699,23 +8785,23 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2920:1: ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )*
-            loop45:
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2942:1: ( () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) ) )*
+            loop46:
             do {
-                int alt45=2;
-                int LA45_0 = input.LA(1);
+                int alt46=2;
+                int LA46_0 = input.LA(1);
 
-                if ( (LA45_0==61) ) {
-                    alt45=1;
+                if ( (LA46_0==59) ) {
+                    alt46=1;
                 }
 
 
-                switch (alt45) {
+                switch (alt46) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2920:2: () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2942:2: () otherlv_2= '||' ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2920:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2921:5: 
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2942:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2943:5: 
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -8727,24 +8813,24 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_2=(Token)match(input,61,FOLLOW_61_in_ruleLogicalOrExpression6833); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,59,FOLLOW_59_in_ruleLogicalOrExpression6868); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getLogicalOrExpressionAccess().getVerticalLineVerticalLineKeyword_1_1());
             	          
             	    }
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2930:1: ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2931:1: (lv_rightOperand_3_0= ruleLogicalAndExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2952:1: ( (lv_rightOperand_3_0= ruleLogicalAndExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2953:1: (lv_rightOperand_3_0= ruleLogicalAndExpression )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2931:1: (lv_rightOperand_3_0= ruleLogicalAndExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2932:3: lv_rightOperand_3_0= ruleLogicalAndExpression
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2953:1: (lv_rightOperand_3_0= ruleLogicalAndExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2954:3: lv_rightOperand_3_0= ruleLogicalAndExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
             	      	        newCompositeNode(grammarAccess.getLogicalOrExpressionAccess().getRightOperandLogicalAndExpressionParserRuleCall_1_2_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6854);
+            	    pushFollow(FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6889);
             	    lv_rightOperand_3_0=ruleLogicalAndExpression();
 
             	    state._fsp--;
@@ -8759,182 +8845,6 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	             			"rightOperand",
             	              		lv_rightOperand_3_0, 
             	              		"LogicalAndExpression");
-            	      	        afterParserOrEnumRuleCall();
-            	      	    
-            	    }
-
-            	    }
-
-
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop45;
-                }
-            } while (true);
-
-
-            }
-
-
-            }
-
-            if ( state.backtracking==0 ) {
-               leaveRule(); 
-            }
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleLogicalOrExpression"
-
-
-    // $ANTLR start "entryRuleLogicalAndExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2956:1: entryRuleLogicalAndExpression returns [EObject current=null] : iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF ;
-    public final EObject entryRuleLogicalAndExpression() throws RecognitionException {
-        EObject current = null;
-
-        EObject iv_ruleLogicalAndExpression = null;
-
-
-        try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2957:2: (iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2958:2: iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF
-            {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getLogicalAndExpressionRule()); 
-            }
-            pushFollow(FOLLOW_ruleLogicalAndExpression_in_entryRuleLogicalAndExpression6892);
-            iv_ruleLogicalAndExpression=ruleLogicalAndExpression();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleLogicalAndExpression; 
-            }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleLogicalAndExpression6902); if (state.failed) return current;
-
-            }
-
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleLogicalAndExpression"
-
-
-    // $ANTLR start "ruleLogicalAndExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2965:1: ruleLogicalAndExpression returns [EObject current=null] : (this_LogicalNotExpression_0= ruleLogicalNotExpression ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )* ) ;
-    public final EObject ruleLogicalAndExpression() throws RecognitionException {
-        EObject current = null;
-
-        Token otherlv_2=null;
-        EObject this_LogicalNotExpression_0 = null;
-
-        EObject lv_rightOperand_3_0 = null;
-
-
-         enterRule(); 
-            
-        try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2968:28: ( (this_LogicalNotExpression_0= ruleLogicalNotExpression ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2969:1: (this_LogicalNotExpression_0= ruleLogicalNotExpression ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )* )
-            {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2969:1: (this_LogicalNotExpression_0= ruleLogicalNotExpression ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2970:5: this_LogicalNotExpression_0= ruleLogicalNotExpression ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )*
-            {
-            if ( state.backtracking==0 ) {
-               
-                      newCompositeNode(grammarAccess.getLogicalAndExpressionAccess().getLogicalNotExpressionParserRuleCall_0()); 
-                  
-            }
-            pushFollow(FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression6949);
-            this_LogicalNotExpression_0=ruleLogicalNotExpression();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               
-                      current = this_LogicalNotExpression_0; 
-                      afterParserOrEnumRuleCall();
-                  
-            }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2978:1: ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )*
-            loop46:
-            do {
-                int alt46=2;
-                int LA46_0 = input.LA(1);
-
-                if ( (LA46_0==62) ) {
-                    alt46=1;
-                }
-
-
-                switch (alt46) {
-            	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2978:2: () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) )
-            	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2978:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2979:5: 
-            	    {
-            	    if ( state.backtracking==0 ) {
-
-            	              current = forceCreateModelElementAndSet(
-            	                  grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0(),
-            	                  current);
-            	          
-            	    }
-
-            	    }
-
-            	    otherlv_2=(Token)match(input,62,FOLLOW_62_in_ruleLogicalAndExpression6970); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	          	newLeafNode(otherlv_2, grammarAccess.getLogicalAndExpressionAccess().getAmpersandAmpersandKeyword_1_1());
-            	          
-            	    }
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2988:1: ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2989:1: (lv_rightOperand_3_0= ruleLogicalNotExpression )
-            	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2989:1: (lv_rightOperand_3_0= ruleLogicalNotExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2990:3: lv_rightOperand_3_0= ruleLogicalNotExpression
-            	    {
-            	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getLogicalAndExpressionAccess().getRightOperandLogicalNotExpressionParserRuleCall_1_2_0()); 
-            	      	    
-            	    }
-            	    pushFollow(FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression6991);
-            	    lv_rightOperand_3_0=ruleLogicalNotExpression();
-
-            	    state._fsp--;
-            	    if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getLogicalAndExpressionRule());
-            	      	        }
-            	             		set(
-            	             			current, 
-            	             			"rightOperand",
-            	              		lv_rightOperand_3_0, 
-            	              		"LogicalNotExpression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -8972,11 +8882,187 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
+    // $ANTLR end "ruleLogicalOrExpression"
+
+
+    // $ANTLR start "entryRuleLogicalAndExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2978:1: entryRuleLogicalAndExpression returns [EObject current=null] : iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF ;
+    public final EObject entryRuleLogicalAndExpression() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleLogicalAndExpression = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2979:2: (iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2980:2: iv_ruleLogicalAndExpression= ruleLogicalAndExpression EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getLogicalAndExpressionRule()); 
+            }
+            pushFollow(FOLLOW_ruleLogicalAndExpression_in_entryRuleLogicalAndExpression6927);
+            iv_ruleLogicalAndExpression=ruleLogicalAndExpression();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleLogicalAndExpression; 
+            }
+            match(input,EOF,FOLLOW_EOF_in_entryRuleLogicalAndExpression6937); if (state.failed) return current;
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleLogicalAndExpression"
+
+
+    // $ANTLR start "ruleLogicalAndExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2987:1: ruleLogicalAndExpression returns [EObject current=null] : (this_LogicalNotExpression_0= ruleLogicalNotExpression ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )* ) ;
+    public final EObject ruleLogicalAndExpression() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_2=null;
+        EObject this_LogicalNotExpression_0 = null;
+
+        EObject lv_rightOperand_3_0 = null;
+
+
+         enterRule(); 
+            
+        try {
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2990:28: ( (this_LogicalNotExpression_0= ruleLogicalNotExpression ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2991:1: (this_LogicalNotExpression_0= ruleLogicalNotExpression ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )* )
+            {
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2991:1: (this_LogicalNotExpression_0= ruleLogicalNotExpression ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:2992:5: this_LogicalNotExpression_0= ruleLogicalNotExpression ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )*
+            {
+            if ( state.backtracking==0 ) {
+               
+                      newCompositeNode(grammarAccess.getLogicalAndExpressionAccess().getLogicalNotExpressionParserRuleCall_0()); 
+                  
+            }
+            pushFollow(FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression6984);
+            this_LogicalNotExpression_0=ruleLogicalNotExpression();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               
+                      current = this_LogicalNotExpression_0; 
+                      afterParserOrEnumRuleCall();
+                  
+            }
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3000:1: ( () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) ) )*
+            loop47:
+            do {
+                int alt47=2;
+                int LA47_0 = input.LA(1);
+
+                if ( (LA47_0==60) ) {
+                    alt47=1;
+                }
+
+
+                switch (alt47) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3000:2: () otherlv_2= '&&' ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) )
+            	    {
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3000:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3001:5: 
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	              current = forceCreateModelElementAndSet(
+            	                  grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0(),
+            	                  current);
+            	          
+            	    }
+
+            	    }
+
+            	    otherlv_2=(Token)match(input,60,FOLLOW_60_in_ruleLogicalAndExpression7005); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	          	newLeafNode(otherlv_2, grammarAccess.getLogicalAndExpressionAccess().getAmpersandAmpersandKeyword_1_1());
+            	          
+            	    }
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3010:1: ( (lv_rightOperand_3_0= ruleLogicalNotExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3011:1: (lv_rightOperand_3_0= ruleLogicalNotExpression )
+            	    {
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3011:1: (lv_rightOperand_3_0= ruleLogicalNotExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3012:3: lv_rightOperand_3_0= ruleLogicalNotExpression
+            	    {
+            	    if ( state.backtracking==0 ) {
+            	       
+            	      	        newCompositeNode(grammarAccess.getLogicalAndExpressionAccess().getRightOperandLogicalNotExpressionParserRuleCall_1_2_0()); 
+            	      	    
+            	    }
+            	    pushFollow(FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression7026);
+            	    lv_rightOperand_3_0=ruleLogicalNotExpression();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      	        if (current==null) {
+            	      	            current = createModelElementForParent(grammarAccess.getLogicalAndExpressionRule());
+            	      	        }
+            	             		set(
+            	             			current, 
+            	             			"rightOperand",
+            	              		lv_rightOperand_3_0, 
+            	              		"LogicalNotExpression");
+            	      	        afterParserOrEnumRuleCall();
+            	      	    
+            	    }
+
+            	    }
+
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop47;
+                }
+            } while (true);
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+               leaveRule(); 
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
     // $ANTLR end "ruleLogicalAndExpression"
 
 
     // $ANTLR start "entryRuleLogicalNotExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3014:1: entryRuleLogicalNotExpression returns [EObject current=null] : iv_ruleLogicalNotExpression= ruleLogicalNotExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3036:1: entryRuleLogicalNotExpression returns [EObject current=null] : iv_ruleLogicalNotExpression= ruleLogicalNotExpression EOF ;
     public final EObject entryRuleLogicalNotExpression() throws RecognitionException {
         EObject current = null;
 
@@ -8984,13 +9070,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3015:2: (iv_ruleLogicalNotExpression= ruleLogicalNotExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3016:2: iv_ruleLogicalNotExpression= ruleLogicalNotExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3037:2: (iv_ruleLogicalNotExpression= ruleLogicalNotExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3038:2: iv_ruleLogicalNotExpression= ruleLogicalNotExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getLogicalNotExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleLogicalNotExpression_in_entryRuleLogicalNotExpression7029);
+            pushFollow(FOLLOW_ruleLogicalNotExpression_in_entryRuleLogicalNotExpression7064);
             iv_ruleLogicalNotExpression=ruleLogicalNotExpression();
 
             state._fsp--;
@@ -8998,7 +9084,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleLogicalNotExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleLogicalNotExpression7039); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleLogicalNotExpression7074); if (state.failed) return current;
 
             }
 
@@ -9016,7 +9102,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalNotExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3023:1: ruleLogicalNotExpression returns [EObject current=null] : (this_BitwiseXorExpression_0= ruleBitwiseXorExpression | ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3045:1: ruleLogicalNotExpression returns [EObject current=null] : (this_BitwiseXorExpression_0= ruleBitwiseXorExpression | ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) ) ) ;
     public final EObject ruleLogicalNotExpression() throws RecognitionException {
         EObject current = null;
 
@@ -9029,36 +9115,36 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3026:28: ( (this_BitwiseXorExpression_0= ruleBitwiseXorExpression | ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3027:1: (this_BitwiseXorExpression_0= ruleBitwiseXorExpression | ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3048:28: ( (this_BitwiseXorExpression_0= ruleBitwiseXorExpression | ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3049:1: (this_BitwiseXorExpression_0= ruleBitwiseXorExpression | ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3027:1: (this_BitwiseXorExpression_0= ruleBitwiseXorExpression | ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) ) )
-            int alt47=2;
-            int LA47_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3049:1: (this_BitwiseXorExpression_0= ruleBitwiseXorExpression | ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) ) )
+            int alt48=2;
+            int LA48_0 = input.LA(1);
 
-            if ( ((LA47_0>=RULE_ID && LA47_0<=RULE_STRING)||LA47_0==23||LA47_0==34||(LA47_0>=56 && LA47_0<=57)||(LA47_0>=89 && LA47_0<=90)||LA47_0==93) ) {
-                alt47=1;
+            if ( ((LA48_0>=RULE_ID && LA48_0<=RULE_STRING)||LA48_0==23||LA48_0==32||(LA48_0>=54 && LA48_0<=55)||(LA48_0>=87 && LA48_0<=88)||LA48_0==91) ) {
+                alt48=1;
             }
-            else if ( (LA47_0==63) ) {
-                alt47=2;
+            else if ( (LA48_0==61) ) {
+                alt48=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 47, 0, input);
+                    new NoViableAltException("", 48, 0, input);
 
                 throw nvae;
             }
-            switch (alt47) {
+            switch (alt48) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3028:5: this_BitwiseXorExpression_0= ruleBitwiseXorExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3050:5: this_BitwiseXorExpression_0= ruleBitwiseXorExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getLogicalNotExpressionAccess().getBitwiseXorExpressionParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleBitwiseXorExpression_in_ruleLogicalNotExpression7086);
+                    pushFollow(FOLLOW_ruleBitwiseXorExpression_in_ruleLogicalNotExpression7121);
                     this_BitwiseXorExpression_0=ruleBitwiseXorExpression();
 
                     state._fsp--;
@@ -9073,13 +9159,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3037:6: ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3059:6: ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3037:6: ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3037:7: () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3059:6: ( () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3059:7: () otherlv_2= '!' ( (lv_operand_3_0= ruleBitwiseXorExpression ) )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3037:7: ()
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3038:5: 
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3059:7: ()
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3060:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -9091,24 +9177,24 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,63,FOLLOW_63_in_ruleLogicalNotExpression7113); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,61,FOLLOW_61_in_ruleLogicalNotExpression7148); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getLogicalNotExpressionAccess().getExclamationMarkKeyword_1_1());
                           
                     }
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3047:1: ( (lv_operand_3_0= ruleBitwiseXorExpression ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3048:1: (lv_operand_3_0= ruleBitwiseXorExpression )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3069:1: ( (lv_operand_3_0= ruleBitwiseXorExpression ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3070:1: (lv_operand_3_0= ruleBitwiseXorExpression )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3048:1: (lv_operand_3_0= ruleBitwiseXorExpression )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3049:3: lv_operand_3_0= ruleBitwiseXorExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3070:1: (lv_operand_3_0= ruleBitwiseXorExpression )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3071:3: lv_operand_3_0= ruleBitwiseXorExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getLogicalNotExpressionAccess().getOperandBitwiseXorExpressionParserRuleCall_1_2_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleBitwiseXorExpression_in_ruleLogicalNotExpression7134);
+                    pushFollow(FOLLOW_ruleBitwiseXorExpression_in_ruleLogicalNotExpression7169);
                     lv_operand_3_0=ruleBitwiseXorExpression();
 
                     state._fsp--;
@@ -9161,7 +9247,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBitwiseXorExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3073:1: entryRuleBitwiseXorExpression returns [EObject current=null] : iv_ruleBitwiseXorExpression= ruleBitwiseXorExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3095:1: entryRuleBitwiseXorExpression returns [EObject current=null] : iv_ruleBitwiseXorExpression= ruleBitwiseXorExpression EOF ;
     public final EObject entryRuleBitwiseXorExpression() throws RecognitionException {
         EObject current = null;
 
@@ -9169,13 +9255,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3074:2: (iv_ruleBitwiseXorExpression= ruleBitwiseXorExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3075:2: iv_ruleBitwiseXorExpression= ruleBitwiseXorExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3096:2: (iv_ruleBitwiseXorExpression= ruleBitwiseXorExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3097:2: iv_ruleBitwiseXorExpression= ruleBitwiseXorExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBitwiseXorExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleBitwiseXorExpression_in_entryRuleBitwiseXorExpression7171);
+            pushFollow(FOLLOW_ruleBitwiseXorExpression_in_entryRuleBitwiseXorExpression7206);
             iv_ruleBitwiseXorExpression=ruleBitwiseXorExpression();
 
             state._fsp--;
@@ -9183,7 +9269,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleBitwiseXorExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleBitwiseXorExpression7181); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleBitwiseXorExpression7216); if (state.failed) return current;
 
             }
 
@@ -9201,7 +9287,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseXorExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3082:1: ruleBitwiseXorExpression returns [EObject current=null] : (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )* ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3104:1: ruleBitwiseXorExpression returns [EObject current=null] : (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )* ) ;
     public final EObject ruleBitwiseXorExpression() throws RecognitionException {
         EObject current = null;
 
@@ -9214,18 +9300,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3085:28: ( (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3086:1: (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3107:28: ( (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3108:1: (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3086:1: (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3087:5: this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3108:1: (this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3109:5: this_BitwiseOrExpression_0= ruleBitwiseOrExpression ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )*
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getBitwiseXorExpressionAccess().getBitwiseOrExpressionParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleBitwiseOrExpression_in_ruleBitwiseXorExpression7228);
+            pushFollow(FOLLOW_ruleBitwiseOrExpression_in_ruleBitwiseXorExpression7263);
             this_BitwiseOrExpression_0=ruleBitwiseOrExpression();
 
             state._fsp--;
@@ -9236,23 +9322,23 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3095:1: ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )*
-            loop48:
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3117:1: ( () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) ) )*
+            loop49:
             do {
-                int alt48=2;
-                int LA48_0 = input.LA(1);
+                int alt49=2;
+                int LA49_0 = input.LA(1);
 
-                if ( (LA48_0==64) ) {
-                    alt48=1;
+                if ( (LA49_0==62) ) {
+                    alt49=1;
                 }
 
 
-                switch (alt48) {
+                switch (alt49) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3095:2: () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3117:2: () otherlv_2= '^' ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3095:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3096:5: 
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3117:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3118:5: 
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -9264,24 +9350,24 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_2=(Token)match(input,64,FOLLOW_64_in_ruleBitwiseXorExpression7249); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,62,FOLLOW_62_in_ruleBitwiseXorExpression7284); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getBitwiseXorExpressionAccess().getCircumflexAccentKeyword_1_1());
             	          
             	    }
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3105:1: ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3106:1: (lv_rightOperand_3_0= ruleBitwiseOrExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3127:1: ( (lv_rightOperand_3_0= ruleBitwiseOrExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3128:1: (lv_rightOperand_3_0= ruleBitwiseOrExpression )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3106:1: (lv_rightOperand_3_0= ruleBitwiseOrExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3107:3: lv_rightOperand_3_0= ruleBitwiseOrExpression
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3128:1: (lv_rightOperand_3_0= ruleBitwiseOrExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3129:3: lv_rightOperand_3_0= ruleBitwiseOrExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
             	      	        newCompositeNode(grammarAccess.getBitwiseXorExpressionAccess().getRightOperandBitwiseOrExpressionParserRuleCall_1_2_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleBitwiseOrExpression_in_ruleBitwiseXorExpression7270);
+            	    pushFollow(FOLLOW_ruleBitwiseOrExpression_in_ruleBitwiseXorExpression7305);
             	    lv_rightOperand_3_0=ruleBitwiseOrExpression();
 
             	    state._fsp--;
@@ -9296,182 +9382,6 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	             			"rightOperand",
             	              		lv_rightOperand_3_0, 
             	              		"BitwiseOrExpression");
-            	      	        afterParserOrEnumRuleCall();
-            	      	    
-            	    }
-
-            	    }
-
-
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop48;
-                }
-            } while (true);
-
-
-            }
-
-
-            }
-
-            if ( state.backtracking==0 ) {
-               leaveRule(); 
-            }
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleBitwiseXorExpression"
-
-
-    // $ANTLR start "entryRuleBitwiseOrExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3131:1: entryRuleBitwiseOrExpression returns [EObject current=null] : iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF ;
-    public final EObject entryRuleBitwiseOrExpression() throws RecognitionException {
-        EObject current = null;
-
-        EObject iv_ruleBitwiseOrExpression = null;
-
-
-        try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3132:2: (iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3133:2: iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF
-            {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getBitwiseOrExpressionRule()); 
-            }
-            pushFollow(FOLLOW_ruleBitwiseOrExpression_in_entryRuleBitwiseOrExpression7308);
-            iv_ruleBitwiseOrExpression=ruleBitwiseOrExpression();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleBitwiseOrExpression; 
-            }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleBitwiseOrExpression7318); if (state.failed) return current;
-
-            }
-
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleBitwiseOrExpression"
-
-
-    // $ANTLR start "ruleBitwiseOrExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3140:1: ruleBitwiseOrExpression returns [EObject current=null] : (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )* ) ;
-    public final EObject ruleBitwiseOrExpression() throws RecognitionException {
-        EObject current = null;
-
-        Token otherlv_2=null;
-        EObject this_BitwiseAndExpression_0 = null;
-
-        EObject lv_rightOperand_3_0 = null;
-
-
-         enterRule(); 
-            
-        try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3143:28: ( (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3144:1: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )* )
-            {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3144:1: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3145:5: this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )*
-            {
-            if ( state.backtracking==0 ) {
-               
-                      newCompositeNode(grammarAccess.getBitwiseOrExpressionAccess().getBitwiseAndExpressionParserRuleCall_0()); 
-                  
-            }
-            pushFollow(FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression7365);
-            this_BitwiseAndExpression_0=ruleBitwiseAndExpression();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               
-                      current = this_BitwiseAndExpression_0; 
-                      afterParserOrEnumRuleCall();
-                  
-            }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3153:1: ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )*
-            loop49:
-            do {
-                int alt49=2;
-                int LA49_0 = input.LA(1);
-
-                if ( (LA49_0==65) ) {
-                    alt49=1;
-                }
-
-
-                switch (alt49) {
-            	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3153:2: () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) )
-            	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3153:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3154:5: 
-            	    {
-            	    if ( state.backtracking==0 ) {
-
-            	              current = forceCreateModelElementAndSet(
-            	                  grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0(),
-            	                  current);
-            	          
-            	    }
-
-            	    }
-
-            	    otherlv_2=(Token)match(input,65,FOLLOW_65_in_ruleBitwiseOrExpression7386); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	          	newLeafNode(otherlv_2, grammarAccess.getBitwiseOrExpressionAccess().getVerticalLineKeyword_1_1());
-            	          
-            	    }
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3163:1: ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3164:1: (lv_rightOperand_3_0= ruleBitwiseAndExpression )
-            	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3164:1: (lv_rightOperand_3_0= ruleBitwiseAndExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3165:3: lv_rightOperand_3_0= ruleBitwiseAndExpression
-            	    {
-            	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getBitwiseOrExpressionAccess().getRightOperandBitwiseAndExpressionParserRuleCall_1_2_0()); 
-            	      	    
-            	    }
-            	    pushFollow(FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression7407);
-            	    lv_rightOperand_3_0=ruleBitwiseAndExpression();
-
-            	    state._fsp--;
-            	    if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getBitwiseOrExpressionRule());
-            	      	        }
-            	             		set(
-            	             			current, 
-            	             			"rightOperand",
-            	              		lv_rightOperand_3_0, 
-            	              		"BitwiseAndExpression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -9509,33 +9419,33 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleBitwiseOrExpression"
+    // $ANTLR end "ruleBitwiseXorExpression"
 
 
-    // $ANTLR start "entryRuleBitwiseAndExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3189:1: entryRuleBitwiseAndExpression returns [EObject current=null] : iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF ;
-    public final EObject entryRuleBitwiseAndExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleBitwiseOrExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3153:1: entryRuleBitwiseOrExpression returns [EObject current=null] : iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF ;
+    public final EObject entryRuleBitwiseOrExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleBitwiseAndExpression = null;
+        EObject iv_ruleBitwiseOrExpression = null;
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3190:2: (iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3191:2: iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3154:2: (iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3155:2: iv_ruleBitwiseOrExpression= ruleBitwiseOrExpression EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getBitwiseAndExpressionRule()); 
+               newCompositeNode(grammarAccess.getBitwiseOrExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleBitwiseAndExpression_in_entryRuleBitwiseAndExpression7445);
-            iv_ruleBitwiseAndExpression=ruleBitwiseAndExpression();
+            pushFollow(FOLLOW_ruleBitwiseOrExpression_in_entryRuleBitwiseOrExpression7343);
+            iv_ruleBitwiseOrExpression=ruleBitwiseOrExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleBitwiseAndExpression; 
+               current =iv_ruleBitwiseOrExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleBitwiseAndExpression7455); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleBitwiseOrExpression7353); if (state.failed) return current;
 
             }
 
@@ -9549,16 +9459,16 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleBitwiseAndExpression"
+    // $ANTLR end "entryRuleBitwiseOrExpression"
 
 
-    // $ANTLR start "ruleBitwiseAndExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3198:1: ruleBitwiseAndExpression returns [EObject current=null] : (this_LogicalRelationExpression_0= ruleLogicalRelationExpression ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )* ) ;
-    public final EObject ruleBitwiseAndExpression() throws RecognitionException {
+    // $ANTLR start "ruleBitwiseOrExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3162:1: ruleBitwiseOrExpression returns [EObject current=null] : (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )* ) ;
+    public final EObject ruleBitwiseOrExpression() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_2=null;
-        EObject this_LogicalRelationExpression_0 = null;
+        EObject this_BitwiseAndExpression_0 = null;
 
         EObject lv_rightOperand_3_0 = null;
 
@@ -9566,88 +9476,88 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3201:28: ( (this_LogicalRelationExpression_0= ruleLogicalRelationExpression ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3202:1: (this_LogicalRelationExpression_0= ruleLogicalRelationExpression ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3165:28: ( (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3166:1: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3202:1: (this_LogicalRelationExpression_0= ruleLogicalRelationExpression ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3203:5: this_LogicalRelationExpression_0= ruleLogicalRelationExpression ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3166:1: (this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3167:5: this_BitwiseAndExpression_0= ruleBitwiseAndExpression ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )*
             {
             if ( state.backtracking==0 ) {
                
-                      newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getLogicalRelationExpressionParserRuleCall_0()); 
+                      newCompositeNode(grammarAccess.getBitwiseOrExpressionAccess().getBitwiseAndExpressionParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleLogicalRelationExpression_in_ruleBitwiseAndExpression7502);
-            this_LogicalRelationExpression_0=ruleLogicalRelationExpression();
+            pushFollow(FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression7400);
+            this_BitwiseAndExpression_0=ruleBitwiseAndExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
                
-                      current = this_LogicalRelationExpression_0; 
+                      current = this_BitwiseAndExpression_0; 
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3211:1: ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3175:1: ( () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) ) )*
             loop50:
             do {
                 int alt50=2;
                 int LA50_0 = input.LA(1);
 
-                if ( (LA50_0==66) ) {
+                if ( (LA50_0==63) ) {
                     alt50=1;
                 }
 
 
                 switch (alt50) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3211:2: () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3175:2: () otherlv_2= '|' ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3211:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3212:5: 
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3175:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3176:5: 
             	    {
             	    if ( state.backtracking==0 ) {
 
             	              current = forceCreateModelElementAndSet(
-            	                  grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0(),
+            	                  grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0(),
             	                  current);
             	          
             	    }
 
             	    }
 
-            	    otherlv_2=(Token)match(input,66,FOLLOW_66_in_ruleBitwiseAndExpression7523); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,63,FOLLOW_63_in_ruleBitwiseOrExpression7421); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	          	newLeafNode(otherlv_2, grammarAccess.getBitwiseAndExpressionAccess().getAmpersandKeyword_1_1());
+            	          	newLeafNode(otherlv_2, grammarAccess.getBitwiseOrExpressionAccess().getVerticalLineKeyword_1_1());
             	          
             	    }
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3221:1: ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3222:1: (lv_rightOperand_3_0= ruleLogicalRelationExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3185:1: ( (lv_rightOperand_3_0= ruleBitwiseAndExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3186:1: (lv_rightOperand_3_0= ruleBitwiseAndExpression )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3222:1: (lv_rightOperand_3_0= ruleLogicalRelationExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3223:3: lv_rightOperand_3_0= ruleLogicalRelationExpression
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3186:1: (lv_rightOperand_3_0= ruleBitwiseAndExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3187:3: lv_rightOperand_3_0= ruleBitwiseAndExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getRightOperandLogicalRelationExpressionParserRuleCall_1_2_0()); 
+            	      	        newCompositeNode(grammarAccess.getBitwiseOrExpressionAccess().getRightOperandBitwiseAndExpressionParserRuleCall_1_2_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleLogicalRelationExpression_in_ruleBitwiseAndExpression7544);
-            	    lv_rightOperand_3_0=ruleLogicalRelationExpression();
+            	    pushFollow(FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression7442);
+            	    lv_rightOperand_3_0=ruleBitwiseAndExpression();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getBitwiseAndExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getBitwiseOrExpressionRule());
             	      	        }
             	             		set(
             	             			current, 
             	             			"rightOperand",
             	              		lv_rightOperand_3_0, 
-            	              		"LogicalRelationExpression");
+            	              		"BitwiseAndExpression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -9685,33 +9595,33 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleBitwiseAndExpression"
+    // $ANTLR end "ruleBitwiseOrExpression"
 
 
-    // $ANTLR start "entryRuleLogicalRelationExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3247:1: entryRuleLogicalRelationExpression returns [EObject current=null] : iv_ruleLogicalRelationExpression= ruleLogicalRelationExpression EOF ;
-    public final EObject entryRuleLogicalRelationExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleBitwiseAndExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3211:1: entryRuleBitwiseAndExpression returns [EObject current=null] : iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF ;
+    public final EObject entryRuleBitwiseAndExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleLogicalRelationExpression = null;
+        EObject iv_ruleBitwiseAndExpression = null;
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3248:2: (iv_ruleLogicalRelationExpression= ruleLogicalRelationExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3249:2: iv_ruleLogicalRelationExpression= ruleLogicalRelationExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3212:2: (iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3213:2: iv_ruleBitwiseAndExpression= ruleBitwiseAndExpression EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getLogicalRelationExpressionRule()); 
+               newCompositeNode(grammarAccess.getBitwiseAndExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleLogicalRelationExpression_in_entryRuleLogicalRelationExpression7582);
-            iv_ruleLogicalRelationExpression=ruleLogicalRelationExpression();
+            pushFollow(FOLLOW_ruleBitwiseAndExpression_in_entryRuleBitwiseAndExpression7480);
+            iv_ruleBitwiseAndExpression=ruleBitwiseAndExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleLogicalRelationExpression; 
+               current =iv_ruleBitwiseAndExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleLogicalRelationExpression7592); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleBitwiseAndExpression7490); if (state.failed) return current;
 
             }
 
@@ -9725,17 +9635,16 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleLogicalRelationExpression"
+    // $ANTLR end "entryRuleBitwiseAndExpression"
 
 
-    // $ANTLR start "ruleLogicalRelationExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3256:1: ruleLogicalRelationExpression returns [EObject current=null] : (this_ShiftExpression_0= ruleShiftExpression ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )* ) ;
-    public final EObject ruleLogicalRelationExpression() throws RecognitionException {
+    // $ANTLR start "ruleBitwiseAndExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3220:1: ruleBitwiseAndExpression returns [EObject current=null] : (this_LogicalRelationExpression_0= ruleLogicalRelationExpression ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )* ) ;
+    public final EObject ruleBitwiseAndExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject this_ShiftExpression_0 = null;
-
-        Enumerator lv_operator_2_0 = null;
+        Token otherlv_2=null;
+        EObject this_LogicalRelationExpression_0 = null;
 
         EObject lv_rightOperand_3_0 = null;
 
@@ -9743,117 +9652,88 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3259:28: ( (this_ShiftExpression_0= ruleShiftExpression ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3260:1: (this_ShiftExpression_0= ruleShiftExpression ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3223:28: ( (this_LogicalRelationExpression_0= ruleLogicalRelationExpression ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3224:1: (this_LogicalRelationExpression_0= ruleLogicalRelationExpression ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3260:1: (this_ShiftExpression_0= ruleShiftExpression ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3261:5: this_ShiftExpression_0= ruleShiftExpression ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3224:1: (this_LogicalRelationExpression_0= ruleLogicalRelationExpression ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3225:5: this_LogicalRelationExpression_0= ruleLogicalRelationExpression ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )*
             {
             if ( state.backtracking==0 ) {
                
-                      newCompositeNode(grammarAccess.getLogicalRelationExpressionAccess().getShiftExpressionParserRuleCall_0()); 
+                      newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getLogicalRelationExpressionParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7639);
-            this_ShiftExpression_0=ruleShiftExpression();
+            pushFollow(FOLLOW_ruleLogicalRelationExpression_in_ruleBitwiseAndExpression7537);
+            this_LogicalRelationExpression_0=ruleLogicalRelationExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
                
-                      current = this_ShiftExpression_0; 
+                      current = this_LogicalRelationExpression_0; 
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3269:1: ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3233:1: ( () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) ) )*
             loop51:
             do {
                 int alt51=2;
                 int LA51_0 = input.LA(1);
 
-                if ( (LA51_0==59||(LA51_0>=94 && LA51_0<=98)) ) {
+                if ( (LA51_0==64) ) {
                     alt51=1;
                 }
 
 
                 switch (alt51) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3269:2: () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3233:2: () otherlv_2= '&' ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3269:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3270:5: 
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3233:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3234:5: 
             	    {
             	    if ( state.backtracking==0 ) {
 
             	              current = forceCreateModelElementAndSet(
-            	                  grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0(),
+            	                  grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0(),
             	                  current);
             	          
             	    }
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3275:2: ( (lv_operator_2_0= ruleRelationalOperator ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3276:1: (lv_operator_2_0= ruleRelationalOperator )
+            	    otherlv_2=(Token)match(input,64,FOLLOW_64_in_ruleBitwiseAndExpression7558); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	          	newLeafNode(otherlv_2, grammarAccess.getBitwiseAndExpressionAccess().getAmpersandKeyword_1_1());
+            	          
+            	    }
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3243:1: ( (lv_rightOperand_3_0= ruleLogicalRelationExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3244:1: (lv_rightOperand_3_0= ruleLogicalRelationExpression )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3276:1: (lv_operator_2_0= ruleRelationalOperator )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3277:3: lv_operator_2_0= ruleRelationalOperator
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3244:1: (lv_rightOperand_3_0= ruleLogicalRelationExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3245:3: lv_rightOperand_3_0= ruleLogicalRelationExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getLogicalRelationExpressionAccess().getOperatorRelationalOperatorEnumRuleCall_1_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getRightOperandLogicalRelationExpressionParserRuleCall_1_2_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleRelationalOperator_in_ruleLogicalRelationExpression7669);
-            	    lv_operator_2_0=ruleRelationalOperator();
+            	    pushFollow(FOLLOW_ruleLogicalRelationExpression_in_ruleBitwiseAndExpression7579);
+            	    lv_rightOperand_3_0=ruleLogicalRelationExpression();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getLogicalRelationExpressionRule());
-            	      	        }
-            	             		set(
-            	             			current, 
-            	             			"operator",
-            	              		lv_operator_2_0, 
-            	              		"RelationalOperator");
-            	      	        afterParserOrEnumRuleCall();
-            	      	    
-            	    }
-
-            	    }
-
-
-            	    }
-
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3293:2: ( (lv_rightOperand_3_0= ruleShiftExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3294:1: (lv_rightOperand_3_0= ruleShiftExpression )
-            	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3294:1: (lv_rightOperand_3_0= ruleShiftExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3295:3: lv_rightOperand_3_0= ruleShiftExpression
-            	    {
-            	    if ( state.backtracking==0 ) {
-            	       
-            	      	        newCompositeNode(grammarAccess.getLogicalRelationExpressionAccess().getRightOperandShiftExpressionParserRuleCall_1_2_0()); 
-            	      	    
-            	    }
-            	    pushFollow(FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7690);
-            	    lv_rightOperand_3_0=ruleShiftExpression();
-
-            	    state._fsp--;
-            	    if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getLogicalRelationExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getBitwiseAndExpressionRule());
             	      	        }
             	             		set(
             	             			current, 
             	             			"rightOperand",
             	              		lv_rightOperand_3_0, 
-            	              		"ShiftExpression");
+            	              		"LogicalRelationExpression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -9891,33 +9771,33 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleLogicalRelationExpression"
+    // $ANTLR end "ruleBitwiseAndExpression"
 
 
-    // $ANTLR start "entryRuleShiftExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3319:1: entryRuleShiftExpression returns [EObject current=null] : iv_ruleShiftExpression= ruleShiftExpression EOF ;
-    public final EObject entryRuleShiftExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleLogicalRelationExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3269:1: entryRuleLogicalRelationExpression returns [EObject current=null] : iv_ruleLogicalRelationExpression= ruleLogicalRelationExpression EOF ;
+    public final EObject entryRuleLogicalRelationExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleShiftExpression = null;
+        EObject iv_ruleLogicalRelationExpression = null;
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3320:2: (iv_ruleShiftExpression= ruleShiftExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3321:2: iv_ruleShiftExpression= ruleShiftExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3270:2: (iv_ruleLogicalRelationExpression= ruleLogicalRelationExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3271:2: iv_ruleLogicalRelationExpression= ruleLogicalRelationExpression EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getShiftExpressionRule()); 
+               newCompositeNode(grammarAccess.getLogicalRelationExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleShiftExpression_in_entryRuleShiftExpression7728);
-            iv_ruleShiftExpression=ruleShiftExpression();
+            pushFollow(FOLLOW_ruleLogicalRelationExpression_in_entryRuleLogicalRelationExpression7617);
+            iv_ruleLogicalRelationExpression=ruleLogicalRelationExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleShiftExpression; 
+               current =iv_ruleLogicalRelationExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleShiftExpression7738); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleLogicalRelationExpression7627); if (state.failed) return current;
 
             }
 
@@ -9931,15 +9811,15 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleShiftExpression"
+    // $ANTLR end "entryRuleLogicalRelationExpression"
 
 
-    // $ANTLR start "ruleShiftExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3328:1: ruleShiftExpression returns [EObject current=null] : (this_NumericalAddSubtractExpression_0= ruleNumericalAddSubtractExpression ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )* ) ;
-    public final EObject ruleShiftExpression() throws RecognitionException {
+    // $ANTLR start "ruleLogicalRelationExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3278:1: ruleLogicalRelationExpression returns [EObject current=null] : (this_ShiftExpression_0= ruleShiftExpression ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )* ) ;
+    public final EObject ruleLogicalRelationExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject this_NumericalAddSubtractExpression_0 = null;
+        EObject this_ShiftExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
@@ -9949,82 +9829,82 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3331:28: ( (this_NumericalAddSubtractExpression_0= ruleNumericalAddSubtractExpression ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3332:1: (this_NumericalAddSubtractExpression_0= ruleNumericalAddSubtractExpression ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3281:28: ( (this_ShiftExpression_0= ruleShiftExpression ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3282:1: (this_ShiftExpression_0= ruleShiftExpression ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3332:1: (this_NumericalAddSubtractExpression_0= ruleNumericalAddSubtractExpression ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3333:5: this_NumericalAddSubtractExpression_0= ruleNumericalAddSubtractExpression ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3282:1: (this_ShiftExpression_0= ruleShiftExpression ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3283:5: this_ShiftExpression_0= ruleShiftExpression ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )*
             {
             if ( state.backtracking==0 ) {
                
-                      newCompositeNode(grammarAccess.getShiftExpressionAccess().getNumericalAddSubtractExpressionParserRuleCall_0()); 
+                      newCompositeNode(grammarAccess.getLogicalRelationExpressionAccess().getShiftExpressionParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleNumericalAddSubtractExpression_in_ruleShiftExpression7785);
-            this_NumericalAddSubtractExpression_0=ruleNumericalAddSubtractExpression();
+            pushFollow(FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7674);
+            this_ShiftExpression_0=ruleShiftExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
                
-                      current = this_NumericalAddSubtractExpression_0; 
+                      current = this_ShiftExpression_0; 
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3341:1: ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3291:1: ( () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) ) )*
             loop52:
             do {
                 int alt52=2;
                 int LA52_0 = input.LA(1);
 
-                if ( ((LA52_0>=87 && LA52_0<=88)) ) {
+                if ( (LA52_0==57||(LA52_0>=92 && LA52_0<=96)) ) {
                     alt52=1;
                 }
 
 
                 switch (alt52) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3341:2: () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3291:2: () ( (lv_operator_2_0= ruleRelationalOperator ) ) ( (lv_rightOperand_3_0= ruleShiftExpression ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3341:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3342:5: 
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3291:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3292:5: 
             	    {
             	    if ( state.backtracking==0 ) {
 
             	              current = forceCreateModelElementAndSet(
-            	                  grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0(),
+            	                  grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0(),
             	                  current);
             	          
             	    }
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3347:2: ( (lv_operator_2_0= ruleShiftOperator ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3348:1: (lv_operator_2_0= ruleShiftOperator )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3297:2: ( (lv_operator_2_0= ruleRelationalOperator ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3298:1: (lv_operator_2_0= ruleRelationalOperator )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3348:1: (lv_operator_2_0= ruleShiftOperator )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3349:3: lv_operator_2_0= ruleShiftOperator
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3298:1: (lv_operator_2_0= ruleRelationalOperator )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3299:3: lv_operator_2_0= ruleRelationalOperator
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getShiftExpressionAccess().getOperatorShiftOperatorEnumRuleCall_1_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getLogicalRelationExpressionAccess().getOperatorRelationalOperatorEnumRuleCall_1_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleShiftOperator_in_ruleShiftExpression7815);
-            	    lv_operator_2_0=ruleShiftOperator();
+            	    pushFollow(FOLLOW_ruleRelationalOperator_in_ruleLogicalRelationExpression7704);
+            	    lv_operator_2_0=ruleRelationalOperator();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getShiftExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getLogicalRelationExpressionRule());
             	      	        }
             	             		set(
             	             			current, 
             	             			"operator",
             	              		lv_operator_2_0, 
-            	              		"ShiftOperator");
+            	              		"RelationalOperator");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -10034,32 +9914,32 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3365:2: ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3366:1: (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3315:2: ( (lv_rightOperand_3_0= ruleShiftExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3316:1: (lv_rightOperand_3_0= ruleShiftExpression )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3366:1: (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3367:3: lv_rightOperand_3_0= ruleNumericalAddSubtractExpression
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3316:1: (lv_rightOperand_3_0= ruleShiftExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3317:3: lv_rightOperand_3_0= ruleShiftExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getShiftExpressionAccess().getRightOperandNumericalAddSubtractExpressionParserRuleCall_1_2_0()); 
+            	      	        newCompositeNode(grammarAccess.getLogicalRelationExpressionAccess().getRightOperandShiftExpressionParserRuleCall_1_2_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleNumericalAddSubtractExpression_in_ruleShiftExpression7836);
-            	    lv_rightOperand_3_0=ruleNumericalAddSubtractExpression();
+            	    pushFollow(FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7725);
+            	    lv_rightOperand_3_0=ruleShiftExpression();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getShiftExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getLogicalRelationExpressionRule());
             	      	        }
             	             		set(
             	             			current, 
             	             			"rightOperand",
             	              		lv_rightOperand_3_0, 
-            	              		"NumericalAddSubtractExpression");
+            	              		"ShiftExpression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -10097,33 +9977,33 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleShiftExpression"
+    // $ANTLR end "ruleLogicalRelationExpression"
 
 
-    // $ANTLR start "entryRuleNumericalAddSubtractExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3391:1: entryRuleNumericalAddSubtractExpression returns [EObject current=null] : iv_ruleNumericalAddSubtractExpression= ruleNumericalAddSubtractExpression EOF ;
-    public final EObject entryRuleNumericalAddSubtractExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleShiftExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3341:1: entryRuleShiftExpression returns [EObject current=null] : iv_ruleShiftExpression= ruleShiftExpression EOF ;
+    public final EObject entryRuleShiftExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleNumericalAddSubtractExpression = null;
+        EObject iv_ruleShiftExpression = null;
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3392:2: (iv_ruleNumericalAddSubtractExpression= ruleNumericalAddSubtractExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3393:2: iv_ruleNumericalAddSubtractExpression= ruleNumericalAddSubtractExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3342:2: (iv_ruleShiftExpression= ruleShiftExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3343:2: iv_ruleShiftExpression= ruleShiftExpression EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getNumericalAddSubtractExpressionRule()); 
+               newCompositeNode(grammarAccess.getShiftExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleNumericalAddSubtractExpression_in_entryRuleNumericalAddSubtractExpression7874);
-            iv_ruleNumericalAddSubtractExpression=ruleNumericalAddSubtractExpression();
+            pushFollow(FOLLOW_ruleShiftExpression_in_entryRuleShiftExpression7763);
+            iv_ruleShiftExpression=ruleShiftExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleNumericalAddSubtractExpression; 
+               current =iv_ruleShiftExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleNumericalAddSubtractExpression7884); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleShiftExpression7773); if (state.failed) return current;
 
             }
 
@@ -10137,15 +10017,15 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleNumericalAddSubtractExpression"
+    // $ANTLR end "entryRuleShiftExpression"
 
 
-    // $ANTLR start "ruleNumericalAddSubtractExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3400:1: ruleNumericalAddSubtractExpression returns [EObject current=null] : (this_NumericalMultiplyDivideExpression_0= ruleNumericalMultiplyDivideExpression ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )* ) ;
-    public final EObject ruleNumericalAddSubtractExpression() throws RecognitionException {
+    // $ANTLR start "ruleShiftExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3350:1: ruleShiftExpression returns [EObject current=null] : (this_NumericalAddSubtractExpression_0= ruleNumericalAddSubtractExpression ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )* ) ;
+    public final EObject ruleShiftExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject this_NumericalMultiplyDivideExpression_0 = null;
+        EObject this_NumericalAddSubtractExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
@@ -10155,82 +10035,82 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3403:28: ( (this_NumericalMultiplyDivideExpression_0= ruleNumericalMultiplyDivideExpression ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3404:1: (this_NumericalMultiplyDivideExpression_0= ruleNumericalMultiplyDivideExpression ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3353:28: ( (this_NumericalAddSubtractExpression_0= ruleNumericalAddSubtractExpression ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3354:1: (this_NumericalAddSubtractExpression_0= ruleNumericalAddSubtractExpression ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3404:1: (this_NumericalMultiplyDivideExpression_0= ruleNumericalMultiplyDivideExpression ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3405:5: this_NumericalMultiplyDivideExpression_0= ruleNumericalMultiplyDivideExpression ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3354:1: (this_NumericalAddSubtractExpression_0= ruleNumericalAddSubtractExpression ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3355:5: this_NumericalAddSubtractExpression_0= ruleNumericalAddSubtractExpression ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )*
             {
             if ( state.backtracking==0 ) {
                
-                      newCompositeNode(grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalMultiplyDivideExpressionParserRuleCall_0()); 
+                      newCompositeNode(grammarAccess.getShiftExpressionAccess().getNumericalAddSubtractExpressionParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleNumericalMultiplyDivideExpression_in_ruleNumericalAddSubtractExpression7931);
-            this_NumericalMultiplyDivideExpression_0=ruleNumericalMultiplyDivideExpression();
+            pushFollow(FOLLOW_ruleNumericalAddSubtractExpression_in_ruleShiftExpression7820);
+            this_NumericalAddSubtractExpression_0=ruleNumericalAddSubtractExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
                
-                      current = this_NumericalMultiplyDivideExpression_0; 
+                      current = this_NumericalAddSubtractExpression_0; 
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3413:1: ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3363:1: ( () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) ) )*
             loop53:
             do {
                 int alt53=2;
                 int LA53_0 = input.LA(1);
 
-                if ( ((LA53_0>=89 && LA53_0<=90)) ) {
+                if ( ((LA53_0>=85 && LA53_0<=86)) ) {
                     alt53=1;
                 }
 
 
                 switch (alt53) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3413:2: () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3363:2: () ( (lv_operator_2_0= ruleShiftOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3413:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3414:5: 
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3363:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3364:5: 
             	    {
             	    if ( state.backtracking==0 ) {
 
             	              current = forceCreateModelElementAndSet(
-            	                  grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0(),
+            	                  grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0(),
             	                  current);
             	          
             	    }
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3419:2: ( (lv_operator_2_0= ruleAdditiveOperator ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3420:1: (lv_operator_2_0= ruleAdditiveOperator )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3369:2: ( (lv_operator_2_0= ruleShiftOperator ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3370:1: (lv_operator_2_0= ruleShiftOperator )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3420:1: (lv_operator_2_0= ruleAdditiveOperator )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3421:3: lv_operator_2_0= ruleAdditiveOperator
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3370:1: (lv_operator_2_0= ruleShiftOperator )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3371:3: lv_operator_2_0= ruleShiftOperator
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getNumericalAddSubtractExpressionAccess().getOperatorAdditiveOperatorEnumRuleCall_1_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getShiftExpressionAccess().getOperatorShiftOperatorEnumRuleCall_1_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleAdditiveOperator_in_ruleNumericalAddSubtractExpression7961);
-            	    lv_operator_2_0=ruleAdditiveOperator();
+            	    pushFollow(FOLLOW_ruleShiftOperator_in_ruleShiftExpression7850);
+            	    lv_operator_2_0=ruleShiftOperator();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getNumericalAddSubtractExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getShiftExpressionRule());
             	      	        }
             	             		set(
             	             			current, 
             	             			"operator",
             	              		lv_operator_2_0, 
-            	              		"AdditiveOperator");
+            	              		"ShiftOperator");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -10240,32 +10120,32 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3437:2: ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3438:1: (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3387:2: ( (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3388:1: (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3438:1: (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3439:3: lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3388:1: (lv_rightOperand_3_0= ruleNumericalAddSubtractExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3389:3: lv_rightOperand_3_0= ruleNumericalAddSubtractExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getNumericalAddSubtractExpressionAccess().getRightOperandNumericalMultiplyDivideExpressionParserRuleCall_1_2_0()); 
+            	      	        newCompositeNode(grammarAccess.getShiftExpressionAccess().getRightOperandNumericalAddSubtractExpressionParserRuleCall_1_2_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleNumericalMultiplyDivideExpression_in_ruleNumericalAddSubtractExpression7982);
-            	    lv_rightOperand_3_0=ruleNumericalMultiplyDivideExpression();
+            	    pushFollow(FOLLOW_ruleNumericalAddSubtractExpression_in_ruleShiftExpression7871);
+            	    lv_rightOperand_3_0=ruleNumericalAddSubtractExpression();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getNumericalAddSubtractExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getShiftExpressionRule());
             	      	        }
             	             		set(
             	             			current, 
             	             			"rightOperand",
             	              		lv_rightOperand_3_0, 
-            	              		"NumericalMultiplyDivideExpression");
+            	              		"NumericalAddSubtractExpression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -10303,33 +10183,33 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleNumericalAddSubtractExpression"
+    // $ANTLR end "ruleShiftExpression"
 
 
-    // $ANTLR start "entryRuleNumericalMultiplyDivideExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3463:1: entryRuleNumericalMultiplyDivideExpression returns [EObject current=null] : iv_ruleNumericalMultiplyDivideExpression= ruleNumericalMultiplyDivideExpression EOF ;
-    public final EObject entryRuleNumericalMultiplyDivideExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleNumericalAddSubtractExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3413:1: entryRuleNumericalAddSubtractExpression returns [EObject current=null] : iv_ruleNumericalAddSubtractExpression= ruleNumericalAddSubtractExpression EOF ;
+    public final EObject entryRuleNumericalAddSubtractExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleNumericalMultiplyDivideExpression = null;
+        EObject iv_ruleNumericalAddSubtractExpression = null;
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3464:2: (iv_ruleNumericalMultiplyDivideExpression= ruleNumericalMultiplyDivideExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3465:2: iv_ruleNumericalMultiplyDivideExpression= ruleNumericalMultiplyDivideExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3414:2: (iv_ruleNumericalAddSubtractExpression= ruleNumericalAddSubtractExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3415:2: iv_ruleNumericalAddSubtractExpression= ruleNumericalAddSubtractExpression EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getNumericalMultiplyDivideExpressionRule()); 
+               newCompositeNode(grammarAccess.getNumericalAddSubtractExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleNumericalMultiplyDivideExpression_in_entryRuleNumericalMultiplyDivideExpression8020);
-            iv_ruleNumericalMultiplyDivideExpression=ruleNumericalMultiplyDivideExpression();
+            pushFollow(FOLLOW_ruleNumericalAddSubtractExpression_in_entryRuleNumericalAddSubtractExpression7909);
+            iv_ruleNumericalAddSubtractExpression=ruleNumericalAddSubtractExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleNumericalMultiplyDivideExpression; 
+               current =iv_ruleNumericalAddSubtractExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleNumericalMultiplyDivideExpression8030); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleNumericalAddSubtractExpression7919); if (state.failed) return current;
 
             }
 
@@ -10343,15 +10223,15 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleNumericalMultiplyDivideExpression"
+    // $ANTLR end "entryRuleNumericalAddSubtractExpression"
 
 
-    // $ANTLR start "ruleNumericalMultiplyDivideExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3472:1: ruleNumericalMultiplyDivideExpression returns [EObject current=null] : (this_NumericalUnaryExpression_0= ruleNumericalUnaryExpression ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )* ) ;
-    public final EObject ruleNumericalMultiplyDivideExpression() throws RecognitionException {
+    // $ANTLR start "ruleNumericalAddSubtractExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3422:1: ruleNumericalAddSubtractExpression returns [EObject current=null] : (this_NumericalMultiplyDivideExpression_0= ruleNumericalMultiplyDivideExpression ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )* ) ;
+    public final EObject ruleNumericalAddSubtractExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject this_NumericalUnaryExpression_0 = null;
+        EObject this_NumericalMultiplyDivideExpression_0 = null;
 
         Enumerator lv_operator_2_0 = null;
 
@@ -10361,82 +10241,82 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3475:28: ( (this_NumericalUnaryExpression_0= ruleNumericalUnaryExpression ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3476:1: (this_NumericalUnaryExpression_0= ruleNumericalUnaryExpression ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3425:28: ( (this_NumericalMultiplyDivideExpression_0= ruleNumericalMultiplyDivideExpression ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3426:1: (this_NumericalMultiplyDivideExpression_0= ruleNumericalMultiplyDivideExpression ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3476:1: (this_NumericalUnaryExpression_0= ruleNumericalUnaryExpression ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3477:5: this_NumericalUnaryExpression_0= ruleNumericalUnaryExpression ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3426:1: (this_NumericalMultiplyDivideExpression_0= ruleNumericalMultiplyDivideExpression ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3427:5: this_NumericalMultiplyDivideExpression_0= ruleNumericalMultiplyDivideExpression ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )*
             {
             if ( state.backtracking==0 ) {
                
-                      newCompositeNode(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalUnaryExpressionParserRuleCall_0()); 
+                      newCompositeNode(grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalMultiplyDivideExpressionParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleNumericalUnaryExpression_in_ruleNumericalMultiplyDivideExpression8077);
-            this_NumericalUnaryExpression_0=ruleNumericalUnaryExpression();
+            pushFollow(FOLLOW_ruleNumericalMultiplyDivideExpression_in_ruleNumericalAddSubtractExpression7966);
+            this_NumericalMultiplyDivideExpression_0=ruleNumericalMultiplyDivideExpression();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
                
-                      current = this_NumericalUnaryExpression_0; 
+                      current = this_NumericalMultiplyDivideExpression_0; 
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3485:1: ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3435:1: ( () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) ) )*
             loop54:
             do {
                 int alt54=2;
                 int LA54_0 = input.LA(1);
 
-                if ( (LA54_0==25||(LA54_0>=91 && LA54_0<=92)) ) {
+                if ( ((LA54_0>=87 && LA54_0<=88)) ) {
                     alt54=1;
                 }
 
 
                 switch (alt54) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3485:2: () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3435:2: () ( (lv_operator_2_0= ruleAdditiveOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3485:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3486:5: 
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3435:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3436:5: 
             	    {
             	    if ( state.backtracking==0 ) {
 
             	              current = forceCreateModelElementAndSet(
-            	                  grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0(),
+            	                  grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0(),
             	                  current);
             	          
             	    }
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3491:2: ( (lv_operator_2_0= ruleMultiplicativeOperator ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3492:1: (lv_operator_2_0= ruleMultiplicativeOperator )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3441:2: ( (lv_operator_2_0= ruleAdditiveOperator ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3442:1: (lv_operator_2_0= ruleAdditiveOperator )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3492:1: (lv_operator_2_0= ruleMultiplicativeOperator )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3493:3: lv_operator_2_0= ruleMultiplicativeOperator
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3442:1: (lv_operator_2_0= ruleAdditiveOperator )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3443:3: lv_operator_2_0= ruleAdditiveOperator
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getOperatorMultiplicativeOperatorEnumRuleCall_1_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getNumericalAddSubtractExpressionAccess().getOperatorAdditiveOperatorEnumRuleCall_1_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleMultiplicativeOperator_in_ruleNumericalMultiplyDivideExpression8107);
-            	    lv_operator_2_0=ruleMultiplicativeOperator();
+            	    pushFollow(FOLLOW_ruleAdditiveOperator_in_ruleNumericalAddSubtractExpression7996);
+            	    lv_operator_2_0=ruleAdditiveOperator();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getNumericalMultiplyDivideExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getNumericalAddSubtractExpressionRule());
             	      	        }
             	             		set(
             	             			current, 
             	             			"operator",
             	              		lv_operator_2_0, 
-            	              		"MultiplicativeOperator");
+            	              		"AdditiveOperator");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -10446,32 +10326,32 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3509:2: ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3510:1: (lv_rightOperand_3_0= ruleNumericalUnaryExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3459:2: ( (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3460:1: (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3510:1: (lv_rightOperand_3_0= ruleNumericalUnaryExpression )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3511:3: lv_rightOperand_3_0= ruleNumericalUnaryExpression
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3460:1: (lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3461:3: lv_rightOperand_3_0= ruleNumericalMultiplyDivideExpression
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getRightOperandNumericalUnaryExpressionParserRuleCall_1_2_0()); 
+            	      	        newCompositeNode(grammarAccess.getNumericalAddSubtractExpressionAccess().getRightOperandNumericalMultiplyDivideExpressionParserRuleCall_1_2_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleNumericalUnaryExpression_in_ruleNumericalMultiplyDivideExpression8128);
-            	    lv_rightOperand_3_0=ruleNumericalUnaryExpression();
+            	    pushFollow(FOLLOW_ruleNumericalMultiplyDivideExpression_in_ruleNumericalAddSubtractExpression8017);
+            	    lv_rightOperand_3_0=ruleNumericalMultiplyDivideExpression();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getNumericalMultiplyDivideExpressionRule());
+            	      	            current = createModelElementForParent(grammarAccess.getNumericalAddSubtractExpressionRule());
             	      	        }
             	             		set(
             	             			current, 
             	             			"rightOperand",
             	              		lv_rightOperand_3_0, 
-            	              		"NumericalUnaryExpression");
+            	              		"NumericalMultiplyDivideExpression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -10509,11 +10389,217 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
+    // $ANTLR end "ruleNumericalAddSubtractExpression"
+
+
+    // $ANTLR start "entryRuleNumericalMultiplyDivideExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3485:1: entryRuleNumericalMultiplyDivideExpression returns [EObject current=null] : iv_ruleNumericalMultiplyDivideExpression= ruleNumericalMultiplyDivideExpression EOF ;
+    public final EObject entryRuleNumericalMultiplyDivideExpression() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleNumericalMultiplyDivideExpression = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3486:2: (iv_ruleNumericalMultiplyDivideExpression= ruleNumericalMultiplyDivideExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3487:2: iv_ruleNumericalMultiplyDivideExpression= ruleNumericalMultiplyDivideExpression EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getNumericalMultiplyDivideExpressionRule()); 
+            }
+            pushFollow(FOLLOW_ruleNumericalMultiplyDivideExpression_in_entryRuleNumericalMultiplyDivideExpression8055);
+            iv_ruleNumericalMultiplyDivideExpression=ruleNumericalMultiplyDivideExpression();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleNumericalMultiplyDivideExpression; 
+            }
+            match(input,EOF,FOLLOW_EOF_in_entryRuleNumericalMultiplyDivideExpression8065); if (state.failed) return current;
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleNumericalMultiplyDivideExpression"
+
+
+    // $ANTLR start "ruleNumericalMultiplyDivideExpression"
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3494:1: ruleNumericalMultiplyDivideExpression returns [EObject current=null] : (this_NumericalUnaryExpression_0= ruleNumericalUnaryExpression ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )* ) ;
+    public final EObject ruleNumericalMultiplyDivideExpression() throws RecognitionException {
+        EObject current = null;
+
+        EObject this_NumericalUnaryExpression_0 = null;
+
+        Enumerator lv_operator_2_0 = null;
+
+        EObject lv_rightOperand_3_0 = null;
+
+
+         enterRule(); 
+            
+        try {
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3497:28: ( (this_NumericalUnaryExpression_0= ruleNumericalUnaryExpression ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3498:1: (this_NumericalUnaryExpression_0= ruleNumericalUnaryExpression ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )* )
+            {
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3498:1: (this_NumericalUnaryExpression_0= ruleNumericalUnaryExpression ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3499:5: this_NumericalUnaryExpression_0= ruleNumericalUnaryExpression ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )*
+            {
+            if ( state.backtracking==0 ) {
+               
+                      newCompositeNode(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalUnaryExpressionParserRuleCall_0()); 
+                  
+            }
+            pushFollow(FOLLOW_ruleNumericalUnaryExpression_in_ruleNumericalMultiplyDivideExpression8112);
+            this_NumericalUnaryExpression_0=ruleNumericalUnaryExpression();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               
+                      current = this_NumericalUnaryExpression_0; 
+                      afterParserOrEnumRuleCall();
+                  
+            }
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3507:1: ( () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) ) )*
+            loop55:
+            do {
+                int alt55=2;
+                int LA55_0 = input.LA(1);
+
+                if ( (LA55_0==25||(LA55_0>=89 && LA55_0<=90)) ) {
+                    alt55=1;
+                }
+
+
+                switch (alt55) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3507:2: () ( (lv_operator_2_0= ruleMultiplicativeOperator ) ) ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) )
+            	    {
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3507:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3508:5: 
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	              current = forceCreateModelElementAndSet(
+            	                  grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0(),
+            	                  current);
+            	          
+            	    }
+
+            	    }
+
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3513:2: ( (lv_operator_2_0= ruleMultiplicativeOperator ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3514:1: (lv_operator_2_0= ruleMultiplicativeOperator )
+            	    {
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3514:1: (lv_operator_2_0= ruleMultiplicativeOperator )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3515:3: lv_operator_2_0= ruleMultiplicativeOperator
+            	    {
+            	    if ( state.backtracking==0 ) {
+            	       
+            	      	        newCompositeNode(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getOperatorMultiplicativeOperatorEnumRuleCall_1_1_0()); 
+            	      	    
+            	    }
+            	    pushFollow(FOLLOW_ruleMultiplicativeOperator_in_ruleNumericalMultiplyDivideExpression8142);
+            	    lv_operator_2_0=ruleMultiplicativeOperator();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      	        if (current==null) {
+            	      	            current = createModelElementForParent(grammarAccess.getNumericalMultiplyDivideExpressionRule());
+            	      	        }
+            	             		set(
+            	             			current, 
+            	             			"operator",
+            	              		lv_operator_2_0, 
+            	              		"MultiplicativeOperator");
+            	      	        afterParserOrEnumRuleCall();
+            	      	    
+            	    }
+
+            	    }
+
+
+            	    }
+
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3531:2: ( (lv_rightOperand_3_0= ruleNumericalUnaryExpression ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3532:1: (lv_rightOperand_3_0= ruleNumericalUnaryExpression )
+            	    {
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3532:1: (lv_rightOperand_3_0= ruleNumericalUnaryExpression )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3533:3: lv_rightOperand_3_0= ruleNumericalUnaryExpression
+            	    {
+            	    if ( state.backtracking==0 ) {
+            	       
+            	      	        newCompositeNode(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getRightOperandNumericalUnaryExpressionParserRuleCall_1_2_0()); 
+            	      	    
+            	    }
+            	    pushFollow(FOLLOW_ruleNumericalUnaryExpression_in_ruleNumericalMultiplyDivideExpression8163);
+            	    lv_rightOperand_3_0=ruleNumericalUnaryExpression();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      	        if (current==null) {
+            	      	            current = createModelElementForParent(grammarAccess.getNumericalMultiplyDivideExpressionRule());
+            	      	        }
+            	             		set(
+            	             			current, 
+            	             			"rightOperand",
+            	              		lv_rightOperand_3_0, 
+            	              		"NumericalUnaryExpression");
+            	      	        afterParserOrEnumRuleCall();
+            	      	    
+            	    }
+
+            	    }
+
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop55;
+                }
+            } while (true);
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+               leaveRule(); 
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
     // $ANTLR end "ruleNumericalMultiplyDivideExpression"
 
 
     // $ANTLR start "entryRuleNumericalUnaryExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3535:1: entryRuleNumericalUnaryExpression returns [EObject current=null] : iv_ruleNumericalUnaryExpression= ruleNumericalUnaryExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3557:1: entryRuleNumericalUnaryExpression returns [EObject current=null] : iv_ruleNumericalUnaryExpression= ruleNumericalUnaryExpression EOF ;
     public final EObject entryRuleNumericalUnaryExpression() throws RecognitionException {
         EObject current = null;
 
@@ -10521,13 +10607,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3536:2: (iv_ruleNumericalUnaryExpression= ruleNumericalUnaryExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3537:2: iv_ruleNumericalUnaryExpression= ruleNumericalUnaryExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3558:2: (iv_ruleNumericalUnaryExpression= ruleNumericalUnaryExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3559:2: iv_ruleNumericalUnaryExpression= ruleNumericalUnaryExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNumericalUnaryExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleNumericalUnaryExpression_in_entryRuleNumericalUnaryExpression8166);
+            pushFollow(FOLLOW_ruleNumericalUnaryExpression_in_entryRuleNumericalUnaryExpression8201);
             iv_ruleNumericalUnaryExpression=ruleNumericalUnaryExpression();
 
             state._fsp--;
@@ -10535,7 +10621,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleNumericalUnaryExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleNumericalUnaryExpression8176); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleNumericalUnaryExpression8211); if (state.failed) return current;
 
             }
 
@@ -10553,7 +10639,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNumericalUnaryExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3544:1: ruleNumericalUnaryExpression returns [EObject current=null] : (this_PrimaryExpression_0= rulePrimaryExpression | ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3566:1: ruleNumericalUnaryExpression returns [EObject current=null] : (this_PrimaryExpression_0= rulePrimaryExpression | ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) ) ) ;
     public final EObject ruleNumericalUnaryExpression() throws RecognitionException {
         EObject current = null;
 
@@ -10567,36 +10653,36 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3547:28: ( (this_PrimaryExpression_0= rulePrimaryExpression | ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3548:1: (this_PrimaryExpression_0= rulePrimaryExpression | ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3569:28: ( (this_PrimaryExpression_0= rulePrimaryExpression | ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3570:1: (this_PrimaryExpression_0= rulePrimaryExpression | ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3548:1: (this_PrimaryExpression_0= rulePrimaryExpression | ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) ) )
-            int alt55=2;
-            int LA55_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3570:1: (this_PrimaryExpression_0= rulePrimaryExpression | ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) ) )
+            int alt56=2;
+            int LA56_0 = input.LA(1);
 
-            if ( ((LA55_0>=RULE_ID && LA55_0<=RULE_STRING)||LA55_0==23||LA55_0==34||(LA55_0>=56 && LA55_0<=57)) ) {
-                alt55=1;
+            if ( ((LA56_0>=RULE_ID && LA56_0<=RULE_STRING)||LA56_0==23||LA56_0==32||(LA56_0>=54 && LA56_0<=55)) ) {
+                alt56=1;
             }
-            else if ( ((LA55_0>=89 && LA55_0<=90)||LA55_0==93) ) {
-                alt55=2;
+            else if ( ((LA56_0>=87 && LA56_0<=88)||LA56_0==91) ) {
+                alt56=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 55, 0, input);
+                    new NoViableAltException("", 56, 0, input);
 
                 throw nvae;
             }
-            switch (alt55) {
+            switch (alt56) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3549:5: this_PrimaryExpression_0= rulePrimaryExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3571:5: this_PrimaryExpression_0= rulePrimaryExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getNumericalUnaryExpressionAccess().getPrimaryExpressionParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_rulePrimaryExpression_in_ruleNumericalUnaryExpression8223);
+                    pushFollow(FOLLOW_rulePrimaryExpression_in_ruleNumericalUnaryExpression8258);
                     this_PrimaryExpression_0=rulePrimaryExpression();
 
                     state._fsp--;
@@ -10611,13 +10697,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3558:6: ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3580:6: ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3558:6: ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3558:7: () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3580:6: ( () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3580:7: () ( (lv_operator_2_0= ruleUnaryOperator ) ) ( (lv_operand_3_0= rulePrimaryExpression ) )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3558:7: ()
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3559:5: 
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3580:7: ()
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3581:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -10629,18 +10715,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3564:2: ( (lv_operator_2_0= ruleUnaryOperator ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3565:1: (lv_operator_2_0= ruleUnaryOperator )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3586:2: ( (lv_operator_2_0= ruleUnaryOperator ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3587:1: (lv_operator_2_0= ruleUnaryOperator )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3565:1: (lv_operator_2_0= ruleUnaryOperator )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3566:3: lv_operator_2_0= ruleUnaryOperator
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3587:1: (lv_operator_2_0= ruleUnaryOperator )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3588:3: lv_operator_2_0= ruleUnaryOperator
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getNumericalUnaryExpressionAccess().getOperatorUnaryOperatorEnumRuleCall_1_1_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleUnaryOperator_in_ruleNumericalUnaryExpression8259);
+                    pushFollow(FOLLOW_ruleUnaryOperator_in_ruleNumericalUnaryExpression8294);
                     lv_operator_2_0=ruleUnaryOperator();
 
                     state._fsp--;
@@ -10664,18 +10750,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3582:2: ( (lv_operand_3_0= rulePrimaryExpression ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3583:1: (lv_operand_3_0= rulePrimaryExpression )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3604:2: ( (lv_operand_3_0= rulePrimaryExpression ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3605:1: (lv_operand_3_0= rulePrimaryExpression )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3583:1: (lv_operand_3_0= rulePrimaryExpression )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3584:3: lv_operand_3_0= rulePrimaryExpression
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3605:1: (lv_operand_3_0= rulePrimaryExpression )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3606:3: lv_operand_3_0= rulePrimaryExpression
                     {
                     if ( state.backtracking==0 ) {
                        
                       	        newCompositeNode(grammarAccess.getNumericalUnaryExpressionAccess().getOperandPrimaryExpressionParserRuleCall_1_2_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_rulePrimaryExpression_in_ruleNumericalUnaryExpression8280);
+                    pushFollow(FOLLOW_rulePrimaryExpression_in_ruleNumericalUnaryExpression8315);
                     lv_operand_3_0=rulePrimaryExpression();
 
                     state._fsp--;
@@ -10728,7 +10814,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrimitiveValueExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3608:1: entryRulePrimitiveValueExpression returns [EObject current=null] : iv_rulePrimitiveValueExpression= rulePrimitiveValueExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3630:1: entryRulePrimitiveValueExpression returns [EObject current=null] : iv_rulePrimitiveValueExpression= rulePrimitiveValueExpression EOF ;
     public final EObject entryRulePrimitiveValueExpression() throws RecognitionException {
         EObject current = null;
 
@@ -10736,13 +10822,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3609:2: (iv_rulePrimitiveValueExpression= rulePrimitiveValueExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3610:2: iv_rulePrimitiveValueExpression= rulePrimitiveValueExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3631:2: (iv_rulePrimitiveValueExpression= rulePrimitiveValueExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3632:2: iv_rulePrimitiveValueExpression= rulePrimitiveValueExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPrimitiveValueExpressionRule()); 
             }
-            pushFollow(FOLLOW_rulePrimitiveValueExpression_in_entryRulePrimitiveValueExpression8317);
+            pushFollow(FOLLOW_rulePrimitiveValueExpression_in_entryRulePrimitiveValueExpression8352);
             iv_rulePrimitiveValueExpression=rulePrimitiveValueExpression();
 
             state._fsp--;
@@ -10750,7 +10836,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_rulePrimitiveValueExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRulePrimitiveValueExpression8327); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRulePrimitiveValueExpression8362); if (state.failed) return current;
 
             }
 
@@ -10768,7 +10854,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrimitiveValueExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3617:1: rulePrimitiveValueExpression returns [EObject current=null] : ( () ( (lv_value_1_0= ruleLiteral ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3639:1: rulePrimitiveValueExpression returns [EObject current=null] : ( () ( (lv_value_1_0= ruleLiteral ) ) ) ;
     public final EObject rulePrimitiveValueExpression() throws RecognitionException {
         EObject current = null;
 
@@ -10778,14 +10864,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3620:28: ( ( () ( (lv_value_1_0= ruleLiteral ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3621:1: ( () ( (lv_value_1_0= ruleLiteral ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3642:28: ( ( () ( (lv_value_1_0= ruleLiteral ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3643:1: ( () ( (lv_value_1_0= ruleLiteral ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3621:1: ( () ( (lv_value_1_0= ruleLiteral ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3621:2: () ( (lv_value_1_0= ruleLiteral ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3643:1: ( () ( (lv_value_1_0= ruleLiteral ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3643:2: () ( (lv_value_1_0= ruleLiteral ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3621:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3622:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3643:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3644:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -10797,18 +10883,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3627:2: ( (lv_value_1_0= ruleLiteral ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3628:1: (lv_value_1_0= ruleLiteral )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3649:2: ( (lv_value_1_0= ruleLiteral ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3650:1: (lv_value_1_0= ruleLiteral )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3628:1: (lv_value_1_0= ruleLiteral )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3629:3: lv_value_1_0= ruleLiteral
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3650:1: (lv_value_1_0= ruleLiteral )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3651:3: lv_value_1_0= ruleLiteral
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getPrimitiveValueExpressionAccess().getValueLiteralParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleLiteral_in_rulePrimitiveValueExpression8382);
+            pushFollow(FOLLOW_ruleLiteral_in_rulePrimitiveValueExpression8417);
             lv_value_1_0=ruleLiteral();
 
             state._fsp--;
@@ -10855,7 +10941,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFeatureCall"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3653:1: entryRuleFeatureCall returns [EObject current=null] : iv_ruleFeatureCall= ruleFeatureCall EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3675:1: entryRuleFeatureCall returns [EObject current=null] : iv_ruleFeatureCall= ruleFeatureCall EOF ;
     public final EObject entryRuleFeatureCall() throws RecognitionException {
         EObject current = null;
 
@@ -10863,13 +10949,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3654:2: (iv_ruleFeatureCall= ruleFeatureCall EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3655:2: iv_ruleFeatureCall= ruleFeatureCall EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3676:2: (iv_ruleFeatureCall= ruleFeatureCall EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3677:2: iv_ruleFeatureCall= ruleFeatureCall EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFeatureCallRule()); 
             }
-            pushFollow(FOLLOW_ruleFeatureCall_in_entryRuleFeatureCall8418);
+            pushFollow(FOLLOW_ruleFeatureCall_in_entryRuleFeatureCall8453);
             iv_ruleFeatureCall=ruleFeatureCall();
 
             state._fsp--;
@@ -10877,7 +10963,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleFeatureCall; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleFeatureCall8428); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleFeatureCall8463); if (state.failed) return current;
 
             }
 
@@ -10895,7 +10981,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFeatureCall"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3662:1: ruleFeatureCall returns [EObject current=null] : (this_ElementReferenceExpression_0= ruleElementReferenceExpression ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )* ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3684:1: ruleFeatureCall returns [EObject current=null] : (this_ElementReferenceExpression_0= ruleElementReferenceExpression ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )* ) ;
     public final EObject ruleFeatureCall() throws RecognitionException {
         EObject current = null;
 
@@ -10914,18 +11000,18 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3665:28: ( (this_ElementReferenceExpression_0= ruleElementReferenceExpression ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )* ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3666:1: (this_ElementReferenceExpression_0= ruleElementReferenceExpression ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3687:28: ( (this_ElementReferenceExpression_0= ruleElementReferenceExpression ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )* ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3688:1: (this_ElementReferenceExpression_0= ruleElementReferenceExpression ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )* )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3666:1: (this_ElementReferenceExpression_0= ruleElementReferenceExpression ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )* )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3667:5: this_ElementReferenceExpression_0= ruleElementReferenceExpression ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )*
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3688:1: (this_ElementReferenceExpression_0= ruleElementReferenceExpression ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )* )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3689:5: this_ElementReferenceExpression_0= ruleElementReferenceExpression ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )*
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getFeatureCallAccess().getElementReferenceExpressionParserRuleCall_0()); 
                   
             }
-            pushFollow(FOLLOW_ruleElementReferenceExpression_in_ruleFeatureCall8475);
+            pushFollow(FOLLOW_ruleElementReferenceExpression_in_ruleFeatureCall8510);
             this_ElementReferenceExpression_0=ruleElementReferenceExpression();
 
             state._fsp--;
@@ -10936,23 +11022,23 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3675:1: ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )*
-            loop59:
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3697:1: ( () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )? )*
+            loop60:
             do {
-                int alt59=2;
-                int LA59_0 = input.LA(1);
+                int alt60=2;
+                int LA60_0 = input.LA(1);
 
-                if ( (LA59_0==58) ) {
-                    alt59=1;
+                if ( (LA60_0==56) ) {
+                    alt60=1;
                 }
 
 
-                switch (alt59) {
+                switch (alt60) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3675:2: () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )?
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3697:2: () otherlv_2= '.' ( (otherlv_3= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )?
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3675:2: ()
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3676:5: 
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3697:2: ()
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3698:5: 
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -10964,17 +11050,17 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_2=(Token)match(input,58,FOLLOW_58_in_ruleFeatureCall8496); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,56,FOLLOW_56_in_ruleFeatureCall8531); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getFeatureCallAccess().getFullStopKeyword_1_1());
             	          
             	    }
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3685:1: ( (otherlv_3= RULE_ID ) )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3686:1: (otherlv_3= RULE_ID )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3707:1: ( (otherlv_3= RULE_ID ) )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3708:1: (otherlv_3= RULE_ID )
             	    {
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3686:1: (otherlv_3= RULE_ID )
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3687:3: otherlv_3= RULE_ID
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3708:1: (otherlv_3= RULE_ID )
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3709:3: otherlv_3= RULE_ID
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -10983,7 +11069,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	      	        }
             	              
             	    }
-            	    otherlv_3=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleFeatureCall8516); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleFeatureCall8551); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      		newLeafNode(otherlv_3, grammarAccess.getFeatureCallAccess().getFeatureEObjectCrossReference_1_2_0()); 
@@ -10995,24 +11081,24 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3698:2: ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )?
-            	    int alt58=2;
-            	    int LA58_0 = input.LA(1);
+            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3720:2: ( ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')' )?
+            	    int alt59=2;
+            	    int LA59_0 = input.LA(1);
 
-            	    if ( (LA58_0==23) && (synpred2_InternalSyncChartstext())) {
-            	        alt58=1;
+            	    if ( (LA59_0==23) && (synpred2_InternalSyncChartstext())) {
+            	        alt59=1;
             	    }
-            	    switch (alt58) {
+            	    switch (alt59) {
             	        case 1 :
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3698:3: ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')'
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3720:3: ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) ) ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )? otherlv_8= ')'
             	            {
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3698:3: ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) )
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3698:4: ( ( '(' ) )=> (lv_operationCall_4_0= '(' )
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3720:3: ( ( ( '(' ) )=> (lv_operationCall_4_0= '(' ) )
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3720:4: ( ( '(' ) )=> (lv_operationCall_4_0= '(' )
             	            {
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3705:1: (lv_operationCall_4_0= '(' )
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3706:3: lv_operationCall_4_0= '('
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3727:1: (lv_operationCall_4_0= '(' )
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3728:3: lv_operationCall_4_0= '('
             	            {
-            	            lv_operationCall_4_0=(Token)match(input,23,FOLLOW_23_in_ruleFeatureCall8550); if (state.failed) return current;
+            	            lv_operationCall_4_0=(Token)match(input,23,FOLLOW_23_in_ruleFeatureCall8585); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
 
             	                      newLeafNode(lv_operationCall_4_0, grammarAccess.getFeatureCallAccess().getOperationCallLeftParenthesisKeyword_1_3_0_0());
@@ -11032,29 +11118,29 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3719:2: ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )?
-            	            int alt57=2;
-            	            int LA57_0 = input.LA(1);
+            	            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3741:2: ( ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )* )?
+            	            int alt58=2;
+            	            int LA58_0 = input.LA(1);
 
-            	            if ( ((LA57_0>=RULE_ID && LA57_0<=RULE_STRING)||LA57_0==23||LA57_0==34||(LA57_0>=56 && LA57_0<=57)||LA57_0==63||(LA57_0>=89 && LA57_0<=90)||LA57_0==93) ) {
-            	                alt57=1;
+            	            if ( ((LA58_0>=RULE_ID && LA58_0<=RULE_STRING)||LA58_0==23||LA58_0==32||(LA58_0>=54 && LA58_0<=55)||LA58_0==61||(LA58_0>=87 && LA58_0<=88)||LA58_0==91) ) {
+            	                alt58=1;
             	            }
-            	            switch (alt57) {
+            	            switch (alt58) {
             	                case 1 :
-            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3719:3: ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )*
+            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3741:3: ( (lv_args_5_0= ruleExpression ) ) (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )*
             	                    {
-            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3719:3: ( (lv_args_5_0= ruleExpression ) )
-            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3720:1: (lv_args_5_0= ruleExpression )
+            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3741:3: ( (lv_args_5_0= ruleExpression ) )
+            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3742:1: (lv_args_5_0= ruleExpression )
             	                    {
-            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3720:1: (lv_args_5_0= ruleExpression )
-            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3721:3: lv_args_5_0= ruleExpression
+            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3742:1: (lv_args_5_0= ruleExpression )
+            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3743:3: lv_args_5_0= ruleExpression
             	                    {
             	                    if ( state.backtracking==0 ) {
             	                       
             	                      	        newCompositeNode(grammarAccess.getFeatureCallAccess().getArgsExpressionParserRuleCall_1_3_1_0_0()); 
             	                      	    
             	                    }
-            	                    pushFollow(FOLLOW_ruleExpression_in_ruleFeatureCall8585);
+            	                    pushFollow(FOLLOW_ruleExpression_in_ruleFeatureCall8620);
             	                    lv_args_5_0=ruleExpression();
 
             	                    state._fsp--;
@@ -11078,39 +11164,39 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	                    }
 
-            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3737:2: (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )*
-            	                    loop56:
+            	                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3759:2: (otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) ) )*
+            	                    loop57:
             	                    do {
-            	                        int alt56=2;
-            	                        int LA56_0 = input.LA(1);
+            	                        int alt57=2;
+            	                        int LA57_0 = input.LA(1);
 
-            	                        if ( (LA56_0==33) ) {
-            	                            alt56=1;
+            	                        if ( (LA57_0==31) ) {
+            	                            alt57=1;
             	                        }
 
 
-            	                        switch (alt56) {
+            	                        switch (alt57) {
             	                    	case 1 :
-            	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3737:4: otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) )
+            	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3759:4: otherlv_6= ',' ( (lv_args_7_0= ruleExpression ) )
             	                    	    {
-            	                    	    otherlv_6=(Token)match(input,33,FOLLOW_33_in_ruleFeatureCall8598); if (state.failed) return current;
+            	                    	    otherlv_6=(Token)match(input,31,FOLLOW_31_in_ruleFeatureCall8633); if (state.failed) return current;
             	                    	    if ( state.backtracking==0 ) {
 
             	                    	          	newLeafNode(otherlv_6, grammarAccess.getFeatureCallAccess().getCommaKeyword_1_3_1_1_0());
             	                    	          
             	                    	    }
-            	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3741:1: ( (lv_args_7_0= ruleExpression ) )
-            	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3742:1: (lv_args_7_0= ruleExpression )
+            	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3763:1: ( (lv_args_7_0= ruleExpression ) )
+            	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3764:1: (lv_args_7_0= ruleExpression )
             	                    	    {
-            	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3742:1: (lv_args_7_0= ruleExpression )
-            	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3743:3: lv_args_7_0= ruleExpression
+            	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3764:1: (lv_args_7_0= ruleExpression )
+            	                    	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3765:3: lv_args_7_0= ruleExpression
             	                    	    {
             	                    	    if ( state.backtracking==0 ) {
             	                    	       
             	                    	      	        newCompositeNode(grammarAccess.getFeatureCallAccess().getArgsExpressionParserRuleCall_1_3_1_1_1_0()); 
             	                    	      	    
             	                    	    }
-            	                    	    pushFollow(FOLLOW_ruleExpression_in_ruleFeatureCall8619);
+            	                    	    pushFollow(FOLLOW_ruleExpression_in_ruleFeatureCall8654);
             	                    	    lv_args_7_0=ruleExpression();
 
             	                    	    state._fsp--;
@@ -11139,7 +11225,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	                    	    break;
 
             	                    	default :
-            	                    	    break loop56;
+            	                    	    break loop57;
             	                        }
             	                    } while (true);
 
@@ -11149,7 +11235,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             	            }
 
-            	            otherlv_8=(Token)match(input,24,FOLLOW_24_in_ruleFeatureCall8635); if (state.failed) return current;
+            	            otherlv_8=(Token)match(input,24,FOLLOW_24_in_ruleFeatureCall8670); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
 
             	                  	newLeafNode(otherlv_8, grammarAccess.getFeatureCallAccess().getRightParenthesisKeyword_1_3_2());
@@ -11166,7 +11252,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop59;
+            	    break loop60;
                 }
             } while (true);
 
@@ -11193,7 +11279,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleElementReferenceExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3771:1: entryRuleElementReferenceExpression returns [EObject current=null] : iv_ruleElementReferenceExpression= ruleElementReferenceExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3793:1: entryRuleElementReferenceExpression returns [EObject current=null] : iv_ruleElementReferenceExpression= ruleElementReferenceExpression EOF ;
     public final EObject entryRuleElementReferenceExpression() throws RecognitionException {
         EObject current = null;
 
@@ -11201,13 +11287,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3772:2: (iv_ruleElementReferenceExpression= ruleElementReferenceExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3773:2: iv_ruleElementReferenceExpression= ruleElementReferenceExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3794:2: (iv_ruleElementReferenceExpression= ruleElementReferenceExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3795:2: iv_ruleElementReferenceExpression= ruleElementReferenceExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getElementReferenceExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleElementReferenceExpression_in_entryRuleElementReferenceExpression8675);
+            pushFollow(FOLLOW_ruleElementReferenceExpression_in_entryRuleElementReferenceExpression8710);
             iv_ruleElementReferenceExpression=ruleElementReferenceExpression();
 
             state._fsp--;
@@ -11215,7 +11301,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleElementReferenceExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleElementReferenceExpression8685); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleElementReferenceExpression8720); if (state.failed) return current;
 
             }
 
@@ -11233,7 +11319,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleElementReferenceExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3780:1: ruleElementReferenceExpression returns [EObject current=null] : ( () ( (otherlv_1= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )? ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3802:1: ruleElementReferenceExpression returns [EObject current=null] : ( () ( (otherlv_1= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )? ) ;
     public final EObject ruleElementReferenceExpression() throws RecognitionException {
         EObject current = null;
 
@@ -11249,14 +11335,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3783:28: ( ( () ( (otherlv_1= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )? ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3784:1: ( () ( (otherlv_1= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )? )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3805:28: ( ( () ( (otherlv_1= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )? ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3806:1: ( () ( (otherlv_1= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )? )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3784:1: ( () ( (otherlv_1= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )? )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3784:2: () ( (otherlv_1= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )?
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3806:1: ( () ( (otherlv_1= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )? )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3806:2: () ( (otherlv_1= RULE_ID ) ) ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )?
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3784:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3785:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3806:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3807:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -11268,11 +11354,11 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3790:2: ( (otherlv_1= RULE_ID ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3791:1: (otherlv_1= RULE_ID )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3812:2: ( (otherlv_1= RULE_ID ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3813:1: (otherlv_1= RULE_ID )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3791:1: (otherlv_1= RULE_ID )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3792:3: otherlv_1= RULE_ID
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3813:1: (otherlv_1= RULE_ID )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3814:3: otherlv_1= RULE_ID
             {
             if ( state.backtracking==0 ) {
 
@@ -11281,7 +11367,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
               	        }
                       
             }
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleElementReferenceExpression8739); if (state.failed) return current;
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleElementReferenceExpression8774); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               		newLeafNode(otherlv_1, grammarAccess.getElementReferenceExpressionAccess().getReferenceEObjectCrossReference_1_0()); 
@@ -11293,24 +11379,24 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3803:2: ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )?
-            int alt62=2;
-            int LA62_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3825:2: ( ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')' )?
+            int alt63=2;
+            int LA63_0 = input.LA(1);
 
-            if ( (LA62_0==23) && (synpred3_InternalSyncChartstext())) {
-                alt62=1;
+            if ( (LA63_0==23) && (synpred3_InternalSyncChartstext())) {
+                alt63=1;
             }
-            switch (alt62) {
+            switch (alt63) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3803:3: ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3825:3: ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) ) ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )? otherlv_6= ')'
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3803:3: ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3803:4: ( ( '(' ) )=> (lv_operationCall_2_0= '(' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3825:3: ( ( ( '(' ) )=> (lv_operationCall_2_0= '(' ) )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3825:4: ( ( '(' ) )=> (lv_operationCall_2_0= '(' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3810:1: (lv_operationCall_2_0= '(' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3811:3: lv_operationCall_2_0= '('
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3832:1: (lv_operationCall_2_0= '(' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3833:3: lv_operationCall_2_0= '('
                     {
-                    lv_operationCall_2_0=(Token)match(input,23,FOLLOW_23_in_ruleElementReferenceExpression8773); if (state.failed) return current;
+                    lv_operationCall_2_0=(Token)match(input,23,FOLLOW_23_in_ruleElementReferenceExpression8808); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_operationCall_2_0, grammarAccess.getElementReferenceExpressionAccess().getOperationCallLeftParenthesisKeyword_2_0_0());
@@ -11330,29 +11416,29 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3824:2: ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )?
-                    int alt61=2;
-                    int LA61_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3846:2: ( ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )* )?
+                    int alt62=2;
+                    int LA62_0 = input.LA(1);
 
-                    if ( ((LA61_0>=RULE_ID && LA61_0<=RULE_STRING)||LA61_0==23||LA61_0==34||(LA61_0>=56 && LA61_0<=57)||LA61_0==63||(LA61_0>=89 && LA61_0<=90)||LA61_0==93) ) {
-                        alt61=1;
+                    if ( ((LA62_0>=RULE_ID && LA62_0<=RULE_STRING)||LA62_0==23||LA62_0==32||(LA62_0>=54 && LA62_0<=55)||LA62_0==61||(LA62_0>=87 && LA62_0<=88)||LA62_0==91) ) {
+                        alt62=1;
                     }
-                    switch (alt61) {
+                    switch (alt62) {
                         case 1 :
-                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3824:3: ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )*
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3846:3: ( (lv_args_3_0= ruleExpression ) ) (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )*
                             {
-                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3824:3: ( (lv_args_3_0= ruleExpression ) )
-                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3825:1: (lv_args_3_0= ruleExpression )
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3846:3: ( (lv_args_3_0= ruleExpression ) )
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3847:1: (lv_args_3_0= ruleExpression )
                             {
-                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3825:1: (lv_args_3_0= ruleExpression )
-                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3826:3: lv_args_3_0= ruleExpression
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3847:1: (lv_args_3_0= ruleExpression )
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3848:3: lv_args_3_0= ruleExpression
                             {
                             if ( state.backtracking==0 ) {
                                
                               	        newCompositeNode(grammarAccess.getElementReferenceExpressionAccess().getArgsExpressionParserRuleCall_2_1_0_0()); 
                               	    
                             }
-                            pushFollow(FOLLOW_ruleExpression_in_ruleElementReferenceExpression8808);
+                            pushFollow(FOLLOW_ruleExpression_in_ruleElementReferenceExpression8843);
                             lv_args_3_0=ruleExpression();
 
                             state._fsp--;
@@ -11376,39 +11462,39 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                             }
 
-                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3842:2: (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )*
-                            loop60:
+                            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3864:2: (otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) ) )*
+                            loop61:
                             do {
-                                int alt60=2;
-                                int LA60_0 = input.LA(1);
+                                int alt61=2;
+                                int LA61_0 = input.LA(1);
 
-                                if ( (LA60_0==33) ) {
-                                    alt60=1;
+                                if ( (LA61_0==31) ) {
+                                    alt61=1;
                                 }
 
 
-                                switch (alt60) {
+                                switch (alt61) {
                             	case 1 :
-                            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3842:4: otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) )
+                            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3864:4: otherlv_4= ',' ( (lv_args_5_0= ruleExpression ) )
                             	    {
-                            	    otherlv_4=(Token)match(input,33,FOLLOW_33_in_ruleElementReferenceExpression8821); if (state.failed) return current;
+                            	    otherlv_4=(Token)match(input,31,FOLLOW_31_in_ruleElementReferenceExpression8856); if (state.failed) return current;
                             	    if ( state.backtracking==0 ) {
 
                             	          	newLeafNode(otherlv_4, grammarAccess.getElementReferenceExpressionAccess().getCommaKeyword_2_1_1_0());
                             	          
                             	    }
-                            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3846:1: ( (lv_args_5_0= ruleExpression ) )
-                            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3847:1: (lv_args_5_0= ruleExpression )
+                            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3868:1: ( (lv_args_5_0= ruleExpression ) )
+                            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3869:1: (lv_args_5_0= ruleExpression )
                             	    {
-                            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3847:1: (lv_args_5_0= ruleExpression )
-                            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3848:3: lv_args_5_0= ruleExpression
+                            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3869:1: (lv_args_5_0= ruleExpression )
+                            	    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3870:3: lv_args_5_0= ruleExpression
                             	    {
                             	    if ( state.backtracking==0 ) {
                             	       
                             	      	        newCompositeNode(grammarAccess.getElementReferenceExpressionAccess().getArgsExpressionParserRuleCall_2_1_1_1_0()); 
                             	      	    
                             	    }
-                            	    pushFollow(FOLLOW_ruleExpression_in_ruleElementReferenceExpression8842);
+                            	    pushFollow(FOLLOW_ruleExpression_in_ruleElementReferenceExpression8877);
                             	    lv_args_5_0=ruleExpression();
 
                             	    state._fsp--;
@@ -11437,7 +11523,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                             	    break;
 
                             	default :
-                            	    break loop60;
+                            	    break loop61;
                                 }
                             } while (true);
 
@@ -11447,7 +11533,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_6=(Token)match(input,24,FOLLOW_24_in_ruleElementReferenceExpression8858); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,24,FOLLOW_24_in_ruleElementReferenceExpression8893); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_6, grammarAccess.getElementReferenceExpressionAccess().getRightParenthesisKeyword_2_2());
@@ -11482,7 +11568,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEventValueReferenceExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3876:1: entryRuleEventValueReferenceExpression returns [EObject current=null] : iv_ruleEventValueReferenceExpression= ruleEventValueReferenceExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3898:1: entryRuleEventValueReferenceExpression returns [EObject current=null] : iv_ruleEventValueReferenceExpression= ruleEventValueReferenceExpression EOF ;
     public final EObject entryRuleEventValueReferenceExpression() throws RecognitionException {
         EObject current = null;
 
@@ -11490,13 +11576,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3877:2: (iv_ruleEventValueReferenceExpression= ruleEventValueReferenceExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3878:2: iv_ruleEventValueReferenceExpression= ruleEventValueReferenceExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3899:2: (iv_ruleEventValueReferenceExpression= ruleEventValueReferenceExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3900:2: iv_ruleEventValueReferenceExpression= ruleEventValueReferenceExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEventValueReferenceExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleEventValueReferenceExpression_in_entryRuleEventValueReferenceExpression8896);
+            pushFollow(FOLLOW_ruleEventValueReferenceExpression_in_entryRuleEventValueReferenceExpression8931);
             iv_ruleEventValueReferenceExpression=ruleEventValueReferenceExpression();
 
             state._fsp--;
@@ -11504,7 +11590,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleEventValueReferenceExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleEventValueReferenceExpression8906); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEventValueReferenceExpression8941); if (state.failed) return current;
 
             }
 
@@ -11522,7 +11608,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEventValueReferenceExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3885:1: ruleEventValueReferenceExpression returns [EObject current=null] : ( () otherlv_1= 'valueof' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3907:1: ruleEventValueReferenceExpression returns [EObject current=null] : ( () otherlv_1= 'valueof' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' ) ;
     public final EObject ruleEventValueReferenceExpression() throws RecognitionException {
         EObject current = null;
 
@@ -11535,14 +11621,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3888:28: ( ( () otherlv_1= 'valueof' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3889:1: ( () otherlv_1= 'valueof' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3910:28: ( ( () otherlv_1= 'valueof' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3911:1: ( () otherlv_1= 'valueof' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3889:1: ( () otherlv_1= 'valueof' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3889:2: () otherlv_1= 'valueof' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')'
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3911:1: ( () otherlv_1= 'valueof' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3911:2: () otherlv_1= 'valueof' otherlv_2= '(' ( (lv_value_3_0= ruleFeatureCall ) ) otherlv_4= ')'
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3889:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3890:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3911:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3912:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -11554,30 +11640,30 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,56,FOLLOW_56_in_ruleEventValueReferenceExpression8952); if (state.failed) return current;
+            otherlv_1=(Token)match(input,54,FOLLOW_54_in_ruleEventValueReferenceExpression8987); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getEventValueReferenceExpressionAccess().getValueofKeyword_1());
                   
             }
-            otherlv_2=(Token)match(input,23,FOLLOW_23_in_ruleEventValueReferenceExpression8964); if (state.failed) return current;
+            otherlv_2=(Token)match(input,23,FOLLOW_23_in_ruleEventValueReferenceExpression8999); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getEventValueReferenceExpressionAccess().getLeftParenthesisKeyword_2());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3903:1: ( (lv_value_3_0= ruleFeatureCall ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3904:1: (lv_value_3_0= ruleFeatureCall )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3925:1: ( (lv_value_3_0= ruleFeatureCall ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3926:1: (lv_value_3_0= ruleFeatureCall )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3904:1: (lv_value_3_0= ruleFeatureCall )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3905:3: lv_value_3_0= ruleFeatureCall
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3926:1: (lv_value_3_0= ruleFeatureCall )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3927:3: lv_value_3_0= ruleFeatureCall
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getEventValueReferenceExpressionAccess().getValueFeatureCallParserRuleCall_3_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleFeatureCall_in_ruleEventValueReferenceExpression8985);
+            pushFollow(FOLLOW_ruleFeatureCall_in_ruleEventValueReferenceExpression9020);
             lv_value_3_0=ruleFeatureCall();
 
             state._fsp--;
@@ -11601,7 +11687,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,24,FOLLOW_24_in_ruleEventValueReferenceExpression8997); if (state.failed) return current;
+            otherlv_4=(Token)match(input,24,FOLLOW_24_in_ruleEventValueReferenceExpression9032); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getEventValueReferenceExpressionAccess().getRightParenthesisKeyword_4());
@@ -11630,7 +11716,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleActiveStateReferenceExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3933:1: entryRuleActiveStateReferenceExpression returns [EObject current=null] : iv_ruleActiveStateReferenceExpression= ruleActiveStateReferenceExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3955:1: entryRuleActiveStateReferenceExpression returns [EObject current=null] : iv_ruleActiveStateReferenceExpression= ruleActiveStateReferenceExpression EOF ;
     public final EObject entryRuleActiveStateReferenceExpression() throws RecognitionException {
         EObject current = null;
 
@@ -11638,13 +11724,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3934:2: (iv_ruleActiveStateReferenceExpression= ruleActiveStateReferenceExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3935:2: iv_ruleActiveStateReferenceExpression= ruleActiveStateReferenceExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3956:2: (iv_ruleActiveStateReferenceExpression= ruleActiveStateReferenceExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3957:2: iv_ruleActiveStateReferenceExpression= ruleActiveStateReferenceExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getActiveStateReferenceExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleActiveStateReferenceExpression_in_entryRuleActiveStateReferenceExpression9033);
+            pushFollow(FOLLOW_ruleActiveStateReferenceExpression_in_entryRuleActiveStateReferenceExpression9068);
             iv_ruleActiveStateReferenceExpression=ruleActiveStateReferenceExpression();
 
             state._fsp--;
@@ -11652,7 +11738,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleActiveStateReferenceExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleActiveStateReferenceExpression9043); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleActiveStateReferenceExpression9078); if (state.failed) return current;
 
             }
 
@@ -11670,7 +11756,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleActiveStateReferenceExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3942:1: ruleActiveStateReferenceExpression returns [EObject current=null] : ( () otherlv_1= 'active' otherlv_2= '(' ( ( ruleFQN ) ) otherlv_4= ')' ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3964:1: ruleActiveStateReferenceExpression returns [EObject current=null] : ( () otherlv_1= 'active' otherlv_2= '(' ( ( ruleFQN ) ) otherlv_4= ')' ) ;
     public final EObject ruleActiveStateReferenceExpression() throws RecognitionException {
         EObject current = null;
 
@@ -11681,14 +11767,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3945:28: ( ( () otherlv_1= 'active' otherlv_2= '(' ( ( ruleFQN ) ) otherlv_4= ')' ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3946:1: ( () otherlv_1= 'active' otherlv_2= '(' ( ( ruleFQN ) ) otherlv_4= ')' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3967:28: ( ( () otherlv_1= 'active' otherlv_2= '(' ( ( ruleFQN ) ) otherlv_4= ')' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3968:1: ( () otherlv_1= 'active' otherlv_2= '(' ( ( ruleFQN ) ) otherlv_4= ')' )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3946:1: ( () otherlv_1= 'active' otherlv_2= '(' ( ( ruleFQN ) ) otherlv_4= ')' )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3946:2: () otherlv_1= 'active' otherlv_2= '(' ( ( ruleFQN ) ) otherlv_4= ')'
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3968:1: ( () otherlv_1= 'active' otherlv_2= '(' ( ( ruleFQN ) ) otherlv_4= ')' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3968:2: () otherlv_1= 'active' otherlv_2= '(' ( ( ruleFQN ) ) otherlv_4= ')'
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3946:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3947:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3968:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3969:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -11700,23 +11786,23 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,57,FOLLOW_57_in_ruleActiveStateReferenceExpression9089); if (state.failed) return current;
+            otherlv_1=(Token)match(input,55,FOLLOW_55_in_ruleActiveStateReferenceExpression9124); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getActiveStateReferenceExpressionAccess().getActiveKeyword_1());
                   
             }
-            otherlv_2=(Token)match(input,23,FOLLOW_23_in_ruleActiveStateReferenceExpression9101); if (state.failed) return current;
+            otherlv_2=(Token)match(input,23,FOLLOW_23_in_ruleActiveStateReferenceExpression9136); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getActiveStateReferenceExpressionAccess().getLeftParenthesisKeyword_2());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3960:1: ( ( ruleFQN ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3961:1: ( ruleFQN )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3982:1: ( ( ruleFQN ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3983:1: ( ruleFQN )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3961:1: ( ruleFQN )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3962:3: ruleFQN
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3983:1: ( ruleFQN )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3984:3: ruleFQN
             {
             if ( state.backtracking==0 ) {
 
@@ -11730,7 +11816,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
               	        newCompositeNode(grammarAccess.getActiveStateReferenceExpressionAccess().getValueStateCrossReference_3_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleFQN_in_ruleActiveStateReferenceExpression9124);
+            pushFollow(FOLLOW_ruleFQN_in_ruleActiveStateReferenceExpression9159);
             ruleFQN();
 
             state._fsp--;
@@ -11746,7 +11832,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,24,FOLLOW_24_in_ruleActiveStateReferenceExpression9136); if (state.failed) return current;
+            otherlv_4=(Token)match(input,24,FOLLOW_24_in_ruleActiveStateReferenceExpression9171); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getActiveStateReferenceExpressionAccess().getRightParenthesisKeyword_4());
@@ -11775,7 +11861,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleParenthesizedExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3987:1: entryRuleParenthesizedExpression returns [EObject current=null] : iv_ruleParenthesizedExpression= ruleParenthesizedExpression EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4009:1: entryRuleParenthesizedExpression returns [EObject current=null] : iv_ruleParenthesizedExpression= ruleParenthesizedExpression EOF ;
     public final EObject entryRuleParenthesizedExpression() throws RecognitionException {
         EObject current = null;
 
@@ -11783,13 +11869,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3988:2: (iv_ruleParenthesizedExpression= ruleParenthesizedExpression EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3989:2: iv_ruleParenthesizedExpression= ruleParenthesizedExpression EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4010:2: (iv_ruleParenthesizedExpression= ruleParenthesizedExpression EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4011:2: iv_ruleParenthesizedExpression= ruleParenthesizedExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getParenthesizedExpressionRule()); 
             }
-            pushFollow(FOLLOW_ruleParenthesizedExpression_in_entryRuleParenthesizedExpression9172);
+            pushFollow(FOLLOW_ruleParenthesizedExpression_in_entryRuleParenthesizedExpression9207);
             iv_ruleParenthesizedExpression=ruleParenthesizedExpression();
 
             state._fsp--;
@@ -11797,7 +11883,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleParenthesizedExpression; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleParenthesizedExpression9182); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleParenthesizedExpression9217); if (state.failed) return current;
 
             }
 
@@ -11815,7 +11901,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParenthesizedExpression"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3996:1: ruleParenthesizedExpression returns [EObject current=null] : ( () otherlv_1= '(' ( (lv_expression_2_0= ruleExpression ) ) otherlv_3= ')' ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4018:1: ruleParenthesizedExpression returns [EObject current=null] : ( () otherlv_1= '(' ( (lv_expression_2_0= ruleExpression ) ) otherlv_3= ')' ) ;
     public final EObject ruleParenthesizedExpression() throws RecognitionException {
         EObject current = null;
 
@@ -11827,14 +11913,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3999:28: ( ( () otherlv_1= '(' ( (lv_expression_2_0= ruleExpression ) ) otherlv_3= ')' ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4000:1: ( () otherlv_1= '(' ( (lv_expression_2_0= ruleExpression ) ) otherlv_3= ')' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4021:28: ( ( () otherlv_1= '(' ( (lv_expression_2_0= ruleExpression ) ) otherlv_3= ')' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4022:1: ( () otherlv_1= '(' ( (lv_expression_2_0= ruleExpression ) ) otherlv_3= ')' )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4000:1: ( () otherlv_1= '(' ( (lv_expression_2_0= ruleExpression ) ) otherlv_3= ')' )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4000:2: () otherlv_1= '(' ( (lv_expression_2_0= ruleExpression ) ) otherlv_3= ')'
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4022:1: ( () otherlv_1= '(' ( (lv_expression_2_0= ruleExpression ) ) otherlv_3= ')' )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4022:2: () otherlv_1= '(' ( (lv_expression_2_0= ruleExpression ) ) otherlv_3= ')'
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4000:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4001:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4022:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4023:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -11846,24 +11932,24 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,23,FOLLOW_23_in_ruleParenthesizedExpression9228); if (state.failed) return current;
+            otherlv_1=(Token)match(input,23,FOLLOW_23_in_ruleParenthesizedExpression9263); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getParenthesizedExpressionAccess().getLeftParenthesisKeyword_1());
                   
             }
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4010:1: ( (lv_expression_2_0= ruleExpression ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4011:1: (lv_expression_2_0= ruleExpression )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4032:1: ( (lv_expression_2_0= ruleExpression ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4033:1: (lv_expression_2_0= ruleExpression )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4011:1: (lv_expression_2_0= ruleExpression )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4012:3: lv_expression_2_0= ruleExpression
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4033:1: (lv_expression_2_0= ruleExpression )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4034:3: lv_expression_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getParenthesizedExpressionAccess().getExpressionExpressionParserRuleCall_2_0()); 
               	    
             }
-            pushFollow(FOLLOW_ruleExpression_in_ruleParenthesizedExpression9249);
+            pushFollow(FOLLOW_ruleExpression_in_ruleParenthesizedExpression9284);
             lv_expression_2_0=ruleExpression();
 
             state._fsp--;
@@ -11887,7 +11973,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,24,FOLLOW_24_in_ruleParenthesizedExpression9261); if (state.failed) return current;
+            otherlv_3=(Token)match(input,24,FOLLOW_24_in_ruleParenthesizedExpression9296); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getParenthesizedExpressionAccess().getRightParenthesisKeyword_3());
@@ -11916,7 +12002,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4040:1: entryRuleLiteral returns [EObject current=null] : iv_ruleLiteral= ruleLiteral EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4062:1: entryRuleLiteral returns [EObject current=null] : iv_ruleLiteral= ruleLiteral EOF ;
     public final EObject entryRuleLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -11924,13 +12010,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4041:2: (iv_ruleLiteral= ruleLiteral EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4042:2: iv_ruleLiteral= ruleLiteral EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4063:2: (iv_ruleLiteral= ruleLiteral EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4064:2: iv_ruleLiteral= ruleLiteral EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getLiteralRule()); 
             }
-            pushFollow(FOLLOW_ruleLiteral_in_entryRuleLiteral9297);
+            pushFollow(FOLLOW_ruleLiteral_in_entryRuleLiteral9332);
             iv_ruleLiteral=ruleLiteral();
 
             state._fsp--;
@@ -11938,7 +12024,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleLiteral; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleLiteral9307); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleLiteral9342); if (state.failed) return current;
 
             }
 
@@ -11956,7 +12042,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4049:1: ruleLiteral returns [EObject current=null] : (this_BoolLiteral_0= ruleBoolLiteral | this_IntLiteral_1= ruleIntLiteral | this_HexLiteral_2= ruleHexLiteral | this_RealLiteral_3= ruleRealLiteral | this_StringLiteral_4= ruleStringLiteral ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4071:1: ruleLiteral returns [EObject current=null] : (this_BoolLiteral_0= ruleBoolLiteral | this_IntLiteral_1= ruleIntLiteral | this_HexLiteral_2= ruleHexLiteral | this_RealLiteral_3= ruleRealLiteral | this_StringLiteral_4= ruleStringLiteral ) ;
     public final EObject ruleLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -11974,55 +12060,55 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4052:28: ( (this_BoolLiteral_0= ruleBoolLiteral | this_IntLiteral_1= ruleIntLiteral | this_HexLiteral_2= ruleHexLiteral | this_RealLiteral_3= ruleRealLiteral | this_StringLiteral_4= ruleStringLiteral ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4053:1: (this_BoolLiteral_0= ruleBoolLiteral | this_IntLiteral_1= ruleIntLiteral | this_HexLiteral_2= ruleHexLiteral | this_RealLiteral_3= ruleRealLiteral | this_StringLiteral_4= ruleStringLiteral )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4074:28: ( (this_BoolLiteral_0= ruleBoolLiteral | this_IntLiteral_1= ruleIntLiteral | this_HexLiteral_2= ruleHexLiteral | this_RealLiteral_3= ruleRealLiteral | this_StringLiteral_4= ruleStringLiteral ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4075:1: (this_BoolLiteral_0= ruleBoolLiteral | this_IntLiteral_1= ruleIntLiteral | this_HexLiteral_2= ruleHexLiteral | this_RealLiteral_3= ruleRealLiteral | this_StringLiteral_4= ruleStringLiteral )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4053:1: (this_BoolLiteral_0= ruleBoolLiteral | this_IntLiteral_1= ruleIntLiteral | this_HexLiteral_2= ruleHexLiteral | this_RealLiteral_3= ruleRealLiteral | this_StringLiteral_4= ruleStringLiteral )
-            int alt63=5;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4075:1: (this_BoolLiteral_0= ruleBoolLiteral | this_IntLiteral_1= ruleIntLiteral | this_HexLiteral_2= ruleHexLiteral | this_RealLiteral_3= ruleRealLiteral | this_StringLiteral_4= ruleStringLiteral )
+            int alt64=5;
             switch ( input.LA(1) ) {
             case RULE_BOOL:
                 {
-                alt63=1;
+                alt64=1;
                 }
                 break;
             case RULE_INT:
                 {
-                alt63=2;
+                alt64=2;
                 }
                 break;
             case RULE_HEX:
                 {
-                alt63=3;
+                alt64=3;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt63=4;
+                alt64=4;
                 }
                 break;
             case RULE_STRING:
                 {
-                alt63=5;
+                alt64=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 63, 0, input);
+                    new NoViableAltException("", 64, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt63) {
+            switch (alt64) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4054:5: this_BoolLiteral_0= ruleBoolLiteral
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4076:5: this_BoolLiteral_0= ruleBoolLiteral
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getLiteralAccess().getBoolLiteralParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleBoolLiteral_in_ruleLiteral9354);
+                    pushFollow(FOLLOW_ruleBoolLiteral_in_ruleLiteral9389);
                     this_BoolLiteral_0=ruleBoolLiteral();
 
                     state._fsp--;
@@ -12037,14 +12123,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4064:5: this_IntLiteral_1= ruleIntLiteral
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4086:5: this_IntLiteral_1= ruleIntLiteral
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getLiteralAccess().getIntLiteralParserRuleCall_1()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleIntLiteral_in_ruleLiteral9381);
+                    pushFollow(FOLLOW_ruleIntLiteral_in_ruleLiteral9416);
                     this_IntLiteral_1=ruleIntLiteral();
 
                     state._fsp--;
@@ -12059,14 +12145,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4074:5: this_HexLiteral_2= ruleHexLiteral
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4096:5: this_HexLiteral_2= ruleHexLiteral
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getLiteralAccess().getHexLiteralParserRuleCall_2()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleHexLiteral_in_ruleLiteral9408);
+                    pushFollow(FOLLOW_ruleHexLiteral_in_ruleLiteral9443);
                     this_HexLiteral_2=ruleHexLiteral();
 
                     state._fsp--;
@@ -12081,14 +12167,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4084:5: this_RealLiteral_3= ruleRealLiteral
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4106:5: this_RealLiteral_3= ruleRealLiteral
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getLiteralAccess().getRealLiteralParserRuleCall_3()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleRealLiteral_in_ruleLiteral9435);
+                    pushFollow(FOLLOW_ruleRealLiteral_in_ruleLiteral9470);
                     this_RealLiteral_3=ruleRealLiteral();
 
                     state._fsp--;
@@ -12103,14 +12189,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4094:5: this_StringLiteral_4= ruleStringLiteral
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4116:5: this_StringLiteral_4= ruleStringLiteral
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getLiteralAccess().getStringLiteralParserRuleCall_4()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleStringLiteral_in_ruleLiteral9462);
+                    pushFollow(FOLLOW_ruleStringLiteral_in_ruleLiteral9497);
                     this_StringLiteral_4=ruleStringLiteral();
 
                     state._fsp--;
@@ -12147,7 +12233,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBoolLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4110:1: entryRuleBoolLiteral returns [EObject current=null] : iv_ruleBoolLiteral= ruleBoolLiteral EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4132:1: entryRuleBoolLiteral returns [EObject current=null] : iv_ruleBoolLiteral= ruleBoolLiteral EOF ;
     public final EObject entryRuleBoolLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -12155,13 +12241,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4111:2: (iv_ruleBoolLiteral= ruleBoolLiteral EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4112:2: iv_ruleBoolLiteral= ruleBoolLiteral EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4133:2: (iv_ruleBoolLiteral= ruleBoolLiteral EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4134:2: iv_ruleBoolLiteral= ruleBoolLiteral EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBoolLiteralRule()); 
             }
-            pushFollow(FOLLOW_ruleBoolLiteral_in_entryRuleBoolLiteral9497);
+            pushFollow(FOLLOW_ruleBoolLiteral_in_entryRuleBoolLiteral9532);
             iv_ruleBoolLiteral=ruleBoolLiteral();
 
             state._fsp--;
@@ -12169,7 +12255,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleBoolLiteral; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleBoolLiteral9507); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleBoolLiteral9542); if (state.failed) return current;
 
             }
 
@@ -12187,7 +12273,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBoolLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4119:1: ruleBoolLiteral returns [EObject current=null] : ( () ( (lv_value_1_0= RULE_BOOL ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4141:1: ruleBoolLiteral returns [EObject current=null] : ( () ( (lv_value_1_0= RULE_BOOL ) ) ) ;
     public final EObject ruleBoolLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -12196,14 +12282,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4122:28: ( ( () ( (lv_value_1_0= RULE_BOOL ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4123:1: ( () ( (lv_value_1_0= RULE_BOOL ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4144:28: ( ( () ( (lv_value_1_0= RULE_BOOL ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4145:1: ( () ( (lv_value_1_0= RULE_BOOL ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4123:1: ( () ( (lv_value_1_0= RULE_BOOL ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4123:2: () ( (lv_value_1_0= RULE_BOOL ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4145:1: ( () ( (lv_value_1_0= RULE_BOOL ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4145:2: () ( (lv_value_1_0= RULE_BOOL ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4123:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4124:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4145:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4146:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -12215,13 +12301,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4129:2: ( (lv_value_1_0= RULE_BOOL ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4130:1: (lv_value_1_0= RULE_BOOL )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4151:2: ( (lv_value_1_0= RULE_BOOL ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4152:1: (lv_value_1_0= RULE_BOOL )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4130:1: (lv_value_1_0= RULE_BOOL )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4131:3: lv_value_1_0= RULE_BOOL
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4152:1: (lv_value_1_0= RULE_BOOL )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4153:3: lv_value_1_0= RULE_BOOL
             {
-            lv_value_1_0=(Token)match(input,RULE_BOOL,FOLLOW_RULE_BOOL_in_ruleBoolLiteral9558); if (state.failed) return current;
+            lv_value_1_0=(Token)match(input,RULE_BOOL,FOLLOW_RULE_BOOL_in_ruleBoolLiteral9593); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(lv_value_1_0, grammarAccess.getBoolLiteralAccess().getValueBOOLTerminalRuleCall_1_0()); 
@@ -12268,7 +12354,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIntLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4155:1: entryRuleIntLiteral returns [EObject current=null] : iv_ruleIntLiteral= ruleIntLiteral EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4177:1: entryRuleIntLiteral returns [EObject current=null] : iv_ruleIntLiteral= ruleIntLiteral EOF ;
     public final EObject entryRuleIntLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -12276,13 +12362,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4156:2: (iv_ruleIntLiteral= ruleIntLiteral EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4157:2: iv_ruleIntLiteral= ruleIntLiteral EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4178:2: (iv_ruleIntLiteral= ruleIntLiteral EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4179:2: iv_ruleIntLiteral= ruleIntLiteral EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntLiteralRule()); 
             }
-            pushFollow(FOLLOW_ruleIntLiteral_in_entryRuleIntLiteral9599);
+            pushFollow(FOLLOW_ruleIntLiteral_in_entryRuleIntLiteral9634);
             iv_ruleIntLiteral=ruleIntLiteral();
 
             state._fsp--;
@@ -12290,7 +12376,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleIntLiteral; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleIntLiteral9609); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleIntLiteral9644); if (state.failed) return current;
 
             }
 
@@ -12308,7 +12394,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4164:1: ruleIntLiteral returns [EObject current=null] : ( () ( (lv_value_1_0= RULE_INT ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4186:1: ruleIntLiteral returns [EObject current=null] : ( () ( (lv_value_1_0= RULE_INT ) ) ) ;
     public final EObject ruleIntLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -12317,14 +12403,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4167:28: ( ( () ( (lv_value_1_0= RULE_INT ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4168:1: ( () ( (lv_value_1_0= RULE_INT ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4189:28: ( ( () ( (lv_value_1_0= RULE_INT ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4190:1: ( () ( (lv_value_1_0= RULE_INT ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4168:1: ( () ( (lv_value_1_0= RULE_INT ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4168:2: () ( (lv_value_1_0= RULE_INT ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4190:1: ( () ( (lv_value_1_0= RULE_INT ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4190:2: () ( (lv_value_1_0= RULE_INT ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4168:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4169:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4190:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4191:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -12336,13 +12422,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4174:2: ( (lv_value_1_0= RULE_INT ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4175:1: (lv_value_1_0= RULE_INT )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4196:2: ( (lv_value_1_0= RULE_INT ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4197:1: (lv_value_1_0= RULE_INT )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4175:1: (lv_value_1_0= RULE_INT )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4176:3: lv_value_1_0= RULE_INT
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4197:1: (lv_value_1_0= RULE_INT )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4198:3: lv_value_1_0= RULE_INT
             {
-            lv_value_1_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleIntLiteral9660); if (state.failed) return current;
+            lv_value_1_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleIntLiteral9695); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(lv_value_1_0, grammarAccess.getIntLiteralAccess().getValueINTTerminalRuleCall_1_0()); 
@@ -12389,7 +12475,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleRealLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4200:1: entryRuleRealLiteral returns [EObject current=null] : iv_ruleRealLiteral= ruleRealLiteral EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4222:1: entryRuleRealLiteral returns [EObject current=null] : iv_ruleRealLiteral= ruleRealLiteral EOF ;
     public final EObject entryRuleRealLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -12397,13 +12483,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4201:2: (iv_ruleRealLiteral= ruleRealLiteral EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4202:2: iv_ruleRealLiteral= ruleRealLiteral EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4223:2: (iv_ruleRealLiteral= ruleRealLiteral EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4224:2: iv_ruleRealLiteral= ruleRealLiteral EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getRealLiteralRule()); 
             }
-            pushFollow(FOLLOW_ruleRealLiteral_in_entryRuleRealLiteral9701);
+            pushFollow(FOLLOW_ruleRealLiteral_in_entryRuleRealLiteral9736);
             iv_ruleRealLiteral=ruleRealLiteral();
 
             state._fsp--;
@@ -12411,7 +12497,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleRealLiteral; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleRealLiteral9711); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleRealLiteral9746); if (state.failed) return current;
 
             }
 
@@ -12429,7 +12515,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRealLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4209:1: ruleRealLiteral returns [EObject current=null] : ( () ( (lv_value_1_0= RULE_FLOAT ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4231:1: ruleRealLiteral returns [EObject current=null] : ( () ( (lv_value_1_0= RULE_FLOAT ) ) ) ;
     public final EObject ruleRealLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -12438,14 +12524,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4212:28: ( ( () ( (lv_value_1_0= RULE_FLOAT ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4213:1: ( () ( (lv_value_1_0= RULE_FLOAT ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4234:28: ( ( () ( (lv_value_1_0= RULE_FLOAT ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4235:1: ( () ( (lv_value_1_0= RULE_FLOAT ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4213:1: ( () ( (lv_value_1_0= RULE_FLOAT ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4213:2: () ( (lv_value_1_0= RULE_FLOAT ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4235:1: ( () ( (lv_value_1_0= RULE_FLOAT ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4235:2: () ( (lv_value_1_0= RULE_FLOAT ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4213:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4214:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4235:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4236:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -12457,13 +12543,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4219:2: ( (lv_value_1_0= RULE_FLOAT ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4220:1: (lv_value_1_0= RULE_FLOAT )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4241:2: ( (lv_value_1_0= RULE_FLOAT ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4242:1: (lv_value_1_0= RULE_FLOAT )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4220:1: (lv_value_1_0= RULE_FLOAT )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4221:3: lv_value_1_0= RULE_FLOAT
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4242:1: (lv_value_1_0= RULE_FLOAT )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4243:3: lv_value_1_0= RULE_FLOAT
             {
-            lv_value_1_0=(Token)match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_ruleRealLiteral9762); if (state.failed) return current;
+            lv_value_1_0=(Token)match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_ruleRealLiteral9797); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(lv_value_1_0, grammarAccess.getRealLiteralAccess().getValueFLOATTerminalRuleCall_1_0()); 
@@ -12510,7 +12596,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleHexLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4245:1: entryRuleHexLiteral returns [EObject current=null] : iv_ruleHexLiteral= ruleHexLiteral EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4267:1: entryRuleHexLiteral returns [EObject current=null] : iv_ruleHexLiteral= ruleHexLiteral EOF ;
     public final EObject entryRuleHexLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -12518,13 +12604,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4246:2: (iv_ruleHexLiteral= ruleHexLiteral EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4247:2: iv_ruleHexLiteral= ruleHexLiteral EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4268:2: (iv_ruleHexLiteral= ruleHexLiteral EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4269:2: iv_ruleHexLiteral= ruleHexLiteral EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getHexLiteralRule()); 
             }
-            pushFollow(FOLLOW_ruleHexLiteral_in_entryRuleHexLiteral9803);
+            pushFollow(FOLLOW_ruleHexLiteral_in_entryRuleHexLiteral9838);
             iv_ruleHexLiteral=ruleHexLiteral();
 
             state._fsp--;
@@ -12532,7 +12618,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleHexLiteral; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleHexLiteral9813); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleHexLiteral9848); if (state.failed) return current;
 
             }
 
@@ -12550,7 +12636,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleHexLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4254:1: ruleHexLiteral returns [EObject current=null] : ( () ( (lv_value_1_0= RULE_HEX ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4276:1: ruleHexLiteral returns [EObject current=null] : ( () ( (lv_value_1_0= RULE_HEX ) ) ) ;
     public final EObject ruleHexLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -12559,14 +12645,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4257:28: ( ( () ( (lv_value_1_0= RULE_HEX ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4258:1: ( () ( (lv_value_1_0= RULE_HEX ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4279:28: ( ( () ( (lv_value_1_0= RULE_HEX ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4280:1: ( () ( (lv_value_1_0= RULE_HEX ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4258:1: ( () ( (lv_value_1_0= RULE_HEX ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4258:2: () ( (lv_value_1_0= RULE_HEX ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4280:1: ( () ( (lv_value_1_0= RULE_HEX ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4280:2: () ( (lv_value_1_0= RULE_HEX ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4258:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4259:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4280:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4281:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -12578,13 +12664,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4264:2: ( (lv_value_1_0= RULE_HEX ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4265:1: (lv_value_1_0= RULE_HEX )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4286:2: ( (lv_value_1_0= RULE_HEX ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4287:1: (lv_value_1_0= RULE_HEX )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4265:1: (lv_value_1_0= RULE_HEX )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4266:3: lv_value_1_0= RULE_HEX
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4287:1: (lv_value_1_0= RULE_HEX )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4288:3: lv_value_1_0= RULE_HEX
             {
-            lv_value_1_0=(Token)match(input,RULE_HEX,FOLLOW_RULE_HEX_in_ruleHexLiteral9864); if (state.failed) return current;
+            lv_value_1_0=(Token)match(input,RULE_HEX,FOLLOW_RULE_HEX_in_ruleHexLiteral9899); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(lv_value_1_0, grammarAccess.getHexLiteralAccess().getValueHEXTerminalRuleCall_1_0()); 
@@ -12631,7 +12717,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4290:1: entryRuleStringLiteral returns [EObject current=null] : iv_ruleStringLiteral= ruleStringLiteral EOF ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4312:1: entryRuleStringLiteral returns [EObject current=null] : iv_ruleStringLiteral= ruleStringLiteral EOF ;
     public final EObject entryRuleStringLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -12639,13 +12725,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4291:2: (iv_ruleStringLiteral= ruleStringLiteral EOF )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4292:2: iv_ruleStringLiteral= ruleStringLiteral EOF
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4313:2: (iv_ruleStringLiteral= ruleStringLiteral EOF )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4314:2: iv_ruleStringLiteral= ruleStringLiteral EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStringLiteralRule()); 
             }
-            pushFollow(FOLLOW_ruleStringLiteral_in_entryRuleStringLiteral9905);
+            pushFollow(FOLLOW_ruleStringLiteral_in_entryRuleStringLiteral9940);
             iv_ruleStringLiteral=ruleStringLiteral();
 
             state._fsp--;
@@ -12653,7 +12739,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleStringLiteral; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleStringLiteral9915); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleStringLiteral9950); if (state.failed) return current;
 
             }
 
@@ -12671,7 +12757,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringLiteral"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4299:1: ruleStringLiteral returns [EObject current=null] : ( () ( (lv_value_1_0= RULE_STRING ) ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4321:1: ruleStringLiteral returns [EObject current=null] : ( () ( (lv_value_1_0= RULE_STRING ) ) ) ;
     public final EObject ruleStringLiteral() throws RecognitionException {
         EObject current = null;
 
@@ -12680,14 +12766,14 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4302:28: ( ( () ( (lv_value_1_0= RULE_STRING ) ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4303:1: ( () ( (lv_value_1_0= RULE_STRING ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4324:28: ( ( () ( (lv_value_1_0= RULE_STRING ) ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4325:1: ( () ( (lv_value_1_0= RULE_STRING ) ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4303:1: ( () ( (lv_value_1_0= RULE_STRING ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4303:2: () ( (lv_value_1_0= RULE_STRING ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4325:1: ( () ( (lv_value_1_0= RULE_STRING ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4325:2: () ( (lv_value_1_0= RULE_STRING ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4303:2: ()
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4304:5: 
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4325:2: ()
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4326:5: 
             {
             if ( state.backtracking==0 ) {
 
@@ -12699,13 +12785,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4309:2: ( (lv_value_1_0= RULE_STRING ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4310:1: (lv_value_1_0= RULE_STRING )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4331:2: ( (lv_value_1_0= RULE_STRING ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4332:1: (lv_value_1_0= RULE_STRING )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4310:1: (lv_value_1_0= RULE_STRING )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4311:3: lv_value_1_0= RULE_STRING
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4332:1: (lv_value_1_0= RULE_STRING )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4333:3: lv_value_1_0= RULE_STRING
             {
-            lv_value_1_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleStringLiteral9966); if (state.failed) return current;
+            lv_value_1_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleStringLiteral10001); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(lv_value_1_0, grammarAccess.getStringLiteralAccess().getValueSTRINGTerminalRuleCall_1_0()); 
@@ -12752,7 +12838,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCombineOperator"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4335:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= '\\'none\\'' ) | (enumLiteral_1= '\\'+\\'' ) | (enumLiteral_2= '\\'*\\'' ) | (enumLiteral_3= '\\'max\\'' ) | (enumLiteral_4= '\\'min\\'' ) | (enumLiteral_5= '\\'or\\'' ) | (enumLiteral_6= '\\'and\\'' ) | (enumLiteral_7= '\\'host\\'' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4357:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= '\\'none\\'' ) | (enumLiteral_1= '\\'+\\'' ) | (enumLiteral_2= '\\'*\\'' ) | (enumLiteral_3= '\\'max\\'' ) | (enumLiteral_4= '\\'min\\'' ) | (enumLiteral_5= '\\'or\\'' ) | (enumLiteral_6= '\\'and\\'' ) | (enumLiteral_7= '\\'host\\'' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -12767,68 +12853,68 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4337:28: ( ( (enumLiteral_0= '\\'none\\'' ) | (enumLiteral_1= '\\'+\\'' ) | (enumLiteral_2= '\\'*\\'' ) | (enumLiteral_3= '\\'max\\'' ) | (enumLiteral_4= '\\'min\\'' ) | (enumLiteral_5= '\\'or\\'' ) | (enumLiteral_6= '\\'and\\'' ) | (enumLiteral_7= '\\'host\\'' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4338:1: ( (enumLiteral_0= '\\'none\\'' ) | (enumLiteral_1= '\\'+\\'' ) | (enumLiteral_2= '\\'*\\'' ) | (enumLiteral_3= '\\'max\\'' ) | (enumLiteral_4= '\\'min\\'' ) | (enumLiteral_5= '\\'or\\'' ) | (enumLiteral_6= '\\'and\\'' ) | (enumLiteral_7= '\\'host\\'' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4359:28: ( ( (enumLiteral_0= '\\'none\\'' ) | (enumLiteral_1= '\\'+\\'' ) | (enumLiteral_2= '\\'*\\'' ) | (enumLiteral_3= '\\'max\\'' ) | (enumLiteral_4= '\\'min\\'' ) | (enumLiteral_5= '\\'or\\'' ) | (enumLiteral_6= '\\'and\\'' ) | (enumLiteral_7= '\\'host\\'' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4360:1: ( (enumLiteral_0= '\\'none\\'' ) | (enumLiteral_1= '\\'+\\'' ) | (enumLiteral_2= '\\'*\\'' ) | (enumLiteral_3= '\\'max\\'' ) | (enumLiteral_4= '\\'min\\'' ) | (enumLiteral_5= '\\'or\\'' ) | (enumLiteral_6= '\\'and\\'' ) | (enumLiteral_7= '\\'host\\'' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4338:1: ( (enumLiteral_0= '\\'none\\'' ) | (enumLiteral_1= '\\'+\\'' ) | (enumLiteral_2= '\\'*\\'' ) | (enumLiteral_3= '\\'max\\'' ) | (enumLiteral_4= '\\'min\\'' ) | (enumLiteral_5= '\\'or\\'' ) | (enumLiteral_6= '\\'and\\'' ) | (enumLiteral_7= '\\'host\\'' ) )
-            int alt64=8;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4360:1: ( (enumLiteral_0= '\\'none\\'' ) | (enumLiteral_1= '\\'+\\'' ) | (enumLiteral_2= '\\'*\\'' ) | (enumLiteral_3= '\\'max\\'' ) | (enumLiteral_4= '\\'min\\'' ) | (enumLiteral_5= '\\'or\\'' ) | (enumLiteral_6= '\\'and\\'' ) | (enumLiteral_7= '\\'host\\'' ) )
+            int alt65=8;
             switch ( input.LA(1) ) {
+            case 65:
+                {
+                alt65=1;
+                }
+                break;
+            case 66:
+                {
+                alt65=2;
+                }
+                break;
             case 67:
                 {
-                alt64=1;
+                alt65=3;
                 }
                 break;
             case 68:
                 {
-                alt64=2;
+                alt65=4;
                 }
                 break;
             case 69:
                 {
-                alt64=3;
+                alt65=5;
                 }
                 break;
             case 70:
                 {
-                alt64=4;
+                alt65=6;
                 }
                 break;
             case 71:
                 {
-                alt64=5;
+                alt65=7;
                 }
                 break;
             case 72:
                 {
-                alt64=6;
-                }
-                break;
-            case 73:
-                {
-                alt64=7;
-                }
-                break;
-            case 74:
-                {
-                alt64=8;
+                alt65=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 64, 0, input);
+                    new NoViableAltException("", 65, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt64) {
+            switch (alt65) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4338:2: (enumLiteral_0= '\\'none\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4360:2: (enumLiteral_0= '\\'none\\'' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4338:2: (enumLiteral_0= '\\'none\\'' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4338:4: enumLiteral_0= '\\'none\\''
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4360:2: (enumLiteral_0= '\\'none\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4360:4: enumLiteral_0= '\\'none\\''
                     {
-                    enumLiteral_0=(Token)match(input,67,FOLLOW_67_in_ruleCombineOperator10021); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,65,FOLLOW_65_in_ruleCombineOperator10056); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getNONEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -12842,12 +12928,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4344:6: (enumLiteral_1= '\\'+\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4366:6: (enumLiteral_1= '\\'+\\'' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4344:6: (enumLiteral_1= '\\'+\\'' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4344:8: enumLiteral_1= '\\'+\\''
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4366:6: (enumLiteral_1= '\\'+\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4366:8: enumLiteral_1= '\\'+\\''
                     {
-                    enumLiteral_1=(Token)match(input,68,FOLLOW_68_in_ruleCombineOperator10038); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,66,FOLLOW_66_in_ruleCombineOperator10073); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getADDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -12861,12 +12947,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4350:6: (enumLiteral_2= '\\'*\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4372:6: (enumLiteral_2= '\\'*\\'' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4350:6: (enumLiteral_2= '\\'*\\'' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4350:8: enumLiteral_2= '\\'*\\''
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4372:6: (enumLiteral_2= '\\'*\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4372:8: enumLiteral_2= '\\'*\\''
                     {
-                    enumLiteral_2=(Token)match(input,69,FOLLOW_69_in_ruleCombineOperator10055); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,67,FOLLOW_67_in_ruleCombineOperator10090); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMULTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -12880,12 +12966,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4356:6: (enumLiteral_3= '\\'max\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4378:6: (enumLiteral_3= '\\'max\\'' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4356:6: (enumLiteral_3= '\\'max\\'' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4356:8: enumLiteral_3= '\\'max\\''
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4378:6: (enumLiteral_3= '\\'max\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4378:8: enumLiteral_3= '\\'max\\''
                     {
-                    enumLiteral_3=(Token)match(input,70,FOLLOW_70_in_ruleCombineOperator10072); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,68,FOLLOW_68_in_ruleCombineOperator10107); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMAXEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -12899,12 +12985,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4362:6: (enumLiteral_4= '\\'min\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4384:6: (enumLiteral_4= '\\'min\\'' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4362:6: (enumLiteral_4= '\\'min\\'' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4362:8: enumLiteral_4= '\\'min\\''
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4384:6: (enumLiteral_4= '\\'min\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4384:8: enumLiteral_4= '\\'min\\''
                     {
-                    enumLiteral_4=(Token)match(input,71,FOLLOW_71_in_ruleCombineOperator10089); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,69,FOLLOW_69_in_ruleCombineOperator10124); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMINEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -12918,12 +13004,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4368:6: (enumLiteral_5= '\\'or\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4390:6: (enumLiteral_5= '\\'or\\'' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4368:6: (enumLiteral_5= '\\'or\\'' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4368:8: enumLiteral_5= '\\'or\\''
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4390:6: (enumLiteral_5= '\\'or\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4390:8: enumLiteral_5= '\\'or\\''
                     {
-                    enumLiteral_5=(Token)match(input,72,FOLLOW_72_in_ruleCombineOperator10106); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,70,FOLLOW_70_in_ruleCombineOperator10141); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -12937,12 +13023,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4374:6: (enumLiteral_6= '\\'and\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4396:6: (enumLiteral_6= '\\'and\\'' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4374:6: (enumLiteral_6= '\\'and\\'' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4374:8: enumLiteral_6= '\\'and\\''
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4396:6: (enumLiteral_6= '\\'and\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4396:8: enumLiteral_6= '\\'and\\''
                     {
-                    enumLiteral_6=(Token)match(input,73,FOLLOW_73_in_ruleCombineOperator10123); if (state.failed) return current;
+                    enumLiteral_6=(Token)match(input,71,FOLLOW_71_in_ruleCombineOperator10158); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -12956,12 +13042,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4380:6: (enumLiteral_7= '\\'host\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4402:6: (enumLiteral_7= '\\'host\\'' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4380:6: (enumLiteral_7= '\\'host\\'' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4380:8: enumLiteral_7= '\\'host\\''
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4402:6: (enumLiteral_7= '\\'host\\'' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4402:8: enumLiteral_7= '\\'host\\''
                     {
-                    enumLiteral_7=(Token)match(input,74,FOLLOW_74_in_ruleCombineOperator10140); if (state.failed) return current;
+                    enumLiteral_7=(Token)match(input,72,FOLLOW_72_in_ruleCombineOperator10175); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getHOSTEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -12997,7 +13083,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDirection"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4390:1: ruleDirection returns [Enumerator current=null] : ( (enumLiteral_0= 'local' ) | (enumLiteral_1= 'in' ) | (enumLiteral_2= 'out' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4412:1: ruleDirection returns [Enumerator current=null] : ( (enumLiteral_0= 'local' ) | (enumLiteral_1= 'in' ) | (enumLiteral_2= 'out' ) ) ;
     public final Enumerator ruleDirection() throws RecognitionException {
         Enumerator current = null;
 
@@ -13007,43 +13093,43 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4392:28: ( ( (enumLiteral_0= 'local' ) | (enumLiteral_1= 'in' ) | (enumLiteral_2= 'out' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4393:1: ( (enumLiteral_0= 'local' ) | (enumLiteral_1= 'in' ) | (enumLiteral_2= 'out' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4414:28: ( ( (enumLiteral_0= 'local' ) | (enumLiteral_1= 'in' ) | (enumLiteral_2= 'out' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4415:1: ( (enumLiteral_0= 'local' ) | (enumLiteral_1= 'in' ) | (enumLiteral_2= 'out' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4393:1: ( (enumLiteral_0= 'local' ) | (enumLiteral_1= 'in' ) | (enumLiteral_2= 'out' ) )
-            int alt65=3;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4415:1: ( (enumLiteral_0= 'local' ) | (enumLiteral_1= 'in' ) | (enumLiteral_2= 'out' ) )
+            int alt66=3;
             switch ( input.LA(1) ) {
+            case 40:
+                {
+                alt66=1;
+                }
+                break;
+            case 41:
+                {
+                alt66=2;
+                }
+                break;
             case 42:
                 {
-                alt65=1;
-                }
-                break;
-            case 43:
-                {
-                alt65=2;
-                }
-                break;
-            case 44:
-                {
-                alt65=3;
+                alt66=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 65, 0, input);
+                    new NoViableAltException("", 66, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt65) {
+            switch (alt66) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4393:2: (enumLiteral_0= 'local' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4415:2: (enumLiteral_0= 'local' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4393:2: (enumLiteral_0= 'local' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4393:4: enumLiteral_0= 'local'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4415:2: (enumLiteral_0= 'local' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4415:4: enumLiteral_0= 'local'
                     {
-                    enumLiteral_0=(Token)match(input,42,FOLLOW_42_in_ruleDirection10185); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,40,FOLLOW_40_in_ruleDirection10220); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getDirectionAccess().getLOCALEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13057,12 +13143,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4399:6: (enumLiteral_1= 'in' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4421:6: (enumLiteral_1= 'in' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4399:6: (enumLiteral_1= 'in' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4399:8: enumLiteral_1= 'in'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4421:6: (enumLiteral_1= 'in' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4421:8: enumLiteral_1= 'in'
                     {
-                    enumLiteral_1=(Token)match(input,43,FOLLOW_43_in_ruleDirection10202); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,41,FOLLOW_41_in_ruleDirection10237); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getDirectionAccess().getINEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -13076,12 +13162,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4405:6: (enumLiteral_2= 'out' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4427:6: (enumLiteral_2= 'out' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4405:6: (enumLiteral_2= 'out' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4405:8: enumLiteral_2= 'out'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4427:6: (enumLiteral_2= 'out' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4427:8: enumLiteral_2= 'out'
                     {
-                    enumLiteral_2=(Token)match(input,44,FOLLOW_44_in_ruleDirection10219); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,42,FOLLOW_42_in_ruleDirection10254); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getDirectionAccess().getOUTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -13117,7 +13203,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTimeEventType"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4415:1: ruleTimeEventType returns [Enumerator current=null] : ( (enumLiteral_0= 'after' ) | (enumLiteral_1= 'every' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4437:1: ruleTimeEventType returns [Enumerator current=null] : ( (enumLiteral_0= 'after' ) | (enumLiteral_1= 'every' ) ) ;
     public final Enumerator ruleTimeEventType() throws RecognitionException {
         Enumerator current = null;
 
@@ -13126,34 +13212,34 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4417:28: ( ( (enumLiteral_0= 'after' ) | (enumLiteral_1= 'every' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4418:1: ( (enumLiteral_0= 'after' ) | (enumLiteral_1= 'every' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4439:28: ( ( (enumLiteral_0= 'after' ) | (enumLiteral_1= 'every' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4440:1: ( (enumLiteral_0= 'after' ) | (enumLiteral_1= 'every' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4418:1: ( (enumLiteral_0= 'after' ) | (enumLiteral_1= 'every' ) )
-            int alt66=2;
-            int LA66_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4440:1: ( (enumLiteral_0= 'after' ) | (enumLiteral_1= 'every' ) )
+            int alt67=2;
+            int LA67_0 = input.LA(1);
 
-            if ( (LA66_0==75) ) {
-                alt66=1;
+            if ( (LA67_0==73) ) {
+                alt67=1;
             }
-            else if ( (LA66_0==76) ) {
-                alt66=2;
+            else if ( (LA67_0==74) ) {
+                alt67=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 66, 0, input);
+                    new NoViableAltException("", 67, 0, input);
 
                 throw nvae;
             }
-            switch (alt66) {
+            switch (alt67) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4418:2: (enumLiteral_0= 'after' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4440:2: (enumLiteral_0= 'after' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4418:2: (enumLiteral_0= 'after' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4418:4: enumLiteral_0= 'after'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4440:2: (enumLiteral_0= 'after' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4440:4: enumLiteral_0= 'after'
                     {
-                    enumLiteral_0=(Token)match(input,75,FOLLOW_75_in_ruleTimeEventType10264); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,73,FOLLOW_73_in_ruleTimeEventType10299); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getTimeEventTypeAccess().getAfterEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13167,12 +13253,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4424:6: (enumLiteral_1= 'every' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4446:6: (enumLiteral_1= 'every' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4424:6: (enumLiteral_1= 'every' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4424:8: enumLiteral_1= 'every'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4446:6: (enumLiteral_1= 'every' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4446:8: enumLiteral_1= 'every'
                     {
-                    enumLiteral_1=(Token)match(input,76,FOLLOW_76_in_ruleTimeEventType10281); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,74,FOLLOW_74_in_ruleTimeEventType10316); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getTimeEventTypeAccess().getEveryEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -13208,7 +13294,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAssignmentOperator"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4434:1: ruleAssignmentOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '*=' ) | (enumLiteral_2= '/=' ) | (enumLiteral_3= '%=' ) | (enumLiteral_4= '+=' ) | (enumLiteral_5= '-=' ) | (enumLiteral_6= '<<=' ) | (enumLiteral_7= '>>=' ) | (enumLiteral_8= '&=' ) | (enumLiteral_9= '^=' ) | (enumLiteral_10= '|=' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4456:1: ruleAssignmentOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '*=' ) | (enumLiteral_2= '/=' ) | (enumLiteral_3= '%=' ) | (enumLiteral_4= '+=' ) | (enumLiteral_5= '-=' ) | (enumLiteral_6= '<<=' ) | (enumLiteral_7= '>>=' ) | (enumLiteral_8= '&=' ) | (enumLiteral_9= '^=' ) | (enumLiteral_10= '|=' ) ) ;
     public final Enumerator ruleAssignmentOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -13226,83 +13312,83 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4436:28: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '*=' ) | (enumLiteral_2= '/=' ) | (enumLiteral_3= '%=' ) | (enumLiteral_4= '+=' ) | (enumLiteral_5= '-=' ) | (enumLiteral_6= '<<=' ) | (enumLiteral_7= '>>=' ) | (enumLiteral_8= '&=' ) | (enumLiteral_9= '^=' ) | (enumLiteral_10= '|=' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4437:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '*=' ) | (enumLiteral_2= '/=' ) | (enumLiteral_3= '%=' ) | (enumLiteral_4= '+=' ) | (enumLiteral_5= '-=' ) | (enumLiteral_6= '<<=' ) | (enumLiteral_7= '>>=' ) | (enumLiteral_8= '&=' ) | (enumLiteral_9= '^=' ) | (enumLiteral_10= '|=' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4458:28: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '*=' ) | (enumLiteral_2= '/=' ) | (enumLiteral_3= '%=' ) | (enumLiteral_4= '+=' ) | (enumLiteral_5= '-=' ) | (enumLiteral_6= '<<=' ) | (enumLiteral_7= '>>=' ) | (enumLiteral_8= '&=' ) | (enumLiteral_9= '^=' ) | (enumLiteral_10= '|=' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4459:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '*=' ) | (enumLiteral_2= '/=' ) | (enumLiteral_3= '%=' ) | (enumLiteral_4= '+=' ) | (enumLiteral_5= '-=' ) | (enumLiteral_6= '<<=' ) | (enumLiteral_7= '>>=' ) | (enumLiteral_8= '&=' ) | (enumLiteral_9= '^=' ) | (enumLiteral_10= '|=' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4437:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '*=' ) | (enumLiteral_2= '/=' ) | (enumLiteral_3= '%=' ) | (enumLiteral_4= '+=' ) | (enumLiteral_5= '-=' ) | (enumLiteral_6= '<<=' ) | (enumLiteral_7= '>>=' ) | (enumLiteral_8= '&=' ) | (enumLiteral_9= '^=' ) | (enumLiteral_10= '|=' ) )
-            int alt67=11;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4459:1: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '*=' ) | (enumLiteral_2= '/=' ) | (enumLiteral_3= '%=' ) | (enumLiteral_4= '+=' ) | (enumLiteral_5= '-=' ) | (enumLiteral_6= '<<=' ) | (enumLiteral_7= '>>=' ) | (enumLiteral_8= '&=' ) | (enumLiteral_9= '^=' ) | (enumLiteral_10= '|=' ) )
+            int alt68=11;
             switch ( input.LA(1) ) {
             case 15:
                 {
-                alt67=1;
+                alt68=1;
+                }
+                break;
+            case 75:
+                {
+                alt68=2;
+                }
+                break;
+            case 76:
+                {
+                alt68=3;
                 }
                 break;
             case 77:
                 {
-                alt67=2;
+                alt68=4;
                 }
                 break;
             case 78:
                 {
-                alt67=3;
+                alt68=5;
                 }
                 break;
             case 79:
                 {
-                alt67=4;
+                alt68=6;
                 }
                 break;
             case 80:
                 {
-                alt67=5;
+                alt68=7;
                 }
                 break;
             case 81:
                 {
-                alt67=6;
+                alt68=8;
                 }
                 break;
             case 82:
                 {
-                alt67=7;
+                alt68=9;
                 }
                 break;
             case 83:
                 {
-                alt67=8;
+                alt68=10;
                 }
                 break;
             case 84:
                 {
-                alt67=9;
-                }
-                break;
-            case 85:
-                {
-                alt67=10;
-                }
-                break;
-            case 86:
-                {
-                alt67=11;
+                alt68=11;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 67, 0, input);
+                    new NoViableAltException("", 68, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt67) {
+            switch (alt68) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4437:2: (enumLiteral_0= '=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4459:2: (enumLiteral_0= '=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4437:2: (enumLiteral_0= '=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4437:4: enumLiteral_0= '='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4459:2: (enumLiteral_0= '=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4459:4: enumLiteral_0= '='
                     {
-                    enumLiteral_0=(Token)match(input,15,FOLLOW_15_in_ruleAssignmentOperator10326); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,15,FOLLOW_15_in_ruleAssignmentOperator10361); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getAssignEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13316,12 +13402,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4443:6: (enumLiteral_1= '*=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4465:6: (enumLiteral_1= '*=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4443:6: (enumLiteral_1= '*=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4443:8: enumLiteral_1= '*='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4465:6: (enumLiteral_1= '*=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4465:8: enumLiteral_1= '*='
                     {
-                    enumLiteral_1=(Token)match(input,77,FOLLOW_77_in_ruleAssignmentOperator10343); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,75,FOLLOW_75_in_ruleAssignmentOperator10378); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getMultAssignEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -13335,12 +13421,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4449:6: (enumLiteral_2= '/=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4471:6: (enumLiteral_2= '/=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4449:6: (enumLiteral_2= '/=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4449:8: enumLiteral_2= '/='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4471:6: (enumLiteral_2= '/=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4471:8: enumLiteral_2= '/='
                     {
-                    enumLiteral_2=(Token)match(input,78,FOLLOW_78_in_ruleAssignmentOperator10360); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,76,FOLLOW_76_in_ruleAssignmentOperator10395); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getDivAssignEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -13354,12 +13440,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4455:6: (enumLiteral_3= '%=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4477:6: (enumLiteral_3= '%=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4455:6: (enumLiteral_3= '%=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4455:8: enumLiteral_3= '%='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4477:6: (enumLiteral_3= '%=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4477:8: enumLiteral_3= '%='
                     {
-                    enumLiteral_3=(Token)match(input,79,FOLLOW_79_in_ruleAssignmentOperator10377); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,77,FOLLOW_77_in_ruleAssignmentOperator10412); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getModAssignEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -13373,12 +13459,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4461:6: (enumLiteral_4= '+=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4483:6: (enumLiteral_4= '+=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4461:6: (enumLiteral_4= '+=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4461:8: enumLiteral_4= '+='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4483:6: (enumLiteral_4= '+=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4483:8: enumLiteral_4= '+='
                     {
-                    enumLiteral_4=(Token)match(input,80,FOLLOW_80_in_ruleAssignmentOperator10394); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,78,FOLLOW_78_in_ruleAssignmentOperator10429); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getAddAssignEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -13392,12 +13478,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4467:6: (enumLiteral_5= '-=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4489:6: (enumLiteral_5= '-=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4467:6: (enumLiteral_5= '-=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4467:8: enumLiteral_5= '-='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4489:6: (enumLiteral_5= '-=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4489:8: enumLiteral_5= '-='
                     {
-                    enumLiteral_5=(Token)match(input,81,FOLLOW_81_in_ruleAssignmentOperator10411); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,79,FOLLOW_79_in_ruleAssignmentOperator10446); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getSubAssignEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -13411,12 +13497,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4473:6: (enumLiteral_6= '<<=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4495:6: (enumLiteral_6= '<<=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4473:6: (enumLiteral_6= '<<=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4473:8: enumLiteral_6= '<<='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4495:6: (enumLiteral_6= '<<=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4495:8: enumLiteral_6= '<<='
                     {
-                    enumLiteral_6=(Token)match(input,82,FOLLOW_82_in_ruleAssignmentOperator10428); if (state.failed) return current;
+                    enumLiteral_6=(Token)match(input,80,FOLLOW_80_in_ruleAssignmentOperator10463); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getLeftShiftAssignEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -13430,12 +13516,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4479:6: (enumLiteral_7= '>>=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4501:6: (enumLiteral_7= '>>=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4479:6: (enumLiteral_7= '>>=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4479:8: enumLiteral_7= '>>='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4501:6: (enumLiteral_7= '>>=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4501:8: enumLiteral_7= '>>='
                     {
-                    enumLiteral_7=(Token)match(input,83,FOLLOW_83_in_ruleAssignmentOperator10445); if (state.failed) return current;
+                    enumLiteral_7=(Token)match(input,81,FOLLOW_81_in_ruleAssignmentOperator10480); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getRightShiftAssignEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -13449,12 +13535,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4485:6: (enumLiteral_8= '&=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4507:6: (enumLiteral_8= '&=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4485:6: (enumLiteral_8= '&=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4485:8: enumLiteral_8= '&='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4507:6: (enumLiteral_8= '&=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4507:8: enumLiteral_8= '&='
                     {
-                    enumLiteral_8=(Token)match(input,84,FOLLOW_84_in_ruleAssignmentOperator10462); if (state.failed) return current;
+                    enumLiteral_8=(Token)match(input,82,FOLLOW_82_in_ruleAssignmentOperator10497); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getAndAssignEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
@@ -13468,12 +13554,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4491:6: (enumLiteral_9= '^=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4513:6: (enumLiteral_9= '^=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4491:6: (enumLiteral_9= '^=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4491:8: enumLiteral_9= '^='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4513:6: (enumLiteral_9= '^=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4513:8: enumLiteral_9= '^='
                     {
-                    enumLiteral_9=(Token)match(input,85,FOLLOW_85_in_ruleAssignmentOperator10479); if (state.failed) return current;
+                    enumLiteral_9=(Token)match(input,83,FOLLOW_83_in_ruleAssignmentOperator10514); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getXorAssignEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
@@ -13487,12 +13573,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4497:6: (enumLiteral_10= '|=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4519:6: (enumLiteral_10= '|=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4497:6: (enumLiteral_10= '|=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4497:8: enumLiteral_10= '|='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4519:6: (enumLiteral_10= '|=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4519:8: enumLiteral_10= '|='
                     {
-                    enumLiteral_10=(Token)match(input,86,FOLLOW_86_in_ruleAssignmentOperator10496); if (state.failed) return current;
+                    enumLiteral_10=(Token)match(input,84,FOLLOW_84_in_ruleAssignmentOperator10531); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAssignmentOperatorAccess().getOrAssignEnumLiteralDeclaration_10().getEnumLiteral().getInstance();
@@ -13528,7 +13614,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftOperator"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4507:1: ruleShiftOperator returns [Enumerator current=null] : ( (enumLiteral_0= '<<' ) | (enumLiteral_1= '>>' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4529:1: ruleShiftOperator returns [Enumerator current=null] : ( (enumLiteral_0= '<<' ) | (enumLiteral_1= '>>' ) ) ;
     public final Enumerator ruleShiftOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -13537,34 +13623,34 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4509:28: ( ( (enumLiteral_0= '<<' ) | (enumLiteral_1= '>>' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4510:1: ( (enumLiteral_0= '<<' ) | (enumLiteral_1= '>>' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4531:28: ( ( (enumLiteral_0= '<<' ) | (enumLiteral_1= '>>' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4532:1: ( (enumLiteral_0= '<<' ) | (enumLiteral_1= '>>' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4510:1: ( (enumLiteral_0= '<<' ) | (enumLiteral_1= '>>' ) )
-            int alt68=2;
-            int LA68_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4532:1: ( (enumLiteral_0= '<<' ) | (enumLiteral_1= '>>' ) )
+            int alt69=2;
+            int LA69_0 = input.LA(1);
 
-            if ( (LA68_0==87) ) {
-                alt68=1;
+            if ( (LA69_0==85) ) {
+                alt69=1;
             }
-            else if ( (LA68_0==88) ) {
-                alt68=2;
+            else if ( (LA69_0==86) ) {
+                alt69=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 68, 0, input);
+                    new NoViableAltException("", 69, 0, input);
 
                 throw nvae;
             }
-            switch (alt68) {
+            switch (alt69) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4510:2: (enumLiteral_0= '<<' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4532:2: (enumLiteral_0= '<<' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4510:2: (enumLiteral_0= '<<' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4510:4: enumLiteral_0= '<<'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4532:2: (enumLiteral_0= '<<' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4532:4: enumLiteral_0= '<<'
                     {
-                    enumLiteral_0=(Token)match(input,87,FOLLOW_87_in_ruleShiftOperator10541); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,85,FOLLOW_85_in_ruleShiftOperator10576); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getShiftOperatorAccess().getLeftEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13578,12 +13664,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4516:6: (enumLiteral_1= '>>' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4538:6: (enumLiteral_1= '>>' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4516:6: (enumLiteral_1= '>>' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4516:8: enumLiteral_1= '>>'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4538:6: (enumLiteral_1= '>>' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4538:8: enumLiteral_1= '>>'
                     {
-                    enumLiteral_1=(Token)match(input,88,FOLLOW_88_in_ruleShiftOperator10558); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,86,FOLLOW_86_in_ruleShiftOperator10593); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getShiftOperatorAccess().getRightEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -13619,7 +13705,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAdditiveOperator"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4526:1: ruleAdditiveOperator returns [Enumerator current=null] : ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4548:1: ruleAdditiveOperator returns [Enumerator current=null] : ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) ) ;
     public final Enumerator ruleAdditiveOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -13628,34 +13714,34 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4528:28: ( ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4529:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4550:28: ( ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4551:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4529:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) )
-            int alt69=2;
-            int LA69_0 = input.LA(1);
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4551:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) )
+            int alt70=2;
+            int LA70_0 = input.LA(1);
 
-            if ( (LA69_0==89) ) {
-                alt69=1;
+            if ( (LA70_0==87) ) {
+                alt70=1;
             }
-            else if ( (LA69_0==90) ) {
-                alt69=2;
+            else if ( (LA70_0==88) ) {
+                alt70=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 69, 0, input);
+                    new NoViableAltException("", 70, 0, input);
 
                 throw nvae;
             }
-            switch (alt69) {
+            switch (alt70) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4529:2: (enumLiteral_0= '+' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4551:2: (enumLiteral_0= '+' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4529:2: (enumLiteral_0= '+' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4529:4: enumLiteral_0= '+'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4551:2: (enumLiteral_0= '+' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4551:4: enumLiteral_0= '+'
                     {
-                    enumLiteral_0=(Token)match(input,89,FOLLOW_89_in_ruleAdditiveOperator10603); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,87,FOLLOW_87_in_ruleAdditiveOperator10638); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAdditiveOperatorAccess().getPlusEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13669,12 +13755,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4535:6: (enumLiteral_1= '-' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4557:6: (enumLiteral_1= '-' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4535:6: (enumLiteral_1= '-' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4535:8: enumLiteral_1= '-'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4557:6: (enumLiteral_1= '-' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4557:8: enumLiteral_1= '-'
                     {
-                    enumLiteral_1=(Token)match(input,90,FOLLOW_90_in_ruleAdditiveOperator10620); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,88,FOLLOW_88_in_ruleAdditiveOperator10655); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getAdditiveOperatorAccess().getMinusEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -13710,7 +13796,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultiplicativeOperator"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4545:1: ruleMultiplicativeOperator returns [Enumerator current=null] : ( (enumLiteral_0= '*' ) | (enumLiteral_1= '/' ) | (enumLiteral_2= '%' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4567:1: ruleMultiplicativeOperator returns [Enumerator current=null] : ( (enumLiteral_0= '*' ) | (enumLiteral_1= '/' ) | (enumLiteral_2= '%' ) ) ;
     public final Enumerator ruleMultiplicativeOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -13720,43 +13806,43 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4547:28: ( ( (enumLiteral_0= '*' ) | (enumLiteral_1= '/' ) | (enumLiteral_2= '%' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4548:1: ( (enumLiteral_0= '*' ) | (enumLiteral_1= '/' ) | (enumLiteral_2= '%' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4569:28: ( ( (enumLiteral_0= '*' ) | (enumLiteral_1= '/' ) | (enumLiteral_2= '%' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4570:1: ( (enumLiteral_0= '*' ) | (enumLiteral_1= '/' ) | (enumLiteral_2= '%' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4548:1: ( (enumLiteral_0= '*' ) | (enumLiteral_1= '/' ) | (enumLiteral_2= '%' ) )
-            int alt70=3;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4570:1: ( (enumLiteral_0= '*' ) | (enumLiteral_1= '/' ) | (enumLiteral_2= '%' ) )
+            int alt71=3;
             switch ( input.LA(1) ) {
-            case 91:
+            case 89:
                 {
-                alt70=1;
+                alt71=1;
                 }
                 break;
             case 25:
                 {
-                alt70=2;
+                alt71=2;
                 }
                 break;
-            case 92:
+            case 90:
                 {
-                alt70=3;
+                alt71=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 70, 0, input);
+                    new NoViableAltException("", 71, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt70) {
+            switch (alt71) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4548:2: (enumLiteral_0= '*' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4570:2: (enumLiteral_0= '*' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4548:2: (enumLiteral_0= '*' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4548:4: enumLiteral_0= '*'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4570:2: (enumLiteral_0= '*' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4570:4: enumLiteral_0= '*'
                     {
-                    enumLiteral_0=(Token)match(input,91,FOLLOW_91_in_ruleMultiplicativeOperator10665); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,89,FOLLOW_89_in_ruleMultiplicativeOperator10700); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getMultiplicativeOperatorAccess().getMulEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13770,12 +13856,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4554:6: (enumLiteral_1= '/' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4576:6: (enumLiteral_1= '/' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4554:6: (enumLiteral_1= '/' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4554:8: enumLiteral_1= '/'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4576:6: (enumLiteral_1= '/' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4576:8: enumLiteral_1= '/'
                     {
-                    enumLiteral_1=(Token)match(input,25,FOLLOW_25_in_ruleMultiplicativeOperator10682); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,25,FOLLOW_25_in_ruleMultiplicativeOperator10717); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getMultiplicativeOperatorAccess().getDivEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -13789,12 +13875,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4560:6: (enumLiteral_2= '%' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4582:6: (enumLiteral_2= '%' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4560:6: (enumLiteral_2= '%' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4560:8: enumLiteral_2= '%'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4582:6: (enumLiteral_2= '%' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4582:8: enumLiteral_2= '%'
                     {
-                    enumLiteral_2=(Token)match(input,92,FOLLOW_92_in_ruleMultiplicativeOperator10699); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,90,FOLLOW_90_in_ruleMultiplicativeOperator10734); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getMultiplicativeOperatorAccess().getModEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -13830,7 +13916,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleUnaryOperator"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4570:1: ruleUnaryOperator returns [Enumerator current=null] : ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) | (enumLiteral_2= '~' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4592:1: ruleUnaryOperator returns [Enumerator current=null] : ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) | (enumLiteral_2= '~' ) ) ;
     public final Enumerator ruleUnaryOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -13840,43 +13926,43 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4572:28: ( ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) | (enumLiteral_2= '~' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4573:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) | (enumLiteral_2= '~' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4594:28: ( ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) | (enumLiteral_2= '~' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4595:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) | (enumLiteral_2= '~' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4573:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) | (enumLiteral_2= '~' ) )
-            int alt71=3;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4595:1: ( (enumLiteral_0= '+' ) | (enumLiteral_1= '-' ) | (enumLiteral_2= '~' ) )
+            int alt72=3;
             switch ( input.LA(1) ) {
-            case 89:
+            case 87:
                 {
-                alt71=1;
+                alt72=1;
                 }
                 break;
-            case 90:
+            case 88:
                 {
-                alt71=2;
+                alt72=2;
                 }
                 break;
-            case 93:
+            case 91:
                 {
-                alt71=3;
+                alt72=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 71, 0, input);
+                    new NoViableAltException("", 72, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt71) {
+            switch (alt72) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4573:2: (enumLiteral_0= '+' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4595:2: (enumLiteral_0= '+' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4573:2: (enumLiteral_0= '+' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4573:4: enumLiteral_0= '+'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4595:2: (enumLiteral_0= '+' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4595:4: enumLiteral_0= '+'
                     {
-                    enumLiteral_0=(Token)match(input,89,FOLLOW_89_in_ruleUnaryOperator10744); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,87,FOLLOW_87_in_ruleUnaryOperator10779); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getUnaryOperatorAccess().getPositiveEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -13890,12 +13976,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4579:6: (enumLiteral_1= '-' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4601:6: (enumLiteral_1= '-' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4579:6: (enumLiteral_1= '-' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4579:8: enumLiteral_1= '-'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4601:6: (enumLiteral_1= '-' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4601:8: enumLiteral_1= '-'
                     {
-                    enumLiteral_1=(Token)match(input,90,FOLLOW_90_in_ruleUnaryOperator10761); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,88,FOLLOW_88_in_ruleUnaryOperator10796); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getUnaryOperatorAccess().getNegativeEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -13909,12 +13995,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4585:6: (enumLiteral_2= '~' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4607:6: (enumLiteral_2= '~' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4585:6: (enumLiteral_2= '~' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4585:8: enumLiteral_2= '~'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4607:6: (enumLiteral_2= '~' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4607:8: enumLiteral_2= '~'
                     {
-                    enumLiteral_2=(Token)match(input,93,FOLLOW_93_in_ruleUnaryOperator10778); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,91,FOLLOW_91_in_ruleUnaryOperator10813); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getUnaryOperatorAccess().getComplementEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -13950,7 +14036,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRelationalOperator"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4595:1: ruleRelationalOperator returns [Enumerator current=null] : ( (enumLiteral_0= '<' ) | (enumLiteral_1= '<=' ) | (enumLiteral_2= '>' ) | (enumLiteral_3= '>=' ) | (enumLiteral_4= '==' ) | (enumLiteral_5= '!=' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4617:1: ruleRelationalOperator returns [Enumerator current=null] : ( (enumLiteral_0= '<' ) | (enumLiteral_1= '<=' ) | (enumLiteral_2= '>' ) | (enumLiteral_3= '>=' ) | (enumLiteral_4= '==' ) | (enumLiteral_5= '!=' ) ) ;
     public final Enumerator ruleRelationalOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -13963,58 +14049,58 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4597:28: ( ( (enumLiteral_0= '<' ) | (enumLiteral_1= '<=' ) | (enumLiteral_2= '>' ) | (enumLiteral_3= '>=' ) | (enumLiteral_4= '==' ) | (enumLiteral_5= '!=' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4598:1: ( (enumLiteral_0= '<' ) | (enumLiteral_1= '<=' ) | (enumLiteral_2= '>' ) | (enumLiteral_3= '>=' ) | (enumLiteral_4= '==' ) | (enumLiteral_5= '!=' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4619:28: ( ( (enumLiteral_0= '<' ) | (enumLiteral_1= '<=' ) | (enumLiteral_2= '>' ) | (enumLiteral_3= '>=' ) | (enumLiteral_4= '==' ) | (enumLiteral_5= '!=' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4620:1: ( (enumLiteral_0= '<' ) | (enumLiteral_1= '<=' ) | (enumLiteral_2= '>' ) | (enumLiteral_3= '>=' ) | (enumLiteral_4= '==' ) | (enumLiteral_5= '!=' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4598:1: ( (enumLiteral_0= '<' ) | (enumLiteral_1= '<=' ) | (enumLiteral_2= '>' ) | (enumLiteral_3= '>=' ) | (enumLiteral_4= '==' ) | (enumLiteral_5= '!=' ) )
-            int alt72=6;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4620:1: ( (enumLiteral_0= '<' ) | (enumLiteral_1= '<=' ) | (enumLiteral_2= '>' ) | (enumLiteral_3= '>=' ) | (enumLiteral_4= '==' ) | (enumLiteral_5= '!=' ) )
+            int alt73=6;
             switch ( input.LA(1) ) {
+            case 92:
+                {
+                alt73=1;
+                }
+                break;
+            case 93:
+                {
+                alt73=2;
+                }
+                break;
+            case 57:
+                {
+                alt73=3;
+                }
+                break;
             case 94:
                 {
-                alt72=1;
+                alt73=4;
                 }
                 break;
             case 95:
                 {
-                alt72=2;
-                }
-                break;
-            case 59:
-                {
-                alt72=3;
+                alt73=5;
                 }
                 break;
             case 96:
                 {
-                alt72=4;
-                }
-                break;
-            case 97:
-                {
-                alt72=5;
-                }
-                break;
-            case 98:
-                {
-                alt72=6;
+                alt73=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 72, 0, input);
+                    new NoViableAltException("", 73, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt72) {
+            switch (alt73) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4598:2: (enumLiteral_0= '<' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4620:2: (enumLiteral_0= '<' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4598:2: (enumLiteral_0= '<' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4598:4: enumLiteral_0= '<'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4620:2: (enumLiteral_0= '<' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4620:4: enumLiteral_0= '<'
                     {
-                    enumLiteral_0=(Token)match(input,94,FOLLOW_94_in_ruleRelationalOperator10823); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,92,FOLLOW_92_in_ruleRelationalOperator10858); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getRelationalOperatorAccess().getSmallerEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -14028,12 +14114,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4604:6: (enumLiteral_1= '<=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4626:6: (enumLiteral_1= '<=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4604:6: (enumLiteral_1= '<=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4604:8: enumLiteral_1= '<='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4626:6: (enumLiteral_1= '<=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4626:8: enumLiteral_1= '<='
                     {
-                    enumLiteral_1=(Token)match(input,95,FOLLOW_95_in_ruleRelationalOperator10840); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,93,FOLLOW_93_in_ruleRelationalOperator10875); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getRelationalOperatorAccess().getSmallerEqualEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -14047,12 +14133,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4610:6: (enumLiteral_2= '>' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4632:6: (enumLiteral_2= '>' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4610:6: (enumLiteral_2= '>' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4610:8: enumLiteral_2= '>'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4632:6: (enumLiteral_2= '>' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4632:8: enumLiteral_2= '>'
                     {
-                    enumLiteral_2=(Token)match(input,59,FOLLOW_59_in_ruleRelationalOperator10857); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,57,FOLLOW_57_in_ruleRelationalOperator10892); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getRelationalOperatorAccess().getGreaterEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -14066,12 +14152,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4616:6: (enumLiteral_3= '>=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4638:6: (enumLiteral_3= '>=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4616:6: (enumLiteral_3= '>=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4616:8: enumLiteral_3= '>='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4638:6: (enumLiteral_3= '>=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4638:8: enumLiteral_3= '>='
                     {
-                    enumLiteral_3=(Token)match(input,96,FOLLOW_96_in_ruleRelationalOperator10874); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,94,FOLLOW_94_in_ruleRelationalOperator10909); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getRelationalOperatorAccess().getGreaterEqualEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -14085,12 +14171,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4622:6: (enumLiteral_4= '==' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4644:6: (enumLiteral_4= '==' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4622:6: (enumLiteral_4= '==' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4622:8: enumLiteral_4= '=='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4644:6: (enumLiteral_4= '==' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4644:8: enumLiteral_4= '=='
                     {
-                    enumLiteral_4=(Token)match(input,97,FOLLOW_97_in_ruleRelationalOperator10891); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,95,FOLLOW_95_in_ruleRelationalOperator10926); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getRelationalOperatorAccess().getEqualsEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -14104,12 +14190,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4628:6: (enumLiteral_5= '!=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4650:6: (enumLiteral_5= '!=' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4628:6: (enumLiteral_5= '!=' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4628:8: enumLiteral_5= '!='
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4650:6: (enumLiteral_5= '!=' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4650:8: enumLiteral_5= '!='
                     {
-                    enumLiteral_5=(Token)match(input,98,FOLLOW_98_in_ruleRelationalOperator10908); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,96,FOLLOW_96_in_ruleRelationalOperator10943); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getRelationalOperatorAccess().getNotEqualsEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -14145,7 +14231,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTimeUnit"
-    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4638:1: ruleTimeUnit returns [Enumerator current=null] : ( (enumLiteral_0= 's' ) | (enumLiteral_1= 'ms' ) | (enumLiteral_2= 'us' ) | (enumLiteral_3= 'ns' ) ) ;
+    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4660:1: ruleTimeUnit returns [Enumerator current=null] : ( (enumLiteral_0= 's' ) | (enumLiteral_1= 'ms' ) | (enumLiteral_2= 'us' ) | (enumLiteral_3= 'ns' ) ) ;
     public final Enumerator ruleTimeUnit() throws RecognitionException {
         Enumerator current = null;
 
@@ -14156,48 +14242,48 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4640:28: ( ( (enumLiteral_0= 's' ) | (enumLiteral_1= 'ms' ) | (enumLiteral_2= 'us' ) | (enumLiteral_3= 'ns' ) ) )
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4641:1: ( (enumLiteral_0= 's' ) | (enumLiteral_1= 'ms' ) | (enumLiteral_2= 'us' ) | (enumLiteral_3= 'ns' ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4662:28: ( ( (enumLiteral_0= 's' ) | (enumLiteral_1= 'ms' ) | (enumLiteral_2= 'us' ) | (enumLiteral_3= 'ns' ) ) )
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4663:1: ( (enumLiteral_0= 's' ) | (enumLiteral_1= 'ms' ) | (enumLiteral_2= 'us' ) | (enumLiteral_3= 'ns' ) )
             {
-            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4641:1: ( (enumLiteral_0= 's' ) | (enumLiteral_1= 'ms' ) | (enumLiteral_2= 'us' ) | (enumLiteral_3= 'ns' ) )
-            int alt73=4;
+            // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4663:1: ( (enumLiteral_0= 's' ) | (enumLiteral_1= 'ms' ) | (enumLiteral_2= 'us' ) | (enumLiteral_3= 'ns' ) )
+            int alt74=4;
             switch ( input.LA(1) ) {
+            case 97:
+                {
+                alt74=1;
+                }
+                break;
+            case 98:
+                {
+                alt74=2;
+                }
+                break;
             case 99:
                 {
-                alt73=1;
+                alt74=3;
                 }
                 break;
             case 100:
                 {
-                alt73=2;
-                }
-                break;
-            case 101:
-                {
-                alt73=3;
-                }
-                break;
-            case 102:
-                {
-                alt73=4;
+                alt74=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 73, 0, input);
+                    new NoViableAltException("", 74, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt73) {
+            switch (alt74) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4641:2: (enumLiteral_0= 's' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4663:2: (enumLiteral_0= 's' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4641:2: (enumLiteral_0= 's' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4641:4: enumLiteral_0= 's'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4663:2: (enumLiteral_0= 's' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4663:4: enumLiteral_0= 's'
                     {
-                    enumLiteral_0=(Token)match(input,99,FOLLOW_99_in_ruleTimeUnit10953); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,97,FOLLOW_97_in_ruleTimeUnit10988); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getTimeUnitAccess().getSecondEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -14211,12 +14297,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4647:6: (enumLiteral_1= 'ms' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4669:6: (enumLiteral_1= 'ms' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4647:6: (enumLiteral_1= 'ms' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4647:8: enumLiteral_1= 'ms'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4669:6: (enumLiteral_1= 'ms' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4669:8: enumLiteral_1= 'ms'
                     {
-                    enumLiteral_1=(Token)match(input,100,FOLLOW_100_in_ruleTimeUnit10970); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,98,FOLLOW_98_in_ruleTimeUnit11005); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getTimeUnitAccess().getMillisecondEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -14230,12 +14316,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4653:6: (enumLiteral_2= 'us' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4675:6: (enumLiteral_2= 'us' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4653:6: (enumLiteral_2= 'us' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4653:8: enumLiteral_2= 'us'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4675:6: (enumLiteral_2= 'us' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4675:8: enumLiteral_2= 'us'
                     {
-                    enumLiteral_2=(Token)match(input,101,FOLLOW_101_in_ruleTimeUnit10987); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,99,FOLLOW_99_in_ruleTimeUnit11022); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getTimeUnitAccess().getMicrosecondEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -14249,12 +14335,12 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4659:6: (enumLiteral_3= 'ns' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4681:6: (enumLiteral_3= 'ns' )
                     {
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4659:6: (enumLiteral_3= 'ns' )
-                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4659:8: enumLiteral_3= 'ns'
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4681:6: (enumLiteral_3= 'ns' )
+                    // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:4681:8: enumLiteral_3= 'ns'
                     {
-                    enumLiteral_3=(Token)match(input,102,FOLLOW_102_in_ruleTimeUnit11004); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,100,FOLLOW_100_in_ruleTimeUnit11039); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getTimeUnitAccess().getNanosecondEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -14290,10 +14376,10 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
     // $ANTLR start synpred1_InternalSyncChartstext
     public final void synpred1_InternalSyncChartstext_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1013:4: ( ',' )
-        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1013:6: ','
+        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1035:4: ( ',' )
+        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:1035:6: ','
         {
-        match(input,33,FOLLOW_33_in_synpred1_InternalSyncChartstext2158); if (state.failed) return ;
+        match(input,31,FOLLOW_31_in_synpred1_InternalSyncChartstext2193); if (state.failed) return ;
 
         }
     }
@@ -14301,13 +14387,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
     // $ANTLR start synpred2_InternalSyncChartstext
     public final void synpred2_InternalSyncChartstext_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3698:4: ( ( '(' ) )
-        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3699:1: ( '(' )
+        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3720:4: ( ( '(' ) )
+        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3721:1: ( '(' )
         {
-        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3699:1: ( '(' )
-        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3700:2: '('
+        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3721:1: ( '(' )
+        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3722:2: '('
         {
-        match(input,23,FOLLOW_23_in_synpred2_InternalSyncChartstext8532); if (state.failed) return ;
+        match(input,23,FOLLOW_23_in_synpred2_InternalSyncChartstext8567); if (state.failed) return ;
 
         }
 
@@ -14318,13 +14404,13 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
 
     // $ANTLR start synpred3_InternalSyncChartstext
     public final void synpred3_InternalSyncChartstext_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3803:4: ( ( '(' ) )
-        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3804:1: ( '(' )
+        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3825:4: ( ( '(' ) )
+        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3826:1: ( '(' )
         {
-        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3804:1: ( '(' )
-        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3805:2: '('
+        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3826:1: ( '(' )
+        // ../de.cau.cs.kieler.yakindu.synccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/synccharts/model/stext/parser/antlr/internal/InternalSyncChartstext.g:3827:2: '('
         {
-        match(input,23,FOLLOW_23_in_synpred3_InternalSyncChartstext8755); if (state.failed) return ;
+        match(input,23,FOLLOW_23_in_synpred3_InternalSyncChartstext8790); if (state.failed) return ;
 
         }
 
@@ -14379,144 +14465,83 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     }
 
 
-    protected DFA3 dfa3 = new DFA3(this);
-    protected DFA28 dfa28 = new DFA28(this);
-    static final String DFA3_eotS =
-        "\10\uffff";
-    static final String DFA3_eofS =
-        "\10\uffff";
-    static final String DFA3_minS =
-        "\1\4\1\uffff\1\4\3\uffff\2\4";
-    static final String DFA3_maxS =
-        "\1\71\1\uffff\1\72\3\uffff\1\71\1\72";
-    static final String DFA3_acceptS =
-        "\1\uffff\1\1\1\uffff\1\2\1\3\1\4\2\uffff";
-    static final String DFA3_specialS =
-        "\10\uffff}>";
-    static final String[] DFA3_transitionS = {
-            "\1\2\1\5\10\uffff\1\1\2\uffff\3\3\2\uffff\1\4\2\uffff\1\5\1"+
-            "\uffff\5\5\6\uffff\24\1",
+    protected DFA29 dfa29 = new DFA29(this);
+    static final String DFA29_eotS =
+        "\12\uffff";
+    static final String DFA29_eofS =
+        "\11\uffff\1\10";
+    static final String DFA29_minS =
+        "\5\4\4\uffff\1\4";
+    static final String DFA29_maxS =
+        "\1\67\4\70\4\uffff\1\67";
+    static final String DFA29_acceptS =
+        "\5\uffff\1\2\1\3\1\4\1\1\1\uffff";
+    static final String DFA29_specialS =
+        "\12\uffff}>";
+    static final String[] DFA29_transitionS = {
+            "\1\5\1\7\10\uffff\1\5\7\uffff\1\6\2\uffff\1\7\1\uffff\3\7\6"+
+            "\uffff\3\5\1\4\1\1\1\2\1\3\15\5",
+            "\1\5\42\uffff\1\10\20\uffff\1\5",
+            "\1\5\42\uffff\1\10\20\uffff\1\5",
+            "\1\5\42\uffff\1\10\20\uffff\1\5",
+            "\1\11\37\uffff\24\10\1\5",
             "",
-            "\1\1\22\uffff\1\5\1\uffff\1\5\40\uffff\1\6",
             "",
             "",
             "",
-            "\1\7\41\uffff\24\1",
-            "\1\1\22\uffff\1\5\1\uffff\1\5\40\uffff\1\6"
+            "\2\10\10\uffff\1\10\2\5\3\uffff\1\10\1\uffff\1\10\2\uffff"+
+            "\1\10\1\uffff\3\10\6\uffff\24\10"
     };
 
-    static final short[] DFA3_eot = DFA.unpackEncodedString(DFA3_eotS);
-    static final short[] DFA3_eof = DFA.unpackEncodedString(DFA3_eofS);
-    static final char[] DFA3_min = DFA.unpackEncodedStringToUnsignedChars(DFA3_minS);
-    static final char[] DFA3_max = DFA.unpackEncodedStringToUnsignedChars(DFA3_maxS);
-    static final short[] DFA3_accept = DFA.unpackEncodedString(DFA3_acceptS);
-    static final short[] DFA3_special = DFA.unpackEncodedString(DFA3_specialS);
-    static final short[][] DFA3_transition;
+    static final short[] DFA29_eot = DFA.unpackEncodedString(DFA29_eotS);
+    static final short[] DFA29_eof = DFA.unpackEncodedString(DFA29_eofS);
+    static final char[] DFA29_min = DFA.unpackEncodedStringToUnsignedChars(DFA29_minS);
+    static final char[] DFA29_max = DFA.unpackEncodedStringToUnsignedChars(DFA29_maxS);
+    static final short[] DFA29_accept = DFA.unpackEncodedString(DFA29_acceptS);
+    static final short[] DFA29_special = DFA.unpackEncodedString(DFA29_specialS);
+    static final short[][] DFA29_transition;
 
     static {
-        int numStates = DFA3_transitionS.length;
-        DFA3_transition = new short[numStates][];
+        int numStates = DFA29_transitionS.length;
+        DFA29_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA3_transition[i] = DFA.unpackEncodedString(DFA3_transitionS[i]);
+            DFA29_transition[i] = DFA.unpackEncodedString(DFA29_transitionS[i]);
         }
     }
 
-    class DFA3 extends DFA {
+    class DFA29 extends DFA {
 
-        public DFA3(BaseRecognizer recognizer) {
+        public DFA29(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 3;
-            this.eot = DFA3_eot;
-            this.eof = DFA3_eof;
-            this.min = DFA3_min;
-            this.max = DFA3_max;
-            this.accept = DFA3_accept;
-            this.special = DFA3_special;
-            this.transition = DFA3_transition;
+            this.decisionNumber = 29;
+            this.eot = DFA29_eot;
+            this.eof = DFA29_eof;
+            this.min = DFA29_min;
+            this.max = DFA29_max;
+            this.accept = DFA29_accept;
+            this.special = DFA29_special;
+            this.transition = DFA29_transition;
         }
         public String getDescription() {
-            return "190:1: (lv_declarations_1_1= ruleVariableDeclaration | lv_declarations_1_2= ruleSignalDeclaration | lv_declarations_1_3= ruleOperationDeclaration | lv_declarations_1_4= ruleLocalReaction )";
-        }
-    }
-    static final String DFA28_eotS =
-        "\15\uffff";
-    static final String DFA28_eofS =
-        "\12\uffff\1\11\2\uffff";
-    static final String DFA28_minS =
-        "\5\4\1\uffff\1\4\3\uffff\3\4";
-    static final String DFA28_maxS =
-        "\1\71\4\72\1\uffff\1\72\3\uffff\2\71\1\72";
-    static final String DFA28_acceptS =
-        "\5\uffff\1\2\1\uffff\1\3\1\4\1\1\3\uffff";
-    static final String DFA28_specialS =
-        "\15\uffff}>";
-    static final String[] DFA28_transitionS = {
-            "\1\6\1\10\10\uffff\1\5\7\uffff\1\7\2\uffff\1\10\1\uffff\5\10"+
-            "\6\uffff\3\5\1\4\1\1\1\2\1\3\15\5",
-            "\1\5\44\uffff\1\11\20\uffff\1\5",
-            "\1\5\44\uffff\1\11\20\uffff\1\5",
-            "\1\5\44\uffff\1\11\20\uffff\1\5",
-            "\1\12\41\uffff\24\11\1\5",
-            "",
-            "\1\5\22\uffff\1\10\1\uffff\1\10\40\uffff\1\13",
-            "",
-            "",
-            "",
-            "\2\11\10\uffff\1\11\2\5\3\uffff\1\11\1\uffff\1\11\2\uffff"+
-            "\1\11\1\uffff\5\11\6\uffff\24\11",
-            "\1\14\41\uffff\24\5",
-            "\1\5\22\uffff\1\10\1\uffff\1\10\40\uffff\1\13"
-    };
-
-    static final short[] DFA28_eot = DFA.unpackEncodedString(DFA28_eotS);
-    static final short[] DFA28_eof = DFA.unpackEncodedString(DFA28_eofS);
-    static final char[] DFA28_min = DFA.unpackEncodedStringToUnsignedChars(DFA28_minS);
-    static final char[] DFA28_max = DFA.unpackEncodedStringToUnsignedChars(DFA28_maxS);
-    static final short[] DFA28_accept = DFA.unpackEncodedString(DFA28_acceptS);
-    static final short[] DFA28_special = DFA.unpackEncodedString(DFA28_specialS);
-    static final short[][] DFA28_transition;
-
-    static {
-        int numStates = DFA28_transitionS.length;
-        DFA28_transition = new short[numStates][];
-        for (int i=0; i<numStates; i++) {
-            DFA28_transition[i] = DFA.unpackEncodedString(DFA28_transitionS[i]);
-        }
-    }
-
-    class DFA28 extends DFA {
-
-        public DFA28(BaseRecognizer recognizer) {
-            this.recognizer = recognizer;
-            this.decisionNumber = 28;
-            this.eot = DFA28_eot;
-            this.eof = DFA28_eof;
-            this.min = DFA28_min;
-            this.max = DFA28_max;
-            this.accept = DFA28_accept;
-            this.special = DFA28_special;
-            this.transition = DFA28_transition;
-        }
-        public String getDescription() {
-            return "1686:1: (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction )";
+            return "1708:1: (lv_declarations_3_1= ruleEventDeclarartion | lv_declarations_3_2= ruleVariableDeclaration | lv_declarations_3_3= ruleOperationDeclaration | lv_declarations_3_4= ruleLocalReaction )";
         }
     }
  
 
     public static final BitSet FOLLOW_ruleVariableDefinition_in_entryRuleVariableDefinition75 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleVariableDefinition85 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_ruleVariableDefinition137 = new BitSet(new long[]{0x03FFFFC000000010L});
+    public static final BitSet FOLLOW_14_in_ruleVariableDefinition137 = new BitSet(new long[]{0x00FFFFF000000010L});
     public static final BitSet FOLLOW_ruleFQN_in_ruleVariableDefinition174 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleVariableDefinition191 = new BitSet(new long[]{0x0000000000018000L});
-    public static final BitSet FOLLOW_15_in_ruleVariableDefinition209 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_15_in_ruleVariableDefinition209 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
     public static final BitSet FOLLOW_ruleExpression_in_ruleVariableDefinition230 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_16_in_ruleVariableDefinition244 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStateScope_in_entryRuleStateScope280 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStateScope290 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleStateScope347 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
-    public static final BitSet FOLLOW_ruleSignalDeclaration_in_ruleStateScope366 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
-    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleStateScope385 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
-    public static final BitSet FOLLOW_ruleLocalReaction_in_ruleStateScope404 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
+    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleStateScope347 = new BitSet(new long[]{0x00FFFFF03A4E4032L});
+    public static final BitSet FOLLOW_ruleSignalDeclaration_in_ruleStateScope366 = new BitSet(new long[]{0x00FFFFF03A4E4032L});
+    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleStateScope385 = new BitSet(new long[]{0x00FFFFF03A4E4032L});
+    public static final BitSet FOLLOW_ruleLocalReaction_in_ruleStateScope404 = new BitSet(new long[]{0x00FFFFF03A4E4032L});
     public static final BitSet FOLLOW_ruleSignalDeclaration_in_entryRuleSignalDeclaration444 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSignalDeclaration454 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSignalDefinition_in_ruleSignalDeclaration500 = new BitSet(new long[]{0x0000000000000002L});
@@ -14526,19 +14551,19 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_18_in_ruleSignalDefinition628 = new BitSet(new long[]{0x0000000000080000L});
     public static final BitSet FOLLOW_19_in_ruleSignalDefinition654 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleSignalDefinition671 = new BitSet(new long[]{0x0000000000110000L});
-    public static final BitSet FOLLOW_20_in_ruleSignalDefinition689 = new BitSet(new long[]{0x03FFFFC000000010L});
+    public static final BitSet FOLLOW_20_in_ruleSignalDefinition689 = new BitSet(new long[]{0x00FFFFF000000010L});
     public static final BitSet FOLLOW_ruleFQN_in_ruleSignalDefinition712 = new BitSet(new long[]{0x0000000000218000L});
-    public static final BitSet FOLLOW_15_in_ruleSignalDefinition725 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_15_in_ruleSignalDefinition725 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
     public static final BitSet FOLLOW_ruleExpression_in_ruleSignalDefinition746 = new BitSet(new long[]{0x0000000000210000L});
-    public static final BitSet FOLLOW_21_in_ruleSignalDefinition761 = new BitSet(new long[]{0x0000000000000000L,0x00000000000007F8L});
+    public static final BitSet FOLLOW_21_in_ruleSignalDefinition761 = new BitSet(new long[]{0x0000000000000000L,0x00000000000001FEL});
     public static final BitSet FOLLOW_ruleCombineOperator_in_ruleSignalDefinition782 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_16_in_ruleSignalDefinition798 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleOperationDefinition_in_entryRuleOperationDefinition834 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleOperationDefinition844 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_ruleOperationDefinition890 = new BitSet(new long[]{0x03FFFFC000000010L});
-    public static final BitSet FOLLOW_ruleFQN_in_ruleOperationDefinition913 = new BitSet(new long[]{0x03FFFFC000000010L});
+    public static final BitSet FOLLOW_22_in_ruleOperationDefinition890 = new BitSet(new long[]{0x00FFFFF000000010L});
+    public static final BitSet FOLLOW_ruleFQN_in_ruleOperationDefinition913 = new BitSet(new long[]{0x00FFFFF000000010L});
     public static final BitSet FOLLOW_ruleXID_in_ruleOperationDefinition934 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ruleOperationDefinition946 = new BitSet(new long[]{0x03FFFFC000000010L});
+    public static final BitSet FOLLOW_23_in_ruleOperationDefinition946 = new BitSet(new long[]{0x00FFFFF000000010L});
     public static final BitSet FOLLOW_ruleFQN_in_ruleOperationDefinition969 = new BitSet(new long[]{0x0000000001000000L});
     public static final BitSet FOLLOW_24_in_ruleOperationDefinition981 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_16_in_ruleOperationDefinition993 = new BitSet(new long[]{0x0000000000000002L});
@@ -14546,7 +14571,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_EOF_in_entryRuleLocalReaction1039 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLocalReactionTrigger_in_ruleLocalReaction1087 = new BitSet(new long[]{0x0000000002000000L});
     public static final BitSet FOLLOW_ruleReactionTrigger_in_ruleLocalReaction1106 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_25_in_ruleLocalReaction1123 = new BitSet(new long[]{0x83000004048003F0L,0x0000000026000000L});
+    public static final BitSet FOLLOW_25_in_ruleLocalReaction1123 = new BitSet(new long[]{0x20C00001048003F0L,0x0000000009800000L});
     public static final BitSet FOLLOW_ruleReactionEffect_in_ruleLocalReaction1146 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_ruleSuspendEffect_in_ruleLocalReaction1165 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_16_in_ruleLocalReaction1181 = new BitSet(new long[]{0x0000000000000002L});
@@ -14556,7 +14581,7 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleLocalReactionTrigger_in_entryRuleLocalReactionTrigger1309 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLocalReactionTrigger1319 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStateReaction_in_ruleLocalReactionTrigger1374 = new BitSet(new long[]{0x0000000000100002L});
-    public static final BitSet FOLLOW_20_in_ruleLocalReactionTrigger1387 = new BitSet(new long[]{0x00000000F8000032L});
+    public static final BitSet FOLLOW_20_in_ruleLocalReactionTrigger1387 = new BitSet(new long[]{0x0000000038000022L});
     public static final BitSet FOLLOW_ruleReactionTrigger_in_ruleLocalReactionTrigger1408 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleStateReaction_in_entryRuleStateReaction1447 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleStateReaction1457 = new BitSet(new long[]{0x0000000000000002L});
@@ -14574,349 +14599,351 @@ public class InternalSyncChartstextParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_29_in_ruleExit1833 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleReactionTrigger_in_entryRuleReactionTrigger1869 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleReactionTrigger1879 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_ruleReactionTrigger1931 = new BitSet(new long[]{0x0000000080000030L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleReactionTrigger1962 = new BitSet(new long[]{0x0000000080000010L});
-    public static final BitSet FOLLOW_ruleRegularEventSpec_in_ruleReactionTrigger1990 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_ruleReactionTrigger2009 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionTrigger2030 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_32_in_ruleReactionTrigger2042 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleReactionEffect_in_entryRuleReactionEffect2080 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleReactionEffect2090 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionEffect2145 = new BitSet(new long[]{0x0000000200000002L});
-    public static final BitSet FOLLOW_33_in_ruleReactionEffect2166 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionEffect2188 = new BitSet(new long[]{0x0000000200000002L});
-    public static final BitSet FOLLOW_rulePrimaryExpression_in_entryRulePrimaryExpression2226 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePrimaryExpression2236 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePrimitiveValueExpression_in_rulePrimaryExpression2283 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleFeatureCall_in_rulePrimaryExpression2310 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleActiveStateReferenceExpression_in_rulePrimaryExpression2337 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePreValueExpression_in_rulePrimaryExpression2364 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleParenthesizedExpression_in_rulePrimaryExpression2391 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEventValueReferenceExpression_in_rulePrimaryExpression2418 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePreValueExpression_in_entryRulePreValueExpression2453 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePreValueExpression2463 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_rulePreValueExpression2509 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_rulePreValueExpression2521 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleFeatureCall_in_rulePreValueExpression2542 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_rulePreValueExpression2554 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDefRoot_in_entryRuleDefRoot2592 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDefRoot2602 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStatechartRoot_in_ruleDefRoot2649 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStateRoot_in_ruleDefRoot2676 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTransitionRoot_in_ruleDefRoot2703 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStatechartRoot_in_entryRuleStatechartRoot2738 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleStatechartRoot2748 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_35_in_ruleStatechartRoot2785 = new BitSet(new long[]{0x000001C000000000L});
-    public static final BitSet FOLLOW_ruleStatechartSpecification_in_ruleStatechartRoot2806 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStateRoot_in_entryRuleStateRoot2842 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleStateRoot2852 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_ruleStateRoot2889 = new BitSet(new long[]{0x03FFFFC0FA4E4030L});
-    public static final BitSet FOLLOW_ruleStateSpecification_in_ruleStateRoot2910 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTransitionRoot_in_entryRuleTransitionRoot2946 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTransitionRoot2956 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_37_in_ruleTransitionRoot2993 = new BitSet(new long[]{0x00060000FA000030L});
-    public static final BitSet FOLLOW_ruleTransitionSpecification_in_ruleTransitionRoot3014 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStatechartSpecification_in_entryRuleStatechartSpecification3052 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleStatechartSpecification3062 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_38_in_ruleStatechartSpecification3109 = new BitSet(new long[]{0x03FFFFC000000010L});
-    public static final BitSet FOLLOW_ruleFQN_in_ruleStatechartSpecification3130 = new BitSet(new long[]{0x0000018000000002L});
-    public static final BitSet FOLLOW_ruleStatechartScope_in_ruleStatechartSpecification3153 = new BitSet(new long[]{0x0000018000000002L});
-    public static final BitSet FOLLOW_ruleStateSpecification_in_entryRuleStateSpecification3190 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleStateSpecification3200 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStateScope_in_ruleStateSpecification3245 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTransitionSpecification_in_entryRuleTransitionSpecification3280 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTransitionSpecification3290 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTransitionReaction_in_ruleTransitionSpecification3335 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStatechartScope_in_entryRuleStatechartScope3372 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleStatechartScope3382 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleInterfaceScope_in_ruleStatechartScope3429 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleInternalScope_in_ruleStatechartScope3456 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleInterfaceScope_in_entryRuleInterfaceScope3493 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleInterfaceScope3503 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_ruleInterfaceScope3549 = new BitSet(new long[]{0x03FFFFC000100010L});
-    public static final BitSet FOLLOW_ruleXID_in_ruleInterfaceScope3570 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_ruleInterfaceScope3583 = new BitSet(new long[]{0x03FFFFC000404012L});
-    public static final BitSet FOLLOW_ruleEventDeclarartion_in_ruleInterfaceScope3606 = new BitSet(new long[]{0x03FFFFC000404012L});
-    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleInterfaceScope3625 = new BitSet(new long[]{0x03FFFFC000404012L});
-    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleInterfaceScope3644 = new BitSet(new long[]{0x03FFFFC000404012L});
-    public static final BitSet FOLLOW_ruleInternalScope_in_entryRuleInternalScope3684 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleInternalScope3694 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_ruleInternalScope3740 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_ruleInternalScope3752 = new BitSet(new long[]{0x03FFFFC0FA4E4030L});
-    public static final BitSet FOLLOW_ruleEventDeclarartion_in_ruleInternalScope3775 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
-    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleInternalScope3794 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
-    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleInternalScope3813 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
-    public static final BitSet FOLLOW_ruleLocalReaction_in_ruleInternalScope3832 = new BitSet(new long[]{0x03FFFFC0FA4E4032L});
-    public static final BitSet FOLLOW_ruleEventDeclarartion_in_entryRuleEventDeclarartion3874 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleEventDeclarartion3884 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEventDefinition_in_ruleEventDeclarartion3930 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEventDefinition_in_entryRuleEventDefinition3966 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleEventDefinition3976 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDirection_in_ruleEventDefinition4022 = new BitSet(new long[]{0x0000020000000000L});
-    public static final BitSet FOLLOW_41_in_ruleEventDefinition4035 = new BitSet(new long[]{0x03FFFFC000000010L});
-    public static final BitSet FOLLOW_ruleXID_in_ruleEventDefinition4056 = new BitSet(new long[]{0x0000000000100002L});
-    public static final BitSet FOLLOW_20_in_ruleEventDefinition4069 = new BitSet(new long[]{0x03FFFFC000000010L});
-    public static final BitSet FOLLOW_ruleFQN_in_ruleEventDefinition4092 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariableDeclaration_in_entryRuleVariableDeclaration4130 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleVariableDeclaration4140 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariableDefinition_in_ruleVariableDeclaration4186 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleOperationDeclaration_in_entryRuleOperationDeclaration4222 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleOperationDeclaration4232 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleOperationDefinition_in_ruleOperationDeclaration4278 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleXID_in_entryRuleXID4317 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleXID4328 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleXID4368 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_38_in_ruleXID4392 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_ruleXID4411 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_ruleXID4430 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_ruleXID4449 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_ruleXID4468 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_43_in_ruleXID4487 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_ruleXID4506 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_ruleXID4525 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_ruleXID4544 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_ruleXID4563 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_48_in_ruleXID4582 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_ruleXID4601 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_ruleXID4620 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_51_in_ruleXID4639 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_ruleXID4658 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_ruleXID4677 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_ruleXID4696 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_55_in_ruleXID4715 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_56_in_ruleXID4734 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_57_in_ruleXID4753 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleFQN_in_entryRuleFQN4794 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleFQN4805 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleXID_in_ruleFQN4852 = new BitSet(new long[]{0x0400000000000002L});
-    public static final BitSet FOLLOW_58_in_ruleFQN4871 = new BitSet(new long[]{0x03FFFFC000000010L});
-    public static final BitSet FOLLOW_ruleXID_in_ruleFQN4893 = new BitSet(new long[]{0x0400000000000002L});
-    public static final BitSet FOLLOW_ruleTransitionReaction_in_entryRuleTransitionReaction4942 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTransitionReaction4952 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStextTrigger_in_ruleTransitionReaction5007 = new BitSet(new long[]{0x0000000042000002L});
-    public static final BitSet FOLLOW_25_in_ruleTransitionReaction5021 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleReactionEffect_in_ruleTransitionReaction5042 = new BitSet(new long[]{0x0000000040000002L});
-    public static final BitSet FOLLOW_30_in_ruleTransitionReaction5057 = new BitSet(new long[]{0x0800000000000012L});
-    public static final BitSet FOLLOW_ruleTransitionProperty_in_ruleTransitionReaction5078 = new BitSet(new long[]{0x0800000000000012L});
-    public static final BitSet FOLLOW_ruleStextTrigger_in_entryRuleStextTrigger5117 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleStextTrigger5127 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleReactionTrigger_in_ruleStextTrigger5174 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDefaultTrigger_in_ruleStextTrigger5201 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDefaultTrigger_in_entryRuleDefaultTrigger5236 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDefaultTrigger5246 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_ruleDefaultTrigger5293 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_ruleDefaultTrigger5311 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTransitionProperty_in_entryRuleTransitionProperty5348 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTransitionProperty5358 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEntryPointSpec_in_ruleTransitionProperty5405 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExitPointSpec_in_ruleTransitionProperty5432 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEntryPointSpec_in_entryRuleEntryPointSpec5467 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleEntryPointSpec5477 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_59_in_ruleEntryPointSpec5514 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleEntryPointSpec5531 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExitPointSpec_in_entryRuleExitPointSpec5572 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleExitPointSpec5582 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleExitPointSpec5624 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_59_in_ruleExitPointSpec5641 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRegularEventSpec_in_entryRuleRegularEventSpec5679 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleRegularEventSpec5689 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleFeatureCall_in_ruleRegularEventSpec5734 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTimeEventSpec_in_entryRuleTimeEventSpec5769 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTimeEventSpec5779 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTimeEventType_in_ruleTimeEventSpec5825 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleConditionalExpression_in_ruleTimeEventSpec5846 = new BitSet(new long[]{0x0000000000000000L,0x0000007800000000L});
-    public static final BitSet FOLLOW_ruleTimeUnit_in_ruleTimeEventSpec5867 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBuiltinEventSpec_in_entryRuleBuiltinEventSpec5903 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleBuiltinEventSpec5913 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEntryEvent_in_ruleBuiltinEventSpec5960 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExitEvent_in_ruleBuiltinEventSpec5987 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAlwaysEvent_in_ruleBuiltinEventSpec6014 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEntryEvent_in_entryRuleEntryEvent6049 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleEntryEvent6059 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_51_in_ruleEntryEvent6105 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExitEvent_in_entryRuleExitEvent6141 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleExitEvent6151 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_ruleExitEvent6197 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAlwaysEvent_in_entryRuleAlwaysEvent6233 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleAlwaysEvent6243 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_ruleAlwaysEvent6290 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_ruleAlwaysEvent6308 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_entryRuleExpression6349 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleExpression6359 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAssignmentExpression_in_ruleExpression6405 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAssignmentExpression_in_entryRuleAssignmentExpression6439 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleAssignmentExpression6449 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleConditionalExpression_in_ruleAssignmentExpression6496 = new BitSet(new long[]{0x0000000000008002L,0x00000000007FE000L});
-    public static final BitSet FOLLOW_ruleAssignmentOperator_in_ruleAssignmentExpression6526 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleConditionalExpression_in_ruleAssignmentExpression6547 = new BitSet(new long[]{0x0000000000008002L,0x00000000007FE000L});
-    public static final BitSet FOLLOW_ruleConditionalExpression_in_entryRuleConditionalExpression6585 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleConditionalExpression6595 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6642 = new BitSet(new long[]{0x1000000000000002L});
-    public static final BitSet FOLLOW_60_in_ruleConditionalExpression6663 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6684 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_20_in_ruleConditionalExpression6696 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6717 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLogicalOrExpression_in_entryRuleLogicalOrExpression6755 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleLogicalOrExpression6765 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6812 = new BitSet(new long[]{0x2000000000000002L});
-    public static final BitSet FOLLOW_61_in_ruleLogicalOrExpression6833 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6854 = new BitSet(new long[]{0x2000000000000002L});
-    public static final BitSet FOLLOW_ruleLogicalAndExpression_in_entryRuleLogicalAndExpression6892 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleLogicalAndExpression6902 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression6949 = new BitSet(new long[]{0x4000000000000002L});
-    public static final BitSet FOLLOW_62_in_ruleLogicalAndExpression6970 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression6991 = new BitSet(new long[]{0x4000000000000002L});
-    public static final BitSet FOLLOW_ruleLogicalNotExpression_in_entryRuleLogicalNotExpression7029 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleLogicalNotExpression7039 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBitwiseXorExpression_in_ruleLogicalNotExpression7086 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_63_in_ruleLogicalNotExpression7113 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleBitwiseXorExpression_in_ruleLogicalNotExpression7134 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBitwiseXorExpression_in_entryRuleBitwiseXorExpression7171 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseXorExpression7181 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_ruleBitwiseXorExpression7228 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_ruleBitwiseXorExpression7249 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_ruleBitwiseXorExpression7270 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000001L});
-    public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_entryRuleBitwiseOrExpression7308 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseOrExpression7318 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression7365 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000002L});
-    public static final BitSet FOLLOW_65_in_ruleBitwiseOrExpression7386 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression7407 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_entryRuleBitwiseAndExpression7445 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseAndExpression7455 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLogicalRelationExpression_in_ruleBitwiseAndExpression7502 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000004L});
-    public static final BitSet FOLLOW_66_in_ruleBitwiseAndExpression7523 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleLogicalRelationExpression_in_ruleBitwiseAndExpression7544 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000004L});
-    public static final BitSet FOLLOW_ruleLogicalRelationExpression_in_entryRuleLogicalRelationExpression7582 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleLogicalRelationExpression7592 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7639 = new BitSet(new long[]{0x0800000000000002L,0x00000007C0000000L});
-    public static final BitSet FOLLOW_ruleRelationalOperator_in_ruleLogicalRelationExpression7669 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7690 = new BitSet(new long[]{0x0800000000000002L,0x00000007C0000000L});
-    public static final BitSet FOLLOW_ruleShiftExpression_in_entryRuleShiftExpression7728 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleShiftExpression7738 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNumericalAddSubtractExpression_in_ruleShiftExpression7785 = new BitSet(new long[]{0x0000000000000002L,0x0000000001800000L});
-    public static final BitSet FOLLOW_ruleShiftOperator_in_ruleShiftExpression7815 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleNumericalAddSubtractExpression_in_ruleShiftExpression7836 = new BitSet(new long[]{0x0000000000000002L,0x0000000001800000L});
-    public static final BitSet FOLLOW_ruleNumericalAddSubtractExpression_in_entryRuleNumericalAddSubtractExpression7874 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleNumericalAddSubtractExpression7884 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNumericalMultiplyDivideExpression_in_ruleNumericalAddSubtractExpression7931 = new BitSet(new long[]{0x0000000000000002L,0x0000000006000000L});
-    public static final BitSet FOLLOW_ruleAdditiveOperator_in_ruleNumericalAddSubtractExpression7961 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleNumericalMultiplyDivideExpression_in_ruleNumericalAddSubtractExpression7982 = new BitSet(new long[]{0x0000000000000002L,0x0000000006000000L});
-    public static final BitSet FOLLOW_ruleNumericalMultiplyDivideExpression_in_entryRuleNumericalMultiplyDivideExpression8020 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleNumericalMultiplyDivideExpression8030 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNumericalUnaryExpression_in_ruleNumericalMultiplyDivideExpression8077 = new BitSet(new long[]{0x0000000002000002L,0x0000000018000000L});
-    public static final BitSet FOLLOW_ruleMultiplicativeOperator_in_ruleNumericalMultiplyDivideExpression8107 = new BitSet(new long[]{0x03000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleNumericalUnaryExpression_in_ruleNumericalMultiplyDivideExpression8128 = new BitSet(new long[]{0x0000000002000002L,0x0000000018000000L});
-    public static final BitSet FOLLOW_ruleNumericalUnaryExpression_in_entryRuleNumericalUnaryExpression8166 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleNumericalUnaryExpression8176 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePrimaryExpression_in_ruleNumericalUnaryExpression8223 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleUnaryOperator_in_ruleNumericalUnaryExpression8259 = new BitSet(new long[]{0x03000004008003F0L});
-    public static final BitSet FOLLOW_rulePrimaryExpression_in_ruleNumericalUnaryExpression8280 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePrimitiveValueExpression_in_entryRulePrimitiveValueExpression8317 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePrimitiveValueExpression8327 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLiteral_in_rulePrimitiveValueExpression8382 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleFeatureCall_in_entryRuleFeatureCall8418 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleFeatureCall8428 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleElementReferenceExpression_in_ruleFeatureCall8475 = new BitSet(new long[]{0x0400000000000002L});
-    public static final BitSet FOLLOW_58_in_ruleFeatureCall8496 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleFeatureCall8516 = new BitSet(new long[]{0x0400000000800002L});
-    public static final BitSet FOLLOW_23_in_ruleFeatureCall8550 = new BitSet(new long[]{0x83000004018003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleFeatureCall8585 = new BitSet(new long[]{0x0000000201000000L});
-    public static final BitSet FOLLOW_33_in_ruleFeatureCall8598 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleFeatureCall8619 = new BitSet(new long[]{0x0000000201000000L});
-    public static final BitSet FOLLOW_24_in_ruleFeatureCall8635 = new BitSet(new long[]{0x0400000000000002L});
-    public static final BitSet FOLLOW_ruleElementReferenceExpression_in_entryRuleElementReferenceExpression8675 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleElementReferenceExpression8685 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleElementReferenceExpression8739 = new BitSet(new long[]{0x0000000000800002L});
-    public static final BitSet FOLLOW_23_in_ruleElementReferenceExpression8773 = new BitSet(new long[]{0x83000004018003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleElementReferenceExpression8808 = new BitSet(new long[]{0x0000000201000000L});
-    public static final BitSet FOLLOW_33_in_ruleElementReferenceExpression8821 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleElementReferenceExpression8842 = new BitSet(new long[]{0x0000000201000000L});
-    public static final BitSet FOLLOW_24_in_ruleElementReferenceExpression8858 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEventValueReferenceExpression_in_entryRuleEventValueReferenceExpression8896 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleEventValueReferenceExpression8906 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_56_in_ruleEventValueReferenceExpression8952 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ruleEventValueReferenceExpression8964 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleFeatureCall_in_ruleEventValueReferenceExpression8985 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_ruleEventValueReferenceExpression8997 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleActiveStateReferenceExpression_in_entryRuleActiveStateReferenceExpression9033 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleActiveStateReferenceExpression9043 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_57_in_ruleActiveStateReferenceExpression9089 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ruleActiveStateReferenceExpression9101 = new BitSet(new long[]{0x03FFFFC000000010L});
-    public static final BitSet FOLLOW_ruleFQN_in_ruleActiveStateReferenceExpression9124 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_ruleActiveStateReferenceExpression9136 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleParenthesizedExpression_in_entryRuleParenthesizedExpression9172 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleParenthesizedExpression9182 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_ruleParenthesizedExpression9228 = new BitSet(new long[]{0x83000004008003F0L,0x0000000026000000L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleParenthesizedExpression9249 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_24_in_ruleParenthesizedExpression9261 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLiteral_in_entryRuleLiteral9297 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleLiteral9307 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBoolLiteral_in_ruleLiteral9354 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIntLiteral_in_ruleLiteral9381 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleHexLiteral_in_ruleLiteral9408 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRealLiteral_in_ruleLiteral9435 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStringLiteral_in_ruleLiteral9462 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBoolLiteral_in_entryRuleBoolLiteral9497 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleBoolLiteral9507 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_BOOL_in_ruleBoolLiteral9558 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIntLiteral_in_entryRuleIntLiteral9599 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleIntLiteral9609 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleIntLiteral9660 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRealLiteral_in_entryRuleRealLiteral9701 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleRealLiteral9711 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_FLOAT_in_ruleRealLiteral9762 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleHexLiteral_in_entryRuleHexLiteral9803 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleHexLiteral9813 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_HEX_in_ruleHexLiteral9864 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleStringLiteral_in_entryRuleStringLiteral9905 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleStringLiteral9915 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleStringLiteral9966 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_67_in_ruleCombineOperator10021 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_68_in_ruleCombineOperator10038 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_69_in_ruleCombineOperator10055 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_70_in_ruleCombineOperator10072 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_71_in_ruleCombineOperator10089 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_72_in_ruleCombineOperator10106 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_73_in_ruleCombineOperator10123 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_74_in_ruleCombineOperator10140 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_ruleDirection10185 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_43_in_ruleDirection10202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_ruleDirection10219 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_75_in_ruleTimeEventType10264 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_76_in_ruleTimeEventType10281 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_ruleAssignmentOperator10326 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_77_in_ruleAssignmentOperator10343 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_78_in_ruleAssignmentOperator10360 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_79_in_ruleAssignmentOperator10377 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_80_in_ruleAssignmentOperator10394 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_81_in_ruleAssignmentOperator10411 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_82_in_ruleAssignmentOperator10428 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_83_in_ruleAssignmentOperator10445 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_84_in_ruleAssignmentOperator10462 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_85_in_ruleAssignmentOperator10479 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_86_in_ruleAssignmentOperator10496 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_87_in_ruleShiftOperator10541 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_88_in_ruleShiftOperator10558 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_89_in_ruleAdditiveOperator10603 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_90_in_ruleAdditiveOperator10620 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_91_in_ruleMultiplicativeOperator10665 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_25_in_ruleMultiplicativeOperator10682 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_92_in_ruleMultiplicativeOperator10699 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_89_in_ruleUnaryOperator10744 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_90_in_ruleUnaryOperator10761 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_93_in_ruleUnaryOperator10778 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_94_in_ruleRelationalOperator10823 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_95_in_ruleRelationalOperator10840 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_59_in_ruleRelationalOperator10857 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_96_in_ruleRelationalOperator10874 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_97_in_ruleRelationalOperator10891 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_98_in_ruleRelationalOperator10908 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_99_in_ruleTimeUnit10953 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_100_in_ruleTimeUnit10970 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_101_in_ruleTimeUnit10987 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_102_in_ruleTimeUnit11004 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_synpred1_InternalSyncChartstext2158 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_synpred2_InternalSyncChartstext8532 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_synpred3_InternalSyncChartstext8755 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleReactionTrigger1930 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_20_in_ruleReactionTrigger1947 = new BitSet(new long[]{0x0000000040800032L});
+    public static final BitSet FOLLOW_30_in_ruleReactionTrigger1965 = new BitSet(new long[]{0x0000000000800032L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleReactionTrigger1996 = new BitSet(new long[]{0x0000000000800012L});
+    public static final BitSet FOLLOW_ruleRegularEventSpec_in_ruleReactionTrigger2024 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_ruleReactionTrigger2043 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionTrigger2064 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_24_in_ruleReactionTrigger2076 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleReactionEffect_in_entryRuleReactionEffect2115 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleReactionEffect2125 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionEffect2180 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_31_in_ruleReactionEffect2201 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleReactionEffect2223 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_rulePrimaryExpression_in_entryRulePrimaryExpression2261 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePrimaryExpression2271 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePrimitiveValueExpression_in_rulePrimaryExpression2318 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleFeatureCall_in_rulePrimaryExpression2345 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleActiveStateReferenceExpression_in_rulePrimaryExpression2372 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePreValueExpression_in_rulePrimaryExpression2399 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleParenthesizedExpression_in_rulePrimaryExpression2426 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEventValueReferenceExpression_in_rulePrimaryExpression2453 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePreValueExpression_in_entryRulePreValueExpression2488 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePreValueExpression2498 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rulePreValueExpression2544 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_rulePreValueExpression2556 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_ruleFeatureCall_in_rulePreValueExpression2577 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_24_in_rulePreValueExpression2589 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDefRoot_in_entryRuleDefRoot2627 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDefRoot2637 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStatechartRoot_in_ruleDefRoot2684 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStateRoot_in_ruleDefRoot2711 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTransitionRoot_in_ruleDefRoot2738 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStatechartRoot_in_entryRuleStatechartRoot2773 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleStatechartRoot2783 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_ruleStatechartRoot2820 = new BitSet(new long[]{0x0000007000000000L});
+    public static final BitSet FOLLOW_ruleStatechartSpecification_in_ruleStatechartRoot2841 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStateRoot_in_entryRuleStateRoot2877 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleStateRoot2887 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_ruleStateRoot2924 = new BitSet(new long[]{0x00FFFFF03A4E4030L});
+    public static final BitSet FOLLOW_ruleStateSpecification_in_ruleStateRoot2945 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTransitionRoot_in_entryRuleTransitionRoot2981 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTransitionRoot2991 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_35_in_ruleTransitionRoot3028 = new BitSet(new long[]{0x000180007A000020L});
+    public static final BitSet FOLLOW_ruleTransitionSpecification_in_ruleTransitionRoot3049 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStatechartSpecification_in_entryRuleStatechartSpecification3087 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleStatechartSpecification3097 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_ruleStatechartSpecification3144 = new BitSet(new long[]{0x00FFFFF000000010L});
+    public static final BitSet FOLLOW_ruleFQN_in_ruleStatechartSpecification3165 = new BitSet(new long[]{0x0000006000000002L});
+    public static final BitSet FOLLOW_ruleStatechartScope_in_ruleStatechartSpecification3188 = new BitSet(new long[]{0x0000006000000002L});
+    public static final BitSet FOLLOW_ruleStateSpecification_in_entryRuleStateSpecification3225 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleStateSpecification3235 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStateScope_in_ruleStateSpecification3280 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTransitionSpecification_in_entryRuleTransitionSpecification3315 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTransitionSpecification3325 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTransitionReaction_in_ruleTransitionSpecification3370 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStatechartScope_in_entryRuleStatechartScope3407 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleStatechartScope3417 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleInterfaceScope_in_ruleStatechartScope3464 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleInternalScope_in_ruleStatechartScope3491 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleInterfaceScope_in_entryRuleInterfaceScope3528 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleInterfaceScope3538 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_37_in_ruleInterfaceScope3584 = new BitSet(new long[]{0x00FFFFF000100010L});
+    public static final BitSet FOLLOW_ruleXID_in_ruleInterfaceScope3605 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_20_in_ruleInterfaceScope3618 = new BitSet(new long[]{0x00FFFFF000404012L});
+    public static final BitSet FOLLOW_ruleEventDeclarartion_in_ruleInterfaceScope3641 = new BitSet(new long[]{0x00FFFFF000404012L});
+    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleInterfaceScope3660 = new BitSet(new long[]{0x00FFFFF000404012L});
+    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleInterfaceScope3679 = new BitSet(new long[]{0x00FFFFF000404012L});
+    public static final BitSet FOLLOW_ruleInternalScope_in_entryRuleInternalScope3719 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleInternalScope3729 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_ruleInternalScope3775 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_20_in_ruleInternalScope3787 = new BitSet(new long[]{0x00FFFFF03A4E4030L});
+    public static final BitSet FOLLOW_ruleEventDeclarartion_in_ruleInternalScope3810 = new BitSet(new long[]{0x00FFFFF03A4E4032L});
+    public static final BitSet FOLLOW_ruleVariableDeclaration_in_ruleInternalScope3829 = new BitSet(new long[]{0x00FFFFF03A4E4032L});
+    public static final BitSet FOLLOW_ruleOperationDeclaration_in_ruleInternalScope3848 = new BitSet(new long[]{0x00FFFFF03A4E4032L});
+    public static final BitSet FOLLOW_ruleLocalReaction_in_ruleInternalScope3867 = new BitSet(new long[]{0x00FFFFF03A4E4032L});
+    public static final BitSet FOLLOW_ruleEventDeclarartion_in_entryRuleEventDeclarartion3909 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEventDeclarartion3919 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEventDefinition_in_ruleEventDeclarartion3965 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEventDefinition_in_entryRuleEventDefinition4001 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEventDefinition4011 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDirection_in_ruleEventDefinition4057 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_39_in_ruleEventDefinition4070 = new BitSet(new long[]{0x00FFFFF000000010L});
+    public static final BitSet FOLLOW_ruleXID_in_ruleEventDefinition4091 = new BitSet(new long[]{0x0000000000100002L});
+    public static final BitSet FOLLOW_20_in_ruleEventDefinition4104 = new BitSet(new long[]{0x00FFFFF000000010L});
+    public static final BitSet FOLLOW_ruleFQN_in_ruleEventDefinition4127 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariableDeclaration_in_entryRuleVariableDeclaration4165 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleVariableDeclaration4175 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariableDefinition_in_ruleVariableDeclaration4221 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleOperationDeclaration_in_entryRuleOperationDeclaration4257 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleOperationDeclaration4267 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleOperationDefinition_in_ruleOperationDeclaration4313 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleXID_in_entryRuleXID4352 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleXID4363 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleXID4403 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_ruleXID4427 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_37_in_ruleXID4446 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_ruleXID4465 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_ruleXID4484 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_ruleXID4503 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_ruleXID4522 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_ruleXID4541 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_43_in_ruleXID4560 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_44_in_ruleXID4579 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_45_in_ruleXID4598 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_ruleXID4617 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_ruleXID4636 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_ruleXID4655 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_49_in_ruleXID4674 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_ruleXID4693 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_51_in_ruleXID4712 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_52_in_ruleXID4731 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_ruleXID4750 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_ruleXID4769 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_55_in_ruleXID4788 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleFQN_in_entryRuleFQN4829 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleFQN4840 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleXID_in_ruleFQN4887 = new BitSet(new long[]{0x0100000000000002L});
+    public static final BitSet FOLLOW_56_in_ruleFQN4906 = new BitSet(new long[]{0x00FFFFF000000010L});
+    public static final BitSet FOLLOW_ruleXID_in_ruleFQN4928 = new BitSet(new long[]{0x0100000000000002L});
+    public static final BitSet FOLLOW_ruleTransitionReaction_in_entryRuleTransitionReaction4977 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTransitionReaction4987 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStextTrigger_in_ruleTransitionReaction5042 = new BitSet(new long[]{0x0000000042000002L});
+    public static final BitSet FOLLOW_25_in_ruleTransitionReaction5056 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleReactionEffect_in_ruleTransitionReaction5077 = new BitSet(new long[]{0x0000000040000002L});
+    public static final BitSet FOLLOW_30_in_ruleTransitionReaction5092 = new BitSet(new long[]{0x0200000000000012L});
+    public static final BitSet FOLLOW_ruleTransitionProperty_in_ruleTransitionReaction5113 = new BitSet(new long[]{0x0200000000000012L});
+    public static final BitSet FOLLOW_ruleStextTrigger_in_entryRuleStextTrigger5152 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleStextTrigger5162 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleReactionTrigger_in_ruleStextTrigger5209 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDefaultTrigger_in_ruleStextTrigger5236 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDefaultTrigger_in_entryRuleDefaultTrigger5271 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDefaultTrigger5281 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_ruleDefaultTrigger5328 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_ruleDefaultTrigger5346 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTransitionProperty_in_entryRuleTransitionProperty5383 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTransitionProperty5393 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEntryPointSpec_in_ruleTransitionProperty5440 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExitPointSpec_in_ruleTransitionProperty5467 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEntryPointSpec_in_entryRuleEntryPointSpec5502 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEntryPointSpec5512 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_57_in_ruleEntryPointSpec5549 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleEntryPointSpec5566 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExitPointSpec_in_entryRuleExitPointSpec5607 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleExitPointSpec5617 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleExitPointSpec5659 = new BitSet(new long[]{0x0200000000000000L});
+    public static final BitSet FOLLOW_57_in_ruleExitPointSpec5676 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleRegularEventSpec_in_entryRuleRegularEventSpec5714 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleRegularEventSpec5724 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleFeatureCall_in_ruleRegularEventSpec5769 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTimeEventSpec_in_entryRuleTimeEventSpec5804 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTimeEventSpec5814 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTimeEventType_in_ruleTimeEventSpec5860 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleConditionalExpression_in_ruleTimeEventSpec5881 = new BitSet(new long[]{0x0000000000000000L,0x0000001E00000000L});
+    public static final BitSet FOLLOW_ruleTimeUnit_in_ruleTimeEventSpec5902 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBuiltinEventSpec_in_entryRuleBuiltinEventSpec5938 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleBuiltinEventSpec5948 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEntryEvent_in_ruleBuiltinEventSpec5995 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExitEvent_in_ruleBuiltinEventSpec6022 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAlwaysEvent_in_ruleBuiltinEventSpec6049 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEntryEvent_in_entryRuleEntryEvent6084 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEntryEvent6094 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_49_in_ruleEntryEvent6140 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExitEvent_in_entryRuleExitEvent6176 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleExitEvent6186 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_ruleExitEvent6232 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAlwaysEvent_in_entryRuleAlwaysEvent6268 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleAlwaysEvent6278 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_51_in_ruleAlwaysEvent6325 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_52_in_ruleAlwaysEvent6343 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExpression_in_entryRuleExpression6384 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleExpression6394 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAssignmentExpression_in_ruleExpression6440 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAssignmentExpression_in_entryRuleAssignmentExpression6474 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleAssignmentExpression6484 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleConditionalExpression_in_ruleAssignmentExpression6531 = new BitSet(new long[]{0x0000000000008002L,0x00000000001FF800L});
+    public static final BitSet FOLLOW_ruleAssignmentOperator_in_ruleAssignmentExpression6561 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleConditionalExpression_in_ruleAssignmentExpression6582 = new BitSet(new long[]{0x0000000000008002L,0x00000000001FF800L});
+    public static final BitSet FOLLOW_ruleConditionalExpression_in_entryRuleConditionalExpression6620 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleConditionalExpression6630 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6677 = new BitSet(new long[]{0x0400000000000002L});
+    public static final BitSet FOLLOW_58_in_ruleConditionalExpression6698 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6719 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_20_in_ruleConditionalExpression6731 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleLogicalOrExpression_in_ruleConditionalExpression6752 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLogicalOrExpression_in_entryRuleLogicalOrExpression6790 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleLogicalOrExpression6800 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6847 = new BitSet(new long[]{0x0800000000000002L});
+    public static final BitSet FOLLOW_59_in_ruleLogicalOrExpression6868 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleLogicalAndExpression_in_ruleLogicalOrExpression6889 = new BitSet(new long[]{0x0800000000000002L});
+    public static final BitSet FOLLOW_ruleLogicalAndExpression_in_entryRuleLogicalAndExpression6927 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleLogicalAndExpression6937 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression6984 = new BitSet(new long[]{0x1000000000000002L});
+    public static final BitSet FOLLOW_60_in_ruleLogicalAndExpression7005 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleLogicalNotExpression_in_ruleLogicalAndExpression7026 = new BitSet(new long[]{0x1000000000000002L});
+    public static final BitSet FOLLOW_ruleLogicalNotExpression_in_entryRuleLogicalNotExpression7064 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleLogicalNotExpression7074 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBitwiseXorExpression_in_ruleLogicalNotExpression7121 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_61_in_ruleLogicalNotExpression7148 = new BitSet(new long[]{0x00C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleBitwiseXorExpression_in_ruleLogicalNotExpression7169 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBitwiseXorExpression_in_entryRuleBitwiseXorExpression7206 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseXorExpression7216 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_ruleBitwiseXorExpression7263 = new BitSet(new long[]{0x4000000000000002L});
+    public static final BitSet FOLLOW_62_in_ruleBitwiseXorExpression7284 = new BitSet(new long[]{0x00C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_ruleBitwiseXorExpression7305 = new BitSet(new long[]{0x4000000000000002L});
+    public static final BitSet FOLLOW_ruleBitwiseOrExpression_in_entryRuleBitwiseOrExpression7343 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseOrExpression7353 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression7400 = new BitSet(new long[]{0x8000000000000002L});
+    public static final BitSet FOLLOW_63_in_ruleBitwiseOrExpression7421 = new BitSet(new long[]{0x00C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_ruleBitwiseOrExpression7442 = new BitSet(new long[]{0x8000000000000002L});
+    public static final BitSet FOLLOW_ruleBitwiseAndExpression_in_entryRuleBitwiseAndExpression7480 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleBitwiseAndExpression7490 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLogicalRelationExpression_in_ruleBitwiseAndExpression7537 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000001L});
+    public static final BitSet FOLLOW_64_in_ruleBitwiseAndExpression7558 = new BitSet(new long[]{0x00C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleLogicalRelationExpression_in_ruleBitwiseAndExpression7579 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000001L});
+    public static final BitSet FOLLOW_ruleLogicalRelationExpression_in_entryRuleLogicalRelationExpression7617 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleLogicalRelationExpression7627 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7674 = new BitSet(new long[]{0x0200000000000002L,0x00000001F0000000L});
+    public static final BitSet FOLLOW_ruleRelationalOperator_in_ruleLogicalRelationExpression7704 = new BitSet(new long[]{0x00C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleShiftExpression_in_ruleLogicalRelationExpression7725 = new BitSet(new long[]{0x0200000000000002L,0x00000001F0000000L});
+    public static final BitSet FOLLOW_ruleShiftExpression_in_entryRuleShiftExpression7763 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleShiftExpression7773 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNumericalAddSubtractExpression_in_ruleShiftExpression7820 = new BitSet(new long[]{0x0000000000000002L,0x0000000000600000L});
+    public static final BitSet FOLLOW_ruleShiftOperator_in_ruleShiftExpression7850 = new BitSet(new long[]{0x00C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleNumericalAddSubtractExpression_in_ruleShiftExpression7871 = new BitSet(new long[]{0x0000000000000002L,0x0000000000600000L});
+    public static final BitSet FOLLOW_ruleNumericalAddSubtractExpression_in_entryRuleNumericalAddSubtractExpression7909 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleNumericalAddSubtractExpression7919 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNumericalMultiplyDivideExpression_in_ruleNumericalAddSubtractExpression7966 = new BitSet(new long[]{0x0000000000000002L,0x0000000001800000L});
+    public static final BitSet FOLLOW_ruleAdditiveOperator_in_ruleNumericalAddSubtractExpression7996 = new BitSet(new long[]{0x00C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleNumericalMultiplyDivideExpression_in_ruleNumericalAddSubtractExpression8017 = new BitSet(new long[]{0x0000000000000002L,0x0000000001800000L});
+    public static final BitSet FOLLOW_ruleNumericalMultiplyDivideExpression_in_entryRuleNumericalMultiplyDivideExpression8055 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleNumericalMultiplyDivideExpression8065 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNumericalUnaryExpression_in_ruleNumericalMultiplyDivideExpression8112 = new BitSet(new long[]{0x0000000002000002L,0x0000000006000000L});
+    public static final BitSet FOLLOW_ruleMultiplicativeOperator_in_ruleNumericalMultiplyDivideExpression8142 = new BitSet(new long[]{0x00C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleNumericalUnaryExpression_in_ruleNumericalMultiplyDivideExpression8163 = new BitSet(new long[]{0x0000000002000002L,0x0000000006000000L});
+    public static final BitSet FOLLOW_ruleNumericalUnaryExpression_in_entryRuleNumericalUnaryExpression8201 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleNumericalUnaryExpression8211 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePrimaryExpression_in_ruleNumericalUnaryExpression8258 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleUnaryOperator_in_ruleNumericalUnaryExpression8294 = new BitSet(new long[]{0x00C00001008003F0L});
+    public static final BitSet FOLLOW_rulePrimaryExpression_in_ruleNumericalUnaryExpression8315 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePrimitiveValueExpression_in_entryRulePrimitiveValueExpression8352 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePrimitiveValueExpression8362 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLiteral_in_rulePrimitiveValueExpression8417 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleFeatureCall_in_entryRuleFeatureCall8453 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleFeatureCall8463 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleElementReferenceExpression_in_ruleFeatureCall8510 = new BitSet(new long[]{0x0100000000000002L});
+    public static final BitSet FOLLOW_56_in_ruleFeatureCall8531 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleFeatureCall8551 = new BitSet(new long[]{0x0100000000800002L});
+    public static final BitSet FOLLOW_23_in_ruleFeatureCall8585 = new BitSet(new long[]{0x20C00001018003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleFeatureCall8620 = new BitSet(new long[]{0x0000000081000000L});
+    public static final BitSet FOLLOW_31_in_ruleFeatureCall8633 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleFeatureCall8654 = new BitSet(new long[]{0x0000000081000000L});
+    public static final BitSet FOLLOW_24_in_ruleFeatureCall8670 = new BitSet(new long[]{0x0100000000000002L});
+    public static final BitSet FOLLOW_ruleElementReferenceExpression_in_entryRuleElementReferenceExpression8710 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleElementReferenceExpression8720 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleElementReferenceExpression8774 = new BitSet(new long[]{0x0000000000800002L});
+    public static final BitSet FOLLOW_23_in_ruleElementReferenceExpression8808 = new BitSet(new long[]{0x20C00001018003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleElementReferenceExpression8843 = new BitSet(new long[]{0x0000000081000000L});
+    public static final BitSet FOLLOW_31_in_ruleElementReferenceExpression8856 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleElementReferenceExpression8877 = new BitSet(new long[]{0x0000000081000000L});
+    public static final BitSet FOLLOW_24_in_ruleElementReferenceExpression8893 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEventValueReferenceExpression_in_entryRuleEventValueReferenceExpression8931 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEventValueReferenceExpression8941 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_ruleEventValueReferenceExpression8987 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_ruleEventValueReferenceExpression8999 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_ruleFeatureCall_in_ruleEventValueReferenceExpression9020 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_24_in_ruleEventValueReferenceExpression9032 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleActiveStateReferenceExpression_in_entryRuleActiveStateReferenceExpression9068 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleActiveStateReferenceExpression9078 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_55_in_ruleActiveStateReferenceExpression9124 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_ruleActiveStateReferenceExpression9136 = new BitSet(new long[]{0x00FFFFF000000010L});
+    public static final BitSet FOLLOW_ruleFQN_in_ruleActiveStateReferenceExpression9159 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_24_in_ruleActiveStateReferenceExpression9171 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleParenthesizedExpression_in_entryRuleParenthesizedExpression9207 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleParenthesizedExpression9217 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_ruleParenthesizedExpression9263 = new BitSet(new long[]{0x20C00001008003F0L,0x0000000009800000L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleParenthesizedExpression9284 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_24_in_ruleParenthesizedExpression9296 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLiteral_in_entryRuleLiteral9332 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleLiteral9342 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBoolLiteral_in_ruleLiteral9389 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIntLiteral_in_ruleLiteral9416 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleHexLiteral_in_ruleLiteral9443 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleRealLiteral_in_ruleLiteral9470 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStringLiteral_in_ruleLiteral9497 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBoolLiteral_in_entryRuleBoolLiteral9532 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleBoolLiteral9542 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_BOOL_in_ruleBoolLiteral9593 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIntLiteral_in_entryRuleIntLiteral9634 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleIntLiteral9644 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleIntLiteral9695 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleRealLiteral_in_entryRuleRealLiteral9736 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleRealLiteral9746 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_FLOAT_in_ruleRealLiteral9797 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleHexLiteral_in_entryRuleHexLiteral9838 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleHexLiteral9848 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_HEX_in_ruleHexLiteral9899 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleStringLiteral_in_entryRuleStringLiteral9940 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleStringLiteral9950 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleStringLiteral10001 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_65_in_ruleCombineOperator10056 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_66_in_ruleCombineOperator10073 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_67_in_ruleCombineOperator10090 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_68_in_ruleCombineOperator10107 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_69_in_ruleCombineOperator10124 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_70_in_ruleCombineOperator10141 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_71_in_ruleCombineOperator10158 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_72_in_ruleCombineOperator10175 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_ruleDirection10220 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_ruleDirection10237 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_ruleDirection10254 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_73_in_ruleTimeEventType10299 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_74_in_ruleTimeEventType10316 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_15_in_ruleAssignmentOperator10361 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_75_in_ruleAssignmentOperator10378 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_76_in_ruleAssignmentOperator10395 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_77_in_ruleAssignmentOperator10412 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_78_in_ruleAssignmentOperator10429 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_79_in_ruleAssignmentOperator10446 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_80_in_ruleAssignmentOperator10463 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_81_in_ruleAssignmentOperator10480 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_82_in_ruleAssignmentOperator10497 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_83_in_ruleAssignmentOperator10514 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_84_in_ruleAssignmentOperator10531 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_85_in_ruleShiftOperator10576 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_86_in_ruleShiftOperator10593 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_87_in_ruleAdditiveOperator10638 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_88_in_ruleAdditiveOperator10655 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_89_in_ruleMultiplicativeOperator10700 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_25_in_ruleMultiplicativeOperator10717 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_90_in_ruleMultiplicativeOperator10734 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_87_in_ruleUnaryOperator10779 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_88_in_ruleUnaryOperator10796 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_91_in_ruleUnaryOperator10813 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_92_in_ruleRelationalOperator10858 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_93_in_ruleRelationalOperator10875 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_57_in_ruleRelationalOperator10892 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_94_in_ruleRelationalOperator10909 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_95_in_ruleRelationalOperator10926 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_96_in_ruleRelationalOperator10943 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_97_in_ruleTimeUnit10988 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_98_in_ruleTimeUnit11005 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_99_in_ruleTimeUnit11022 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_100_in_ruleTimeUnit11039 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_synpred1_InternalSyncChartstext2193 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_synpred2_InternalSyncChartstext8567 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_synpred3_InternalSyncChartstext8790 = new BitSet(new long[]{0x0000000000000002L});
 
 }

@@ -309,6 +309,10 @@
             <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/stext/#//ReactionTrigger"/>
           </type>
         </elements>
+        <elements xsi:type="xtext:Assignment" feature="labelPriority" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.1"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=":"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="isImmediate" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="#"/>
         </elements>
@@ -319,12 +323,12 @@
           <elements xsi:type="xtext:Assignment" feature="trigger" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.40"/>
           </elements>
-          <elements xsi:type="xtext:Group">
-            <elements xsi:type="xtext:Keyword" value="["/>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="("/>
             <elements xsi:type="xtext:Assignment" feature="guardExpression" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.49"/>
             </elements>
-            <elements xsi:type="xtext:Keyword" value="]"/>
+            <elements xsi:type="xtext:Keyword" value=")"/>
           </elements>
         </elements>
       </alternatives>

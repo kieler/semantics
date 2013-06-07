@@ -41,7 +41,7 @@ public class SyncChartstextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLocalReactionAccess().getTriggerAlternatives_0_0(), "rule__LocalReaction__TriggerAlternatives_0_0");
 					put(grammarAccess.getLocalReactionAccess().getEffectAlternatives_1_1_0(), "rule__LocalReaction__EffectAlternatives_1_1_0");
 					put(grammarAccess.getStateReactionAccess().getAlternatives(), "rule__StateReaction__Alternatives");
-					put(grammarAccess.getReactionTriggerAccess().getAlternatives_3(), "rule__ReactionTrigger__Alternatives_3");
+					put(grammarAccess.getReactionTriggerAccess().getAlternatives_5(), "rule__ReactionTrigger__Alternatives_5");
 					put(grammarAccess.getPrimaryExpressionAccess().getAlternatives(), "rule__PrimaryExpression__Alternatives");
 					put(grammarAccess.getDefRootAccess().getAlternatives(), "rule__DefRoot__Alternatives");
 					put(grammarAccess.getScopeAccess().getAlternatives(), "rule__Scope__Alternatives");
@@ -87,7 +87,7 @@ public class SyncChartstextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getInsideAccess().getGroup(), "rule__Inside__Group__0");
 					put(grammarAccess.getExitAccess().getGroup(), "rule__Exit__Group__0");
 					put(grammarAccess.getReactionTriggerAccess().getGroup(), "rule__ReactionTrigger__Group__0");
-					put(grammarAccess.getReactionTriggerAccess().getGroup_3_1(), "rule__ReactionTrigger__Group_3_1__0");
+					put(grammarAccess.getReactionTriggerAccess().getGroup_5_1(), "rule__ReactionTrigger__Group_5_1__0");
 					put(grammarAccess.getReactionEffectAccess().getGroup(), "rule__ReactionEffect__Group__0");
 					put(grammarAccess.getReactionEffectAccess().getGroup_2(), "rule__ReactionEffect__Group_2__0");
 					put(grammarAccess.getPreValueExpressionAccess().getGroup(), "rule__PreValueExpression__Group__0");
@@ -175,10 +175,11 @@ public class SyncChartstextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_1(), "rule__LocalReaction__EffectAssignment_1_1");
 					put(grammarAccess.getLocalReactionTriggerAccess().getStateReactionAssignment_1(), "rule__LocalReactionTrigger__StateReactionAssignment_1");
 					put(grammarAccess.getLocalReactionTriggerAccess().getReactionTriggerAssignment_2_1(), "rule__LocalReactionTrigger__ReactionTriggerAssignment_2_1");
-					put(grammarAccess.getReactionTriggerAccess().getIsImmediateAssignment_1(), "rule__ReactionTrigger__IsImmediateAssignment_1");
-					put(grammarAccess.getReactionTriggerAccess().getDelayAssignment_2(), "rule__ReactionTrigger__DelayAssignment_2");
-					put(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3_0(), "rule__ReactionTrigger__TriggerAssignment_3_0");
-					put(grammarAccess.getReactionTriggerAccess().getGuardExpressionAssignment_3_1_1(), "rule__ReactionTrigger__GuardExpressionAssignment_3_1_1");
+					put(grammarAccess.getReactionTriggerAccess().getLabelPriorityAssignment_1(), "rule__ReactionTrigger__LabelPriorityAssignment_1");
+					put(grammarAccess.getReactionTriggerAccess().getIsImmediateAssignment_3(), "rule__ReactionTrigger__IsImmediateAssignment_3");
+					put(grammarAccess.getReactionTriggerAccess().getDelayAssignment_4(), "rule__ReactionTrigger__DelayAssignment_4");
+					put(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_5_0(), "rule__ReactionTrigger__TriggerAssignment_5_0");
+					put(grammarAccess.getReactionTriggerAccess().getGuardExpressionAssignment_5_1_1(), "rule__ReactionTrigger__GuardExpressionAssignment_5_1_1");
 					put(grammarAccess.getReactionEffectAccess().getActionsAssignment_1(), "rule__ReactionEffect__ActionsAssignment_1");
 					put(grammarAccess.getReactionEffectAccess().getActionsAssignment_2_1(), "rule__ReactionEffect__ActionsAssignment_2_1");
 					put(grammarAccess.getPreValueExpressionAccess().getValueAssignment_3(), "rule__PreValueExpression__ValueAssignment_3");
