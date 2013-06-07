@@ -581,6 +581,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             }
 
             // Set layout parameter for this hierarchy
+            kContainerNode.addLayoutParam(LayoutOptions::DEBUG_MODE, true)
             kContainerNode.addLayoutParam(LayoutOptions::SPACING, 25.0f)
             kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
             kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
@@ -588,6 +589,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kContainerNode.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
             if (NODEPLACEMENT_LINEARSEGMENTS) 
                 kContainerNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
+            
             kContainerNode.addNSPortsFixed
             kContainerNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             
@@ -599,7 +601,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kEntryNode.KRendering.add(factory.createKText.of('entry'))
             kContainerNode.children.add(kEntryNode)
             if (SCGRAPH_FILTER.optionValue != SCGRAPH_WO_HIERARCHY)
-                kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
+                kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             
             // Create exit node
             val kExitNode = ExitObj.createEllipseNode(30,75)
@@ -609,7 +611,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kExitNode.KRendering.add(factory.createKText.of('exit'))
             kContainerNode.children.add(kExitNode)
             if (SCGRAPH_FILTER.optionValue != SCGRAPH_WO_HIERARCHY)
-                kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
+                kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
 
             // Create a fixed port at the entry node for outgoing edges.
             kEntryNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
@@ -660,7 +662,43 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                     createEdgeArrow(kContainerNode, kJoinNode, 'outgoing', 'incoming' + thread.hashCode.toString)
                 } else {
 //                    createEdgeArrow(kExitNode, kJoinNode)         
-                    createEdgeArrow(kForkNode, kEntryNode)
+//                    createEdgeArrow(kForkNode, kEntryNode)
+
+      val sourcePort = kForkNode.getPort('outgoing')
+      kContainerNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+      val targetPort = unassignedObject.createPort() => [
+         it.setPortPos(0, 0)
+         it.setPortSize(2, 2)
+         it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::UNDEFINED);
+      ]
+      kContainerNode.ports += targetPort
+      val Container = kContainerNode
+
+      createEdge() => [
+          it.source = kForkNode
+          it.sourcePort = null
+          it.target = Container
+          it.targetPort = targetPort
+          it.data += renderingFactory.createKRoundedBendsPolyline() => [
+              it.bendRadius = 8;
+              it.setLineWidth(2);
+              it.addArrowDecorator(); 
+          ];          
+      ] 
+      createEdge() => [
+          it.source = Container
+          it.sourcePort = targetPort
+          it.target = kEntryNode
+          it.targetPort = kEntryNode.getPort('incoming')
+          it.data += renderingFactory.createKRoundedBendsPolyline() => [
+              it.bendRadius = 8;
+              it.setLineWidth(2);
+              it.addArrowDecorator(); 
+          ];          
+      ] 
+                
+                
+                
                 }
             }   
         }
