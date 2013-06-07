@@ -53,9 +53,10 @@ Workflow {
 
 			// The antlr parser generator fragment.
 			fragment = parser.antlr.XtextAntlrGeneratorFragment {
-			//  options = {
-			//		backtrack = true
-			//	}
+            options = {
+                    backtrack = true
+//                  memoize = false
+            }
 			}
 
 			// java-based API for validation 

@@ -497,19 +497,20 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ReactionTrigger");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cReactionTriggerAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cLabelPriorityAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cLabelPriorityINTTerminalRuleCall_1_0 = (RuleCall)cLabelPriorityAssignment_1.eContents().get(0);
-		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cDelayAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cDelayINTTerminalRuleCall_3_0 = (RuleCall)cDelayAssignment_3.eContents().get(0);
-		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
-		private final Assignment cTriggerAssignment_4_0 = (Assignment)cAlternatives_4.eContents().get(0);
-		private final RuleCall cTriggerRegularEventSpecParserRuleCall_4_0_0 = (RuleCall)cTriggerAssignment_4_0.eContents().get(0);
-		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
-		private final Assignment cGuardExpressionAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
-		private final RuleCall cGuardExpressionExpressionParserRuleCall_4_1_1_0 = (RuleCall)cGuardExpressionAssignment_4_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_4_1_2 = (Keyword)cGroup_4_1.eContents().get(2);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Assignment cLabelPriorityAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cLabelPriorityINTTerminalRuleCall_1_0_0 = (RuleCall)cLabelPriorityAssignment_1_0.eContents().get(0);
+		private final Keyword cColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cDelayAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cDelayINTTerminalRuleCall_2_0 = (RuleCall)cDelayAssignment_2.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cTriggerAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cTriggerRegularEventSpecParserRuleCall_3_0_0 = (RuleCall)cTriggerAssignment_3_0.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
+		private final Assignment cGuardExpressionAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cGuardExpressionExpressionParserRuleCall_3_1_1_0 = (RuleCall)cGuardExpressionAssignment_3_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_1_2 = (Keyword)cGroup_3_1.eContents().get(2);
 		
 		/// ******************************************** TRANSITION ***************************************** * / // The ReactionTrigger is a Trigger and has an Expression, 
 		//
@@ -517,53 +518,58 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//ReactionTrigger returns sgraph::Trigger:
 		//
-		//	{ReactionTrigger} labelPriority=INT ":" delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression ")")?;
+		//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression
+		//
+		//	")")?;
 		public ParserRule getRule() { return rule; }
 
-		//{ReactionTrigger} labelPriority=INT ":" delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression ")")?
+		//{ReactionTrigger} (labelPriority=INT ":")? delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression ")")?
 		public Group getGroup() { return cGroup; }
 
 		//{ReactionTrigger}
 		public Action getReactionTriggerAction_0() { return cReactionTriggerAction_0; }
 
+		//(labelPriority=INT ":")?
+		public Group getGroup_1() { return cGroup_1; }
+
 		//labelPriority=INT
-		public Assignment getLabelPriorityAssignment_1() { return cLabelPriorityAssignment_1; }
+		public Assignment getLabelPriorityAssignment_1_0() { return cLabelPriorityAssignment_1_0; }
 
 		//INT
-		public RuleCall getLabelPriorityINTTerminalRuleCall_1_0() { return cLabelPriorityINTTerminalRuleCall_1_0; }
+		public RuleCall getLabelPriorityINTTerminalRuleCall_1_0_0() { return cLabelPriorityINTTerminalRuleCall_1_0_0; }
 
 		//":"
-		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+		public Keyword getColonKeyword_1_1() { return cColonKeyword_1_1; }
 
 		//delay=INT?
-		public Assignment getDelayAssignment_3() { return cDelayAssignment_3; }
+		public Assignment getDelayAssignment_2() { return cDelayAssignment_2; }
 
 		//INT
-		public RuleCall getDelayINTTerminalRuleCall_3_0() { return cDelayINTTerminalRuleCall_3_0; }
+		public RuleCall getDelayINTTerminalRuleCall_2_0() { return cDelayINTTerminalRuleCall_2_0; }
 
 		//(trigger=RegularEventSpec | "(" guardExpression=Expression ")")?
-		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//trigger=RegularEventSpec
-		public Assignment getTriggerAssignment_4_0() { return cTriggerAssignment_4_0; }
+		public Assignment getTriggerAssignment_3_0() { return cTriggerAssignment_3_0; }
 
 		//RegularEventSpec
-		public RuleCall getTriggerRegularEventSpecParserRuleCall_4_0_0() { return cTriggerRegularEventSpecParserRuleCall_4_0_0; }
+		public RuleCall getTriggerRegularEventSpecParserRuleCall_3_0_0() { return cTriggerRegularEventSpecParserRuleCall_3_0_0; }
 
 		//"(" guardExpression=Expression ")"
-		public Group getGroup_4_1() { return cGroup_4_1; }
+		public Group getGroup_3_1() { return cGroup_3_1; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_4_1_0() { return cLeftParenthesisKeyword_4_1_0; }
+		public Keyword getLeftParenthesisKeyword_3_1_0() { return cLeftParenthesisKeyword_3_1_0; }
 
 		//guardExpression=Expression
-		public Assignment getGuardExpressionAssignment_4_1_1() { return cGuardExpressionAssignment_4_1_1; }
+		public Assignment getGuardExpressionAssignment_3_1_1() { return cGuardExpressionAssignment_3_1_1; }
 
 		//Expression
-		public RuleCall getGuardExpressionExpressionParserRuleCall_4_1_1_0() { return cGuardExpressionExpressionParserRuleCall_4_1_1_0; }
+		public RuleCall getGuardExpressionExpressionParserRuleCall_3_1_1_0() { return cGuardExpressionExpressionParserRuleCall_3_1_1_0; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_4_1_2() { return cRightParenthesisKeyword_4_1_2; }
+		public Keyword getRightParenthesisKeyword_3_1_2() { return cRightParenthesisKeyword_3_1_2; }
 	}
 
 	public class ReactionEffectElements extends AbstractParserRuleElementFinder {
@@ -989,7 +995,9 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//ReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} labelPriority=INT ":" delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression ")")?;
+	//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression
+	//
+	//	")")?;
 	public ReactionTriggerElements getReactionTriggerAccess() {
 		return (pReactionTrigger != null) ? pReactionTrigger : (pReactionTrigger = new ReactionTriggerElements());
 	}

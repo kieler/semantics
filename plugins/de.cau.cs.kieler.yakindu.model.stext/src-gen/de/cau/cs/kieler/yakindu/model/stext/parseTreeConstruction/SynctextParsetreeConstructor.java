@@ -2145,11 +2145,13 @@ protected class Exit_ExitKeyword_1 extends KeywordToken  {
  * 
  * ReactionTrigger returns sgraph::Trigger:
  * 
- * 	{ReactionTrigger} labelPriority=INT ":" delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression ")")?;
+ * 	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression
+ * 
+ * 	")")?;
  *
  **/
 
-// {ReactionTrigger} labelPriority=INT ":" delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression ")")?
+// {ReactionTrigger} (labelPriority=INT ":")? delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression ")")?
 protected class ReactionTrigger_Group extends GroupToken {
 	
 	public ReactionTrigger_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2164,9 +2166,10 @@ protected class ReactionTrigger_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ReactionTrigger_Alternatives_4(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new ReactionTrigger_DelayAssignment_3(lastRuleCallOrigin, this, 1, inst);
-			case 2: return new ReactionTrigger_ColonKeyword_2(lastRuleCallOrigin, this, 2, inst);
+			case 0: return new ReactionTrigger_Alternatives_3(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new ReactionTrigger_DelayAssignment_2(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new ReactionTrigger_Group_1(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new ReactionTrigger_ReactionTriggerAction_0(lastRuleCallOrigin, this, 3, inst);
 			default: return null;
 		}	
 	}
@@ -2206,16 +2209,38 @@ protected class ReactionTrigger_ReactionTriggerAction_0 extends ActionToken  {
 	}
 }
 
-// labelPriority=INT
-protected class ReactionTrigger_LabelPriorityAssignment_1 extends AssignmentToken  {
+// (labelPriority=INT ":")?
+protected class ReactionTrigger_Group_1 extends GroupToken {
 	
-	public ReactionTrigger_LabelPriorityAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_Group_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getReactionTriggerAccess().getGroup_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new ReactionTrigger_ColonKeyword_1_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// labelPriority=INT
+protected class ReactionTrigger_LabelPriorityAssignment_1_0 extends AssignmentToken  {
+	
+	public ReactionTrigger_LabelPriorityAssignment_1_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getLabelPriorityAssignment_1();
+		return grammarAccess.getReactionTriggerAccess().getLabelPriorityAssignment_1_0();
 	}
 
     @Override
@@ -2228,11 +2253,11 @@ protected class ReactionTrigger_LabelPriorityAssignment_1 extends AssignmentToke
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("labelPriority",true)) == null) return null;
+		if((value = eObjectConsumer.getConsumable("labelPriority",false)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("labelPriority");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getReactionTriggerAccess().getLabelPriorityINTTerminalRuleCall_1_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getReactionTriggerAccess().getLabelPriorityINTTerminalRuleCall_1_0_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getReactionTriggerAccess().getLabelPriorityINTTerminalRuleCall_1_0();
+			element = grammarAccess.getReactionTriggerAccess().getLabelPriorityINTTerminalRuleCall_1_0_0();
 			return obj;
 		}
 		return null;
@@ -2241,43 +2266,45 @@ protected class ReactionTrigger_LabelPriorityAssignment_1 extends AssignmentToke
 }
 
 // ":"
-protected class ReactionTrigger_ColonKeyword_2 extends KeywordToken  {
+protected class ReactionTrigger_ColonKeyword_1_1 extends KeywordToken  {
 	
-	public ReactionTrigger_ColonKeyword_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_ColonKeyword_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getColonKeyword_2();
+		return grammarAccess.getReactionTriggerAccess().getColonKeyword_1_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ReactionTrigger_LabelPriorityAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new ReactionTrigger_LabelPriorityAssignment_1_0(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
 
 }
 
+
 // delay=INT?
-protected class ReactionTrigger_DelayAssignment_3 extends AssignmentToken  {
+protected class ReactionTrigger_DelayAssignment_2 extends AssignmentToken  {
 	
-	public ReactionTrigger_DelayAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_DelayAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getDelayAssignment_3();
+		return grammarAccess.getReactionTriggerAccess().getDelayAssignment_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ReactionTrigger_ColonKeyword_2(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new ReactionTrigger_Group_1(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new ReactionTrigger_ReactionTriggerAction_0(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
 	}
@@ -2286,9 +2313,9 @@ protected class ReactionTrigger_DelayAssignment_3 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("delay",false)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("delay");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getReactionTriggerAccess().getDelayINTTerminalRuleCall_3_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getReactionTriggerAccess().getDelayINTTerminalRuleCall_2_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getReactionTriggerAccess().getDelayINTTerminalRuleCall_3_0();
+			element = grammarAccess.getReactionTriggerAccess().getDelayINTTerminalRuleCall_2_0();
 			return obj;
 		}
 		return null;
@@ -2297,22 +2324,22 @@ protected class ReactionTrigger_DelayAssignment_3 extends AssignmentToken  {
 }
 
 // (trigger=RegularEventSpec | "(" guardExpression=Expression ")")?
-protected class ReactionTrigger_Alternatives_4 extends AlternativesToken {
+protected class ReactionTrigger_Alternatives_3 extends AlternativesToken {
 
-	public ReactionTrigger_Alternatives_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_Alternatives_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Alternatives getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getAlternatives_4();
+		return grammarAccess.getReactionTriggerAccess().getAlternatives_3();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ReactionTrigger_TriggerAssignment_4_0(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new ReactionTrigger_Group_4_1(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new ReactionTrigger_TriggerAssignment_3_0(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new ReactionTrigger_Group_3_1(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
 	}
@@ -2320,15 +2347,15 @@ protected class ReactionTrigger_Alternatives_4 extends AlternativesToken {
 }
 
 // trigger=RegularEventSpec
-protected class ReactionTrigger_TriggerAssignment_4_0 extends AssignmentToken  {
+protected class ReactionTrigger_TriggerAssignment_3_0 extends AssignmentToken  {
 	
-	public ReactionTrigger_TriggerAssignment_4_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_TriggerAssignment_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getTriggerAssignment_4_0();
+		return grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3_0();
 	}
 
     @Override
@@ -2347,7 +2374,7 @@ protected class ReactionTrigger_TriggerAssignment_4_0 extends AssignmentToken  {
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getRegularEventSpecRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_4_0_0(); 
+				element = grammarAccess.getReactionTriggerAccess().getTriggerRegularEventSpecParserRuleCall_3_0_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -2359,29 +2386,30 @@ protected class ReactionTrigger_TriggerAssignment_4_0 extends AssignmentToken  {
 	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
 		if(value == inst.getEObject() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new ReactionTrigger_DelayAssignment_3(lastRuleCallOrigin, next, actIndex, consumed);
-			case 1: return new ReactionTrigger_ColonKeyword_2(lastRuleCallOrigin, next, actIndex, consumed);
+			case 0: return new ReactionTrigger_DelayAssignment_2(lastRuleCallOrigin, next, actIndex, consumed);
+			case 1: return new ReactionTrigger_Group_1(lastRuleCallOrigin, next, actIndex, consumed);
+			case 2: return new ReactionTrigger_ReactionTriggerAction_0(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
 }
 
 // "(" guardExpression=Expression ")"
-protected class ReactionTrigger_Group_4_1 extends GroupToken {
+protected class ReactionTrigger_Group_3_1 extends GroupToken {
 	
-	public ReactionTrigger_Group_4_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_Group_3_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getGroup_4_1();
+		return grammarAccess.getReactionTriggerAccess().getGroup_3_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ReactionTrigger_RightParenthesisKeyword_4_1_2(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new ReactionTrigger_RightParenthesisKeyword_3_1_2(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -2389,22 +2417,23 @@ protected class ReactionTrigger_Group_4_1 extends GroupToken {
 }
 
 // "("
-protected class ReactionTrigger_LeftParenthesisKeyword_4_1_0 extends KeywordToken  {
+protected class ReactionTrigger_LeftParenthesisKeyword_3_1_0 extends KeywordToken  {
 	
-	public ReactionTrigger_LeftParenthesisKeyword_4_1_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_LeftParenthesisKeyword_3_1_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getLeftParenthesisKeyword_4_1_0();
+		return grammarAccess.getReactionTriggerAccess().getLeftParenthesisKeyword_3_1_0();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ReactionTrigger_DelayAssignment_3(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new ReactionTrigger_ColonKeyword_2(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new ReactionTrigger_DelayAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new ReactionTrigger_Group_1(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new ReactionTrigger_ReactionTriggerAction_0(lastRuleCallOrigin, this, 2, inst);
 			default: return null;
 		}	
 	}
@@ -2412,15 +2441,15 @@ protected class ReactionTrigger_LeftParenthesisKeyword_4_1_0 extends KeywordToke
 }
 
 // guardExpression=Expression
-protected class ReactionTrigger_GuardExpressionAssignment_4_1_1 extends AssignmentToken  {
+protected class ReactionTrigger_GuardExpressionAssignment_3_1_1 extends AssignmentToken  {
 	
-	public ReactionTrigger_GuardExpressionAssignment_4_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_GuardExpressionAssignment_3_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getGuardExpressionAssignment_4_1_1();
+		return grammarAccess.getReactionTriggerAccess().getGuardExpressionAssignment_3_1_1();
 	}
 
     @Override
@@ -2439,7 +2468,7 @@ protected class ReactionTrigger_GuardExpressionAssignment_4_1_1 extends Assignme
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getExpressionRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getReactionTriggerAccess().getGuardExpressionExpressionParserRuleCall_4_1_1_0(); 
+				element = grammarAccess.getReactionTriggerAccess().getGuardExpressionExpressionParserRuleCall_3_1_1_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -2451,28 +2480,28 @@ protected class ReactionTrigger_GuardExpressionAssignment_4_1_1 extends Assignme
 	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
 		if(value == inst.getEObject() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new ReactionTrigger_LeftParenthesisKeyword_4_1_0(lastRuleCallOrigin, next, actIndex, consumed);
+			case 0: return new ReactionTrigger_LeftParenthesisKeyword_3_1_0(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
 }
 
 // ")"
-protected class ReactionTrigger_RightParenthesisKeyword_4_1_2 extends KeywordToken  {
+protected class ReactionTrigger_RightParenthesisKeyword_3_1_2 extends KeywordToken  {
 	
-	public ReactionTrigger_RightParenthesisKeyword_4_1_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_RightParenthesisKeyword_3_1_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getRightParenthesisKeyword_4_1_2();
+		return grammarAccess.getReactionTriggerAccess().getRightParenthesisKeyword_3_1_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ReactionTrigger_GuardExpressionAssignment_4_1_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new ReactionTrigger_GuardExpressionAssignment_3_1_1(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
