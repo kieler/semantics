@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.scl.controlflow.handler;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.jface.viewers.ISelection;
@@ -11,7 +12,7 @@ import org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.scl.controlflow.xtend.SCLToSCLCFTransformation;
-import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
+import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.scl.scl.Program;
 
 /**
@@ -20,52 +21,42 @@ import de.cau.cs.kieler.scl.scl.Program;
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-public class SCLToSCLCFFileHandler extends AbstractModelFileHandler {
+public class SCLToSCLCFFileHandler extends AbstractConvertModelHandler {
 
+    // Create an injector to load the transformation via guice.
     private static Injector injector = new STextStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
-
-    public static final String SCLTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.scl.controlflow.commands.SCLToSCLCFTransformation";
-
-    public SCLToSCLCFFileHandler() {
-    }
-
-    public String ModelHandlerFileExtension() {
-        return "scl";
-    }
-
-    public String ModelHandlerFileExtensionTransformed() {
+    
+    @Override
+    protected String getTargetExtension() {
         return "cf.scl";
     }
-
-    public String ModelHandlerDiagramEditorID() {
+    
+    @Override
+    protected String getDiagramEditorID() {
         return "de.cau.cs.kieler.scl.SCL";
     }
-
-    public PreferencesHint ModelHandlerDiagramPreferencesHint() {
-        return new PreferencesHint("");
-    }
-
-    public boolean ModelHandlerCreateDiagram() {
+    
+    @Override 
+    protected boolean doCreateDiagram(EObject model, ExecutionEvent event, ISelection selection) {
         return false;
     }
 
-    public boolean ModelHandlerOpenEditor() {
-        return false;
+    @Override 
+    protected boolean doOpenEditor(Object model, ExecutionEvent event, ISelection selection) {
+        return true;
     }
 
-    public Injector CreateResourceInjector() {
+    @Override
+    protected Injector CreateResourceInjector() {
         return injector;
     }
 
-    public EObject doTransformation(EObject modelObject, String commandString, ISelection select) {
-        if (commandString.equals(SCLTRANSFORMATIONCOMMAND)) {
-            EObject transformed = (new SCLToSCLCFTransformation())
-                    .transformSCLToSCLControlflow((Program) modelObject);
-            return transformed;
-        }
-
-        return null;
+    @Override
+    protected Object transform(EObject model, String command, ISelection selection) {
+        EObject transformed = (new SCLToSCLCFTransformation())
+                .transformSCLToSCLControlflow((Program) model);
+        return transformed;
     }
 
 }

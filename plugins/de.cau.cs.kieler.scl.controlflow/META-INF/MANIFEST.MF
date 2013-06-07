@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.scl
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Import-Package: org.eclipse.emf.ecore,
+Import-Package: de.cau.cs.kieler.core.model.handlers,
+ org.eclipse.emf.ecore,
  org.eclipse.gmf.runtime.diagram.core.preferences,
  org.yakindu.sct.model.sgraph,
  org.yakindu.sct.model.stext,
