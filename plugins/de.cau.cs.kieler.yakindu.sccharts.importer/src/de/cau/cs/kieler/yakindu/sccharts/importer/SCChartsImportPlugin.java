@@ -4,50 +4,58 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
+ * 
+ * @author cmot
+ * @kieler.design 2013-06-06 proposed cmot
+ * @kieler.rating 2013-06-06 proposed yellow
  */
 public class SCChartsImportPlugin extends AbstractUIPlugin {
 
-	// The plug-in ID
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.yakindu.sccharts.synccharts.importer"; //$NON-NLS-1$
+    /** The Constant PLUGIN_ID. */
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.yakindu.sccharts.synccharts.importer"; //$NON-NLS-1$
 
-	// The shared instance
-	private static SCChartsImportPlugin plugin;
+    /** The shared instance. */
+    private static SCChartsImportPlugin plugin;
 
-	/**
-	 * The constructor
-	 */
-	public SCChartsImportPlugin() {
-	}
+    // -------------------------------------------------------------------------
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
+    /**
+     * The constructor.
+     */
+    public SCChartsImportPlugin() {
+    }
 
-		// DEBUG
-		System.out.println("==== SCL Plugin loaded ====");
-	}
+    // -------------------------------------------------------------------------
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+    }
 
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static SCChartsImportPlugin getDefault() {
-		return plugin;
-	}
+    // -------------------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Returns the shared instance.
+     *
+     * @return the shared instance
+     */
+    public static SCChartsImportPlugin getDefault() {
+        return plugin;
+    }
+
+    // -------------------------------------------------------------------------
 }
