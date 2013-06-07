@@ -10,6 +10,12 @@
             name="SCCharts Layout After Model Changed"
             active="true">
       </combination>
+       <combination
+             active="true"
+             class="de.cau.cs.kieler.yakindu.sccharts.kivi.TransitionPriorityCombination"
+             description="Tries to make the transition priorities consistent and hides unnecessary transitions priorities"
+             name="SCCharts Transition Priority Fix">
+       </combination>
       <!--<combination
             active="true"
             class="de.cau.cs.kieler.yakindu.sccharts.kivi.GenerateDefaultCombination"

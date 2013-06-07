@@ -12,7 +12,12 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend;bundle-version="1.2.0",
  de.cau.cs.kieler.yakindu.model.sgraph;bundle-version="0.1.0",
  de.cau.cs.kieler.core;bundle-version="0.8.1",
- de.cau.cs.kieler.core.model.gmf;bundle-version="0.2.2"
+ de.cau.cs.kieler.core.model.gmf;bundle-version="0.2.2",
+ org.eclipse.xtend.lib,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.util.stdlib;bundle-version="1.2.0",
+ de.cau.cs.kieler.ksbase;bundle-version="0.5.2",
+ de.cau.cs.kieler.ksbase.ui;bundle-version="0.7.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
