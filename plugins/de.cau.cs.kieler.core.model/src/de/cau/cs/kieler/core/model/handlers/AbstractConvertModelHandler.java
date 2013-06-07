@@ -9,7 +9,6 @@ import java.util.Map;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -35,17 +34,13 @@ import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-
 import com.google.inject.Injector;
 
 
@@ -57,6 +52,10 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
 
 	protected abstract String getTargetExtension();
 	
+        protected abstract Injector CreateResourceInjector();
+        
+        protected abstract Object transform(EObject model, ExecutionEvent event, ISelection selection);
+        
 	protected String getDiagramEditorID() {
 	    return null;
 	}
@@ -73,10 +72,10 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
 	    return false;
 	}
 	
-	protected abstract Injector CreateResourceInjector();
-	
-	protected abstract Object transform(EObject model, String command, ISelection selection);
-		
+	protected void postProcess(Object modelObject) { 
+	  
+	}
+			
         public Object execute(ExecutionEvent event) throws ExecutionException {
             // Get input model from currently selected files in Explorer
             final ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
@@ -120,22 +119,18 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
             URI input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
             URI output = URI.createURI("");
 
-            String command = event.getCommand().getId().toString();
-            
             Injector rInjector = CreateResourceInjector();
             ResourceSet resourceSet = rInjector.getInstance(ResourceSet.class);
             Resource resourceLoad=resourceSet.getResource(input, true);    
             EObject model = resourceLoad.getContents().get(0); 
             
-            Object transformedObject = transform(model, command, selection);
+            Object transformedObject = transform(model, event, selection);
          
             resourceLoad.unload();
             
-            // Calculate output path
             output = URI.createURI(input.toString());
             output = output.trimFragment();
             output = output.trimFileExtension().appendFileExtension(getTargetExtension());                
-      
 
             try {
                 ResourceSet resSet = new ResourceSetImpl();
@@ -234,9 +229,7 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
         }
 
     }
-	
-    protected void postProcess(Object modelObject) { }
-    
+	    
     protected Map<String, String> getSaveOptions() {
         Map<String, String> saveOptions = new HashMap<String, String>();
         saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");

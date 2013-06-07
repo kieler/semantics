@@ -53,7 +53,9 @@ public class SCLToSCLCFFileHandler extends AbstractConvertModelHandler {
     }
 
     @Override
-    protected Object transform(EObject model, String command, ISelection selection) {
+    protected Object transform(EObject model, ExecutionEvent event, ISelection selection) {
+//        String command = event.getCommand().getId().toString();        
+        
         EObject transformed = (new SCLToSCLCFTransformation())
                 .transformSCLToSCLControlflow((Program) model);
         return transformed;
