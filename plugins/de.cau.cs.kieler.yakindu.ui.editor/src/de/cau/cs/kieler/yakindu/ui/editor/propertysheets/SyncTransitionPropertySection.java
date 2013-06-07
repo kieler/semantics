@@ -50,6 +50,8 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
  * text area is bound to the right column controls. The Transition type combo
  * and isHistory combo are bound into the left column controls.
  * 
+ * cmot added isImmediate attribute on 7.6.2013.
+ * 
  * @author wah, cmot
  * @kieler.rating green 2013-04-13
  */

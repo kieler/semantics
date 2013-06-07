@@ -28,7 +28,9 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
  * to allow switching between the three diferent transition types (weak abort,
  * strong abort, and normal termination).
  * 
- * @author wah
+ * cmot added isImmediate-Visualization 7.6.2013
+ * 
+ * @author wah, cmot
  * @kieler.rating green 2013-04-13
  * 
  */
