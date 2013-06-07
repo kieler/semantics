@@ -162,6 +162,7 @@ class KIXS2SCC {
         newTransition.setTarget(target);
         
         newTransition.setIsHistory(transition.isHistory);
+        newTransition.setIsImmediate(transition.isImmediate);
         newTransition.setPriority(transition.priority);
         
         switch (transition.type.literal) {
@@ -233,7 +234,6 @@ class KIXS2SCC {
         if (action.label.nullOrEmpty) {
             return "";
         }
-        val immediate = action.label.contains("#");
         var newLabel = prefix + action.label.replaceAll(" and ", " && ").replace(" or ", " || ").replace(" = ", " == ").replace("#", "");
         if (!(action.trigger instanceof ValuedObjectReference)) {
             if (newLabel.contains("/")) {
@@ -244,18 +244,15 @@ class KIXS2SCC {
                 }
                 else {
                     // Trigger and effect
-                    newLabel = "[" + newLabel.substring(0, newLabel.indexOf("/")) + "] " + newLabel.substring(newLabel.indexOf("/"));
+                    newLabel = "(" + newLabel.substring(0, newLabel.indexOf("/")) + ") " + newLabel.substring(newLabel.indexOf("/"));
                 }
             }
             else {
                 // No effect
-                newLabel = "[" + newLabel.substring(0) + "]";
+                newLabel = "(" + newLabel.substring(0) + ")";
             }
         }
         newLabel = newLabel.convertValueOf;
-        if (immediate) {
-            newLabel = "# " + newLabel;
-        }
         return newLabel;
     }
 
