@@ -26,7 +26,8 @@
                label="SCL to SCL Controlflow"
                mnemonic="A"
                style="push">
-            <visibleWhen>
+            <visibleWhen
+                  checkEnabled="true">
                <iterate
                      ifEmpty="false"
                      operator="and">
