@@ -14,13 +14,10 @@
 package de.cau.cs.kieler.yakindu.sccharts.kivi;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.yakindu.sct.model.sgraph.Statechart;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.DiagramSelectionState;
 import de.cau.cs.kieler.ksbase.core.KSBasETransformation;
@@ -58,28 +55,4 @@ public class TransitionPriorityCombination extends AbstractCombination {
 
 	}
 	
-	
-	    /**
-	     * Method to refresh the CanonicalEditPolicy to show the changes done by a transformation.
-	     * 
-	     * @param diagramEditor
-	     *            the current diagram editor.
-	     */
-	    private void refreshEditPolicy(final DiagramDocumentEditor diagramEditor) {
-	        try {
-	            AbstractEffect refresh = new AbstractEffect() {
-	                public void execute() {
-	                    CanonicalEditPolicy policy = (CanonicalEditPolicy) diagramEditor
-	                            .getDiagramEditPart().getEditPolicy("Canonical");
-	                    if (policy != null) {
-	                        policy.refresh();
-	                    }
-	                }
-	            };
-	            refresh.schedule();
-	        } catch (Exception e) {
-	            // doesn't matter if this fails, just pretend nothing happened.
-	        }
-	    }
-
 }

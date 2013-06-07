@@ -15,26 +15,15 @@ package de.cau.cs.kieler.yakindu.sccharts.kivi.xtend
 
 import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
-//import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
-//import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
-import java.util.List
-import org.yakindu.sct.model.sgraph.Effect
 import org.yakindu.sct.model.sgraph.Statechart
-import org.yakindu.sct.model.sgraph.Trigger
-import org.eclipse.emf.common.util.EList
 import org.yakindu.sct.model.sgraph.Transition
-import org.eclipse.emf.common.util.BasicEList
 
 /**
- * @author ssm
+ * Fixed the priorities of all transitions of an Yakindu SCChart.
+ * 
+ * @author cmot
  *
  */
- 
- /* This class provides common sccharts manipulation extensions. Since there are only a few, all extensions 
-  * are gathered in one class. Should be divided in several classes, if the list of methods grows.  
-  */
 class SCCFixPriorities {
     
     
@@ -50,6 +39,9 @@ class SCCFixPriorities {
     
     def int getLabelPriority(Transition transition) {
         val label = transition.specification;
+        if (label == null) {
+            return -1;
+        }
         if (label.indexOf(":") > 0) {
              val prio = label.substring(0, label.indexOf(":"));
              return Integer::parseInt(prio);
