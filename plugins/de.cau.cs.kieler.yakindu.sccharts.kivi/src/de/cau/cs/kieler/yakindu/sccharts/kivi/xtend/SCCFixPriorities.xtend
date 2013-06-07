@@ -74,6 +74,9 @@ class SCCFixPriorities {
         // Remove all priorities
         for (transition : allTransitions) {
           var label = transition.specification;
+          if (label == null) {
+              label = "";
+          }
           var index = label.indexOf(":") + 1;
           if (index > -1) {
               label = label.substring(index);
