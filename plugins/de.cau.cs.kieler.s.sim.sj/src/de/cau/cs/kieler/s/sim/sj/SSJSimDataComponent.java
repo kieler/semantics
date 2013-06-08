@@ -163,7 +163,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
      * {@inheritDoc}
      */
     public boolean isDirty() {
-        return (sjExecution == null);
+        return (sjExecution == null && sjExecution.isCompiled());
     }
 
     // -------------------------------------------------------------------------
@@ -552,9 +552,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
 
             // The file name could contain illegal characters not allowed for naming a Java class
             // therefore take the S-model name instead
-            String className = model.getName(); // scOutput.lastSegment();
-
-            scOutput = scOutput.appendFileExtension("java");
+            String className = model.getName().toLowerCase(); // scOutput.lastSegment();
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
