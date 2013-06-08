@@ -163,7 +163,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
      * {@inheritDoc}
      */
     public boolean isDirty() {
-        return (sjExecution == null && sjExecution.isCompiled());
+        return (sjExecution == null || !sjExecution.isCompiled());
     }
 
     // -------------------------------------------------------------------------
