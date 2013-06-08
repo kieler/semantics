@@ -27,11 +27,11 @@ abstract public class SJLProgram<State extends Enum<?>> {
 
     /** A flag indicating debug output should be collected. */
     private boolean debug = false;
-    
+
     /** The debug message of the latest executed tick. */
     private String debugMessage = "";
 
-    /**  Active means NOT-paused for a tick. */
+    /** Active means NOT-paused for a tick. */
     private PriorityQueue<Thread> activeThreads;
 
     /** Alive means NOT-aborted and NOT-terminated. */
@@ -123,9 +123,9 @@ abstract public class SJLProgram<State extends Enum<?>> {
     // -------------------------------------------------------------------------
 
     /**
-     * The central state() method should be used within the tick() method of derived classes
-     * to switch to the current thread.
-     *
+     * The central state() method should be used within the tick() method of derived classes to
+     * switch to the current thread.
+     * 
      * @return the state
      */
     protected State state() {
@@ -239,11 +239,11 @@ abstract public class SJLProgram<State extends Enum<?>> {
         abort();
         gotoB(stateLabel);
     }
-    
+
     protected int currentPrio() {
         return activeThreads.getPrio(currentThread);
     }
-    
+
     protected Thread getCurrentThread() {
         return currentThread;
     }
@@ -277,9 +277,10 @@ abstract public class SJLProgram<State extends Enum<?>> {
         public State state;
         public ArrayList<Thread> children = new ArrayList<Thread>();
         public Thread parent;
-        
+
         public String toString() {
-           return this.state.name() + " (term:"+this.terminated+", children:"+this.children.size()+")";
+            return this.state.name() + " (term:" + this.terminated + ", children:"
+                    + this.children.size() + ")";
         }
 
         public Thread(State state, Thread parent) {
@@ -317,44 +318,52 @@ abstract public class SJLProgram<State extends Enum<?>> {
      */
     private void debug(String action, Thread thread, State forkedOrResumedState) {
         if (debug) {
+            String threadState = "null";
+            String threadPrio = "-1";
+            if (thread != null) {
+                threadPrio = aliveThreads.getPrio(thread) + "";
+                if (thread.state != null) {
+                    threadState = thread.state + "";
+                }
+            }
             if (forkedOrResumedState == null) {
-                debugMessage += (action + " " + thread.state + " ("
-                        + aliveThreads.getPrio(thread) + ")\n");
+                debugMessage += (action + " " + threadState + " (" + threadPrio + ")\n");
             } else {
-                debugMessage += (action + " " + thread.state + " ("
-                        + aliveThreads.getPrio(thread) + ")" + " ->" + forkedOrResumedState) + "\n";
+                debugMessage += (action + " " + threadState + " (" + threadPrio + ")" + " ->" + forkedOrResumedState)
+                        + "\n";
             }
         }
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Turn debug messages on or off.
-     *
-     * @param turnDebugOnOff the new debug
+     * 
+     * @param turnDebugOnOff
+     *            the new debug
      */
     public void setDebug(boolean turnDebugOnOff) {
         debug = turnDebugOnOff;
     }
 
     // -------------------------------------------------------------------------
- 
+
     /**
      * Checks if debugging is turned on.
-     *
+     * 
      * @return true, if is debug
      */
     public boolean isDebug() {
         return debug;
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
-     * Gets the debug message of the latest executed tick. Note that this will return
-     * an empty String if debug (setDebug()) is not turned on.
-     *
+     * Gets the debug message of the latest executed tick. Note that this will return an empty
+     * String if debug (setDebug()) is not turned on.
+     * 
      * @return the last debug message
      */
     public String getLastDebugMessage() {

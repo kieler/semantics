@@ -140,7 +140,10 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             dirtyIndicator = newDirtyIndicator;
             return true;
         }
-        return false;
+        // If we conclude at this point that we are not dirty on the level of
+        // changes to the diagram, we MUST check whether the simulation
+        // DataComponent used comes to the same result.
+        return sSimDataComponent.isDirty();
     }
 
     // -------------------------------------------------------------------------

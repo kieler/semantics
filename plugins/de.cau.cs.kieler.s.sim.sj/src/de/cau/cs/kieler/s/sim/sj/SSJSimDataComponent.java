@@ -158,7 +158,16 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
     private static final int KIEM_PROPERTY_MAX = 7;
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isDirty() {
+        return (sjExecution == null);
+    }
 
+    // -------------------------------------------------------------------------
+    
     /**
      * {@inheritDoc}
      */
@@ -592,7 +601,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
 
         // start execution of compiled program
-        if (sjExecution.isCompiled()) {
+        if (sjExecution != null && sjExecution.isCompiled()) {
             try {
                 sjExecution.startExecution();
             } catch (IOException e) {
