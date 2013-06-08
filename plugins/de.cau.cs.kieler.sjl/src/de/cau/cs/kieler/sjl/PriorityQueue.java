@@ -184,7 +184,6 @@ public class PriorityQueue<T> {
      */
     public List<T> getQueue() {
         LinkedList<T> queue = new LinkedList<T>();
-        HashMap<Object, Integer> printed = new HashMap<Object, Integer>();
         for (T element : this.elements) {
             queue.add(element);
         }
@@ -225,7 +224,6 @@ public class PriorityQueue<T> {
             if (elements[prio] != null) {
                 firstElement = (T) elements[prio];
                 firstPrio = prio;
-                System.out.println("Updating " + firstElement.toString() + " to PRIO " + prio);
                 return;
             }
         }
