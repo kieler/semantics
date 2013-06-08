@@ -1,35 +1,18 @@
 package de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend
 
-import org.eclipse.xtend.util.stdlib.CloningExtensions
 import com.google.common.collect.ImmutableList
-import com.google.common.collect.ImmutableCollection;
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.Collections
-import java.util.List
-import java.util.Collection
-import java.util.ArrayList
-import org.eclipse.emf.common.util.EList;
-
-import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
-import org.yakindu.sct.model.sgraph.Statechart
-//import org.yakindu.sct.model.sgraph.State
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
-
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
-
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
+import java.util.ArrayList
+import java.util.List
+import org.eclipse.xtend.util.stdlib.CloningExtensions
+import org.yakindu.sct.model.sgraph.Choice
+import org.yakindu.sct.model.sgraph.Region
 import org.yakindu.sct.model.sgraph.SGraphFactory
 import org.yakindu.sct.model.sgraph.State
-import org.yakindu.sct.model.sgraph.Trigger
-import org.yakindu.sct.model.sgraph.Region
-import org.yakindu.sct.model.stext.stext.StextFactory
-import org.yakindu.sct.model.stext.stext.Expression
-import org.yakindu.sct.model.stext.stext.ReactionTrigger
-import org.yakindu.sct.model.stext.stext.ReactionEffect
-
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFactory
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.*
-import org.yakindu.sct.model.sgraph.Choice
+import org.yakindu.sct.model.sgraph.Statechart
 
 class SCCToCoreTransformation {
  

@@ -21,7 +21,6 @@ import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
 import java.util.List
 import org.yakindu.sct.model.sgraph.Effect
-import org.yakindu.sct.model.sgraph.Statechart
 import org.yakindu.sct.model.sgraph.Trigger
 
 /**
@@ -73,24 +72,5 @@ class SCCExtensions {
     def List<SyncTransition> getNormalterminations(SyncState state) {
         ImmutableList::copyOf(state.getTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION));        
     }
-    
-    /* Checks whether or not a transition is immediate.
-     * Since the flag of an immediate transition is stored in the trigger, trigger-less immediate
-     * transitions can not be identified in the way they should be.
-     * To check for these, a workaround tests the specification of the transition. 
-     * TODO: This meta-model problem should be evaluated soon. 
-     */ 
-    def boolean isImmediate(SyncTransition transition) {
-        // Check the transition trigger for the immediate flag.
-        var ret = (transition.trigger != null && 
-            (transition.trigger as ReactionTrigger).isImmediate)
-        
-        // Workaround for trigger-less immediate transitions
-        if (transition.trigger == null) {
-            ret = transition.specification.contains('#');
-        }
-        
-        ret
-    }        
              
 }

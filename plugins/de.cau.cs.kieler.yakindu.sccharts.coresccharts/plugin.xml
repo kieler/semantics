@@ -8,6 +8,10 @@
             id="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SCCToCoreTransformation"
             name="SCCToCoreTransformation">
       </command>
+      <category
+            id="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.category"
+            name="SCCharts Transformations">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">

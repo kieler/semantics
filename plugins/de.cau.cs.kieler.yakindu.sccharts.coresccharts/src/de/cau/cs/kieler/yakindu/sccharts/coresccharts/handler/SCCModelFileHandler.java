@@ -14,12 +14,11 @@ import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 import de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCToCoreTransformation;
 
 /**
- * Our sample handler extends AbstractHandler, an IHandler base class.
+ * Model transformation handler for extended SCChart to core SCCharts. 
  *
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-@SuppressWarnings("restriction")
 public class SCCModelFileHandler extends AbstractModelFileHandler {
 
         private static Injector injector = new STextStandaloneSetup().createInjectorAndDoEMFRegistration();
