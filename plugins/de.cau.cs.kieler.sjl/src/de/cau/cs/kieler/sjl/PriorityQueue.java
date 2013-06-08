@@ -13,7 +13,10 @@
  */
 package de.cau.cs.kieler.sjl;
 
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Fast and simple priority queue implementation (KISS principle).
@@ -120,8 +123,8 @@ public class PriorityQueue<T> {
     // -------------------------------------------------------------------------
 
     /**
-     * Insert an element with a specific priority into the queue. If the element was the
-     * first element (head) of the priority queue, then the first element is updated.
+     * Insert an element with a specific priority into the queue. If the element was the first
+     * element (head) of the priority queue, then the first element is updated.
      * 
      * @param element
      *            the element
@@ -142,8 +145,8 @@ public class PriorityQueue<T> {
     // -------------------------------------------------------------------------
 
     /**
-     * Removes the element with the specific priority. If the element was the
-     * first element (head) of the priority queue, then the first element is updated.
+     * Removes the element with the specific priority. If the element was the first element (head)
+     * of the priority queue, then the first element is updated.
      * 
      * @param prio
      *            the priority of the element to be removed
@@ -173,7 +176,23 @@ public class PriorityQueue<T> {
     }
 
     // -------------------------------------------------------------------------
-    
+
+    /**
+     * Gets the queue.
+     * 
+     * @return the queue
+     */
+    public List<T> getQueue() {
+        LinkedList<T> queue = new LinkedList<T>();
+        HashMap<Object, Integer> printed = new HashMap<Object, Integer>();
+        for (T element : this.elements) {
+            queue.add(element);
+        }
+        return queue;
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
@@ -185,12 +204,12 @@ public class PriorityQueue<T> {
                 if (debugString.length() > 0) {
                     debugString += ", ";
                 }
-                debugString += object.toString(); 
+                debugString += object.toString();
             }
         }
         return debugString;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -206,7 +225,7 @@ public class PriorityQueue<T> {
             if (elements[prio] != null) {
                 firstElement = (T) elements[prio];
                 firstPrio = prio;
-                System.out.println("Updating "+firstElement.toString() + " to PRIO " + prio);
+                System.out.println("Updating " + firstElement.toString() + " to PRIO " + prio);
                 return;
             }
         }

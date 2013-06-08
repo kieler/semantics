@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.sjl;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The SJLProgram implements a light version of SynchronousJava (SJ) Programs.
@@ -78,6 +80,7 @@ abstract public class SJLProgram<State extends Enum<?>> {
         // Clone the alive threads means making all alive threads active
         activeThreads = aliveThreads.clone();
         // Run the tick() method
+        debug = true;
         tick();
         // Return whether the program terminated
         return isTerminated();
@@ -89,19 +92,7 @@ abstract public class SJLProgram<State extends Enum<?>> {
         // Return whether there are no more active threads
         if (activeThreads.getFirst() ==  null) {
             if (debug) {
-                System.out.println("\n");
-                for (Object object : aliveThreads.elements) {
-                    if (object != null && object instanceof SJLProgram.Thread) {
-                        // Parameterized type check is not possible
-                        @SuppressWarnings("unchecked")
-                        Thread thread = (Thread) object;
-                        debug("Children of", thread);
-                        for (Thread child : thread.children) {
-                            debug("   -", child);
-                        }
-                    }
-                }
-                System.out.println("\n");
+                debug("\n" + getDebugAliveThreads(), null);
             }
         }
         return (activeThreads.getFirst() ==  null);
@@ -160,10 +151,15 @@ abstract public class SJLProgram<State extends Enum<?>> {
         // Remove the thread from the active and the alive ones
         activeThreads.remove(currentThread);
         aliveThreads.remove(currentThread);
-        // Remove the thread from its parents children list
-        if (currentThread.parent != null) {
-            currentThread.parent.children.remove(currentThread);
-        }
+        
+// Do NOT perform the following code as it destroys the
+// parent-child relations necessary for aborts!
+//        
+//        // Remove the thread from its parents children list
+//        if (currentThread.parent != null) {
+//            currentThread.parent.children.remove(currentThread);
+//        }
+        
         // Note that at this point there may be descendant child threads
         // that are still active and alive!
     }
@@ -236,7 +232,9 @@ abstract public class SJLProgram<State extends Enum<?>> {
     // -------------------------------------------------------------------------
 
     protected void transB(State stateLabel) {
-        abort();
+        if (currentThread.children.size() > 0) {
+            abort();
+        }
         gotoB(stateLabel);
     }
 
@@ -318,18 +316,21 @@ abstract public class SJLProgram<State extends Enum<?>> {
      */
     private void debug(String action, Thread thread, State forkedOrResumedState) {
         if (debug) {
-            String threadState = "null";
-            String threadPrio = "-1";
+            String threadState = "";
+            String threadPrio = "";
             if (thread != null) {
                 threadPrio = aliveThreads.getPrio(thread) + "";
                 if (thread.state != null) {
                     threadState = thread.state + "";
                 }
+                if (threadPrio.length() > 0) {
+                    threadPrio = " (" + threadPrio + ")";
+                }
             }
             if (forkedOrResumedState == null) {
-                debugMessage += (action + " " + threadState + " (" + threadPrio + ")\n");
+                debugMessage += (action + " " + threadState + threadPrio + "\n");
             } else {
-                debugMessage += (action + " " + threadState + " (" + threadPrio + ")" + " ->" + forkedOrResumedState)
+                debugMessage += (action + " " + threadState + threadPrio + "" + " ->" + forkedOrResumedState)
                         + "\n";
             }
         }
@@ -370,5 +371,64 @@ abstract public class SJLProgram<State extends Enum<?>> {
         return debugMessage;
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the hierarchical debug information of all alive threads.
+     *
+     * @return the debug alive threads
+     */
+    public String getDebugAliveThreads() {
+        if ( this.aliveThreads == null) {
+            return "";
+        }
+        List<Thread> threadList = this.aliveThreads.getQueue();
+        List<Thread> visitedThreadList = new LinkedList<Thread>();
+        String serialization = "";
+        
+        for (Thread thread: threadList) {
+            // If we not serialized this before
+            if (thread != null && !visitedThreadList.contains(thread)) {
+                // Get the root thread
+                Thread rootThread = getRootParent(thread);
+                serialization += serializeThread(rootThread, "│ ", "  " , "",  visitedThreadList);
+            }
+        }
+        return serialization;
+    }
+    
+    
+    private String serializeThread(Thread thread, String tabC, String tabN, String currentTab, List<Thread> visitedThreadList) {
+        visitedThreadList.add(thread);
+        String serialization = "";
+        serialization += currentTab + "└─• " + thread.toString() + "\n";
+        String childrenSerialization = "";
+        if (thread.children.size() > 0) {
+            for (Thread child : thread.children) {
+                String tab = tabN;
+                if (thread.parent != null && thread.parent.children.size() > 1) {
+                    tab = tabC;
+                }
+                childrenSerialization += serializeThread(child, tabC, tabN, currentTab + tab, visitedThreadList);
+            }
+        }
+        return serialization + childrenSerialization;
+    }
+    
+    /**
+     * Gets the root parent of a thread.
+     *
+     * @param thread the thread
+     * @return the root parent
+     */
+    private Thread getRootParent(Thread thread) {
+        if (thread.parent == null) {
+            return thread;
+        }
+        else {
+            return getRootParent(thread.parent);
+        }
+    }
+    
     // -------------------------------------------------------------------------
 }

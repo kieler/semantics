@@ -244,7 +244,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
 
             // Make a tick
             program.doTick();
-
+            
             // Inspect the output
 
             // sjExecution.getInterfaceToExecution().write(out + "\n");
@@ -258,7 +258,6 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             if (debugConsole) {
                 printConsole("==============| TICK " + computedTick++ + " |==============");
                 printConsole(program.getLastDebugMessage());
-                printConsole("\n");
             }
 
             // For the signals (and possible debug) data
