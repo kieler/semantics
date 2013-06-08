@@ -87,7 +87,7 @@ abstract public class SJLProgram<State extends Enum<?>> {
 
     public boolean isTickDone() {
         // Return whether there are no more active threads
-        if (activeThreads.size == 0) {
+        if (activeThreads.firstElement ==  null) {
             if (debug) {
                 System.out.println("\n");
                 for (Object object : aliveThreads.elements) {
@@ -104,7 +104,7 @@ abstract public class SJLProgram<State extends Enum<?>> {
                 System.out.println("\n");
             }
         }
-        return (activeThreads.size == 0);
+        return (activeThreads.firstElement ==  null);
     }
 
     // -------------------------------------------------------------------------
