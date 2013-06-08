@@ -167,7 +167,14 @@ abstract public class SJLProgram<State extends Enum<?>> {
     // -------------------------------------------------------------------------
 
     protected void haltB() {
-        termB();
+        // Halt must not terminate the thread!
+        // This is WRONG -> termB();
+
+        // Remove the thread from the active ones (it is paused now)
+        activeThreads.remove(currentThread);
+        debug("Pausing", currentThread);
+        // The halted thread will continue at the label it
+        // currently is in the next tick and again execute haltB
     }
 
     // -------------------------------------------------------------------------
