@@ -47,6 +47,7 @@ import de.cau.cs.kieler.s.sj.S2SJPlugin;
 import de.cau.cs.kieler.s.sim.xtend.S2Simulation;
 import de.cau.cs.kieler.sjl.SJExecution;
 import de.cau.cs.kieler.sjl.SJLProgramWithSignals;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -158,7 +159,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
     private static final int KIEM_PROPERTY_MAX = 7;
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
      */
@@ -167,7 +168,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
      */
@@ -241,10 +242,23 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     }
                 }
             }
-
-            // Make a tick
-            program.doTick();
             
+            // Make a tick (either benchmarked or not)
+            if (this.benchmark) {
+                program.doTick(Benchmark.BENCHMARK_NORMED_RUNS);
+                
+                double bench = ((double)program.getLastTickTime()) / 1000000;
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_CYCLES, bench);
+
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,
+                        this.sjExecution.getSourceFileSize());
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE,
+                        this.sjExecution.getExecutableFileSize());
+            } else {
+                program.doTick();
+            }
+
+
             // Inspect the output
 
             // sjExecution.getInterfaceToExecution().write(out + "\n");
@@ -337,21 +351,6 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                 activeStatementsBuf.append(activeStatement.name + "(" + activeStatement.prio + ")");
             }
             activeStatements = activeStatementsBuf.toString();
-
-            if (this.benchmark) {
-                // TODO: benchmark currently not supported
-
-                // if (sSignalOutput.has(SJExecution.BENCHMARK_SIGNAL_CYCLES)) {
-                // Object bench = sSignalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
-                // returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
-                //
-                // returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_SOURCE,
-                // this.sjExecution.getSourceFileSize());
-                // returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_EXECUTABLE,
-                // this.sjExecution.getExecutableFileSize());
-                //
-                // }
-            }
 
             // Then add normal output signals
             for (String sSignalOutputName : outputSignalList) {

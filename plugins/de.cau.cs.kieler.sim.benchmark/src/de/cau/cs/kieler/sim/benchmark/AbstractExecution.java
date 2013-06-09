@@ -34,18 +34,6 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  */
 public abstract class AbstractExecution implements IBenchmarkExecution {
 
-    /** The execution process. */
-    private Process executionProcess = null;
-
-    /** The execution interface to execution. */
-    private PrintWriter interfaceToExecution;
-
-    /** The execution interface from execution. */
-    private BufferedReader interfaceFromExecution;
-
-    /** The execution interface error. */
-    private BufferedReader interfaceError;
-
     /** The compile error. */
     private String compileError;
 
@@ -58,17 +46,14 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
     /** The started. */
     private boolean started;
 
-    /** The cyclecount or time flag. */
-    private boolean cycleCountOrTime;
+    /** The benchmark (cyclecount or time) flag. */
+    private boolean benchmark;
 
     /** The source file size. */
     private long sourceFileSize;
 
     /** The executable file size. */
     private long executableFileSize;
-
-    /** The accumulated cycles since last reset. */
-    private int cycles;
 
     /** The compiler. */
     private String compiler;
@@ -78,6 +63,8 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
 
     /** The debug flag. */
     private boolean debug;
+
+    private File[] compiledFiles;
 
     // -------------------------------------------------------------------------
 
@@ -92,8 +79,9 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
 
     /**
      * Builds the compile command line that is executed when compilation is necessary before a run.
-     *
-     * @param filePaths the file paths
+     * 
+     * @param filePaths
+     *            the file paths
      * @return the string
      */
     public abstract String buildCompileCommandLine(final List<String> filePaths);
@@ -101,10 +89,11 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
     // -------------------------------------------------------------------------
 
     /**
-     * Files pre processing before compilation. Here, possible cycle counting code can be inserted.
+     * Files pre processing before compilation. Here, possible timing/cycle counting code can be inserted.
      * The method must return a possible modified file path.
-     *
-     * @param filePath the file path
+     * 
+     * @param filePath
+     *            the file path
      * @return the string
      */
     public abstract String filesPreProcessing(String filePath);
@@ -113,9 +102,11 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
 
     /**
      * Gets the executable prefix that is later followed by a random number.
-     *
-     * @param filePaths the file paths
-     * @param modelName the model name
+     * 
+     * @param filePaths
+     *            the file paths
+     * @param modelName
+     *            the model name
      * @return the executable prefix
      */
     public String generateExecutableName(final List<String> filePaths, final String modelName) {
@@ -143,7 +134,7 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
         setCompiler(setCompilerDefault());
         setCompiled(false);
         setStarted(false);
-        cycleCountOrTime = false;
+        benchmark = false;
         setOutputPath(KiemUtil.generateRandomTempOutputFolder());
     }
 
@@ -159,7 +150,7 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
         setCompiler(setCompilerDefault());
         setCompiled(false);
         setStarted(false);
-        cycleCountOrTime = false;
+        benchmark = false;
         setOutputPath(outputPath);
     }
 
@@ -170,14 +161,14 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
      * 
      * @param outputPath
      *            the output path
-     * @param cycleCountOrTime
+     * @param benchmark
      *            the cycle count or time flag if measuring should be turned on
      */
-    public AbstractExecution(final String outputPath, final boolean cycleCountOrTime) {
+    public AbstractExecution(final String outputPath, final boolean benchmark) {
         setCompiler(setCompilerDefault());
         setCompiled(false);
         setStarted(false);
-        this.cycleCountOrTime = cycleCountOrTime;
+        this.benchmark = benchmark;
         setOutputPath(outputPath);
     }
 
@@ -185,9 +176,8 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
     // -------------------------------------------------------------------------
 
     /**
-     * Compile the filePaths SC files together with the bundled SC core files within the given
-     * outputPath folder. The executable will be randomly named and can later be started after a
-     * successful compilation.
+     * Compile the filePaths files and return the compiled files or null if compilation fails. On
+     * failure IOExecption/Interrupted Exception can be thrown.
      * 
      * @param filePaths
      *            the file paths
@@ -198,8 +188,26 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
      * @throws InterruptedException
      *             the interrupted exception
      */
-    public void compile(final List<String> filePaths, final String modelName) throws IOException,
-            InterruptedException {
+    protected abstract File[] doCompile(final List<String> filePaths, final String modelName)
+            throws IOException, InterruptedException;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Compile the filePaths files and does the surrounding measurement of file sizes.
+     * Implementations implement doCompile only.
+     * 
+     * @param filePaths
+     *            the file paths
+     * @param modelName
+     *            the model name
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     * @throws InterruptedException
+     *             the interrupted exception
+     */
+    final public void compile(final List<String> filePaths, final String modelName)
+            throws IOException, InterruptedException {
 
         // Possible pre processing
         List<String> usedfilePaths = new LinkedList<String>();
@@ -213,57 +221,36 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
         // Choose a random name for the compiled executable
         setExecutableName(generateExecutableName(filePaths, modelName));
 
+        // Measure source file size
+        sourceFileSize = 0;
+        executableFileSize = 0;
+        for (String filePath : usedfilePaths) {
+            File currentFile = new File(filePath);
+            sourceFileSize += currentFile.length();
+        }
 
-        try {
-            // Measure source file size
-            sourceFileSize = 0;
-            executableFileSize = 0;
-            for (String filePath : usedfilePaths) {
-                File currentFile = new File(filePath);
-                sourceFileSize += currentFile.length();
+        // Decide based on benchmark which files to use
+        if (!benchmark) {
+            usedfilePaths = filePaths;
+        }
+        
+        // Test if compiled file exists
+        compiledFiles = doCompile(usedfilePaths, modelName);
+        
+        boolean raiseError = false;
+        if (compiledFiles == null) {
+            raiseError = true;
+        } else if (!compiledFiles[0].exists()) {
+            // The Windows case
+            if (!(new File(compiledFiles[0].getAbsolutePath() + ".exe").exists())) {
+                raiseError = true;
             }
-            
-            String compile = buildCompileCommandLine(filePaths);
+        }
 
-            System.out.println(compile);
-            executionProcess = Runtime.getRuntime().exec(compile);
-
-            InputStream stderr = executionProcess.getErrorStream();
-            InputStreamReader isr = new InputStreamReader(stderr);
-            BufferedReader br = new BufferedReader(isr);
-            String line = null;
-            setCompileError("");
-            while ((line = br.readLine()) != null) {
-                setCompileError(getCompileError() + "\n" + line);
-            }
-            br.close();
-
-            int exitValue = executionProcess.waitFor();
-
-            // Test if compiled file exists
-            File file = new File(outputPath + getExecutableName());
-            if (!file.exists()) {
-                if (exitValue != 0) {
-                    throw new IOException("Could not compile the generated code (" + exitValue
-                            + ").\nCheck that the path to your Workspace/Eclipse"
-                            + " installation does not contain any white spaces.\n\n"
-                            + getCompileError());
-                }
-            }
-
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            if (executionProcess != null) {
-                executionProcess.destroy();
-            }
-            throw e;
-
-        } catch (InterruptedException e) {
-            System.err.println(e.getMessage());
-            if (executionProcess != null) {
-                executionProcess.destroy();
-            }
-            throw e;
+        if (raiseError) {
+            throw new IOException("Could not compile the generated code."
+                    + "\nCheck that the path to your Workspace/Eclipse"
+                    + " installation does not contain any white spaces.\n\n" + getCompileError());
         }
 
         // Set successful compiled flag
@@ -273,12 +260,23 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
     // -------------------------------------------------------------------------
 
     /**
-     * Start execution and start the execution process.
+     * Start execution and start the execution process return false if this did not succeed.
      * 
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public void startExecution() throws IOException {
+    abstract protected boolean doStartExecution() throws IOException;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Start execution and start the execution process and also does the surrounding compiled files
+     * size measurement. Implementations implement doStartExecution().
+     * 
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    final public void startExecution() throws IOException {
         // Reset successful started flag
         setStarted(false);
 
@@ -288,45 +286,37 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
             throw new IOException("Generated code was not compiled yet.");
         }
 
-        File file = new File(this.getOutputPath() + getExecutableName());
-        if (file.exists()) {
-            executableFileSize = file.length();
-        } else {
-            // The Windows case
-            file = new File(this.getOutputPath() + getExecutableName() + ".exe");
+        // Compute file sizes
+        executableFileSize = 0;
+        for (File file : compiledFiles) {
             if (file.exists()) {
-                executableFileSize = file.length();
+                executableFileSize += file.length();
+            } else {
+                // The Windows case
+                file = new File(this.getOutputPath() + getExecutableName() + ".exe");
+                if (file.exists()) {
+                    executableFileSize += file.length();
+                }
             }
         }
-        
-        // File file = new File(outputPath + getExecutableName());
-        // if (file.exists()) {
-        // executableFileSize = file.length();
-        // } else {
-        // // The Windows case
-        // file = new File(outputPath + getExecutableName() + ".exe");
-        // if (file.exists()) {
-        // executableFileSize = file.length();
-        // }
-        // }
-        // outputPath + getExecutableName() + " ";
 
-        // Start compiled sc code
-        String executable = buildExecutionCommandLine();
-        // executable = "C:\\Users\\delphino\\AppData\\Local\\Temp\\SC.exe";
-
-        executionProcess = Runtime.getRuntime().exec(executable);
-
-        setInterfaceToExecution(new PrintWriter(new OutputStreamWriter(
-                executionProcess.getOutputStream())));
-        setInterfaceFromExecution(new BufferedReader(new InputStreamReader(
-                executionProcess.getInputStream())));
-        setInterfaceError(new BufferedReader(new InputStreamReader(
-                executionProcess.getErrorStream())));
+        // Execution specific code goes here
+        doStartExecution();
 
         // set successful started flag
         setStarted(true);
     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Stop execution and destroy the execution process. Implementation can implement cleanup
+     * procedures here;
+     * 
+     * @param tryToDelete
+     *            the try to delete
+     */
+    protected abstract void doStopExecution(final boolean tryToDelete);
 
     // -------------------------------------------------------------------------
 
@@ -336,31 +326,17 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
      * @param tryToDelete
      *            the try to delete
      */
-    public void stopExecution(final boolean tryToDelete) {
+    public final void stopExecution(final boolean tryToDelete) {
         // reset successful started flag
         setStarted(false);
 
-        // close streams
-        getInterfaceToExecution().close();
-        try {
-            getInterfaceFromExecution().close();
-        } catch (IOException e) {
-            // ignore errors
-        }
-        try {
-            getInterfaceError().close();
-        } catch (IOException e) {
-            // ignore errors
-        }
-
-        // destroy process
-        executionProcess.destroy();
+        // Implementation specific code
+        doStopExecution(tryToDelete);
 
         if (tryToDelete) {
-            // (try to) delete temp folder
-            File folder = new File(outputPath);
-            if (folder.getAbsolutePath().contains(System.getProperty("java.io.tmpdir"))) {
-                KiemUtil.deleteFolder(folder);
+            // (try to) delete on VM exit
+            for (File file : compiledFiles) {
+                file.deleteOnExit();
             }
         }
     }
@@ -435,74 +411,6 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
     }
 
     // -------------------------------------------------------------------------
-
-    /**
-     * Gets the execution interface to execution.
-     * 
-     * @return the execution interface to execution
-     */
-    public PrintWriter getInterfaceToExecution() {
-        return interfaceToExecution;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the execution interface to execution.
-     * 
-     * @param toSC
-     *            the new execution interface to execution
-     */
-    protected void setInterfaceToExecution(final PrintWriter toSC) {
-        this.interfaceToExecution = toSC;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the execution interface from execution.
-     * 
-     * @return the execution interface from execution
-     */
-    public BufferedReader getInterfaceFromExecution() {
-        return interfaceFromExecution;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the execution interface from execution.
-     * 
-     * @param fromSC
-     *            the new execution interface from execution
-     */
-    protected void setInterfaceFromExecution(final BufferedReader fromSC) {
-        this.interfaceFromExecution = fromSC;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the execution interface error.
-     * 
-     * @return the execution interface error
-     */
-    public BufferedReader getInterfaceError() {
-        return interfaceError;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the execution interface error.
-     * 
-     * @param error
-     *            the new execution interface error
-     */
-    protected void setInterfaceError(final BufferedReader error) {
-        this.interfaceError = error;
-    }
-
     // -------------------------------------------------------------------------
 
     /**
@@ -575,28 +483,6 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the current accumulated differential cycles or time. These are/is measured before and
-     * after each tick() computation iff measuring is set to true.
-     * 
-     * @return the cycles
-     */
-    public int getCyclesOrTime() {
-        return cycles;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Reset the cycle or time counter for cycle counting or time measurement.
-     * 
-     */
-    public void resetCyclesOrTime() {
-        this.cycles = 0;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Gets the source file size.
      * 
      * @return the source file size
@@ -646,21 +532,10 @@ public abstract class AbstractExecution implements IBenchmarkExecution {
      * 
      * @return the cycleCountOrTime
      */
-    public boolean isCycleCountOrTime() {
-        return cycleCountOrTime;
+    public boolean isBenchmark() {
+        return benchmark;
     }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Sets the cycle count or time.
-     * 
-     * @param cycleCountOrTime
-     *            the cycleCountOrTime to set
-     */
-    public void setCycleCountOrTime(final boolean cycleCountOrTime) {
-        this.cycleCountOrTime = cycleCountOrTime;
-    }
-
-    // -------------------------------------------------------------------------
 }

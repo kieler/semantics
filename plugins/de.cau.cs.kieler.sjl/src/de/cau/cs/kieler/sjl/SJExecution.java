@@ -27,8 +27,6 @@ import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.benchmark.AbstractExecution;
 
-//import org.eclipse.core.internal.boot.PlatformClassLoader;
-
 /**
  * This class is intended to compile and execute SJ code.
  * 
@@ -43,17 +41,17 @@ public class SJExecution extends AbstractExecution {
 
     /** The Constant SJL_PATH to the SJLProgram.class for compilation. */
     private static final String SJL_PATH_BIN = "bin/";
-    
+
     /** The model name used when compile() was called. */
     private String modelName;
-    
+
     /** The program set after successful compilation. */
     private SJLProgramWithSignals<?> program;
-    
+
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new sC execution.
+     * Instantiates a new SJ execution.
      * 
      * @param outputPath
      *            the output path
@@ -123,17 +121,17 @@ public class SJExecution extends AbstractExecution {
     /**
      * {@inheritDoc}
      */
-    public void compile(final List<String> filePaths, final String modelName) throws IOException,
-            InterruptedException {
+    protected File[] doCompile(final List<String> filePaths, final String modelName)
+            throws IOException, InterruptedException {
         // Reset flag that compilation was NOT successful at this point
         super.setCompiled(false);
-        
+
         // Reset program
         this.program = null;
-                
+
         // Set modelName
         this.modelName = modelName;
-        
+
         // Building path to bundle
         Bundle bundle = Platform.getBundle(SJPlugin.PLUGIN_ID);
 
@@ -156,10 +154,11 @@ public class SJExecution extends AbstractExecution {
                 filePath = filePath.substring(1);
             }
         }
-        
-        //DEBUG OUTPUT
-        //System.out.println("-verbose -classpath " + bundleLocation + " -source 1.5 -target 1.5 -classpath d:/test/ d:/test/simple.java");
-        
+
+        // DEBUG OUTPUT
+        // System.out.println("-verbose -classpath " + bundleLocation +
+        // " -source 1.5 -target 1.5 -classpath d:/test/ d:/test/simple.java");
+
         // Compile all files
         for (String filePath : filePaths) {
             String filePathRoot = null;
@@ -169,16 +168,15 @@ public class SJExecution extends AbstractExecution {
             if (filePath.lastIndexOf("\\") > 0) {
                 filePathRoot = filePath.substring(0, filePath.lastIndexOf("\\"));
             }
-            BatchCompiler.compile(
-                    "-verbose -classpath " + bundleLocation + " -source 1.5 -target 1.5 -classpath "+ filePathRoot +" " + filePath,
-                    new PrintWriter(System.out),
-                    new PrintWriter(System.err),
-                    null);
+            BatchCompiler.compile("-verbose -classpath " + bundleLocation
+                    + " -source 1.5 -target 1.5 -classpath " + filePathRoot + " " + filePath,
+                    new PrintWriter(System.out), new PrintWriter(System.err), null);
         }
 
         // Instantiate the dynamic class loader
-        DynamicClassLoader dynamicClassLoader = new DynamicClassLoader(this.getClass().getClassLoader());
-        
+        DynamicClassLoader dynamicClassLoader = new DynamicClassLoader(this.getClass()
+                .getClassLoader());
+
         // Fill the class loader with all necessary file paths
         for (String filePath : filePaths) {
             String filePathRoot = null;
@@ -194,11 +192,31 @@ public class SJExecution extends AbstractExecution {
                 dynamicClassLoader.addClassPath(classLoaderRootURL);
             }
         }
-        
+
+        String className1 = "test." + modelName;
+        String className2 = "test." + modelName + "$State";
+
         // Register classes to be loaded specifically by the dynamic class loader
-        dynamicClassLoader.addClassFileByName("test." + modelName);
-        dynamicClassLoader.addClassFileByName("test." + modelName +"$State");
-        
+        dynamicClassLoader.addClassFileByName(className1);
+        dynamicClassLoader.addClassFileByName(className2);
+
+        // Build array of compiled files as return value (for possibly measuring file size)
+        File[] returnFiles = new File[2];
+        String classFileName1 = className1;
+        String classFileName2 = className2;
+        if (className1.lastIndexOf(".") > 0) {
+            classFileName1 = className1.substring(className1.lastIndexOf(".") + 1);
+        }
+        if (className2.lastIndexOf(".") > 0) {
+            classFileName2 = className2.substring(className2.lastIndexOf(".") + 1);
+        }
+        classFileName1 += ".class";
+        classFileName2 += ".class";
+        URL classFileURL1 = dynamicClassLoader.getResource(classFileName1);
+        URL classFileURL2 = dynamicClassLoader.getResource(classFileName2);
+        returnFiles[0] = new File(classFileURL1.getFile());
+        returnFiles[1] = new File(classFileURL2.getFile());
+
         // Instantiate new class as SJProgramWithSignals
         Class<?> cls;
         try {
@@ -206,24 +224,24 @@ public class SJExecution extends AbstractExecution {
             Object instance = cls.newInstance();
             if (instance instanceof SJLProgramWithSignals) {
                 SJLProgramWithSignals<?> program = (SJLProgramWithSignals<?>) instance;
-                
+
                 // Set this program to be used
                 this.program = program;
 
                 // Flag that compilation was successful
                 super.setCompiled(true);
 
-//                // Example sequence
-//                program.setInput("I", true);
-//                program.doTick();
-//                System.out.println("O:"+program.getOutput("O"));
-//                program.setInput("I", true);
-//                program.doTick();
-//                System.out.println("O:"+program.getOutput("O"));
-//                program.doTick();
-//                System.out.println("O:"+program.getOutput("O"));
-//                program.doTick();
-//                System.out.println("O:"+program.getOutput("O"));
+                // // Example sequence
+                // program.setInput("I", true);
+                // program.doTick();
+                // System.out.println("O:"+program.getOutput("O"));
+                // program.setInput("I", true);
+                // program.doTick();
+                // System.out.println("O:"+program.getOutput("O"));
+                // program.doTick();
+                // System.out.println("O:"+program.getOutput("O"));
+                // program.doTick();
+                // System.out.println("O:"+program.getOutput("O"));
             }
         } catch (ClassNotFoundException e) {
             throw new IOException(e.getMessage());
@@ -235,20 +253,9 @@ public class SJExecution extends AbstractExecution {
             throw new IOException(e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new IOException(e.getMessage());
-        } 
-        
-        return;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
-    public void startExecution() throws IOException {
-        if (super.isCompiled() && program != null) {
-            setStarted(true);
         }
+
+        return returnFiles;
     }
 
     // -------------------------------------------------------------------------
@@ -256,7 +263,19 @@ public class SJExecution extends AbstractExecution {
     /**
      * {@inheritDoc}
      */
-    public void stopExecution(final boolean tryToDelete) {
+    protected boolean doStartExecution() {
+        if (!super.isCompiled() || program == null) {
+            return false;
+        }
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    protected void doStopExecution(final boolean tryToDelete) {
         // Reset successful started flag
         setStarted(false);
     }
@@ -265,7 +284,7 @@ public class SJExecution extends AbstractExecution {
 
     /**
      * Gets the model name.
-     *
+     * 
      * @return the model name
      */
     public String getModelName() {
@@ -273,12 +292,11 @@ public class SJExecution extends AbstractExecution {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
-     * Gets the SJLProgram that has been compiled and loaded when
-     * compile() hass been called. It is null if compilation failed or
-     * compile() has not been called before.
-     *
+     * Gets the SJLProgram that has been compiled and loaded when compile() hass been called. It is
+     * null if compilation failed or compile() has not been called before.
+     * 
      * @return the model name
      */
     public SJLProgramWithSignals<?> getSJLProgram() {
@@ -286,5 +304,5 @@ public class SJExecution extends AbstractExecution {
     }
 
     // -------------------------------------------------------------------------
-    
+
 }

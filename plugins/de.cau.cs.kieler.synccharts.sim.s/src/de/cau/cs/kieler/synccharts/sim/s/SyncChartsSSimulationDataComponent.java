@@ -32,9 +32,7 @@ import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sim.sc.SSCSimDataComponent;
 import de.cau.cs.kieler.s.sim.sj.SSJSimDataComponent;
-import de.cau.cs.kieler.sc.SCExecution;
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
-import de.cau.cs.kieler.sim.benchmark.IBenchmarkExecution;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -82,7 +80,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     private static final String KIEM_RUNTIME_SJL = "SJL (SJ Light)";
     private static final String KIEM_RUNTIME_SC = "SC";
     private static final String KIEM_RUNTIME_SCL = "SCL (SC Light)";
-    
+
     /** The currently selected/used runtime. */
     private String runtime;
 
@@ -97,9 +95,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
 
     /** The simulation DataComponent. */
     private JSONObjectSimulationDataComponent sSimDataComponent = null;
-    
-    /** The simulation execution. */
-    private IBenchmarkExecution sSimExecution = null;
 
     // -------------------------------------------------------------------------
 
@@ -175,19 +170,22 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             JSONArray signalOutputArray = signalOutput.names();
 
             if (this.benchmark) {
-                if (signalOutput.has(Benchmark.BENCHMARK_SIGNAL_CYCLES)) {
-                    Object bench;
-                    try {
-                        bench = signalOutput.get(Benchmark.BENCHMARK_SIGNAL_CYCLES);
+                try {
+                    if (signalOutput.has(Benchmark.BENCHMARK_SIGNAL_CYCLES)) {
+                        Object bench = signalOutput.get(Benchmark.BENCHMARK_SIGNAL_CYCLES);
                         returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_CYCLES, bench);
-                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,
-                                sSimExecution.getSourceFileSize());
-                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE,
-                                sSimExecution.getExecutableFileSize());
-                    } catch (JSONException e) {
-                        // do nothing if this signal is not provided
-                        // or JSON data cannot be added
                     }
+                    if (signalOutput.has(Benchmark.BENCHMARK_SIGNAL_SOURCE)) {
+                        Object source = signalOutput.get(Benchmark.BENCHMARK_SIGNAL_SOURCE);
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE, source);
+                    }
+                    if (signalOutput.has(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE)) {
+                        Object exe = signalOutput.get(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE);
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE, exe);
+                    }
+                } catch (JSONException e) {
+                    // do nothing if this signal is not provided
+                    // or JSON data cannot be added
                 }
             }
 
@@ -238,7 +236,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         } else if (!signalName
                                 .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                  .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             // add/pass-through normal signals directly
                             returnObj.accumulate(signalName, signalValue);
                         }
@@ -310,8 +308,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 KIEM_PROPERTY_NAME_RUNTIMEDEBUGCONSOLE, true);
         properties[KIEM_PROPERTY_EXPOSELOCALSIGNALS] = new KiemProperty(
                 KIEM_PROPERTY_NAME_EXPOSELOCALSIGNALS, false);
-        String[] items = {KIEM_RUNTIME_SJ, KIEM_RUNTIME_SJL, KIEM_RUNTIME_SC, KIEM_RUNTIME_SCL};
-        properties[KIEM_PROPERTY_RUNTIME] = new KiemProperty(KIEM_PROPERTY_NAME_RUNTIME, new KiemPropertyTypeChoice(items), items[0]);
+        String[] items = { KIEM_RUNTIME_SJ, KIEM_RUNTIME_SJL, KIEM_RUNTIME_SC, KIEM_RUNTIME_SCL };
+        properties[KIEM_PROPERTY_RUNTIME] = new KiemProperty(KIEM_PROPERTY_NAME_RUNTIME,
+                new KiemPropertyTypeChoice(items), items[0]);
 
         return properties;
     }
@@ -324,7 +323,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     public void wrapup() throws KiemInitializationException {
         getSSimDataComponent().wrapup();
         sSimDataComponent = null;
-        sSimExecution = null;
     }
 
     // -------------------------------------------------------------------------
@@ -367,14 +365,13 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             syncChartOutput = URI.createURI(input.toString());
 
-            debugConsole = this.getProperties()[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE + KIEM_PROPERTY_DIFF]
-                    .getValueAsBoolean();
+            debugConsole = this.getProperties()[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE
+                    + KIEM_PROPERTY_DIFF].getValueAsBoolean();
 
             benchmark = this.getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
                     .getValueAsBoolean();
 
-            runtime = this.getProperties()[KIEM_PROPERTY_RUNTIME + KIEM_PROPERTY_DIFF]
-                    .getValue();
+            runtime = this.getProperties()[KIEM_PROPERTY_RUNTIME + KIEM_PROPERTY_DIFF].getValue();
 
             // If 'Full Debug Mode' is turned on then the user wants to have
             // also states visualized.
@@ -429,7 +426,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
 
             // If a LIGHT runtime is selected, that makes use of normal termination, then
             // do NOT transform these away.
-            if (! (runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL))) {
+            if (!(runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL))) {
                 // Normal Termination transitions (@requires: during actions, @before: exit actions)
                 transformedModel = (new SyncCharts2Simulation())
                         .transformNormalTermination(transformedModel);
@@ -453,7 +450,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // During actions (@requires: none)
             transformedModel = (new SyncCharts2Simulation())
                     .transformDuringAction(transformedModel);
-            
+
             // If a LIGHT runtime is selected, that cannot handle weak/strong aborts, then
             // transform these away.
             if (runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL)) {
@@ -483,13 +480,12 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                 throw new KiemInitializationException("Cannot write output S file.", true, null);
             }
 
-            
             // If a LIGHT runtime is selected, that makes use of normal termination, then
             // do NOT transform these away
             boolean lightRuntime = false;
             if (runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL)) {
                 lightRuntime = true;
-            }   
+            }
             if (runtime.equals(KIEM_RUNTIME_SJ) || runtime.equals(KIEM_RUNTIME_SJL)) {
                 // Use the SSJSimulationDataComponent
                 SSJSimDataComponent sSJSimDataComponent = (SSJSimDataComponent) getSSimDataComponent();
@@ -504,7 +500,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
                         .getProperties()[KIEM_PROPERTY_BENCHMARK + KIEM_PROPERTY_DIFF]
                         .getValueAsBoolean(), debugConsole, lightRuntime);
             }
-                
 
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
@@ -516,29 +511,27 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
 
     /**
      * Retrieves the SJ or SC simulation data component (cached in sSimDataComponent).
-     *
+     * 
      * @return the JSONObjectSimulationDataComponent of SJ or SC
      */
     protected JSONObjectSimulationDataComponent getSSimDataComponent() {
         if (sSimDataComponent == null) {
-            if (runtime.equals(KIEM_RUNTIME_SJ )|| runtime.equals(KIEM_RUNTIME_SJL)) {
+            if (runtime.equals(KIEM_RUNTIME_SJ) || runtime.equals(KIEM_RUNTIME_SJL)) {
                 // Use the SSJSimulationDataComponent
                 SSJSimDataComponent sSJSimDataComponent = new SSJSimDataComponent();
                 // Set the global sSimDataComponent / sSimExecution
                 sSimDataComponent = sSJSimDataComponent;
-                sSimExecution = sSJSimDataComponent.getSJExecution();
             }
             if (runtime.equals(KIEM_RUNTIME_SC) || runtime.equals(KIEM_RUNTIME_SCL)) {
                 // Use the SSCSimulationDataComponent
                 SSCSimDataComponent sSCSimDataComponent = new SSCSimDataComponent();
                 // Set the global sSimDataComponent / sSimExecution
                 sSimDataComponent = sSCSimDataComponent;
-                sSimExecution = sSCSimDataComponent.getSCExecution();
             }
         }
         return sSimDataComponent;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**

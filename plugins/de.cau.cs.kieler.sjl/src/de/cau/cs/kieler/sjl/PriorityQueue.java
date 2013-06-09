@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sjl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +26,7 @@ import java.util.List;
  * @kieler.design 2013-05-23 proposed cmot
  * @kieler.rating 2013-05-23 proposed *
  */
-public class PriorityQueue<T> {
+public class PriorityQueue<T> implements Cloneable {
 
     public int maxPrio;
     public T firstElement;
@@ -76,7 +78,41 @@ public class PriorityQueue<T> {
     /**
      * {@inheritDoc}
      */
-    public PriorityQueue<T> clone() {
+    public PriorityQueue<T> cloneDeep() {
+        PriorityQueue<T> clone = new PriorityQueue<T>(maxPrio);
+        for (int prio = 0; prio < maxPrio; prio++) {
+            
+            Object o = elements[prio];
+            if (o != null) {
+                Object o_clone;
+                try {
+                    Class class1 = o.getClass();
+                    Method method = class1.getMethod("clone"); 
+                    o_clone = method.invoke(o);
+                    T element = (T) o_clone; //elements[prio].clone();
+                    clone.insert(element, prio);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                clone.insert(null, prio);
+            }
+            
+        }
+        return clone;
+    }
+
+    // -------------------------------------------------------------------------
+
+    public PriorityQueue<T> cloneShallow() {
         PriorityQueue<T> clone = new PriorityQueue<T>(maxPrio);
         for (int prio = 0; prio < maxPrio; prio++) {
             clone.insert(elements[prio], prio);

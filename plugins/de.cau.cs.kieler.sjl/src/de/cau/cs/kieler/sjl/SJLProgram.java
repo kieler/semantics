@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sjl;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +27,7 @@ import java.util.List;
  * @kieler.rating 2013-05-23 proposed
  * 
  */
-abstract public class SJLProgram<State extends Enum<?>> {
+abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
 
     /** A flag indicating debug output should be collected. */
     private boolean debug = false;
@@ -41,7 +43,25 @@ abstract public class SJLProgram<State extends Enum<?>> {
 
     /** The current thread that is executed. */
     private Thread currentThread;
+    
+    /** The last tick time in Milliseconds. */
+    private long lastTickTime;
 
+    // -------------------------------------------------------------------------
+
+    public SJLProgram clone() throws CloneNotSupportedException {
+        SJLProgram clone = (SJLProgram) super.clone();
+        clone.activeThreads = activeThreads.cloneDeep();
+        clone.aliveThreads = aliveThreads.cloneDeep();
+//        for (int t = 0; t < activeThreads.size; t++) {
+//            Thread thread = (Thread) clone.activeThreads.elements[t];
+//            if (thread.state == currentThread.state) {
+//                clone.currentThread = (SJLProgram.Thread) thread;
+//            }
+//        }
+        return clone;
+    }    
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -76,12 +96,57 @@ abstract public class SJLProgram<State extends Enum<?>> {
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
+    /**
+     * Do a non benchmarked tick.
+     *
+     * @return true, if successful
+     */
     public boolean doTick() {
         // Clone the alive threads means making all alive threads active
-        activeThreads = aliveThreads.clone();
+        activeThreads = aliveThreads.cloneShallow();
         // Run the tick() method
-        debug = true;
         tick();
+        lastTickTime = -1;
+        // Return whether the program terminated
+        return isTerminated();
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Do a benchmarked tick with a specific number of runs.
+     *
+     * @param number the number
+     * @return true, if successful
+     */
+     public boolean doTick(int number) {
+        // Clone the alive threads means making all alive threads active
+        activeThreads = aliveThreads.cloneShallow();
+        // Clone the SJLProgram number of times
+        SJLProgram<?>[] programs = new SJLProgram[number];
+        for (int i = 0; i < number; i++) {
+            Object o;
+            try {
+                o = this.clone();
+                if (o instanceof SJLProgram) {
+                   programs[i] = ((SJLProgram<?>)o);
+                }
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+        // Start the benchmark, get nanoseconds
+        long t1 = getUserTime();
+        for (int i = 0; i < number; i++) {
+            // Run the tick() method ith time in the benchmark
+           programs[i].tick();
+        }
+        // End the benchmark, get nanoseconds
+        long t2 = getUserTime();
+        // Run the tick() method
+        tick();
+        // Norm taken time to the number of runs
+        lastTickTime = (t2 - t1)/number;
         // Return whether the program terminated
         return isTerminated();
     }
@@ -277,12 +342,18 @@ abstract public class SJLProgram<State extends Enum<?>> {
      * The internal Thread class encompasses the parent-child relations. Fields have been declared
      * public for direct access to them.
      */
-    protected class Thread {
+    protected class Thread implements Cloneable {
         public boolean terminated;
         public State state;
         public ArrayList<Thread> children = new ArrayList<Thread>();
         public Thread parent;
 
+        public Thread clone() throws CloneNotSupportedException {
+            Thread clone = (Thread) super.clone();
+            clone.children = (ArrayList<Thread>) children.clone();
+            return clone;
+        }    
+        
         public String toString() {
             return this.state.name() + " (term:" + this.terminated + ", children:"
                     + this.children.size() + ")";
@@ -404,7 +475,18 @@ abstract public class SJLProgram<State extends Enum<?>> {
         return serialization;
     }
     
+    // -------------------------------------------------------------------------
     
+    /**
+     * Serialize thread.
+     *
+     * @param thread the thread
+     * @param tabC the tab c
+     * @param tabN the tab n
+     * @param currentTab the current tab
+     * @param visitedThreadList the visited thread list
+     * @return the string
+     */
     private String serializeThread(Thread thread, String tabC, String tabN, String currentTab, List<Thread> visitedThreadList) {
         visitedThreadList.add(thread);
         String serialization = "";
@@ -422,6 +504,8 @@ abstract public class SJLProgram<State extends Enum<?>> {
         return serialization + childrenSerialization;
     }
     
+    // -------------------------------------------------------------------------
+    
     /**
      * Gets the root parent of a thread.
      *
@@ -436,6 +520,30 @@ abstract public class SJLProgram<State extends Enum<?>> {
             return getRootParent(thread.parent);
         }
     }
-    
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get user time in nanoseconds.
+     *
+     * @return the user time
+     */
+    protected long getUserTime() {
+        ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+        return bean.isCurrentThreadCpuTimeSupported() ?
+            bean.getCurrentThreadCpuTime() : 0L;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the last tick time in Milliseconds.
+     *
+     * @return the lastTickTime
+     */
+    public long getLastTickTime() {
+        return lastTickTime;
+    }
+
     // -------------------------------------------------------------------------
 }

@@ -150,6 +150,15 @@ public class DynamicClassLoader extends ClassLoader {
         URL classFileURL = classLoader.getResource(classFileName);
         addClassFileByURL(className, classFileURL);
     }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    public URL getResource(String name) {
+        return urlClassLoader.getResource(name);
+    }
 
     // -------------------------------------------------------------------------
 

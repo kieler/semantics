@@ -133,7 +133,7 @@ import de.cau.cs.kieler.sjl.SJLProgramWithSignals;
 import ''' + packageName + '''.''' + className + '''.State;
 import static '''  + packageName + '''.''' + className + '''.State.*;
     
-public class ''' + className + ''' extends SJLProgramWithSignals<State> {
+public class ''' + className + ''' extends SJLProgramWithSignals<State> implements Cloneable {
     
     enum State {
         ''' + program.eAllContents.filter(typeof(Continuation)).toList.listContinuations + '''

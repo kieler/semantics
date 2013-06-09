@@ -24,25 +24,6 @@ package de.cau.cs.kieler.sim.benchmark;
 public interface IBenchmarkExecution {
 
     /**
-     * Gets the current accumulated differential cycles or time. These are/is measured before and
-     * after each tick() computation iff measuring is set to true.
-     * 
-     * @return the cycles
-     */
-    public int getCyclesOrTime();
-    
-    // -------------------------------------------------------------------------
-    
-
-    /**
-     * Reset the cycle or time counter for cycle counting or time measurement.
-     * 
-     */
-    public void resetCyclesOrTime();
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Gets the source file size.
      * 
      * @return the source file size
@@ -61,21 +42,11 @@ public interface IBenchmarkExecution {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is cycle count or time.
+     * Checks if is cycle count or time measurement is turned on.
      * 
      * @return the cycleCountOrTime
      */
-    public boolean isCycleCountOrTime();
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the cycle count or time.
-     * 
-     * @param cycleCountOrTime
-     *            the cycleCountOrTime to set
-     */
-    public void setCycleCountOrTime(final boolean cycleCountOrTime);
+    public boolean isBenchmark();
 
     // -------------------------------------------------------------------------
     
