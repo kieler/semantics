@@ -134,6 +134,14 @@ public class SignalsView extends ViewPart {
         // instantiate a plotter, and provide data to it.
         signalsPlotter = new SignalsPlotter(parent);
 
+        // set white color as default
+        defaultColorScheme = false;
+        colors.setBackgroundColor(NONDEFAULTBACKGROUNDCOLOR);
+        colors.setSignalColor2(NONDEFAULTSIGNALCOLOR2);
+        colors.setSignalColorMarker(NONDEFAULTSIGNALCOLORMARKER);
+        colors.setSignalSpareColor(NONDEFAULTSIGNALCOLOR0);
+        signalsPlotter.plot(zoomLevel, colors, drawMode);
+
         // update signalList of plotter and plot
         this.refresh(0);
 
