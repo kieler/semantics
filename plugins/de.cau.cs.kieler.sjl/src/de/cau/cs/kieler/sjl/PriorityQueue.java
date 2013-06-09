@@ -86,10 +86,11 @@ public class PriorityQueue<T> implements Cloneable {
             if (o != null) {
                 Object o_clone;
                 try {
-                    Class class1 = o.getClass();
+                    Class<? extends Object> class1 = o.getClass();
                     Method method = class1.getMethod("clone"); 
                     o_clone = method.invoke(o);
-                    T element = (T) o_clone; //elements[prio].clone();
+                    @SuppressWarnings("unchecked")
+                    T element = (T) o_clone;
                     clone.insert(element, prio);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -101,6 +102,7 @@ public class PriorityQueue<T> implements Cloneable {
                     e.printStackTrace();
                 } catch (SecurityException e) {
                     e.printStackTrace();
+                } finally {
                 }
             } else {
                 clone.insert(null, prio);

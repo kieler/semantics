@@ -294,9 +294,9 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
                 activeStatements = activeStatementsBuf.toString();
 
                 if (this.benchmark) {
-                    if (sSignalOutput.has(Benchmark.BENCHMARK_SIGNAL_CYCLES)) {
-                        Object bench = sSignalOutput.get(Benchmark.BENCHMARK_SIGNAL_CYCLES);
-                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_CYCLES, bench);
+                    if (sSignalOutput.has(Benchmark.BENCHMARK_SIGNAL_TIME)) {
+                        Object bench = sSignalOutput.get(Benchmark.BENCHMARK_SIGNAL_TIME);
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
                     }
                     returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,
                             this.scExecution.getSourceFileSize());

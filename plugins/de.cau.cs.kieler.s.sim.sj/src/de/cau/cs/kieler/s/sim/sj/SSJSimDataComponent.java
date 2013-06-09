@@ -248,7 +248,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                 program.doTick(Benchmark.BENCHMARK_NORMED_RUNS);
                 
                 double bench = ((double)program.getLastTickTime()) / 1000000;
-                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_CYCLES, bench);
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
 
                 returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,
                         this.sjExecution.getSourceFileSize());

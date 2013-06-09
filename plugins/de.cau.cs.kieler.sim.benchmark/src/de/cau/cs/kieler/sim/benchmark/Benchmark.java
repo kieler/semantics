@@ -24,7 +24,7 @@ package de.cau.cs.kieler.sim.benchmark;
 public class Benchmark {
 
     /** The Constant BENCHMARK_SIGNAL. */
-    public static final String BENCHMARK_SIGNAL_CYCLES = "benchCycles";
+    public static final String BENCHMARK_SIGNAL_TIME = "benchTime";
 
     /** The Constant BENCHMARK_SIGNAL. */
     public static final String BENCHMARK_SIGNAL_SOURCE = "benchSource";

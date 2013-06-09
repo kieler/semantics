@@ -363,7 +363,7 @@ public class SCExecution extends AbstractExecution {
              // fileContent.add("cJSON_AddItemToObject(value, \"value\", "
              // + "cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
              // fileContent.add("cJSON_AddItemToObject(value, \"present\", cJSON_CreateTrue());");
-             fileContent.add("cJSON_AddItemToObject(output, \"" + Benchmark.BENCHMARK_SIGNAL_CYCLES + "\""
+             fileContent.add("cJSON_AddItemToObject(output, \"" + Benchmark.BENCHMARK_SIGNAL_TIME + "\""
                      + ", cJSON_CreateNumber((double)(((double) t)*1)));");
          } else {
              fileContent.add(lineIn);

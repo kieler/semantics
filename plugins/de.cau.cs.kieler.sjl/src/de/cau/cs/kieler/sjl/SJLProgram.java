@@ -49,16 +49,15 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
 
     // -------------------------------------------------------------------------
 
-    public SJLProgram clone() throws CloneNotSupportedException {
-        SJLProgram clone = (SJLProgram) super.clone();
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    public SJLProgram<?> clone() throws CloneNotSupportedException {
+        @SuppressWarnings("rawtypes")
+        SJLProgram clone = (SJLProgram<?>) super.clone();
         clone.activeThreads = activeThreads.cloneDeep();
         clone.aliveThreads = aliveThreads.cloneDeep();
-//        for (int t = 0; t < activeThreads.size; t++) {
-//            Thread thread = (Thread) clone.activeThreads.elements[t];
-//            if (thread.state == currentThread.state) {
-//                clone.currentThread = (SJLProgram.Thread) thread;
-//            }
-//        }
         return clone;
     }    
     
@@ -348,6 +347,7 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
         public ArrayList<Thread> children = new ArrayList<Thread>();
         public Thread parent;
 
+        @SuppressWarnings("unchecked")
         public Thread clone() throws CloneNotSupportedException {
             Thread clone = (Thread) super.clone();
             clone.children = (ArrayList<Thread>) children.clone();

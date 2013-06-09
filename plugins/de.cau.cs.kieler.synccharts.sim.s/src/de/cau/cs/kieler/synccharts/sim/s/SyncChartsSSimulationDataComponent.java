@@ -171,9 +171,9 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
 
             if (this.benchmark) {
                 try {
-                    if (signalOutput.has(Benchmark.BENCHMARK_SIGNAL_CYCLES)) {
-                        Object bench = signalOutput.get(Benchmark.BENCHMARK_SIGNAL_CYCLES);
-                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_CYCLES, bench);
+                    if (signalOutput.has(Benchmark.BENCHMARK_SIGNAL_TIME)) {
+                        Object bench = signalOutput.get(Benchmark.BENCHMARK_SIGNAL_TIME);
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
                     }
                     if (signalOutput.has(Benchmark.BENCHMARK_SIGNAL_SOURCE)) {
                         Object source = signalOutput.get(Benchmark.BENCHMARK_SIGNAL_SOURCE);
