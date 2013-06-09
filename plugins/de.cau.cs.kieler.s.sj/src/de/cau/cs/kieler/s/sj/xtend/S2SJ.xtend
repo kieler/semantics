@@ -15,17 +15,18 @@
 
 import de.cau.cs.kieler.core.kexpressions.BooleanValue
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Await
+import de.cau.cs.kieler.s.s.Continuation
 import de.cau.cs.kieler.s.s.Emit
 import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Halt
@@ -33,16 +34,16 @@ import de.cau.cs.kieler.s.s.HostCodeInstruction
 import de.cau.cs.kieler.s.s.If
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Join
+import de.cau.cs.kieler.s.s.LocalSignal
 import de.cau.cs.kieler.s.s.Pause
 import de.cau.cs.kieler.s.s.Prio
 import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.s.s.LocalSignal
-import de.cau.cs.kieler.s.s.Continuation
 import java.util.List
+
+import static de.cau.cs.kieler.s.sj.xtend.S2SJ.*
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -159,7 +160,7 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> {
     }
 
     public void resetOutputSignals() {    
-    «FOR signal : program.signals.filter(e | e.isOutput) SEPARATOR ""»
+    «FOR signal : program.signals.filter(e | !e.isInput) SEPARATOR ""»
         «signal.name» = false;
     «ENDFOR»
     }
