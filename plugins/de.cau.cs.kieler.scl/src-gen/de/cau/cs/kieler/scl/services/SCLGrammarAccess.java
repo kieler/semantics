@@ -154,10 +154,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		////KeyStringValueAnnotation returns annotations::StringAnnotation:
+		// //    '@' name=ID value=STRING
+		// //;
 		//
-		////    '@' name=ID value=STRING
-		//
-		////;
 		//
 		//VariableDeclaration:
 		//
@@ -294,13 +293,15 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//InstructionStatement:
 		//
 		//	annotation+=SL_COMMENT* //        (label = ID ':')?
+		// instruction=(Assignment | Conditional | Goto | Parallel | Pause
 		//
-		//	instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope);
+		//	| StatementScope);
 		public ParserRule getRule() { return rule; }
 
 		//annotation+=SL_COMMENT* //        (label = ID ':')?
+		// instruction=(Assignment | Conditional | Goto | Parallel | Pause |
 		//
-		//instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
+		//StatementScope)
 		public Group getGroup() { return cGroup; }
 
 		//annotation+=SL_COMMENT*
@@ -310,8 +311,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getAnnotationSL_COMMENTTerminalRuleCall_0_0() { return cAnnotationSL_COMMENTTerminalRuleCall_0_0; }
 
 		////        (label = ID ':')?
-		//
-		//instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
+		// instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
 		public Assignment getInstructionAssignment_1() { return cInstructionAssignment_1; }
 
 		//Assignment | Conditional | Goto | Parallel | Pause | StatementScope
@@ -525,12 +525,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatementScopeParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		////AbstractThread:
-		//
-		////    Thread | Program
-		//
-		////;
-		//
-		//StatementSequence:
+		// //    Thread | Program
+		// //;
+		// StatementSequence:
 		//
 		//	Thread | Program | Conditional | StatementScope;
 		public ParserRule getRule() { return rule; }
@@ -881,10 +878,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////KeyStringValueAnnotation returns annotations::StringAnnotation:
+	// //    '@' name=ID value=STRING
+	// //;
 	//
-	////    '@' name=ID value=STRING
-	//
-	////;
 	//
 	//VariableDeclaration:
 	//
@@ -922,8 +918,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//InstructionStatement:
 	//
 	//	annotation+=SL_COMMENT* //        (label = ID ':')?
+	// instruction=(Assignment | Conditional | Goto | Parallel | Pause
 	//
-	//	instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope);
+	//	| StatementScope);
 	public InstructionStatementElements getInstructionStatementAccess() {
 		return (pInstructionStatement != null) ? pInstructionStatement : (pInstructionStatement = new InstructionStatementElements());
 	}
@@ -979,12 +976,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////AbstractThread:
-	//
-	////    Thread | Program
-	//
-	////;
-	//
-	//StatementSequence:
+	// //    Thread | Program
+	// //;
+	// StatementSequence:
 	//
 	//	Thread | Program | Conditional | StatementScope;
 	public StatementSequenceElements getStatementSequenceAccess() {

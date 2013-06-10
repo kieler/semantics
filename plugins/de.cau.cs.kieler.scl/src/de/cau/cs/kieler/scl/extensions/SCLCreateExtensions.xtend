@@ -233,14 +233,14 @@ class SCLCreateExtensions {
         var conditional = SCL.createConditional();
         if (trigger instanceof ReactionTrigger) {
             val reactionTrigger = trigger as ReactionTrigger;
-            if (reactionTrigger.guardExpression != null) {
-                conditional.expression = reactionTrigger.guardExpression.copy;
-                conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
-                    e.reference = (e.reference as Event).createVariableDeclaration;  
-                ]
-            } else 
-            if (reactionTrigger.trigger != null) {
-                conditional.expression = reactionTrigger.trigger.copy.toExpression;
+//            if (reactionTrigger.guardExpression != null) {
+//                conditional.expression = reactionTrigger.guardExpression.copy;
+//                conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
+//                    e.reference = (e.reference as Event).createVariableDeclaration;  
+//                ]
+//            } else 
+            if (reactionTrigger.expression != null) {
+                conditional.expression = reactionTrigger.expression.copy;
                 conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
                     e.reference = (e.reference as Event).createVariableDeclaration;  ]
             }
