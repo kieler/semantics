@@ -79,6 +79,8 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
       case SynctextPackage.SUSPEND_EFFECT: return createSuspendEffect();
       case SynctextPackage.REACTION_TRIGGER: return createReactionTrigger();
       case SynctextPackage.REACTION_EFFECT: return createReactionEffect();
+      case SynctextPackage.NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION: return createNumericalMultiplyDivideExpression();
+      case SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION: return createEventValueReferenceExpression();
       case SynctextPackage.PRE_VALUE_EXPRESSION: return createPreValueExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -95,6 +97,8 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
   {
     switch (eDataType.getClassifierID())
     {
+      case SynctextPackage.MULTIPLICATIVE_OPERATOR2:
+        return createMultiplicativeOperator2FromString(eDataType, initialValue);
       case SynctextPackage.COMBINE_OPERATOR:
         return createCombineOperatorFromString(eDataType, initialValue);
       default:
@@ -112,6 +116,8 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
   {
     switch (eDataType.getClassifierID())
     {
+      case SynctextPackage.MULTIPLICATIVE_OPERATOR2:
+        return convertMultiplicativeOperator2ToString(eDataType, instanceValue);
       case SynctextPackage.COMBINE_OPERATOR:
         return convertCombineOperatorToString(eDataType, instanceValue);
       default:
@@ -278,10 +284,54 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public NumericalMultiplyDivideExpression createNumericalMultiplyDivideExpression()
+  {
+    NumericalMultiplyDivideExpressionImpl numericalMultiplyDivideExpression = new NumericalMultiplyDivideExpressionImpl();
+    return numericalMultiplyDivideExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EventValueReferenceExpression createEventValueReferenceExpression()
+  {
+    EventValueReferenceExpressionImpl eventValueReferenceExpression = new EventValueReferenceExpressionImpl();
+    return eventValueReferenceExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public PreValueExpression createPreValueExpression()
   {
     PreValueExpressionImpl preValueExpression = new PreValueExpressionImpl();
     return preValueExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MultiplicativeOperator2 createMultiplicativeOperator2FromString(EDataType eDataType, String initialValue)
+  {
+    MultiplicativeOperator2 result = MultiplicativeOperator2.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertMultiplicativeOperator2ToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

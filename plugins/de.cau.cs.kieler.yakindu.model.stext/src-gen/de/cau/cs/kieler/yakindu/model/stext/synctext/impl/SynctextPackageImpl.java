@@ -5,9 +5,12 @@ package de.cau.cs.kieler.yakindu.model.stext.synctext.impl;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.CombineOperator;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.Entry;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition;
+import de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpression;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.Exit;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.Inside;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.LocalReaction;
+import de.cau.cs.kieler.yakindu.model.stext.synctext.MultiplicativeOperator2;
+import de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.PreValueExpression;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect;
@@ -146,7 +149,28 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass numericalMultiplyDivideExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass eventValueReferenceExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass preValueExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum multiplicativeOperator2EEnum = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -476,16 +500,6 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getReactionTrigger_GuardExpression()
-  {
-    return (EReference)reactionTriggerEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getReactionEffect()
   {
     return reactionEffectEClass;
@@ -506,6 +520,66 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getNumericalMultiplyDivideExpression()
+  {
+    return numericalMultiplyDivideExpressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getNumericalMultiplyDivideExpression_LeftOperand()
+  {
+    return (EReference)numericalMultiplyDivideExpressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getNumericalMultiplyDivideExpression_Operator()
+  {
+    return (EAttribute)numericalMultiplyDivideExpressionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getNumericalMultiplyDivideExpression_RightOperand()
+  {
+    return (EReference)numericalMultiplyDivideExpressionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEventValueReferenceExpression()
+  {
+    return eventValueReferenceExpressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEventValueReferenceExpression_Value()
+  {
+    return (EReference)eventValueReferenceExpressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPreValueExpression()
   {
     return preValueExpressionEClass;
@@ -519,6 +593,16 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
   public EReference getPreValueExpression_Value()
   {
     return (EReference)preValueExpressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EEnum getMultiplicativeOperator2()
+  {
+    return multiplicativeOperator2EEnum;
   }
 
   /**
@@ -598,15 +682,23 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__LABEL_PRIORITY);
     createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__DELAY);
     createEReference(reactionTriggerEClass, REACTION_TRIGGER__TRIGGER);
-    createEReference(reactionTriggerEClass, REACTION_TRIGGER__GUARD_EXPRESSION);
 
     reactionEffectEClass = createEClass(REACTION_EFFECT);
     createEReference(reactionEffectEClass, REACTION_EFFECT__ACTIONS);
+
+    numericalMultiplyDivideExpressionEClass = createEClass(NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION);
+    createEReference(numericalMultiplyDivideExpressionEClass, NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__LEFT_OPERAND);
+    createEAttribute(numericalMultiplyDivideExpressionEClass, NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__OPERATOR);
+    createEReference(numericalMultiplyDivideExpressionEClass, NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__RIGHT_OPERAND);
+
+    eventValueReferenceExpressionEClass = createEClass(EVENT_VALUE_REFERENCE_EXPRESSION);
+    createEReference(eventValueReferenceExpressionEClass, EVENT_VALUE_REFERENCE_EXPRESSION__VALUE);
 
     preValueExpressionEClass = createEClass(PRE_VALUE_EXPRESSION);
     createEReference(preValueExpressionEClass, PRE_VALUE_EXPRESSION__VALUE);
 
     // Create enums
+    multiplicativeOperator2EEnum = createEEnum(MULTIPLICATIVE_OPERATOR2);
     combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
   }
 
@@ -657,6 +749,8 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     suspendEffectEClass.getESuperTypes().add(theSGraphPackage.getEffect());
     reactionTriggerEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
     reactionEffectEClass.getESuperTypes().add(theSGraphPackage.getEffect());
+    numericalMultiplyDivideExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
+    eventValueReferenceExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
     preValueExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
 
     // Initialize classes and features; add operations and parameters
@@ -696,16 +790,28 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     initEReference(getReactionTrigger_ReactionTrigger(), theSGraphPackage.getTrigger(), null, "reactionTrigger", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReactionTrigger_LabelPriority(), ecorePackage.getEInt(), "labelPriority", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReactionTrigger_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getReactionTrigger_Trigger(), theStextPackage.getRegularEventSpec(), null, "trigger", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getReactionTrigger_GuardExpression(), theStextPackage.getExpression(), null, "guardExpression", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReactionTrigger_Trigger(), theStextPackage.getExpression(), null, "trigger", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(reactionEffectEClass, ReactionEffect.class, "ReactionEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getReactionEffect_Actions(), theStextPackage.getExpression(), null, "actions", null, 0, -1, ReactionEffect.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(numericalMultiplyDivideExpressionEClass, NumericalMultiplyDivideExpression.class, "NumericalMultiplyDivideExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNumericalMultiplyDivideExpression_LeftOperand(), theStextPackage.getExpression(), null, "leftOperand", null, 0, 1, NumericalMultiplyDivideExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNumericalMultiplyDivideExpression_Operator(), this.getMultiplicativeOperator2(), "operator", null, 0, 1, NumericalMultiplyDivideExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNumericalMultiplyDivideExpression_RightOperand(), theStextPackage.getExpression(), null, "rightOperand", null, 0, 1, NumericalMultiplyDivideExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(eventValueReferenceExpressionEClass, EventValueReferenceExpression.class, "EventValueReferenceExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEventValueReferenceExpression_Value(), theStextPackage.getExpression(), null, "value", null, 0, 1, EventValueReferenceExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(preValueExpressionEClass, PreValueExpression.class, "PreValueExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPreValueExpression_Value(), theStextPackage.getExpression(), null, "value", null, 0, 1, PreValueExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
+    initEEnum(multiplicativeOperator2EEnum, MultiplicativeOperator2.class, "MultiplicativeOperator2");
+    addEEnumLiteral(multiplicativeOperator2EEnum, MultiplicativeOperator2.MUL);
+    addEEnumLiteral(multiplicativeOperator2EEnum, MultiplicativeOperator2.DIV);
+    addEEnumLiteral(multiplicativeOperator2EEnum, MultiplicativeOperator2.MOD);
+
     initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.NONE);
     addEEnumLiteral(combineOperatorEEnum, CombineOperator.ADD);

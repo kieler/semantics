@@ -9,6 +9,11 @@
     usedGenPackages="../../../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../../../org.yakindu.base.types/model/types.genmodel#//types ../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
   <genPackages prefix="Synctext" basePackage="de.cau.cs.kieler.yakindu.model.stext"
       disposableProviderFactory="true" ecorePackage="Synctext.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Synctext.ecore#//MultiplicativeOperator2">
+      <genEnumLiterals ecoreEnumLiteral="Synctext.ecore#//MultiplicativeOperator2/mul"/>
+      <genEnumLiterals ecoreEnumLiteral="Synctext.ecore#//MultiplicativeOperator2/div"/>
+      <genEnumLiterals ecoreEnumLiteral="Synctext.ecore#//MultiplicativeOperator2/mod"/>
+    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Synctext.ecore#//CombineOperator">
       <genEnumLiterals ecoreEnumLiteral="Synctext.ecore#//CombineOperator/NONE"/>
       <genEnumLiterals ecoreEnumLiteral="Synctext.ecore#//CombineOperator/ADD"/>
@@ -46,10 +51,17 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//ReactionTrigger/labelPriority"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//ReactionTrigger/delay"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//ReactionTrigger/trigger"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//ReactionTrigger/guardExpression"/>
     </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//ReactionEffect">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//ReactionEffect/actions"/>
+    </genClasses>
+    <genClasses ecoreClass="Synctext.ecore#//NumericalMultiplyDivideExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//NumericalMultiplyDivideExpression/leftOperand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//NumericalMultiplyDivideExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//NumericalMultiplyDivideExpression/rightOperand"/>
+    </genClasses>
+    <genClasses ecoreClass="Synctext.ecore#//EventValueReferenceExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventValueReferenceExpression/value"/>
     </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//PreValueExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//PreValueExpression/value"/>

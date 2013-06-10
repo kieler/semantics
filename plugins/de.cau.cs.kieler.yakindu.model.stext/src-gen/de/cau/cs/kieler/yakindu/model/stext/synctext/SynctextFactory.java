@@ -149,6 +149,24 @@ public interface SynctextFactory extends EFactory
   ReactionEffect createReactionEffect();
 
   /**
+   * Returns a new object of class '<em>Numerical Multiply Divide Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Numerical Multiply Divide Expression</em>'.
+   * @generated
+   */
+  NumericalMultiplyDivideExpression createNumericalMultiplyDivideExpression();
+
+  /**
+   * Returns a new object of class '<em>Event Value Reference Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Event Value Reference Expression</em>'.
+   * @generated
+   */
+  EventValueReferenceExpression createEventValueReferenceExpression();
+
+  /**
    * Returns a new object of class '<em>Pre Value Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

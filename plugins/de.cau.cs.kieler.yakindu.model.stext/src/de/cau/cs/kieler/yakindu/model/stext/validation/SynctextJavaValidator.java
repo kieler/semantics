@@ -75,36 +75,38 @@ public class SynctextJavaValidator extends STextJavaValidator {
 	 */
 	@Check(CheckType.FAST)
 	public void checkGuardHasBooleanExpression(ReactionTrigger trigger) {
-		try {
-			//
-			if (trigger.getGuardExpression() != null) {
-				if (trigger.getGuardExpression() instanceof AssignmentExpression) {
-					error(GUARD_EXPRESSION,
-							SynctextPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
-				} else {
-					InferenceResult result = sccInferrer.inferType(trigger
-							.getGuardExpression());
-					if (result.getType() == null
-							|| !typeSystem.isBooleanType(result.getType())) {
-						error(GUARD_EXPRESSION,
-								SynctextPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
-					}
-				}
-			} else if (trigger.getTrigger() != null) {
-				if (!(((ElementReferenceExpression) trigger.getTrigger()
-						.getEvent()).getReference() instanceof EventDefinition)) {
-					InferenceResult result1 = sccInferrer.inferType(trigger
-							.getTrigger().getEvent());
-					if (result1.getType() == null
-							|| !typeSystem.isBooleanType(result1.getType())) {
-						error(TRIGGER_EXPRESSION,
-								SynctextPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
-					}
-				}
-			}
-		} catch (IllegalArgumentException ex) {
-			// This is handled by checkExpression
-		}
+	    
+// TODO: Changed Synctext grammar, code below needs fix? 	    
+//		try {
+//			//
+//			if (trigger.getGuardExpression() != null) {
+//				if (trigger.getGuardExpression() instanceof AssignmentExpression) {
+//					error(GUARD_EXPRESSION,
+//							SynctextPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
+//				} else {
+//					InferenceResult result = sccInferrer.inferType(trigger
+//							.getGuardExpression());
+//					if (result.getType() == null
+//							|| !typeSystem.isBooleanType(result.getType())) {
+//						error(GUARD_EXPRESSION,
+//								SynctextPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
+//					}
+//				}
+//			} else if (trigger.getTrigger() != null) {
+//				if (!(((ElementReferenceExpression) trigger.getTrigger()
+//						.getEvent()).getReference() instanceof EventDefinition)) {
+//					InferenceResult result1 = sccInferrer.inferType(trigger
+//							.getTrigger().getEvent());
+//					if (result1.getType() == null
+//							|| !typeSystem.isBooleanType(result1.getType())) {
+//						error(TRIGGER_EXPRESSION,
+//								SynctextPackage.Literals.REACTION_TRIGGER__GUARD_EXPRESSION);
+//					}
+//				}
+//			}
+//		} catch (IllegalArgumentException ex) {
+//			// This is handled by checkExpression
+//		}
 	}
 
 	/**

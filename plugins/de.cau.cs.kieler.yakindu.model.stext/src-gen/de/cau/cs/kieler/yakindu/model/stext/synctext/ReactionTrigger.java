@@ -5,7 +5,6 @@ package de.cau.cs.kieler.yakindu.model.stext.synctext;
 import org.yakindu.sct.model.sgraph.Trigger;
 
 import org.yakindu.sct.model.stext.stext.Expression;
-import org.yakindu.sct.model.stext.stext.RegularEventSpec;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,7 +19,6 @@ import org.yakindu.sct.model.stext.stext.RegularEventSpec;
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getLabelPriority <em>Label Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getTrigger <em>Trigger</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -143,12 +141,12 @@ public interface ReactionTrigger extends Trigger
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Trigger</em>' containment reference.
-   * @see #setTrigger(RegularEventSpec)
+   * @see #setTrigger(Expression)
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage#getReactionTrigger_Trigger()
    * @model containment="true"
    * @generated
    */
-  RegularEventSpec getTrigger();
+  Expression getTrigger();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getTrigger <em>Trigger</em>}' containment reference.
@@ -158,32 +156,6 @@ public interface ReactionTrigger extends Trigger
    * @see #getTrigger()
    * @generated
    */
-  void setTrigger(RegularEventSpec value);
-
-  /**
-   * Returns the value of the '<em><b>Guard Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Guard Expression</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Guard Expression</em>' containment reference.
-   * @see #setGuardExpression(Expression)
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage#getReactionTrigger_GuardExpression()
-   * @model containment="true"
-   * @generated
-   */
-  Expression getGuardExpression();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Guard Expression</em>' containment reference.
-   * @see #getGuardExpression()
-   * @generated
-   */
-  void setGuardExpression(Expression value);
+  void setTrigger(Expression value);
 
 } // ReactionTrigger

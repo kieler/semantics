@@ -221,6 +221,24 @@ public class SynctextSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SynctextPackage.NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION:
+      {
+        NumericalMultiplyDivideExpression numericalMultiplyDivideExpression = (NumericalMultiplyDivideExpression)theEObject;
+        T result = caseNumericalMultiplyDivideExpression(numericalMultiplyDivideExpression);
+        if (result == null) result = caseExpression(numericalMultiplyDivideExpression);
+        if (result == null) result = caseStatement(numericalMultiplyDivideExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION:
+      {
+        EventValueReferenceExpression eventValueReferenceExpression = (EventValueReferenceExpression)theEObject;
+        T result = caseEventValueReferenceExpression(eventValueReferenceExpression);
+        if (result == null) result = caseExpression(eventValueReferenceExpression);
+        if (result == null) result = caseStatement(eventValueReferenceExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SynctextPackage.PRE_VALUE_EXPRESSION:
       {
         PreValueExpression preValueExpression = (PreValueExpression)theEObject;
@@ -454,6 +472,38 @@ public class SynctextSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseReactionEffect(ReactionEffect object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Numerical Multiply Divide Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Numerical Multiply Divide Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNumericalMultiplyDivideExpression(NumericalMultiplyDivideExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Event Value Reference Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Event Value Reference Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEventValueReferenceExpression(EventValueReferenceExpression object)
   {
     return null;
   }

@@ -19,7 +19,6 @@ import org.yakindu.sct.model.sgraph.Trigger;
 import org.yakindu.sct.model.sgraph.impl.TriggerImpl;
 
 import org.yakindu.sct.model.stext.stext.Expression;
-import org.yakindu.sct.model.stext.stext.RegularEventSpec;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +32,6 @@ import org.yakindu.sct.model.stext.stext.RegularEventSpec;
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getLabelPriority <em>Label Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getTrigger <em>Trigger</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getGuardExpression <em>Guard Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -109,17 +107,7 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * @generated
    * @ordered
    */
-  protected RegularEventSpec trigger;
-
-  /**
-   * The cached value of the '{@link #getGuardExpression() <em>Guard Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getGuardExpression()
-   * @generated
-   * @ordered
-   */
-  protected Expression guardExpression;
+  protected Expression trigger;
 
   /**
    * <!-- begin-user-doc -->
@@ -289,7 +277,7 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public RegularEventSpec getTrigger()
+  public Expression getTrigger()
   {
     return trigger;
   }
@@ -299,9 +287,9 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetTrigger(RegularEventSpec newTrigger, NotificationChain msgs)
+  public NotificationChain basicSetTrigger(Expression newTrigger, NotificationChain msgs)
   {
-    RegularEventSpec oldTrigger = trigger;
+    Expression oldTrigger = trigger;
     trigger = newTrigger;
     if (eNotificationRequired())
     {
@@ -316,7 +304,7 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTrigger(RegularEventSpec newTrigger)
+  public void setTrigger(Expression newTrigger)
   {
     if (newTrigger != trigger)
     {
@@ -337,54 +325,6 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getGuardExpression()
-  {
-    return guardExpression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetGuardExpression(Expression newGuardExpression, NotificationChain msgs)
-  {
-    Expression oldGuardExpression = guardExpression;
-    guardExpression = newGuardExpression;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SynctextPackage.REACTION_TRIGGER__GUARD_EXPRESSION, oldGuardExpression, newGuardExpression);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setGuardExpression(Expression newGuardExpression)
-  {
-    if (newGuardExpression != guardExpression)
-    {
-      NotificationChain msgs = null;
-      if (guardExpression != null)
-        msgs = ((InternalEObject)guardExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SynctextPackage.REACTION_TRIGGER__GUARD_EXPRESSION, null, msgs);
-      if (newGuardExpression != null)
-        msgs = ((InternalEObject)newGuardExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SynctextPackage.REACTION_TRIGGER__GUARD_EXPRESSION, null, msgs);
-      msgs = basicSetGuardExpression(newGuardExpression, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.REACTION_TRIGGER__GUARD_EXPRESSION, newGuardExpression, newGuardExpression));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -396,8 +336,6 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return basicSetReactionTrigger(null, msgs);
       case SynctextPackage.REACTION_TRIGGER__TRIGGER:
         return basicSetTrigger(null, msgs);
-      case SynctextPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
-        return basicSetGuardExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -422,8 +360,6 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return getDelay();
       case SynctextPackage.REACTION_TRIGGER__TRIGGER:
         return getTrigger();
-      case SynctextPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
-        return getGuardExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -451,10 +387,7 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         setDelay((Integer)newValue);
         return;
       case SynctextPackage.REACTION_TRIGGER__TRIGGER:
-        setTrigger((RegularEventSpec)newValue);
-        return;
-      case SynctextPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
-        setGuardExpression((Expression)newValue);
+        setTrigger((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -483,10 +416,7 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         setDelay(DELAY_EDEFAULT);
         return;
       case SynctextPackage.REACTION_TRIGGER__TRIGGER:
-        setTrigger((RegularEventSpec)null);
-        return;
-      case SynctextPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
-        setGuardExpression((Expression)null);
+        setTrigger((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -512,8 +442,6 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return delay != DELAY_EDEFAULT;
       case SynctextPackage.REACTION_TRIGGER__TRIGGER:
         return trigger != null;
-      case SynctextPackage.REACTION_TRIGGER__GUARD_EXPRESSION:
-        return guardExpression != null;
     }
     return super.eIsSet(featureID);
   }

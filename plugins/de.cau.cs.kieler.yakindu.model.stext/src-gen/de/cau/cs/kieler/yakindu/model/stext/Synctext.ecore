@@ -13,6 +13,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="Entry" eSuperTypes="#//StateReaction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Inside" eSuperTypes="#//StateReaction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Exit" eSuperTypes="#//StateReaction"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="MultiplicativeOperator2">
+    <eLiterals name="mul" literal="*"/>
+    <eLiterals name="div" value="1" literal=":"/>
+    <eLiterals name="mod" value="2" literal="%"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="CombineOperator">
     <eLiterals name="NONE" literal="'none'"/>
     <eLiterals name="ADD" value="1" literal="'+'"/>
@@ -40,14 +45,23 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelPriority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//RegularEventSpec"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="guardExpression" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReactionEffect" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
         eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NumericalMultiplyDivideExpression" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="leftOperand" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//MultiplicativeOperator2"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rightOperand" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EventValueReferenceExpression" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PreValueExpression" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression">

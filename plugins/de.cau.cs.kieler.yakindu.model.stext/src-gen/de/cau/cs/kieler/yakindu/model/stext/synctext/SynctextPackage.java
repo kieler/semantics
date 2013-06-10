@@ -606,22 +606,13 @@ public interface SynctextPackage extends EPackage
   int REACTION_TRIGGER__TRIGGER = SGraphPackage.TRIGGER_FEATURE_COUNT + 4;
 
   /**
-   * The feature id for the '<em><b>Guard Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REACTION_TRIGGER__GUARD_EXPRESSION = SGraphPackage.TRIGGER_FEATURE_COUNT + 5;
-
-  /**
    * The number of structural features of the '<em>Reaction Trigger</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REACTION_TRIGGER_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 6;
+  int REACTION_TRIGGER_FEATURE_COUNT = SGraphPackage.TRIGGER_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionEffectImpl <em>Reaction Effect</em>}' class.
@@ -652,6 +643,80 @@ public interface SynctextPackage extends EPackage
   int REACTION_EFFECT_FEATURE_COUNT = SGraphPackage.EFFECT_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.NumericalMultiplyDivideExpressionImpl <em>Numerical Multiply Divide Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.NumericalMultiplyDivideExpressionImpl
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getNumericalMultiplyDivideExpression()
+   * @generated
+   */
+  int NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION = 14;
+
+  /**
+   * The feature id for the '<em><b>Left Operand</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__LEFT_OPERAND = StextPackage.EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__OPERATOR = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right Operand</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__RIGHT_OPERAND = StextPackage.EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Numerical Multiply Divide Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventValueReferenceExpressionImpl <em>Event Value Reference Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventValueReferenceExpressionImpl
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getEventValueReferenceExpression()
+   * @generated
+   */
+  int EVENT_VALUE_REFERENCE_EXPRESSION = 15;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT_VALUE_REFERENCE_EXPRESSION__VALUE = StextPackage.EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Event Value Reference Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVENT_VALUE_REFERENCE_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.PreValueExpressionImpl <em>Pre Value Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -659,7 +724,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getPreValueExpression()
    * @generated
    */
-  int PRE_VALUE_EXPRESSION = 14;
+  int PRE_VALUE_EXPRESSION = 16;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -680,6 +745,16 @@ public interface SynctextPackage extends EPackage
   int PRE_VALUE_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.MultiplicativeOperator2 <em>Multiplicative Operator2</em>}' enum.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.MultiplicativeOperator2
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getMultiplicativeOperator2()
+   * @generated
+   */
+  int MULTIPLICATIVE_OPERATOR2 = 17;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.CombineOperator <em>Combine Operator</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -687,7 +762,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getCombineOperator()
    * @generated
    */
-  int COMBINE_OPERATOR = 15;
+  int COMBINE_OPERATOR = 18;
 
 
   /**
@@ -953,17 +1028,6 @@ public interface SynctextPackage extends EPackage
   EReference getReactionTrigger_Trigger();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getGuardExpression <em>Guard Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Guard Expression</em>'.
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getGuardExpression()
-   * @see #getReactionTrigger()
-   * @generated
-   */
-  EReference getReactionTrigger_GuardExpression();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect <em>Reaction Effect</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -985,6 +1049,70 @@ public interface SynctextPackage extends EPackage
   EReference getReactionEffect_Actions();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression <em>Numerical Multiply Divide Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Numerical Multiply Divide Expression</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression
+   * @generated
+   */
+  EClass getNumericalMultiplyDivideExpression();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression#getLeftOperand <em>Left Operand</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left Operand</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression#getLeftOperand()
+   * @see #getNumericalMultiplyDivideExpression()
+   * @generated
+   */
+  EReference getNumericalMultiplyDivideExpression_LeftOperand();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression#getOperator <em>Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Operator</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression#getOperator()
+   * @see #getNumericalMultiplyDivideExpression()
+   * @generated
+   */
+  EAttribute getNumericalMultiplyDivideExpression_Operator();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression#getRightOperand <em>Right Operand</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right Operand</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression#getRightOperand()
+   * @see #getNumericalMultiplyDivideExpression()
+   * @generated
+   */
+  EReference getNumericalMultiplyDivideExpression_RightOperand();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpression <em>Event Value Reference Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Event Value Reference Expression</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpression
+   * @generated
+   */
+  EClass getEventValueReferenceExpression();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpression#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpression#getValue()
+   * @see #getEventValueReferenceExpression()
+   * @generated
+   */
+  EReference getEventValueReferenceExpression_Value();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.PreValueExpression <em>Pre Value Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1004,6 +1132,16 @@ public interface SynctextPackage extends EPackage
    * @generated
    */
   EReference getPreValueExpression_Value();
+
+  /**
+   * Returns the meta object for enum '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.MultiplicativeOperator2 <em>Multiplicative Operator2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>Multiplicative Operator2</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.MultiplicativeOperator2
+   * @generated
+   */
+  EEnum getMultiplicativeOperator2();
 
   /**
    * Returns the meta object for enum '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.CombineOperator <em>Combine Operator</em>}'.
@@ -1265,14 +1403,6 @@ public interface SynctextPackage extends EPackage
     EReference REACTION_TRIGGER__TRIGGER = eINSTANCE.getReactionTrigger_Trigger();
 
     /**
-     * The meta object literal for the '<em><b>Guard Expression</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference REACTION_TRIGGER__GUARD_EXPRESSION = eINSTANCE.getReactionTrigger_GuardExpression();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionEffectImpl <em>Reaction Effect</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1291,6 +1421,58 @@ public interface SynctextPackage extends EPackage
     EReference REACTION_EFFECT__ACTIONS = eINSTANCE.getReactionEffect_Actions();
 
     /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.NumericalMultiplyDivideExpressionImpl <em>Numerical Multiply Divide Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.NumericalMultiplyDivideExpressionImpl
+     * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getNumericalMultiplyDivideExpression()
+     * @generated
+     */
+    EClass NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION = eINSTANCE.getNumericalMultiplyDivideExpression();
+
+    /**
+     * The meta object literal for the '<em><b>Left Operand</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__LEFT_OPERAND = eINSTANCE.getNumericalMultiplyDivideExpression_LeftOperand();
+
+    /**
+     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__OPERATOR = eINSTANCE.getNumericalMultiplyDivideExpression_Operator();
+
+    /**
+     * The meta object literal for the '<em><b>Right Operand</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__RIGHT_OPERAND = eINSTANCE.getNumericalMultiplyDivideExpression_RightOperand();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventValueReferenceExpressionImpl <em>Event Value Reference Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.EventValueReferenceExpressionImpl
+     * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getEventValueReferenceExpression()
+     * @generated
+     */
+    EClass EVENT_VALUE_REFERENCE_EXPRESSION = eINSTANCE.getEventValueReferenceExpression();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EVENT_VALUE_REFERENCE_EXPRESSION__VALUE = eINSTANCE.getEventValueReferenceExpression_Value();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.PreValueExpressionImpl <em>Pre Value Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1307,6 +1489,16 @@ public interface SynctextPackage extends EPackage
      * @generated
      */
     EReference PRE_VALUE_EXPRESSION__VALUE = eINSTANCE.getPreValueExpression_Value();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.MultiplicativeOperator2 <em>Multiplicative Operator2</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.yakindu.model.stext.synctext.MultiplicativeOperator2
+     * @see de.cau.cs.kieler.yakindu.model.stext.synctext.impl.SynctextPackageImpl#getMultiplicativeOperator2()
+     * @generated
+     */
+    EEnum MULTIPLICATIVE_OPERATOR2 = eINSTANCE.getMultiplicativeOperator2();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.CombineOperator <em>Combine Operator</em>}' enum.

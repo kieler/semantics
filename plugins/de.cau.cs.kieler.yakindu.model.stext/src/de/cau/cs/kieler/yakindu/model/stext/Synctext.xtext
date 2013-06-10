@@ -63,26 +63,58 @@ Exit:
 // The ReactionTrigger is a Trigger and has an Expression, 
 // an optional delay and isImmediate option represented with a '#'
 ReactionTrigger returns sgraph::Trigger:
-	{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec)
-	| ('(' guardExpression=Expression ')'))?;
+	{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? (trigger=Expression)?;
+
+    //{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
+    //| ('(' guardExpression=Expression ')'))?;
 
 	// The ReactionEffect is an Effect. 
 ReactionEffect returns sgraph::Effect:
 	{ReactionEffect} actions+=Expression (=> ',' actions+=Expression)*; // (';')?;
+
+
+
+NumericalMultiplyDivideExpression returns stext::Expression:
+    NumericalUnaryExpression
+    ({NumericalMultiplyDivideExpression.leftOperand=current}
+    operator=MultiplicativeOperator2
+    rightOperand=NumericalUnaryExpression)*;
+    
+enum MultiplicativeOperator2:
+    mul='*' | div=':' | mod='%';
+    
+    
+EventValueReferenceExpression returns stext::Expression:
+  {EventValueReferenceExpression} 'val'  '(' value=(FeatureCall|PreReferenceExpression) ')';
+    
+PreReferenceExpression returns stext::Expression:
+  {EventValueReferenceExpression} 'pre'  '(' value=(FeatureCall|EventValueReferenceExpression|PreReferenceExpression) ')';
+    
+
 
 /***************************************** Expressions ******************************************* */
 // Override the stext::PrimaryExpression
 // remove the ActiveStateReferenceExpression and the EventValueReferenceExpression
 // and add PreValueExpressionreturns that returns the value of a variable in the previous tick. 
 PrimaryExpression returns stext::Expression:
-	PrimitiveValueExpression
-	| FeatureCall
-	| ActiveStateReferenceExpression
-	| PreValueExpression
-	| ParenthesizedExpression
-	| EventValueReferenceExpression
-	//	| '(' Expression ')'
-;
+    PrimitiveValueExpression 
+    | FeatureCall 
+    | ActiveStateReferenceExpression 
+    | EventValueReferenceExpression
+    | PreReferenceExpression  
+    | ParenthesizedExpression
+//  | '(' Expression ')'
+; 
+
+//PrimaryExpression returns stext::Expression:
+//    PrimitiveValueExpression
+//    | FeatureCall
+//    | ActiveStateReferenceExpression
+//    | PreValueExpression
+//    | ParenthesizedExpression
+//    | EventValueReferenceExpression
+//    //  | '(' Expression ')'
+//;
 
 //todo: pre(x) should return the same type of x
 PreValueExpression returns stext::Expression:

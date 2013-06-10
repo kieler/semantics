@@ -163,6 +163,16 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
         return createReactionEffectAdapter();
       }
       @Override
+      public Adapter caseNumericalMultiplyDivideExpression(NumericalMultiplyDivideExpression object)
+      {
+        return createNumericalMultiplyDivideExpressionAdapter();
+      }
+      @Override
+      public Adapter caseEventValueReferenceExpression(EventValueReferenceExpression object)
+      {
+        return createEventValueReferenceExpressionAdapter();
+      }
+      @Override
       public Adapter casePreValueExpression(PreValueExpression object)
       {
         return createPreValueExpressionAdapter();
@@ -480,6 +490,36 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createReactionEffectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression <em>Numerical Multiply Divide Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.NumericalMultiplyDivideExpression
+   * @generated
+   */
+  public Adapter createNumericalMultiplyDivideExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpression <em>Event Value Reference Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpression
+   * @generated
+   */
+  public Adapter createEventValueReferenceExpressionAdapter()
   {
     return null;
   }

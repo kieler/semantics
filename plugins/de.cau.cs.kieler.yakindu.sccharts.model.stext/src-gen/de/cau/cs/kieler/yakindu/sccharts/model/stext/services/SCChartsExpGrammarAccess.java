@@ -322,9 +322,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//ReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? (trigger=RegularEventSpec | "(" guardExpression=Expression
-	//
-	//	")")?;
+	//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? trigger=Expression?;
 	public SynctextGrammarAccess.ReactionTriggerElements getReactionTriggerAccess() {
 		return gaSynctext.getReactionTriggerAccess();
 	}
@@ -333,6 +331,10 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getReactionTriggerAccess().getRule();
 	}
 
+	////{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
+	//
+	////| ('(' guardExpression=Expression ')'))?;
+	//
 	//// The ReactionEffect is an Effect. 
 	//
 	//// (';')?;
@@ -348,19 +350,67 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getReactionEffectAccess().getRule();
 	}
 
+	//NumericalMultiplyDivideExpression returns stext::Expression:
+	//
+	//	NumericalUnaryExpression ({NumericalMultiplyDivideExpression.leftOperand=current} operator=MultiplicativeOperator2
+	//
+	//	rightOperand=NumericalUnaryExpression)*;
+	public SynctextGrammarAccess.NumericalMultiplyDivideExpressionElements getNumericalMultiplyDivideExpressionAccess() {
+		return gaSynctext.getNumericalMultiplyDivideExpressionAccess();
+	}
+	
+	public ParserRule getNumericalMultiplyDivideExpressionRule() {
+		return getNumericalMultiplyDivideExpressionAccess().getRule();
+	}
+
+	//enum MultiplicativeOperator2:
+	//
+	//	mul="*" | div=":" | mod="%";
+	public SynctextGrammarAccess.MultiplicativeOperator2Elements getMultiplicativeOperator2Access() {
+		return gaSynctext.getMultiplicativeOperator2Access();
+	}
+	
+	public EnumRule getMultiplicativeOperator2Rule() {
+		return getMultiplicativeOperator2Access().getRule();
+	}
+
+	//EventValueReferenceExpression returns stext::Expression:
+	//
+	//	{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
+	public SynctextGrammarAccess.EventValueReferenceExpressionElements getEventValueReferenceExpressionAccess() {
+		return gaSynctext.getEventValueReferenceExpressionAccess();
+	}
+	
+	public ParserRule getEventValueReferenceExpressionRule() {
+		return getEventValueReferenceExpressionAccess().getRule();
+	}
+
+	//PreReferenceExpression returns stext::Expression:
+	//
+	//	{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression |
+	//
+	//	PreReferenceExpression) ")";
+	public SynctextGrammarAccess.PreReferenceExpressionElements getPreReferenceExpressionAccess() {
+		return gaSynctext.getPreReferenceExpressionAccess();
+	}
+	
+	public ParserRule getPreReferenceExpressionRule() {
+		return getPreReferenceExpressionAccess().getRule();
+	}
+
 	/// ***************************************** Expressions ******************************************* * / // Override the stext::PrimaryExpression
 	//
 	//// remove the ActiveStateReferenceExpression and the EventValueReferenceExpression
 	//
 	//// and add PreValueExpressionreturns that returns the value of a variable in the previous tick. 
 	//
-	////	| '(' Expression ')'
+	////  | '(' Expression ')'
 	//
 	//PrimaryExpression returns stext::Expression:
 	//
-	//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | PreValueExpression |
+	//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | EventValueReferenceExpression |
 	//
-	//	ParenthesizedExpression | EventValueReferenceExpression;
+	//	PreReferenceExpression | ParenthesizedExpression;
 	public SynctextGrammarAccess.PrimaryExpressionElements getPrimaryExpressionAccess() {
 		return gaSynctext.getPrimaryExpressionAccess();
 	}
@@ -369,6 +419,24 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getPrimaryExpressionAccess().getRule();
 	}
 
+	////PrimaryExpression returns stext::Expression:
+	//
+	////    PrimitiveValueExpression
+	//
+	////    | FeatureCall
+	//
+	////    | ActiveStateReferenceExpression
+	//
+	////    | PreValueExpression
+	//
+	////    | ParenthesizedExpression
+	//
+	////    | EventValueReferenceExpression
+	//
+	////    //  | '(' Expression ')'
+	//
+	////;
+	//
 	////todo: pre(x) should return the same type of x
 	//
 	//PreValueExpression returns stext::Expression:
@@ -1058,19 +1126,6 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getNumericalAddSubtractExpressionAccess().getRule();
 	}
 
-	//NumericalMultiplyDivideExpression returns Expression:
-	//
-	//	NumericalUnaryExpression ({NumericalMultiplyDivideExpression.leftOperand=current} operator=MultiplicativeOperator
-	//
-	//	rightOperand=NumericalUnaryExpression)*;
-	public STextGrammarAccess.NumericalMultiplyDivideExpressionElements getNumericalMultiplyDivideExpressionAccess() {
-		return gaSynctext.getNumericalMultiplyDivideExpressionAccess();
-	}
-	
-	public ParserRule getNumericalMultiplyDivideExpressionRule() {
-		return getNumericalMultiplyDivideExpressionAccess().getRule();
-	}
-
 	//NumericalUnaryExpression returns Expression:
 	//
 	//	PrimaryExpression | {NumericalUnaryExpression} operator=UnaryOperator operand=PrimaryExpression;
@@ -1117,17 +1172,6 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getElementReferenceExpressionRule() {
 		return getElementReferenceExpressionAccess().getRule();
-	}
-
-	//EventValueReferenceExpression returns Expression:
-	//
-	//	{EventValueReferenceExpression} "valueof" "(" value=FeatureCall ")";
-	public STextGrammarAccess.EventValueReferenceExpressionElements getEventValueReferenceExpressionAccess() {
-		return gaSynctext.getEventValueReferenceExpressionAccess();
-	}
-	
-	public ParserRule getEventValueReferenceExpressionRule() {
-		return getEventValueReferenceExpressionAccess().getRule();
 	}
 
 	//ActiveStateReferenceExpression returns Expression:
