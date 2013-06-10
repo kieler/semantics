@@ -112,7 +112,7 @@ public class SyncTransitionEditPart extends TransitionEditPart {
 						.createTransitionTargetDecoration());
 			}
 			if (isImmediate) {
-			    transition.setLineDash(new float[] { 7.0f, 8.0f });
+			    transition.setLineDash(new float[] { 8.0f, 5.0f });
 			    transition.setLineStyle(SWT.LINE_CUSTOM);
 			}
 			else {
