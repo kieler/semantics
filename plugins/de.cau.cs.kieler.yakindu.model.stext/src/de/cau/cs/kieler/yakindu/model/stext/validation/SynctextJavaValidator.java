@@ -38,6 +38,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition;
+import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
 import de.cau.cs.kieler.yakindu.model.sgraph.validator.SyncGraphJavaValidator;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition;
 import de.cau.cs.kieler.yakindu.model.stext.synctext.PreValueExpression;
@@ -60,6 +62,7 @@ public class SynctextJavaValidator extends STextJavaValidator {
 
 	public static final String TRIGGER_EXPRESSION = "A trigger should be a signal or a variable of type boolean";
 	public static final String PRE_ASSIGNMENT = "Can not assign a value to a pre operator";
+        private static final String NORMALTERMINATION_WITH_TRIGGER = "A normal termination may not have a trigger.";
 
 	@Inject
 	private ISTextTypeInferrer sccInferrer;
@@ -109,6 +112,25 @@ public class SynctextJavaValidator extends STextJavaValidator {
 //		}
 	}
 
+	
+      /**
+      * Verify that a normal termination transition has no trigger-expression (it may habe priority!)
+      * 
+      */
+     @Check(CheckType.FAST)
+     public void disallowTrigger(SyncTransition transition) {
+             if (transition.getType() == TransitionType.NORMALTERMINATION
+                             && transition.getTrigger() != null) {
+                     if (transition.getTrigger() instanceof ReactionTrigger) {
+                         ReactionTrigger trigger = (ReactionTrigger) transition.getTrigger();
+                         Expression expression = trigger.getExpression();
+                         if (expression != null) {
+                             error(NORMALTERMINATION_WITH_TRIGGER, transition, null, -1);
+                         }
+                     }
+             }
+     }	
+	
 	/**
 	 * Only Expressions that produce an effect should be used as actions.
 	 * 

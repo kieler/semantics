@@ -31,7 +31,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getReactionTrigger <em>Reaction Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getLabelPriority <em>Label Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getTrigger <em>Trigger</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionTriggerImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -100,14 +100,14 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
   protected int delay = DELAY_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getTrigger() <em>Trigger</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTrigger()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Expression trigger;
+  protected Expression expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -277,9 +277,9 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getTrigger()
+  public Expression getExpression()
   {
-    return trigger;
+    return expression;
   }
 
   /**
@@ -287,13 +287,13 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetTrigger(Expression newTrigger, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    Expression oldTrigger = trigger;
-    trigger = newTrigger;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SynctextPackage.REACTION_TRIGGER__TRIGGER, oldTrigger, newTrigger);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SynctextPackage.REACTION_TRIGGER__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -304,20 +304,20 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTrigger(Expression newTrigger)
+  public void setExpression(Expression newExpression)
   {
-    if (newTrigger != trigger)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (trigger != null)
-        msgs = ((InternalEObject)trigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SynctextPackage.REACTION_TRIGGER__TRIGGER, null, msgs);
-      if (newTrigger != null)
-        msgs = ((InternalEObject)newTrigger).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SynctextPackage.REACTION_TRIGGER__TRIGGER, null, msgs);
-      msgs = basicSetTrigger(newTrigger, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SynctextPackage.REACTION_TRIGGER__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SynctextPackage.REACTION_TRIGGER__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.REACTION_TRIGGER__TRIGGER, newTrigger, newTrigger));
+      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.REACTION_TRIGGER__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -334,8 +334,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return basicSetStateReaction(null, msgs);
       case SynctextPackage.REACTION_TRIGGER__REACTION_TRIGGER:
         return basicSetReactionTrigger(null, msgs);
-      case SynctextPackage.REACTION_TRIGGER__TRIGGER:
-        return basicSetTrigger(null, msgs);
+      case SynctextPackage.REACTION_TRIGGER__EXPRESSION:
+        return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -358,8 +358,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return getLabelPriority();
       case SynctextPackage.REACTION_TRIGGER__DELAY:
         return getDelay();
-      case SynctextPackage.REACTION_TRIGGER__TRIGGER:
-        return getTrigger();
+      case SynctextPackage.REACTION_TRIGGER__EXPRESSION:
+        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -386,8 +386,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
       case SynctextPackage.REACTION_TRIGGER__DELAY:
         setDelay((Integer)newValue);
         return;
-      case SynctextPackage.REACTION_TRIGGER__TRIGGER:
-        setTrigger((Expression)newValue);
+      case SynctextPackage.REACTION_TRIGGER__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -415,8 +415,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
       case SynctextPackage.REACTION_TRIGGER__DELAY:
         setDelay(DELAY_EDEFAULT);
         return;
-      case SynctextPackage.REACTION_TRIGGER__TRIGGER:
-        setTrigger((Expression)null);
+      case SynctextPackage.REACTION_TRIGGER__EXPRESSION:
+        setExpression((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -440,8 +440,8 @@ public class ReactionTriggerImpl extends TriggerImpl implements ReactionTrigger
         return labelPriority != LABEL_PRIORITY_EDEFAULT;
       case SynctextPackage.REACTION_TRIGGER__DELAY:
         return delay != DELAY_EDEFAULT;
-      case SynctextPackage.REACTION_TRIGGER__TRIGGER:
-        return trigger != null;
+      case SynctextPackage.REACTION_TRIGGER__EXPRESSION:
+        return expression != null;
     }
     return super.eIsSet(featureID);
   }

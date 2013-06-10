@@ -597,13 +597,13 @@ public interface SynctextPackage extends EPackage
   int REACTION_TRIGGER__DELAY = SGraphPackage.TRIGGER_FEATURE_COUNT + 3;
 
   /**
-   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REACTION_TRIGGER__TRIGGER = SGraphPackage.TRIGGER_FEATURE_COUNT + 4;
+  int REACTION_TRIGGER__EXPRESSION = SGraphPackage.TRIGGER_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Reaction Trigger</em>' class.
@@ -1017,15 +1017,15 @@ public interface SynctextPackage extends EPackage
   EAttribute getReactionTrigger_Delay();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getTrigger <em>Trigger</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Trigger</em>'.
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getTrigger()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getExpression()
    * @see #getReactionTrigger()
    * @generated
    */
-  EReference getReactionTrigger_Trigger();
+  EReference getReactionTrigger_Expression();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect <em>Reaction Effect</em>}'.
@@ -1395,12 +1395,12 @@ public interface SynctextPackage extends EPackage
     EAttribute REACTION_TRIGGER__DELAY = eINSTANCE.getReactionTrigger_Delay();
 
     /**
-     * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference REACTION_TRIGGER__TRIGGER = eINSTANCE.getReactionTrigger_Trigger();
+    EReference REACTION_TRIGGER__EXPRESSION = eINSTANCE.getReactionTrigger_Expression();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.ReactionEffectImpl <em>Reaction Effect</em>}' class.

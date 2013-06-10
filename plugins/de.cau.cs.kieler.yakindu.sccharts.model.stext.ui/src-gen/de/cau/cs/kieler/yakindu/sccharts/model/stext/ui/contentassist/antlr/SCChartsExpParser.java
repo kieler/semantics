@@ -184,7 +184,7 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLocalReactionTriggerAccess().getReactionTriggerAssignment_2_1(), "rule__LocalReactionTrigger__ReactionTriggerAssignment_2_1");
 					put(grammarAccess.getReactionTriggerAccess().getLabelPriorityAssignment_1_0(), "rule__ReactionTrigger__LabelPriorityAssignment_1_0");
 					put(grammarAccess.getReactionTriggerAccess().getDelayAssignment_2(), "rule__ReactionTrigger__DelayAssignment_2");
-					put(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3(), "rule__ReactionTrigger__TriggerAssignment_3");
+					put(grammarAccess.getReactionTriggerAccess().getExpressionAssignment_3(), "rule__ReactionTrigger__ExpressionAssignment_3");
 					put(grammarAccess.getReactionEffectAccess().getActionsAssignment_1(), "rule__ReactionEffect__ActionsAssignment_1");
 					put(grammarAccess.getReactionEffectAccess().getActionsAssignment_2_1(), "rule__ReactionEffect__ActionsAssignment_2_1");
 					put(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getOperatorAssignment_1_1(), "rule__NumericalMultiplyDivideExpression__OperatorAssignment_1_1");

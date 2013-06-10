@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.eclipse.xtext.common.types
+ org.eclipse.xtext.common.types,
+ de.cau.cs.kieler.yakindu.model.sgraph;bundle-version="0.1.0"
 Import-Package: de.cau.cs.kieler.yakindu.model.sgraph.validator,
  de.itemis.xtext.utils.jface.viewers,
  org.apache.log4j

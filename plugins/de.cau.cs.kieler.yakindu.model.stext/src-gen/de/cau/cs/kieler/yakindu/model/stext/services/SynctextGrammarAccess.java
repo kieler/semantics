@@ -503,8 +503,8 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
 		private final Assignment cDelayAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cDelayINTTerminalRuleCall_2_0 = (RuleCall)cDelayAssignment_2.eContents().get(0);
-		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTriggerExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
+		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cExpressionExpressionParserRuleCall_3_0 = (RuleCall)cExpressionAssignment_3.eContents().get(0);
 		
 		/// ******************************************** TRANSITION ***************************************** * / // The ReactionTrigger is a Trigger and has an Expression, 
 		//
@@ -512,10 +512,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//ReactionTrigger returns sgraph::Trigger:
 		//
-		//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? trigger=Expression?;
+		//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? expression=Expression?;
 		public ParserRule getRule() { return rule; }
 
-		//{ReactionTrigger} (labelPriority=INT ":")? delay=INT? trigger=Expression?
+		//{ReactionTrigger} (labelPriority=INT ":")? delay=INT? expression=Expression?
 		public Group getGroup() { return cGroup; }
 
 		//{ReactionTrigger}
@@ -539,11 +539,11 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getDelayINTTerminalRuleCall_2_0() { return cDelayINTTerminalRuleCall_2_0; }
 
-		//trigger=Expression?
-		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
+		//expression=Expression?
+		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
 
 		//Expression
-		public RuleCall getTriggerExpressionParserRuleCall_3_0() { return cTriggerExpressionParserRuleCall_3_0; }
+		public RuleCall getExpressionExpressionParserRuleCall_3_0() { return cExpressionExpressionParserRuleCall_3_0; }
 	}
 
 	public class ReactionEffectElements extends AbstractParserRuleElementFinder {
@@ -1177,7 +1177,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//ReactionTrigger returns sgraph::Trigger:
 	//
-	//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? trigger=Expression?;
+	//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? expression=Expression?;
 	public ReactionTriggerElements getReactionTriggerAccess() {
 		return (pReactionTrigger != null) ? pReactionTrigger : (pReactionTrigger = new ReactionTriggerElements());
 	}

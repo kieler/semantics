@@ -2526,24 +2526,24 @@ public class InternalSynctextParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReactionTrigger"
-    // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:886:1: ruleReactionTrigger returns [EObject current=null] : ( () ( ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleExpression ) )? ) ;
+    // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:886:1: ruleReactionTrigger returns [EObject current=null] : ( () ( ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_expression_4_0= ruleExpression ) )? ) ;
     public final EObject ruleReactionTrigger() throws RecognitionException {
         EObject current = null;
 
         Token lv_labelPriority_1_0=null;
         Token otherlv_2=null;
         Token lv_delay_3_0=null;
-        EObject lv_trigger_4_0 = null;
+        EObject lv_expression_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:889:28: ( ( () ( ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleExpression ) )? ) )
-            // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:890:1: ( () ( ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleExpression ) )? )
+            // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:889:28: ( ( () ( ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_expression_4_0= ruleExpression ) )? ) )
+            // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:890:1: ( () ( ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_expression_4_0= ruleExpression ) )? )
             {
-            // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:890:1: ( () ( ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleExpression ) )? )
-            // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:890:2: () ( ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleExpression ) )?
+            // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:890:1: ( () ( ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_expression_4_0= ruleExpression ) )? )
+            // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:890:2: () ( ( (lv_labelPriority_1_0= RULE_INT ) ) otherlv_2= ':' )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_expression_4_0= ruleExpression ) )?
             {
             // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:890:2: ()
             // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:891:2: 
@@ -2657,7 +2657,7 @@ public class InternalSynctextParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:939:3: ( (lv_trigger_4_0= ruleExpression ) )?
+            // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:939:3: ( (lv_expression_4_0= ruleExpression ) )?
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -2666,18 +2666,18 @@ public class InternalSynctextParser extends AbstractInternalAntlrParser {
             }
             switch (alt16) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:940:1: (lv_trigger_4_0= ruleExpression )
+                    // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:940:1: (lv_expression_4_0= ruleExpression )
                     {
-                    // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:940:1: (lv_trigger_4_0= ruleExpression )
-                    // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:941:3: lv_trigger_4_0= ruleExpression
+                    // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:940:1: (lv_expression_4_0= ruleExpression )
+                    // ../de.cau.cs.kieler.yakindu.model.stext/src-gen/de/cau/cs/kieler/yakindu/model/stext/parser/antlr/internal/InternalSynctext.g:941:3: lv_expression_4_0= ruleExpression
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getTriggerExpressionParserRuleCall_3_0()); 
+                      	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getExpressionExpressionParserRuleCall_3_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_ruleExpression_in_ruleReactionTrigger1975);
-                    lv_trigger_4_0=ruleExpression();
+                    lv_expression_4_0=ruleExpression();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -2688,8 +2688,8 @@ public class InternalSynctextParser extends AbstractInternalAntlrParser {
                       	        }
                              		set(
                              			current, 
-                             			"trigger",
-                              		lv_trigger_4_0, 
+                             			"expression",
+                              		lv_expression_4_0, 
                               		"Expression");
                       	        afterParserOrEnumRuleCall();
                       	    

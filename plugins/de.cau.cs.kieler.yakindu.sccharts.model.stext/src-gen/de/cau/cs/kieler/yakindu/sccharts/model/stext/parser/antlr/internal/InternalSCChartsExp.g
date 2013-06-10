@@ -1042,16 +1042,16 @@ ruleReactionTrigger returns [EObject current=null]
 )?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getTriggerExpressionParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getReactionTriggerAccess().getExpressionExpressionParserRuleCall_3_0()); 
 	    }
-		lv_trigger_4_0=ruleExpression		{
+		lv_expression_4_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getReactionTriggerRule());
 	        }
        		set(
        			$current, 
-       			"trigger",
-        		lv_trigger_4_0, 
+       			"expression",
+        		lv_expression_4_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }

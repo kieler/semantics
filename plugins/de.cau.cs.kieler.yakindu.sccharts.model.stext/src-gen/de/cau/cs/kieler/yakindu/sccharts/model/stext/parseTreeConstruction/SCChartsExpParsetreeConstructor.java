@@ -2448,11 +2448,11 @@ protected class Exit_ExitKeyword_1 extends KeywordToken  {
  * 
  * ReactionTrigger returns sgraph::Trigger:
  * 
- * 	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? trigger=Expression?;
+ * 	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? expression=Expression?;
  *
  **/
 
-// {ReactionTrigger} (labelPriority=INT ":")? delay=INT? trigger=Expression?
+// {ReactionTrigger} (labelPriority=INT ":")? delay=INT? expression=Expression?
 protected class ReactionTrigger_Group extends GroupToken {
 	
 	public ReactionTrigger_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2467,7 +2467,7 @@ protected class ReactionTrigger_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ReactionTrigger_TriggerAssignment_3(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new ReactionTrigger_ExpressionAssignment_3(lastRuleCallOrigin, this, 0, inst);
 			case 1: return new ReactionTrigger_DelayAssignment_2(lastRuleCallOrigin, this, 1, inst);
 			case 2: return new ReactionTrigger_Group_1(lastRuleCallOrigin, this, 2, inst);
 			case 3: return new ReactionTrigger_ReactionTriggerAction_0(lastRuleCallOrigin, this, 3, inst);
@@ -2624,16 +2624,16 @@ protected class ReactionTrigger_DelayAssignment_2 extends AssignmentToken  {
 
 }
 
-// trigger=Expression?
-protected class ReactionTrigger_TriggerAssignment_3 extends AssignmentToken  {
+// expression=Expression?
+protected class ReactionTrigger_ExpressionAssignment_3 extends AssignmentToken  {
 	
-	public ReactionTrigger_TriggerAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public ReactionTrigger_ExpressionAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3();
+		return grammarAccess.getReactionTriggerAccess().getExpressionAssignment_3();
 	}
 
     @Override
@@ -2646,13 +2646,13 @@ protected class ReactionTrigger_TriggerAssignment_3 extends AssignmentToken  {
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("trigger",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("trigger");
+		if((value = eObjectConsumer.getConsumable("expression",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("expression");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getExpressionRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getReactionTriggerAccess().getTriggerExpressionParserRuleCall_3_0(); 
+				element = grammarAccess.getReactionTriggerAccess().getExpressionExpressionParserRuleCall_3_0(); 
 				consumed = obj;
 				return param;
 			}

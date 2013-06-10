@@ -16167,22 +16167,22 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__ReactionTrigger__Group__3__Impl"
-    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5229:1: rule__ReactionTrigger__Group__3__Impl : ( ( rule__ReactionTrigger__TriggerAssignment_3 )? ) ;
+    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5229:1: rule__ReactionTrigger__Group__3__Impl : ( ( rule__ReactionTrigger__ExpressionAssignment_3 )? ) ;
     public final void rule__ReactionTrigger__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5233:1: ( ( ( rule__ReactionTrigger__TriggerAssignment_3 )? ) )
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5234:1: ( ( rule__ReactionTrigger__TriggerAssignment_3 )? )
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5233:1: ( ( ( rule__ReactionTrigger__ExpressionAssignment_3 )? ) )
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5234:1: ( ( rule__ReactionTrigger__ExpressionAssignment_3 )? )
             {
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5234:1: ( ( rule__ReactionTrigger__TriggerAssignment_3 )? )
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5235:1: ( rule__ReactionTrigger__TriggerAssignment_3 )?
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5234:1: ( ( rule__ReactionTrigger__ExpressionAssignment_3 )? )
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5235:1: ( rule__ReactionTrigger__ExpressionAssignment_3 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3()); 
+               before(grammarAccess.getReactionTriggerAccess().getExpressionAssignment_3()); 
             }
-            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5236:1: ( rule__ReactionTrigger__TriggerAssignment_3 )?
+            // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5236:1: ( rule__ReactionTrigger__ExpressionAssignment_3 )?
             int alt47=2;
             int LA47_0 = input.LA(1);
 
@@ -16191,10 +16191,10 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
             }
             switch (alt47) {
                 case 1 :
-                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5236:2: rule__ReactionTrigger__TriggerAssignment_3
+                    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:5236:2: rule__ReactionTrigger__ExpressionAssignment_3
                     {
-                    pushFollow(FOLLOW_rule__ReactionTrigger__TriggerAssignment_3_in_rule__ReactionTrigger__Group__3__Impl11079);
-                    rule__ReactionTrigger__TriggerAssignment_3();
+                    pushFollow(FOLLOW_rule__ReactionTrigger__ExpressionAssignment_3_in_rule__ReactionTrigger__Group__3__Impl11079);
+                    rule__ReactionTrigger__ExpressionAssignment_3();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -16205,7 +16205,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReactionTriggerAccess().getTriggerAssignment_3()); 
+               after(grammarAccess.getReactionTriggerAccess().getExpressionAssignment_3()); 
             }
 
             }
@@ -32562,9 +32562,9 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__ReactionTrigger__DelayAssignment_2"
 
 
-    // $ANTLR start "rule__ReactionTrigger__TriggerAssignment_3"
-    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:11237:1: rule__ReactionTrigger__TriggerAssignment_3 : ( ruleExpression ) ;
-    public final void rule__ReactionTrigger__TriggerAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__ReactionTrigger__ExpressionAssignment_3"
+    // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:11237:1: rule__ReactionTrigger__ExpressionAssignment_3 : ( ruleExpression ) ;
+    public final void rule__ReactionTrigger__ExpressionAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -32576,15 +32576,15 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSCChartsExp.g:11243:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReactionTriggerAccess().getTriggerExpressionParserRuleCall_3_0()); 
+               before(grammarAccess.getReactionTriggerAccess().getExpressionExpressionParserRuleCall_3_0()); 
             }
-            pushFollow(FOLLOW_ruleExpression_in_rule__ReactionTrigger__TriggerAssignment_322855);
+            pushFollow(FOLLOW_ruleExpression_in_rule__ReactionTrigger__ExpressionAssignment_322855);
             ruleExpression();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReactionTriggerAccess().getTriggerExpressionParserRuleCall_3_0()); 
+               after(grammarAccess.getReactionTriggerAccess().getExpressionExpressionParserRuleCall_3_0()); 
             }
 
             }
@@ -32604,7 +32604,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__ReactionTrigger__TriggerAssignment_3"
+    // $ANTLR end "rule__ReactionTrigger__ExpressionAssignment_3"
 
 
     // $ANTLR start "rule__ReactionEffect__ActionsAssignment_1"
@@ -36464,7 +36464,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_rule__ReactionTrigger__Group__3_in_rule__ReactionTrigger__Group__210994 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ReactionTrigger__DelayAssignment_2_in_rule__ReactionTrigger__Group__2__Impl11021 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ReactionTrigger__Group__3__Impl_in_rule__ReactionTrigger__Group__311052 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ReactionTrigger__TriggerAssignment_3_in_rule__ReactionTrigger__Group__3__Impl11079 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ReactionTrigger__ExpressionAssignment_3_in_rule__ReactionTrigger__Group__3__Impl11079 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ReactionTrigger__Group_1__0__Impl_in_rule__ReactionTrigger__Group_1__011118 = new BitSet(new long[]{0x0000000800000000L});
     public static final BitSet FOLLOW_rule__ReactionTrigger__Group_1__1_in_rule__ReactionTrigger__Group_1__011121 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ReactionTrigger__LabelPriorityAssignment_1_0_in_rule__ReactionTrigger__Group_1__0__Impl11148 = new BitSet(new long[]{0x0000000000000002L});
@@ -36918,7 +36918,7 @@ public class InternalSCChartsExpParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_ruleReactionTrigger_in_rule__LocalReactionTrigger__ReactionTriggerAssignment_2_122762 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_INT_in_rule__ReactionTrigger__LabelPriorityAssignment_1_022793 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_INT_in_rule__ReactionTrigger__DelayAssignment_222824 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_rule__ReactionTrigger__TriggerAssignment_322855 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExpression_in_rule__ReactionTrigger__ExpressionAssignment_322855 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__ReactionEffect__ActionsAssignment_122886 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__ReactionEffect__ActionsAssignment_2_122917 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleMultiplicativeOperator2_in_rule__NumericalMultiplyDivideExpression__OperatorAssignment_1_122948 = new BitSet(new long[]{0x0000000000000002L});

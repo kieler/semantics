@@ -265,7 +265,7 @@
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="delay" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="trigger" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="expression" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.49"/>
         </elements>
       </alternatives>

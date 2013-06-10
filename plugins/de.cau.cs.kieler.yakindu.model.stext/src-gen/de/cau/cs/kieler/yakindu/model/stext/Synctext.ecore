@@ -45,7 +45,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelPriority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReactionEffect" eSuperTypes="../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect">

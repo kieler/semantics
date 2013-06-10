@@ -11,6 +11,7 @@ import org.yakindu.sct.model.sgraph.Entry;
 import org.yakindu.sct.model.sgraph.Region;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.model.sgraph.Transition;
+import org.yakindu.sct.model.sgraph.Trigger;
 import org.yakindu.sct.model.sgraph.Vertex;
 import org.yakindu.sct.model.sgraph.validation.SGraphJavaValidator;
 
@@ -32,7 +33,6 @@ public class SyncGraphJavaValidator extends SGraphJavaValidator {
 
 	// private static final String ISSUE_INITIAL_ENTRY_WITH_IN_TRANS =
 	// "Initial state should have no incoming transition.";
-	private static final String NORMALTERMINATION_WITH_TRIGGER = "A normal termination may not have a trigger.";
 	private static final String REGION_HAS_ONE_INITIAL_STATE = "Every region should have exactly one initial state.";
 	private static final String STATE_HAS_ONLY_ONE_NORMAL_TERMINATION = "A state can only have one outgoing normal termination.";
 	private static final String SYNCCHARTS_HAS_ONE_REGION = "A diagram should have exactly one region.";
@@ -148,17 +148,21 @@ public class SyncGraphJavaValidator extends SGraphJavaValidator {
 	// }
 	// }
 
-	/**
-	 * Verify that a normal termination transition has no trigger
-	 * 
-	 */
-	@Check(CheckType.FAST)
-	public void disallowTrigger(SyncTransition transition) {
-		if (transition.getType() == TransitionType.NORMALTERMINATION
-				&& transition.getTrigger() != null) {
-			error(NORMALTERMINATION_WITH_TRIGGER, transition, null, -1);
-		}
-	}
+//	/**
+//	 * Verify that a normal termination transition has no trigger
+//	 * 
+//	 */
+//	@Check(CheckType.FAST)
+//	public void disallowTrigger(SyncTransition transition) {
+//		if (transition.getType() == TransitionType.NORMALTERMINATION
+//				&& transition.getTrigger() != null) {
+//		        if (transition.getTrigger(). instanceof ReactionTrigger) {
+//		            ReactionTrigger trigger = (ReactionTrigger) transition.getTrigger;
+//		            expression = trigger.getTrigger();
+//		        }
+//			error(NORMALTERMINATION_WITH_TRIGGER + transition.getTrigger().toString(), transition, null, -1);
+//		}
+//	}
 
 	/**
 	 * Verify that every region has one initial state

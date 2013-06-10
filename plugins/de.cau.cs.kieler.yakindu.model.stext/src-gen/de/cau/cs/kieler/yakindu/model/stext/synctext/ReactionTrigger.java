@@ -18,7 +18,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getReactionTrigger <em>Reaction Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getLabelPriority <em>Label Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getTrigger <em>Trigger</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -133,29 +133,29 @@ public interface ReactionTrigger extends Trigger
   void setDelay(int value);
 
   /**
-   * Returns the value of the '<em><b>Trigger</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Trigger</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Trigger</em>' containment reference.
-   * @see #setTrigger(Expression)
-   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage#getReactionTrigger_Trigger()
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(Expression)
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage#getReactionTrigger_Expression()
    * @model containment="true"
    * @generated
    */
-  Expression getTrigger();
+  Expression getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getTrigger <em>Trigger</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Trigger</em>' containment reference.
-   * @see #getTrigger()
+   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @see #getExpression()
    * @generated
    */
-  void setTrigger(Expression value);
+  void setExpression(Expression value);
 
 } // ReactionTrigger
