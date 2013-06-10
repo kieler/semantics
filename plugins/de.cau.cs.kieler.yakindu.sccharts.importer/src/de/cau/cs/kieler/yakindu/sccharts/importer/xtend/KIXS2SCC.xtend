@@ -244,12 +244,12 @@ class KIXS2SCC {
                 }
                 else {
                     // Trigger and effect
-                    newLabel = "(" + newLabel.substring(0, newLabel.indexOf("/")) + ") " + newLabel.substring(newLabel.indexOf("/"));
+                    newLabel = newLabel.substring(0, newLabel.indexOf("/")) + newLabel.substring(newLabel.indexOf("/"));
                 }
             }
             else {
                 // No effect
-                newLabel = "(" + newLabel.substring(0) + ")";
+                newLabel = newLabel.substring(0);
             }
         }
         newLabel = newLabel.replace("(not ", "(! ").replace(" not ", " ! ");
@@ -269,7 +269,7 @@ class KIXS2SCC {
             return label;
         }
         else {
-            returnLabel = label.substring(0, label.indexOf("?")) + "valueof(";
+            returnLabel = label.substring(0, label.indexOf("?")) + "val(";
             val subString = label.substring(label.indexOf("?") + 1);
             val separationIndex = subString.indexOfSeparator;
             returnLabel = returnLabel.concat(subString.substring(0, separationIndex) + ")" + subString.substring(separationIndex)); 
@@ -299,6 +299,7 @@ class KIXS2SCC {
         val i12 = text.indexOf("}");
         val i13 = text.indexOf("\\");
         val i14 = text.indexOf("=");
+        val i15 = text.indexOf(":");
         var returnIndex = text.length;
         if (i1 > 0) {returnIndex = returnIndex.min(i1);}
         if (i2 > 0) {returnIndex = returnIndex.min(i2);}
@@ -314,6 +315,7 @@ class KIXS2SCC {
         if (i12 > 0) {returnIndex = returnIndex.min(i12);}
         if (i13 > 0) {returnIndex = returnIndex.min(i13);}
         if (i14 > 0) {returnIndex = returnIndex.min(i14);}
+        if (i15 > 0) {returnIndex = returnIndex.min(i15);}
         return returnIndex;
     }
     
