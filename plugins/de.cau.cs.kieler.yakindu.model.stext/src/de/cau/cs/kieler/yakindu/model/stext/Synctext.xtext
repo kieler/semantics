@@ -62,9 +62,11 @@ Exit:
 /******************************************** TRANSITION ***************************************** */
 // The ReactionTrigger is a Trigger and has an Expression, 
 // an optional delay and isImmediate option represented with a '#'
+// cmot change: Get rid of extra brackets
 ReactionTrigger returns sgraph::Trigger:
 	{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? (expression=Expression)?;
 
+    // Original code by wah
     //{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
     //| ('(' guardExpression=Expression ')'))?;
 
@@ -74,19 +76,31 @@ ReactionEffect returns sgraph::Effect:
 
 
 
+/***************************************** Expressions ******************************************* */
+// Override the stext::NumericalMultiplyDivideExpression
+// cmot addition: goal is to have some other divisor ":" instead of "/", because "/" is used to separate
+// trigger / effect.
 NumericalMultiplyDivideExpression returns stext::Expression:
     NumericalUnaryExpression
     ({NumericalMultiplyDivideExpression.leftOperand=current}
     operator=MultiplicativeOperator2
     rightOperand=NumericalUnaryExpression)*;
     
+// New MultiplicativeOperator2 (replacing MultiplicativeOperator with ":" instead of "/")    
+// cmot addition
 enum MultiplicativeOperator2:
     mul='*' | div=':' | mod='%';
     
     
+/***************************************** Expressions ******************************************* */
+// Override the stext::EventValueReferenceExpression
+// override 'valueof()' with 'val()', allow val(pre())    
+// cmot change
 EventValueReferenceExpression returns stext::Expression:
   {EventValueReferenceExpression} 'val'  '(' value=(FeatureCall|PreReferenceExpression) ')';
     
+// Additional pre(), like val(), allow pre(val()) and allow pre(pre())    
+// cmot addition
 PreReferenceExpression returns stext::Expression:
   {EventValueReferenceExpression} 'pre'  '(' value=(FeatureCall|EventValueReferenceExpression|PreReferenceExpression) ')';
     
@@ -95,7 +109,7 @@ PreReferenceExpression returns stext::Expression:
 /***************************************** Expressions ******************************************* */
 // Override the stext::PrimaryExpression
 // remove the ActiveStateReferenceExpression and the EventValueReferenceExpression
-// and add PreValueExpressionreturns that returns the value of a variable in the previous tick. 
+// and add PreReferenceExpression that returns the previous tick instance of a variable. 
 PrimaryExpression returns stext::Expression:
     PrimitiveValueExpression 
     | FeatureCall 
@@ -103,18 +117,9 @@ PrimaryExpression returns stext::Expression:
     | EventValueReferenceExpression
     | PreReferenceExpression  
     | ParenthesizedExpression
-//  | '(' Expression ')'
 ; 
 
-//PrimaryExpression returns stext::Expression:
-//    PrimitiveValueExpression
-//    | FeatureCall
-//    | ActiveStateReferenceExpression
-//    | PreValueExpression
-//    | ParenthesizedExpression
-//    | EventValueReferenceExpression
-//    //  | '(' Expression ')'
-//;
+
 
 //todo: pre(x) should return the same type of x
 PreValueExpression returns stext::Expression:
