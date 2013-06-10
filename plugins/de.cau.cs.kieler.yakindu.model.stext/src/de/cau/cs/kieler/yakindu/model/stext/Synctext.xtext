@@ -63,7 +63,7 @@ Exit:
 // The ReactionTrigger is a Trigger and has an Expression, 
 // an optional delay and isImmediate option represented with a '#'
 ReactionTrigger returns sgraph::Trigger:
-	{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? (trigger=Expression)?;
+	{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? (expression=Expression)?;
 
     //{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
     //| ('(' guardExpression=Expression ')'))?;
