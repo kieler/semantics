@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scl.vhdl;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
+import org.eclipse.jface.viewers.ISelection;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
 import com.google.inject.Injector;
 
@@ -60,7 +61,7 @@ public class VHDLGenerator extends AbstractModelFileHandler {
         }
 
         public CharSequence doTransformation(EObject modelObject,
-                        String commandString) {
+                        String commandString, ISelection selection) {
                 if (commandString.equals(TRANSFORMATIONCOMMAND)) {
                     CharSequence transformed = (new SCL2VHDL())
                                     .transform((Program) modelObject);
