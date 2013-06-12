@@ -581,7 +581,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             }
 
             // Set layout parameter for this hierarchy
-            kContainerNode.addLayoutParam(LayoutOptions::DEBUG_MODE, true)
+//            kContainerNode.addLayoutParam(LayoutOptions::DEBUG_MODE, true)
             kContainerNode.addLayoutParam(LayoutOptions::SPACING, 25.0f)
             kContainerNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
             kContainerNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
