@@ -45,7 +45,7 @@ class SCLToSCLCFTransformation {
     def Program transformSCLToSCLControlflow(Program program) {
         val targetProgram = SCL.createProgram()
         
-        targetProgram.setName(program.getName + "_seqcf")
+        targetProgram.setName(program.getName + "_tick")
         targetProgram.declarations.addAll(program.declarations.copyAll)
         targetProgram.declarations.add(createVariableDeclaration('GO', 'boolean'))
         
