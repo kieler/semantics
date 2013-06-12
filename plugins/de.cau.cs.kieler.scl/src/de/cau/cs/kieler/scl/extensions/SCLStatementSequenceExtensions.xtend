@@ -103,11 +103,11 @@ class SCLStatementSequenceExtensions {
     
     // Checks if an instruction is in the main thread list (program.instructions)
     def dispatch boolean isInMainThread(Instruction instruction) {
-        getThread(instruction) == getProgram(instruction)
+        getThread(instruction) == null
     }
 
     def dispatch boolean isInMainThread(Statement statement) {
-        getThread(statement) == getProgram(statement)
+        getThread(statement) == null
     }
     
     def boolean hasSameThreadParentAs(Instruction instruction, Instruction secondInstruction) {
