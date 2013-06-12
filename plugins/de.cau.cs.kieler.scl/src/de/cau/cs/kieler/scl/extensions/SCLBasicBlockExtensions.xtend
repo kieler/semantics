@@ -405,7 +405,7 @@ class SCLBasicBlockExtensions {
     }
     
     def boolean isPauseSurface(BasicBlock basicBlock) {
-        if (basicBlock.statements.last.isPause) return true
+        if (basicBlock.statements.last.trueInstruction instanceof PauseSurface) return true
         return false
     }
     
@@ -493,7 +493,10 @@ class SCLBasicBlockExtensions {
     }
     
     def boolean isExitBlock(BasicBlock basicBlock) {
-        basicBlock.basicBlockSuccessor.size == 0
+        val succ = basicBlock.basicBlockSuccessor 
+        if (succ.size == 0) return true
+        if (succ.size == 1 && succ.head.getHead.isConditional) return true
+        return false
     }
     
     
