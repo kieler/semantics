@@ -18,54 +18,47 @@ import de.cau.cs.kieler.sim.eso.eso.tracelist
 import de.cau.cs.kieler.sim.eso.eso.EsoInt
 import de.cau.cs.kieler.sim.eso.eso.signal
 import de.cau.cs.kieler.sim.eso.eso.EsoBool
-import de.cau.cs.kieler.sim.coreeso.coreEso.CoreEsoFactory
-import de.cau.cs.kieler.sim.coreeso.coreEso.coreTracelist
-import de.cau.cs.kieler.sim.coreeso.coreEso.coreTrace
-import de.cau.cs.kieler.sim.coreeso.coreEso.coreTick
+import de.cau.cs.kieler.sim.eso.eso.tick
+import de.cau.cs.kieler.sim.eso.eso.trace
+import de.cau.cs.kieler.sim.eso.eso.EsoFactory
 
 class ESO2CoreESO {
-	coreTick newTick
-	coreTrace newTrace
+	tick newTick
+	trace newTrace
 
-
-	def coreTracelist transformESO2CoreESO (tracelist tl) {
+	def tracelist transformESO2CoreESO (tracelist tl) {
 	
 		return generateCoreEso(tl)
 	}	
 
 	def generateCoreEso(tracelist tl){	
 
-		val ctl = CoreEsoFactory::eINSTANCE.createcoreTracelist
+		val newTl = EsoFactory::eINSTANCE.createtracelist
 
 		tl.traces.forEach[trace |
-			newTrace = CoreEsoFactory::eINSTANCE.createcoreTrace
+			newTrace = EsoFactory::eINSTANCE.createtrace
 			trace.ticks.forEach[tick |
-				newTick = CoreEsoFactory::eINSTANCE.createcoreTick
+				newTick = EsoFactory::eINSTANCE.createtick
 				tick.input.forEach[in |
-					if(in.valued){
-						newTick.input.add(newKeyValuePair(in.name, true))
-						newTick.input.add(newKeyValuePair(in.name + "_value", getValue(in)))
-					}
-					else{
-						newTick.input.add(newKeyValuePair(in.name, getValue(in)))
-					}
 					
+					newTick.input.add(newSignal(in.name, true))
+					if(in.valued){
+						newTick.extraInfos.add(newKeyValuePair(in.name + "_value", getValue(in)))
+					}					
 				]
 				tick.output.forEach[out |
+					
+					newTick.output.add(newSignal(out.name, true))
 					if(out.valued){
-						newTick.output.add(newKeyValuePair(out.name, true))
-						newTick.output.add(newKeyValuePair(out.name + "_value", getValue(out)))
-					}
-					else{
-						newTick.output.add(newKeyValuePair(out.name, getValue(out)))
+						newTick.extraInfos.add(newKeyValuePair(out.name + "_value", getValue(out)))
 					}
 				]
 				newTrace.ticks.add(newTick)
 			]
-			ctl.traces.add(newTrace)
+			newTl.traces.add(newTrace)
 		]
 		
-		return ctl
+		return newTl
 	}
 	
 	def getValue(signal s) {
@@ -85,24 +78,38 @@ class ESO2CoreESO {
 		}
 	}
 
+	def  newSignal(String name, boolean boolValue){
+		
+		val s = EsoFactory::eINSTANCE.createsignal
+		s.setName(name)
+		val value = EsoFactory::eINSTANCE.createEsoBool
+		value.setValue(boolValue)
+		s.setVal(value)
+		s.setValued(true)
+		
+		return s
+	}
+
 	def dispatch newKeyValuePair(String name, int intVal) { 
 		
-		val kvp = CoreEsoFactory::eINSTANCE.createcoreKvpair
+		val kvp = EsoFactory::eINSTANCE.createkvpair
 		kvp.setKey(name)
-		val value = CoreEsoFactory::eINSTANCE.createCoreEsoInt
+		val value = EsoFactory::eINSTANCE.createEsoInt
 		value.setValue(intVal)
 		kvp.setValue(value)
-		kvp
+		
+		return kvp
 	}
 
 	def dispatch newKeyValuePair(String name, boolean booleanVal) { 
 		
-		val kvp = CoreEsoFactory::eINSTANCE.createcoreKvpair
+		val kvp = EsoFactory::eINSTANCE.createkvpair
 		kvp.setKey(name)
-		val value = CoreEsoFactory::eINSTANCE.createCoreEsoBool
+		val value = EsoFactory::eINSTANCE.createEsoBool
 		value.setValue(booleanVal)
 		kvp.setValue(value)
-		kvp
+		
+		return kvp
 	}
 }
 

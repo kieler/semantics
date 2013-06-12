@@ -23,7 +23,6 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.eso.coreeso.xtend.ESO2CoreESO;
 import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 import de.cau.cs.kieler.sim.eso.eso.tracelist;
-import de.cau.cs.kieler.sim.coreeso.coreEso.coreTracelist;
 
 /**
  * @author gjo
@@ -43,7 +42,7 @@ private static Injector injector = new STextStandaloneSetup().createInjectorAndD
     }
 
     public String ModelHandlerFileExtensionTransformed() {
-            return "ceso";
+            return "core.eso";
     }
 
     public String ModelHandlerDiagramEditorID() {
@@ -71,11 +70,11 @@ private static Injector injector = new STextStandaloneSetup().createInjectorAndD
     }
     
 
-    public coreTracelist doTransformation(EObject modelObject,
+    public tracelist doTransformation(EObject modelObject,
                     String commandString, ISelection selection) {       
             
         if (commandString.equals(TRANSFORMATIONCOMMAND)) {
-            coreTracelist transformed = (new ESO2CoreESO())
+            tracelist transformed = (new ESO2CoreESO())
                             .transformESO2CoreESO((tracelist) modelObject);
             return transformed;
         }
