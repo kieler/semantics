@@ -94,6 +94,9 @@ class SCLToSCLCFTransformation {
             }        
             if (!changed) {
                 Debug("SCL ERROR: Program not schedulable!")
+                for(pool : basicBlockPool) {
+                    Debug("  not scheduled item: " + pool.basicBlockName)
+                }
                 return targetProgram
             }
         }
