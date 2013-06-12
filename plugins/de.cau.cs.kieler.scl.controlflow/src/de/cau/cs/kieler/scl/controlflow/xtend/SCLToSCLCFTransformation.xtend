@@ -176,9 +176,8 @@ class SCLToSCLCFTransformation {
             expression.setReference(program.getDeclarationByName('GO'))
             guardExpression = expression
         } else if (predecessors.size==1) {
-            val boolean isParallelJoin = basicBlock.isParallelJoin
-            var predID = predecessors.head.getBasicBlockName(isParallelJoin)
-            if (predecessors.head.isPauseSurface && !isParallelJoin) predID = predID + '_pre'
+            var predID = predecessors.head.getBasicBlockName
+            if (predecessors.head.isPauseSurface) predID = predID + '_pre'
             val expression = SText.createElementReferenceExpression
             expression.setReference(program.getDeclarationByName(predID))
             if (basicBlock.isConditionalPredecessor(predecessors.head)) {
@@ -189,14 +188,13 @@ class SCLToSCLCFTransformation {
                 guardExpression = expression
             }
         } else if (predecessors.size>1) {
-            val boolean isParallelJoin = basicBlock.isParallelJoin
-            var predID = predecessors.head.getBasicBlockName(isParallelJoin)
-            if (predecessors.head.isPauseSurface && !isParallelJoin) predID = predID + '_pre'
+            var predID = predecessors.head.getBasicBlockName
+            if (predecessors.head.isPauseSurface) predID = predID + '_pre'
             var expression = SText.createElementReferenceExpression as Expression
             (expression as ElementReferenceExpression).setReference(program.getDeclarationByName(predID))
             for(Integer i: 1..(predecessors.size - 1)) {
-                var predIDi = predecessors.get(i).getBasicBlockName(isParallelJoin)
-                if (predecessors.get(i).isPauseSurface && !isParallelJoin) predIDi = predIDi + '_pre'
+                var predIDi = predecessors.get(i).getBasicBlockName
+                if (predecessors.get(i).isPauseSurface) predIDi = predIDi + '_pre'
                 val exp2 = SText.createElementReferenceExpression 
                 exp2.setReference(program.getDeclarationByName(predIDi))
                 expression = createOrExpression(expression, exp2) 
