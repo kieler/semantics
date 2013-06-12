@@ -18,7 +18,7 @@
                      <test
                            forcePluginActivation="true"
                            property="org.eclipse.core.resources.extension"
-                           value="ceso">
+                           value="eso">
                      </test>
                   </adapt>
                </iterate>

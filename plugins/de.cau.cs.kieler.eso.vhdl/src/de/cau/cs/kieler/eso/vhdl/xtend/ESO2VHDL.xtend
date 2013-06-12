@@ -16,15 +16,11 @@ package de.cau.cs.kieler.eso.vhdl.xtend
 import org.eclipse.emf.common.util.EList
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sim.coreeso.coreEso.coreTracelist
-import de.cau.cs.kieler.sim.coreeso.coreEso.coreTrace
-import de.cau.cs.kieler.sim.coreeso.coreEso.coreKvpair
-import de.cau.cs.kieler.sim.coreeso.coreEso.CoreEsoInt
-import de.cau.cs.kieler.sim.coreeso.coreEso.CoreEsoBool
-
-//import org.eclipse.xtext.formatting.INodeModelFormatter$IFormattedRegion
-//import com.google.common.base.Joiner
-//import java.util.List
+import de.cau.cs.kieler.sim.eso.eso.tracelist
+import de.cau.cs.kieler.sim.eso.eso.trace
+import de.cau.cs.kieler.sim.eso.eso.signal
+import de.cau.cs.kieler.sim.eso.eso.EsoInt
+import de.cau.cs.kieler.sim.eso.eso.EsoBool
 
 class ESO2VHDL {
 	String name2
@@ -42,13 +38,14 @@ class ESO2VHDL {
 	
 	
 	 // General method to create the c simulation interface.
-	def transformESO2VHDL (coreTracelist tracelist, String name) {
+	def transformESO2VHDL (tracelist tl, String name) {
 
        	if(name.nullOrEmpty){
        		name2 = "noname_tb";
        	}
        	else{
-       		name2 = name;
+       		name2 = name.subSequence(0,name.indexOf(".")).toString()
+       		//name2 = name;
        	}
        	
        	'''
@@ -56,7 +53,7 @@ class ESO2VHDL {
 		«generateHeader()»
 
 		«/*Generate entiy */»
-		«createEntity(tracelist.traces ,name2)»
+		«createEntity(tl.traces ,name2)»
        	'''
    	}
    
@@ -84,32 +81,32 @@ class ESO2VHDL {
    }
    
     //-------------------------------------------------------------------------
-   	def createEntity(EList<coreTrace> traces, String name){
+   	def createEntity(EList<trace> traces, String name){
     
-    val inputArray = new ArrayList<coreKvpair>
-    val outputArray = new ArrayList<coreKvpair>
+    val inputArray = new ArrayList<signal>
+    val outputArray = new ArrayList<signal>
     val signalAlreadyHandled = new ArrayList<String>
         
     //Get inputs and outputs of all traces
     traces.forEach[trace |
     	trace.ticks.forEach[ tick |
     		tick.input.forEach[ input | 
-    			if(!signalAlreadyHandled.contains(input.key)){
-    				signalAlreadyHandled.add(input.key)
+    			if(!signalAlreadyHandled.contains(input.name)){
+    				signalAlreadyHandled.add(input.name)
     				inputArray.add(input) 
     			}
     		]
     		//All output get an "_out" additional
     		tick.output.forEach[ output |
-    			if(!signalAlreadyHandled.contains(output.key.concat("_out"))){	
+    			if(!signalAlreadyHandled.contains(output.name.concat("_out"))){	
     			
-    				signalAlreadyHandled.add(output.key.concat("_out"))
+    				signalAlreadyHandled.add(output.name.concat("_out"))
     			
-    				output.setKey(output.key.concat(("_out")))
+    				output.setName(output.name.concat(("_out")))
     				outputArray.add(output)	
     			}
     			else{
-    				output.setKey(output.key.concat(("_out")))
+    				output.setName(output.name.concat(("_out")))
     			}
     		]
     	]
@@ -125,10 +122,10 @@ class ESO2VHDL {
 	«generateComponent(inputArray, outputArray, name)»
 	
 	--Inputs
-	«inputArray.map( in |'''signal «in.key» : «getTypeAndInitValue(in)»''').join('\n')»
+	«inputArray.map( in |'''signal «in.name» : «getTypeAndInitValue(in)»''').join('\n')»
 	
 	--Outputs
-	«outputArray.map( out |'''signal «out.key» : «getTypeAndInitValue(out)»''').join('\n')»
+	«outputArray.map( out |'''signal «out.name» : «getTypeAndInitValue(out)»''').join('\n')»
 		
 	--Control
 	signal reset : std_logic := '0';
@@ -148,12 +145,12 @@ class ESO2VHDL {
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateComponent(ArrayList<coreKvpair> inputArray, ArrayList<coreKvpair> outputArray, String componentName) { 
+	def generateComponent(ArrayList<signal> inputArray, ArrayList<signal> outputArray, String componentName) { 
 	
 		//compute the component 
 		//e.g. A_in : IN boolean; 		
-		val ins = inputArray.map(input | '''«input.key»: IN «getTypeString(input)»''').join(';\n')
-		val outs = outputArray.map(output | '''«output.key» : OUT «getTypeString(output)»''').join(';\n')
+		val ins = inputArray.map(input | '''«input.name»: IN «getTypeString(input)»''').join(';\n')
+		val outs = outputArray.map(output | '''«output.name» : OUT «getTypeString(output)»''').join(';\n')
 		
 		//compute the whole component, the last entry in the component has no ';'
 		//if there are no inputs and output res should be empty, not null (null will be a String in vhdl)
@@ -174,12 +171,12 @@ class ESO2VHDL {
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateUUT(ArrayList<coreKvpair> inputArray, ArrayList<coreKvpair> outputArray) {
+	def generateUUT(ArrayList<signal> inputArray, ArrayList<signal> outputArray) {
 		 
 		//compute the mapping from the entity to simulation signals
 		//e.g. A_in => A_in 
-		val ins = inputArray.map( input |'''«input.key» => «input.key»''').join(',\n');
-		val outs = outputArray.map( output |'''«output.key» => «output.key»''').join(',\n');
+		val ins = inputArray.map( input |'''«input.name» => «input.name»''').join(',\n');
+		val outs = outputArray.map( output |'''«output.name» => «output.name»''').join(',\n');
 		
 		//compute the whole port mapping, the last entry in the Port map has no ','
 		//if there are no inputs and output res should be empty, not null (null will be a String in vhdl)
@@ -208,7 +205,7 @@ class ESO2VHDL {
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateSimulation(EList<coreTrace> traces) { 
+	def generateSimulation(EList<trace> traces) { 
 	
 	'''
 	-- Stimulus process
@@ -224,7 +221,7 @@ class ESO2VHDL {
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateSimProcess(EList<coreTrace> traces) { 
+	def generateSimProcess(EList<trace> traces) { 
 		
 		val String wait = '''wait for tick_period;''' + '\n' 
 		simTicks = ""
@@ -232,18 +229,18 @@ class ESO2VHDL {
 		traceCnt = 1
 	
 		//for all traces and all ticks generate simulation code
-		traces.forEach[ t | 
+		traces.forEach[ trace | 
 //			simTicks = "\n--NEW TRACE\n" + generateVhdlResetCode(wait)	//Reset on every new Trace
 			simTicks = ""
 			tickCnt = 1
 			setInputs = ""
 			
-			t.ticks.forEach[ tick | 
+			trace.ticks.forEach[ tick | 
 				
 				//Set inputs according to the tick
 				//setInputs = tick.input.map( in | '''«in.name» <= true''' + (';\n')).join('')
 				setInputs = getEsoString(tick.input,"-- ESO: ")
-				setInputs = setInputs + tick.input.map[ in | '''«in.key» <= «getValue(in)»''' + (';\n') 
+				setInputs = setInputs + tick.input.map[ in | '''«in.name» <= «getValue(in)»''' + (';\n') 
 				].join('')
 				
 				if(setInputs.nullOrEmpty)
@@ -253,15 +250,15 @@ class ESO2VHDL {
 				asserts = getEsoString(tick.output,"--ESO: %Output ")
 				asserts = asserts + tick.output.map[ out | 
 					'''
-					assert( «out.key» = «getValue(out)» )
-						report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «out.key» should have been «getValue(out)»"
+					assert( «out.name» = «getValue(out)» )
+						report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «out.name» should have been «getValue(out)»"
 						severity ERROR;''' + '\n'
 				].join('')
 				
 				//Set all inputs back to initial value
 				//setInputsBack = tick.input.map( in | '''«in.name» <= false''' + (';\n')).join('')
-				setInputsBack = tick.input.map[ in | if(!(in.key.contains("value"))){
-														'''«in.key» <= false''' + (';\n')}else ''''''
+				setInputsBack = tick.input.map[ in | if(!(in.name.endsWith("_value"))){
+														'''«in.name» <= false''' + (';\n')}else ''''''
 				].join('')
 				
 				//Compute code that is needed for one tick
@@ -303,31 +300,31 @@ class ESO2VHDL {
 	}
 	
 	//Return the ESO instructions as a String
-	def String getEsoString(EList<coreKvpair> list, String startString) { 
-		'''«startString»«list.map[kvpair | '''«kvpair.key.toString»«if(true){'''(«getValue(kvpair)»)'''}else " "»'''].join(' ').concat("\n")»'''
+	def String getEsoString(EList<signal> list, String startString) { 
+		'''«startString»«list.map[s | '''«s.name»«if(true){'''(«getValue(s)»)'''}else " "»'''].join(' ').concat("\n")»'''
 	}
 
 	//Returns the value as String
-	def getValue(coreKvpair kv) {
+	def getValue(signal s) {
 		
-		val EObject value = kv.value
+		val EObject value = s.^val
 
-		if(value instanceof CoreEsoInt){
-            var CoreEsoInt intVal = value as CoreEsoInt
+		if(value instanceof EsoInt){
+            var EsoInt intVal = value as EsoInt
             str = intVal.value.toString
         }
-        if(value instanceof CoreEsoBool){
-            var CoreEsoBool boolVal = value as CoreEsoBool
+        if(value instanceof EsoBool){
+            var EsoBool boolVal = value as EsoBool
             str = boolVal.value.toString
         }
 		str			
 	}
 	
 	//Returns a vhdl String according to the type of the kvpair
-	def getTypeAndInitValue(coreKvpair kv) { 
+	def getTypeAndInitValue(signal s) { 
 
-		val value = kv.value
-		if(value instanceof CoreEsoInt){
+		val value = s.^val
+		if(value instanceof EsoInt){
 			"integer range 31 downto 0 := 0;"
 		}
 		else
@@ -335,10 +332,10 @@ class ESO2VHDL {
 	}
 	
 	//Return the kvpair type as a string
-	def getTypeString(coreKvpair kv) { 
+	def getTypeString(signal s) { 
 		
-		val value = kv.getValue()
-		if(value instanceof CoreEsoBool)
+		val value = s.^val
+		if(value instanceof EsoBool)
 			inOut = "boolean"
 		else{
 			inOut = "integer range 31 downto 0"

@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sim.eso.eso.EsoBool
 import de.cau.cs.kieler.sim.eso.eso.tick
 import de.cau.cs.kieler.sim.eso.eso.trace
 import de.cau.cs.kieler.sim.eso.eso.EsoFactory
+import org.eclipse.emf.ecore.EObject
 
 class ESO2CoreESO {
 	tick newTick
@@ -43,14 +44,14 @@ class ESO2CoreESO {
 					
 					newTick.input.add(newSignal(in.name, true))
 					if(in.valued){
-						newTick.extraInfos.add(newKeyValuePair(in.name + "_value", getValue(in)))
+						newTick.input.add(newSignal(in.name + "_value", in.^val))
 					}					
 				]
 				tick.output.forEach[out |
 					
 					newTick.output.add(newSignal(out.name, true))
 					if(out.valued){
-						newTick.extraInfos.add(newKeyValuePair(out.name + "_value", getValue(out)))
+						newTick.output.add(newSignal(out.name + "_value", out.^val))
 					}
 				]
 				newTrace.ticks.add(newTick)
@@ -61,24 +62,32 @@ class ESO2CoreESO {
 		return newTl
 	}
 	
-	def getValue(signal s) {
-		val value = s.^val
-		if(s.valued){
-			if(value instanceof EsoInt){
-				val EsoInt v = value as EsoInt
-				return v.value
-			}
-			if(value instanceof EsoBool){
-				val EsoBool v = value as EsoBool
-				return v.value
-			}
+
+	def dispatch newSignal(String name, EObject valueObject){
+		
+		val s = EsoFactory::eINSTANCE.createsignal
+		//s.setName(name)
+		
+		if(valueObject instanceof EsoInt){
+			s.setName(name)
+			val EsoInt value = valueObject as EsoInt
+			var intValue = EsoFactory::eINSTANCE.createEsoInt
+			intValue.setValue(value.value)
+			s.setVal(intValue)
+			s.setValued(true)	
 		}
-		else{
-			return true
+		else if(valueObject instanceof EsoBool){
+			s.setName(name)
+			val EsoBool value = valueObject as EsoBool
+			val boolValue = EsoFactory::eINSTANCE.createEsoBool
+			boolValue.setValue(value.value)
+			s.setVal(boolValue)
+			s.setValued(true)
 		}
+		 return s
 	}
 
-	def  newSignal(String name, boolean boolValue){
+	def dispatch newSignal(String name, boolean boolValue){
 		
 		val s = EsoFactory::eINSTANCE.createsignal
 		s.setName(name)
@@ -88,28 +97,6 @@ class ESO2CoreESO {
 		s.setValued(true)
 		
 		return s
-	}
-
-	def dispatch newKeyValuePair(String name, int intVal) { 
-		
-		val kvp = EsoFactory::eINSTANCE.createkvpair
-		kvp.setKey(name)
-		val value = EsoFactory::eINSTANCE.createEsoInt
-		value.setValue(intVal)
-		kvp.setValue(value)
-		
-		return kvp
-	}
-
-	def dispatch newKeyValuePair(String name, boolean booleanVal) { 
-		
-		val kvp = EsoFactory::eINSTANCE.createkvpair
-		kvp.setKey(name)
-		val value = EsoFactory::eINSTANCE.createEsoBool
-		value.setValue(booleanVal)
-		kvp.setValue(value)
-		
-		return kvp
 	}
 }
 

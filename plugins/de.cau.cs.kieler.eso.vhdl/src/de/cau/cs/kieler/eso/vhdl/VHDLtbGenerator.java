@@ -10,7 +10,7 @@ import org.yakindu.sct.model.stext.STextStandaloneSetup;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
-import de.cau.cs.kieler.sim.coreeso.coreEso.coreTracelist;
+import de.cau.cs.kieler.sim.eso.eso.tracelist;
 import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
 
 
@@ -24,7 +24,7 @@ public class VHDLtbGenerator extends AbstractModelFileHandler {
     }
 
     public String ModelHandlerFileExtension() {
-            return "ceso";
+            return "eso";
     }
 
     public String ModelHandlerFileExtensionTransformed() {
@@ -68,7 +68,7 @@ public class VHDLtbGenerator extends AbstractModelFileHandler {
             
         if (commandString.equals(TRANSFORMATIONCOMMAND)) {
             CharSequence transformed = (new ESO2VHDL())
-                            .transformESO2VHDL((coreTracelist) modelObject, name);
+                            .transformESO2VHDL((tracelist) modelObject, name);
             return transformed;
         }
         
@@ -77,41 +77,4 @@ public class VHDLtbGenerator extends AbstractModelFileHandler {
     
     public void doPostProcessing(EObject modelObject) {
     }
-    
-//    @Override
-//    public String ModelHandlerFileExtension() {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
-//
-//    @Override
-//    public String ModelHandlerFileExtensionTransformed() {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
-//
-//    @Override
-//    public String ModelHandlerDiagramEditorID() {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
-//
-//    @Override
-//    public boolean ModelHandlerCreateDiagram() {
-//        // TODO Auto-generated method stub
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean ModelHandlerOpenEditor() {
-//        // TODO Auto-generated method stub
-//        return false;
-//    }
-//
-//    @Override
-//    public Injector CreateResourceInjector() {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
-
 }
