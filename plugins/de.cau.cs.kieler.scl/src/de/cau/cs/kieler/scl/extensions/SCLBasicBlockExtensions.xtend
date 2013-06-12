@@ -51,6 +51,7 @@ class SCLBasicBlockExtensions {
     public static val SPLIT_BLOCKS_AT_DEPENDENCY = true
     
     public static val BASICBLOCKPREFIX = 'g';
+    public static val EMPTYBLOCKPREFIX = 'e';
     
     // Decides whether or not a statement is the beginning of a new basic block.
     def boolean isBasicBlockFirst(Statement statement) {
@@ -338,6 +339,15 @@ class SCLBasicBlockExtensions {
     def String getBasicBlockName(BasicBlock basicBlock) {
         BASICBLOCKPREFIX + basicBlock.getBasicBlockIndex.toString
     }
+
+    def String getEmptyBlockName(BasicBlock basicBlock) {
+        EMPTYBLOCKPREFIX + basicBlock.getBasicBlockIndex.toString
+    }
+    
+    def String getBasicBlockName(BasicBlock basicBlock, boolean emptyBlock) {
+        if (emptyBlock) return basicBlock.getEmptyBlockName
+        else return basicBlock.getBasicBlockName
+    }
     
     def boolean headIsDepth(BasicBlock basicBlock) {
         basicBlock.getHead.hasInstruction && basicBlock.getHead.trueInstruction instanceof PauseDepth
@@ -480,6 +490,10 @@ class SCLBasicBlockExtensions {
         } 
         
         successors
+    }
+    
+    def boolean isExitBlock(BasicBlock basicBlock) {
+        basicBlock.basicBlockSuccessor.size == 0
     }
     
     
