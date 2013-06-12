@@ -499,7 +499,7 @@ class SCLBasicBlockExtensions {
     def boolean isExitBlock(BasicBlock basicBlock) {
         val succ = basicBlock.basicBlockSuccessor 
         if (succ.size == 0) return true
-        if (succ.size == 1 && succ.head.getHead.isConditional) return true
+        if (succ.size == 1 && basicBlock.getHead.isConditional) return true
         return false
     }
     
