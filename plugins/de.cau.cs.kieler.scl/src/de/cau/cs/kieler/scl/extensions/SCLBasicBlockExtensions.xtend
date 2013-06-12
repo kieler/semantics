@@ -347,7 +347,7 @@ class SCLBasicBlockExtensions {
         val predecessors = new ArrayList<BasicBlock>;
 
         if (basicBlock.statements.head.isParallelJoin) {
-            for(thread : basicBlock.statements.last.getInstruction.asParallel.threads) {
+            for(thread : basicBlock.statements.head.getInstruction.asParallel.threads) {
                 var predBlock = thread.statements.head.getBasicBlockByAnyStatement
                 predecessors.add(predBlock)
             }
@@ -416,7 +416,7 @@ class SCLBasicBlockExtensions {
     }
     
     def boolean isParallelJoin(BasicBlock basicBlock) {
-        if (basicBlock.statements.last.trueInstruction instanceof ParallelJoin) return true
+        if (basicBlock.statements.head.trueInstruction instanceof ParallelJoin) return true
         return false
     }
     
