@@ -145,8 +145,12 @@ class SCLToSCLCFTransformation {
                 
                 for (guard : guards) {
                     if (guard.isExitBlock) {
-                        termExp = termExp.addOrExpression(createElementReferenceExpression(program.getDeclarationByName(guard.basicBlockName)))
-                        handleExp = handleExp.addOrExpression(createElementReferenceExpression(program.getDeclarationByName(guard.basicBlockName)))
+                        var Expression exitExp = createElementReferenceExpression(program.getDeclarationByName(guard.basicBlockName))
+                        if (guard.isConditionalExitBlock && !guard.isConditionalExitBlockTrue) {
+                            exitExp = exitExp.addAndExpression(guard.getConditionalExpression.copy.negate.transformExpression(program, sourceProgram)).addParanthesizedExpression    
+                        } 
+                        termExp = termExp.addOrExpression(exitExp)
+                        handleExp = handleExp.addOrExpression(exitExp.copy)
                     }
                 }
                 

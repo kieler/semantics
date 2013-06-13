@@ -250,4 +250,8 @@ class SCLStatementSequenceExtensions {
         nextStatement
     }    
     
+    def boolean endOfSequence(Statement statement) {
+        statement.getNextInstructionStatement(false) == null
+    }
+    
 }

@@ -101,6 +101,12 @@ class SCLExpressionExtensions {
             return createAndExpression(op1, op2)
         }
     }
+    
+    def Expression addParanthesizedExpression(Expression exp) {
+        val pe = SText.createParenthesizedExpression
+        pe.setExpression(exp)
+        pe
+    }
 
     def Expression createOrExpression(Expression op1, Expression op2) {
         val or = SText.createLogicalOrExpression()

@@ -503,5 +503,17 @@ class SCLBasicBlockExtensions {
         return false
     }
     
+    def boolean isConditionalExitBlock(BasicBlock basicBlock) {
+        if (basicBlock.statements.last.isConditional) return true
+        return false
+    }
+    
+    def boolean isConditionalExitBlockTrue(BasicBlock basicBlock) {
+        if (basicBlock == null) return false;
+        val lastStatement = basicBlock.statements.last.getInstruction.asConditional.statements.last;
+        if (lastStatement.isConditional) { return isConditionalExitBlockTrue(lastStatement.getBasicBlockByAnyStatementDepth) }
+        if (lastStatement.isGoto && !lastStatement.getInstruction.asGoto.getTargetStatement.endOfSequence) {return true} 
+        return false
+    }
     
 }
