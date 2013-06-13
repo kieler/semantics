@@ -48,7 +48,7 @@ public class SCLToSCLCFFileHandler extends AbstractConvertModelHandler {
     }
 
     @Override
-    protected Injector CreateResourceInjector() {
+    protected Injector createResourceInjector() {
         return injector;
     }
 
