@@ -152,7 +152,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
      */
     private var HashMap<Instruction, Pair<KNode, KNode>>InstructionMapping;
     private var HashMap<KNode, HashMap<String, KPort>>PortMapping;
-    private var HashMap<Goto, Pair<KNode, String>>GotoMapping;
+    private var HashMap<Pair<Goto, Integer>, Pair<KNode, String>>GotoMapping;
     /* 
      * ParallelExitMap is used by the goto mapping to draw edges to the exit node.
      * Might be replaced by the edgeMapping in a later revision.
@@ -183,7 +183,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         // Initialize all maps	    
 	    InstructionMapping = new HashMap<Instruction, Pair<KNode, KNode>>;
 	    PortMapping = new HashMap<KNode, HashMap<String, KPort>>;
-	    GotoMapping = new HashMap<Goto, Pair<KNode, String>>;
+	    GotoMapping = new HashMap<Pair<Goto, Integer>, Pair<KNode, String>>;
 	    ParallelExitMapping = new HashMap<StatementSequence, KNode>;
 	    EdgeMapping = new HashMap<KNode, HashMap<KPort, Pair<KNode, KPort>>>;
 		
@@ -254,10 +254,11 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         ParallelExitMapping.put(program.statements.head.getThread, kExitNode);
 
         // Process all reserved goto statements
-        for(goto : GotoMapping.keySet) {
+        for(gotoPair : GotoMapping.keySet) {
+            val goto = gotoPair.first
             // Retrieve source node and port
-            val sourceNode = GotoMapping.get(goto).first
-            val sourcePortID = GotoMapping.get(goto).second.normalizeSource
+            val sourceNode = GotoMapping.get(gotoPair).first
+            val sourcePortID = GotoMapping.get(gotoPair).second.normalizeSource
             
             /*
              * Retrieve target information and find target instruction.
@@ -409,12 +410,16 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 Goto: {
                     if (!lastInstructions.empty) {
                         // Map last instruction in goto map
-                        GotoMapping.put((instruction as Goto), 
-                            new Pair<KNode, String>(InstructionMapping.get(lastInstructions.last as Instruction).second,
-                                sourceNodeOutID))
+                        var i = 0
+                        for(instr: lastInstructions) {
+                            GotoMapping.put(new Pair<Goto, Integer>((instruction as Goto), new Integer(i)), 
+                                new Pair<KNode, String>(InstructionMapping.get(instr as Instruction).second,
+                                    sourceNodeOutID))
+                            i = i + 1
+                        }
                     } else { 
                         // Map preceding hierarchy node in goto map
-                        GotoMapping.put((instruction as Goto), 
+                        GotoMapping.put(new Pair<Goto, Integer>((instruction as Goto), new Integer(0)), 
                             new Pair<KNode, String>(sourceNode, sourceNodeOutID)
                         )
                     }
@@ -840,7 +845,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         // Evaluate the true condition and add the result to the result list.    
         val lastInstructions = instr.statements.createInstructionListFigure(rootNode, kNode, null, 
             'conditional')
-        retList.addAll(lastInstructions)
+        retList.addAll(lastInstructions);
 
         // Add this instruction ti the instruction mapping and return the result list
         (instr as Instruction).addToMapping(kNode, kNode)
