@@ -16,7 +16,7 @@ package de.cau.cs.kieler.eso.coreeso.xtend
 
 import de.cau.cs.kieler.sim.eso.eso.tracelist
 import de.cau.cs.kieler.sim.eso.eso.EsoInt
-import de.cau.cs.kieler.sim.eso.eso.signal
+import de.cau.cs.kieler.sim.eso.eso.kvpair
 import de.cau.cs.kieler.sim.eso.eso.EsoBool
 import de.cau.cs.kieler.sim.eso.eso.tick
 import de.cau.cs.kieler.sim.eso.eso.trace
@@ -42,16 +42,16 @@ class ESO2CoreESO {
 				newTick = EsoFactory::eINSTANCE.createtick
 				tick.input.forEach[in |
 					
-					newTick.input.add(newSignal(in.name, true))
+					newTick.extraInfos.add(newKvpair(in.name, true))
 					if(in.valued){
-						newTick.input.add(newSignal(in.name + "_value", in.^val))
+						newTick.extraInfos.add(newKvpair(in.name + "_value", in.^val))
 					}					
 				]
 				tick.output.forEach[out |
 					
-					newTick.output.add(newSignal(out.name, true))
+					newTick.extraInfos.add(newKvpair(out.name, true))
 					if(out.valued){
-						newTick.output.add(newSignal(out.name + "_value", out.^val))
+						newTick.extraInfos.add(newKvpair(out.name + "_value", out.^val))
 					}
 				]
 				newTrace.ticks.add(newTick)
@@ -62,42 +62,41 @@ class ESO2CoreESO {
 		return newTl
 	}
 	
-
-	def dispatch newSignal(String name, EObject valueObject){
+	
+	def dispatch kvpair newKvpair(String name, EObject valueObject) { 
+		val kvp = EsoFactory::eINSTANCE.createkvpair
+		//val js = EsoFactory::eINSTANCE.createEsoJson //Why Json?? 
 		
-		val s = EsoFactory::eINSTANCE.createsignal
-		//s.setName(name)
+		kvp.setKey(name)
 		
 		if(valueObject instanceof EsoInt){
-			s.setName(name)
+			//s.setName(name)
 			val EsoInt value = valueObject as EsoInt
 			var intValue = EsoFactory::eINSTANCE.createEsoInt
 			intValue.setValue(value.value)
-			s.setVal(intValue)
-			s.setValued(true)	
+			kvp.setValue(intValue)	
 		}
 		else if(valueObject instanceof EsoBool){
-			s.setName(name)
+			//s.setName(name)
 			val EsoBool value = valueObject as EsoBool
 			val boolValue = EsoFactory::eINSTANCE.createEsoBool
 			boolValue.setValue(value.value)
-			s.setVal(boolValue)
-			s.setValued(true)
+			kvp.setValue(boolValue)
 		}
-		 return s
+		
+		return kvp
 	}
 
-	def dispatch newSignal(String name, boolean boolValue){
+	def dispatch newKvpair(String name, boolean boolValue){
 		
-		val s = EsoFactory::eINSTANCE.createsignal
-		s.setName(name)
+		val kvp = EsoFactory::eINSTANCE.createkvpair
+		kvp.setKey(name)
 		val value = EsoFactory::eINSTANCE.createEsoBool
 		value.setValue(boolValue)
-		s.setVal(value)
-		s.setValued(true)
+		kvp.setValue(value)
 		
-		return s
-	}
+		return kvp
+	}	
 }
 
 
