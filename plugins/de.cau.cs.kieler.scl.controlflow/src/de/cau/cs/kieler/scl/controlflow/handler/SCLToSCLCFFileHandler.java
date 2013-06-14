@@ -29,7 +29,7 @@ public class SCLToSCLCFFileHandler extends AbstractConvertModelHandler {
     
     @Override
     protected String getTargetExtension() {
-        return "cf.scl";
+        return "tick.scl";
     }
     
     @Override
@@ -48,7 +48,7 @@ public class SCLToSCLCFFileHandler extends AbstractConvertModelHandler {
     }
 
     @Override
-    protected Injector CreateResourceInjector() {
+    protected Injector createResourceInjector() {
         return injector;
     }
 

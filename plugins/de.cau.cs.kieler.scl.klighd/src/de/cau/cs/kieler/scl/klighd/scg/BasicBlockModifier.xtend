@@ -105,17 +105,20 @@ class BasicBlockModifier implements IStyleModifier {
         var LSData = headLabel.getData(typeof(KShapeLayout))
         LSData.ypos = LSData.ypos - 5
         LSData.xpos = LSData.xpos + 6
-        
         var gLT = ''
         var labelLines = 0
         var wide = false
         for (pred : basicBlock.getBasicBlockPredecessor) {
-            gLT = gLT + 'g' + pred.getBasicBlockIndex
-            if (pred.isPauseSurface) { 
-                gLT = 'pre_' + gLT 
-                wide = true
+            if (basicBlock.isParallelJoin) {
+                gLT = gLT + 'e' + pred.getBasicBlockIndex + "\n"
+            } else {
+                if (pred.isPauseSurface) { 
+                    gLT = gLT + 'pre_g' + pred.getBasicBlockIndex + "\n" 
+                    wide = true
+                } else {
+                    gLT = gLT + 'g' + pred.getBasicBlockIndex + "\n"
+                }
             }
-            gLT = gLT +  "\n"
             labelLines = labelLines + 1
         } 
         val goLabelText = gLT
@@ -154,12 +157,12 @@ class BasicBlockModifier implements IStyleModifier {
         labelLines = 0
         wide = false
         for (pred : basicBlock.getBasicBlockSuccessor) {
-            tLT = tLT + 'g' + pred.getBasicBlockIndex
             if (basicBlock.isPauseSurface) { 
-                tLT = 'suc_' + tLT
+                tLT = tLT + 'suc_g' + pred.getBasicBlockIndex + "\n"
                 wide = true
+            } else {
+                tLT = tLT + 'g' + pred.getBasicBlockIndex + "\n"
             }
-            tLT = tLT + "\n"
             labelLines = labelLines + 1
         } 
         val termLabelText = tLT

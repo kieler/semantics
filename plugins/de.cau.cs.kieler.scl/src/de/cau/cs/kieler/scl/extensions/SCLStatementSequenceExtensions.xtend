@@ -48,7 +48,7 @@ class SCLStatementSequenceExtensions {
     
     // Retrieve the thread list of a given instruction
     def Thread getThread(Instruction instruction) {
-        getThread(instruction.eContainer as Statement)
+        getThread(instruction.eContainer as Statement);
     }
     
     def Thread getThread(Statement statement) {
@@ -103,11 +103,11 @@ class SCLStatementSequenceExtensions {
     
     // Checks if an instruction is in the main thread list (program.instructions)
     def dispatch boolean isInMainThread(Instruction instruction) {
-        getThread(instruction) == getProgram(instruction)
+        getThread(instruction) == null
     }
 
     def dispatch boolean isInMainThread(Statement statement) {
-        getThread(statement) == getProgram(statement)
+        getThread(statement) == null
     }
     
     def boolean hasSameThreadParentAs(Instruction instruction, Instruction secondInstruction) {
@@ -249,5 +249,9 @@ class SCLStatementSequenceExtensions {
             nextStatement = nextStatement.getNextStatementHierarchical(resolveGotos)
         nextStatement
     }    
+    
+    def boolean endOfSequence(Statement statement) {
+        statement.getNextInstructionStatement(false) == null
+    }
     
 }

@@ -45,7 +45,7 @@ class SCLToSCLCFTransformation {
     def Program transformSCLToSCLControlflow(Program program) {
         val targetProgram = SCL.createProgram()
         
-        targetProgram.setName(program.getName + "_seqcf")
+        targetProgram.setName(program.getName + "_tick")
         targetProgram.declarations.addAll(program.declarations.copyAll)
         targetProgram.declarations.add(createVariableDeclaration('GO', 'boolean'))
         
@@ -55,6 +55,11 @@ class SCLToSCLCFTransformation {
             targetProgram.declarations.add(createVariableDeclaration(basicBlock.basicBlockName, 'boolean'))
             if (basicBlock.isPauseSurface)
                 targetProgram.declarations.add(createVariableDeclaration(basicBlock.basicBlockName + '_pre', 'boolean'))
+            if (basicBlock.isParallelJoin) {
+                for (pred : basicBlock.getBasicBlockPredecessor) {
+                    targetProgram.declarations.add(createVariableDeclaration(pred.emptyBlockName, 'boolean'))
+                }
+            }
         }
 
 
@@ -69,12 +74,18 @@ class SCLToSCLCFTransformation {
                 var ready = true
                 
                 for (pred : predecessors) {
-                    if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred)) {ready = false}     
+                    if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred)) {ready = false}
+                    if (basicBlock.isParallelJoin) {
+                        val guards = pred.getHead.basicBlocks
+                        for (guard : guards) {
+                            if (basicBlockPool.containsEqual(guard)) { ready = false }
+                        }
+                    }     
                 }
                 for (pred : depPredecessors) {
                     if (!pred.head.isPauseSurface && basicBlockPool.containsEqual(pred)) {ready = false}     
-                }
-                
+                } 
+                                
                 if (ready) {
                     targetProgram.statements.addAll(targetProgram.transformBasicBlock(program, basicBlock));
                     basicBlockPool.removeEqual(basicBlock)
@@ -83,6 +94,9 @@ class SCLToSCLCFTransformation {
             }        
             if (!changed) {
                 Debug("SCL ERROR: Program not schedulable!")
+                for(pool : basicBlockPool) {
+                    Debug("  not scheduled item: " + pool.basicBlockName)
+                }
                 return targetProgram
             }
         }
@@ -107,6 +121,61 @@ class SCLToSCLCFTransformation {
         var newStatements = createNewStatementList
         val predecessors = basicBlock.getBasicBlockPredecessor;
  
+        if (basicBlock.isParallelJoin) {
+            var Expression syncExp = null; 
+            var Expression termExp = null;
+            for(pred : predecessors) {
+                var Expression handleExp = null;
+                val emptyExp = SText.createLogicalNotExpression;
+                val _parExp  = SText.createParenthesizedExpression
+                var Expression innerExp = null 
+                val guards = pred.getHead.basicBlocks
+                val predID = guards.head.basicBlockName;
+                innerExp = SText.createElementReferenceExpression as Expression
+                (innerExp as ElementReferenceExpression).setReference(program.getDeclarationByName(predID))
+                if (guards.size>1) {
+                    for(Integer i: 1..(guards.size - 1)) {
+                        var predIDi = guards.get(i).basicBlockName
+                        val exp2 = createElementReferenceExpression(program.getDeclarationByName(predIDi))
+                        innerExp = createOrExpression(innerExp, exp2)
+                    } 
+                }
+                _parExp.setExpression(innerExp);
+                emptyExp.setOperand(_parExp)
+                
+                for (guard : guards) {
+                    if (guard.isExitBlock) {
+                        var Expression exitExp = createElementReferenceExpression(program.getDeclarationByName(guard.basicBlockName))
+                        if (guard.isConditionalExitBlock && !guard.isConditionalExitBlockTrue) {
+                            exitExp = exitExp.addAndExpression(guard.getConditionalExpression.copy.negate.transformExpression(program, sourceProgram)).addParanthesizedExpression    
+                        } 
+                        termExp = termExp.addOrExpression(exitExp)
+                        handleExp = handleExp.addOrExpression(exitExp.copy)
+                    }
+                }
+                
+                val emptyAssignment = createSCLAssignment(
+                    createAssignmentExpression(program.getDeclarationByNameAsElemRef(pred.emptyBlockName),
+                        emptyExp),
+                    program.getDeclarationByName(pred.emptyBlockName)              
+                ).createStatement;
+                newStatements.add(emptyAssignment)
+                
+                handleExp = handleExp.addOrExpression(createElementReferenceExpression(program.getDeclarationByName(pred.emptyBlockName)))
+                syncExp = syncExp.addAndExpression(createParanthesizedExpression(handleExp))
+            }        
+            syncExp = syncExp.addAndExpression(createParanthesizedExpression(termExp))
+
+            val guardAssignment = createSCLAssignment(
+                createAssignmentExpression(program.getDeclarationByNameAsElemRef(basicBlock.basicBlockName),
+                    syncExp),
+                program.getDeclarationByName(basicBlock.basicBlockName)              
+            ).createStatement;
+            newStatements.add(guardAssignment)
+            
+        }
+        else 
+        {
  
         var Expression guardExpression = null        
          if (predecessors.size==0) {
@@ -114,7 +183,7 @@ class SCLToSCLCFTransformation {
             expression.setReference(program.getDeclarationByName('GO'))
             guardExpression = expression
         } else if (predecessors.size==1) {
-            var predID = predecessors.head.basicBlockName
+            var predID = predecessors.head.getBasicBlockName
             if (predecessors.head.isPauseSurface) predID = predID + '_pre'
             val expression = SText.createElementReferenceExpression
             expression.setReference(program.getDeclarationByName(predID))
@@ -126,12 +195,12 @@ class SCLToSCLCFTransformation {
                 guardExpression = expression
             }
         } else if (predecessors.size>1) {
-            var predID = predecessors.head.basicBlockName
+            var predID = predecessors.head.getBasicBlockName
             if (predecessors.head.isPauseSurface) predID = predID + '_pre'
             var expression = SText.createElementReferenceExpression as Expression
             (expression as ElementReferenceExpression).setReference(program.getDeclarationByName(predID))
             for(Integer i: 1..(predecessors.size - 1)) {
-                var predIDi = predecessors.get(i).basicBlockName
+                var predIDi = predecessors.get(i).getBasicBlockName
                 if (predecessors.get(i).isPauseSurface) predIDi = predIDi + '_pre'
                 val exp2 = SText.createElementReferenceExpression 
                 exp2.setReference(program.getDeclarationByName(predIDi))
@@ -148,6 +217,8 @@ class SCLToSCLCFTransformation {
         
         
         newStatements.add(guardAssignment)
+        
+        }
 
         val guardConditional = createSCLConditional
         guardConditional.expression = program.getDeclarationByNameAsElemRef(basicBlock.basicBlockName)

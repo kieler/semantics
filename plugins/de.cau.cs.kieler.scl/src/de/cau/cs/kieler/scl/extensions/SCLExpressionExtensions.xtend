@@ -20,6 +20,7 @@ import org.yakindu.sct.model.stext.stext.RegularEventSpec
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
+import de.cau.cs.kieler.scl.scl.VariableDeclaration
 
 class SCLExpressionExtensions {
    
@@ -72,6 +73,40 @@ class SCLExpressionExtensions {
 //        not.setOperand(par);
 //        not  
 //    }    
+
+    def Expression createParanthesizedExpression(Expression exp) {
+        val newExp = SText.createParenthesizedExpression
+        newExp.setExpression(exp)
+        newExp
+    }
+
+    def Expression createElementReferenceExpression(VariableDeclaration varDec) {
+        val exp = SText.createElementReferenceExpression 
+        exp.setReference(varDec)
+        exp
+    }
+
+    def Expression addOrExpression(Expression op1, Expression op2) {
+        if (op1 == null) {
+            return op2
+        } else {
+            return createOrExpression(op1, op2)
+        }
+    }
+    
+    def Expression addAndExpression(Expression op1, Expression op2) {
+        if (op1 == null) {
+            return op2
+        } else {
+            return createAndExpression(op1, op2)
+        }
+    }
+    
+    def Expression addParanthesizedExpression(Expression exp) {
+        val pe = SText.createParenthesizedExpression
+        pe.setExpression(exp)
+        pe
+    }
 
     def Expression createOrExpression(Expression op1, Expression op2) {
         val or = SText.createLogicalOrExpression()
