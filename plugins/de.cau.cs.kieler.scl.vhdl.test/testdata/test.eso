@@ -1,0 +1,21 @@
+!reset ;
+A 
+% Output : A B O1 
+;
+
+% Output : O1 ;
+B 
+% Output : O2 B 
+%% B_Present : true 
+%% B : 5 
+;
+
+!reset 
+;
+
+% Output : 
+;
+
+A
+% Output : A B O2 
+;

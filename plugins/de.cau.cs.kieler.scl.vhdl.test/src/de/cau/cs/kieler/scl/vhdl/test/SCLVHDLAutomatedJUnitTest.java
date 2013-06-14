@@ -34,6 +34,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import junit.framework.Assert;
+
 //import org.apache.log4j.Level;
 //import org.apache.log4j.Logger;
 //import org.eclipse.core.filesystem.EFS;
@@ -84,10 +86,12 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 //import de.cau.cs.kieler.vhdl.test.VHDLTestRunner;
 
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 //import de.cau.cs.kieler.scl.vhdl.VHDLGenerator;
 import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
 import de.cau.cs.kieler.scl.vhdl.xtend.SCL2VHDL;
 import de.cau.cs.kieler.eso.vhdl.VHDLtbGenerator;
+import de.cau.cs.kieler.eso.coreeso.ESO2CoreESOGenerator;
 import org.eclipse.core.resources.IResource;
 //import de.cau.cs.kieler.vhdl.test.VHDLTestRunner;
 //import de.cau.cs.kieler.scl.scl.Program;
@@ -96,7 +100,7 @@ import org.eclipse.core.resources.IResource;
  *
  */
 @RunWith(VHDLTestRunner.class)
-public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
+public  class SCLVHDLAutomatedJUnitTest {
 
   
     // -------------------------------------------------------------------------
@@ -127,11 +131,11 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
 
     /** The currently tested ESO file as specified by parameters. */
     private IPath currentEsoFile = null;
-
+    
     /** If in strict mode, require an ESO file for all model files and raise an error otherwise. */
     public static final boolean STRICT_MODE_REQUIRE_ESO_FOR_ALL_MODEL_FILES = false;
     
-    private static int SIMULATION_TICK_TIME = 10;
+    private static int SIMULATION_TICK_TIME = 100;
     
     private static String CMD_FILE_NAME = "my.cmd";
     
@@ -147,8 +151,12 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
      * @param clazz
      * @throws Throwable
      */
-    public SCLVHDLTestRunner(Class<?> clazz) throws Throwable {
-        //super(clazz);
+    public SCLVHDLAutomatedJUnitTest(final IPath esoFile) throws Throwable {
+        super();
+        
+        this.currentEsoFile = esoFile;
+       // this.currentModelFile = modelFile;
+        
         // TODO Auto-generated constructor stub
     }
     
@@ -206,18 +214,18 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the name of the considered KIEM execution scheduling file. Derived test classes should
-     * provide the name of the execution file that should be part of the plugin in the
-     * BundleTestPath.
-     * 
-     * E.g., return "myexecution.execution";
-     * 
-     * @return the plugin execution file
-     */
-   private String getExecutionFileName(){
-       return "";     //still missing, needed?
-   }
+//    /**
+//     * Gets the name of the considered KIEM execution scheduling file. Derived test classes should
+//     * provide the name of the execution file that should be part of the plugin in the
+//     * BundleTestPath.
+//     * 
+//     * E.g., return "myexecution.execution";
+//     * 
+//     * @return the plugin execution file
+//     */
+//   private String getExecutionFileName(){
+//       return "";     //still missing, needed?
+//   }
 
     // -------------------------------------------------------------------------
 
@@ -231,7 +239,7 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
      * @return all ESO files as a hash map
      */
     @Parameters
-    public static Collection<Object[]> getEso() {
+    public static Collection<Object[]> getEsoAndModelFiles() {
         LinkedList<Object[]> esoFilesList = new LinkedList<Object[]>();
 
         for (IPath esoFile : esoFiles) {
@@ -366,81 +374,91 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
         
         //SCLVHDLTestRunnerInitialization();
         
-        for(IPath esoFilePath : esoFiles){
-            IPath modelFilePath = modelFile.get(esoFilePath);
+
+        IPath modelFilePath = modelFile.get(currentEsoFile);
+    
+        EObject sclModel = ModelUtil.loadEObjectFromModelFile(modelFilePath);
+        EObject esoModel = ModelUtil.loadEObjectFromModelFile(currentEsoFile);
         
-            EObject sclModel = KiemUtil.loadEObjectFromModelFile(modelFilePath);
-            EObject esoModel = KiemUtil.loadEObjectFromModelFile(esoFilePath);
-            
-//            CharSequence transformedSCL = new VHDLGenerator().doTransformation((Program)sclModel, 
-//                    "de.cau.cs.kieler.scl.vhdl.SCL2VHDL");
-//            CharSequence transformedESO = new VHDLtbGenerator().doTransformation((tracelist)esoModel, 
-//                    "de.cau.cs.kieler.eso.vhdl.ESO2VHDL",null);
-            
-            //testcase
-            CharSequence transformedSCL = "SCL";
-            CharSequence transformedESO = "ESO";
-            
-            String vhdlPath = writeStringToFile(transformedSCL.toString(), 
-                    modelFilePath.removeFileExtension().addFileExtension("vhd").lastSegment());
-            String esoFileName = "tb_" + esoFilePath.removeFileExtension().addFileExtension("vhd").lastSegment();
-            String tbPath  = writeStringToFile(transformedESO.toString(), esoFileName);
-                        
-            
-            
-        // create prj file
-        // prj = createPRJFile(ListOfAllVHDLFiles)
+        tracelist transformedCoreEso = new ESO2CoreESOGenerator().doTransformation(esoModel, 
+                "de.cau.cs.kieler.eso.coreeso.eso2coreeso", null);
+        CharSequence transformedSCL = new VHDLGenerator().doTransformation((Program)sclModel, 
+                "de.cau.cs.kieler.scl.vhdl.SCL2VHDL", null);
+        CharSequence transformedCoreESO = new VHDLtbGenerator().doTransformation(transformedCoreEso, 
+                "de.cau.cs.kieler.eso.vhdl.ESO2VHDL",null);
         
-            LinkedList<String> allVhdlFiles = new LinkedList<String>();
-            allVhdlFiles.add(vhdlPath);
-            allVhdlFiles.add(tbPath);
-            
-            String prjFilePath = createPRJFile(allVhdlFiles);
-            
-        // create cmd file, compute execution time from eso file
-        // cmd = createCMDFile(eso)
-            
-            String cmdFilePath = createCMDFile(esoFilePath);
+        // !!! check name
+       createWorkspaceFile((modelFilePath.removeFileExtension().addFileExtension("vhd")), transformedSCL.toString());
+       
+       IPath cef = currentEsoFile. removeFileExtension().addFileExtension("tb_vhd");
+       createWorkspaceFile(cef, transformedCoreESO.toString());
         
-        // create batch file
-        // batch = createBatchFile(prj, cmd, topLevelEntity?)
+        // !!! check filename and extensions
+//        String vhdlPath = writeStringToFile(transformedSCL.toString(), 
+//                modelFilePath.removeFileExtension().addFileExtension("vhd").lastSegment());
+//        String esoFileName = "tb_" + currentEsoFile.removeFileExtension().addFileExtension("vhd").lastSegment();
+//        String tbPath  = writeStringToFile(transformedCoreESO.toString(), esoFileName);
+
         
-            String batchFilePath = createBatchFile(esoFilePath.removeFileExtension().lastSegment());
-            
-        // Execute Batch
-        // shell.execute(batch)
-            
-        // Start compiled sc code
-        // String executable = buildExecutionCommandLine();
-        // executable = "C:\\Users\\delphino\\AppData\\Local\\Temp\\SC.exe";
-            Process executionProcess  = null;
-            executionProcess = Runtime.getRuntime().exec(batchFilePath);
-            executionProcess.destroy();
-            
-    // !!! Could not work, Paths are incorrect !!!
-    //------
-    //  ||
-    // \  /     
-    //  \/
-            IWorkspace workspace = ResourcesPlugin.getWorkspace();
-            IWorkspaceRoot root = workspace.getRoot();
-           
-            IPath logFilePath = root.getFullPath().append(getTemporaryWorkspaceFolderName()).append(SIMULATION_LOG_FILE_NAME);
-             
-            InputStream inStream = KiemUtil.openWorkspaceFile(logFilePath);
-            
-            BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
-            String lineIn;
-            boolean errorFlag = false;
-            
-            while ((lineIn = br.readLine()) != null) {
-                if(lineIn.contains("ERROR")){
-                    errorFlag = true;
-                    break;
-                }
-            }
-            
-            
+    // create prj file
+    // prj = createPRJFile(ListOfAllVHDLFiles)
+    
+        LinkedList<String> allVhdlFiles = new LinkedList<String>();
+        allVhdlFiles.add(modelFilePath.removeFileExtension().addFileExtension("vhd").toString());
+        allVhdlFiles.add(currentEsoFile. removeFileExtension().addFileExtension("tb_vhd").toString());
+        
+        String prjFileContent = createPRJFile(allVhdlFiles);
+
+        createWorkspaceFile(currentEsoFile.removeFileExtension().addFileExtension("prj"), prjFileContent);
+        
+    // create cmd file, compute execution time from eso file
+    // cmd = createCMDFile(eso)
+        
+        String cmdFileContent = createCMDFile(currentEsoFile);
+        createWorkspaceFile(currentEsoFile.removeFileExtension().addFileExtension("cmd"), cmdFileContent);
+    
+    // create batch file
+    // batch = createBatchFile(prj, cmd, topLevelEntity?)
+    
+        String batchFileContent = createBatchFile(currentEsoFile.removeFileExtension().lastSegment());
+        createWorkspaceFile(currentEsoFile.removeFileExtension().addFileExtension("sh"), batchFileContent);
+        
+    // Execute Batch
+    // shell.execute(batch)
+        
+    // Start compiled sc code
+    // String executable = buildExecutionCommandLine();
+    // executable = "C:\\Users\\delphino\\AppData\\Local\\Temp\\SC.exe";
+
+        //        Process executionProcess  = null;
+//        executionProcess = Runtime.getRuntime().exec(batchFilePath);
+//        executionProcess.destroy();
+        
+// !!! Could not work, Paths are incorrect !!!
+//------
+//  ||
+// \  /     
+//  \/
+        IWorkspace workspace = ResourcesPlugin.getWorkspace();
+//        IWorkspaceRoot root = workspace.getRoot();
+//       
+//        IPath logFilePath = root.getFullPath().append(getTemporaryWorkspaceFolderName()).append(SIMULATION_LOG_FILE_NAME);
+//         
+//        InputStream inStream = ModelUtil.openWorkspaceFile(logFilePath);
+//        
+//        BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
+//        String lineIn;
+//        boolean errorFlag = false;
+//        
+//        while ((lineIn = br.readLine()) != null) {
+//            if(lineIn.contains("ERROR")){
+//                errorFlag = true;
+//                break;
+//            }
+//        }
+        
+        
+        
 //            String LogFilePath = getPluginId() + SIMULATION_LOG_FILE_NAME;
 //             
 //            FileInputStream fis = new FileInputStream(LogFilePath);
@@ -454,7 +472,7 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
 //                    break;
 //                }
 //            }
-            
+        
 //            if(errorFlag){
 //                // AAAHHHRRRRGGGG
 //            }
@@ -470,13 +488,28 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
 //            f.delete();
 //            f = new File(getPluginId() + "/" + SIMULATION_LOG_FILE_NAME);
 //            f.delete();
-            
-    //  /\
-    // /  \
-    //  ||
-    //------
+        
+//  /\
+// /  \
+//  ||
+//------
 
+    }
+
+    /**
+     * @param os
+     * @param string
+     * @throws IOException 
+     */
+    private void createWorkspaceFile(IPath path, String fileContent) throws IOException {
+        
+        OutputStream os = ModelUtil.createWorkspaceFile(path);
+        
+        for(int i = 0; i < fileContent.length(); i++){
+            os.write(fileContent.charAt(i));
         }
+        os.flush();
+        os.close();
         
     }
 
@@ -538,9 +571,9 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
                          +  "# rm $tmp_out "
                          +  "\n"; 
         
-        path = writeStringToFile(batchFileContent, BATCH_FILE_NAME);
+//        path = writeStringToFile(batchFileContent, BATCH_FILE_NAME);
         
-        return path;
+        return batchFileContent;
     }
 
     // -------------------------------------------------------------------------
@@ -557,14 +590,17 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
         int resetCounter = 0;
         int tickCounter = 0;
         
-        String esofile = eso.toFile().toString();
+        //String esofile = eso.toFile().toString();
         
         //Calculate Simulation time,
         //every output in the eso file correspondents to a tick
         //every reset in the eso file needs a tick in the testbench
         //and append some offset
-        FileInputStream fis = new FileInputStream(esofile);
-        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+        
+        String pluginID = "de.cau.cs.kieler.de.sch.vhdl.test";
+        
+        InputStream is = ModelUtil.openBundleOrWorkspaceFile(eso,pluginID);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String lineIn;
         
         //Problem!: Grammer allows you to write !reset; and %Output: over more than one line
@@ -574,16 +610,16 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
         while ((lineIn = br.readLine()) != null) {
          
             //finds &Output: ([\\s]*)%([\\s]*(Output))([\\s]*[:]*)
-            if (lineIn.contains("&Output:")){
+            if (lineIn.contains("% Output")){
                 tickCounter++;
             }
             //finds !reset; ([\\s]*)!([\\s]*(reset))([\\s]*[;]*)
-            if (lineIn.contains("!reset;")) {
+            if (lineIn.contains("!reset ;")) {
                 resetCounter++;
             }
         }
         
-        fis.close();
+        is.close();
         br.close();
         
         int simulationTime = (tickCounter + resetCounter + 20) * SIMULATION_TICK_TIME;
@@ -592,9 +628,7 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
         fileContent = "run " + simulationTime + "ns; \n" +
                "quit";
         
-        path = writeStringToFile(fileContent, CMD_FILE_NAME);
-        
-        return path;
+        return fileContent;
     }
 
     // -------------------------------------------------------------------------
@@ -611,10 +645,8 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
         for(String path : allVhdlFiles){
             prjFileContent  += "vhdl work \"" + path + "\"\n";
         }
-                
-        String path = writeStringToFile(prjFileContent, PRJ_FILE_NAME);
         
-        return path;
+        return prjFileContent;
     }
     
     // -------------------------------------------------------------------------
@@ -711,7 +743,7 @@ public  class SCLVHDLTestRunner {//extends VHDLTestRunner {
             try {
 //                logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
 
-                IFile workspaceFile = KiemUtil.createLinkedWorkspaceFile(bundleFileUrl,
+                IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
                         temporaryWorkspaceFolderName, false, true);
                 
                 if (!workspaceFile.exists()) {
