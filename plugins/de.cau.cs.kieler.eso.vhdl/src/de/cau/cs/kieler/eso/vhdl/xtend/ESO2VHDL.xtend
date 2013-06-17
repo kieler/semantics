@@ -21,11 +21,31 @@ import de.cau.cs.kieler.sim.eso.eso.trace
 import de.cau.cs.kieler.sim.eso.eso.signal
 import de.cau.cs.kieler.sim.eso.eso.EsoInt
 import de.cau.cs.kieler.sim.eso.eso.EsoBool
+import de.cau.cs.kieler.core.model.util.ModelUtil
+import de.cau.cs.kieler.scl.scl.Program
+import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import org.eclipse.core.runtime.Path
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.jface.viewers.TreeSelection
+import org.eclipse.core.runtime.IPath
+import org.eclipse.jface.viewers.ISelection
+import org.eclipse.core.internal.resources.File
+import org.eclipse.emf.common.util.URI
+import org.yakindu.sct.model.stext.stext.impl.IntLiteralImpl
+import org.yakindu.sct.model.stext.stext.impl.BoolLiteralImpl
+import de.cau.cs.kieler.eso.vhdl.Variables
+import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
+import de.cau.cs.kieler.sim.eso.eso.kvpair
+import java.util.List
 
 class ESO2VHDL {
+	
+	URI input
+	String name
 	String name2
 	String str
 	String inOut
+	
     
 	int traceCnt
 	int tickCnt
@@ -36,26 +56,55 @@ class ESO2VHDL {
 	String simTicks
 	String simTraces
 	
+	Program sclModel
+	
 	
 	 // General method to create the c simulation interface.
-	def transformESO2VHDL (tracelist tl, String name) {
-
-       	if(name.nullOrEmpty){
-       		name2 = "noname_tb";
+	def transformESO2VHDL (tracelist tl, File filePath) {
+		
+		input = URI::createFileURI(filePath.getName());
+		name = input.trimFileExtension.trimFileExtension.toString
+            
+        if(name.nullOrEmpty){
+   			name2 = "noname_tb";
        	}
        	else{
-       		name2 = name.subSequence(0,name.indexOf(".")).toString()
-       		//name2 = name;
+       		//name2 = name.subSequence(0,name.indexOf(".")).toString()
+       		name2 = name;
        	}
+        
+       	sclModel = loadModel(name)
+       	if(sclModel == null){
+       		//throw failed exception, exit transformation
+       	}
+       	
        	
        	'''
 		«/* Generate the header */»
 		«generateHeader()»
 
-		«/*Generate entiy */»
-		«createEntity(tl.traces ,name2)»
+		«/*Generate entity */»
+		«createEntity(tl.traces ,name2, sclModel.declarations)»
        	'''
    	}
+   	
+   	
+	def Program loadModel(String input) { 
+		
+		//better: non hardcoded path
+		
+		//val String workspace = ResourcesPlugin::workspace.root.fullPath.toString
+	    val IPath iPath = new Path("\\test\\" + input +  ".scl")
+				
+		val EObject eobject = ModelUtil::loadEObjectFromModelFile(iPath)
+		if(eobject instanceof Program){
+			val Program sclModel = eobject as Program
+			sclModel
+		}else{
+			return null
+		}	
+	}
+
    
    // -------------------------------------------------------------------------   
    // Generate the header.
@@ -81,36 +130,87 @@ class ESO2VHDL {
    }
    
     //-------------------------------------------------------------------------
-   	def createEntity(EList<trace> traces, String name){
+   	def createEntity(EList<trace> traces, String name, EList<VariableDeclaration> vars){
     
-    val inputArray = new ArrayList<signal>
-    val outputArray = new ArrayList<signal>
-    val signalAlreadyHandled = new ArrayList<String>
-        
-    //Get inputs and outputs of all traces
-    traces.forEach[trace |
-    	trace.ticks.forEach[ tick |
-    		tick.input.forEach[ input | 
-    			if(!signalAlreadyHandled.contains(input.name)){
-    				signalAlreadyHandled.add(input.name)
-    				inputArray.add(input) 
-    			}
-    		]
-    		//All output get an "_out" additional
-    		tick.output.forEach[ output |
-    			if(!signalAlreadyHandled.contains(output.name.concat("_out"))){	
-    			
-    				signalAlreadyHandled.add(output.name.concat("_out"))
-    			
-    				output.setName(output.name.concat(("_out")))
-    				outputArray.add(output)	
-    			}
-    			else{
-    				output.setName(output.name.concat(("_out")))
-    			}
-    		]
-    	]
-    ]
+//    val inputArray = new ArrayList<signal>
+//    val outputArray = new ArrayList<signal>
+//    val signalAlreadyHandled = new ArrayList<String>
+    
+    
+    //Get Input and Output from Model
+    val modelInputs = new ArrayList<Variables>
+    val modelOutputs = new ArrayList<Variables>
+    
+    vars.forEach[ variable | if(variable.input) {
+    	
+    							val value = (variable.initialValue)
+    							
+    							if(value != null){
+    								val value1 = value as PrimitiveValueExpression
+	    							if(value1.value instanceof IntLiteralImpl){
+	    								val value2 = value1.value as IntLiteralImpl
+	    								val value3 = value2.value
+	    								modelInputs.add(new Variables(variable.name,true,false))
+	    								modelInputs.add(new Variables(variable.name.concat("_value"),true,value3))
+	    							}else if (value1.value instanceof BoolLiteralImpl){
+	    								val value2 = value1.value as BoolLiteralImpl
+	    								val value3 = value2.value
+	    								modelInputs.add(new Variables(variable.name,true,false))
+	    								modelInputs.add(new Variables(variable.name.concat("_value"),true,value3))
+	    							}		
+    							}else{
+    								modelInputs.add(new Variables(variable.name,true,false))
+    								modelInputs.add(new Variables(variable.name.concat("_value"),true,true))
+    							}	
+    						}
+    						if(variable.output){
+    							
+    							val value = (variable.initialValue)
+    							
+    							if(value != null){
+    								val value1 = value as PrimitiveValueExpression
+	    							
+	    							if(value1.value instanceof IntLiteralImpl){
+	    								val value2 = value1.value as IntLiteralImpl
+	    								val value3 = value2.value
+	    								modelOutputs.add(new Variables(variable.name,false,false))
+	    								modelOutputs.add(new Variables(variable.name.concat("_value"),false,value3))
+	    							}else if (value1.value instanceof BoolLiteralImpl){
+	    								val value2 = value1.value as BoolLiteralImpl
+	    								val value3 = value2.value
+	    								modelOutputs.add(new Variables(variable.name,false,false))
+	    								modelOutputs.add(new Variables(variable.name.concat("_value"),false,value3))
+	    							}
+	    						} else{
+    								modelOutputs.add(new Variables(variable.name,false, false))
+    								modelOutputs.add(new Variables(variable.name.concat("_value"),false,true))
+    							}
+    						}	
+    			]
+    
+     
+//    //Get inputs and outputs of all traces
+//    traces.forEach[trace |
+//    	trace.ticks.forEach[ tick |
+//    		tick.input.forEach[ input | 
+//    			if(!signalAlreadyHandled.contains(input.name)){
+//    				signalAlreadyHandled.add(input.name)
+//    				inputArray.add(input) 
+//    			}
+//    		]
+//    		//All output get an "_out" additional
+//    		tick.output.forEach[ output |
+//    			if(!signalAlreadyHandled.contains(output.name)){	
+//    				signalAlreadyHandled.add(output.name)
+////    				output.setName(output.name)
+//    				outputArray.add(output)	
+//    			}
+////    			else{
+////    				output.setName(output.name)
+////    			}
+//    		]
+//    	]
+//    ]
 
     
     '''
@@ -119,13 +219,13 @@ class ESO2VHDL {
 	
 	ARCHITECTURE behavior OF tb_«name» IS
 	
-	«generateComponent(inputArray, outputArray, name)»
+	«generateComponent(modelInputs, modelOutputs, name)»
 	
 	--Inputs
-	«inputArray.map( in |'''signal «in.name» : «getTypeAndInitValue(in)»''').join('\n')»
+	«modelInputs.map( in |'''signal «in.name» : «getTypeAndInitValue(in)»''').join('\n')»
 	
 	--Outputs
-	«outputArray.map( out |'''signal «out.name» : «getTypeAndInitValue(out)»''').join('\n')»
+	«modelOutputs.map( out |'''signal «out.name» : «getTypeAndInitValue(out)»''').join('\n')»
 		
 	--Control
 	signal reset : std_logic := '0';
@@ -134,18 +234,18 @@ class ESO2VHDL {
 	
 	BEGIN
 
-		«generateUUT(inputArray,outputArray)»
+		«generateUUT(modelInputs, modelOutputs)»
 	
 		«generateTickProcess()»
 
-		«generateSimulation(traces)»
+		«generateSimulation(traces, modelInputs, modelOutputs)»
 	
 	END;
     '''
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateComponent(ArrayList<signal> inputArray, ArrayList<signal> outputArray, String componentName) { 
+	def generateComponent(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String componentName) { 
 	
 		//compute the component 
 		//e.g. A_in : IN boolean; 		
@@ -171,7 +271,7 @@ class ESO2VHDL {
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateUUT(ArrayList<signal> inputArray, ArrayList<signal> outputArray) {
+	def generateUUT(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray) {
 		 
 		//compute the mapping from the entity to simulation signals
 		//e.g. A_in => A_in 
@@ -205,7 +305,7 @@ class ESO2VHDL {
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateSimulation(EList<trace> traces) { 
+	def generateSimulation(EList<trace> traces, ArrayList<Variables> inputArray, ArrayList<Variables> outputArray) { 
 	
 	'''
 	-- Stimulus process
@@ -214,19 +314,23 @@ class ESO2VHDL {
 		wait for 1 ps;
 		
 		--sim Process
-		«generateSimProcess(traces)»
+		«generateSimProcess(traces, inputArray, outputArray)»
 		wait;
 	end process;
 	'''
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateSimProcess(EList<trace> traces) { 
+	def generateSimProcess(EList<trace> traces, ArrayList<Variables> inputArray, ArrayList<Variables> outputArray) { 
 		
 		val String wait = '''wait for tick_period;''' + '\n' 
 		simTicks = ""
 		simTraces = ""
 		traceCnt = 1
+	
+		val List<String> inputString = getStringList(inputArray)
+		val List<String> outputString = getStringList(outputArray)
+		
 	
 		//for all traces and all ticks generate simulation code
 		traces.forEach[ trace | 
@@ -239,26 +343,39 @@ class ESO2VHDL {
 				
 				//Set inputs according to the tick
 				//setInputs = tick.input.map( in | '''«in.name» <= true''' + (';\n')).join('')
-				setInputs = getEsoString(tick.input,"-- ESO: ")
-				setInputs = setInputs + tick.input.map[ in | '''«in.name» <= «getValue(in)»''' + (';\n') 
-				].join('')
+//				setInputs = getEsoString(tick.extraInfos,"-- ESO: ")
+//				setInputs = setInputs + tick.input.map[ in | '''«in.name» <= «getValue(in)»''' + (';\n') 
+//				].join('')
 				
+				setInputs = setInputs + tick.extraInfos.map[ kvp | 
+					if(inputString.contains(kvp.key)){
+						'''«kvp.key» <= «getValue(kvp)»''' + (';\n')
+					}else''''''
+				].join('')
+								
 				if(setInputs.nullOrEmpty)
 					setInputs = ""
 				
 				//check if all outputs are set, use asserts
-				asserts = getEsoString(tick.output,"--ESO: %Output ")
-				asserts = asserts + tick.output.map[ out | 
-					'''
-					assert( «out.name» = «getValue(out)» )
-						report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «out.name» should have been «getValue(out)»"
-						severity ERROR;''' + '\n'
+//				asserts = getEsoString(tick.extraInfos,"--ESO: %Output ")
+				asserts = ""
+				asserts = asserts + tick.extraInfos.map[ kvp | 
+					if(outputString.contains(kvp.key)){
+						'''
+						assert( «kvp.key» = «getValue(kvp)» )
+							report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «kvp.key» should have been «getValue(kvp)»"
+							severity ERROR;''' + '\n'
+					}else''''''
 				].join('')
 				
 				//Set all inputs back to initial value
 				//setInputsBack = tick.input.map( in | '''«in.name» <= false''' + (';\n')).join('')
-				setInputsBack = tick.input.map[ in | if(!(in.name.endsWith("_value"))){
-														'''«in.name» <= false''' + (';\n')}else ''''''
+				setInputsBack = tick.extraInfos.map[ kvp | 
+					if(inputString.contains(kvp.key)){
+						if(!(kvp.key.endsWith("_value"))){
+							'''«kvp.key» <= false''' + (';\n')
+						}else ''''''
+					}else ''''''
 				].join('')
 				
 				//Compute code that is needed for one tick
@@ -280,6 +397,18 @@ class ESO2VHDL {
 		simTraces
 	}
 	
+	def List<String> getStringList(ArrayList<Variables> vari) { 
+	
+		val ArrayList<String> temp = newArrayList
+		
+		for(i : vari){
+			temp.add(i.name)
+		}
+				
+		return temp
+	}
+
+	
     //-------------------------------------------------------------------------
     //------------- H E L P E R - M E T H O D S -------------------------------
 	//-------------------------------------------------------------------------
@@ -300,14 +429,14 @@ class ESO2VHDL {
 	}
 	
 	//Return the ESO instructions as a String
-	def String getEsoString(EList<signal> list, String startString) { 
-		'''«startString»«list.map[s | '''«s.name»«if(true){'''(«getValue(s)»)'''}else " "»'''].join(' ').concat("\n")»'''
+	def String getEsoString(EList<kvpair> list, String startString) { 
+		'''«startString»«list.map[kvp | '''«kvp.key»«if(true){'''(«getValue(kvp)»)'''}else " "»'''].join(' ').concat("\n")»'''
 	}
 
 	//Returns the value as String
-	def getValue(signal s) {
+	def getValue(kvpair kvp) {
 		
-		val EObject value = s.^val
+		val EObject value =  kvp.value
 
 		if(value instanceof EsoInt){
             var EsoInt intVal = value as EsoInt
@@ -321,21 +450,21 @@ class ESO2VHDL {
 	}
 	
 	//Returns a vhdl String according to the type of the kvpair
-	def getTypeAndInitValue(signal s) { 
+	def getTypeAndInitValue(Variables v) { 
 
-		val value = s.^val
-		if(value instanceof EsoInt){
-			"integer range 31 downto 0 := 0;"
+		val value = v.value
+		if(value instanceof Integer){
+			"integer range 31 downto 0 := " + value.toString + ";"
 		}
 		else
-			"boolean := false;"			
+			"boolean := " + value.toString + ";"			
 	}
 	
 	//Return the kvpair type as a string
-	def getTypeString(signal s) { 
+	def getTypeString(Variables v) { 
 		
-		val value = s.^val
-		if(value instanceof EsoBool)
+		val value = v.value
+		if(value instanceof Boolean)
 			inOut = "boolean"
 		else{
 			inOut = "integer range 31 downto 0"

@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.yakindu.sct.ui.editor;bundle-version="2.0.0",
  org.eclipse.emf;bundle-version="2.6.0",
  de.cau.cs.kieler.sim.eso;bundle-version="0.2.1",
- de.cau.cs.kieler.sim.coreeso;bundle-version="1.0.0"
+ de.cau.cs.kieler.sim.coreeso;bundle-version="1.0.0",
+ de.cau.cs.kieler.core.model;bundle-version="0.7.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: de.cau.cs.kieler.eso.vhdl,

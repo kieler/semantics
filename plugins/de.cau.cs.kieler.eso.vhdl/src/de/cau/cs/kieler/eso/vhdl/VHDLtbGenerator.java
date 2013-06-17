@@ -59,16 +59,17 @@ public class VHDLtbGenerator extends AbstractModelFileHandler {
                     String commandString, ISelection selection) {
         
         String name = "";    
+        File file = null;
         
         if(!(selection == null)){
-            File file = (File) ((TreeSelection) selection).getFirstElement();
+            file = (File) ((TreeSelection) selection).getFirstElement();
             URI input = URI.createFileURI(file.getName());
             name = input.trimFileExtension().toString();
         }            
             
         if (commandString.equals(TRANSFORMATIONCOMMAND)) {
             CharSequence transformed = (new ESO2VHDL())
-                            .transformESO2VHDL((tracelist) modelObject, name);
+                            .transformESO2VHDL((tracelist) modelObject, file);
             return transformed;
         }
         
