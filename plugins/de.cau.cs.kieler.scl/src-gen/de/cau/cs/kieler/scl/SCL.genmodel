@@ -18,7 +18,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//VariableDeclaration/initialValue"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Statement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Statement/annotation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Statement/annotations"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//EmptyStatement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//EmptyStatement/label"/>
@@ -27,6 +27,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//InstructionStatement/instruction"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Instruction"/>
+    <genClasses ecoreClass="SCL.ecore#//Annotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Annotation/name"/>
+    </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Assignment">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Assignment/assignment"/>
     </genClasses>

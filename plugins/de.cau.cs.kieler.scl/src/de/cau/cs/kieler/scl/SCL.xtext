@@ -5,7 +5,7 @@ import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 import "http://www.yakindu.org/base/base/2.0.0" as base
 import "http://www.yakindu.org/sct/statechart/SText" as stext
-import "http://kieler.cs.cau.de/annotations" as annotations
+//import "http://kieler.cs.cau.de/annotations" as annotations
 
 generate scl "http://www.cau.de/cs/kieler/scl/scl"
 
@@ -35,13 +35,13 @@ Statement:
 ;
 
 EmptyStatement:
-    (annotation += SL_COMMENT)*
+    (annotations += Annotation)*
     (label = ID ':')
 ;
 
 InstructionStatement:    
     (
-        (annotation += SL_COMMENT)*
+        (annotations += Annotation)*
 //        (label = ID ':')?
         instruction = (Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
     )
@@ -49,6 +49,12 @@ InstructionStatement:
 
 Instruction:
     Assignment | Conditional | Goto | Parallel | Pause | StatementScope
+;
+
+//terminal SL_ANNOTATION     : '@' !('\n'|'\r')* ('\r'? '\n')?;
+
+Annotation:
+    '@' name = ID
 ;
 
 Assignment:

@@ -2,6 +2,7 @@ package de.cau.cs.kieler.scl.serializer;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -87,6 +88,12 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case SclPackage.ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule()) {
+					sequence_Annotation(context, (Annotation) semanticObject); 
+					return; 
+				}
+				else break;
 			case SclPackage.ASSIGNMENT:
 				if(context == grammarAccess.getAssignmentRule() ||
 				   context == grammarAccess.getInstructionRule()) {
@@ -868,6 +875,22 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_Annotation(EObject context, Annotation semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.ANNOTATION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.ANNOTATION__NAME));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getAnnotationAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     assignment=Expression
 	 */
 	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
@@ -899,7 +922,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (annotation+=SL_COMMENT* label=ID)
+	 *     (annotations+=Annotation* label=ID)
 	 */
 	protected void sequence_EmptyStatement(EObject context, EmptyStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -925,7 +948,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	/**
 	 * Constraint:
 	 *     (
-	 *         annotation+=SL_COMMENT* 
+	 *         annotations+=Annotation* 
 	 *         (
 	 *             instruction=Assignment | 
 	 *             instruction=Conditional | 

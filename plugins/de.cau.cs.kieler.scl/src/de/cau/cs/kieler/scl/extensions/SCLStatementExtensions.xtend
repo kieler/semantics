@@ -32,6 +32,7 @@ import de.cau.cs.kieler.scl.basicblocks.ParallelFork
 import de.cau.cs.kieler.scl.basicblocks.ParallelJoin
 import de.cau.cs.kieler.scl.basicblocks.ParallelForkImpl
 import de.cau.cs.kieler.scl.basicblocks.ParallelJoinImpl
+import de.cau.cs.kieler.scl.scl.Annotation
 
 class SCLStatementExtensions {
     
@@ -132,6 +133,10 @@ class SCLStatementExtensions {
             stmt = stmt.eContainer
         }
         stmt.eContainer as Statement
+    }
+    
+    def boolean hasAnnotation(Statement statement, String annotation) {
+        statement.annotations.filter(e | e.getName == annotation).size > 0
     }
     
 }

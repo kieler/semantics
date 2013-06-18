@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.util;
 
+import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -121,6 +122,11 @@ public class SclAdapterFactory extends AdapterFactoryImpl
       public Adapter caseInstruction(Instruction object)
       {
         return createInstructionAdapter();
+      }
+      @Override
+      public Adapter caseAnnotation(Annotation object)
+      {
+        return createAnnotationAdapter();
       }
       @Override
       public Adapter caseAssignment(Assignment object)
@@ -285,6 +291,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createInstructionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.Annotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.Annotation
+   * @generated
+   */
+  public Adapter createAnnotationAdapter()
   {
     return null;
   }

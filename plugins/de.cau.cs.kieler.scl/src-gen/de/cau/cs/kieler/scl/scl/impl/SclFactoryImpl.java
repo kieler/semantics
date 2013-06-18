@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
+import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -84,6 +85,7 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
       case SclPackage.EMPTY_STATEMENT: return createEmptyStatement();
       case SclPackage.INSTRUCTION_STATEMENT: return createInstructionStatement();
       case SclPackage.INSTRUCTION: return createInstruction();
+      case SclPackage.ANNOTATION: return createAnnotation();
       case SclPackage.ASSIGNMENT: return createAssignment();
       case SclPackage.CONDITIONAL: return createConditional();
       case SclPackage.GOTO: return createGoto();
@@ -161,6 +163,17 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     InstructionImpl instruction = new InstructionImpl();
     return instruction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Annotation createAnnotation()
+  {
+    AnnotationImpl annotation = new AnnotationImpl();
+    return annotation;
   }
 
   /**

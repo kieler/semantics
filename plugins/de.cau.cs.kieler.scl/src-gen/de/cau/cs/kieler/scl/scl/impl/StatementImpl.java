@@ -2,18 +2,23 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
+import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +27,7 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl#getAnnotation <em>Annotation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl#getAnnotations <em>Annotations</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,14 +36,14 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
 public class StatementImpl extends MinimalEObjectImpl.Container implements Statement
 {
   /**
-   * The cached value of the '{@link #getAnnotation() <em>Annotation</em>}' attribute list.
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getAnnotation()
+   * @see #getAnnotations()
    * @generated
    * @ordered
    */
-  protected EList<String> annotation;
+  protected EList<Annotation> annotations;
 
   /**
    * <!-- begin-user-doc -->
@@ -66,13 +71,29 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getAnnotation()
+  public EList<Annotation> getAnnotations()
   {
-    if (annotation == null)
+    if (annotations == null)
     {
-      annotation = new EDataTypeEList<String>(String.class, this, SclPackage.STATEMENT__ANNOTATION);
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SclPackage.STATEMENT__ANNOTATIONS);
     }
-    return annotation;
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case SclPackage.STATEMENT__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -85,8 +106,8 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
-      case SclPackage.STATEMENT__ANNOTATION:
-        return getAnnotation();
+      case SclPackage.STATEMENT__ANNOTATIONS:
+        return getAnnotations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -102,9 +123,9 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
-      case SclPackage.STATEMENT__ANNOTATION:
-        getAnnotation().clear();
-        getAnnotation().addAll((Collection<? extends String>)newValue);
+      case SclPackage.STATEMENT__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -120,8 +141,8 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
-      case SclPackage.STATEMENT__ANNOTATION:
-        getAnnotation().clear();
+      case SclPackage.STATEMENT__ANNOTATIONS:
+        getAnnotations().clear();
         return;
     }
     super.eUnset(featureID);
@@ -137,27 +158,10 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
-      case SclPackage.STATEMENT__ANNOTATION:
-        return annotation != null && !annotation.isEmpty();
+      case SclPackage.STATEMENT__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (annotation: ");
-    result.append(annotation);
-    result.append(')');
-    return result.toString();
   }
 
 } //StatementImpl
