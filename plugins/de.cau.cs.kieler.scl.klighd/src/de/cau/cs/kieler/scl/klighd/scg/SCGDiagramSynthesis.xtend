@@ -195,6 +195,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         rootNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
         rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        rootNode.addLayoutParam(Properties::THOROUGHNESS, 100)
         rootNode.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
         if (NODEPLACEMENT_LINEARSEGMENTS) 
             rootNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
@@ -225,7 +226,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kEntryNode.KRendering.foreground = "gray".color;
         kEntryNode.KRendering.add(factory.createKText.of('entry'));
         rootNode.children.add(kEntryNode)
-        kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
+        kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
 //        kEntryNode.addNSPortFixed;
                 
         // Create the exit node
@@ -236,7 +237,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kExitNode.KRendering.foreground = "gray".color;
         kExitNode.KRendering.add(factory.createKText.of('exit'));
         rootNode.children.add(kExitNode)
-        kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
+        kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
         kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
         
         // Add incoming port for the exit node
@@ -776,6 +777,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kDepthNode.KRendering.add(factory.createKLineWidth.of(2));
         kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
         if (PAUSEDEPTH_FIRST)
+        if (!instr.getStatement.hasAnnotation('inline'))
             kDepthNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             
         // Add all nodes to their parents 
@@ -836,9 +838,14 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kNode.addNSPortsFixed;            
         (unassignedObject.createPort() => [
             kNode.ports += it
-            it.setPortPos(75, 24)
+            if (instr.getStatement.hasAnnotation('condleft')) {
+                it.setPortPos(0, 24)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::WEST);
+            } else { 
+                it.setPortPos(75, 24)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST);
+            }
             it.setPortSize(2,2)
-            it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST);
         ]).addToPortMapping(kNode, 'conditional')
         kNode.addLayoutParam(LayoutOptions::SIZE_CONSTRAINT, SizeConstraint::fixed);
         
