@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.eso.vhdl;
-import org.eclipse.core.internal.resources.File;
+//import org.eclipse.core.internal.resources.File;
+import java.io.File;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;

@@ -28,5 +28,6 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: de.cau.cs.kieler.sim.coreeso.coreEso
-Export-Package: de.cau.cs.kieler.eso.coreeso
+Export-Package: de.cau.cs.kieler.eso.coreeso,
+ de.cau.cs.kieler.eso.coreeso.xtend
 

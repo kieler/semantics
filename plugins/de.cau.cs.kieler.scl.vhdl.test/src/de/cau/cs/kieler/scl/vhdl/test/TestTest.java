@@ -27,7 +27,7 @@ import org.junit.runners.Parameterized.Parameters;
  * @author gjohannsen
  *
  */
-@RunWith(VHDLTestRunner.class)
+@RunWith(Parameterized.class)
 public class TestTest {
 
     String str;

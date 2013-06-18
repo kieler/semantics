@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scl.handler;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
+import org.eclipse.jface.viewers.ISelection;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
 import com.google.inject.Injector;
@@ -62,7 +63,7 @@ public class SCLModelFileHandler extends AbstractModelFileHandler {
         }
 
         public EObject doTransformation(EObject modelObject,
-                        String commandString) {
+                        String commandString, ISelection selection) {
                 if (commandString.equals(TRANSFORMATIONCOMMAND)) {
                     EObject transformed = (new SCL2KAOMTransformation())
                                     .transform((Program) modelObject);

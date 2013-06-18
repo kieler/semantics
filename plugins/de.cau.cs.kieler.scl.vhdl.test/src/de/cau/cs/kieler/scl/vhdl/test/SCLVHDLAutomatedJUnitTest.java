@@ -13,13 +13,9 @@
  */
 package de.cau.cs.kieler.scl.vhdl.test;
 
-import static org.junit.Assert.fail;
-
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,10 +32,6 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-//import org.apache.log4j.Level;
-//import org.apache.log4j.Logger;
-//import org.eclipse.core.filesystem.EFS;
-//import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -48,51 +40,29 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.content.IContentType;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IEditorDescriptor;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorRegistry;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-//import org.eclipse.ui.part.FileEditorInput;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Bundle;
 
-import com.google.inject.Injector;
-
+import de.cau.cs.kieler.core.model.util.ModelUtil;
+import de.cau.cs.kieler.eso.coreeso.xtend.ESO2CoreESO;
+import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
 import de.cau.cs.kieler.scl.scl.Program;
-import de.cau.cs.kieler.scl.vhdl.VHDLGenerator;
+import de.cau.cs.kieler.scl.vhdl.xtend.SCL2VHDL;
 import de.cau.cs.kieler.sim.eso.eso.tracelist;
+//import org.apache.log4j.Level;
+//import org.apache.log4j.Logger;
+//import org.eclipse.core.filesystem.EFS;
+//import org.eclipse.core.filesystem.IFileStore;
+//import org.eclipse.ui.part.FileEditorInput;
 //import de.cau.cs.kieler.sim.kart.KartConstants;
 //import de.cau.cs.kieler.sim.kart.KartPlugin;
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.execution.Execution;
-import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
-import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 //import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 //import de.cau.cs.kieler.vhdl.test.VHDLTestRunner;
-
-import de.cau.cs.kieler.core.model.util.ModelUtil;
 //import de.cau.cs.kieler.scl.vhdl.VHDLGenerator;
-import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
-import de.cau.cs.kieler.scl.vhdl.xtend.SCL2VHDL;
-import de.cau.cs.kieler.eso.vhdl.VHDLtbGenerator;
-import de.cau.cs.kieler.eso.coreeso.ESO2CoreESOGenerator;
-import org.eclipse.core.resources.IResource;
 //import de.cau.cs.kieler.vhdl.test.VHDLTestRunner;
 //import de.cau.cs.kieler.scl.scl.Program;
 /**
@@ -347,153 +317,77 @@ public  class SCLVHDLAutomatedJUnitTest {
      * file also an ESO file is found these both serve as a test case. Additionally a valid
      * execution file has to be defined.
      * @throws IOException 
+     * @throws InterruptedException 
      */
     @Test
-    public void SCLVHDLTestRunnerExecution() throws IOException {
-        // Get the trace property of KART
-//        DataComponentWrapper kartReplay = getKartReplayComponent();
-//        KiemProperty traceProperty = getProperty(KartConstants.TRACENUM, kartReplay);
-
-        // -----------------------------------------------------------------------------------------
-        // For all ESO files grab the number of executions (separated by
-        // reset!), set the
-        // validation KART component and play the execution until stop.
-        // Continuously monitor the
-        // the KART variable/signal for errors and declare success if this stays
-        // empty. Otherwise
-        // raise a JUNIT error and abort the testing
-
-        // test this ESO file with all its included traces
-        // the traceProperty is required to be able to update the trace number
-//        testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId());
+    public void SCLVHDLTestRunnerExecution() throws IOException, InterruptedException {
         
+       //SCLVHDLTestRunnerInitialization();
         
-        // take scl and eso file
-        // vhdl = transformSCL2VHDL(scl)
-        // tb   = transformESO2VHDL(eso)
-        
-        //SCLVHDLTestRunnerInitialization();
-        
-
         IPath modelFilePath = modelFile.get(currentEsoFile);
-    
+         
         EObject sclModel = ModelUtil.loadEObjectFromModelFile(modelFilePath);
         EObject esoModel = ModelUtil.loadEObjectFromModelFile(currentEsoFile);
+             
+        CharSequence transformedSCL2VHDL = (new SCL2VHDL().transform((Program)sclModel));
+        IPath vhdlPath = modelFilePath.removeFileExtension().addFileExtension("vhd");
+        createWorkspaceFile(vhdlPath, transformedSCL2VHDL.toString());
         
-        tracelist transformedCoreEso = new ESO2CoreESOGenerator().doTransformation(esoModel, 
-                "de.cau.cs.kieler.eso.coreeso.eso2coreeso", null);
-        CharSequence transformedSCL = new VHDLGenerator().doTransformation((Program)sclModel, 
-                "de.cau.cs.kieler.scl.vhdl.SCL2VHDL", null);
-        CharSequence transformedCoreESO = new VHDLtbGenerator().doTransformation(transformedCoreEso, 
-                "de.cau.cs.kieler.eso.vhdl.ESO2VHDL",null);
-        
-        // !!! check name
-       createWorkspaceFile((modelFilePath.removeFileExtension().addFileExtension("vhd")), transformedSCL.toString());
-       
-       IPath cef = currentEsoFile. removeFileExtension().addFileExtension("tb_vhd");
-       createWorkspaceFile(cef, transformedCoreESO.toString());
-        
-        // !!! check filename and extensions
-//        String vhdlPath = writeStringToFile(transformedSCL.toString(), 
-//                modelFilePath.removeFileExtension().addFileExtension("vhd").lastSegment());
-//        String esoFileName = "tb_" + currentEsoFile.removeFileExtension().addFileExtension("vhd").lastSegment();
-//        String tbPath  = writeStringToFile(transformedCoreESO.toString(), esoFileName);
-
-        
-    // create prj file
-    // prj = createPRJFile(ListOfAllVHDLFiles)
-    
+        tracelist transformedEso2CoreEso = (new ESO2CoreESO().transformESO2CoreESO((tracelist) esoModel));
+        CharSequence transformedCoreESO2VHDLTB = (new ESO2VHDL().transformESO2VHDL(transformedEso2CoreEso,modelFilePath.toFile()));
+        IPath tbPath = new Path(currentEsoFile.removeFileExtension().toString() + "_tb.vhd");
+        createWorkspaceFile(tbPath, transformedCoreESO2VHDLTB.toString());
+           
         LinkedList<String> allVhdlFiles = new LinkedList<String>();
-        allVhdlFiles.add(modelFilePath.removeFileExtension().addFileExtension("vhd").toString());
-        allVhdlFiles.add(currentEsoFile. removeFileExtension().addFileExtension("tb_vhd").toString());
-        
+        allVhdlFiles.add(vhdlPath.lastSegment());
+        allVhdlFiles.add(tbPath.lastSegment());
         String prjFileContent = createPRJFile(allVhdlFiles);
-
-        createWorkspaceFile(currentEsoFile.removeFileExtension().addFileExtension("prj"), prjFileContent);
-        
-    // create cmd file, compute execution time from eso file
-    // cmd = createCMDFile(eso)
-        
+        IPath prjPath = new Path(currentEsoFile.removeLastSegments(1).addTrailingSeparator().toString().concat(PRJ_FILE_NAME));
+        createWorkspaceFile(prjPath, prjFileContent);
+           
         String cmdFileContent = createCMDFile(currentEsoFile);
-        createWorkspaceFile(currentEsoFile.removeFileExtension().addFileExtension("cmd"), cmdFileContent);
-    
-    // create batch file
-    // batch = createBatchFile(prj, cmd, topLevelEntity?)
-    
+        IPath cmdPath = new Path(currentEsoFile.removeLastSegments(1).addTrailingSeparator().toString().concat(CMD_FILE_NAME));
+        createWorkspaceFile(cmdPath, cmdFileContent);
+            
         String batchFileContent = createBatchFile(currentEsoFile.removeFileExtension().lastSegment());
-        createWorkspaceFile(currentEsoFile.removeFileExtension().addFileExtension("sh"), batchFileContent);
+        IPath batchPath = new Path(currentEsoFile.removeLastSegments(1).addTrailingSeparator().toString().concat(BATCH_FILE_NAME));
+        createWorkspaceFile(batchPath, batchFileContent);
+            
+        // Execute Batch
+          
+        String userhome = System.getProperty("user.home");
+        String path = userhome + File.separator + "junit-workspace" + File.separator + "test-scl";
+        String cmd = "exec.sh";
         
-    // Execute Batch
-    // shell.execute(batch)
-        
-    // Start compiled sc code
-    // String executable = buildExecutionCommandLine();
-    // executable = "C:\\Users\\delphino\\AppData\\Local\\Temp\\SC.exe";
+        ProcessBuilder pb = new ProcessBuilder("sh", path + File.separator + cmd);
+        pb.directory(new java.io.File(path));
+        Process p = pb.start();
+        p.waitFor();              
 
-        //        Process executionProcess  = null;
-//        executionProcess = Runtime.getRuntime().exec(batchFilePath);
-//        executionProcess.destroy();
+        //_--------------
         
-// !!! Could not work, Paths are incorrect !!!
-//------
-//  ||
-// \  /     
-//  \/
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
-//        IWorkspaceRoot root = workspace.getRoot();
-//       
-//        IPath logFilePath = root.getFullPath().append(getTemporaryWorkspaceFolderName()).append(SIMULATION_LOG_FILE_NAME);
-//         
-//        InputStream inStream = ModelUtil.openWorkspaceFile(logFilePath);
-//        
-//        BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
-//        String lineIn;
-//        boolean errorFlag = false;
-//        
-//        while ((lineIn = br.readLine()) != null) {
-//            if(lineIn.contains("ERROR")){
-//                errorFlag = true;
-//                break;
-//            }
-//        }
+        IWorkspaceRoot root = workspace.getRoot();
+       
+        IPath logFilePath = root.getFullPath().append(getTemporaryWorkspaceFolderName()).append(SIMULATION_LOG_FILE_NAME);
+         
+        InputStream inStream = ModelUtil.openWorkspaceFile(logFilePath);
         
+        BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
+        String lineIn;
+        boolean errorFlag = false;
         
-        
-//            String LogFilePath = getPluginId() + SIMULATION_LOG_FILE_NAME;
-//             
-//            FileInputStream fis = new FileInputStream(LogFilePath);
-//            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-//            String lineIn;
-//            boolean errorFlag = false;
-//            
-//            while ((lineIn = br.readLine()) != null) {
-//                if(lineIn.contains("ERROR")){
-//                    errorFlag = true;
-//                    break;
-//                }
-//            }
-        
-//            if(errorFlag){
-//                // AAAHHHRRRRGGGG
-//            }
-//                
-//            
-//            //CleanUp
-//            File f = null;
-//            f = new File(cmdFilePath + "/" + CMD_FILE_NAME);
-//            f.delete();
-//            f = new File(prjFilePath + "/" + PRJ_FILE_NAME);
-//            f.delete();
-//            f = new File(batchFilePath + "/" + BATCH_FILE_NAME);
-//            f.delete();
-//            f = new File(getPluginId() + "/" + SIMULATION_LOG_FILE_NAME);
-//            f.delete();
-        
-//  /\
-// /  \
-//  ||
-//------
-
+        while ((lineIn = br.readLine()) != null) {
+            if(lineIn.contains("ERROR")){
+                errorFlag = true;
+                break;
+            }
+        }
+        br.close();
+   
+        Assert.assertEquals(errorFlag , false);
+        File temp = new File(path);
+//        System.out.println(" Files deleted: " + ModelUtil.deleteFolder(temp));
     }
 
     /**
@@ -510,7 +404,6 @@ public  class SCLVHDLAutomatedJUnitTest {
         }
         os.flush();
         os.close();
-        
     }
 
     // -------------------------------------------------------------------------
@@ -525,48 +418,47 @@ public  class SCLVHDLAutomatedJUnitTest {
         
         //entityname is the same name as testbench filename (convention)
         
-        String path;
         String batchFileContent = "";
         
         batchFileContent += ""
                          +  "ise_path=\"/C/Xilinx/14.5/ISE_DS/ISE/\"\n"
                          +  "project=\"" + PRJ_FILE_NAME + "\"\n"
-                         +  "toplevelEntitys=\"" + "tb_" + testbenchFilenameWoExtension + "\"\n"
+                         +  "toplevelEntitys=\"" + testbenchFilenameWoExtension + "_tb" + "\"\n"
                          +  "simulation_tcl=\"" + CMD_FILE_NAME + "\"\n"
                          +  "\n"
-                         +  "export PLATFORM=nt"
-                         +  "export XILINX=$ise_path"
-                         +  "export PATH=$PATH:$XILINX/bin/$PLATFORM"
-                         +  "export LD_LIBRARY_PATH=$XILINX/lib/$PLATFORM"
+                         +  "export PLATFORM=nt" + "\n"
+                         +  "export XILINX=$ise_path" + "\n"
+                         +  "export PATH=$PATH:$XILINX/bin/$PLATFORM" + "\n"
+                         +  "export LD_LIBRARY_PATH=$XILINX/lib/$PLATFORM" + "\n"
                          +  "\n"
-                         +  "compile_params=\"-intstyle silent -incremental -o tb_abo_seq_isim_beh -prj \"$project"
-                         +  "sim_params=\"-intstyle silent -tclbatch \"$simulation_tcl\" -log sim_out.log -sdfnowarn\""
-                         +  "binary=\"tb_isim_beh\""
-                         +  "tmp_out=\"" + SIMULATION_LOG_FILE_NAME + "\""
+                         +  "compile_params=\"-intstyle silent -incremental -o tb_abo_seq_isim_beh -prj \"$project" + "\n"
+                         +  "sim_params=\"-intstyle silent -tclbatch \"$simulation_tcl\" -log sim_out.log -sdfnowarn\"" + "\n"
+                         +  "binary=\"tb_isim_beh\"" + "\n"
+                         +  "tmp_out=\"" + SIMULATION_LOG_FILE_NAME + "\"" + "\n"
                          +  "\n"
                          
-                         +  "for file in `echo $toplevelEntitys`"
-                         +  "do"
-                         +  "   fuse $compile_params $file"
-                         +  "   \"./\"$binary\".exe\" $sim_params"
-                         +  "#   echo -n $file\"   \" >> $tmp_out"
-                         +  "   echo -e out.log | cat out.log | grep 'Error:' | sed 's/at.*ps: //' >> $tmp_out"
-                         +  "done"
+                         +  "for file in `echo $toplevelEntitys`" + "\n"
+                         +  "do" + "\n"
+                         +  "   fuse $compile_params $file" + "\n"
+                         +  "   \"./\"$binary\".exe\" $sim_params" + "\n"
+                         +  "#   echo -n $file\"   \" >> $tmp_out" + "\n"
+                         +  "   echo -e out.log | cat out.log | grep 'Error:' | sed 's/at.*ps: //' >> $tmp_out" + "\n"
+                         +  "done" + "\n"
                          +  "\n" 
                          
-                         +  "# tests failed if a 0 is written, so omit all '1's"
-                         +  "#fails=$(grep \"Error\" $tmp_out)"
-                         +  "#\n"
+                         +  "# tests failed if a 0 is written, so omit all '1's" + "\n"
+                         +  "#fails=$(grep \"Error\" $tmp_out)" + "\n"
+                         +  "#\n" + "\n"
                          
-                         +  "# print results"
-                         +  "#if [ -n \"$fails\" ]"
-                         +  "#then"
-                         +  "#   echo \"Following tests failed ...\""
-                         +  "#   echo -e $fails"
-                         +  "#else"
-                         +  "#   echo \"All tests successful ...\""
-                         +  "#fi"
-                         +  "#\n" 
+                         +  "# print results" + "\n"
+                         +  "#if [ -n \"$fails\" ]" + "\n"
+                         +  "#then" + "\n"
+                         +  "#   echo \"Following tests failed ...\"" + "\n"
+                         +  "#   echo -e $fails" + "\n"
+                         +  "#else" + "\n"
+                         +  "#   echo \"All tests successful ...\"" + "\n"
+                         +  "#fi" + "\n"
+                         +  "#\n" + "\n" 
                          
                          +  "# rm $tmp_out "
                          +  "\n"; 
@@ -586,7 +478,6 @@ public  class SCLVHDLAutomatedJUnitTest {
     private String createCMDFile(IPath eso) throws IOException {
         
         String fileContent = "";
-        String path;
         int resetCounter = 0;
         int tickCounter = 0;
         
@@ -624,8 +515,7 @@ public  class SCLVHDLAutomatedJUnitTest {
         
         int simulationTime = (tickCounter + resetCounter + 20) * SIMULATION_TICK_TIME;
         
-        
-        fileContent = "run " + simulationTime + "ns; \n" +
+        fileContent = "run " + simulationTime + " ns; \n" +
                "quit";
         
         return fileContent;

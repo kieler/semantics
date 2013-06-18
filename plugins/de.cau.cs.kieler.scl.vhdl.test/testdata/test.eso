@@ -1,21 +1,23 @@
-!reset ;
-A 
-% Output : A B O1 
+!reset;
+%Output:
 ;
 
-% Output : O1 ;
-B 
-% Output : O2 B 
-%% B_Present : true 
-%% B : 5 
-;
-
-!reset 
-;
-
-% Output : 
-;
-
+!reset;
 A
-% Output : A B O2 
+%Output: B
+;
+
+!reset;
+A(2)
+%Output:B(3)
+;
+
+!reset;
+A(true)
+%Output:B(false)
+;
+
+!reset;
+A B(2) C(false) D(true)
+%Output: B(5) C(true)
 ;
