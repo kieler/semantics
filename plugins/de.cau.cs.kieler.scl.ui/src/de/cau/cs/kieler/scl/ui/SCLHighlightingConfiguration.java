@@ -37,8 +37,8 @@ public class SCLHighlightingConfiguration extends DefaultHighlightingConfigurati
 
     public TextStyle annotation() {
         TextStyle textStyle = defaultTextStyle().copy();
-        textStyle.setColor( new RGB( 0, 150, 16 ) );
-        textStyle.setStyle( SWT.BOLD );
+        textStyle.setColor( new RGB( 0, 133, 0 ) );
+        textStyle.setStyle( SWT.BOLD + SWT.ITALIC );
         return textStyle;
     }
 }
