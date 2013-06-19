@@ -5,12 +5,18 @@ package de.cau.cs.kieler.scl.scl.impl;
 import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,6 +26,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AnnotationImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AnnotationImpl#getParameter <em>Parameter</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,6 +53,16 @@ public class AnnotationImpl extends MinimalEObjectImpl.Container implements Anno
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getParameter() <em>Parameter</em>}' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getParameter()
+   * @generated
+   * @ordered
+   */
+  protected EList<String> parameter;
 
   /**
    * <!-- begin-user-doc -->
@@ -96,6 +113,20 @@ public class AnnotationImpl extends MinimalEObjectImpl.Container implements Anno
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<String> getParameter()
+  {
+    if (parameter == null)
+    {
+      parameter = new EDataTypeEList<String>(String.class, this, SclPackage.ANNOTATION__PARAMETER);
+    }
+    return parameter;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -103,6 +134,8 @@ public class AnnotationImpl extends MinimalEObjectImpl.Container implements Anno
     {
       case SclPackage.ANNOTATION__NAME:
         return getName();
+      case SclPackage.ANNOTATION__PARAMETER:
+        return getParameter();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -112,6 +145,7 @@ public class AnnotationImpl extends MinimalEObjectImpl.Container implements Anno
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -119,6 +153,10 @@ public class AnnotationImpl extends MinimalEObjectImpl.Container implements Anno
     {
       case SclPackage.ANNOTATION__NAME:
         setName((String)newValue);
+        return;
+      case SclPackage.ANNOTATION__PARAMETER:
+        getParameter().clear();
+        getParameter().addAll((Collection<? extends String>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -137,6 +175,9 @@ public class AnnotationImpl extends MinimalEObjectImpl.Container implements Anno
       case SclPackage.ANNOTATION__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case SclPackage.ANNOTATION__PARAMETER:
+        getParameter().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -153,6 +194,8 @@ public class AnnotationImpl extends MinimalEObjectImpl.Container implements Anno
     {
       case SclPackage.ANNOTATION__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case SclPackage.ANNOTATION__PARAMETER:
+        return parameter != null && !parameter.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -170,6 +213,8 @@ public class AnnotationImpl extends MinimalEObjectImpl.Container implements Anno
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", parameter: ");
+    result.append(parameter);
     result.append(')');
     return result.toString();
   }

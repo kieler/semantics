@@ -379,15 +379,23 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cColonKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cParameterAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cParameterIDTerminalRuleCall_2_1_0 = (RuleCall)cParameterAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cParameterAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cParameterIDTerminalRuleCall_2_2_1_0 = (RuleCall)cParameterAssignment_2_2_1.eContents().get(0);
 		
 		////terminal SL_ANNOTATION     : '@' !('\n'|'\r')* ('\r'? '\n')?;
 		//
 		//Annotation:
 		//
-		//	"@" name=ID;
+		//	"@" name=ID (":" parameter+=ID ("," parameter+=ID)*)?;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ID
+		//"@" name=ID (":" parameter+=ID ("," parameter+=ID)*)?
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -398,6 +406,30 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//(":" parameter+=ID ("," parameter+=ID)*)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//":"
+		public Keyword getColonKeyword_2_0() { return cColonKeyword_2_0; }
+
+		//parameter+=ID
+		public Assignment getParameterAssignment_2_1() { return cParameterAssignment_2_1; }
+
+		//ID
+		public RuleCall getParameterIDTerminalRuleCall_2_1_0() { return cParameterIDTerminalRuleCall_2_1_0; }
+
+		//("," parameter+=ID)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//","
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+
+		//parameter+=ID
+		public Assignment getParameterAssignment_2_2_1() { return cParameterAssignment_2_2_1; }
+
+		//ID
+		public RuleCall getParameterIDTerminalRuleCall_2_2_1_0() { return cParameterIDTerminalRuleCall_2_2_1_0; }
 	}
 
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
@@ -975,7 +1007,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//Annotation:
 	//
-	//	"@" name=ID;
+	//	"@" name=ID (":" parameter+=ID ("," parameter+=ID)*)?;
 	public AnnotationElements getAnnotationAccess() {
 		return (pAnnotation != null) ? pAnnotation : (pAnnotation = new AnnotationElements());
 	}

@@ -29,6 +29,7 @@
     <genClasses ecoreClass="SCL.ecore#//Instruction"/>
     <genClasses ecoreClass="SCL.ecore#//Annotation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Annotation/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Annotation/parameter"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Assignment">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Assignment/assignment"/>

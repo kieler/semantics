@@ -591,7 +591,51 @@ ruleAnnotation returns [EObject current=null]
 	    }
 
 )
-))
+)(	otherlv_2=':' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getAnnotationAccess().getColonKeyword_2_0());
+    }
+(
+(
+		lv_parameter_3_0=RULE_ID
+		{
+			newLeafNode(lv_parameter_3_0, grammarAccess.getAnnotationAccess().getParameterIDTerminalRuleCall_2_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getAnnotationRule());
+	        }
+       		addWithLastConsumed(
+       			$current, 
+       			"parameter",
+        		lv_parameter_3_0, 
+        		"ID");
+	    }
+
+)
+)(	otherlv_4=',' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getAnnotationAccess().getCommaKeyword_2_2_0());
+    }
+(
+(
+		lv_parameter_5_0=RULE_ID
+		{
+			newLeafNode(lv_parameter_5_0, grammarAccess.getAnnotationAccess().getParameterIDTerminalRuleCall_2_2_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getAnnotationRule());
+	        }
+       		addWithLastConsumed(
+       			$current, 
+       			"parameter",
+        		lv_parameter_5_0, 
+        		"ID");
+	    }
+
+)
+))*)?)
 ;
 
 

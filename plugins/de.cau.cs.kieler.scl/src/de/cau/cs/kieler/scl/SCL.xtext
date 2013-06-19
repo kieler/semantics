@@ -54,7 +54,8 @@ Instruction:
 //terminal SL_ANNOTATION     : '@' !('\n'|'\r')* ('\r'? '\n')?;
 
 Annotation:
-    '@' name = ID
+    '@' name = ID 
+    (':' parameter += ID(',' parameter += ID)*)? 
 ;
 
 Assignment:

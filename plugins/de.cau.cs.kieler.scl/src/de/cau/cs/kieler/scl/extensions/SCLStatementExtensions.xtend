@@ -135,8 +135,12 @@ class SCLStatementExtensions {
         stmt.eContainer as Statement
     }
     
-    def boolean hasAnnotation(Statement statement, String annotation) {
-        statement.annotations.filter(e | e.getName == annotation).size > 0
+    def boolean hasAnnotation(Statement statement, String name) {
+        statement.annotations.filter(e | e.getName == name).size > 0
+    }
+    
+    def boolean hasParameter(Statement statement, String name, String parameter) {
+        statement.annotations.filter(e | e.getName == name && e.parameter.contains(parameter)).size > 0    
     }
     
 }

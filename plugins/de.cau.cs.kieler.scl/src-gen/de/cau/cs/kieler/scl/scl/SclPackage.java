@@ -337,13 +337,22 @@ public interface SclPackage extends EPackage
   int ANNOTATION__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Parameter</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION__PARAMETER = 1;
+
+  /**
    * The number of structural features of the '<em>Annotation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ANNOTATION_FEATURE_COUNT = 1;
+  int ANNOTATION_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
@@ -732,6 +741,17 @@ public interface SclPackage extends EPackage
   EAttribute getAnnotation_Name();
 
   /**
+   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.scl.scl.Annotation#getParameter <em>Parameter</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Parameter</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Annotation#getParameter()
+   * @see #getAnnotation()
+   * @generated
+   */
+  EAttribute getAnnotation_Parameter();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Assignment <em>Assignment</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1049,6 +1069,14 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EAttribute ANNOTATION__NAME = eINSTANCE.getAnnotation_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Parameter</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ANNOTATION__PARAMETER = eINSTANCE.getAnnotation_Parameter();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
