@@ -144,6 +144,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
     private static val DEPENDENCY_COLOR = "red"
     private static val DEPENDENCY_COLOR_WR = "darkOrange"
+    
+    private static val SCLANNOTATION_DEPTH_INLINE = 'inline'
+    private static val SCLANNOTATION_CONDITIONAL_BRANCH = 'branch'
+    private static val SCLANNOTATION_DEPENDENCY = 'dependency'
 
     /*
      * These maps link the scl program instructions to krendering nodes and ports.
@@ -777,7 +781,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kDepthNode.KRendering.add(factory.createKLineWidth.of(2));
         kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
         if (PAUSEDEPTH_FIRST)
-        if (!instr.getStatement.hasAnnotation('inline'))
+        if (!instr.getStatement.hasAnnotation(SCLANNOTATION_DEPTH_INLINE))
             kDepthNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             
         // Add all nodes to their parents 
@@ -838,7 +842,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kNode.addNSPortsFixed;            
         (unassignedObject.createPort() => [
             kNode.ports += it
-            if (instr.getStatement.hasAnnotation('condleft')) {
+            if (instr.getStatement.hasParameter(SCLANNOTATION_CONDITIONAL_BRANCH, 'left')) {
                 it.setPortPos(0, 24)
                 it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::WEST);
             } else { 

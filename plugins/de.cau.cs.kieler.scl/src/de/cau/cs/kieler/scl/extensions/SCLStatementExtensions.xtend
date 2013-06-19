@@ -140,6 +140,7 @@ class SCLStatementExtensions {
     }
     
     def boolean hasParameter(Statement statement, String name, String parameter) {
+        if (!statement.hasAnnotation(name)) return false
         statement.annotations.filter(e | e.getName == name && e.parameter.contains(parameter)).size > 0    
     }
     
