@@ -1,7 +1,7 @@
 package de.cau.cs.kieler.eso.vhdl;
-//import org.eclipse.core.internal.resources.File;
-import java.io.File;
-import org.eclipse.emf.common.util.URI;
+
+//import java.io.File;
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.jface.viewers.ISelection;
@@ -59,18 +59,17 @@ public class VHDLtbGenerator extends AbstractModelFileHandler {
     public CharSequence doTransformation(EObject modelObject,
                     String commandString, ISelection selection) {
         
-        String name = "";    
-        File file = null;
+        File file;
         
         if(!(selection == null)){
             file = (File) ((TreeSelection) selection).getFirstElement();
-            URI input = URI.createFileURI(file.getName());
-            name = input.trimFileExtension().toString();
-        }            
+        }else{file = null;}            
             
+        java.io.File ioFile = file.getFullPath().removeFileExtension().removeFileExtension().addFileExtension("scl").toFile();
+        
         if (commandString.equals(TRANSFORMATIONCOMMAND)) {
             CharSequence transformed = (new ESO2VHDL())
-                            .transformESO2VHDL((tracelist) modelObject, file);
+                            .transformESO2VHDL((tracelist) modelObject, ioFile);
             return transformed;
         }
         

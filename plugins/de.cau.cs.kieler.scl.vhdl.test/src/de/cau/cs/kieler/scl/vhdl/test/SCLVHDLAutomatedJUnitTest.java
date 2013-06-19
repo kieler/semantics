@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -53,31 +52,30 @@ import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.vhdl.xtend.SCL2VHDL;
 import de.cau.cs.kieler.sim.eso.eso.tracelist;
-//import org.apache.log4j.Level;
-//import org.apache.log4j.Logger;
-//import org.eclipse.core.filesystem.EFS;
-//import org.eclipse.core.filesystem.IFileStore;
-//import org.eclipse.ui.part.FileEditorInput;
-//import de.cau.cs.kieler.sim.kart.KartConstants;
-//import de.cau.cs.kieler.sim.kart.KartPlugin;
-//import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
-//import de.cau.cs.kieler.vhdl.test.VHDLTestRunner;
-//import de.cau.cs.kieler.scl.vhdl.VHDLGenerator;
-//import de.cau.cs.kieler.vhdl.test.VHDLTestRunner;
-//import de.cau.cs.kieler.scl.scl.Program;
 /**
  * @author gjo
  *
  */
 @RunWith(VHDLTestRunner.class)
 public  class SCLVHDLAutomatedJUnitTest {
-
   
     // -------------------------------------------------------------------------
     // General Configuration
 
     /** The Constant DEFAULT_ESO_FILE_EXTENSITION. */
     static final String DEFAULT_ESO_FILE_EXTENSITION = "eso";
+    
+    /** The Constant DEFAULT_SCL_FILE_EXTENSITION. */
+    static final String DEFAULT_SCL_MODEL_EXTENSITION = "scl";
+    
+    /** The Constant PLUGIN_ID. */
+    static final String PLUGIN_ID = "de.cau.cs.kieler.scl.vhdl.test";
+    
+    /** The Constant BUNDLE_TEST_PATH. */
+    static final IPath BUNDLE_TEST_PATH = new Path ("testdata");
+    
+    /** The Constant TEMPORARY_WORKSPACE_FOLDER_NAME. */
+    static final String TEMPORARY_WORKSPACE_FOLDER_NAME = "temp-scl";
 
     // -------------------------------------------------------------------------
     // Private properties
@@ -88,16 +86,8 @@ public  class SCLVHDLAutomatedJUnitTest {
     /** The corresponding model file for an ESO file. */
     private static HashMap<IPath, IPath> modelFile = new HashMap<IPath, IPath>();
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * The first test flag used to identify the first test and initialize KIEM and all static
-     * lists/hashmaps.
-     */
+    /** The first test flag used to identify the first test and initialize all static lists/hashmaps. */
     private static boolean firstTestFlag = true;
-
-    /** The current model file path. */
-    private static String modelFilePathString = null;
 
     /** The currently tested ESO file as specified by parameters. */
     private IPath currentEsoFile = null;
@@ -105,15 +95,23 @@ public  class SCLVHDLAutomatedJUnitTest {
     /** If in strict mode, require an ESO file for all model files and raise an error otherwise. */
     public static final boolean STRICT_MODE_REQUIRE_ESO_FOR_ALL_MODEL_FILES = false;
     
-    private static int SIMULATION_TICK_TIME = 100;
+    /** The standard simulation tick time in ns  */
+    private static int SIMULATION_TICK_TIME_IN_NS = 100;
     
+    /** Name of the command file */
     private static String CMD_FILE_NAME = "my.cmd";
     
+    /** Name of the project file */
     private static String PRJ_FILE_NAME = "my.prj";
     
+    /** Name of the batch file */
     private static String BATCH_FILE_NAME = "exec.sh";
     
-    private static String SIMULATION_LOG_FILE_NAME = "sim_out.log";
+    /** Name of the simulation log file file */
+    private static String SIMULATION_LOG_FILE_NAME = "sim_out.txt";
+    
+    /** Path from ISE distribution, used for PATH variable */
+    private static String ISE_PATH = "/C/Xilinx/14.5/ISE_DS/ISE/";
 
     // -------------------------------------------------------------------------
     
@@ -125,83 +123,13 @@ public  class SCLVHDLAutomatedJUnitTest {
         super();
         
         this.currentEsoFile = esoFile;
-       // this.currentModelFile = modelFile;
-        
-        // TODO Auto-generated constructor stub
     }
     
     // -------------------------------------------------------------------------
 
     /**
-     * Important for scanning files is the Plugin ID.
-     * 
-     * @return the plugin id
-     */
-    private  String getPluginId(){
-        return "de.cau.cs.kieler.scl.vhdl.test";
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Defines a path in the bundle where the model files, the ESO files and the execution files are
-     * located.
-     * 
-     * E.g., return new Path("/testdata/");
-     * 
-     * @return the ESO files
-     */
-    private IPath getBundleTestPath(){
-        return new Path("testdata");
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Defines the file extension for the model files.
-     * 
-     * E.g., return "s"
-     * 
-     * @return the model file extension
-     */
-    private String getModelFileExtension(){
-        return "scl";
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Defines the name of the folder in the workspace where links to the bundle files will be
-     * created.
-     * 
-     * E.g., return "temp-s"
-     * 
-     * @return the temporary workspace folder name
-     */
-    private String getTemporaryWorkspaceFolderName(){
-        return "test-scl";
-    }
-
-    // -------------------------------------------------------------------------
-
-//    /**
-//     * Gets the name of the considered KIEM execution scheduling file. Derived test classes should
-//     * provide the name of the execution file that should be part of the plugin in the
-//     * BundleTestPath.
-//     * 
-//     * E.g., return "myexecution.execution";
-//     * 
-//     * @return the plugin execution file
-//     */
-//   private String getExecutionFileName(){
-//       return "";     //still missing, needed?
-//   }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Gets all ESO files and provides the parameters for the consecutive tests run by the
-     * KiemTestRunner.
+     * VHDLTestRunner.
      * 
      * The objectArray contains exactly ONE entry because the constructor
      * KiemAutomatedJUnitTest(final IPath esoFile) takes ONE parameter value.
@@ -248,11 +176,11 @@ public  class SCLVHDLAutomatedJUnitTest {
         // Create links in temp workspace and test if valid input (eso files and execution file)
 
         // First create links to local bundle file in a temporary workspace
-        List<IPath> allWorkspaceFiles = createLinksForAllTestFiles(getPluginId(),
-                getBundleTestPath(), getTemporaryWorkspaceFolderName());
+        List<IPath> allWorkspaceFiles = createLinksForAllTestFiles(PLUGIN_ID,
+                BUNDLE_TEST_PATH, TEMPORARY_WORKSPACE_FOLDER_NAME);
 
         // Fill esoFiles and modelFile list/hashmap
-        fillModelAndEsoFiles(allWorkspaceFiles, getModelFileExtension());
+        fillModelAndEsoFiles(allWorkspaceFiles, DEFAULT_SCL_MODEL_EXTENSITION);
 
         // Test if ESO files and corresponding model files exist
         if (esoFiles.size() == 0) {
@@ -261,50 +189,18 @@ public  class SCLVHDLAutomatedJUnitTest {
                             + " for model files in the current workspace. "
                             + "Cannot proceed without model files to test!");
         }
-
-//        // -----------------------------------------------------------
-//        // Set the KIEM plugin
-//        kiemPlugin = KiemPlugin.getDefault();
-//        if (kiemPlugin == null) {
-//            throw new RuntimeException(
-//                    "KIEM Plugin is not loaded. Verify that it is added in the run configuration "
-//                            + "with all its dependend plugins.");
-//        }
-//
-//        // -----------------------------------------------------------------------------------------
-//        // Figure out execution file path and try to load it with KIEM
-//        String executionFileString = executionFilePath.toString();
-//        try {
-//            kiemPlugin.openFile(executionFilePath, true);
-//        } catch (IOException e) {
-//            fail("Cannot find execution scheduling file '" + executionFileString + "'.");
-//        }
-//
-//        // -----------------------------------------------------------------------------------------
-//        // Initialize the KART data component properties
-//        DataComponentWrapper kartReplay = getKartReplayComponent();
-//        DataComponentWrapper kartValidation = getKartValidationComponent();
-//        KiemProperty errorProperty = getProperty(KartConstants.SIGNALVAR, kartValidation);
-//        KiemProperty stopProperty = getProperty(KartConstants.AUTOMATIC, kartReplay);
-//        stopProperty.setValue("true"); // not stop execution after ESO file is
-//                                       // done
-//        errorSignalName = errorProperty.getValue(); // extract the correct error
-//                                                    // signal name to look for
-//        KiemPlugin.getDefault().setForceNoErrorOutput(true);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Wraps up KIEM pointer that is stored statically.
+     * Wraps up VHDL pointer that is stored statically.
      */
     @AfterClass
     public static void SCLVHDLTestRunnerWrapup() {
         // Clear all static fields
-//        kiemPlugin = null;
         esoFiles.clear();
         modelFile.clear();
-        modelFilePathString = null;
         // Reset important firstTestFlag used to initialize KIEM at the
         // first test of a set of consecutive tests.
         firstTestFlag = true;
@@ -322,82 +218,119 @@ public  class SCLVHDLAutomatedJUnitTest {
     @Test
     public void SCLVHDLTestRunnerExecution() throws IOException, InterruptedException {
         
-       //SCLVHDLTestRunnerInitialization();
+        //Temporary Folder, only needed inner this method, it will be created and also be deleted in this method 
+        String tempFolder = "temp";
         
+        IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        IWorkspaceRoot root = workspace.getRoot();
+        IPath absolutePath = root.getLocation().append(TEMPORARY_WORKSPACE_FOLDER_NAME);
+
+        //Create a temporary folder, it will be deleted after each JUjnit iteration
+        IPath absoluteTempPath = absolutePath.append(tempFolder);
+        File tempDir = absoluteTempPath.toFile();
+        tempDir.mkdir();
+        
+        //create an relative temporary path from eso file
+        String relativeTempPath = currentEsoFile.removeLastSegments(1).addTrailingSeparator().append(tempFolder).addTrailingSeparator().toString();
+        
+        //Get Model File path
         IPath modelFilePath = modelFile.get(currentEsoFile);
          
+        //Load models from File
         EObject sclModel = ModelUtil.loadEObjectFromModelFile(modelFilePath);
         EObject esoModel = ModelUtil.loadEObjectFromModelFile(currentEsoFile);
              
+        //Transform model into vhdl file and save it
         CharSequence transformedSCL2VHDL = (new SCL2VHDL().transform((Program)sclModel));
-        IPath vhdlPath = modelFilePath.removeFileExtension().addFileExtension("vhd");
+        IPath vhdlPath = new Path(relativeTempPath + modelFilePath.removeFileExtension().addFileExtension("vhd").lastSegment());
         createWorkspaceFile(vhdlPath, transformedSCL2VHDL.toString());
         
+        //transform eso file to coreEso file and
+        //transform coreEso file ti vhdl testbench
         tracelist transformedEso2CoreEso = (new ESO2CoreESO().transformESO2CoreESO((tracelist) esoModel));
         CharSequence transformedCoreESO2VHDLTB = (new ESO2VHDL().transformESO2VHDL(transformedEso2CoreEso,modelFilePath.toFile()));
-        IPath tbPath = new Path(currentEsoFile.removeFileExtension().toString() + "_tb.vhd");
+        IPath tbPath = new Path(relativeTempPath + currentEsoFile.removeFileExtension().lastSegment() + "_tb.vhd");
         createWorkspaceFile(tbPath, transformedCoreESO2VHDLTB.toString());
            
+        //generate .prj file the project file contains all vhdl files
+        //so a LinkedList is created with all vhdl files
         LinkedList<String> allVhdlFiles = new LinkedList<String>();
         allVhdlFiles.add(vhdlPath.lastSegment());
         allVhdlFiles.add(tbPath.lastSegment());
         String prjFileContent = createPRJFile(allVhdlFiles);
-        IPath prjPath = new Path(currentEsoFile.removeLastSegments(1).addTrailingSeparator().toString().concat(PRJ_FILE_NAME));
+        IPath prjPath = new Path(relativeTempPath.concat(PRJ_FILE_NAME));
         createWorkspaceFile(prjPath, prjFileContent);
            
+        //generate .cmd file
+        //the .cmd file tells the ise simulater how long the simulation schould take
+        //the simulation time is dirived from the number of ticks in the eso file
         String cmdFileContent = createCMDFile(currentEsoFile);
-        IPath cmdPath = new Path(currentEsoFile.removeLastSegments(1).addTrailingSeparator().toString().concat(CMD_FILE_NAME));
+        IPath cmdPath = new Path(relativeTempPath.concat(CMD_FILE_NAME));
         createWorkspaceFile(cmdPath, cmdFileContent);
             
-        String batchFileContent = createBatchFile(currentEsoFile.removeFileExtension().lastSegment());
-        IPath batchPath = new Path(currentEsoFile.removeLastSegments(1).addTrailingSeparator().toString().concat(BATCH_FILE_NAME));
+        //generate batch file
+        //the batch file executes the ise tool (compiling and simulation) 
+        String batchFileContent = createBatchFile(currentEsoFile.removeFileExtension().lastSegment() + "_tb");
+        IPath batchPath = new Path(relativeTempPath.concat(BATCH_FILE_NAME));
         createWorkspaceFile(batchPath, batchFileContent);
             
         // Execute Batch
-          
-        String userhome = System.getProperty("user.home");
-        String path = userhome + File.separator + "junit-workspace" + File.separator + "test-scl";
-        String cmd = "exec.sh";
-        
-        ProcessBuilder pb = new ProcessBuilder("sh", path + File.separator + cmd);
-        pb.directory(new java.io.File(path));
+        ProcessBuilder pb = new ProcessBuilder("sh", absoluteTempPath + File.separator + BATCH_FILE_NAME);
+        pb.directory(absoluteTempPath.toFile());
         Process p = pb.start();
         p.waitFor();              
 
-        //_--------------
+        //the batch file creates an log file which can be checked for errors
+        //so are no errors in the log every thing is fine
+        IPath logFilePath = new Path(relativeTempPath + SIMULATION_LOG_FILE_NAME); 
+        String errorString = stringOccourInFile(logFilePath, "ERROR" );
         
-        IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        IWorkspaceRoot root = workspace.getRoot();
-       
-        IPath logFilePath = root.getFullPath().append(getTemporaryWorkspaceFolderName()).append(SIMULATION_LOG_FILE_NAME);
-         
-        InputStream inStream = ModelUtil.openWorkspaceFile(logFilePath);
+        //delete temporary folder
+        ModelUtil.deleteFolder(tempDir);
+        
+        //check if there are any errors
+        ///Assert.assertEquals("blaaaa", errorFlag, false);
+        if(!errorString.isEmpty())
+            Assert.fail("\n" + errorString);
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * @param logFilePath
+     * @param string
+     * @return
+     * @throws IOException 
+     */
+    private String stringOccourInFile(IPath relativeFilePath, String searchString) throws IOException {
+        
+        InputStream inStream = ModelUtil.openWorkspaceFile(relativeFilePath);
+        String allFoundedSearchString = "";
         
         BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
         String lineIn;
-        boolean errorFlag = false;
         
         while ((lineIn = br.readLine()) != null) {
-            if(lineIn.contains("ERROR")){
-                errorFlag = true;
-                break;
+            if(lineIn.contains(searchString)){
+                allFoundedSearchString += lineIn + "\n";
             }
         }
+        inStream.close();
         br.close();
-   
-        Assert.assertEquals(errorFlag , false);
-        File temp = new File(path);
-//        System.out.println(" Files deleted: " + ModelUtil.deleteFolder(temp));
+        
+        return allFoundedSearchString;
     }
 
+    // -------------------------------------------------------------------------
+    
     /**
-     * @param os
-     * @param string
+     * @param path
+     * @param fileContent
      * @throws IOException 
      */
-    private void createWorkspaceFile(IPath path, String fileContent) throws IOException {
+    private void createWorkspaceFile(IPath relativeFilePath, String fileContent) throws IOException {
         
-        OutputStream os = ModelUtil.createWorkspaceFile(path);
+        OutputStream os = ModelUtil.createWorkspaceFile(relativeFilePath);
         
         for(int i = 0; i < fileContent.length(); i++){
             os.write(fileContent.charAt(i));
@@ -414,56 +347,35 @@ public  class SCLVHDLAutomatedJUnitTest {
      * @return
      * @throws FileNotFoundException 
      */
-    private String createBatchFile(String testbenchFilenameWoExtension) throws FileNotFoundException {
+    private String createBatchFile(String testbenchTopLevelEntityName) throws FileNotFoundException {
         
         //entityname is the same name as testbench filename (convention)
         
         String batchFileContent = "";
         
         batchFileContent += ""
-                         +  "ise_path=\"/C/Xilinx/14.5/ISE_DS/ISE/\"\n"
+                         +  "ise_path=\"" + ISE_PATH  + "\"\n"
                          +  "project=\"" + PRJ_FILE_NAME + "\"\n"
-                         +  "toplevelEntitys=\"" + testbenchFilenameWoExtension + "_tb" + "\"\n"
+                         +  "toplevelEntity=\"" + testbenchTopLevelEntityName + "_tb" + "\"\n"
                          +  "simulation_tcl=\"" + CMD_FILE_NAME + "\"\n"
                          +  "\n"
+                         
                          +  "export PLATFORM=nt" + "\n"
                          +  "export XILINX=$ise_path" + "\n"
                          +  "export PATH=$PATH:$XILINX/bin/$PLATFORM" + "\n"
                          +  "export LD_LIBRARY_PATH=$XILINX/lib/$PLATFORM" + "\n"
                          +  "\n"
-                         +  "compile_params=\"-intstyle silent -incremental -o tb_abo_seq_isim_beh -prj \"$project" + "\n"
-                         +  "sim_params=\"-intstyle silent -tclbatch \"$simulation_tcl\" -log sim_out.log -sdfnowarn\"" + "\n"
+                         
                          +  "binary=\"tb_isim_beh\"" + "\n"
+                         +  "compile_params=\"-intstyle ise -incremental -o \"$binary\" -prj \"$project" + "\n"
+                         +  "sim_params=\"-intstyle ise -tclbatch \"$simulation_tcl\" -log out.log -sdfnowarn\"" + "\n" 
                          +  "tmp_out=\"" + SIMULATION_LOG_FILE_NAME + "\"" + "\n"
                          +  "\n"
                          
-                         +  "for file in `echo $toplevelEntitys`" + "\n"
-                         +  "do" + "\n"
-                         +  "   fuse $compile_params $file" + "\n"
-                         +  "   \"./\"$binary\".exe\" $sim_params" + "\n"
-                         +  "#   echo -n $file\"   \" >> $tmp_out" + "\n"
-                         +  "   echo -e out.log | cat out.log | grep 'Error:' | sed 's/at.*ps: //' >> $tmp_out" + "\n"
-                         +  "done" + "\n"
-                         +  "\n" 
-                         
-                         +  "# tests failed if a 0 is written, so omit all '1's" + "\n"
-                         +  "#fails=$(grep \"Error\" $tmp_out)" + "\n"
-                         +  "#\n" + "\n"
-                         
-                         +  "# print results" + "\n"
-                         +  "#if [ -n \"$fails\" ]" + "\n"
-                         +  "#then" + "\n"
-                         +  "#   echo \"Following tests failed ...\"" + "\n"
-                         +  "#   echo -e $fails" + "\n"
-                         +  "#else" + "\n"
-                         +  "#   echo \"All tests successful ...\"" + "\n"
-                         +  "#fi" + "\n"
-                         +  "#\n" + "\n" 
-                         
-                         +  "# rm $tmp_out "
+                         +  "fuse $compile_params $toplevelEntity" + "\n"
+                         +  "\"./\"$binary\".exe\" $sim_params" + "\n"
+                         +  "echo -e out.log | cat out.log | grep 'Error:' | sed 's/at.*ps: //' >> $tmp_out" + "\n"
                          +  "\n"; 
-        
-//        path = writeStringToFile(batchFileContent, BATCH_FILE_NAME);
         
         return batchFileContent;
     }
@@ -471,8 +383,8 @@ public  class SCLVHDLAutomatedJUnitTest {
     // -------------------------------------------------------------------------
     
     /**
-     * @param eso
-     * @return
+     * @param eso path of the current eso file
+     * @return String content of the .cmd file
      * @throws IOException 
      */
     private String createCMDFile(IPath eso) throws IOException {
@@ -481,21 +393,17 @@ public  class SCLVHDLAutomatedJUnitTest {
         int resetCounter = 0;
         int tickCounter = 0;
         
-        //String esofile = eso.toFile().toString();
-        
         //Calculate Simulation time,
         //every output in the eso file correspondents to a tick
         //every reset in the eso file needs a tick in the testbench
         //and append some offset
         
-        String pluginID = "de.cau.cs.kieler.de.sch.vhdl.test";
-        
-        InputStream is = ModelUtil.openBundleOrWorkspaceFile(eso,pluginID);
+        InputStream is = ModelUtil.openBundleOrWorkspaceFile(eso, PLUGIN_ID);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String lineIn;
         
-        //Problem!: Grammer allows you to write !reset; and %Output: over more than one line
-        // and or with whitespaces. Or the whole eso in one line -> not all resets and output were seen
+        // Problem!: Grammer allows you to write !reset; and %Output: over more than one line
+        // and/or with whitespaces. Or the whole eso in one line -> not all resets and output were seen
         // RegExp didnt solve the Problem -> you need the eso file in one line but if there are 10 resets
         // only one would recognized
         while ((lineIn = br.readLine()) != null) {
@@ -513,7 +421,7 @@ public  class SCLVHDLAutomatedJUnitTest {
         is.close();
         br.close();
         
-        int simulationTime = (tickCounter + resetCounter + 20) * SIMULATION_TICK_TIME;
+        int simulationTime = (tickCounter + resetCounter + 20) * SIMULATION_TICK_TIME_IN_NS;
         
         fileContent = "run " + simulationTime + " ns; \n" +
                "quit";
@@ -524,8 +432,10 @@ public  class SCLVHDLAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * @param allVhdlFiles
-     * @return
+     * Generate .prj file, it contians all used vhdl files
+     * 
+     * @param allVhdlFiles LinkedList which contains all needed vhdl file names for the current run
+     * @return String contains the file content
      * @throws FileNotFoundException 
      */
     private String createPRJFile(LinkedList<String> allVhdlFiles) throws FileNotFoundException {
@@ -541,73 +451,6 @@ public  class SCLVHDLAutomatedJUnitTest {
     
     // -------------------------------------------------------------------------
     
-    /**
-     * @param file
-     * @param string
-     * @return
-     * @throws FileNotFoundException 
-     */
-    private String writeStringToFile(String fileContent, String filename) throws FileNotFoundException {
-        
-        IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        IWorkspaceRoot root = workspace.getRoot();
-       
-        IPath tempFolderPath = root.getFullPath().append(getTemporaryWorkspaceFolderName());
-        
-        String filepath = tempFolderPath.toString().concat(filename);
-        
-        PrintWriter out = new PrintWriter(filepath);
-        
-        out.print(fileContent);
-
-        out.close();
-        
-        return filepath;
-        
-        //-----
-//        File file = new File(filename);
-//        FileWriter writer = null;
-//              
-//        try {
-//            writer = new FileWriter(file);
-//            
-//            writer.write(fileContent);
-//        } catch (IOException e) {
-//            e.printStackTrace(); // I'd rather declare method with throws IOException and omit this catch.
-//        } finally {
-//            if (writer != null) try { writer.close(); } catch (IOException ignore) {}
-//        }
-//        
-//        System.out.printf("File is located at %s%n", file.getAbsolutePath());
-//        
-//        writer.close();
-//        
-//        return file.getAbsolutePath();
-    }
-    
-    //-------------------------------------------------------------------------
-
-//    /**
-//     * Test ESO file and return a potential (first) error as a String.
-//     * 
-//     * @param esoFilePath
-//     *            the ESO file path
-//     * @param traceProperty
-//     *            the trace property
-//     * @return a possible error string or null if no error
-//     */
-//    private static String testEsoFile(final IPath esoFilePath, final KiemProperty traceProperty,
-//            final String executionFileName, final String pluginId) {
-//        boolean errorFlag = false;
-//        String errorInformation = null;
-//
-//        // Get the corresponding model file
-//        IPath modelFilePath = modelFile.get(esoFilePath);
-//        
-//    }
-
-    // -------------------------------------------------------------------------
-
     /**
      * Creates links for all files in the bundles test directory and returns all paths as a list.
      * 
@@ -667,29 +510,6 @@ public  class SCLVHDLAutomatedJUnitTest {
 
     // -------------------------------------------------------------------------
 
-//    /**
-//     * Gets the path of the execution file if this is found in the files that were copied to the
-//     * temporary workspace folder.
-//     * 
-//     * @param allWorkspaceFiles
-//     *            the all workspace files
-//     * @param executionFileName
-//     *            the execution file name
-//     * @return the execution file path
-//     */
-//    private static IPath getExecutionFilePath(final List<IPath> allWorkspaceFiles,
-//            final String executionFileName) {
-//        for (IPath workspaceFilePath : allWorkspaceFiles) {
-//            // If this is a model file search for the corresponding ESO file
-//            if (workspaceFilePath.toString().endsWith(executionFileName)) {
-//                return workspaceFilePath;
-//            }
-//        }
-//        return null;
-//    }
-
-    // -------------------------------------------------------------------------
-
     /**
      * Fill model and ESO files list and hash map.
      * 
@@ -731,201 +551,7 @@ public  class SCLVHDLAutomatedJUnitTest {
                     }
                 }
             }
-
         }
-
     }
-
-    // -------------------------------------------------------------------------
-
-//    /**
-//     * Creates the editor input for opening model files.
-//     * 
-//     * @param fullFilePathString
-//     *            the full file path string
-//     * @return the i editor input
-//     */
-//    private static IEditorInput createEditorInput(final String fullFilePathString) {
-//        IPath path = new Path(fullFilePathString);
-//        IWorkspace workspace = ResourcesPlugin.getWorkspace();
-//        IFile workspaceFile = workspace.getRoot().getFile(path);
-//        if (workspaceFile != null) {
-//            return new FileEditorInput(workspaceFile);
-//
-//        }
-//        return null;
-//    }
-
-    // -------------------------------------------------------------------------
-
-//    /**
-//     * Gets the editor id for opening model files.
-//     * 
-//     * @param fullFilePath
-//     *            the full file path
-//     * @return the editor id
-//     * @throws URISyntaxException
-//     *             the uRI syntax exception
-//     * @throws IOException
-//     *             Signals that an I/O exception has occurred.
-//     */
-//    private static String getEditorId(final IPath fullFilePath) throws URISyntaxException,
-//            IOException {
-//        URL absoluteFileUrl = KiemUtil.resolveWorkspaceFile(fullFilePath.toString());
-//        String absoluteFilePathString = KiemUtil.getAbsoluteFilePath(absoluteFileUrl);
-//        IPath absoluteFilePath = new Path(absoluteFilePathString);
-//        IFileStore fileStore = EFS.getLocalFileSystem().getStore(absoluteFilePath);
-//        try {
-//            IWorkbench workbench = PlatformUI.getWorkbench();
-//            IEditorRegistry editorRegistry = workbench.getEditorRegistry();
-//            InputStream inputStream;
-//            inputStream = fileStore.openInputStream(EFS.NONE, null);
-//            IContentType contentType = Platform.getContentTypeManager().findContentTypeFor(
-//                    inputStream, fileStore.getName());
-//            IEditorDescriptor descriptor = editorRegistry.getDefaultEditor(fileStore.getName(),
-//                    contentType);
-//
-//            // check the OS for in-place editor (OLE on Win32)
-//            if (descriptor == null
-//                    && editorRegistry.isSystemInPlaceEditorAvailable(fileStore.getName())) {
-//                descriptor = editorRegistry.findEditor(IEditorRegistry.SYSTEM_INPLACE_EDITOR_ID);
-//            }
-//
-//            // check the OS for external editor
-//            if (descriptor == null
-//                    && editorRegistry.isSystemExternalEditorAvailable(fileStore.getName())) {
-//                descriptor = editorRegistry.findEditor(IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID);
-//            }
-//
-//            // otherwise
-//            if (descriptor != null) {
-//                return descriptor.getId();
-//            }
-//        } catch (Exception e) {
-//            logger.error(e.getMessage());
-//        }
-//
-//        return "org.eclipse.ui.DefaultTextEditor";
-//    }
-
-    // -------------------------------------------------------------------------
-
-//    /**
-//     * Open model file.
-//     * 
-//     * @param modelFilePath
-//     *            the model file path
-//     */
-//    public static void openModelFile(final IPath modelFilePath) {
-//        modelFilePathString = modelFilePath.toString();
-//        Display.getDefault().asyncExec(new Runnable() {
-//            public void run() {
-//                IPath modelFilePath = new Path(modelFilePathString);
-//
-//                IWorkbenchWindow win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-//                IWorkbenchPage page = win.getActivePage();
-//
-//                // Get the default editor and the editor ID
-//                String fileExtension = (modelFilePath).getFileExtension();
-//                IEditorDescriptor defaultEditor = PlatformUI.getWorkbench().getEditorRegistry()
-//                        .getDefaultEditor("default." + fileExtension);
-//                if (defaultEditor == null) {
-//                    defaultEditor = PlatformUI.getWorkbench().getEditorRegistry()
-//                            .findEditor(IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID);
-//                }
-//                try {
-//                    String editorId = getEditorId(modelFilePath);
-//
-//                    // Close all other editors
-//                    page.closeAllEditors(false);
-//
-//                    // Try to open as workspace file
-//                    IEditorInput input = createEditorInput(modelFilePathString);
-//                    if (input.exists()) {
-//                        // If this exists then directly open it
-//                        page.openEditor(input, editorId);
-//                    }
-//                } catch (Exception e) {
-//                    logger.error(e.getMessage());
-//                }
-//
-//            }
-//        });
-//
-//    }
-
-
-
-    // -------------------------------------------------------------------------
-
-//    /**
-//     * Gets the property.
-//     * 
-//     * @param propertyKey
-//     *            the property key
-//     * @param dataComponentWrapper
-//     *            the data component wrapper
-//     * @return the property
-//     */
-//    private static KiemProperty getProperty(final String propertyKey,
-//            final DataComponentWrapper dataComponentWrapper) {
-//        KiemProperty[] kiemProperties = dataComponentWrapper.getProperties();
-//        for (KiemProperty kiemProperty : kiemProperties) {
-//            if (kiemProperty.getKey().equals(propertyKey)) {
-//                return kiemProperty;
-//            }
-//        }
-//        throw new RuntimeException(
-//                "This is most likely a KIELER internal programming error. KART Property ("
-//                        + propertyKey
-//                        + ") was not found. Maybe the property name has changed in the KART"
-//                        + " plugin? This is name binded and must be consistent.");
-//    }
-
-    // -------------------------------------------------------------------------
-
-//    /**
-//     * Gets the KART Replay component.
-//     * 
-//     * @return the KART Replay component
-//     */
-//    private static DataComponentWrapper getKartReplayComponent() {
-//        List<DataComponentWrapper> dataComponentWrapperList = kiemPlugin
-//                .getDataComponentWrapperList();
-//        for (DataComponentWrapper dataComponentWrapper : dataComponentWrapperList) {
-//            String dataComponentId = dataComponentWrapper.getDataComponent().getDataComponentId();
-//            if (dataComponentId.startsWith(KartConstants.KART_REPLAY_DATACOMPONENT_ID_START)) {
-//                return dataComponentWrapper;
-//            }
-//        }
-//        throw new RuntimeException("KART DataComponent ("
-//                + KartConstants.KART_REPLAY_DATACOMPONENT_ID_START
-//                + ") was not loaded. The KART Plugin must be added to the run configuration "
-//                + "together with all dependend plugins.");
-//    }
-
-    // -------------------------------------------------------------------------
-
-//    /**
-//     * Gets the KART Validation component.
-//     * 
-//     * @return the KART Validation component
-//     */
-//    private static DataComponentWrapper getKartValidationComponent() {
-//        List<DataComponentWrapper> dataComponentWrapperList = kiemPlugin
-//                .getDataComponentWrapperList();
-//        for (DataComponentWrapper dataComponentWrapper : dataComponentWrapperList) {
-//            String dataComponentId = dataComponentWrapper.getDataComponent().getDataComponentId();
-//            if (dataComponentId.startsWith(KartConstants.KART_VALIDATION_DATACOMPONENT_ID_START)) {
-//                return dataComponentWrapper;
-//            }
-//        }
-//        throw new RuntimeException("KART DataComponent ("
-//                + KartConstants.KART_VALIDATION_DATACOMPONENT_ID_START
-//                + ") was not loaded. The KART Plugin must be added to the run configuration"
-//                + " together with all dependend plugins.");
-//    }
-
-    // -------------------------------------------------------------------------
     
 }

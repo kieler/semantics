@@ -52,7 +52,6 @@ public class VHDLTestRunner extends KielerTestRunner {
             // Do the actual initialization.
             ((SCLVHDLAutomatedJUnitTest) object).SCLVHDLTestRunnerInitialization();
         }
-
     }
 
     /**
@@ -64,7 +63,6 @@ public class VHDLTestRunner extends KielerTestRunner {
         IPath iPath = (IPath) objectArray[0];
         String name = iPath.toString();
         return name;
-//        return "VHDLRUNNER for " + parameterObjectList.get(parameterIndex) ;
     }
 
     /**
@@ -73,11 +71,8 @@ public class VHDLTestRunner extends KielerTestRunner {
     @Override
     public String getTestName(final List<Object[]> parameterObjectList, final int parameterIndex,
             FrameworkMethod method) {
-     // As there is a runner for every single test, we can use the runner name for the test as
+        // As there is a runner for every single test, we can use the runner name for the test as
         // well.
         return getRunnerName(parameterObjectList, parameterIndex);
-//        return method.getName().concat("[" + parameterIndex + "]").concat(" - ")
-//                .concat(parameterObjectList.get(parameterIndex).toString());
     }
-
 }
