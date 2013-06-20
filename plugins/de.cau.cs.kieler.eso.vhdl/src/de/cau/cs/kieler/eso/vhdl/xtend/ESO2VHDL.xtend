@@ -131,25 +131,23 @@ class ESO2VHDL {
     
     vars.forEach[ variable | 
     	
-    	val value = (variable.initialValue)
-    	
     	if(variable.input) {						
-			if(value != null){
-				modelInputs.add(createVariableFromModel(variable.name.concat("_value"), true, variable.initialValue))
-			} else{	
-				modelInputs.add(createVariableFromModel(variable.name.concat("_value"), true, true))
-			}
+//			if(value != null){
+//				modelInputs.add(createVariableFromModel(variable.name, true, variable.initialValue))
+//			} else{	
+//				modelInputs.add(createVariableFromModel(variable.name, true, false))
+//			}
 			//every time a present variable is needed
-			modelInputs.add(createVariableFromModel(variable.name, true, false)) 
+			modelInputs.add(createVariableFromModel(variable, true)) 
 		}
 		if(variable.output){					
-			if(value != null){
-				modelOutputs.add(createVariableFromModel(variable.name.concat("_value"), false, variable.initialValue))	
-			} else{	
-				modelOutputs.add(createVariableFromModel(variable.name.concat("_value"), false, true))			
-			}
+//			if(value != null){
+//				modelOutputs.add(createVariableFromModel(variable.name, false, variable.initialValue))	
+//			} else{	
+//				modelOutputs.add(createVariableFromModel(variable.name, false, false))			
+//			}
 			//every time a present variable is needed
-			modelOutputs.add(createVariableFromModel(variable.name, false, false))
+			modelOutputs.add(createVariableFromModel(variable, false))
 		}	
     ]
     
@@ -275,11 +273,12 @@ class ESO2VHDL {
 			simTicks = "\n--NEW TRACE\n" + generateVhdlResetCode(wait)	//Reset on every new Trace
 //			simTicks = ""
 			tickCnt = 1
-			setInputs = ""
+			
 			
 			trace.ticks.forEach[ tick | 
 				//Set inputs according to the tick
 //				setInputs = getEsoString(tick.extraInfos,"-- ESO: ")
+				setInputs = ""
 				setInputs = setInputs + tick.extraInfos.map[ kvp | 
 					if(inputString.contains(kvp.key)){
 						'''«kvp.key» <= «getValueFromKvPair(kvp)»''' + (';\n')
@@ -399,25 +398,67 @@ class ESO2VHDL {
 		return temp
 	}
 	
-	//create a new instance from variables to save the model variables in a more useable way
-	def dispatch createVariableFromModel(String name, boolean isinput, Expression initialValue) {
+//	//create a new instance from variables to save the model variables in a more useable way
+//	def dispatch createVariableFromModel(String name, boolean isinput, Expression initialValue) {
+//
+//			val value1 = initialValue as PrimitiveValueExpression
+//			if(value1.value instanceof IntLiteralImpl){
+//				val value2 = value1.value as IntLiteralImpl
+//				val value3 = value2.value
+//				new Variables(name,true,value3)
+//			}else if (value1.value instanceof BoolLiteralImpl){
+//				val value2 = value1.value as BoolLiteralImpl
+//				val value3 = value2.value
+//				new Variables(name,true,value3)
+//			}		
+//	}
+//	
+//	//create a new instance from variables to save the model variables in a more useable way
+//	def dispatch createVariableFromModel(String name, boolean isinput, boolean initialValue) {
+//		
+//		new Variables(name,isinput,initialValue)
+//	}
 
+
+	def createVariableFromModel(VariableDeclaration variable, boolean isInput) {
+		
+		val Expression initialValue = variable.initialValue
+		val name = variable.name
+		
+		// Initial Value
+		// Better to look first after an initial value, because the grammer 
+		// allows: input signal A : integer = false; !!!
+		if(initialValue != null){
 			val value1 = initialValue as PrimitiveValueExpression
 			if(value1.value instanceof IntLiteralImpl){
 				val value2 = value1.value as IntLiteralImpl
 				val value3 = value2.value
-				new Variables(name,true,value3)
+				new Variables(name,isInput,value3)
 			}else if (value1.value instanceof BoolLiteralImpl){
 				val value2 = value1.value as BoolLiteralImpl
 				val value3 = value2.value
-				new Variables(name,true,value3)
-			}		
-	}
-	
-	//create a new instance from variables to save the model variables in a more useable way
-	def dispatch createVariableFromModel(String name, boolean isinput, boolean initialValue) {
+				new Variables(name,isInput,value3)
+			}	
+		}
+		//no initial value
+		else{
+			if(variable.type != null){
+				val String type = variable.type.name
+				//In VHDL simulation all used signals should have an initial value
+				if(type == "integer"){
+					new Variables(name,isInput,0)
+				}
+				else if(type == "boolean") {
+					new Variables(name,isInput,false)
+				}
+				//other values are not supported
+				// TODO  throw exception for unsupported type
+			}//no type specified -> set to boolean
+			else{
+				new Variables(name,isInput,false)
+			}
+		}
 		
-		new Variables(name,isinput,initialValue)
 	}
 
 }
