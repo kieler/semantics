@@ -29,7 +29,7 @@ public class SeqSCLToSFileHandler extends AbstractConvertModelHandler {
     
     @Override
     protected String getTargetExtension() {
-        return ".s";
+        return "s";
     }
     
     @Override
