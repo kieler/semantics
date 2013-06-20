@@ -72,6 +72,29 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
+               commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsSurfaceDepthTransformation"
+               label="Surface Depth"
+               mnemonic="N"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="kixs">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
+         <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsNormalTerminationTransformation"
                label="Normal Terminations"
                mnemonic="N"
@@ -282,29 +305,6 @@
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsGenerateRandomInputs"
                label="Generate Random Inputs (ESO) ..."
                mnemonic="E"
-               style="push">
-            <visibleWhen>
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="kixs">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
-         <command
-               commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsSurfaceDepthTransformation"
-               label="Surface Depth"
-               mnemonic="N"
                style="push">
             <visibleWhen>
                <iterate

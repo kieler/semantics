@@ -464,6 +464,8 @@ class SyncCharts2Simulation {
     //-------------------------------------------------------------------------
     //--                S U R F A C E  &   D E P T H                         --
     //-------------------------------------------------------------------------
+    //@requires: abort transformation (there must not be any weak or strong aborts outgoing from
+    //                                 macro state, hence we just consider simple states here)
 
     // ... 
     
@@ -471,21 +473,57 @@ class SyncCharts2Simulation {
         // Clone the complete SyncCharts region 
         var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
 
-        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).filter(e | !e.hierarchical).toList();
 
-        // For every transition in the SyncChart do the transformation
+        // For every state in the SyncChart do the transformation
         // Iterate over a copy of the list  
-        for(targetTransition : targetTransitions) {
+        for(targetState : targetStates) {
             // This statement we want to modify
-            targetTransition.transformSurfaceDepth(targetRootRegion);
+            targetState.transformSurfaceDepth(targetRootRegion);
         }
         
         targetRootRegion;
     }
          
-     def void transformSurfaceDepth(Transition transition, Region targetRootRegion) {
-          if (transition.delay > 1) {
-          }
+     def void transformSurfaceDepth(State state, Region targetRootRegion) {
+       if (state.outgoingTransitions.size > 0) {
+         val parentRegion = state.parentRegion;
+         val numTransitions = state.outgoingTransitions.size;
+         
+         // For every state create a surface node and a depth node
+         val depthState  = SyncchartsFactory::eINSTANCE.createState();
+         depthState.setId(state.id + "Depth");
+         depthState.setLabel(state.label + "Depth");
+         depthState.setIsInitial(false);
+         parentRegion.states.add(depthState);
+         
+         // Move all non-immediate transitions to depth state
+         val nonImmediateTransitions = state.outgoingTransitions.filter(e | !e.isImmediate).toList;
+         for (transition : nonImmediateTransitions) {
+             depthState.outgoingTransitions.add(transition);
+             // Make this transition immediate now
+             transition.setIsImmediate(true);
+         } 
+         
+         // Modify surfaceState (the original state)
+         val surfaceState = state;
+         surfaceState.setId(state.id + "Surface");
+         surfaceState.setLabel(state.label + "Surface");
+         
+         // Connect surface and depth state
+         val connect = SyncchartsFactory::eINSTANCE.createTransition();
+         connect.setPriority(numTransitions);
+         connect.setTargetState(depthState);
+         surfaceState.outgoingTransitions.add(connect);
+         
+         val connectBack = SyncchartsFactory::eINSTANCE.createTransition();
+         connectBack.setIsImmediate(true);
+         connectBack.setLabel("#");
+         connectBack.setPriority(numTransitions);
+         connectBack.setTargetState(surfaceState);
+         depthState.outgoingTransitions.add(connectBack);
+         
+       }
      }
 
 
