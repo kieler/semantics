@@ -61,6 +61,21 @@ class SCLStatementSequenceExtensions {
         return null
     }
 
+    def Parallel getParallel(Instruction instruction) {
+        getParallel(instruction.eContainer as Statement);
+    }
+    
+    def Parallel getParallel(Statement statement) {
+        var container = statement.eContainer
+        if (container == null && statement.hasInstruction) container = statement.getInstruction
+        while (container != null) {
+            if (container instanceof Parallel) return (container as Parallel)
+            container = container.eContainer
+        }
+        return null
+    }
+
+
     def Program getProgram(Instruction instruction) {
 //        var container = instruction
 //        if (container instanceof PauseSurface) container = (container as PauseSurfaceImpl).PauseReference
@@ -116,6 +131,29 @@ class SCLStatementSequenceExtensions {
     
     def boolean hasSameThreadParentAs(Statement statement, Statement secondStatement) {
         statement.getThread?.eContainer == secondStatement.getThread?.eContainer
+    }
+
+    def Parallel getLeastCommonAncestorParallel(Instruction instruction, Instruction secondInstruction) {
+        getLeastCommonAncestorParallel(instruction.eContainer as Statement, 
+            secondInstruction.eContainer as Statement
+            )
+    }
+    
+    def Parallel getLeastCommonAncestorParallel(Statement statement, Statement secondStatement) {
+        var ps1 = statement.getThread;
+        while (ps1 != null) {
+            var ps2 = secondStatement.getThread;
+            while (ps2 != null) {
+                if (ps1 != ps2) {
+                    val ps1p = ps1.eContainer as Parallel
+                    val ps2p = ps2.eContainer as Parallel
+                    if (ps1p == ps2p) return ps1p
+                }
+                ps2 = (ps2.eContainer as Parallel).getThread
+            }
+            ps1 = (ps1.eContainer as Parallel).getThread
+        }
+        return null
     }
 
     // Checks if an instruction is in the given thread

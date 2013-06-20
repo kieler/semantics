@@ -321,6 +321,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             for (targetInstruction : depList) {
                 if (!instruction.isInSameThreadAs(targetInstruction.getInstruction) && !instruction.isInMainThread &&
                     !targetInstruction.isInMainThread /* && instruction.hasSameThreadParentAs(targetInstruction.getInstruction)*/
+                    && instruction.getLeastCommonAncestorParallel(targetInstruction.getInstruction) != null
                 ) {
                 val targetNode = InstructionMapping.get(targetInstruction.getInstruction)?.first
                 if (sourceNode != targetNode && sourceNode != null && targetNode != null &&
