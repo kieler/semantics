@@ -99,13 +99,13 @@ public  class SCLVHDLAutomatedJUnitTest {
     private static int SIMULATION_TICK_TIME_IN_NS = 100;
     
     /** Name of the command file */
-    private static String CMD_FILE_NAME = "my.cmd";
+    private static String CMD_FILE_NAME_EXTENSION = ".cmd";
     
     /** Name of the project file */
-    private static String PRJ_FILE_NAME = "my.prj";
+    private static String PRJ_FILE_NAME_EXTENSION = ".prj";
     
     /** Name of the batch file */
-    private static String BATCH_FILE_NAME = "exec.sh";
+    private static String BATCH_FILE_NAME_EXTENSION = ".sh";
     
     /** Name of the simulation log file file */
     private static String SIMULATION_LOG_FILE_NAME = "sim_out.txt";
@@ -219,19 +219,19 @@ public  class SCLVHDLAutomatedJUnitTest {
     public void SCLVHDLTestRunnerExecution() throws IOException, InterruptedException {
         
         //Temporary Folder, only needed inner this method, it will be created and also be deleted in this method 
-        String tempFolder = "temp";
+        String modelName = currentEsoFile.removeFileExtension().lastSegment();
         
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
         IPath absolutePath = root.getLocation().append(TEMPORARY_WORKSPACE_FOLDER_NAME);
 
         //Create a temporary folder, it will be deleted after each JUjnit iteration
-        IPath absoluteTempPath = absolutePath.append(tempFolder);
+        IPath absoluteTempPath = absolutePath.append(modelName);
         File tempDir = absoluteTempPath.toFile();
         tempDir.mkdir();
         
         //create an relative temporary path from eso file
-        String relativeTempPath = currentEsoFile.removeLastSegments(1).addTrailingSeparator().append(tempFolder).addTrailingSeparator().toString();
+        String relativeTempPath = currentEsoFile.removeLastSegments(1).addTrailingSeparator().append(modelName).addTrailingSeparator().toString();
         
         //Get Model File path
         IPath modelFilePath = modelFile.get(currentEsoFile);
@@ -258,24 +258,24 @@ public  class SCLVHDLAutomatedJUnitTest {
         allVhdlFiles.add(vhdlPath.lastSegment());
         allVhdlFiles.add(tbPath.lastSegment());
         String prjFileContent = createPRJFile(allVhdlFiles);
-        IPath prjPath = new Path(relativeTempPath.concat(PRJ_FILE_NAME));
+        IPath prjPath = new Path(relativeTempPath.concat(modelName + PRJ_FILE_NAME_EXTENSION));
         createWorkspaceFile(prjPath, prjFileContent);
            
         //generate .cmd file
         //the .cmd file tells the ise simulater how long the simulation schould take
         //the simulation time is dirived from the number of ticks in the eso file
         String cmdFileContent = createCMDFile(currentEsoFile);
-        IPath cmdPath = new Path(relativeTempPath.concat(CMD_FILE_NAME));
+        IPath cmdPath = new Path(relativeTempPath.concat(modelName + CMD_FILE_NAME_EXTENSION));
         createWorkspaceFile(cmdPath, cmdFileContent);
             
         //generate batch file
         //the batch file executes the ise tool (compiling and simulation) 
-        String batchFileContent = createBatchFile(currentEsoFile.removeFileExtension().lastSegment() + "_tb");
-        IPath batchPath = new Path(relativeTempPath.concat(BATCH_FILE_NAME));
+        String batchFileContent = createBatchFile(currentEsoFile.removeFileExtension().lastSegment() + "_tb", modelName);
+        IPath batchPath = new Path(relativeTempPath.concat(modelName + BATCH_FILE_NAME_EXTENSION));
         createWorkspaceFile(batchPath, batchFileContent);
             
         // Execute Batch
-        ProcessBuilder pb = new ProcessBuilder("sh", absoluteTempPath + File.separator + BATCH_FILE_NAME);
+        ProcessBuilder pb = new ProcessBuilder("sh", absoluteTempPath + File.separator + modelName + BATCH_FILE_NAME_EXTENSION);
         pb.directory(absoluteTempPath.toFile());
         Process p = pb.start();
         p.waitFor();              
@@ -286,7 +286,7 @@ public  class SCLVHDLAutomatedJUnitTest {
         String errorString = stringOccourInFile(logFilePath, "ERROR" );
         
         //delete temporary folder
-        ModelUtil.deleteFolder(tempDir);
+//        ModelUtil.deleteFolder(tempDir);
         
         //check if there are any errors
         ///Assert.assertEquals("blaaaa", errorFlag, false);
@@ -347,7 +347,7 @@ public  class SCLVHDLAutomatedJUnitTest {
      * @return
      * @throws FileNotFoundException 
      */
-    private String createBatchFile(String testbenchTopLevelEntityName) throws FileNotFoundException {
+    private String createBatchFile(String testbenchTopLevelEntityName, String filename) throws FileNotFoundException {
         
         //entityname is the same name as testbench filename (convention)
         
@@ -355,9 +355,9 @@ public  class SCLVHDLAutomatedJUnitTest {
         
         batchFileContent += ""
                          +  "ise_path=\"" + ISE_PATH  + "\"\n"
-                         +  "project=\"" + PRJ_FILE_NAME + "\"\n"
-                         +  "toplevelEntity=\"" + testbenchTopLevelEntityName + "_tb" + "\"\n"
-                         +  "simulation_tcl=\"" + CMD_FILE_NAME + "\"\n"
+                         +  "project=\"" + filename + PRJ_FILE_NAME_EXTENSION + "\"\n"
+                         +  "toplevelEntity=\"" + testbenchTopLevelEntityName + "\"\n"
+                         +  "simulation_tcl=\"" + filename + CMD_FILE_NAME_EXTENSION + "\"\n"
                          +  "\n"
                          
                          +  "export PLATFORM=nt" + "\n"
@@ -366,7 +366,7 @@ public  class SCLVHDLAutomatedJUnitTest {
                          +  "export LD_LIBRARY_PATH=$XILINX/lib/$PLATFORM" + "\n"
                          +  "\n"
                          
-                         +  "binary=\"tb_isim_beh\"" + "\n"
+                         +  "binary=\"tb_" + filename + "_isim_beh\"" + "\n"
                          +  "compile_params=\"-intstyle ise -incremental -o \"$binary\" -prj \"$project" + "\n"
                          +  "sim_params=\"-intstyle ise -tclbatch \"$simulation_tcl\" -log out.log -sdfnowarn\"" + "\n" 
                          +  "tmp_out=\"" + SIMULATION_LOG_FILE_NAME + "\"" + "\n"
