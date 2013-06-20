@@ -487,9 +487,8 @@ class SyncCharts2Simulation {
     }
          
      def void transformSurfaceDepth(State state, Region targetRootRegion) {
-       if (state.outgoingTransitions.size > 0) {
+       if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL) {
          val parentRegion = state.parentRegion;
-         val maxPrio = state.outgoingTransitions.size + 1;
          val stateId = state.id;
          val stateLabel = state.label;
 
@@ -506,7 +505,7 @@ class SyncCharts2Simulation {
              val connect = SyncchartsFactory::eINSTANCE.createTransition();
              connect.setIsImmediate(true);
              connect.setLabel("#");
-             connect.setPriority(maxPrio);
+             connect.setPriority(1);
              connect.setTargetState(state);
              initialState.outgoingTransitions.add(connect);
          }             
@@ -558,11 +557,13 @@ class SyncCharts2Simulation {
             parentRegion.states.add(surfState);
             // Move transition to this state
             surfState.outgoingTransitions.add(transition);
+            // We can now set the transition priority to 1 (it is reflected implicityly by the sequential order now)
+            transition.setPriority(1);
             // Connect
             val connect = SyncchartsFactory::eINSTANCE.createTransition();
             connect.setIsImmediate(true);
             connect.setLabel("#");
-            connect.setPriority(maxPrio);
+            connect.setPriority(2);
             connect.setTargetState(surfState);
             previousSurfState.outgoingTransitions.add(connect);
             // Next cycle
@@ -577,7 +578,7 @@ class SyncCharts2Simulation {
          
          // Connect back depth with surface state
          val connectBack = SyncchartsFactory::eINSTANCE.createTransition();
-         connectBack.setPriority(maxPrio);
+         connectBack.setPriority(2);
          connectBack.setTargetState(surfaceState);
          depthState.outgoingTransitions.add(connectBack);
          val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
@@ -612,6 +613,53 @@ class SyncCharts2Simulation {
     }
          
      def void transformSplitTransition(Transition transition, Region targetRootRegion) {
+         
+         // Only apply this to transition that have both, a trigger and effects!
+         if (transition.trigger != null && !transition.effects.nullOrEmpty) {
+              val sourceState = transition.sourceState;
+              val targetState = transition.targetState;
+              val parentRegion = targetState.parentRegion;
+              val triggerTransition = transition;
+             
+              // SPECIAL CASE OF INITIAL STATES 
+              // Insert a state and a transition here because conditional states cannot be initial
+              if (sourceState.isInitial) {
+                val initialState  = SyncchartsFactory::eINSTANCE.createState();
+                initialState.setId("Initial" + sourceState.hashCode);
+                initialState.setLabel("I"); 
+                initialState.setIsInitial(true);
+                parentRegion.states.add(initialState);
+                sourceState.setIsInitial(false);
+                // Connect             
+                val connect = SyncchartsFactory::eINSTANCE.createTransition();
+                connect.setIsImmediate(true);
+                connect.setLabel("#");
+                connect.setPriority(1);
+                connect.setTargetState(sourceState);
+                initialState.outgoingTransitions.add(connect);
+             }             
+             
+             val triggeredState  = SyncchartsFactory::eINSTANCE.createState();
+             triggeredState.setId(targetState.id + "_Triggered_" + targetState.hashCode);
+             triggeredState.setLabel( targetState.id + "_Triggered"); 
+             triggeredState.setType(StateType::CONDITIONAL);
+             parentRegion.states.add(triggeredState);
+             // Create new effect transition             
+             val effectTransition = SyncchartsFactory::eINSTANCE.createTransition();
+             effectTransition.setIsImmediate(true);
+             effectTransition.setLabel("#");
+             effectTransition.setPriority(1);
+             // Move effect to effect transition
+             for (effect : transition.effects) {
+                 effectTransition.effects.add(effect.copy);
+             } 
+             transition.effects.clear;
+             // Re-connect
+             effectTransition.setTargetState(transition.targetState);
+             triggerTransition.setTargetState(triggeredState);
+             triggeredState.outgoingTransitions.add(effectTransition);
+             sourceState.outgoingTransitions.add(triggerTransition);
+         }
      }
 
 
