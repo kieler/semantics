@@ -669,9 +669,10 @@ class SyncCharts2Simulation {
     //-------------------------------------------------------------------------
 
     // For every transition T from state S with a count delay n create a region R. Put the
-    // region in parallel to S's parent region. Create a new signal TrigSig that is emitted
-    // by the last transition of the auxiliary region R. Create n states within R and connect
-    // these by the same trigger of T just without the count delay. 
+    // region into S (hence, S may become a macro state). Create a new signal countDelay that is emitted
+    // by the last transition of the auxiliary region R. Create n+1 states within R and connect
+    // these by the same trigger of T just without the count delay. The n+1's state must be final
+    // in order to handle possible outgoing normal terminations of S correctly.
     
     def Region transformCountDelay (Region rootRegion) {
         // Clone the complete SyncCharts region 
@@ -702,17 +703,17 @@ class SyncCharts2Simulation {
                
                val triggerExpression = transition.trigger;
                
-               // Create auxiliary region R and add it to the source state parent region in parallel
+               // Create auxiliary region R and add it to the source state.
                // Also add the auxiliary signal to this common parent state
                val auxiliaryRegion = SyncchartsFactory::eINSTANCE.createRegion()
                val commonParentState = transition.sourceState.parentRegion.parentState;
-               commonParentState.regions.add(auxiliaryRegion);
+               transition.sourceState.regions.add(auxiliaryRegion);
                commonParentState.signals.add(auxiliarySignal);
                
                var delay = 0;
                var State previousAuxiliaryState = null;
                var State auxiliaryState = null;
-               while (delay < transition.delay) {
+               while (delay <= transition.delay) {
                    delay = delay + 1;
                    previousAuxiliaryState = auxiliaryState;
                    
@@ -728,18 +729,18 @@ class SyncCharts2Simulation {
                        connect.targetState = auxiliaryState
                        previousAuxiliaryState.outgoingTransitions.add(connect);
                        connect.setTrigger(triggerExpression.copy);
+                       if (delay > transition.delay) {
+                           // Connect last state
+                           val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                           auxiliaryEmission.setSignal(auxiliarySignal);
+                           connect.effects.add(auxiliaryEmission);
+                       }
                    }
                }
                
-               // Connect the last state
-               val connect = SyncchartsFactory::eINSTANCE.createTransition();
-               connect.setPriority(1);
-               connect.targetState = auxiliaryState
-               auxiliaryState.outgoingTransitions.add(connect);
-               connect.setTrigger(triggerExpression.copy);
-               val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                   auxiliaryEmission.setSignal(auxiliarySignal);
-               connect.effects.add(auxiliaryEmission);
+               // Make last state final (just in case, because there could be
+               // a normal termination outgoing)
+               auxiliaryState.setIsFinal(true);
                
                // Modify original trigger
                transition.setDelay(0);
