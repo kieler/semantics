@@ -53,6 +53,10 @@ public class SyncChartsTransformation implements IHandler {
     public static final String COMMAND_ABORT 
     = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsAbortTransformation";
 
+    /** The Constant COMMAND_SURFACEDEPTH. */
+    public static final String COMMAND_SURFACEDEPTH 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsSurfaceDepthTransformation";
+
     /** The Constant COMMAND_NORMALTERMINATION. */
     public static final String COMMAND_NORMALTERMINATION 
     = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsNormalTerminationTransformation";
@@ -129,6 +133,9 @@ public class SyncChartsTransformation implements IHandler {
             Region transformedModel = rootRegion;
             if (command.equals(COMMAND_ABORT)) {
                 transformedModel = (new SyncCharts2Simulation()).transformSCCAborts(rootRegion);
+            } else if (command.equals(COMMAND_SURFACEDEPTH)) {
+                transformedModel = (new SyncCharts2Simulation())
+                        .transformSurfaceDepth(rootRegion);
             } else if (command.equals(COMMAND_NORMALTERMINATION)) {
                 transformedModel = (new SyncCharts2Simulation())
                         .transformNormalTermination(rootRegion);

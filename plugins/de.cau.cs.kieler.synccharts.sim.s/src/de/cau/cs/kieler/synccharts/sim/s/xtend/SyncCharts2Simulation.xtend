@@ -461,6 +461,34 @@ class SyncCharts2Simulation {
     }
            
 
+    //-------------------------------------------------------------------------
+    //--                S U R F A C E  &   D E P T H                         --
+    //-------------------------------------------------------------------------
+
+    // ... 
+    
+    def Region transformSurfaceDepth (Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+
+        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+
+        // For every transition in the SyncChart do the transformation
+        // Iterate over a copy of the list  
+        for(targetTransition : targetTransitions) {
+            // This statement we want to modify
+            targetTransition.transformSurfaceDepth(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+         
+     def void transformSurfaceDepth(Transition transition, Region targetRootRegion) {
+          if (transition.delay > 1) {
+          }
+     }
+
+
 
     //-------------------------------------------------------------------------
     //--                   C O U N T   D E L A Y S                           --
@@ -487,10 +515,7 @@ class SyncCharts2Simulation {
         targetRootRegion;
     }
          
-     // This will encode count delays in transitions and insert additional counting
-     // host code variables plus modifying the trigger of the count delayed transition
-     // to be immediate and guarded by a host code expression (with the specific
-     // number of ticks).
+     // This will encode count delays in transitions.
      def void transformCountDelay(Transition transition, Region targetRootRegion) {
           if (transition.delay > 1) {
                // auxiliary signal
