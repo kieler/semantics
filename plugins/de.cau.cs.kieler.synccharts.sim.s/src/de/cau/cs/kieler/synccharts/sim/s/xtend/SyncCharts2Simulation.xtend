@@ -490,40 +490,99 @@ class SyncCharts2Simulation {
        if (state.outgoingTransitions.size > 0) {
          val parentRegion = state.parentRegion;
          val maxPrio = state.outgoingTransitions.size + 1;
-         
-         // For every state create a surface node and a depth node
-         val depthState  = SyncchartsFactory::eINSTANCE.createState();
-         depthState.setId(state.id + "Depth");
-         depthState.setLabel(state.label + "Depth");
-         depthState.setIsInitial(false);
-         depthState.setType(StateType::CONDITIONAL);
-         parentRegion.states.add(depthState);
-         
-         // Move all non-immediate transitions to depth state
+         val stateId = state.id;
+         val stateLabel = state.label;
+
+         // SPECIAL CASE OF INITIAL STATES 
+         // Insert a state and a transition here because conditional states cannot be initial
+         if (state.isInitial) {
+             val initialState  = SyncchartsFactory::eINSTANCE.createState();
+             initialState.setId("Initial" + state.hashCode);
+             initialState.setLabel("I"); 
+             initialState.setIsInitial(true);
+             parentRegion.states.add(initialState);
+             state.setIsInitial(false);
+             // Connect             
+             val connect = SyncchartsFactory::eINSTANCE.createTransition();
+             connect.setIsImmediate(true);
+             connect.setLabel("#");
+             connect.setPriority(maxPrio);
+             connect.setTargetState(state);
+             initialState.outgoingTransitions.add(connect);
+         }             
+           
+         // Create auxiliary signal
+         var isDepthSignalUID = "isDepth_" + state.id;
+         val isDepthSignal = KExpressionsFactory::eINSTANCE.createSignal();
+         isDepthSignal.setName(isDepthSignalUID);
+         isDepthSignal.setIsInput(false);
+         isDepthSignal.setIsOutput(false);
+         isDepthSignal.setType(ValueType::PURE);
+         parentRegion.parentState.signals.add(isDepthSignal);  
+
+         // Modify triggers of non immediate transitions and make them immediate
          val nonImmediateTransitions = state.outgoingTransitions.filter(e | !e.isImmediate).toList;
+         val auxiliaryTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
+             auxiliaryTrigger.setValuedObject(isDepthSignal);
          for (transition : nonImmediateTransitions) {
-             depthState.outgoingTransitions.add(transition);
              // Make this transition immediate now
              transition.setIsImmediate(true);
+             // Modify trigger if any
+             if (transition.trigger != null) {
+                 val andAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                 andAuxiliaryTrigger.setOperator(OperatorType::AND);
+                 andAuxiliaryTrigger.subExpressions.add(auxiliaryTrigger.copy);
+                 andAuxiliaryTrigger.subExpressions.add(transition.trigger);
+                 transition.setTrigger(andAuxiliaryTrigger);
+             }  else {
+                 transition.setTrigger(auxiliaryTrigger.copy);
+             }
          } 
-         
+
          // Modify surfaceState (the original state)
          val surfaceState = state;
-         //surfaceState.setId(state.id + "Surface");
-         //surfaceState.setLabel(state.label + "Surface");
+         surfaceState.setType(StateType::CONDITIONAL);
+         surfaceState.setId(stateId + "Surface");
+         surfaceState.setLabel(stateLabel + "Surface");
          
-         // Connect surface and depth state
-         val connect = SyncchartsFactory::eINSTANCE.createTransition();
-         connect.setPriority(maxPrio);
-         connect.setTargetState(depthState);
-         surfaceState.outgoingTransitions.add(connect);
+         // For every state create a number of surface nodes
+         val orderedTransitionList = state.outgoingTransitions.sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
          
+         var previousSurfState = surfaceState;
+         var State surfState = null;
+         for (transition : orderedTransitionList) {
+            surfState  = SyncchartsFactory::eINSTANCE.createState();
+            surfState.setType(StateType::CONDITIONAL);
+            surfState.setId(stateId + "Surface" + transition.hashCode);
+            surfState.setLabel(stateLabel + "Surface");
+            parentRegion.states.add(surfState);
+            // Move transition to this state
+            surfState.outgoingTransitions.add(transition);
+            // Connect
+            val connect = SyncchartsFactory::eINSTANCE.createTransition();
+            connect.setIsImmediate(true);
+            connect.setLabel("#");
+            connect.setPriority(maxPrio);
+            connect.setTargetState(surfState);
+            previousSurfState.outgoingTransitions.add(connect);
+            // Next cycle
+            previousSurfState = surfState; 
+         }
+         
+         // Last state will become depth State
+         val depthState  = surfState;
+         depthState.setType(StateType::NORMAL);
+         depthState.setId(stateId); // + "Depth");
+         depthState.setLabel(stateLabel); // + "Depth");
+         
+         // Connect back depth with surface state
          val connectBack = SyncchartsFactory::eINSTANCE.createTransition();
-         connectBack.setIsImmediate(true);
-         connectBack.setLabel("#");
          connectBack.setPriority(maxPrio);
          connectBack.setTargetState(surfaceState);
          depthState.outgoingTransitions.add(connectBack);
+         val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
+         auxiliaryEmission.setSignal(isDepthSignal);
+         connectBack.effects.add(auxiliaryEmission);
          
        }
      }
