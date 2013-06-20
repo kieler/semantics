@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.scl.controlflow;
+package de.cau.cs.kieler.scl.seqscl;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -6,18 +6,18 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class SCLControlFlowPlugin extends AbstractUIPlugin {
+public class SeqSCLPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.scl.controlflow"; //$NON-NLS-1$
 
 	// The shared instance
-	private static SCLControlFlowPlugin plugin;
+	private static SeqSCLPlugin plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public SCLControlFlowPlugin() {
+	public SeqSCLPlugin() {
 	}
 
 	/*
@@ -43,7 +43,7 @@ public class SCLControlFlowPlugin extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static SCLControlFlowPlugin getDefault() {
+	public static SeqSCLPlugin getDefault() {
 		return plugin;
 	}
 

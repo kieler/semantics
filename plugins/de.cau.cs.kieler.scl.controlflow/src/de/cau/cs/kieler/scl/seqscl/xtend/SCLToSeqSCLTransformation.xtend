@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.scl.controlflow.xtend
+package de.cau.cs.kieler.scl.seqscl.xtend
 
 import com.google.inject.Guice
 import com.google.common.collect.ImmutableList
@@ -22,7 +22,7 @@ import de.cau.cs.kieler.scl.scl.Assignment
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import java.util.ArrayList
 
-class SCLToSCLCFTransformation {
+class SCLToSeqSCLTransformation {
 
 //    @Inject
 //    extension SCLFactoryExtensions

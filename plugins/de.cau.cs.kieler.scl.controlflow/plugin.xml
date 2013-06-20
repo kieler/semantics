@@ -5,16 +5,16 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="de.cau.cs.kieler.scl.controlflow.commands.category"
-            id="de.cau.cs.kieler.scl.controlflow.commands.SCLToSCLCFTransformation"
-            name="SCLToSCLCFTransformation">
+            categoryId="de.cau.cs.kieler.scl.seqscl.commands.category"
+            id="de.cau.cs.kieler.scl.seqscl.commands.SCLToSeqSCLTransformation"
+            name="SCLToSeqSCLTransformation">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.scl.controlflow.handler.SCLToSCLCFFileHandler"
-            commandId="de.cau.cs.kieler.scl.controlflow.commands.SCLToSCLCFTransformation">
+            class="de.cau.cs.kieler.scl.seqscl.handler.SCLToSeqSCLFileHandler"
+            commandId="de.cau.cs.kieler.scl.seqscl.commands.SCLToSeqSCLTransformation">
       </handler>
    </extension>
    <extension
@@ -22,8 +22,8 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
-               commandId="de.cau.cs.kieler.scl.controlflow.commands.SCLToSCLCFTransformation"
-               label="SCL to SCL Controlflow"
+               commandId="de.cau.cs.kieler.scl.seqscl.commands.SCLToSeqSCLTransformation"
+               label="SCL to Seq SCL"
                mnemonic="A"
                style="push">
             <visibleWhen

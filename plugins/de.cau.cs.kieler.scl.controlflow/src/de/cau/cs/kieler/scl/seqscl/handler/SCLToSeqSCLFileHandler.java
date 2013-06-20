@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.scl.controlflow.handler;
+package de.cau.cs.kieler.scl.seqscl.handler;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
@@ -11,7 +11,7 @@ import org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.scl.controlflow.xtend.SCLToSCLCFTransformation;
+import de.cau.cs.kieler.scl.seqscl.xtend.SCLToSeqSCLTransformation;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.scl.scl.Program;
 
@@ -21,7 +21,7 @@ import de.cau.cs.kieler.scl.scl.Program;
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-public class SCLToSCLCFFileHandler extends AbstractConvertModelHandler {
+public class SCLToSeqSCLFileHandler extends AbstractConvertModelHandler {
 
     // Create an injector to load the transformation via guice.
     private static Injector injector = new STextStandaloneSetup()
@@ -56,7 +56,7 @@ public class SCLToSCLCFFileHandler extends AbstractConvertModelHandler {
     protected Object transform(EObject model, ExecutionEvent event, ISelection selection) {
 //        String command = event.getCommand().getId().toString();        
         
-        EObject transformed = (new SCLToSCLCFTransformation())
+        EObject transformed = (new SCLToSeqSCLTransformation())
                 .transformSCLToSCLControlflow((Program) model);
         return transformed;
     }

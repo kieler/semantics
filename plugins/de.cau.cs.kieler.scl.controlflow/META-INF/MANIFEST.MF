@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Controlflow
-Bundle-SymbolicName: de.cau.cs.kieler.scl.controlflow;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.scl.seqscl;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.scl.controlflow.SCLControlFlowPlugin
+Bundle-Activator: de.cau.cs.kieler.scl.seqscl.SeqSCLPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -29,6 +29,6 @@ Import-Package: de.cau.cs.kieler.core.model.handlers,
  org.yakindu.sct.model.stext,
  org.yakindu.sct.ui.editor,
  org.yakindu.sct.ui.editor.editor
-Export-Package: de.cau.cs.kieler.scl.controlflow.handler,
- de.cau.cs.kieler.scl.controlflow.xtend
+Export-Package: de.cau.cs.kieler.scl.seqscl.xtend,
+ de.cau.cs.kieler.scl.seqscl.handler
 
