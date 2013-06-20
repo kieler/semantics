@@ -460,6 +460,7 @@ class SyncCharts2Simulation {
 
     }
            
+           
 
     //-------------------------------------------------------------------------
     //--                S U R F A C E  &   D E P T H                         --
@@ -525,6 +526,33 @@ class SyncCharts2Simulation {
          depthState.outgoingTransitions.add(connectBack);
          
        }
+     }
+
+
+
+    //-------------------------------------------------------------------------
+    //--                 S P L I T   T R A N S I T I O N                     --
+    //-------------------------------------------------------------------------
+
+    // ... 
+    
+    def Region transformSplitTransition (Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+
+        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+
+        // For every transition in the SyncChart do the transformation
+        // Iterate over a copy of the list  
+        for(targetTransition : targetTransitions) {
+            // This statement we want to modify
+            targetTransition.transformSplitTransition(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+         
+     def void transformSplitTransition(Transition transition, Region targetRootRegion) {
      }
 
 

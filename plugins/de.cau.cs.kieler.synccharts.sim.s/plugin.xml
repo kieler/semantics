@@ -95,6 +95,29 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
          <command
+               commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsSplitTransitionTransformation"
+               label="Split Transition"
+               mnemonic="N"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="kixs">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.synccharts.sim.s.transformations">
+         <command
                commandId="de.cau.cs.kieler.synccharts.sim.s.SyncChartsNormalTerminationTransformation"
                label="Normal Terminations"
                mnemonic="N"
@@ -334,6 +357,11 @@
             defaultHandler="de.cau.cs.kieler.synccharts.sim.s.SyncChartsTransformation"
             id="de.cau.cs.kieler.synccharts.sim.s.SyncChartsSurfaceDepthTransformation"
             name="SyncChartsSurfaceDepthTransformation">
+      </command>
+      <command
+            defaultHandler="de.cau.cs.kieler.synccharts.sim.s.SyncChartsTransformation"
+            id="de.cau.cs.kieler.synccharts.sim.s.SyncChartsSplitTransitionTransformation"
+            name="SyncChartsSplitTransitionTransformation">
       </command>
       <command
             defaultHandler="de.cau.cs.kieler.synccharts.sim.s.SyncChartsTransformation"
