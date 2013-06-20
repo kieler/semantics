@@ -461,13 +461,16 @@ class SyncCharts2Simulation {
     }
            
 
-     
+
     //-------------------------------------------------------------------------
     //--                   C O U N T   D E L A Y S                           --
     //-------------------------------------------------------------------------
-    // @requires: auxiliary (host) variables
-     
-    // Transforming Count Delays entry function.
+
+    // For every transition T from state S with a count delay n create a region R. Put the
+    // region in parallel to S's parent region. Create a new signal TrigSig that is emitted
+    // by the last transition of the auxiliary region R. Create n states within R and connect
+    // these by the same trigger of T just without the count delay. 
+    
     def Region transformCountDelay (Region rootRegion) {
         // Clone the complete SyncCharts region 
         var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
@@ -487,49 +490,134 @@ class SyncCharts2Simulation {
      // This will encode count delays in transitions and insert additional counting
      // host code variables plus modifying the trigger of the count delayed transition
      // to be immediate and guarded by a host code expression (with the specific
-    // number of ticks).
+     // number of ticks).
      def void transformCountDelay(Transition transition, Region targetRootRegion) {
           if (transition.delay > 1) {
                // auxiliary signal
-               val auxiliaryVariable = KExpressionsFactory::eINSTANCE.createVariable;
-               val auxiliaryVariableName = "countDelay" + transition.hashCode + "";
-               auxiliaryVariable.setName(auxiliaryVariableName);
-               auxiliaryVariable.setType(ValueType::INT);
-               auxiliaryVariable.setInitialValue("0");
+               var auxiliarySignalUID = "countDelay" + transition.hashCode;
+               val auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
+               auxiliarySignal.setName(auxiliarySignalUID);
+               auxiliarySignal.setIsInput(false);
+               auxiliarySignal.setIsOutput(false);
+               auxiliarySignal.setType(ValueType::PURE);
+               
+               val triggerExpression = transition.trigger;
+               
+               // Create auxiliary region R and add it to the source state parent region in parallel
+               // Also add the auxiliary signal to this common parent state
+               val auxiliaryRegion = SyncchartsFactory::eINSTANCE.createRegion()
+               val commonParentState = transition.sourceState.parentRegion.parentState;
+               commonParentState.regions.add(auxiliaryRegion);
+               commonParentState.signals.add(auxiliarySignal);
+               
+               var delay = 0;
+               var State previousAuxiliaryState = null;
+               var State auxiliaryState = null;
+               while (delay < transition.delay) {
+                   delay = delay + 1;
+                   previousAuxiliaryState = auxiliaryState;
+                   
+                   auxiliaryState  = SyncchartsFactory::eINSTANCE.createState();
+                   auxiliaryState.setId("delay" + delay);
+                   auxiliaryState.setLabel(delay + "");
+                   auxiliaryState.setIsInitial(delay == 1);
+                   auxiliaryRegion.states.add(auxiliaryState);
 
-               // add auxiliaryVariable to first (and only) root region state SyncCharts main interface
-                 targetRootRegion.states.get(0).variables.add(auxiliaryVariable);
-                 
-               // add self-loop transition, counting up the variable
-               val selfLoop = SyncchartsFactory::eINSTANCE.createTransition();
-               val state = transition.sourceState;
-               selfLoop.setTargetState(state);
-               selfLoop.setPriority(1);
-               val selfLoopEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
-               selfLoopEffect.setCode(auxiliaryVariableName + "++");
-               selfLoop.effects.add(selfLoopEffect);
-               selfLoop.setTrigger(transition.trigger);
-               state.outgoingTransitions.add(selfLoop);
-
-               // calculate a new terminating expression, based on the auxiliary variable
-               val terminatingExpression = KExpressionsFactory::eINSTANCE.createTextExpression;
-               terminatingExpression.setCode(auxiliaryVariableName + " >= " + transition.delay);
-               transition.setTrigger(terminatingExpression);
+                   if (previousAuxiliaryState != null) {
+                       val connect = SyncchartsFactory::eINSTANCE.createTransition();
+                       connect.setPriority(1);
+                       connect.targetState = auxiliaryState
+                       previousAuxiliaryState.outgoingTransitions.add(connect);
+                       connect.setTrigger(triggerExpression.copy);
+                   }
+               }
                
-               // disable old delay, set it to be immediate
-               transition.setDelay(1);
-               transition.setIsImmediate(true);
+               // Connect the last state
+               val connect = SyncchartsFactory::eINSTANCE.createTransition();
+               connect.setPriority(1);
+               connect.targetState = auxiliaryState
+               auxiliaryState.outgoingTransitions.add(connect);
+               connect.setTrigger(triggerExpression.copy);
+               val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                   auxiliaryEmission.setSignal(auxiliarySignal);
+               connect.effects.add(auxiliaryEmission);
                
-            // reset the variable for all incoming transition
-            val resetEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
-            resetEffect.setCode(auxiliaryVariableName + "= 0");
-            for (incomingTransition : state.incomingTransitions) {
-                // Add reset text effect of incoming transition
-                transition.effects.add(resetEffect);
-            }
-               
+               // Modify original trigger
+               transition.setDelay(0);
+               val auxiliaryTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
+               auxiliaryTrigger.setValuedObject(auxiliarySignal);
+               transition.setTrigger(auxiliaryTrigger);
           }
      }
+     
+//    //-------------------------------------------------------------------------
+//    //--                   C O U N T   D E L A Y S                           --
+//    //-------------------------------------------------------------------------
+//    // @requires: auxiliary (host) variables
+//     
+//    // Transforming Count Delays entry function.
+//    def Region transformCountDelay (Region rootRegion) {
+//        // Clone the complete SyncCharts region 
+//        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+//
+//        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+//
+//        // For every transition in the SyncChart do the transformation
+//        // Iterate over a copy of the list  
+//        for(targetTransition : targetTransitions) {
+//            // This statement we want to modify
+//            targetTransition.transformCountDelay(targetRootRegion);
+//        }
+//        
+//        targetRootRegion;
+//    }
+//         
+//     // This will encode count delays in transitions and insert additional counting
+//     // host code variables plus modifying the trigger of the count delayed transition
+//     // to be immediate and guarded by a host code expression (with the specific
+//    // number of ticks).
+//     def void transformCountDelay(Transition transition, Region targetRootRegion) {
+//          if (transition.delay > 1) {
+//               // auxiliary signal
+//               val auxiliaryVariable = KExpressionsFactory::eINSTANCE.createVariable;
+//               val auxiliaryVariableName = "countDelay" + transition.hashCode + "";
+//               auxiliaryVariable.setName(auxiliaryVariableName);
+//               auxiliaryVariable.setType(ValueType::INT);
+//               auxiliaryVariable.setInitialValue("0");
+//
+//               // add auxiliaryVariable to first (and only) root region state SyncCharts main interface
+//                 targetRootRegion.states.get(0).variables.add(auxiliaryVariable);
+//                 
+//               // add self-loop transition, counting up the variable
+//               val selfLoop = SyncchartsFactory::eINSTANCE.createTransition();
+//               val state = transition.sourceState;
+//               selfLoop.setTargetState(state);
+//               selfLoop.setPriority(1);
+//               val selfLoopEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
+//               selfLoopEffect.setCode(auxiliaryVariableName + "++");
+//               selfLoop.effects.add(selfLoopEffect);
+//               selfLoop.setTrigger(transition.trigger);
+//               state.outgoingTransitions.add(selfLoop);
+//
+//               // calculate a new terminating expression, based on the auxiliary variable
+//               val terminatingExpression = KExpressionsFactory::eINSTANCE.createTextExpression;
+//               terminatingExpression.setCode(auxiliaryVariableName + " >= " + transition.delay);
+//               transition.setTrigger(terminatingExpression);
+//               
+//               // disable old delay, set it to be immediate
+//               transition.setDelay(1);
+//               transition.setIsImmediate(true);
+//               
+//            // reset the variable for all incoming transition
+//            val resetEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
+//            resetEffect.setCode(auxiliaryVariableName + "= 0");
+//            for (incomingTransition : state.incomingTransitions) {
+//                // Add reset text effect of incoming transition
+//                transition.effects.add(resetEffect);
+//            }
+//               
+//          }
+//     }
      
     
     //-------------------------------------------------------------------------
