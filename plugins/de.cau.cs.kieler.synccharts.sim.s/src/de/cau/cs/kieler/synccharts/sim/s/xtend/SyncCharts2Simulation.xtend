@@ -468,7 +468,23 @@ class SyncCharts2Simulation {
     //@requires: abort transformation (there must not be any weak or strong aborts outgoing from
     //                                 macro state, hence we just consider simple states here)
 
-    // ... 
+    // For every non-hierarchical state S that has outgoing transitions and is of type NORMAL:
+    // Create an auxiliary signal isDepth_S that indicates that the state was
+    // entered in an earlier tick and add it to the parent state P of the parent region R of S.
+    // Modify all triggers of outgoing non-immediate transitions T of S: 1. set them to be
+    // immediate and 2. add "isDepth_S &&" to its trigger.
+    // Modify state S and make it a conditional.
+    // Now walk through all n transitions T_1..n outgoing from S (ordered ascended by their priority):
+    // For T_i create a conditional C_i. Connect C_i-1 and C_i with a true triggered immediate transition
+    // of priority 2. Set priority of T_i to 1. Note that T_i's original priority is now implicitly encoded
+    // by the sequential order of evaluating the conditionals C_1..n.
+    // The last conditional C_n becomes a normal state (the explicit depth of S).
+    // Connect C_n with C_1 using a transition that emits isDepth_S.
+    
+    // Note that conditionals cannot be marked to be initial. Hence, if a state S is marked initial 
+    // then an additional initial state I with a true triggered immediate transition to S will
+    // be inserted. \code{S} is then marked not to be initial. This is a necessary pre-processing for
+    // the above transformation.
     
     def Region transformSurfaceDepth (Region rootRegion) {
         // Clone the complete SyncCharts region 
@@ -594,7 +610,11 @@ class SyncCharts2Simulation {
     //--                 S P L I T   T R A N S I T I O N                     --
     //-------------------------------------------------------------------------
 
-    // ... 
+    // For every transition T that has both, a trigger and an effect do the following:
+    // Create a conditional C and add it to the parent of T's source state S_src.
+    // Create a new true triggered immediate effect transition T_eff and move all effects of T to T_eff.
+    // Set the T_eff to have T's target state. Set T to have the target C.
+    // Add T_eff to C's outgoing transitions. 
     
     def Region transformSplitTransition (Region rootRegion) {
         // Clone the complete SyncCharts region 
@@ -616,28 +636,9 @@ class SyncCharts2Simulation {
          
          // Only apply this to transition that have both, a trigger and effects!
          if (transition.trigger != null && !transition.effects.nullOrEmpty) {
-              val sourceState = transition.sourceState;
               val targetState = transition.targetState;
               val parentRegion = targetState.parentRegion;
               val triggerTransition = transition;
-             
-              // SPECIAL CASE OF INITIAL STATES 
-              // Insert a state and a transition here because conditional states cannot be initial
-              if (sourceState.isInitial) {
-                val initialState  = SyncchartsFactory::eINSTANCE.createState();
-                initialState.setId("Initial" + sourceState.hashCode);
-                initialState.setLabel("I"); 
-                initialState.setIsInitial(true);
-                parentRegion.states.add(initialState);
-                sourceState.setIsInitial(false);
-                // Connect             
-                val connect = SyncchartsFactory::eINSTANCE.createTransition();
-                connect.setIsImmediate(true);
-                connect.setLabel("#");
-                connect.setPriority(1);
-                connect.setTargetState(sourceState);
-                initialState.outgoingTransitions.add(connect);
-             }             
              
              val triggeredState  = SyncchartsFactory::eINSTANCE.createState();
              triggeredState.setId(targetState.id + "_Triggered_" + targetState.hashCode);
@@ -658,7 +659,6 @@ class SyncCharts2Simulation {
              effectTransition.setTargetState(transition.targetState);
              triggerTransition.setTargetState(triggeredState);
              triggeredState.outgoingTransitions.add(effectTransition);
-             sourceState.outgoingTransitions.add(triggerTransition);
          }
      }
 
