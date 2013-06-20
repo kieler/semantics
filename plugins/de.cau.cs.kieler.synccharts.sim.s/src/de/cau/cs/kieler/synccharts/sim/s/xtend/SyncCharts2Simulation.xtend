@@ -488,13 +488,14 @@ class SyncCharts2Simulation {
      def void transformSurfaceDepth(State state, Region targetRootRegion) {
        if (state.outgoingTransitions.size > 0) {
          val parentRegion = state.parentRegion;
-         val numTransitions = state.outgoingTransitions.size;
+         val maxPrio = state.outgoingTransitions.size + 1;
          
          // For every state create a surface node and a depth node
          val depthState  = SyncchartsFactory::eINSTANCE.createState();
          depthState.setId(state.id + "Depth");
          depthState.setLabel(state.label + "Depth");
          depthState.setIsInitial(false);
+         depthState.setType(StateType::CONDITIONAL);
          parentRegion.states.add(depthState);
          
          // Move all non-immediate transitions to depth state
@@ -507,19 +508,19 @@ class SyncCharts2Simulation {
          
          // Modify surfaceState (the original state)
          val surfaceState = state;
-         surfaceState.setId(state.id + "Surface");
-         surfaceState.setLabel(state.label + "Surface");
+         //surfaceState.setId(state.id + "Surface");
+         //surfaceState.setLabel(state.label + "Surface");
          
          // Connect surface and depth state
          val connect = SyncchartsFactory::eINSTANCE.createTransition();
-         connect.setPriority(numTransitions);
+         connect.setPriority(maxPrio);
          connect.setTargetState(depthState);
          surfaceState.outgoingTransitions.add(connect);
          
          val connectBack = SyncchartsFactory::eINSTANCE.createTransition();
          connectBack.setIsImmediate(true);
          connectBack.setLabel("#");
-         connectBack.setPriority(numTransitions);
+         connectBack.setPriority(maxPrio);
          connectBack.setTargetState(surfaceState);
          depthState.outgoingTransitions.add(connectBack);
          
