@@ -31,9 +31,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.PlatformUI;
 
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.s.s.Program;
-import de.cau.cs.kieler.s.sj.xtend.AuxiliaryStates;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * Generate SJ Code from a an S file using new Xtend language.
@@ -77,7 +76,7 @@ public class SJGenerator implements IHandler {
         
         try {
             // Load S Program
-            Program program =  (Program) KiemUtil.loadEObjectFromModelFile(modelFilePath);
+            Program program =  (Program) ModelUtil.loadEObjectFromModelFile(modelFilePath);
             
             // Calculate output path for SJ-m2t
             URI input = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
@@ -96,8 +95,8 @@ public class SJGenerator implements IHandler {
             
             // Generate SJ Code
             IPath sjOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
-            IFile sjOutputFile = KiemUtil.convertIPathToIFile(sjOutputPath);
-            String outputFile = KiemUtil.getAbsoluteFilePath(sjOutputFile);
+            IFile sjOutputFile = ModelUtil.convertIPathToIFile(sjOutputPath);
+            String outputFile = ModelUtil.getAbsoluteFilePath(sjOutputFile);
             S2SJPlugin.generateSJCode(program, outputFile, className, packageName, false);                    
 
         } catch (IOException e) {
