@@ -14,5 +14,6 @@ Require-Bundle: org.eclipse.xtend.lib;bundle-version="2.3.0",
  org.eclipse.jdt.core;bundle-version="3.8.2",
  de.cau.cs.kieler.sim.benchmark;bundle-version="0.1.0"
 Bundle-Activator: de.cau.cs.kieler.sjl.SJPlugin
-Export-Package: de.cau.cs.kieler.sjl
+Export-Package: de.cau.cs.kieler.sjl,
+ de.cau.cs.kieler.sjl.example
 

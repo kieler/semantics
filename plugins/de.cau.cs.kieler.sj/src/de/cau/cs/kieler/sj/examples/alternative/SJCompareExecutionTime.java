@@ -57,6 +57,25 @@ public final class SJCompareExecutionTime {
         }
         return minValue;
     }
+    
+    /**
+     * Measure simple pco SJL version.
+     * 
+     * @param n
+     *            the n
+     * @return the long
+     */
+    public static long measureSimplePCOSJL(final int n) {
+        long minValue = Long.MIN_VALUE;
+        for (int k = 0; k < BESTK; k++) {
+            long start = System.currentTimeMillis();
+            de.cau.cs.kieler.sjl.example.SimplePCO.main(n);
+            long end = System.currentTimeMillis();
+
+            minValue = Math.max(minValue, (end - start));
+        }
+        return minValue;
+    }    
 
     /**
      * Measure simple pco alternative.
@@ -89,8 +108,9 @@ public final class SJCompareExecutionTime {
         while (s < STOP) {
             long a = measureSimplePCO(s);
             long b = measureSimplePCOAlternative(s);
+            long c = measureSimplePCOSJL(s);
             s += STEP;
-            System.out.println(s + "; " + a + ";" + b);
+            System.out.println(s + ", " + a + ", " + b + ", " + c);
         }
 
     }
