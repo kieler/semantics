@@ -16,13 +16,13 @@ package de.cau.cs.kieler.scl.handler;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
-import org.yakindu.sct.model.sgraph.Statechart;
+import org.eclipse.jface.viewers.ISelection;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
+
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.scl.kaom.xtend.SCL2KAOMTransformation;
 import de.cau.cs.kieler.scl.scl.Program;
-import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 
 public class SCLModelFileHandler extends AbstractModelFileHandler {
     
@@ -61,19 +61,24 @@ public class SCLModelFileHandler extends AbstractModelFileHandler {
             return injector;
         }
 
-        public EObject doTransformation(EObject modelObject,
-                        String commandString) {
-                if (commandString.equals(TRANSFORMATIONCOMMAND)) {
-                    EObject transformed = (new SCL2KAOMTransformation())
-                                    .transform((Program) modelObject);
-                    EcoreUtil.resolveAll(transformed);
-                    return transformed;
-                }
-                
-                return null;
-        }
         
         public void doPostProcessing(EObject modelObject) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Object doTransformation(EObject modelObject, String commandString,
+                ISelection selection) {
+            if (commandString.equals(TRANSFORMATIONCOMMAND)) {
+                EObject transformed = (new SCL2KAOMTransformation())
+                                .transform((Program) modelObject);
+                EcoreUtil.resolveAll(transformed);
+                return transformed;
+            }
+            
+            return null;
         }
                 
 }
