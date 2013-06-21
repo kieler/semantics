@@ -718,17 +718,82 @@ class SyncCharts2Simulation {
             auxiliaryResetSignal.setType(ValueType::PURE);
             parentState.signals.add(auxiliaryResetSignal);
             
+            // Auxiliary watch master region with macro WatchMasterState and AbortedState
+            val auxiliaryWatchMasterRegion  = SyncchartsFactory::eINSTANCE.createRegion();
+            parentState.regions.add(auxiliaryWatchMasterRegion);
+            auxiliaryWatchMasterRegion.setId("Watch" + region.hashCode);
+            val auxiliaryWatchMasterState  = SyncchartsFactory::eINSTANCE.createState();
+            auxiliaryWatchMasterRegion.states.add(auxiliaryWatchMasterState);
+            auxiliaryWatchMasterState.setId("Watch" + region.hashCode);
+            auxiliaryWatchMasterState.setLabel("Watch");
+            auxiliaryWatchMasterState.setIsInitial(true);
+            val auxiliaryAbortedState  = SyncchartsFactory::eINSTANCE.createState();
+            auxiliaryWatchMasterRegion.states.add(auxiliaryAbortedState);
+            auxiliaryAbortedState.setId("Aborted" + region.hashCode);
+            auxiliaryAbortedState.setLabel("Aborted");
+            auxiliaryAbortedState.setIsFinal(true);
+            // Connect WatchMaster and Aborted state
+            val abortRegionTransition = SyncchartsFactory::eINSTANCE.createTransition();
+            abortRegionTransition.setPriority(1)
+            abortRegionTransition.setType(TransitionType::NORMALTERMINATION);
+            abortRegionTransition.setTargetState(auxiliaryAbortedState);
+            auxiliaryWatchMasterState.outgoingTransitions.add(abortRegionTransition);
+            // In this normal termination emit reset signal for the region           
+            val auxiliaryResetSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+            auxiliaryResetSignalEmission.setSignal(auxiliaryResetSignal);   
+            abortRegionTransition.effects.add(auxiliaryResetSignalEmission);                       
+            
+            
             // To every final state transition inside parentState,
             // add emission of reset signal
             for (parallelRegion : parentState.regions) {
-                   if (parallelRegion != parentRegion) {
-                        for (finalState : parallelRegion.states.filter(e | e.isFinal))  {
-                            for (finalStateTransition : finalState.incomingTransitions) {
-                               val auxiliaryResetEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                               auxiliaryResetEmission.setSignal(auxiliaryResetSignal);   
-                               finalStateTransition.effects.add(auxiliaryResetEmission);                       
+                   if (parallelRegion != parentRegion && parallelRegion != auxiliaryWatchMasterRegion) {
+                        // Auxiliary term signal - Try to find existing for parallelRegion
+                        val auxiliaryRegionTermSignalUID = "Term" + parallelRegion.hashCode;
+                        val auxiliaryRegionTermSignals = parentState.signals.filter(e | e.name.equals(auxiliaryRegionTermSignalUID));
+                        var Signal auxiliaryRegionTermSignal = null; 
+                        if (!auxiliaryRegionTermSignals.nullOrEmpty) {
+                            auxiliaryRegionTermSignal = auxiliaryRegionTermSignals.head;
+                        } else {
+                            auxiliaryRegionTermSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                            auxiliaryRegionTermSignal.setName(auxiliaryRegionTermSignalUID);
+                            auxiliaryRegionTermSignal.setIsInput(false);
+                            auxiliaryRegionTermSignal.setIsOutput(false);
+                            auxiliaryRegionTermSignal.setType(ValueType::PURE);
+                            parentState.signals.add(auxiliaryRegionTermSignal);
+                            
+                            for (finalState : parallelRegion.states.filter(e | e.isFinal))  {
+                                for (finalStateTransition : finalState.incomingTransitions) {
+                                   val auxiliaryTermSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                                   auxiliaryTermSignalEmission.setSignal(auxiliaryRegionTermSignal);   
+                                   finalStateTransition.effects.add(auxiliaryTermSignalEmission);                       
+                                }
                             }
                         }
+                        
+                        // Now add regions for all parallelRegions in the auxiliaryWatchMasterState
+                        val auxiliaryWatchRegion  = SyncchartsFactory::eINSTANCE.createRegion();
+                        auxiliaryWatchMasterState.regions.add(auxiliaryWatchRegion);
+                        auxiliaryWatchRegion.setId("Watch" + parallelRegion.hashCode);
+                        val auxiliaryWatchState  = SyncchartsFactory::eINSTANCE.createState();
+                        auxiliaryWatchRegion.states.add(auxiliaryWatchState);
+                        auxiliaryWatchState.setId("I" + parallelRegion.hashCode);
+                        auxiliaryWatchState.setLabel("I");
+                        auxiliaryWatchState.setIsInitial(true);
+                        val auxiliaryTerminatedState  = SyncchartsFactory::eINSTANCE.createState();
+                        auxiliaryWatchRegion.states.add(auxiliaryTerminatedState);
+                        auxiliaryTerminatedState.setId("T" + parallelRegion.hashCode);
+                        auxiliaryTerminatedState.setLabel("T");
+                        auxiliaryTerminatedState.setIsFinal(true);
+                        // Connect
+                        val terminatedRegionTransition = SyncchartsFactory::eINSTANCE.createTransition();
+                        val terminatedRegionTransitionTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                        terminatedRegionTransitionTrigger.setValuedObject(auxiliaryRegionTermSignal);
+                        terminatedRegionTransition.setPriority(1)
+                        terminatedRegionTransition.setIsImmediate(true);
+                        terminatedRegionTransition.setTrigger(terminatedRegionTransitionTrigger);
+                        terminatedRegionTransition.setTargetState(auxiliaryTerminatedState);
+                        auxiliaryWatchState.outgoingTransitions.add(terminatedRegionTransition);
                    }
             }
 
