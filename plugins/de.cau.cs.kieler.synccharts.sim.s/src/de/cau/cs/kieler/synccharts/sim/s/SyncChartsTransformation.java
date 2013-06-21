@@ -61,6 +61,10 @@ public class SyncChartsTransformation implements IHandler {
     public static final String COMMAND_SPLITTRANSITION 
     = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsSplitTransitionTransformation";
 
+    /** The Constant COMMAND_FINALSTATETRANSITION. */
+    public static final String COMMAND_FINALSTATETRANSITION 
+    = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsFinalStateTransitionTransformation";
+
     /** The Constant COMMAND_NORMALTERMINATION. */
     public static final String COMMAND_NORMALTERMINATION 
     = "de.cau.cs.kieler.synccharts.sim.s.SyncChartsNormalTerminationTransformation";
@@ -143,6 +147,9 @@ public class SyncChartsTransformation implements IHandler {
             } else if (command.equals(COMMAND_SPLITTRANSITION)) {
                 transformedModel = (new SyncCharts2Simulation())
                         .transformSplitTransition(rootRegion);
+            } else if (command.equals(COMMAND_FINALSTATETRANSITION)) {
+                transformedModel = (new SyncCharts2Simulation())
+                        .transformFinalStateTransition(rootRegion);
             } else if (command.equals(COMMAND_NORMALTERMINATION)) {
                 transformedModel = (new SyncCharts2Simulation())
                         .transformNormalTermination(rootRegion);

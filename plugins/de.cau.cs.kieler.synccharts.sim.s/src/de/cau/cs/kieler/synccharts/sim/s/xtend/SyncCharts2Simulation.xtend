@@ -665,6 +665,99 @@ class SyncCharts2Simulation {
 
 
     //-------------------------------------------------------------------------
+    //--           F I N A L   S T A T E S    T R A N S I T I O N            --
+    //-------------------------------------------------------------------------
+    
+    // For every transition T from state S inside region R where S is a final state do the following:
+    // Find a common final state F of region R that has no outgoing transition. If no one exists, create one.
+    // Create an Abort signal and add it to R's parent state P.
+    // Go through every region of P other then R and search for final states Q. For all incoming transitions
+    // of Q add an emission of Abort.
+    // Finally add an immediate transition with maximal priority from S to F triggered by Abort.
+
+    def Region transformFinalStateTransition (Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+
+        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+
+        // For every transition in the SyncChart do the transformation
+        // Iterate over a copy of the list  
+        for(targetTransition : targetTransitions) {
+            // This statement we want to modify
+            targetTransition.transformFinalStateTransition(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+         
+     def void transformFinalStateTransition(Transition transition, Region targetRootRegion) {
+         
+         // Only apply this to transitions that are outgoing from a final state
+         if (transition.sourceState.isFinal) {
+               val targetState = transition.targetState;
+               val sourceState = transition.sourceState;
+               val parentRegion = targetState.parentRegion;
+               val parentState = parentRegion.parentState;
+               val maxPrio = sourceState.outgoingTransitions.size + 1;
+               
+               // Set source state not to be final any more
+               sourceState.setIsFinal(false);
+               
+               // Find the one final state for the parentRegion to abort to
+               var State finalStateAbortTarget = null;
+               val finalStates = parentRegion.states.filter(e | e.isFinal && e.outgoingTransitions.nullOrEmpty);
+               if (finalStates.nullOrEmpty) {
+                   // Create one 
+                   finalStateAbortTarget  = SyncchartsFactory::eINSTANCE.createState();
+                   finalStateAbortTarget.setId("final" + parentRegion.hashCode);
+                   finalStateAbortTarget.setLabel("final");
+                   finalStateAbortTarget.setIsInitial(false);
+                   parentRegion.states.add(finalStateAbortTarget);
+               } else {
+                   finalStateAbortTarget = finalStates.head;
+               }
+
+               // auxiliary reset signal
+               var auxiliaryResetSignalUID = "Abort" + transition.hashCode;
+               val auxiliaryResetSignal = KExpressionsFactory::eINSTANCE.createSignal();
+               auxiliaryResetSignal.setName(auxiliaryResetSignalUID);
+               auxiliaryResetSignal.setIsInput(false);
+               auxiliaryResetSignal.setIsOutput(false);
+               auxiliaryResetSignal.setType(ValueType::PURE);
+               parentState.signals.add(auxiliaryResetSignal);
+               
+               // Add aborting transition
+               val resetTransition = SyncchartsFactory::eINSTANCE.createTransition();
+               val auxiliaryResetTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
+               auxiliaryResetTrigger.setValuedObject(auxiliaryResetSignal);
+               resetTransition.setTrigger(auxiliaryResetTrigger);
+               resetTransition.setPriority(maxPrio)
+               resetTransition.setIsImmediate(true);
+               resetTransition.setLabel("#");
+               resetTransition.setTargetState(finalStateAbortTarget);
+               sourceState.outgoingTransitions.add(resetTransition);
+               
+               // To every final state transition inside parentState,
+               // add emission of reset signal
+               
+               for (region : parentState.regions) {
+                   if (region != parentRegion) {
+                        for (finalState : region.states.filter(e | e.isFinal))  {
+                            for (finalStateTransition : finalState.incomingTransitions) {
+                               val auxiliaryResetEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                               auxiliaryResetEmission.setSignal(auxiliaryResetSignal);   
+                               finalStateTransition.effects.add(auxiliaryResetEmission);                       
+                            }
+                        }
+                   }
+               }
+         }
+     }
+
+
+
+    //-------------------------------------------------------------------------
     //--                   C O U N T   D E L A Y S                           --
     //-------------------------------------------------------------------------
 
@@ -693,23 +786,29 @@ class SyncCharts2Simulation {
      // This will encode count delays in transitions.
      def void transformCountDelay(Transition transition, Region targetRootRegion) {
           if (transition.delay > 1) {
-               // auxiliary signal
+               val targetRootState = targetRootRegion.states.get(0);
+               val sourceState = transition.sourceState;
+               
+               // Optimization: If there is no outgoing normal termination out of S then do not mark states as final
+               val existsNormalTermination = !(sourceState.parentRegion.parentState.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).nullOrEmpty);
+
+               // auxiliary trigger signal
                var auxiliarySignalUID = "countDelay" + transition.hashCode;
                val auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
                auxiliarySignal.setName(auxiliarySignalUID);
                auxiliarySignal.setIsInput(false);
                auxiliarySignal.setIsOutput(false);
                auxiliarySignal.setType(ValueType::PURE);
-               
+               targetRootState.signals.add(auxiliarySignal);
+
                val triggerExpression = transition.trigger;
                
+
                // Create auxiliary region R and add it to the source state.
                // Also add the auxiliary signal to this common parent state
                val auxiliaryRegion = SyncchartsFactory::eINSTANCE.createRegion()
-               val commonParentState = transition.sourceState.parentRegion.parentState;
-               transition.sourceState.regions.add(auxiliaryRegion);
-               commonParentState.signals.add(auxiliarySignal);
-               
+               sourceState.regions.add(auxiliaryRegion);
+
                var delay = 0;
                var State previousAuxiliaryState = null;
                var State auxiliaryState = null;
@@ -722,10 +821,10 @@ class SyncCharts2Simulation {
                    auxiliaryState.setLabel(delay + "");
                    auxiliaryState.setIsInitial(delay == 1);
                    auxiliaryRegion.states.add(auxiliaryState);
-
+                   
                    if (previousAuxiliaryState != null) {
                        val connect = SyncchartsFactory::eINSTANCE.createTransition();
-                       connect.setPriority(1);
+                       connect.setPriority(2);
                        connect.targetState = auxiliaryState
                        previousAuxiliaryState.outgoingTransitions.add(connect);
                        connect.setTrigger(triggerExpression.copy);
@@ -734,13 +833,15 @@ class SyncCharts2Simulation {
                            val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
                            auxiliaryEmission.setSignal(auxiliarySignal);
                            connect.effects.add(auxiliaryEmission);
+                       } 
+                       
+                       // Make state final (just in case, because there could be
+                       // a normal termination outgoing)
+                       if (existsNormalTermination) {
+                          auxiliaryState.setIsFinal(true);
                        }
                    }
                }
-               
-               // Make last state final (just in case, because there could be
-               // a normal termination outgoing)
-               auxiliaryState.setIsFinal(true);
                
                // Modify original trigger
                transition.setDelay(0);
