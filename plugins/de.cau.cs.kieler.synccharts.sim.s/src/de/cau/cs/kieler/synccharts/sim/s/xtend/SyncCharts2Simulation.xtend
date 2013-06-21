@@ -690,27 +690,23 @@ class SyncCharts2Simulation {
         // Clone the complete SyncCharts region 
         var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
 
-        var targetRegions = targetRootRegion.eAllContents().toIterable().filter(typeof(Region)).toList();
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
-        // For every region in the SyncChart do the transformation
+        // For every state in the SyncChart do the transformation
         // Iterate over a copy of the list  
-        for(targetRegion : targetRegions) {
-            targetRegion.transformFinalStateTransition(rootRegion);
+        for(targetState : targetStates) {
+            targetState.transformFinalStateTransition(rootRegion);
         }
         
         targetRootRegion;
     }
          
-     def void transformFinalStateTransition(Region region, Region targetRootRegion) {
-         // Consider regions that contain final states with outgoing transitions
-         val consideredFinalStates = region.states.filter(e | e.isFinal && !e.outgoingTransitions.nullOrEmpty);
-
-         if (!consideredFinalStates.nullOrEmpty) {
-            val parentRegion = region;
-            val parentState = parentRegion.parentState;
-
+     def void transformFinalStateTransition(State parentState, Region targetRootRegion) {
+       val parentStatesIsConsidered = parentState.eAllContents().toIterable().filter(typeof(State)).filter(e | e.parentRegion.parentState == parentState && e.isFinal && !e.outgoingTransitions.nullOrEmpty).toList();
+         
+       if (!parentStatesIsConsidered.nullOrEmpty) {
             // Auxiliary reset signal
-            var auxiliaryResetSignalUID = "Abort" + region.hashCode;
+            var auxiliaryResetSignalUID = "Abort" + parentState.hashCode;
             val auxiliaryResetSignal = KExpressionsFactory::eINSTANCE.createSignal();
             auxiliaryResetSignal.setName(auxiliaryResetSignalUID);
             auxiliaryResetSignal.setIsInput(false);
@@ -721,15 +717,15 @@ class SyncCharts2Simulation {
             // Auxiliary watch master region with macro WatchMasterState and AbortedState
             val auxiliaryWatchMasterRegion  = SyncchartsFactory::eINSTANCE.createRegion();
             parentState.regions.add(auxiliaryWatchMasterRegion);
-            auxiliaryWatchMasterRegion.setId("Watch" + region.hashCode);
+            auxiliaryWatchMasterRegion.setId("Watch" + parentState.hashCode);
             val auxiliaryWatchMasterState  = SyncchartsFactory::eINSTANCE.createState();
             auxiliaryWatchMasterRegion.states.add(auxiliaryWatchMasterState);
-            auxiliaryWatchMasterState.setId("Watch" + region.hashCode);
+            auxiliaryWatchMasterState.setId("Watch" + parentState.hashCode);
             auxiliaryWatchMasterState.setLabel("Watch");
             auxiliaryWatchMasterState.setIsInitial(true);
             val auxiliaryAbortedState  = SyncchartsFactory::eINSTANCE.createState();
             auxiliaryWatchMasterRegion.states.add(auxiliaryAbortedState);
-            auxiliaryAbortedState.setId("Aborted" + region.hashCode);
+            auxiliaryAbortedState.setId("Aborted" + parentState.hashCode);
             auxiliaryAbortedState.setLabel("Aborted");
             auxiliaryAbortedState.setIsFinal(true);
             // Connect WatchMaster and Aborted state
@@ -743,32 +739,25 @@ class SyncCharts2Simulation {
             auxiliaryResetSignalEmission.setSignal(auxiliaryResetSignal);   
             abortRegionTransition.effects.add(auxiliaryResetSignalEmission);                       
             
-            
-            // To every final state transition inside parentState,
-            // add emission of reset signal
+            // For every parallel region W
             for (parallelRegion : parentState.regions) {
-                   if (parallelRegion != parentRegion && parallelRegion != auxiliaryWatchMasterRegion) {
+                   if (parallelRegion != auxiliaryWatchMasterRegion) {
                         // Auxiliary term signal - Try to find existing for parallelRegion
                         val auxiliaryRegionTermSignalUID = "Term" + parallelRegion.hashCode;
-                        val auxiliaryRegionTermSignals = parentState.signals.filter(e | e.name.equals(auxiliaryRegionTermSignalUID));
                         var Signal auxiliaryRegionTermSignal = null; 
-                        if (!auxiliaryRegionTermSignals.nullOrEmpty) {
-                            auxiliaryRegionTermSignal = auxiliaryRegionTermSignals.head;
-                        } else {
-                            auxiliaryRegionTermSignal = KExpressionsFactory::eINSTANCE.createSignal();
-                            auxiliaryRegionTermSignal.setName(auxiliaryRegionTermSignalUID);
-                            auxiliaryRegionTermSignal.setIsInput(false);
-                            auxiliaryRegionTermSignal.setIsOutput(false);
-                            auxiliaryRegionTermSignal.setType(ValueType::PURE);
-                            parentState.signals.add(auxiliaryRegionTermSignal);
+                        auxiliaryRegionTermSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                        auxiliaryRegionTermSignal.setName(auxiliaryRegionTermSignalUID);
+                        auxiliaryRegionTermSignal.setIsInput(false);
+                        auxiliaryRegionTermSignal.setIsOutput(false);
+                        auxiliaryRegionTermSignal.setType(ValueType::PURE);
+                        parentState.signals.add(auxiliaryRegionTermSignal);
                             
-                            for (finalState : parallelRegion.states.filter(e | e.isFinal))  {
+                        for (finalState : parallelRegion.states.filter(e | e.isFinal))  {
                                 for (finalStateTransition : finalState.incomingTransitions) {
                                    val auxiliaryTermSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
                                    auxiliaryTermSignalEmission.setSignal(auxiliaryRegionTermSignal);   
                                    finalStateTransition.effects.add(auxiliaryTermSignalEmission);                       
                                 }
-                            }
                         }
                         
                         // Now add regions for all parallelRegions in the auxiliaryWatchMasterState
@@ -795,42 +784,54 @@ class SyncCharts2Simulation {
                         terminatedRegionTransition.setTargetState(auxiliaryTerminatedState);
                         auxiliaryWatchState.outgoingTransitions.add(terminatedRegionTransition);
                    }
+            } // end for every parallelRegion
+           
+            for (region : parentState.regions) {
+                // Consider regions that contain final states with outgoing transitions
+                val consideredFinalStates = region.states.filter(e | e.isFinal && !e.outgoingTransitions.nullOrEmpty);
+
+                if (!consideredFinalStates.nullOrEmpty) {
+                    val parentRegion = region;
+
+                    // Find the one final state for the parentRegion to abort to
+                    var State finalStateAbortTarget = null;
+                    val finalStates = parentRegion.states.filter(e | e.isFinal && e.outgoingTransitions.nullOrEmpty);
+                    if (finalStates.nullOrEmpty) {
+                        // Create one 
+                        finalStateAbortTarget  = SyncchartsFactory::eINSTANCE.createState();
+                        finalStateAbortTarget.setId("final" + parentRegion.hashCode);
+                        finalStateAbortTarget.setLabel("final");
+                        finalStateAbortTarget.setIsInitial(false);
+                        parentRegion.states.add(finalStateAbortTarget);
+                    } else {
+                        finalStateAbortTarget = finalStates.head;
+                    }
+            
+                    // Now handle the consider states, make them non-final and add abort transition
+                    for (state : consideredFinalStates) {
+                        val sourceState = state;
+                        val maxPrio = sourceState.outgoingTransitions.size + 1;
+               
+                        // Set source state not to be final any more
+                        sourceState.setIsFinal(false);
+               
+                        // Add aborting transition
+                        val resetTransition = SyncchartsFactory::eINSTANCE.createTransition();
+                        val auxiliaryResetTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                        auxiliaryResetTrigger.setValuedObject(auxiliaryResetSignal);
+                        resetTransition.setTrigger(auxiliaryResetTrigger);
+                        resetTransition.setPriority(maxPrio)
+                        resetTransition.setIsImmediate(true);
+                        resetTransition.setLabel("#");
+                        resetTransition.setTargetState(finalStateAbortTarget);
+                        sourceState.outgoingTransitions.add(resetTransition);
+                    } // end for
+                } // end if considered states <> null                
             }
 
-            // Find the one final state for the parentRegion to abort to
-            var State finalStateAbortTarget = null;
-            val finalStates = parentRegion.states.filter(e | e.isFinal && e.outgoingTransitions.nullOrEmpty);
-            if (finalStates.nullOrEmpty) {
-                   // Create one 
-                   finalStateAbortTarget  = SyncchartsFactory::eINSTANCE.createState();
-                   finalStateAbortTarget.setId("final" + parentRegion.hashCode);
-                   finalStateAbortTarget.setLabel("final");
-                   finalStateAbortTarget.setIsInitial(false);
-                   parentRegion.states.add(finalStateAbortTarget);
-            } else {
-                   finalStateAbortTarget = finalStates.head;
-            }
-            
-            // Now handle the consider states, make them non-final and add abort transition
-            for (state : consideredFinalStates) {
-               val sourceState = state;
-               val maxPrio = sourceState.outgoingTransitions.size + 1;
-               
-               // Set source state not to be final any more
-               sourceState.setIsFinal(false);
-               
-               // Add aborting transition
-               val resetTransition = SyncchartsFactory::eINSTANCE.createTransition();
-               val auxiliaryResetTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
-               auxiliaryResetTrigger.setValuedObject(auxiliaryResetSignal);
-               resetTransition.setTrigger(auxiliaryResetTrigger);
-               resetTransition.setPriority(maxPrio)
-               resetTransition.setIsImmediate(true);
-               resetTransition.setLabel("#");
-               resetTransition.setTargetState(finalStateAbortTarget);
-               sourceState.outgoingTransitions.add(resetTransition);
-            }
-         }
+
+           
+       }  // end if considered
      }
 
 
