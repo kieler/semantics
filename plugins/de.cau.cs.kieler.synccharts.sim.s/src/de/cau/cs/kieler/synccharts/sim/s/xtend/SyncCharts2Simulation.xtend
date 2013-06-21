@@ -358,7 +358,6 @@ class SyncCharts2Simulation {
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
         for(targetState :  ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
             targetState.transformNormalTermination(targetRootRegion);
         }
         
@@ -495,7 +494,6 @@ class SyncCharts2Simulation {
         // For every state in the SyncChart do the transformation
         // Iterate over a copy of the list  
         for(targetState : targetStates) {
-            // This statement we want to modify
             targetState.transformSurfaceDepth(targetRootRegion);
         }
         
@@ -625,7 +623,6 @@ class SyncCharts2Simulation {
         // For every transition in the SyncChart do the transformation
         // Iterate over a copy of the list  
         for(targetTransition : targetTransitions) {
-            // This statement we want to modify
             targetTransition.transformSplitTransition(targetRootRegion);
         }
         
@@ -668,64 +665,83 @@ class SyncCharts2Simulation {
     //--           F I N A L   S T A T E S    T R A N S I T I O N            --
     //-------------------------------------------------------------------------
     
-    // For every transition T from state S inside region R where S is a final state do the following:
-    // Find a common final state F of region R that has no outgoing transition. If no one exists, create one.
+    // For every region R that contains final states with outgoing transitions do the following:
     // Create an Abort signal and add it to R's parent state P.
-    // Go through every region of P other then R and search for final states Q. For all incoming transitions
-    // of Q add an emission of Abort.
-    // Finally add an immediate transition with maximal priority from S to F triggered by Abort.
+    // Go through every region of P other then R and search for final states Q_1..n. For all incoming transitions
+    // of all Q_1..n add an emission of Abort.
+    // Find a common final state F of region R that has no outgoing transition. If no one exists, create one.
+    
+    // For every final state S with outgoing transitions inside R do the following:
+    // Finally add an immediate transition with maximal (lowest) priority from S to F triggered by Abort.
+
 
     def Region transformFinalStateTransition (Region rootRegion) {
         // Clone the complete SyncCharts region 
         var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
 
-        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+        var targetRegions = targetRootRegion.eAllContents().toIterable().filter(typeof(Region)).toList();
 
-        // For every transition in the SyncChart do the transformation
+        // For every region in the SyncChart do the transformation
         // Iterate over a copy of the list  
-        for(targetTransition : targetTransitions) {
-            // This statement we want to modify
-            targetTransition.transformFinalStateTransition(targetRootRegion);
+        for(targetRegion : targetRegions) {
+            targetRegion.transformFinalStateTransition(rootRegion);
         }
         
         targetRootRegion;
     }
          
-     def void transformFinalStateTransition(Transition transition, Region targetRootRegion) {
-         
-         // Only apply this to transitions that are outgoing from a final state
-         if (transition.sourceState.isFinal) {
-               val targetState = transition.targetState;
-               val sourceState = transition.sourceState;
-               val parentRegion = targetState.parentRegion;
-               val parentState = parentRegion.parentState;
-               val maxPrio = sourceState.outgoingTransitions.size + 1;
-               
-               // Set source state not to be final any more
-               sourceState.setIsFinal(false);
-               
-               // Find the one final state for the parentRegion to abort to
-               var State finalStateAbortTarget = null;
-               val finalStates = parentRegion.states.filter(e | e.isFinal && e.outgoingTransitions.nullOrEmpty);
-               if (finalStates.nullOrEmpty) {
+     def void transformFinalStateTransition(Region region, Region targetRootRegion) {
+         // Consider regions that contain final states with outgoing transitions
+         val consideredFinalStates = region.states.filter(e | e.isFinal && !e.outgoingTransitions.nullOrEmpty);
+
+         if (!consideredFinalStates.nullOrEmpty) {
+            val parentRegion = region;
+            val parentState = parentRegion.parentState;
+
+            // Auxiliary reset signal
+            var auxiliaryResetSignalUID = "Abort" + region.hashCode;
+            val auxiliaryResetSignal = KExpressionsFactory::eINSTANCE.createSignal();
+            auxiliaryResetSignal.setName(auxiliaryResetSignalUID);
+            auxiliaryResetSignal.setIsInput(false);
+            auxiliaryResetSignal.setIsOutput(false);
+            auxiliaryResetSignal.setType(ValueType::PURE);
+            parentState.signals.add(auxiliaryResetSignal);
+            
+            // To every final state transition inside parentState,
+            // add emission of reset signal
+            for (parallelRegion : parentState.regions) {
+                   if (parallelRegion != parentRegion) {
+                        for (finalState : parallelRegion.states.filter(e | e.isFinal))  {
+                            for (finalStateTransition : finalState.incomingTransitions) {
+                               val auxiliaryResetEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                               auxiliaryResetEmission.setSignal(auxiliaryResetSignal);   
+                               finalStateTransition.effects.add(auxiliaryResetEmission);                       
+                            }
+                        }
+                   }
+            }
+
+            // Find the one final state for the parentRegion to abort to
+            var State finalStateAbortTarget = null;
+            val finalStates = parentRegion.states.filter(e | e.isFinal && e.outgoingTransitions.nullOrEmpty);
+            if (finalStates.nullOrEmpty) {
                    // Create one 
                    finalStateAbortTarget  = SyncchartsFactory::eINSTANCE.createState();
                    finalStateAbortTarget.setId("final" + parentRegion.hashCode);
                    finalStateAbortTarget.setLabel("final");
                    finalStateAbortTarget.setIsInitial(false);
                    parentRegion.states.add(finalStateAbortTarget);
-               } else {
+            } else {
                    finalStateAbortTarget = finalStates.head;
-               }
-
-               // auxiliary reset signal
-               var auxiliaryResetSignalUID = "Abort" + transition.hashCode;
-               val auxiliaryResetSignal = KExpressionsFactory::eINSTANCE.createSignal();
-               auxiliaryResetSignal.setName(auxiliaryResetSignalUID);
-               auxiliaryResetSignal.setIsInput(false);
-               auxiliaryResetSignal.setIsOutput(false);
-               auxiliaryResetSignal.setType(ValueType::PURE);
-               parentState.signals.add(auxiliaryResetSignal);
+            }
+            
+            // Now handle the consider states, make them non-final and add abort transition
+            for (state : consideredFinalStates) {
+               val sourceState = state;
+               val maxPrio = sourceState.outgoingTransitions.size + 1;
+               
+               // Set source state not to be final any more
+               sourceState.setIsFinal(false);
                
                // Add aborting transition
                val resetTransition = SyncchartsFactory::eINSTANCE.createTransition();
@@ -737,21 +753,7 @@ class SyncCharts2Simulation {
                resetTransition.setLabel("#");
                resetTransition.setTargetState(finalStateAbortTarget);
                sourceState.outgoingTransitions.add(resetTransition);
-               
-               // To every final state transition inside parentState,
-               // add emission of reset signal
-               
-               for (region : parentState.regions) {
-                   if (region != parentRegion) {
-                        for (finalState : region.states.filter(e | e.isFinal))  {
-                            for (finalStateTransition : finalState.incomingTransitions) {
-                               val auxiliaryResetEmission = SyncchartsFactory::eINSTANCE.createEmission();
-                               auxiliaryResetEmission.setSignal(auxiliaryResetSignal);   
-                               finalStateTransition.effects.add(auxiliaryResetEmission);                       
-                            }
-                        }
-                   }
-               }
+            }
          }
      }
 
