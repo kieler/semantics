@@ -477,8 +477,8 @@ class SyncCharts2Simulation {
     // For T_i create a conditional C_i. Connect C_i-1 and C_i with a true triggered immediate transition
     // of priority 2. Set priority of T_i to 1. Note that T_i's original priority is now implicitly encoded
     // by the sequential order of evaluating the conditionals C_1..n.
-    // The last conditional C_n becomes a normal state (the explicit depth of S).
-    // Connect C_n with C_1 using a transition that emits isDepth_S.
+    // The last conditional C_n connect with a new a normal state D (the explicit depth of S).
+    // Connect D with C_1 using a transition that emits isDepth_S.
     
     // Note that conditionals cannot be marked to be initial. Hence, if a state S is marked initial 
     // then an additional initial state I with a true triggered immediate transition to S will
@@ -525,7 +525,7 @@ class SyncCharts2Simulation {
          }             
            
          // Create auxiliary signal
-         var isDepthSignalUID = "isDepth_" + state.id;
+         var isDepthSignalUID = "isDepth_" + parentRegion.hashCode + "_" + state.id;
          val isDepthSignal = KExpressionsFactory::eINSTANCE.createSignal();
          isDepthSignal.setName(isDepthSignalUID);
          isDepthSignal.setIsInput(false);
@@ -584,15 +584,26 @@ class SyncCharts2Simulation {
             previousSurfState = surfState; 
          }
          
-         // Last state will become depth State
-         val depthState  = surfState;
+         // Add an additional last state that will become depth State
+         val depthState  = SyncchartsFactory::eINSTANCE.createState();
          depthState.setType(StateType::NORMAL);
          depthState.setId(stateId); // + "Depth");
          depthState.setLabel(stateLabel); // + "Depth");
+         parentRegion.states.add(depthState);
+         // Connect
+         val connect = SyncchartsFactory::eINSTANCE.createTransition();
+         connect.setIsImmediate(true);
+         connect.setLabel("#");
+         connect.setPriority(2);
+         connect.setTargetState(depthState);
+         surfState.outgoingTransitions.add(connect);
          
          // Connect back depth with surface state
          val connectBack = SyncchartsFactory::eINSTANCE.createTransition();
-         connectBack.setPriority(2);
+         // This MUST be highest priority so that the control flow restarts and takes other 
+         // outgoing transition.
+         // There should not be any other outgoing transition.
+         connectBack.setPriority(1);
          connectBack.setTargetState(surfaceState);
          depthState.outgoingTransitions.add(connectBack);
          val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
