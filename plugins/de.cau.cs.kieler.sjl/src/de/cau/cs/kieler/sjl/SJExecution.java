@@ -13,8 +13,11 @@
  */
 package de.cau.cs.kieler.sjl;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.List;
@@ -168,9 +171,18 @@ public class SJExecution extends AbstractExecution {
             if (filePath.lastIndexOf("\\") > 0) {
                 filePathRoot = filePath.substring(0, filePath.lastIndexOf("\\"));
             }
+            
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            
             BatchCompiler.compile("-verbose -classpath " + bundleLocation
                     + " -source 1.5 -target 1.5 -classpath " + filePathRoot + " " + filePath,
-                    new PrintWriter(System.out), new PrintWriter(System.err), null);
+                    new PrintWriter(System.out), new PrintWriter(os), null);
+            
+            // Test for error message
+            String errorMessage = os.toString();
+            if (errorMessage.length() != 0) {
+                throw new IOException(errorMessage);
+            }
         }
 
         // Instantiate the dynamic class loader
@@ -214,8 +226,12 @@ public class SJExecution extends AbstractExecution {
         classFileName2 += ".class";
         URL classFileURL1 = dynamicClassLoader.getResource(classFileName1);
         URL classFileURL2 = dynamicClassLoader.getResource(classFileName2);
-        returnFiles[0] = new File(classFileURL1.getFile());
-        returnFiles[1] = new File(classFileURL2.getFile());
+        if (classFileURL1 != null) {
+            returnFiles[0] = new File(classFileURL1.getFile());
+        }
+        if (classFileURL2 != null) {
+            returnFiles[1] = new File(classFileURL2.getFile());
+        }
 
         // Instantiate new class as SJProgramWithSignals
         Class<?> cls;
