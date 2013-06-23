@@ -180,7 +180,8 @@ public class SJExecution extends AbstractExecution {
             
             // Test for error message
             String errorMessage = os.toString();
-            if (errorMessage.length() != 0) {
+            boolean foundError = errorMessage.contains("ERROR in");
+            if (foundError && errorMessage.length() != 0) {
                 throw new IOException(errorMessage);
             }
         }

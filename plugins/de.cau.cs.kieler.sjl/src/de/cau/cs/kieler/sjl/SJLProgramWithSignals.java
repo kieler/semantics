@@ -404,6 +404,25 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Checks by name whether a signal exists in the SJ program.
+     *
+     * @param key the key
+     * @return true, if successful
+     */
+    public boolean hasSignal(String key) {
+        LinkedList<String> fieldNames = getSignalNames();
+        for (String fieldName : fieldNames) {
+            if (fieldName.equals(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // -------------------------------------------------------------------------
+
 
     /**
      * Gets all signal names declared.

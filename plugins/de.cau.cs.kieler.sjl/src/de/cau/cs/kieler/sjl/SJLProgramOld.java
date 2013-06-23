@@ -27,7 +27,7 @@ import java.util.List;
  * @kieler.rating 2013-05-23 proposed
  * 
  */
-abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
+abstract public class SJLProgramOld<State extends Enum<?>> implements Cloneable {
 
     /** A flag indicating debug output should be collected. */
     private boolean debug = false;
@@ -35,18 +35,16 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
     /** The debug message of the latest executed tick. */
     private String debugMessage = "";
 
-    // /** Enabled means NOT-paused for a tick. */
-    // private PriorityQueue<Thread> enabledThreads;
-    //
-    // /** Alive means NOT-aborted and NOT-terminated. */
-    // private PriorityQueue<Thread> aliveThreads;
+    /** Enabled means NOT-paused for a tick. */
+    private PriorityQueue<Thread> enabledThreads;
 
-    private int maxGroup;
+    /** Alive means NOT-aborted and NOT-terminated. */
+    private PriorityQueue<Thread> aliveThreads;
 
     /** The current thread that is executed. */
-    private int currentThread;
-
-    /** The last tick time in Nanoseconds. */
+    private Thread currentThread;
+    
+    /** The last tick time in Milliseconds. */
     private long lastTickTime;
 
     // -------------------------------------------------------------------------
@@ -55,18 +53,14 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public SJLProgram<?> clone() throws CloneNotSupportedException {
+    public SJLProgramOld<?> clone() throws CloneNotSupportedException {
         @SuppressWarnings("rawtypes")
-        SJLProgram clone = (SJLProgram<?>) super.clone();
-        clone._desc = _desc.clone();
-        clone._parent = _parent.clone();
-        clone._pc =  (ArrayList<State>)_pc.clone();
-        clone.alive = alive.clone();
-        clone.enabled = enabled.clone();
-        clone.currentThread = currentThread;
+        SJLProgramOld clone = (SJLProgramOld<?>) super.clone();
+        clone.enabledThreads = enabledThreads.cloneDeep();
+        clone.aliveThreads = aliveThreads.cloneDeep();
         return clone;
-    }
-
+    }    
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -79,27 +73,15 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
      * @param maxPrio
      *            the max priority
      */
-    public SJLProgram(State startState, int startPrio, int maxPrio) {
-        this.maxGroup = (maxPrio / 32) + 1;
+    public SJLProgramOld(State startState, int startPrio, int maxPrio) {
         // Create new priority queue for alive threads
-        this.alive = new int[maxGroup];
-        this.enabled = new int[maxGroup];
-
-        this._pc = new ArrayList<State>(maxPrio + 1);
-        // Initialize pc array with the start state
-        for (int i = 0; i < maxPrio + 1; i++) {
-            this._pc.add(startState);
-        }
-
-        this._desc = new int[maxPrio + 1][maxGroup];
-        this._parent = new int[maxPrio + 1];
-        // Create the main thread and
-        // add the main thread as an alive thread
-        setAdd(alive, startPrio);
-        // It has no parent
-        _parent[startPrio] = -1;
+        aliveThreads = new PriorityQueue<Thread>(maxPrio);
+        // Create the main thread
+        Thread startThread = new Thread(startState, null);
+        // Add the main thread as an alive thread
+        aliveThreads.insert(startThread, startPrio);
         // Set the start thread as the current thread
-        currentThread = startPrio;
+        currentThread = startThread;
         // Note that the enabled threads will be cloned from the alive threads
         // in the doTick() method
     }
@@ -115,12 +97,12 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
 
     /**
      * Do a non benchmarked tick.
-     * 
+     *
      * @return true, if successful
      */
     public boolean doTick() {
         // Clone the alive threads means making all alive threads enabled for the current tick
-        setCopyFrom(enabled, alive);
+        enabledThreads = aliveThreads.cloneShallow();
         // Run the tick() method
         tick();
         lastTickTime = -1;
@@ -129,25 +111,24 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * Do a benchmarked tick with a specific number of runs.
-     * 
-     * @param number
-     *            the number
+     *
+     * @param number the number
      * @return true, if successful
      */
-    public boolean doTick(int number) {
+     public boolean doTick(int number) {
         // Clone the alive threads means making all alive threads enabled
-        setCopyFrom(enabled, alive);
+        enabledThreads = aliveThreads.cloneShallow();
         // Clone the SJLProgram number of times
-        SJLProgram<?>[] programs = new SJLProgram[number];
+        SJLProgramOld<?>[] programs = new SJLProgramOld[number];
         for (int i = 0; i < number; i++) {
             Object o;
             try {
                 o = this.clone();
-                if (o instanceof SJLProgram) {
-                    programs[i] = ((SJLProgram<?>) o);
+                if (o instanceof SJLProgramOld) {
+                   programs[i] = ((SJLProgramOld<?>)o);
                 }
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
@@ -157,14 +138,14 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
         long t1 = getUserTime();
         for (int i = 0; i < number; i++) {
             // Run the tick() method ith time in the benchmark
-            programs[i].tick();
+           programs[i].tick();
         }
         // End the benchmark, get nanoseconds
         long t2 = getUserTime();
         // Run the tick() method
         tick();
         // Norm taken time to the number of runs
-        lastTickTime = (t2 - t1) / number;
+        lastTickTime = (t2 - t1)/number;
         // Return whether the program terminated
         return isTerminated();
     }
@@ -173,7 +154,12 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
 
     public boolean isTickDone() {
         // Return whether there are no more enabled threads
-        return setIsEmpty(enabled);
+        if (enabledThreads.getFirst() ==  null) {
+            if (debug) {
+                debug("\n" + getDebugAliveThreads(), null);
+            }
+        }
+        return (enabledThreads.getFirst() ==  null);
     }
 
     // -------------------------------------------------------------------------
@@ -187,26 +173,10 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
     public boolean isTerminated() {
         // Return whether there are no more threads that would be enabled for all following
         // ticks, i.e., there are no more alive threads
-        return setIsEmpty(alive);
+        return (aliveThreads.size == 0);
     }
 
     // -------------------------------------------------------------------------
-
-    private int bitScanReverse(int[] set) {
-        for (int group = maxGroup - 1; group >= 0; group--) {
-            int groupInternalId = -1;
-            for (int bit = 0, maxBits = 31, test = ~(~0 >>> 1); 0 != test; ++bit, test >>>= 1) {
-                if (test == (set[group] & test)) {
-                    groupInternalId = (maxBits - bit);
-                    break;
-                }
-            }
-            if (groupInternalId != -1) {
-                return getThreadId(group, groupInternalId);
-            }
-        }
-        return -1;
-    }
 
     /**
      * The central state() method should be used within the tick() method of derived classes to
@@ -215,18 +185,11 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
      * @return the state
      */
     protected State state() {
-        currentThread = bitScanReverse(enabled);
-        if (currentThread != -1) {
-            return _pc.get(currentThread);
-        }
-        // This is an error: No enabled thread could be found
-        return null;
-
-        // // Update the current thread
-        // currentThread = enabledThreads.getFirst();
-        // // Find the new currentState
-        // debug("Updating state", currentThread);
-        // return currentThread.state;
+        // Update the current thread
+        currentThread = enabledThreads.getFirst();
+        // Find the new currentState
+        debug("Updating state", currentThread);
+        return currentThread.state;
     }
 
     // -------------------------------------------------------------------------
@@ -235,40 +198,38 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
 
     protected void fork(State forkedState, int prio) {
         debug("Forking", currentThread, forkedState);
-        // Create a new thread and
-        // add child-dependency to current one
-        setAdd(_desc[currentThread], prio);
-        _pc.set(prio, forkedState);
-        // Add parent relation
-        _parent[prio] = currentThread;
+        // Create a new thread
+        Thread forkedThread = new Thread(forkedState, currentThread);
+        // Add child-dependency to current one
+        currentThread.children.add(forkedThread);
         // Add new thread as an alive & enabled one
-        setAdd(alive, prio);
-        setAdd(enabled, prio);
+        aliveThreads.insert(forkedThread, prio);
+        enabledThreads.insert(forkedThread, prio);
     }
 
     // -------------------------------------------------------------------------
 
     protected void termB() {
         debug("Terminating", currentThread);
-        // Do not do the following
-        // if (_parent[currentThread] != -1) {
-        // int parentThread = _parent[currentThread];
-        // //Remove current child from its parents descendants
-        // //setDelete(_desc[parentThread], currentThread);
-        // }
+        if (this.currentThread.parent != null) {
+            this.currentThread.parent.childrenRunning.remove(currentThread);
+        }
 
+// PRIOR IMPLEMENTATION        
+//        // Set the terminated flag for the current thread
+//        currentThread.terminated = true;
         // Remove the thread from the active and the alive ones
-        setDelete(enabled, currentThread);
-        setDelete(alive, currentThread);
-
-        // Do NOT perform the following code as it destroys the
-        // parent-child relations necessary for aborts!
-        //
-        // // Remove the thread from its parents children list
-        // if (currentThread.parent != null) {
-        // currentThread.parent.children.remove(currentThread);
-        // }
-
+        enabledThreads.remove(currentThread);
+        aliveThreads.remove(currentThread);
+        
+// Do NOT perform the following code as it destroys the
+// parent-child relations necessary for aborts!
+//        
+//        // Remove the thread from its parents children list
+//        if (currentThread.parent != null) {
+//            currentThread.parent.children.remove(currentThread);
+//        }
+        
         // Note that at this point there may be descendant child threads
         // that are still active and alive!
     }
@@ -280,7 +241,7 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
         // This is WRONG -> termB();
 
         // Remove the thread from the active ones (it is paused now)
-        setDelete(enabled, currentThread);
+        enabledThreads.remove(currentThread);
         debug("Pausing", currentThread);
         // The halted thread will continue at the label it
         // currently is in the next tick and again execute haltB
@@ -291,16 +252,12 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
     protected void abort() {
         debug("Aborting children of", currentThread);
         // Abort all descendants (all children and children of children...)
-        int nextChildThread = -1;
-        do {
-            nextChildThread = bitScanReverse(_desc[currentThread]);
-            if (nextChildThread != -1) {
-                // Remove the child from the descendants
-                setDelete(_desc[currentThread], nextChildThread);
-                // Recursively abort children
-                abort(nextChildThread);    
-            }
-        } while (nextChildThread != -1);
+        for (Thread childThread : currentThread.children) {
+            // Recursively abort children
+            abort(childThread);
+        }
+        // Remove children
+        currentThread.children.clear();
     }
 
     // -------------------------------------------------------------------------
@@ -308,7 +265,7 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
     protected void gotoB(State resumeState) {
         debug("Goto of", currentThread, resumeState);
         // Update the state label
-        _pc.set(currentThread, resumeState);
+        currentThread.state = resumeState;
     }
 
     // -------------------------------------------------------------------------
@@ -316,8 +273,8 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
     protected void pauseB(State resumeState) {
         // Update the state label
         gotoB(resumeState);
-        // Remove the thread from the active ones (it is paused now)'
-        setDelete(enabled, currentThread);
+        // Remove the thread from the active ones (it is paused now)
+        enabledThreads.remove(currentThread);
         debug("Pausing", currentThread);
     }
 
@@ -326,37 +283,29 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
     protected void prioB(int prio, State resumeState) {
         // Update the state label
         gotoB(resumeState);
-
-        if (prio != currentThread) {
-            // Update thread ID's
-            _desc[prio] = _desc[currentThread];
-            _parent[prio] = _parent[currentThread];
-            // Remove children for old thread ID/prio
-            _desc[currentThread] = new int[maxGroup];
-            // setClear(_desc[currentThread]);
-            _parent[currentThread] = -1;
-
-            // Update thread ID in enabled & alive lists
-            setDelete(enabled, currentThread);
-            setDelete(alive, currentThread);
-            setAdd(enabled, prio);
-            setAdd(alive, prio);
-
-            // Update thread ID for all parents
-            for (int i = 0; i < _parent.length; i++) {
-                if (_parent[i] == currentThread) {
-                    _parent[i] = prio;
-                }
-            }
-        }
+        // Reorder elements
+        enabledThreads.update(currentThread, prio);
+        aliveThreads.update(currentThread, prio);
     }
 
     // -------------------------------------------------------------------------
 
     protected boolean join() {
         // True iff all children have terminated
-        // == if none of the children is contained in enabled, then the sets are disjoint
-        return (setDisjoint(alive, _desc[currentThread]));
+        return (this.currentThread.childrenRunning.size() == 0);
+
+// PRIOR IMPLEMENTATION        
+//        // Go thru all (direct) children and check whether they have terminated
+//        for (Thread child : currentThread.children) {
+//            if (!child.terminated) {
+//                debug("Join failed of", currentThread);
+//                // If any child not terminated yet, return false
+//                return false;
+//            }
+//        }
+//        debug("Join sucessfull of", currentThread);
+//        // Return true if all children terminated
+//        return true;
     }
 
     // -------------------------------------------------------------------------
@@ -364,43 +313,81 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
     // -------------------------------------------------------------------------
 
     protected void transB(State stateLabel) {
-        if (setIsEmpty(_desc[currentThread])) {
+        if (currentThread.children.size() > 0) {
             abort();
         }
         gotoB(stateLabel);
     }
 
     protected int currentPrio() {
-        return currentThread;
+        return enabledThreads.getPrio(currentThread);
     }
 
-    protected State getCurrentLabel() {
-        return (_pc.get(currentThread));
+    protected Thread getCurrentThread() {
+        return currentThread;
     }
 
     // -------------------------------------------------------------------------
     // -- INTERNAL METHODS / CLASSES
     // -------------------------------------------------------------------------
 
-    private void abort(int thread) {
+    private void abort(Thread thread) {
         debug("Aborting", thread);
         // Remove the thread from active and alive ones
-        setDelete(enabled, thread);
-        setDelete(alive, thread);
+        enabledThreads.remove(thread);
+        aliveThreads.remove(thread);
         // Abort all descendants (all children and children of children...)
-        int nextChildThread = -1;
-        do {
-            nextChildThread = bitScanReverse(_desc[thread]);
-            if (nextChildThread != -1) {
-                // Remove the child from the descendants
-                setDelete(_desc[thread], nextChildThread);
-                // Recursively abort children
-                abort(nextChildThread);    
-            }
-        } while (nextChildThread != -1);
+        for (Thread childThread : thread.children) {
+            // Recursively abort children
+            abort(childThread);
+        }
+        // Remove children
+        thread.children.clear();
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * The internal Thread class encompasses the parent-child relations. Fields have been declared
+     * public for direct access to them.
+     */
+    protected class Thread implements Cloneable {
+        //public boolean terminated;
+        public State state;
+        public ArrayList<Thread> children = new ArrayList<Thread>();
+        public ArrayList<Thread> childrenRunning = new ArrayList<Thread>();
+        public Thread parent;
+
+        @SuppressWarnings("unchecked")
+        public Thread clone() throws CloneNotSupportedException {
+            Thread clone = (Thread) super.clone();
+            clone.children = (ArrayList<Thread>) children.clone();
+            clone.childrenRunning = (ArrayList<Thread>) childrenRunning.clone();
+            return clone;
+        }    
+        
+        public boolean terminated() {
+            if (this.parent != null) {
+                return (!this.parent.childrenRunning.contains(this));
+            }
+            return true;
+        }
+        
+        public String toString() {
+            return this.state.name() + " (term:" + this.terminated() + ", children:"
+                    + this.children.size() + ")";
+        }
+
+        public Thread(State state, Thread parent) {
+            this.state = state;
+            this.parent = parent;
+            if (parent != null && parent.childrenRunning != null) {
+                parent.childrenRunning.add(this);
+            }
+            //this.terminated = false;
+        }
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -411,7 +398,7 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
      * @param thread
      *            the thread
      */
-    private void debug(String action, int thread) {
+    private void debug(String action, Thread thread) {
         debug(action, thread, null);
     }
 
@@ -427,13 +414,18 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
      * @param forkedOrResumedState
      *            the forked or resumed state
      */
-    private void debug(String action, int thread, State forkedOrResumedState) {
+    private void debug(String action, Thread thread, State forkedOrResumedState) {
         if (debug) {
             String threadState = "";
             String threadPrio = "";
-            if (thread != -1) {
-                threadState = (_pc.get(thread)).name();
-                threadPrio = thread + "";
+            if (thread != null) {
+                threadPrio = aliveThreads.getPrio(thread) + "";
+                if (thread.state != null) {
+                    threadState = thread.state + "";
+                }
+                if (threadPrio.length() > 0) {
+                    threadPrio = " (" + threadPrio + ")";
+                }
             }
             if (forkedOrResumedState == null) {
                 debugMessage += (action + " " + threadState + threadPrio + "\n");
@@ -483,77 +475,71 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
 
     /**
      * Gets the hierarchical debug information of all alive threads.
-     * 
+     *
      * @return the debug alive threads
      */
     public String getDebugAliveThreads() {
-        if (setIsEmpty(alive)) {
+        if ( this.aliveThreads == null) {
             return "";
         }
-        List<Integer> visitedThreadList = new LinkedList<Integer>();
+        List<Thread> threadList = this.aliveThreads.getQueue();
+        List<Thread> visitedThreadList = new LinkedList<Thread>();
         String serialization = "";
-
-        for (int thread : alive) {
+        
+        for (Thread thread: threadList) {
             // If we not serialized this before
-            if (thread > 0 && !visitedThreadList.contains(thread)) {
+            if (thread != null && !visitedThreadList.contains(thread)) {
                 // Get the root thread
-                int rootThread = getRootParent(thread);
-                serialization += serializeThread(rootThread, "│ ", "  ", "", visitedThreadList);
+                Thread rootThread = getRootParent(thread);
+                serialization += serializeThread(rootThread, "│ ", "  " , "",  visitedThreadList);
             }
         }
         return serialization;
     }
-
+    
     // -------------------------------------------------------------------------
-
+    
     /**
      * Serialize thread.
-     * 
-     * @param thread
-     *            the thread
-     * @param tabC
-     *            the tab c
-     * @param tabN
-     *            the tab n
-     * @param currentTab
-     *            the current tab
-     * @param visitedThreadList
-     *            the visited thread list
+     *
+     * @param thread the thread
+     * @param tabC the tab c
+     * @param tabN the tab n
+     * @param currentTab the current tab
+     * @param visitedThreadList the visited thread list
      * @return the string
      */
-    private String serializeThread(int thread, String tabC, String tabN, String currentTab,
-            List<Integer> visitedThreadList) {
+    private String serializeThread(Thread thread, String tabC, String tabN, String currentTab, List<Thread> visitedThreadList) {
         visitedThreadList.add(thread);
         String serialization = "";
-        serialization += currentTab + "└─• " + _pc.get(thread) + "(" + thread + ")\n";
+        serialization += currentTab + "└─• " + thread.toString() + "\n";
         String childrenSerialization = "";
-        if (!setIsEmpty(_desc[thread])) {
-            for (int child : _desc[thread]) {
+        if (thread.children.size() > 0) {
+            for (Thread child : thread.children) {
                 String tab = tabN;
-                if (_parent[thread] > -1 && !setIsEmpty(_desc[_parent[thread]])) {
+                if (thread.parent != null && thread.parent.children.size() > 1) {
                     tab = tabC;
                 }
-                childrenSerialization += serializeThread(child, tabC, tabN, currentTab + tab,
-                        visitedThreadList);
+                childrenSerialization += serializeThread(child, tabC, tabN, currentTab + tab, visitedThreadList);
             }
         }
         return serialization + childrenSerialization;
     }
-
+    
     // -------------------------------------------------------------------------
-
+    
     /**
      * Gets the root parent of a thread.
-     * 
-     * @param thread
-     *            the thread
+     *
+     * @param thread the thread
      * @return the root parent
      */
-    private int getRootParent(int thread) {
-        if (_parent[thread] < 0) {
+    private Thread getRootParent(Thread thread) {
+        if (thread.parent == null) {
             return thread;
-        } else {
-            return getRootParent(_parent[thread]);
+        }
+        else {
+            return getRootParent(thread.parent);
         }
     }
 
@@ -561,19 +547,20 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
 
     /**
      * Get user time in nanoseconds.
-     * 
+     *
      * @return the user time
      */
     protected long getUserTime() {
         ThreadMXBean bean = ManagementFactory.getThreadMXBean();
-        return bean.isCurrentThreadCpuTimeSupported() ? bean.getCurrentThreadCpuTime() : 0L;
+        return bean.isCurrentThreadCpuTimeSupported() ?
+            bean.getCurrentThreadCpuTime() : 0L;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the last tick time in Nanoseconds.
-     * 
+     * Gets the last tick time in Milliseconds.
+     *
      * @return the lastTickTime
      */
     public long getLastTickTime() {
@@ -581,96 +568,4 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
     }
 
     // -------------------------------------------------------------------------
-
-    private ArrayList<State> _pc;
-    private int[][] _desc;
-    private int[] _parent;
-
-    private int[] enabled;
-    private int[] alive;
-
-    // Get group of a thread ID
-    private int getGroupId(int id) {
-        return (id >> 8);
-    }
-
-    private int getThreadId(int group, int groupInternalId) {
-        // (group * 32) + groupInternalId
-        return (group << 8) + groupInternalId;
-    }
-
-    // Get the internal id of a thread within its group
-    private int getIdInsideGroup(int id) {
-        return (id % 32);
-    }
-
-    // Add a thread ID to a set
-    private void setAdd(int[] set, int id) {
-        int group = getGroupId(id);
-        set[group] |= (1 << getIdInsideGroup(id));
-    }
-
-    // Delete a thread from a set
-    private void setDelete(int[] set, int id) {
-        int group = getGroupId(id);
-        set[group] &= ~(1 << getIdInsideGroup(id));
-    }
-
-    // Clear a set
-    // private void setClear(int[] set) {
-    // for (int i = 0; i < set.length; i++) {
-    // set[i] = 0;
-    // }
-    // }
-
-    // Copy all elements of set2 to set1
-    private void setCopyFrom(int[] set1, int[] set2) {
-        for (int i = 0; i < set2.length; i++) {
-            set1[i] = set2[i];
-        }
-    }
-
-    // Add a set2 to a set1
-    private void setAddSet(int[] set1, int[] set2) {
-        for (int i = 0; i < set2.length; i++) {
-            set1[i] |= set2[i];
-        }
-    }
-
-    // Delete a set2 from a set1
-    private void setDeleteSet(int[] set1, int[] set2) {
-        for (int i = 0; i < set2.length; i++) {
-            set1[i] &= ~set2[i];
-        }
-    }
-
-    // Check if a set contains a thread ID
-    private boolean setContains(int[] set, int id) {
-        int group = getGroupId(id);
-        return ((set[group] & (1 << getIdInsideGroup(id))) != 0);
-    }
-
-    // Check if set1 and set2 not contain any common thread IDs
-    private boolean setDisjoint(int[] set1, int[] set2) {
-        return setDisjoint(set1, set2, set1.length - 1);
-    }
-
-    private boolean setDisjoint(int[] set1, int[] set2, int i) {
-        if (i >= 0) {
-            return (((set1[i] & set2[i]) == 0) && setDisjoint(set1, set2, --i));
-        } else
-            return true;
-    }
-
-    private boolean setIsEmpty(int[] set) {
-        return setIsEmpty(set, set.length - 1);
-    }
-
-    private boolean setIsEmpty(int[] set, int i) {
-        if (i >= 0) {
-            return ((set[i] == 0) && setIsEmpty(set, --i));
-        } else
-            return true;
-    }
-
 }

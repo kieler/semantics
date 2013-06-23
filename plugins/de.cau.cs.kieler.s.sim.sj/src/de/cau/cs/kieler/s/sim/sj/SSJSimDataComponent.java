@@ -164,7 +164,10 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
      * {@inheritDoc}
      */
     public boolean isDirty() {
-        return (sjExecution == null || !sjExecution.isCompiled());
+        return true;
+        //TODO: A more sophisticated test is necessary (e.g. compare hash of settings & editor).
+        // the following ALONE is NOT sufficient!
+        //return (sjExecution == null || !sjExecution.isCompiled());
     }
 
     // -------------------------------------------------------------------------
@@ -234,10 +237,12 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     if (object instanceof JSONObject) {
                         JSONObject sSignalInput = (JSONObject) object;
                         boolean sSignalInputIsPresent = JSONSignalValues.isPresent(sSignalInput);
-                        if (sSignalInputIsPresent) {
-                            program.setInput(sSignalInputName, true);
-                        } else {
-                            program.setInput(sSignalInputName, false);
+                        if (program.hasSignal(sSignalInputName)) {
+                            if (sSignalInputIsPresent) {
+                                program.setInput(sSignalInputName, true);
+                            } else {
+                                program.setInput(sSignalInputName, false);
+                            }
                         }
                     }
                 }
@@ -247,7 +252,8 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             if (this.benchmark) {
                 program.doTick(Benchmark.BENCHMARK_NORMED_RUNS);
                 
-                double bench = ((double)program.getLastTickTime()) / 1000000;
+                // Nanoseconds
+                double bench = ((double)program.getLastTickTime()) ;
                 returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
 
                 returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,

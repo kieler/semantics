@@ -66,7 +66,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public static final String KIEM_PROPERTY_MODEFILE = "ESO Model File";
 
     /** The number of the current step. */
-    private long step;
+    private static long step;
 
     /** Name of the ESO file to be replayed/recorded from/to. */
     private IPath esoFilePath;
@@ -126,7 +126,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         trace = null;
         esoFilePath = this.getEsoFilePath();
         int tracenum = 0;
-        step = 0;
+        step = 1;
         configVarName = "";
         outputVarName = "";
         prevInputVarName = "";
@@ -360,6 +360,11 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     private void loadInputs(final JSONObject retval) throws KiemExecutionException {
         JSONObject prevSignals = new JSONObject();
+
+        if (step < 1) {
+            return;
+        }
+        
         ITick tick = trace.get(step - 1);
 
         Iterator<ISignal> signals = tick.getInputs().iterator();
@@ -444,6 +449,10 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      *             when adding to the JSON object fails
      */
     private void loadOutputs(final JSONObject json) throws KiemExecutionException {
+        if (step < 1) {
+            return;
+        }
+        
         ITick curTick = trace.get(step - 1);
         Iterator<ISignal> outputSignals = curTick.getOutputs().iterator();
         JSONObject value = new JSONObject();
