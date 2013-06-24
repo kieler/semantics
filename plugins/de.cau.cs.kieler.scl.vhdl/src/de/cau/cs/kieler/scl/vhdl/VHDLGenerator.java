@@ -60,22 +60,18 @@ public class VHDLGenerator extends AbstractModelFileHandler {
             return injector;
         }
 
-        public void doPostProcessing(EObject modelObject) {
+        public CharSequence doTransformation(EObject modelObject,
+                        String commandString, ISelection selection) {
+                if (commandString.equals(TRANSFORMATIONCOMMAND)) {
+                    CharSequence transformed = (new SCL2VHDL())
+                                    .transform((Program) modelObject);
+                    return transformed;
+                }
+                
+                return null;
         }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Object doTransformation(EObject modelObject, String commandString,
-                ISelection selection) {
-            if (commandString.equals(TRANSFORMATIONCOMMAND)) {
-                CharSequence transformed = (new SCL2VHDL())
-                                .transform((Program) modelObject);
-                return transformed;
-            }
-            
-            return null;
+        
+        public void doPostProcessing(EObject modelObject) {
         }
                 
 }
