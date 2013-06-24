@@ -15,6 +15,7 @@ import de.cau.cs.kieler.sim.eso.eso.tracelist;
 import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
 
 
+//@SuppressWarnings("restriction")
 public class VHDLtbGenerator extends AbstractModelFileHandler {
 
     private static Injector injector = new STextStandaloneSetup().createInjectorAndDoEMFRegistration();
@@ -58,13 +59,15 @@ public class VHDLtbGenerator extends AbstractModelFileHandler {
     
     public CharSequence doTransformation(EObject modelObject,
                     String commandString, ISelection selection) {
-        
-        File file;
-        
-        if(!(selection == null)){
+
+        File file;  
+//        if(!(selection == null)){
             file = (File) ((TreeSelection) selection).getFirstElement();
-        }else{file = null;}            
-            
+//        }else{
+//            file = null;
+//        }            
+           
+        //Eso Core Generation: test.eso transforms to test.core.eso therefore two times removeFileExtension
         java.io.File ioFile = file.getFullPath().removeFileExtension().removeFileExtension().addFileExtension("scl").toFile();
         
         if (commandString.equals(TRANSFORMATIONCOMMAND)) {

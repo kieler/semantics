@@ -195,8 +195,6 @@ class ESO2VHDL {
 					 '''--inputs''' + '\n'  + ins + (if(!outs.nullOrEmpty) ';\n') + 
 					 '''--outputs'''+ '\n' + outs 		 
 		
-		//«componentName»
-		
 		'''
 		COMPONENT «componentName»
 		PORT(
@@ -273,7 +271,6 @@ class ESO2VHDL {
 			simTicks = "\n--NEW TRACE\n" + generateVhdlResetCode(wait)	//Reset on every new Trace
 //			simTicks = ""
 			tickCnt = 1
-			
 			
 			trace.ticks.forEach[ tick | 
 				//Set inputs according to the tick

@@ -283,13 +283,9 @@ public  class SCLVHDLAutomatedJUnitTest {
         //the batch file creates an log file which can be checked for errors
         //so are no errors in the log every thing is fine
         IPath logFilePath = new Path(relativeTempPath + SIMULATION_LOG_FILE_NAME); 
-        String errorString = stringOccourInFile(logFilePath, "ERROR" );
-        
-        //delete temporary folder
-//        ModelUtil.deleteFolder(tempDir);
+        String errorString = stringOccourInFile(logFilePath, "Error" );
         
         //check if there are any errors
-        ///Assert.assertEquals("blaaaa", errorFlag, false);
         if(!errorString.isEmpty())
             Assert.fail("\n" + errorString);
     }
@@ -470,12 +466,9 @@ public  class SCLVHDLAutomatedJUnitTest {
 
         // Search for all files in the test directory
         Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",false);
-//        logger.debug("testpath:" + bundleTestPath.toString());
         while (allBundleFilesUrl.hasMoreElements()) {
             URL bundleFileUrl = allBundleFilesUrl.nextElement();
             try {
-//                logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
-
                 IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
                         temporaryWorkspaceFolderName, false, true);
                 
