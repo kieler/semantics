@@ -144,6 +144,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
 
     private static val DEPENDENCY_COLOR = "red"
     private static val DEPENDENCY_COLOR_WR = "darkOrange"
+    
+    private static val SCLANNOTATION_DEPTH_INLINE = 'inline'
+    private static val SCLANNOTATION_CONDITIONAL_BRANCH = 'branch'
+    private static val SCLANNOTATION_DEPENDENCY = 'dependency'
 
     /*
      * These maps link the scl program instructions to krendering nodes and ports.
@@ -195,6 +199,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         rootNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN);
         rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        rootNode.addLayoutParam(Properties::THOROUGHNESS, 100)
         rootNode.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
         if (NODEPLACEMENT_LINEARSEGMENTS) 
             rootNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
@@ -225,7 +230,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kEntryNode.KRendering.foreground = "gray".color;
         kEntryNode.KRendering.add(factory.createKText.of('entry'));
         rootNode.children.add(kEntryNode)
-        kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
+        kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
 //        kEntryNode.addNSPortFixed;
                 
         // Create the exit node
@@ -236,7 +241,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kExitNode.KRendering.foreground = "gray".color;
         kExitNode.KRendering.add(factory.createKText.of('exit'));
         rootNode.children.add(kExitNode)
-        kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
+        kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
         kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
         
         // Add incoming port for the exit node
@@ -316,6 +321,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             for (targetInstruction : depList) {
                 if (!instruction.isInSameThreadAs(targetInstruction.getInstruction) && !instruction.isInMainThread &&
                     !targetInstruction.isInMainThread /* && instruction.hasSameThreadParentAs(targetInstruction.getInstruction)*/
+                    && instruction.getLeastCommonAncestorParallel(targetInstruction.getInstruction) != null
                 ) {
                 val targetNode = InstructionMapping.get(targetInstruction.getInstruction)?.first
                 if (sourceNode != targetNode && sourceNode != null && targetNode != null &&
@@ -776,6 +782,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kDepthNode.KRendering.add(factory.createKLineWidth.of(2));
         kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
         if (PAUSEDEPTH_FIRST)
+        if (!instr.getStatement.hasAnnotation(SCLANNOTATION_DEPTH_INLINE))
             kDepthNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             
         // Add all nodes to their parents 
@@ -836,9 +843,14 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kNode.addNSPortsFixed;            
         (unassignedObject.createPort() => [
             kNode.ports += it
-            it.setPortPos(75, 24)
+            if (instr.getStatement.hasParameter(SCLANNOTATION_CONDITIONAL_BRANCH, 'left')) {
+                it.setPortPos(0, 24)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::WEST);
+            } else { 
+                it.setPortPos(75, 24)
+                it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST);
+            }
             it.setPortSize(2,2)
-            it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST);
         ]).addToPortMapping(kNode, 'conditional')
         kNode.addLayoutParam(LayoutOptions::SIZE_CONSTRAINT, SizeConstraint::fixed);
         

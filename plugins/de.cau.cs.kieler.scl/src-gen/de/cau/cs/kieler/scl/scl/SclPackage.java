@@ -66,7 +66,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getStatementSequence()
    * @generated
    */
-  int STATEMENT_SEQUENCE = 9;
+  int STATEMENT_SEQUENCE = 10;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -207,13 +207,13 @@ public interface SclPackage extends EPackage
   int STATEMENT = 2;
 
   /**
-   * The feature id for the '<em><b>Annotation</b></em>' attribute list.
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATEMENT__ANNOTATION = 0;
+  int STATEMENT__ANNOTATIONS = 0;
 
   /**
    * The number of structural features of the '<em>Statement</em>' class.
@@ -235,13 +235,13 @@ public interface SclPackage extends EPackage
   int EMPTY_STATEMENT = 3;
 
   /**
-   * The feature id for the '<em><b>Annotation</b></em>' attribute list.
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EMPTY_STATEMENT__ANNOTATION = STATEMENT__ANNOTATION;
+  int EMPTY_STATEMENT__ANNOTATIONS = STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -272,13 +272,13 @@ public interface SclPackage extends EPackage
   int INSTRUCTION_STATEMENT = 4;
 
   /**
-   * The feature id for the '<em><b>Annotation</b></em>' attribute list.
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTION_STATEMENT__ANNOTATION = STATEMENT__ANNOTATION;
+  int INSTRUCTION_STATEMENT__ANNOTATIONS = STATEMENT__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Instruction</b></em>' containment reference.
@@ -318,6 +318,43 @@ public interface SclPackage extends EPackage
   int INSTRUCTION_FEATURE_COUNT = 0;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.AnnotationImpl <em>Annotation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.scl.scl.impl.AnnotationImpl
+   * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAnnotation()
+   * @generated
+   */
+  int ANNOTATION = 6;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Parameter</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION__PARAMETER = 1;
+
+  /**
+   * The number of structural features of the '<em>Annotation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -325,7 +362,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAssignment()
    * @generated
    */
-  int ASSIGNMENT = 6;
+  int ASSIGNMENT = 7;
 
   /**
    * The feature id for the '<em><b>Assignment</b></em>' containment reference.
@@ -353,7 +390,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getConditional()
    * @generated
    */
-  int CONDITIONAL = 7;
+  int CONDITIONAL = 8;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -390,7 +427,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getGoto()
    * @generated
    */
-  int GOTO = 8;
+  int GOTO = 9;
 
   /**
    * The feature id for the '<em><b>Target Label</b></em>' attribute.
@@ -418,7 +455,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getThread()
    * @generated
    */
-  int THREAD = 10;
+  int THREAD = 11;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -446,7 +483,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 11;
+  int PARALLEL = 12;
 
   /**
    * The feature id for the '<em><b>Threads</b></em>' containment reference list.
@@ -474,7 +511,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 12;
+  int PAUSE = 13;
 
   /**
    * The number of structural features of the '<em>Pause</em>' class.
@@ -493,7 +530,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getStatementScope()
    * @generated
    */
-  int STATEMENT_SCOPE = 13;
+  int STATEMENT_SCOPE = 14;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -620,15 +657,15 @@ public interface SclPackage extends EPackage
   EClass getStatement();
 
   /**
-   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.scl.scl.Statement#getAnnotation <em>Annotation</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Statement#getAnnotations <em>Annotations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Annotation</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Statement#getAnnotation()
+   * @return the meta object for the containment reference list '<em>Annotations</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Statement#getAnnotations()
    * @see #getStatement()
    * @generated
    */
-  EAttribute getStatement_Annotation();
+  EReference getStatement_Annotations();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.EmptyStatement <em>Empty Statement</em>}'.
@@ -681,6 +718,38 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EClass getInstruction();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Annotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Annotation</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Annotation
+   * @generated
+   */
+  EClass getAnnotation();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.Annotation#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Annotation#getName()
+   * @see #getAnnotation()
+   * @generated
+   */
+  EAttribute getAnnotation_Name();
+
+  /**
+   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.scl.scl.Annotation#getParameter <em>Parameter</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Parameter</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Annotation#getParameter()
+   * @see #getAnnotation()
+   * @generated
+   */
+  EAttribute getAnnotation_Parameter();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Assignment <em>Assignment</em>}'.
@@ -930,12 +999,12 @@ public interface SclPackage extends EPackage
     EClass STATEMENT = eINSTANCE.getStatement();
 
     /**
-     * The meta object literal for the '<em><b>Annotation</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATEMENT__ANNOTATION = eINSTANCE.getStatement_Annotation();
+    EReference STATEMENT__ANNOTATIONS = eINSTANCE.getStatement_Annotations();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.EmptyStatementImpl <em>Empty Statement</em>}' class.
@@ -982,6 +1051,32 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EClass INSTRUCTION = eINSTANCE.getInstruction();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.AnnotationImpl <em>Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.scl.impl.AnnotationImpl
+     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAnnotation()
+     * @generated
+     */
+    EClass ANNOTATION = eINSTANCE.getAnnotation();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ANNOTATION__NAME = eINSTANCE.getAnnotation_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Parameter</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ANNOTATION__PARAMETER = eINSTANCE.getAnnotation_Parameter();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.

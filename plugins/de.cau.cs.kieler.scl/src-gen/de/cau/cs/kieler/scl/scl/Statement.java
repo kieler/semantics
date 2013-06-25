@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.Statement#getAnnotation <em>Annotation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.Statement#getAnnotations <em>Annotations</em>}</li>
  * </ul>
  * </p>
  *
@@ -25,19 +25,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface Statement extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Annotation</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.Annotation}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Annotation</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Annotation</em>' attribute list.
-   * @see de.cau.cs.kieler.scl.scl.SclPackage#getStatement_Annotation()
-   * @model unique="false"
+   * @return the value of the '<em>Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.scl.scl.SclPackage#getStatement_Annotations()
+   * @model containment="true"
    * @generated
    */
-  EList<String> getAnnotation();
+  EList<Annotation> getAnnotations();
 
 } // Statement

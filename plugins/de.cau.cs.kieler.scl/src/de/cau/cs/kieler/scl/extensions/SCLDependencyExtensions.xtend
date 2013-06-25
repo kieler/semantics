@@ -207,7 +207,8 @@ class SCLDependencyExtensions {
         val depList = instruction.dependencyInstructions(instruction.getProgram)
         for (targetStatement : depList) {
             if (!instruction.isInSameThreadAs(targetStatement.getInstruction) && !instruction.isInMainThread &&
-                    !targetStatement.isInMainThread
+                    !targetStatement.isInMainThread &&
+                     instruction.getLeastCommonAncestorParallel(targetStatement.getInstruction) != null
                 ) {        
                     dList.add(targetStatement)
                 }
@@ -224,7 +225,8 @@ class SCLDependencyExtensions {
         val depList = instruction.dependencyInstructions(instruction.getProgram)
         for (targetStatement : depList) {
             if (!instruction.isInSameThreadAs(targetStatement.getInstruction) && !instruction.isInMainThread &&
-                    !targetStatement.isInMainThread
+                    !targetStatement.isInMainThread &&
+                    instruction.getLeastCommonAncestorParallel(targetStatement.getInstruction) != null
                 ) {
                     if (instruction.isDependencyTarget(targetStatement.getInstruction))        
                         dList.add(targetStatement)

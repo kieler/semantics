@@ -154,9 +154,10 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		////KeyStringValueAnnotation returns annotations::StringAnnotation:
-		// //    '@' name=ID value=STRING
-		// //;
 		//
+		////    '@' name=ID value=STRING
+		//
+		////;
 		//
 		//VariableDeclaration:
 		//
@@ -242,8 +243,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	public class EmptyStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EmptyStatement");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cAnnotationAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationSL_COMMENTTerminalRuleCall_0_0 = (RuleCall)cAnnotationAssignment_0.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Assignment cLabelAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
 		private final RuleCall cLabelIDTerminalRuleCall_1_0_0 = (RuleCall)cLabelAssignment_1_0.eContents().get(0);
@@ -251,17 +252,17 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//EmptyStatement:
 		//
-		//	annotation+=SL_COMMENT* (label=ID ":");
+		//	annotations+=Annotation* (label=ID ":");
 		public ParserRule getRule() { return rule; }
 
-		//annotation+=SL_COMMENT* (label=ID ":")
+		//annotations+=Annotation* (label=ID ":")
 		public Group getGroup() { return cGroup; }
 
-		//annotation+=SL_COMMENT*
-		public Assignment getAnnotationAssignment_0() { return cAnnotationAssignment_0; }
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
-		//SL_COMMENT
-		public RuleCall getAnnotationSL_COMMENTTerminalRuleCall_0_0() { return cAnnotationSL_COMMENTTerminalRuleCall_0_0; }
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
 		//label=ID ":"
 		public Group getGroup_1() { return cGroup_1; }
@@ -279,8 +280,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	public class InstructionStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InstructionStatement");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cAnnotationAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationSL_COMMENTTerminalRuleCall_0_0 = (RuleCall)cAnnotationAssignment_0.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cInstructionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final Alternatives cInstructionAlternatives_1_0 = (Alternatives)cInstructionAssignment_1.eContents().get(0);
 		private final RuleCall cInstructionAssignmentParserRuleCall_1_0_0 = (RuleCall)cInstructionAlternatives_1_0.eContents().get(0);
@@ -292,26 +293,25 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//InstructionStatement:
 		//
-		//	annotation+=SL_COMMENT* //        (label = ID ':')?
-		// instruction=(Assignment | Conditional | Goto | Parallel | Pause
+		//	annotations+=Annotation* //        (label = ID ':')?
 		//
-		//	| StatementScope);
+		//	instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope);
 		public ParserRule getRule() { return rule; }
 
-		//annotation+=SL_COMMENT* //        (label = ID ':')?
-		// instruction=(Assignment | Conditional | Goto | Parallel | Pause |
+		//annotations+=Annotation* //        (label = ID ':')?
 		//
-		//StatementScope)
+		//instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
 		public Group getGroup() { return cGroup; }
 
-		//annotation+=SL_COMMENT*
-		public Assignment getAnnotationAssignment_0() { return cAnnotationAssignment_0; }
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
-		//SL_COMMENT
-		public RuleCall getAnnotationSL_COMMENTTerminalRuleCall_0_0() { return cAnnotationSL_COMMENTTerminalRuleCall_0_0; }
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
 		////        (label = ID ':')?
-		// instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
+		//
+		//instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
 		public Assignment getInstructionAssignment_1() { return cInstructionAssignment_1; }
 
 		//Assignment | Conditional | Goto | Parallel | Pause | StatementScope
@@ -371,6 +371,65 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//StatementScope
 		public RuleCall getStatementScopeParserRuleCall_5() { return cStatementScopeParserRuleCall_5; }
+	}
+
+	public class AnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Annotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cColonKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cParameterAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cParameterIDTerminalRuleCall_2_1_0 = (RuleCall)cParameterAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cParameterAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cParameterIDTerminalRuleCall_2_2_1_0 = (RuleCall)cParameterAssignment_2_2_1.eContents().get(0);
+		
+		////terminal SL_ANNOTATION     : '@' !('\n'|'\r')* ('\r'? '\n')?;
+		//
+		//Annotation:
+		//
+		//	"@" name=ID (":" parameter+=ID ("," parameter+=ID)*)?;
+		public ParserRule getRule() { return rule; }
+
+		//"@" name=ID (":" parameter+=ID ("," parameter+=ID)*)?
+		public Group getGroup() { return cGroup; }
+
+		//"@"
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//(":" parameter+=ID ("," parameter+=ID)*)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//":"
+		public Keyword getColonKeyword_2_0() { return cColonKeyword_2_0; }
+
+		//parameter+=ID
+		public Assignment getParameterAssignment_2_1() { return cParameterAssignment_2_1; }
+
+		//ID
+		public RuleCall getParameterIDTerminalRuleCall_2_1_0() { return cParameterIDTerminalRuleCall_2_1_0; }
+
+		//("," parameter+=ID)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
+
+		//","
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+
+		//parameter+=ID
+		public Assignment getParameterAssignment_2_2_1() { return cParameterAssignment_2_2_1; }
+
+		//ID
+		public RuleCall getParameterIDTerminalRuleCall_2_2_1_0() { return cParameterIDTerminalRuleCall_2_2_1_0; }
 	}
 
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
@@ -525,9 +584,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatementScopeParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		////AbstractThread:
-		// //    Thread | Program
-		// //;
-		// StatementSequence:
+		//
+		////    Thread | Program
+		//
+		////;
+		//
+		//StatementSequence:
 		//
 		//	Thread | Program | Conditional | StatementScope;
 		public ParserRule getRule() { return rule; }
@@ -815,6 +877,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	private EmptyStatementElements pEmptyStatement;
 	private InstructionStatementElements pInstructionStatement;
 	private InstructionElements pInstruction;
+	private AnnotationElements pAnnotation;
 	private AssignmentElements pAssignment;
 	private ConditionalElements pConditional;
 	private GotoElements pGoto;
@@ -878,9 +941,10 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////KeyStringValueAnnotation returns annotations::StringAnnotation:
-	// //    '@' name=ID value=STRING
-	// //;
 	//
+	////    '@' name=ID value=STRING
+	//
+	////;
 	//
 	//VariableDeclaration:
 	//
@@ -906,7 +970,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//EmptyStatement:
 	//
-	//	annotation+=SL_COMMENT* (label=ID ":");
+	//	annotations+=Annotation* (label=ID ":");
 	public EmptyStatementElements getEmptyStatementAccess() {
 		return (pEmptyStatement != null) ? pEmptyStatement : (pEmptyStatement = new EmptyStatementElements());
 	}
@@ -917,10 +981,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//InstructionStatement:
 	//
-	//	annotation+=SL_COMMENT* //        (label = ID ':')?
-	// instruction=(Assignment | Conditional | Goto | Parallel | Pause
+	//	annotations+=Annotation* //        (label = ID ':')?
 	//
-	//	| StatementScope);
+	//	instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope);
 	public InstructionStatementElements getInstructionStatementAccess() {
 		return (pInstructionStatement != null) ? pInstructionStatement : (pInstructionStatement = new InstructionStatementElements());
 	}
@@ -938,6 +1001,19 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getInstructionRule() {
 		return getInstructionAccess().getRule();
+	}
+
+	////terminal SL_ANNOTATION     : '@' !('\n'|'\r')* ('\r'? '\n')?;
+	//
+	//Annotation:
+	//
+	//	"@" name=ID (":" parameter+=ID ("," parameter+=ID)*)?;
+	public AnnotationElements getAnnotationAccess() {
+		return (pAnnotation != null) ? pAnnotation : (pAnnotation = new AnnotationElements());
+	}
+	
+	public ParserRule getAnnotationRule() {
+		return getAnnotationAccess().getRule();
 	}
 
 	//Assignment:
@@ -976,9 +1052,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////AbstractThread:
-	// //    Thread | Program
-	// //;
-	// StatementSequence:
+	//
+	////    Thread | Program
+	//
+	////;
+	//
+	//StatementSequence:
 	//
 	//	Thread | Program | Conditional | StatementScope;
 	public StatementSequenceElements getStatementSequenceAccess() {
