@@ -37,12 +37,21 @@ import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import org.yakindu.sct.model.stext.stext.LogicalOrExpression
 import org.yakindu.sct.model.stext.stext.LogicalAndExpression
 import org.yakindu.sct.model.stext.stext.LogicalNotExpression
+import org.yakindu.sct.model.stext.stext.LogicalRelationExpression
 import org.yakindu.sct.model.stext.stext.ParenthesizedExpression
+import org.yakindu.sct.model.stext.stext.NumericalAddSubtractExpression
+import org.yakindu.sct.model.stext.stext.NumericalMultiplyDivideExpression
+import org.yakindu.sct.model.stext.stext.ShiftExpression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
+import org.yakindu.sct.model.stext.stext.AdditiveOperator
 
 import java.util.ArrayList
 import de.cau.cs.kieler.eso.vhdl.Variables
 import org.eclipse.emf.common.util.EList
+import org.eclipse.xtext.xbase.scoping.featurecalls.OperatorMapping
+import org.yakindu.sct.model.stext.stext.AssignmentOperator
+import org.yakindu.sct.model.stext.stext.AssignmentOperator
+import org.yakindu.sct.model.stext.stext.AssignmentOperator
 
 /**
  * Transformation of SCL code into VHDL code.
@@ -344,16 +353,24 @@ class SCL2VHDL {
    
       // Expand a PAUSE instruction.
    def dispatch expand(AssignmentExpression exp) {
-    '''«exp.varRef.expand» «exp.operator.expand» «exp.expression.expand»'''
+    //other not supported, like *=, /=, %=, <<=, >>=, &=, ^=, |=
+        if      (exp.operator.literal ==  "="){'''«exp.varRef.expand» := «exp.expression.expand»'''}
+        else if (exp.operator.literal == "+="){'''«exp.varRef.expand» := «exp.varRef.expand» + «exp.expression.expand»'''}
+        else if (exp.operator.literal == "-="){'''«exp.varRef.expand» := «exp.varRef.expand» - «exp.expression.expand»'''}
    }
-   
-   def dispatch expand(AssignmentOperator assOp) {
-    ''':='''
+      
+   def dispatch expand(AdditiveOperator addOp) {
+    '''«addOp.literal»'''
    }
    
    // Expand a PAUSE instruction.
-   def dispatch expand(ConditionalExpression exp) {
-    '''«exp.toString»'''
+   def dispatch expand(ConditionalExpression condExp) {
+    '''
+        if («condExp.condition.expand») then
+            «condExp.trueCase.expand»
+        «if(condExp.falseCase != null){'''else«condExp.falseCase.expand»'''}»
+        end if;
+    '''
    }
    
    // Expand a PAUSE instruction.
@@ -382,6 +399,11 @@ class SCL2VHDL {
    }
    
    // Expand all other instructions.
+   def dispatch expand(IntLiteral integer) {
+    '''«integer.value»'''
+   }
+   
+   // Expand all other instructions.
    def dispatch expand(LogicalOrExpression orExp) {
     '''«orExp.leftOperand.expand» or «orExp.rightOperand.expand»'''
    }
@@ -392,21 +414,45 @@ class SCL2VHDL {
    }
    
    // Expand all other instructions.
+   def dispatch expand(LogicalRelationExpression relExp) {
+    
+    if      (relExp.operator.literal ==  "<"){'''«relExp.leftOperand.expand» «relExp.operator» «relExp.rightOperand.expand»'''}
+    else if (relExp.operator.literal == "<="){'''«relExp.leftOperand.expand» «relExp.operator» «relExp.rightOperand.expand»'''}
+    else if (relExp.operator.literal == ">"){'''«relExp.leftOperand.expand» «relExp.operator» «relExp.rightOperand.expand»'''}
+    else if (relExp.operator.literal == ">="){'''«relExp.leftOperand.expand» «relExp.operator» «relExp.rightOperand.expand»'''}
+    else if (relExp.operator.literal == "=="){'''«relExp.leftOperand.expand» = «relExp.rightOperand.expand»'''}
+    else if (relExp.operator.literal == "!="){'''«relExp.leftOperand.expand» /= «relExp.rightOperand.expand»'''}
+   }
+   
+   def dispatch expand(NumericalAddSubtractExpression numAddSubExp) {
+    
+    if      (numAddSubExp.operator.literal == "+"){'''«numAddSubExp.leftOperand.expand» + «numAddSubExp.rightOperand.expand»'''}
+    else if (numAddSubExp.operator.literal == "-"){'''«numAddSubExp.leftOperand.expand» - «numAddSubExp.rightOperand.expand»'''}
+   }
+   
+   def dispatch expand(ShiftExpression shiftExp) {
+    
+    if      (shiftExp.operator.literal == "<<"){'''«shiftExp.leftOperand.expand» sll «shiftExp.rightOperand.expand»'''}
+    else if (shiftExp.operator.literal == ">>"){'''«shiftExp.leftOperand.expand» srl «shiftExp.rightOperand.expand»'''}
+   }
+   
+   def dispatch expand(NumericalMultiplyDivideExpression numMultDivExp) {
+    
+    //Others not supported *, /
+    if (numMultDivExp.operator.literal == "%"){'''«numMultDivExp.leftOperand.expand» mod «numMultDivExp.rightOperand.expand»'''}
+   }
+   
+   // Expand all other instructions.
    def dispatch expand(LogicalNotExpression notExp) {
     '''not «notExp.operand.expand»'''
    }
    
-   
-      // Expand all other instructions.
+   // Expand all other instructions.
    def dispatch expand(ParenthesizedExpression parenthesizedExp) {
     '''(«parenthesizedExp.expression.expand»)'''
    }
    // -------------------------------------------------------------------------   
  
- 
- 
-  
-   
 }
 
 
