@@ -33,7 +33,7 @@ public class Benchmark {
     public static final String BENCHMARK_SIGNAL_EXECUTABLE = "benchExecutable";
 
     /** A Constant used for more acurate normed benchmark results. */
-    public static final int BENCHMARK_NORMED_RUNS = 10000;
+    public static final int BENCHMARK_NORMED_RUNS = 100000;
 
 
 }

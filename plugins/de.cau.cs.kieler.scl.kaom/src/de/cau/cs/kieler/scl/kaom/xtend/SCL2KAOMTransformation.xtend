@@ -13,55 +13,33 @@
  */
 package de.cau.cs.kieler.scl.kaom.xtend
 
-import com.google.inject.Injector
-import de.cau.cs.kieler.scl.SCLStandaloneSetup
-
-//import com.google.common.collect.ImmutableList
-import com.google.inject.Guice
-//import de.cau.cs.kieler.scl.scl.Annotation
-import de.cau.cs.kieler.core.annotations.NamedObject 
-//import java.util.ArrayList
-//import java.util.HashMap
-
-import org.eclipse.xtext.serializer.ISerializer
-import org.yakindu.sct.model.stext.stext.Expression
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.List
 import com.google.common.collect.ImmutableList
-
-
+import com.google.inject.Guice
+import com.google.inject.Injector
 import de.cau.cs.kieler.kaom.Entity
 import de.cau.cs.kieler.kaom.KaomFactory
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-//import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.emf.common.util.EList
-import org.eclipse.emf.ecore.EObject
-import com.google.common.collect.ImmutableList
-
-import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
-import de.cau.cs.kieler.scl.extensions.SCLStatementSequenceExtensions
-import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
-
-import de.cau.cs.kieler.scl.scl.Program
-import de.cau.cs.kieler.scl.scl.Thread
-import de.cau.cs.kieler.scl.scl.Pause
-import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Parallel
-import de.cau.cs.kieler.scl.scl.Instruction
-import de.cau.cs.kieler.scl.scl.Assignment
-
+import de.cau.cs.kieler.kaom.Linkable
 import de.cau.cs.kieler.kaom.Port
 import de.cau.cs.kieler.kaom.Relation
-import de.cau.cs.kieler.kaom.Linkable
-import java.util.HashMap
-import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.SCLStandaloneSetup
+import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
+import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
+import de.cau.cs.kieler.scl.extensions.SCLStatementSequenceExtensions
+import de.cau.cs.kieler.scl.scl.Conditional
+import de.cau.cs.kieler.scl.scl.Goto
+import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.scl.scl.Program
+import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.StatementSequence
-import java.util.ArrayList
-import org.eclipse.xtext.util.Pair
+import java.util.HashMap
+import java.util.List
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.serializer.ISerializer
+
+import static de.cau.cs.kieler.scl.kaom.xtend.SCL2KAOMTransformation.*
 
 
 class SCL2KAOMTransformation {

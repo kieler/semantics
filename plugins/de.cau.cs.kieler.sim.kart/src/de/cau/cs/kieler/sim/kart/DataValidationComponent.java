@@ -475,7 +475,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                 if (obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)) {
                     // it's a signal
                     if (JSONSignalValues.isPresent(obj)
-                            && !recInputs.get((int) step - 1).containsKey(field)) {
+                            && recInputs.get((int) step - 1) != null &&  !recInputs.get((int) step - 1).containsKey(field)) {
                         if (JSONSignalValues.getSignalValue(obj) == null) {
                             signals.put(field, null);
                         } else {

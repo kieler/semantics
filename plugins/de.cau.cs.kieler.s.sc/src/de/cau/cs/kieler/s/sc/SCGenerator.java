@@ -31,8 +31,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.PlatformUI;
 
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.s.s.Program;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * Generate SC Code from a an S file using new Xtend language.
@@ -75,7 +75,7 @@ public class SCGenerator implements IHandler {
         
         try {
             // Load S Program
-            Program program =  (Program) KiemUtil.loadEObjectFromModelFile(modelFilePath);
+            Program program =  (Program) ModelUtil.loadEObjectFromModelFile(modelFilePath);
             
             // Calculate output path for SC-m2t
             URI input = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
@@ -89,8 +89,8 @@ public class SCGenerator implements IHandler {
             
             // Generate SC Code
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
-            IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
-            String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
+            IFile scOutputFile = ModelUtil.convertIPathToIFile(scOutputPath);
+            String scOutputString = ModelUtil.getAbsoluteFilePath(scOutputFile);
             S2SCPlugin.generateSCCode(program, scOutputString, scOutputPath.toString(), 
                             alternativeSyntax);                    
 

@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sim.SSimPlugin;
@@ -54,7 +55,6 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 /**
@@ -164,7 +164,10 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
      * {@inheritDoc}
      */
     public boolean isDirty() {
-        return (sjExecution == null || !sjExecution.isCompiled());
+        return true;
+        //TODO: A more sophisticated test is necessary (e.g. compare hash of settings & editor).
+        // the following ALONE is NOT sufficient!
+        //return (sjExecution == null || !sjExecution.isCompiled());
     }
 
     // -------------------------------------------------------------------------
@@ -234,10 +237,12 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     if (object instanceof JSONObject) {
                         JSONObject sSignalInput = (JSONObject) object;
                         boolean sSignalInputIsPresent = JSONSignalValues.isPresent(sSignalInput);
-                        if (sSignalInputIsPresent) {
-                            program.setInput(sSignalInputName, true);
-                        } else {
-                            program.setInput(sSignalInputName, false);
+                        if (program.hasSignal(sSignalInputName)) {
+                            if (sSignalInputIsPresent) {
+                                program.setInput(sSignalInputName, true);
+                            } else {
+                                program.setInput(sSignalInputName, false);
+                            }
                         }
                     }
                 }
@@ -247,7 +252,8 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             if (this.benchmark) {
                 program.doTick(Benchmark.BENCHMARK_NORMED_RUNS);
                 
-                double bench = ((double)program.getLastTickTime()) / 1000000;
+                // Nanoseconds
+                double bench = ((double)program.getLastTickTime()) ;
                 returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
 
                 returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,
@@ -553,7 +559,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             String className = model.getName().toLowerCase(); // scOutput.lastSegment();
 
             // Set a random output folder for the compiled files
-            String outputFolder = KiemUtil.generateRandomTempOutputFolder();
+            String outputFolder = ModelUtil.generateRandomTempOutputFolder();
 
             // Check whether SJ compilation should generate additional debug output
             debugConsole = debugConsoleParam;
@@ -565,8 +571,8 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             scOutput = scOutput.trimSegments(1).appendSegment(className)
                     .appendFileExtension("java");
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
-            IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
-            String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
+            IFile scOutputFile = ModelUtil.convertIPathToIFile(scOutputPath);
+            String scOutputString = ModelUtil.getAbsoluteFilePath(scOutputFile);
             S2SJPlugin.generateSJCode(transformedProgram, scOutputString, className, packageName,
                     debug);
 
