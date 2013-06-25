@@ -21,19 +21,35 @@ public class Variables<T> {
     
     private String name;
     private boolean isInput;
+    private boolean isOutput;
     private boolean isBoolean;
     private T value;
     
-    public Variables(String name, boolean isInput, T value ){
+    public Variables(String name, boolean isInput, boolean isOutput, T value ){
         
         this.name = name;
         this.isInput = isInput;
+        this.isOutput = isOutput;
         if(value instanceof Integer){
             this.isBoolean = false;
         }else if(value instanceof Boolean){
             this.isBoolean = true;
         }
         this.value = value;
+    }
+
+    /**
+     * @return the isOutput
+     */
+    public boolean isOutput() {
+        return isOutput;
+    }
+
+    /**
+     * @param isOutput the isOutput to set
+     */
+    public void setOutput(boolean isOutput) {
+        this.isOutput = isOutput;
     }
 
     /**

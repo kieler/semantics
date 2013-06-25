@@ -27,19 +27,30 @@ import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.VariableDeclaration
 
-import java.util.ArrayList
-import org.yakindu.sct.model.stext.stext.impl.IntLiteralImpl
-import org.yakindu.sct.model.stext.stext.impl.BoolLiteralImpl
+import org.yakindu.sct.model.stext.stext.IntLiteral
+import org.yakindu.sct.model.stext.stext.BoolLiteral
 import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import org.yakindu.sct.model.stext.stext.Expression
+import org.yakindu.sct.model.stext.stext.AssignmentExpression
+import org.yakindu.sct.model.stext.stext.ConditionalExpression
+import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
+import org.yakindu.sct.model.stext.stext.LogicalOrExpression
+import org.yakindu.sct.model.stext.stext.LogicalAndExpression
+import org.yakindu.sct.model.stext.stext.LogicalNotExpression
+import org.yakindu.sct.model.stext.stext.ParenthesizedExpression
+import org.yakindu.sct.model.stext.stext.AssignmentOperator
+
+import java.util.ArrayList
 import de.cau.cs.kieler.eso.vhdl.Variables
+import org.eclipse.emf.common.util.EList
 
 /**
  * Transformation of SCL code into VHDL code.
  * 
  * @author gjo
  */
-class SCL2VHDL { 
+class SCL2VHDL {
+    Object modelOutput 
     
     // General method to create the c simulation interface.
 	def transform (Program program) {
@@ -97,34 +108,131 @@ class SCL2VHDL {
        //Get Input and Output from Model
     val modelInputs = new ArrayList<Variables>
     val modelOutputs = new ArrayList<Variables>
+    val modelLocalVariables = new ArrayList<Variables>
         
     val name = program.name
     val vars = program.declarations
     
     vars.forEach[ variable | 
         if(variable.input)                      
-             modelInputs.add(createVariableFromModel(variable, true)) 
+             modelInputs.add(createVariableFromModel(variable, true, false)) 
         if(variable.output)                   
-             modelOutputs.add(createVariableFromModel(variable, false))   
+             modelOutputs.add(createVariableFromModel(variable, false, true)) 
+        if(!(variable.input || variable.output))
+             modelLocalVariables.add(createVariableFromModel(variable, false, false)) 
         ]
-        
-        
+             
     '''
     «generateEntity(modelInputs, modelOutputs, name)»
     
     ARCHITECTURE behavior OF «name» IS
     
     --signal declaration
-    --signals
+    signal entry_int : boolean := false;
+    
+    begin
+    prog: process
+    
+    --local in/out Variables
+    «genarateLocalVariables(modelInputs)»
+    «genarateLocalVariables(modelOutputs)»
+    --local variables
+    «genarateLocalVariables(modelLocalVariables)»
     
     begin
     
+        -- do some stuff
+        wait until rising_edge(tick);
+        «signalToVariable(modelInputs)»
+        
+        «generateMainProcess(program.statements)»
+        
+        «variableToSignal(modelOutputs)»
+        
+    end process prog;
     
-    end Behavioral;
+        «generateInitialTickProcess()»
+    
+    end behavior;
     '''
        
    }
    
+    def generateInitialTickProcess() { 
+     '''
+     -- create initial Tick
+     initialTick: process
+        variable u_notInitial : boolean := false;
+        variable u_notInitialDetect : boolean:= true;
+        variable u_entry : boolean;
+
+        begin
+            wait until rising_edge(tick);
+        
+            if (reset = '1') then
+                u_notInitial := false;
+                u_notInitialDetect := true;
+                entry_int <= false;
+            else 
+                u_entry := not u_notInitial;
+                u_notInitial := u_notInitial or u_notInitialDetect;
+                entry_int <= u_entry;
+            end if;
+     end process;
+     '''
+    }
+
+    def variableToSignal(ArrayList<Variables> variables) { 
+        
+        val localVar = variables.map(lVar | '''«lVar.name» <= «lVar.name»_int;''').join('\n')
+        
+        //else must be an empty String, when not null is written into the file
+        if(!(localVar.nullOrEmpty))
+            return localVar + '\n'
+        else 
+            return ''''''
+    }
+
+    def signalToVariable(ArrayList<Variables> variables) { 
+        
+        val localVar = variables.map(lVar | '''«lVar.name»_int := «lVar.name»;''').join('\n')
+        
+        //else must be an empty String, when not null is written into the file
+        if(!(localVar.nullOrEmpty))
+            return localVar + '\n'
+        else 
+            return ''''''
+    }
+
+    def generateMainProcess(EList<Statement> stmList) { 
+        
+        var str = stmList.map(stm | '''«stm.expand»''').join('\n')
+        str
+        
+    }
+
+    def genarateLocalSignals(ArrayList<Variables> variables) { 
+        
+        val localVar = variables.map(lVar | '''signal «lVar.name»_int : «getTypeAndInitValue(lVar)»''').join('\n')
+        
+        //else must be an empty String, when not null is written into the file
+        if(!(localVar.nullOrEmpty))
+            return localVar + '\n'
+        else 
+            return ''''''
+    }
+    
+    def genarateLocalVariables(ArrayList<Variables> variables) { 
+        
+        val localVar = variables.map(lVar | '''variable «lVar.name»_int : «getTypeAndInitValue(lVar)»''').join('\n')
+        
+        //else must be an empty String, when not null is written into the file
+        if(!(localVar.nullOrEmpty))
+            return localVar + '\n'
+        else 
+            return ''''''
+    }
+
    //-------------------------------------------------------------------------
     def generateEntity(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String entityName) { 
     
@@ -174,7 +282,7 @@ class SCL2VHDL {
     
    // -------------------------------------------------------------------------
    
-    def createVariableFromModel(VariableDeclaration variable, boolean isInput) {
+    def createVariableFromModel(VariableDeclaration variable, boolean isInput, boolean isOutput) {
         
         val Expression initialValue = variable.initialValue
         val name = variable.name
@@ -184,14 +292,14 @@ class SCL2VHDL {
         // allows: input signal A : integer = false; !!!
         if(initialValue != null){
             val value1 = initialValue as PrimitiveValueExpression
-            if(value1.value instanceof IntLiteralImpl){
-                val value2 = value1.value as IntLiteralImpl
+            if(value1.value instanceof IntLiteral){
+                val value2 = value1.value as IntLiteral
                 val value3 = value2.value
-                new Variables(name,isInput,value3)
-            }else if (value1.value instanceof BoolLiteralImpl){
-                val value2 = value1.value as BoolLiteralImpl
+                new Variables(name,isInput,isOutput,value3)
+            }else if (value1.value instanceof BoolLiteral){
+                val value2 = value1.value as BoolLiteral
                 val value3 = value2.value
-                new Variables(name,isInput,value3)
+                new Variables(name,isInput,isOutput,value3)
             }   
         }
         //no initial value
@@ -200,42 +308,99 @@ class SCL2VHDL {
                 val String type = variable.type.name
                 //In VHDL simulation all used signals should have an initial value
                 if(type == "integer"){
-                    new Variables(name,isInput,0)
+                    new Variables(name,isInput,isOutput,0)
                 }
                 else if(type == "boolean") {
-                    new Variables(name,isInput,false)
+                    new Variables(name,isInput,isOutput,false)
                 }
                 //other values are not supported
                 // TODO  throw exception for unsupported type
             }//no type specified -> set to boolean
             else{
-                new Variables(name,isInput,false)
+                new Variables(name,isInput,isOutput,false)
             }
         }
         
     }
    // -------------------------------------------------------------------------
+     
    
    // Expand an empty statement
-   def dispatch expand(EmptyStatement statement) {
-   		'''noop'''
+   def dispatch expand(Assignment assign) {
+   		'''«assign.assignment.expand»;'''
    }
 
    // Expand an instruction statement
-   def dispatch expand(InstructionStatement statement) {
-        '''«statement.instruction.expand»'''
+   def dispatch expand(Conditional cond) {
+        '''if («cond.expression.expand»=true) then
+              «cond.statements.map(stm | stm.expand).join('\n')»
+            end if;'''
    }
    
    // Expand a PAUSE instruction.
-   def dispatch expand(Pause pauseInstruction) {
-   	'''PAUSE;'''
+   def dispatch expand(Expression exp) {
+    '''«exp.toString»'''
+   }
+   
+      // Expand a PAUSE instruction.
+   def dispatch expand(AssignmentExpression exp) {
+    '''«exp.varRef.expand» «exp.operator.expand» «exp.expression.expand»'''
+   }
+   
+   def dispatch expand(AssignmentOperator assOp) {
+    ''':='''
+   }
+   
+   // Expand a PAUSE instruction.
+   def dispatch expand(ConditionalExpression exp) {
+    '''«exp.toString»'''
+   }
+   
+   // Expand a PAUSE instruction.
+   def dispatch expand(ElementReferenceExpression exp) {
+   	'''«exp.reference.expand»'''
    }   
 
    // Expand all other instructions.
-   def dispatch expand(Instruction elseInstruction) {
-    '''OTHERINSTRUCTION;'''
-   }   
+   def dispatch expand(InstructionStatement inst) {
+    '''«inst.instruction.expand»'''
+   }  
    
+   // Expand all other instructions.
+   def dispatch expand(VariableDeclaration vari) {
+    '''«vari.name»_int'''
+   }
+   
+   // Expand all other instructions.
+   def dispatch expand(PrimitiveValueExpression primVal) {
+    '''«primVal.value.expand»'''
+   }
+   
+   // Expand all other instructions.
+   def dispatch expand(BoolLiteral bool) {
+    '''«bool.value»'''
+   }
+   
+   // Expand all other instructions.
+   def dispatch expand(LogicalOrExpression orExp) {
+    '''«orExp.leftOperand.expand» or «orExp.rightOperand.expand»'''
+   }
+   
+   // Expand all other instructions.
+   def dispatch expand(LogicalAndExpression andExp) {
+    '''«andExp.leftOperand.expand» and «andExp.rightOperand.expand»'''
+   }
+   
+   // Expand all other instructions.
+   def dispatch expand(LogicalNotExpression notExp) {
+    '''not «notExp.operand.expand»'''
+   }
+   
+   
+      // Expand all other instructions.
+   def dispatch expand(ParenthesizedExpression parenthesizedExp) {
+    '''(«parenthesizedExp.expression.expand»)'''
+   }
    // -------------------------------------------------------------------------   
  
  

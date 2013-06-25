@@ -138,7 +138,7 @@ class ESO2VHDL {
 //				modelInputs.add(createVariableFromModel(variable.name, true, false))
 //			}
 			//every time a present variable is needed
-			modelInputs.add(createVariableFromModel(variable, true)) 
+			modelInputs.add(createVariableFromModel(variable, true, false)) 
 		}
 		if(variable.output){					
 //			if(value != null){
@@ -147,7 +147,7 @@ class ESO2VHDL {
 //				modelOutputs.add(createVariableFromModel(variable.name, false, false))			
 //			}
 			//every time a present variable is needed
-			modelOutputs.add(createVariableFromModel(variable, false))
+			modelOutputs.add(createVariableFromModel(variable, false, true))
 		}	
     ]
     
@@ -417,7 +417,7 @@ class ESO2VHDL {
 //	}
 
 
-	def createVariableFromModel(VariableDeclaration variable, boolean isInput) {
+	def createVariableFromModel(VariableDeclaration variable, boolean isInput, boolean isOutput) {
 		
 		val Expression initialValue = variable.initialValue
 		val name = variable.name
@@ -430,11 +430,11 @@ class ESO2VHDL {
 			if(value1.value instanceof IntLiteralImpl){
 				val value2 = value1.value as IntLiteralImpl
 				val value3 = value2.value
-				new Variables(name,isInput,value3)
+				new Variables(name,isInput,isOutput,value3)
 			}else if (value1.value instanceof BoolLiteralImpl){
 				val value2 = value1.value as BoolLiteralImpl
 				val value3 = value2.value
-				new Variables(name,isInput,value3)
+				new Variables(name,isInput,isOutput,value3)
 			}	
 		}
 		//no initial value
@@ -443,16 +443,16 @@ class ESO2VHDL {
 				val String type = variable.type.name
 				//In VHDL simulation all used signals should have an initial value
 				if(type == "integer"){
-					new Variables(name,isInput,0)
+					new Variables(name,isInput,isOutput,0)
 				}
 				else if(type == "boolean") {
-					new Variables(name,isInput,false)
+					new Variables(name,isInput,isOutput,false)
 				}
 				//other values are not supported
 				// TODO  throw exception for unsupported type
 			}//no type specified -> set to boolean
 			else{
-				new Variables(name,isInput,false)
+				new Variables(name,isInput,isOutput,false)
 			}
 		}
 		
