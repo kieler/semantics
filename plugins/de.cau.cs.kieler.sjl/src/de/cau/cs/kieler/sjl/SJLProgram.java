@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * The SJLProgram implements a light version of SynchronousJava (SJ) Programs.
  *
@@ -294,7 +293,7 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
         coarseProgramCounter.set(prio, forkedState);
         // Add parent relation
         parent[prio] = currentThread;
-        System.out.println("1." + Arrays.toString(parent));
+//        System.out.println("1." + Arrays.toString(parent));
         // Add new thread as an alive & enabled one
         setAdd(alive, prio);
         setAdd(active, prio);
@@ -431,12 +430,12 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
 //                }
 //            }
             
-            System.out.println("2." + Arrays.toString(parent));
+//            System.out.println("2." + Arrays.toString(parent));
             // Remove children for old thread ID/prio
             descendants[currentThread] = new int[maxGroup];
             // setClear(_desc[currentThread]);
             parent[currentThread] = -1;
-            System.out.println("3." + Arrays.toString(parent));
+//            System.out.println("3." + Arrays.toString(parent));
             
             // Update PC
             coarseProgramCounter.set(prio, coarseProgramCounter.get(currentThread));
@@ -451,7 +450,7 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
             for (int i = 0; i < parent.length; i++) {
                 if (parent[i] == currentThread) {
                     parent[i] = prio;
-                    System.out.println("4." + Arrays.toString(parent));
+                    //System.out.println("4." + Arrays.toString(parent));
                 }
             }
         }
@@ -706,7 +705,7 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
             if (parent[thread] == thread) {
                 throw new Error("Calling getRootThread ("+thread+") with its parent (" + parent[thread] + ")");
             }
-            System.out.println("Calling getRootThread ("+thread+") with its parent (" + parent[thread] + ")");
+            //System.out.println("Calling getRootThread ("+thread+") with its parent (" + parent[thread] + ")");
             return getRootParent(parent[thread]);
         }
     }
