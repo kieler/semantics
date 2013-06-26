@@ -333,7 +333,6 @@ class SCL2VHDL {
     }
    // -------------------------------------------------------------------------
      
-   
    // Expand an empty statement
    def dispatch expand(Assignment assign) {
    		'''«assign.assignment.expand»;'''
@@ -341,7 +340,7 @@ class SCL2VHDL {
 
    // Expand an instruction statement
    def dispatch expand(Conditional cond) {
-        '''if («cond.expression.expand»=true) then
+        '''if («cond.expression.expand») then
               «cond.statements.map(stm | stm.expand).join('\n')»
             end if;'''
    }
@@ -357,6 +356,13 @@ class SCL2VHDL {
         if      (exp.operator.literal ==  "="){'''«exp.varRef.expand» := «exp.expression.expand»'''}
         else if (exp.operator.literal == "+="){'''«exp.varRef.expand» := «exp.varRef.expand» + «exp.expression.expand»'''}
         else if (exp.operator.literal == "-="){'''«exp.varRef.expand» := «exp.varRef.expand» - «exp.expression.expand»'''}
+        else if (exp.operator.literal == "*="){'''«exp.varRef.expand» := «exp.varRef.expand» * «exp.expression.expand»'''}
+        else if (exp.operator.literal == "/="){'''«exp.varRef.expand» := «exp.varRef.expand» / «exp.expression.expand»'''}
+        else if (exp.operator.literal == "%="){'''«exp.varRef.expand» := «exp.varRef.expand» mod «exp.expression.expand»'''}
+        else if (exp.operator.literal == "<<="){'''«exp.varRef.expand» := «exp.varRef.expand» sla «exp.expression.expand»'''}
+        else if (exp.operator.literal == ">>="){'''«exp.varRef.expand» := «exp.varRef.expand» sla «exp.expression.expand»'''}
+        else if (exp.operator.literal == "&="){'''«exp.varRef.expand» := «exp.varRef.expand» and «exp.expression.expand»'''}
+        else if (exp.operator.literal == "|="){'''«exp.varRef.expand» := «exp.varRef.expand» or «exp.expression.expand»'''}
    }
       
    def dispatch expand(AdditiveOperator addOp) {
@@ -425,9 +431,7 @@ class SCL2VHDL {
    }
    
    def dispatch expand(NumericalAddSubtractExpression numAddSubExp) {
-    
-    if      (numAddSubExp.operator.literal == "+"){'''«numAddSubExp.leftOperand.expand» + «numAddSubExp.rightOperand.expand»'''}
-    else if (numAddSubExp.operator.literal == "-"){'''«numAddSubExp.leftOperand.expand» - «numAddSubExp.rightOperand.expand»'''}
+    '''«numAddSubExp.leftOperand.expand» «numAddSubExp.operator.literal» «numAddSubExp.rightOperand.expand»'''
    }
    
    def dispatch expand(ShiftExpression shiftExp) {
@@ -438,8 +442,9 @@ class SCL2VHDL {
    
    def dispatch expand(NumericalMultiplyDivideExpression numMultDivExp) {
     
-    //Others not supported *, /
+    //Others *, /
     if (numMultDivExp.operator.literal == "%"){'''«numMultDivExp.leftOperand.expand» mod «numMultDivExp.rightOperand.expand»'''}
+    else{'''«numMultDivExp.leftOperand.expand» «numMultDivExp.operator.literal» «numMultDivExp.rightOperand.expand»'''}
    }
    
    // Expand all other instructions.
