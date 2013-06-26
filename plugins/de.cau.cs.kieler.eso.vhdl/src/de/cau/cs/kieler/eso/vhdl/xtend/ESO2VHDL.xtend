@@ -44,6 +44,7 @@ import java.io.File;
  */
 
 class ESO2VHDL {
+    boolean allreadyAdded
 	
 	URI input
 	String name
@@ -87,6 +88,9 @@ class ESO2VHDL {
    	}
    	
 	def Program loadModel(File input) { 
+
+        //degug model file
+//        val IPath iPath = new Path(input.toString.subSequence(0,input.toString.indexOf(".")) + ".core.tick.scl")
 
 	    val IPath iPath = new Path(input.toString())
 				
@@ -264,7 +268,7 @@ class ESO2VHDL {
 		traceCnt = 1
 	
 		val List<String> inputString = getStringList(inputArray)
-		val List<String> outputString = getStringList(outputArray)
+//		val List<String> outputString = getStringList(outputArray)
 	
 		//for all traces and all ticks generate simulation code
 		traces.forEach[ trace | 
@@ -287,15 +291,26 @@ class ESO2VHDL {
 				
 				//check if all outputs are set, use asserts
 //				asserts = getEsoString(tick.extraInfos,"--ESO: %Output ")
+//				asserts = ""
+//				asserts = asserts + tick.extraInfos.map[ kvp | 
+//					if(outputString.contains(kvp.key)){
+//						'''
+//						assert( «kvp.key» = «getValueFromKvPair(kvp)» )
+//							report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «kvp.key» should have been «getValueFromKvPair(kvp)»"
+//							severity ERROR;''' + '\n'
+//					}else{''''''}
+//				].join('')
+				
+				//make assertions to nearly ALL outputs
+				//only in valued signals which should be absent, the present flag will be tested not the value variable
+				val ArrayList<Variables> allAssertions = computeAssertions(outputArray, tick.extraInfos)
 				asserts = ""
-				asserts = asserts + tick.extraInfos.map[ kvp | 
-					if(outputString.contains(kvp.key)){
-						'''
-						assert( «kvp.key» = «getValueFromKvPair(kvp)» )
-							report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «kvp.key» should have been «getValueFromKvPair(kvp)»"
-							severity ERROR;''' + '\n'
-					}else''''''
-				].join('')
+                asserts = asserts + allAssertions.map[ ass |
+                    '''
+                        assert( «ass.name» = «ass.value» )
+                            report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «ass.name» should have been «ass.value»"
+                            severity ERROR;''' + '\n'
+                ].join('')
 				
 				//Set all inputs back to initial value
 				setInputsBack = tick.extraInfos.map[ kvp | 
@@ -324,6 +339,9 @@ class ESO2VHDL {
 		//Return simulation code for all traces (included all ticks)
 		simTraces
 	}
+	
+
+
 
     //-------------------------------------------------------------------------
     //------------- H E L P E R - M E T H O D S -------------------------------
@@ -395,6 +413,34 @@ class ESO2VHDL {
 		return temp
 	}
 	
+	//we must ensure that value which should be present are tested and values which are not
+    //listed in an eso file to be absent, so compute a list which contains this information
+    def ArrayList<Variables> computeAssertions(ArrayList<Variables> outputArray, EList<kvpair> extraInfos) { 
+         val asserts = new ArrayList<Variables>
+         allreadyAdded = false
+         
+         outputArray.forEach[out | 
+             if(!extraInfos.nullOrEmpty){
+                 extraInfos.forEach[ kvp |
+                     if(out.name.equals(kvp.key)){
+                         asserts.add(new Variables(kvp.key,false,false,getValueFromKvPair(kvp)))
+                         allreadyAdded = true
+                     }
+                 ]
+             }
+             if(!allreadyAdded){
+                 //Because, we cannot say anything about an absent value don't make an assertion
+                 //the pure Signal e.g. F(6) transformed to F and F_value only must be absent
+                 if(!(out.name.contains("_value"))){
+                    asserts.add(out)
+                 }    
+             }
+             allreadyAdded = false
+         ]
+
+         return asserts
+    }
+    
 //	//create a new instance from variables to save the model variables in a more useable way
 //	def dispatch createVariableFromModel(String name, boolean isinput, Expression initialValue) {
 //

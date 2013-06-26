@@ -66,7 +66,7 @@ public class VHDLtbGenerator extends AbstractModelFileHandler {
 //        }else{
 //            file = null;
 //        }            
-           
+
         //Eso Core Generation: test.eso transforms to test.core.eso therefore two times removeFileExtension
         java.io.File ioFile = file.getFullPath().removeFileExtension().removeFileExtension().addFileExtension("scl").toFile();
         
