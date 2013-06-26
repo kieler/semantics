@@ -40,6 +40,9 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
     /** The max group. */
     private int maxGroup;
     
+    /** The max prio. */
+    private int maxPrio;
+    
     /** The coarse program counter. */
     private ArrayList<State> coarseProgramCounter;
     
@@ -92,6 +95,7 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
      *            the max priority
      */
     public SJLProgram(State startState, int startPrio, int maxPrio) {
+        this.maxPrio = maxPrio;
         this.maxGroup = (maxPrio / 32) + 1;
         // Create new priority queue for alive threads
         this.alive = new int[maxGroup];
@@ -403,12 +407,30 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
         gotoB(resumeState);
 
         if (prio != currentThread) {
+            // Update the parent entry
+            parent[prio] = parent[currentThread];
+            parent[currentThread] = -1;
+            
             // Update thread ID's
             descendants[prio] = descendants[currentThread];
             // Reinitialize
             descendants[currentThread] = new int[maxGroup];
-            parent[prio] = parent[currentThread];
-            parent[currentThread] = -1;
+            // We may be the descentant of some other thread, need to fix this
+            int myParent = parent[prio];
+            int[] myParentDescendants = descendants[myParent];
+            if (setContains(myParentDescendants, currentThread)) {
+                setDelete(myParentDescendants, currentThread);
+                setAdd(myParentDescendants, prio);
+            }
+//            for (int[] descendantsOfSomeThread : descendants) {
+//                if (descendants[prio] != descendantsOfSomeThread) {
+//                    if (setContains(descendantsOfSomeThread, currentThread)) {
+//                        setDelete(descendantsOfSomeThread, currentThread);
+//                        setAdd(descendantsOfSomeThread, prio);
+//                    }
+//                }
+//            }
+            
             System.out.println("2." + Arrays.toString(parent));
             // Remove children for old thread ID/prio
             descendants[currentThread] = new int[maxGroup];
@@ -496,6 +518,10 @@ abstract public class SJLProgram<State extends Enum<?>> implements Cloneable {
         // Remove the thread from active and alive ones
         setDelete(active, thread);
         setDelete(alive, thread);
+        // Remove PC
+        coarseProgramCounter.set(thread, null);
+        // Remove parent
+        parent[thread] = -1;
         // Abort all descendants (all children and children of children...)
         int nextChildThread = -1;
         do {
