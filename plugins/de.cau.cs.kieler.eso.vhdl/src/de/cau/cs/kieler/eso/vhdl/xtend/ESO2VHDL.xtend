@@ -25,7 +25,6 @@ import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.VariableDeclaration
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.IPath
-//import org.eclipse.core.internal.resources.File
 import org.eclipse.emf.common.util.URI
 import org.yakindu.sct.model.stext.stext.impl.IntLiteralImpl
 import org.yakindu.sct.model.stext.stext.impl.BoolLiteralImpl
@@ -34,7 +33,7 @@ import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import de.cau.cs.kieler.sim.eso.eso.kvpair
 import java.util.List
 import org.yakindu.sct.model.stext.stext.Expression
-import java.io.File;
+import java.io.File
 
 /*
  * ----- T O D O ---------
@@ -54,7 +53,7 @@ class ESO2VHDL {
 	int tickCnt
 	
 	String setInputs
-	String setInputsBack
+//	String setInputsBack
 	String asserts
 	String simTicks
 	String simTraces
@@ -267,7 +266,7 @@ class ESO2VHDL {
 		simTraces = ""
 		traceCnt = 1
 	
-		val List<String> inputString = getStringList(inputArray)
+//		val List<String> inputString = getStringList(inputArray)
 //		val List<String> outputString = getStringList(outputArray)
 	
 		//for all traces and all ticks generate simulation code
@@ -279,13 +278,21 @@ class ESO2VHDL {
 			trace.ticks.forEach[ tick | 
 				//Set inputs according to the tick
 //				setInputs = getEsoString(tick.extraInfos,"-- ESO: ")
-				setInputs = ""
-				setInputs = setInputs + tick.extraInfos.map[ kvp | 
-					if(inputString.contains(kvp.key)){
-						'''«kvp.key» <= «getValueFromKvPair(kvp)»''' + (';\n')
-					}else''''''
-				].join('')
-								
+                setInputs = ""
+//CHANGE: 27.06.2013 unset variables in ESO should treated as absent/false
+//				setInputs = setInputs + tick.extraInfos.map[ kvp | 
+//					if(inputString.contains(kvp.key)){
+//						'''«kvp.key» <= «getValueFromKvPair(kvp)»''' + (';\n')
+//					}else''''''
+//				].join('')
+			 
+			    val ArrayList<Variables> allInputs = computeValidVariabeles(inputArray, tick.extraInfos)
+			    
+			    setInputs = setInputs
+				setInputs = setInputs + allInputs.map[ in |
+                    '''«in.name» <= «in.value»'''+ (';\n')
+                ].join('')				
+											
 				if(setInputs.nullOrEmpty)
 					setInputs = ""
 				
@@ -303,7 +310,7 @@ class ESO2VHDL {
 				
 				//make assertions to nearly ALL outputs
 				//only in valued signals which should be absent, the present flag will be tested not the value variable
-				val ArrayList<Variables> allAssertions = computeAssertions(outputArray, tick.extraInfos)
+				val ArrayList<Variables> allAssertions = computeValidVariabeles(outputArray, tick.extraInfos)
 				asserts = ""
                 asserts = asserts + allAssertions.map[ ass |
                     '''
@@ -312,19 +319,20 @@ class ESO2VHDL {
                             severity ERROR;''' + '\n'
                 ].join('')
 				
+// CHANGE 27.06.2013: Das Modell soll die Eingangssignale intern nach jedem tick zurücksetzen
 				//Set all inputs back to initial value
-				setInputsBack = tick.extraInfos.map[ kvp | 
-					if(inputString.contains(kvp.key)){
-						if(!(kvp.key.endsWith("_value"))){
-							'''«kvp.key» <= false''' + (';\n')
-						}else ''''''
-					}else ''''''
-				].join('')
+//				setInputsBack = tick.extraInfos.map[ kvp | 
+//					if(inputString.contains(kvp.key)){
+//						if(!(kvp.key.endsWith("_value"))){
+//							'''«kvp.key» <= false''' + (';\n')
+//						}else ''''''
+//					}else ''''''
+//				].join('')
 				
 				//Compute code that is needed for one tick
 				//simTicks contains (at the end) the complete tick code for ONE trace
 				simTicks =  simTicks + ("\n--".concat(" tick ").concat(tickCnt.toString).concat('\n')) 
-							+ setInputs + wait + asserts + setInputsBack 
+							+ setInputs + wait + asserts //+ setInputsBack 
 							
 				//tick counter shows the current tick in the current trace
 				tickCnt = tickCnt + 1
@@ -415,14 +423,14 @@ class ESO2VHDL {
 	
 	//we must ensure that value which should be present are tested and values which are not
     //listed in an eso file to be absent, so compute a list which contains this information
-    def ArrayList<Variables> computeAssertions(ArrayList<Variables> outputArray, EList<kvpair> extraInfos) { 
+    def ArrayList<Variables> computeValidVariabeles(ArrayList<Variables> variableList, EList<kvpair> extraInfos) { 
          val asserts = new ArrayList<Variables>
          allreadyAdded = false
          
-         outputArray.forEach[out | 
+         variableList.forEach[variable | 
              if(!extraInfos.nullOrEmpty){
                  extraInfos.forEach[ kvp |
-                     if(out.name.equals(kvp.key)){
+                     if(variable.name.equals(kvp.key)){
                          asserts.add(new Variables(kvp.key,false,false,getValueFromKvPair(kvp)))
                          allreadyAdded = true
                      }
@@ -431,8 +439,8 @@ class ESO2VHDL {
              if(!allreadyAdded){
                  //Because, we cannot say anything about an absent value don't make an assertion
                  //the pure Signal e.g. F(6) transformed to F and F_value only must be absent
-                 if(!(out.name.contains("_value"))){
-                    asserts.add(out)
+                 if(!(variable.name.contains("_value"))){
+                    asserts.add(variable)
                  }    
              }
              allreadyAdded = false

@@ -30,7 +30,7 @@ public class VHDLtbGenerator extends AbstractModelFileHandler {
     }
 
     public String ModelHandlerFileExtensionTransformed() {
-            return "vhd";
+            return "tb.vhd";
     }
 
     public String ModelHandlerDiagramEditorID() {

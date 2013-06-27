@@ -46,7 +46,8 @@ class ESO2CoreESO {
 					if(in.valued){
 						newTick.extraInfos.add(newKvpair(in.name + "_value", in.^val))
 					}					
-				]
+				]     
+                
 				tick.output.forEach[out |
 					
 					newTick.extraInfos.add(newKvpair(out.name, true))
@@ -65,7 +66,8 @@ class ESO2CoreESO {
 	
 	def dispatch kvpair newKvpair(String name, EObject valueObject) { 
 		val kvp = EsoFactory::eINSTANCE.createkvpair
-		//val js = EsoFactory::eINSTANCE.createEsoJson //Why Json?? 
+//		val js = EsoFactory::eINSTANCE.createEsoJson //Why Json??
+//		js.setValue("A:{present: true, value:6}")
 		
 		kvp.setKey(name)
 		
