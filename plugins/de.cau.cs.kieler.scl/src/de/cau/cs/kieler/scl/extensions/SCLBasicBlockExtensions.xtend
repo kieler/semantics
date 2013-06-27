@@ -116,7 +116,7 @@ class SCLBasicBlockExtensions {
         val instructionStatement = statement.instructionStatement
         val bBox = new ArrayList<Statement>
         if (instructionStatement == null) return bBox
-        val sseq = instructionStatement.getParentStatementSequence
+        val sseq = instructionStatement.getParentStatementSequence;
         
         if (instructionStatement.isGoto) { 
             if (instructionStatement.instruction.asGoto.getTargetStatement?.getInstructionStatement?.instruction == null) return bBox
@@ -417,6 +417,11 @@ class SCLBasicBlockExtensions {
         if (predecessor.statements.last.isConditional) {
             if (predecessor.statements.last.getInstruction.asConditional.statements.head.getBasicBlockByHead(false).isEqual(basicBlock))
                 return true
+            else
+            if (predecessor.statements.last.getInstruction.asConditional.statements.head.isGoto) {
+                val tStmt = predecessor.statements.last.getInstruction.asConditional.statements.head.getInstruction.asGoto.getTargetStatement
+                if (tStmt.getBasicBlockByHead(false).isEqual(basicBlock)) return true            
+           }
         }
         
         return false

@@ -35,7 +35,7 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             c.setIndentation(f.getProgramAccess().getLeftCurlyBracketKeyword_3(), 
                              f.getProgramAccess().getRightCurlyBracketKeyword_5());
             
-            c.setNoSpace().before(f.getVariableDeclarationAccess().getColonKeyword_4_0());
+//            c.setNoSpace().before(f.getVariableDeclarationAccess().getColonKeyword_4_0());
 
             c.setLinewrap(1).after(f.getInstructionStatementRule());
             
@@ -53,13 +53,13 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
           
             // Conditional
             c.setLinewrap(1).after(f.getConditionalAccess().getThenKeyword_2());
-            c.setLinewrap(1).before(f.getConditionalAccess().getEndKeyword_4());
+            c.setLinewrap(1).before(f.getConditionalAccess().getEndKeyword_5());
             c.setIndentation(f.getConditionalAccess().getThenKeyword_2(), 
-                             f.getConditionalAccess().getEndKeyword_4());
+                             f.getConditionalAccess().getEndKeyword_5());
             
    
             // Variable Declaration
-            c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword_6());
+            c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword_5());
             c.setLinewrap(1).after(f.getVariableDeclarationRule());
         
             // Parallel

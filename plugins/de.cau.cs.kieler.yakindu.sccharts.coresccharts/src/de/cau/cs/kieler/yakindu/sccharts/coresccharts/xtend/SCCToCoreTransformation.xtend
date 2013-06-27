@@ -195,21 +195,21 @@ class SCCToCoreTransformation {
              
             for (region : originalRegions) {
                 // Remember all outgoing transitions
-                val regionStatesRaw = ImmutableList::copyOf(region.getVertices);
-                var List<SyncState> regionStates = new ArrayList<SyncState>();
+                val regionStatesRaw = ImmutableList::copyOf(region.getVertices)
+                var List<SyncState> regionStates = new ArrayList<SyncState>()
                 for (raw : regionStatesRaw) {
-                	regionStates.add(0, raw as SyncState);
+                	regionStates.add(0, raw as SyncState)
                 }
                 
                 val abortedState = SyncgraphFactory::eINSTANCE.createSyncState();
 //                abortedState.setId("_Aborted" + state.hashCode);
-                abortedState.setName("_Aborted");             
-                abortedState.setIsFinal(true);
+                abortedState.setName("_Aborted")             
+                abortedState.setIsFinal(true)
                 val needAbortedState = ((outgoingStrongTransitions.size > 0 || 
                                          outgoingWeakTransitions.size > 0
                                         ) && (regionStates.filter(e | !e.isIsFinal).size > 0));
                 if (needAbortedState) {
-                       region.getVertices.add(abortedState);
+                       region.getVertices.add(abortedState)
                 }
                 // Do not add the state here, only add the state iff there are any transitions
                 // ending up in this _Aborted state (within the if-for-constructs below)

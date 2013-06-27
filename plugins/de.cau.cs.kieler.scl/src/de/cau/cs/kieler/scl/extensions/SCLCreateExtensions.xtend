@@ -39,6 +39,8 @@ import org.yakindu.base.types.impl.PrimitiveTypeImpl
 import org.yakindu.base.types.Type
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition
+import org.yakindu.sct.model.sgraph.Declaration
 
 class SCLCreateExtensions {
   
@@ -136,7 +138,7 @@ class SCLCreateExtensions {
     
     // Create a new VariableDeclaration or return an old one, if it already exists in the given context
     def VariableDeclaration create varDef: SCL.createVariableDeclaration()
-        createVariableDeclaration(Event definition) {
+        createVariableDeclaration(Declaration definition) {
 
         varDef.setName(definition.getName());
         if (definition instanceof EventDefinition) {
@@ -149,7 +151,15 @@ class SCLCreateExtensions {
                 varDef.setType(eventDefinition.getType());
             }
         }
+        if (definition instanceof VariableDefinition) {
+            val varD = definition as VariableDefinition
+            varDef.setInput(varD.isInput)
+            varDef.setOutput(varD.isOutput)
+            if (varD.initialValue != null) varDef.setInitialValue(varD.initialValue)
+            if (varD.type != null) varDef.setType(varD.type)
+        }
     }
+
 
     def VariableDeclaration create varDef: SCL.createVariableDeclaration()
         createVariableDeclaration(String name, String type) {
@@ -183,7 +193,7 @@ class SCLCreateExtensions {
                     val assignment = SCL.createAssignment()
                     assignment.assignment = action.copy as AssignmentExpression
                     assignment.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [
-                        it.reference = (it.reference as Event).createVariableDeclaration();
+                        it.reference = (it.reference as Declaration).createVariableDeclaration();
                     ]
 //                    ((assignment.assignment as AssignmentExpression).varRef as ElementReferenceExpression).reference = 
 //                        (((action as AssignmentExpression).varRef as ElementReferenceExpression).reference as Event).createVariableDeclaration();
@@ -242,7 +252,7 @@ class SCLCreateExtensions {
             if (reactionTrigger.expression != null) {
                 conditional.expression = reactionTrigger.expression.copy;
                 conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
-                    e.reference = (e.reference as Event).createVariableDeclaration;  ]
+                    e.reference = (e.reference as Declaration).createVariableDeclaration;  ]
             }
         }
         

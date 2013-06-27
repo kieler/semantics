@@ -87,7 +87,7 @@ class CoreToSCLTransformation {
 
         // Add all declarations of the main state to the declaration of the program.
         for(declaration : mainState.scopes.get(0).declarations) {
-           targetProgram.declarations.add(createVariableDeclaration(declaration as Event));
+           targetProgram.declarations.add(createVariableDeclaration(declaration));
         }
         
         // Create a list of statements for the main state (and all including regions and states) and
@@ -238,7 +238,7 @@ class CoreToSCLTransformation {
         // If a default transition is present, set the flag.
         for(transition : immediateTransitions) {
                 val targetStatements = transformStateTransition(transition)
-                if (targetStatements.head?.getInstruction instanceof Goto) defaultTransition = true
+                if (targetStatements.last?.getInstruction instanceof Goto) defaultTransition = true
                 immediateStatements.addAll(targetStatements)
         }
                 
@@ -256,8 +256,10 @@ class CoreToSCLTransformation {
             // The optimization is possible, if there is already a default transition (already present or
             // added by the transformation) and there are only two transitions.
             if (optimizationFlags.optimize(CoreToSCLOptimization::OPTIMIZE_SELFLOOP) &&
-               ((transitions.size==2 && selfTransitions.size==1 && selfTransitions.head.trigger == null) ||
-                (transitions.size==1 && selfTransitions.size!=1))) {
+               ((transitions.size==2 && selfTransitions.size==1 && selfTransitions.head.trigger == null) 
+//                   ||
+//                (transitions.size==1 && selfTransitions.size!=1)
+                )) {
                 iS.addAll(optimizeSelfLoop(immediateStatements, selfStatements));
             } else {
                 iS.addAll(immediateStatements)
@@ -273,7 +275,7 @@ class CoreToSCLTransformation {
         iS.add(createSCLPause.createStatement);
         
         // Same as above. If there are only two transitions and one of them is going to self, invoke
-        // SELFLOOP OPTIMIZATION if seleced.
+        // SELFLOOP OPTIMIZATION if selected.
         if (optimizationFlags.optimize(CoreToSCLOptimization::OPTIMIZE_SELFLOOP) &&
            ((transitions.size==2 && selfTransitions.size==1 && selfTransitions.head.trigger == null) ||
             (transitions.size==1 && selfTransitions.size!=1))) {
@@ -334,7 +336,7 @@ class CoreToSCLTransformation {
         val transitionEffect = transition.getEffect()
         
         // Transition trigger
-        val transitionTrigger = transition.getTrigger()
+        val transitionTrigger = transition.getTrigger();
 
         // If a trigger is present, add a conditional statement.        
         if (transitionTrigger.exists) {

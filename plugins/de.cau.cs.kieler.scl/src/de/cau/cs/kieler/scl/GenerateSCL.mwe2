@@ -115,13 +115,13 @@ Workflow {
 			// the following fragment tries to use the Antlr based content assist 
 			//     fragment which can be downloaded from http://www.itemis.com 
 			//     and will be ignored if it's not available. 
-//			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment {
-//				options = {
-				//					classSplitting = true
-//					backtrack = true
+			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment {
+				options = {
+									classSplitting = true
+					backtrack = true
 				//					memoize = false
-//				}
-//			}
+				}
+			}
 		
 
 			// project wizard (optional) 

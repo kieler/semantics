@@ -33,6 +33,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getStatements <em>Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getElseStatements <em>Else Statements</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,6 +60,16 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * @ordered
    */
   protected Expression expression;
+
+  /**
+   * The cached value of the '{@link #getElseStatements() <em>Else Statements</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getElseStatements()
+   * @generated
+   * @ordered
+   */
+  protected EList<Statement> elseStatements;
 
   /**
    * <!-- begin-user-doc -->
@@ -148,6 +159,20 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Statement> getElseStatements()
+  {
+    if (elseStatements == null)
+    {
+      elseStatements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.CONDITIONAL__ELSE_STATEMENTS);
+    }
+    return elseStatements;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -157,6 +182,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
       case SclPackage.CONDITIONAL__EXPRESSION:
         return basicSetExpression(null, msgs);
+      case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
+        return ((InternalEList<?>)getElseStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -175,6 +202,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return getStatements();
       case SclPackage.CONDITIONAL__EXPRESSION:
         return getExpression();
+      case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
+        return getElseStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -197,6 +226,10 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case SclPackage.CONDITIONAL__EXPRESSION:
         setExpression((Expression)newValue);
         return;
+      case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
+        getElseStatements().clear();
+        getElseStatements().addAll((Collection<? extends Statement>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -217,6 +250,9 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case SclPackage.CONDITIONAL__EXPRESSION:
         setExpression((Expression)null);
         return;
+      case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
+        getElseStatements().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -235,6 +271,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return statements != null && !statements.isEmpty();
       case SclPackage.CONDITIONAL__EXPRESSION:
         return expression != null;
+      case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
+        return elseStatements != null && !elseStatements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

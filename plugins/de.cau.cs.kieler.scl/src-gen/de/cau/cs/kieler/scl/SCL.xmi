@@ -45,11 +45,13 @@
                 <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
               </elements>
             </elements>
-            <elements xsi:type="xtext:Assignment" feature="statements" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
-            </elements>
-            <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+            <elements xsi:type="xtext:Group" cardinality="?">
+              <elements xsi:type="xtext:Assignment" feature="statements" operator="+=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+              </elements>
+              <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+              </elements>
             </elements>
           </elements>
           <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
@@ -70,7 +72,6 @@
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="output" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="output"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="signal"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
         </elements>
@@ -206,15 +207,46 @@
                 <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
               </elements>
             </elements>
-            <elements xsi:type="xtext:Assignment" feature="statements" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
-            </elements>
-            <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+            <elements xsi:type="xtext:Group" cardinality="?">
+              <elements xsi:type="xtext:Assignment" feature="statements" operator="+=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+              </elements>
+              <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+              </elements>
             </elements>
           </elements>
           <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="else"/>
+          <elements xsi:type="xtext:Alternatives">
+            <elements xsi:type="xtext:Group">
+              <elements xsi:type="xtext:Alternatives" cardinality="*">
+                <elements xsi:type="xtext:Group">
+                  <elements xsi:type="xtext:Assignment" feature="elseStatements" operator="+=">
+                    <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+                  </elements>
+                  <elements xsi:type="xtext:Keyword" value=";"/>
+                </elements>
+                <elements xsi:type="xtext:Assignment" feature="elseStatements" operator="+=">
+                  <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+                </elements>
+              </elements>
+              <elements xsi:type="xtext:Group" cardinality="?">
+                <elements xsi:type="xtext:Assignment" feature="elseStatements" operator="+=">
+                  <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+                </elements>
+                <elements xsi:type="xtext:Assignment" cardinality="*" feature="elseStatements" operator="+=">
+                  <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+                </elements>
+              </elements>
+            </elements>
+            <elements xsi:type="xtext:Assignment" cardinality="*" feature="elseStatements" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+            </elements>
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="end"/>
@@ -265,11 +297,13 @@
                 <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
               </elements>
             </elements>
-            <elements xsi:type="xtext:Assignment" feature="statements" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
-            </elements>
-            <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+            <elements xsi:type="xtext:Group" cardinality="?">
+              <elements xsi:type="xtext:Assignment" feature="statements" operator="+=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+              </elements>
+              <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+              </elements>
             </elements>
           </elements>
           <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
@@ -338,11 +372,13 @@
                 <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
               </elements>
             </elements>
-            <elements xsi:type="xtext:Assignment" feature="statements" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
-            </elements>
-            <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+            <elements xsi:type="xtext:Group" cardinality="?">
+              <elements xsi:type="xtext:Assignment" feature="statements" operator="+=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+              </elements>
+              <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+              </elements>
             </elements>
           </elements>
           <elements xsi:type="xtext:Assignment" cardinality="*" feature="statements" operator="+=">
