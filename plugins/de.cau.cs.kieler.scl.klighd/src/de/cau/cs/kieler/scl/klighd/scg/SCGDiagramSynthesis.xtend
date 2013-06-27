@@ -355,7 +355,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                             it.setLineStyle(LineStyle::DASH);
                         ];          
                     ]
-                    edge.createLabel.configureCenteralLabel(depTypeString, 9, KlighdConstants::DEFAULT_FONT_NAME)
+//                    edge.createLabel.configureCenteralLabel(depTypeString, 9, KlighdConstants::DEFAULT_FONT_NAME)
                     edge.putToLookUpWith(targetInstruction.getInstruction)
                     Debug("Dependency found! Type: " + depType)
                     markedEdges.put(sourceNode, targetNode)
