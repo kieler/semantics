@@ -36,6 +36,7 @@
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Conditional">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Conditional/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Conditional/elseStatements"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Goto">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Goto/targetLabel"/>

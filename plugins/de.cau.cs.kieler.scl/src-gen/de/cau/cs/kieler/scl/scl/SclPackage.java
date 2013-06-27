@@ -411,13 +411,22 @@ public interface SclPackage extends EPackage
   int CONDITIONAL__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Else Statements</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL__ELSE_STATEMENTS = INSTRUCTION_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Conditional</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.GotoImpl <em>Goto</em>}' class.
@@ -794,6 +803,17 @@ public interface SclPackage extends EPackage
   EReference getConditional_Expression();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Conditional#getElseStatements <em>Else Statements</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Else Statements</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Conditional#getElseStatements()
+   * @see #getConditional()
+   * @generated
+   */
+  EReference getConditional_ElseStatements();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Goto <em>Goto</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1113,6 +1133,14 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EReference CONDITIONAL__EXPRESSION = eINSTANCE.getConditional_Expression();
+
+    /**
+     * The meta object literal for the '<em><b>Else Statements</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONDITIONAL__ELSE_STATEMENTS = eINSTANCE.getConditional_ElseStatements();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.GotoImpl <em>Goto</em>}' class.

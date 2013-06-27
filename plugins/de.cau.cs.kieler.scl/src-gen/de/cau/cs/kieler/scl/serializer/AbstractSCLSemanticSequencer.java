@@ -905,7 +905,11 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *         (
 	 *             ((statements+=InstructionStatement | statements+=EmptyStatement)* statements+=InstructionStatement statements+=EmptyStatement*) | 
 	 *             statements+=EmptyStatement*
-	 *         )
+	 *         ) 
+	 *         (
+	 *             ((elseStatements+=InstructionStatement | elseStatements+=EmptyStatement)* elseStatements+=InstructionStatement elseStatements+=EmptyStatement*) | 
+	 *             elseStatements+=EmptyStatement*
+	 *         )?
 	 *     )
 	 */
 	protected void sequence_Conditional(EObject context, Conditional semanticObject) {

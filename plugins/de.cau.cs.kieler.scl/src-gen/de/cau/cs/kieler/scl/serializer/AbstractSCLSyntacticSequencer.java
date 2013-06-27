@@ -19,6 +19,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 
 	protected SCLGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_AlwaysEvent_AlwaysKeyword_1_0_or_OncycleKeyword_1_1;
+	protected AbstractElementAlias match_Conditional_ElseKeyword_4_0_q;
 	protected AbstractElementAlias match_DefaultTrigger_DefaultKeyword_1_0_or_ElseKeyword_1_1;
 	protected AbstractElementAlias match_TransitionReaction_NumberSignKeyword_3_0_q;
 	
@@ -26,6 +27,7 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (SCLGrammarAccess) access;
 		match_AlwaysEvent_AlwaysKeyword_1_0_or_OncycleKeyword_1_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getAlwaysEventAccess().getAlwaysKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAlwaysEventAccess().getOncycleKeyword_1_1()));
+		match_Conditional_ElseKeyword_4_0_q = new TokenAlias(false, true, grammarAccess.getConditionalAccess().getElseKeyword_4_0());
 		match_DefaultTrigger_DefaultKeyword_1_0_or_ElseKeyword_1_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getDefaultTriggerAccess().getDefaultKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getDefaultTriggerAccess().getElseKeyword_1_1()));
 		match_TransitionReaction_NumberSignKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getTransitionReactionAccess().getNumberSignKeyword_3_0());
 	}
@@ -44,6 +46,8 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
 			if(match_AlwaysEvent_AlwaysKeyword_1_0_or_OncycleKeyword_1_1.equals(syntax))
 				emit_AlwaysEvent_AlwaysKeyword_1_0_or_OncycleKeyword_1_1(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Conditional_ElseKeyword_4_0_q.equals(syntax))
+				emit_Conditional_ElseKeyword_4_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_DefaultTrigger_DefaultKeyword_1_0_or_ElseKeyword_1_1.equals(syntax))
 				emit_DefaultTrigger_DefaultKeyword_1_0_or_ElseKeyword_1_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_TransitionReaction_NumberSignKeyword_3_0_q.equals(syntax))
@@ -54,9 +58,17 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 
 	/**
 	 * Syntax:
-	 *     'oncycle' | 'always'
+	 *     'always' | 'oncycle'
 	 */
 	protected void emit_AlwaysEvent_AlwaysKeyword_1_0_or_OncycleKeyword_1_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     'else'?
+	 */
+	protected void emit_Conditional_ElseKeyword_4_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

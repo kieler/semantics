@@ -13,8 +13,8 @@ Program:
 	'module' name = ID
 	(declarations+=VariableDeclaration)*
 	'{'
-        ((
-            ((statements += InstructionStatement';') | statements += EmptyStatement)*
+	    (
+        (((statements += InstructionStatement';') | statements += EmptyStatement)*
            statements +=  InstructionStatement
            statements +=  EmptyStatement*
          )|
@@ -70,6 +70,14 @@ Conditional:
            statements +=  EmptyStatement*
          )|
          statements +=  EmptyStatement*)
+         (
+             'else'
+            ((((elseStatements += InstructionStatement';') | elseStatements += EmptyStatement)*
+           elseStatements +=  InstructionStatement
+           elseStatements +=  EmptyStatement*
+         )|
+         elseStatements +=  EmptyStatement*)
+         )?
     'end' 
 ;
 
