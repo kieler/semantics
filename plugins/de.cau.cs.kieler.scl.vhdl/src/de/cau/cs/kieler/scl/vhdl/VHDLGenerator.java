@@ -37,7 +37,7 @@ public class VHDLGenerator extends AbstractModelFileHandler {
         }
 
         public String ModelHandlerFileExtensionTransformed() {
-                return "vhdl";
+                return "vhd";
         }
 
         public String ModelHandlerDiagramEditorID() {

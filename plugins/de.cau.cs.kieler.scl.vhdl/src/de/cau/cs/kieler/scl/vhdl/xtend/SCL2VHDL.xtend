@@ -59,13 +59,12 @@ import org.yakindu.sct.model.stext.stext.AssignmentOperator
  * @author gjo
  */
 class SCL2VHDL {
-    Object modelOutput 
     
     // General method to create the c simulation interface.
 	def transform (Program program) {
        '''
 	   «/* Generate the header */»
-	   «header()»
+	   «generateHeader()»
 	   «/* Generate the tick function */»
 	   «generateCode(program)»
        '''
@@ -74,7 +73,7 @@ class SCL2VHDL {
    // -------------------------------------------------------------------------   
    
    // Generate the header.
-   def header() {
+   def generateHeader() {
    	'''
 	--/*****************************************************************************/
 	--/*               G E N E R A T E D     V H D L    C O D E                    */
@@ -94,22 +93,7 @@ class SCL2VHDL {
 	use IEEE.STD_LOGIC_1164.ALL;
 	''' 
    }
-   
-   // -------------------------------------------------------------------------
-   
-   // Generate the  tick function.
-   def tickFunction(Program program) {
-       val statementSequence = program as StatementSequence;
-       val statements = statementSequence.statements;
-   	'''    int tick(){
-       «FOR statement : statements»
-       «statement.expand»
-       «ENDFOR»
-	   TICKEND;
-    }
-	'''
-   }
-   
+    
    // -------------------------------------------------------------------------   
    
    def generateCode(Program program){
@@ -153,6 +137,7 @@ class SCL2VHDL {
         -- do some stuff
         wait until rising_edge(tick);
         «signalToVariable(modelInputs)»
+        GO_int := entry_int;
         
         «generateMainProcess(program.statements)»
         
@@ -332,27 +317,44 @@ class SCL2VHDL {
         
     }
    // -------------------------------------------------------------------------
-     
-   // Expand an empty statement
+
+   //not used
+   def dispatch expand(Expression exp) {
+    '''«exp.toString»'''
+   }  
+   
+   //not used     
+   def dispatch expand(AdditiveOperator addOp) {
+    '''«addOp.literal»'''
+   }
+   
+   //not used
+   def dispatch expand(ConditionalExpression condExp) {
+    '''
+        if («condExp.condition.expand») then
+            «condExp.trueCase.expand»
+        «if(condExp.falseCase != null){'''else«condExp.falseCase.expand»'''}»
+        end if;
+    '''
+   }
+   
+   //---------------------------------------------------------------------------
+   
+   // Expand an Assignment
    def dispatch expand(Assignment assign) {
    		'''«assign.assignment.expand»;'''
    }
 
-   // Expand an instruction statement
+   // Expand an conditional statement
    def dispatch expand(Conditional cond) {
         '''if («cond.expression.expand») then
               «cond.statements.map(stm | stm.expand).join('\n')»
             end if;'''
    }
    
-   // Expand a PAUSE instruction.
-   def dispatch expand(Expression exp) {
-    '''«exp.toString»'''
-   }
-   
-      // Expand a PAUSE instruction.
+   // Expand an Assignment Expression
+   // all stext operators are expanded, >>= and <<= are converted to arithmetic shifts (right ?)
    def dispatch expand(AssignmentExpression exp) {
-    //other not supported, like *=, /=, %=, <<=, >>=, &=, ^=, |=
         if      (exp.operator.literal ==  "="){'''«exp.varRef.expand» := «exp.expression.expand»'''}
         else if (exp.operator.literal == "+="){'''«exp.varRef.expand» := «exp.varRef.expand» + «exp.expression.expand»'''}
         else if (exp.operator.literal == "-="){'''«exp.varRef.expand» := «exp.varRef.expand» - «exp.expression.expand»'''}
@@ -364,22 +366,8 @@ class SCL2VHDL {
         else if (exp.operator.literal == "&="){'''«exp.varRef.expand» := «exp.varRef.expand» and «exp.expression.expand»'''}
         else if (exp.operator.literal == "|="){'''«exp.varRef.expand» := «exp.varRef.expand» or «exp.expression.expand»'''}
    }
-      
-   def dispatch expand(AdditiveOperator addOp) {
-    '''«addOp.literal»'''
-   }
-   
-   // Expand a PAUSE instruction.
-   def dispatch expand(ConditionalExpression condExp) {
-    '''
-        if («condExp.condition.expand») then
-            «condExp.trueCase.expand»
-        «if(condExp.falseCase != null){'''else«condExp.falseCase.expand»'''}»
-        end if;
-    '''
-   }
-   
-   // Expand a PAUSE instruction.
+
+   // Expand a Element Reference Expression
    def dispatch expand(ElementReferenceExpression exp) {
    	'''«exp.reference.expand»'''
    }   
@@ -389,37 +377,38 @@ class SCL2VHDL {
     '''«inst.instruction.expand»'''
    }  
    
-   // Expand all other instructions.
+   // Expand a Variable Declaration, all internal signals have an "_int" at the end
    def dispatch expand(VariableDeclaration vari) {
     '''«vari.name»_int'''
    }
    
-   // Expand all other instructions.
+   // Expand a Primitive Value Expression
    def dispatch expand(PrimitiveValueExpression primVal) {
     '''«primVal.value.expand»'''
    }
    
-   // Expand all other instructions.
+   // Expand a Bool Literal
    def dispatch expand(BoolLiteral bool) {
     '''«bool.value»'''
    }
    
-   // Expand all other instructions.
+   // Expand an Int Literal.
    def dispatch expand(IntLiteral integer) {
     '''«integer.value»'''
    }
    
-   // Expand all other instructions.
+   // Expand a Logical Or Expression
    def dispatch expand(LogicalOrExpression orExp) {
     '''«orExp.leftOperand.expand» or «orExp.rightOperand.expand»'''
    }
    
-   // Expand all other instructions.
+   // Expand a Logical And Expression
    def dispatch expand(LogicalAndExpression andExp) {
     '''«andExp.leftOperand.expand» and «andExp.rightOperand.expand»'''
    }
    
-   // Expand all other instructions.
+   // Expand a Logical Relation Expression
+   // all stext Expressions will be transformed
    def dispatch expand(LogicalRelationExpression relExp) {
     
     if      (relExp.operator.literal ==  "<"){'''«relExp.leftOperand.expand» «relExp.operator» «relExp.rightOperand.expand»'''}
@@ -430,32 +419,38 @@ class SCL2VHDL {
     else if (relExp.operator.literal == "!="){'''«relExp.leftOperand.expand» /= «relExp.rightOperand.expand»'''}
    }
    
+   //Expand a Numerical Add Sub Expression
+   // only + and - are included
    def dispatch expand(NumericalAddSubtractExpression numAddSubExp) {
     '''«numAddSubExp.leftOperand.expand» «numAddSubExp.operator.literal» «numAddSubExp.rightOperand.expand»'''
    }
    
+   //Expand an shift operator
+   //left and right shift are transformed to logical shifts
    def dispatch expand(ShiftExpression shiftExp) {
     
     if      (shiftExp.operator.literal == "<<"){'''«shiftExp.leftOperand.expand» sll «shiftExp.rightOperand.expand»'''}
     else if (shiftExp.operator.literal == ">>"){'''«shiftExp.leftOperand.expand» srl «shiftExp.rightOperand.expand»'''}
    }
    
+   //Expand Numerical Multiply Divide Expression and modulo
+   //only modulo must be adapted to vhdl. Multiplication and division are the same
    def dispatch expand(NumericalMultiplyDivideExpression numMultDivExp) {
-    
     //Others *, /
     if (numMultDivExp.operator.literal == "%"){'''«numMultDivExp.leftOperand.expand» mod «numMultDivExp.rightOperand.expand»'''}
     else{'''«numMultDivExp.leftOperand.expand» «numMultDivExp.operator.literal» «numMultDivExp.rightOperand.expand»'''}
    }
    
-   // Expand all other instructions.
+   // Expand a Logical not Expression
    def dispatch expand(LogicalNotExpression notExp) {
     '''not «notExp.operand.expand»'''
    }
    
-   // Expand all other instructions.
+   // Expand a Parenthesized Expression
    def dispatch expand(ParenthesizedExpression parenthesizedExp) {
     '''(«parenthesizedExp.expression.expand»)'''
    }
+   
    // -------------------------------------------------------------------------   
  
 }
