@@ -13,10 +13,9 @@ Program:
 	'module' name = ID
 	(declarations+=VariableDeclaration)*
 	'{'
-	    (
-        (((statements += InstructionStatement';') | statements += EmptyStatement)*
-           statements +=  InstructionStatement
-           statements +=  EmptyStatement*
+        ((
+            ((statements += InstructionStatement';') | statements += EmptyStatement)*
+            (statements +=  InstructionStatement statements +=  EmptyStatement*)?
          )|
          statements +=  EmptyStatement*)
     '}' 
@@ -27,7 +26,7 @@ Program:
 //;
 
 VariableDeclaration:
-    (input?='input')? (output?='output')? 'signal' (name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
+    (input?='input')? (output?='output')? (name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 ;
 
 Statement:
@@ -66,15 +65,14 @@ Conditional:
     'if' expression = Expression 'then'
         ((
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-           statements +=  InstructionStatement
-           statements +=  EmptyStatement*
+            (statements +=  InstructionStatement statements +=  EmptyStatement*)?
          )|
          statements +=  EmptyStatement*)
          (
              'else'
-            ((((elseStatements += InstructionStatement';') | elseStatements += EmptyStatement)*
-           elseStatements +=  InstructionStatement
-           elseStatements +=  EmptyStatement*
+        ((
+            ((elseStatements += InstructionStatement';') | elseStatements += EmptyStatement)*
+            (elseStatements +=  InstructionStatement elseStatements +=  EmptyStatement*)?
          )|
          elseStatements +=  EmptyStatement*)
          )?
@@ -97,8 +95,7 @@ Thread:
     {Thread}
         ((
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-           statements +=  InstructionStatement
-           statements +=  EmptyStatement*
+            (statements +=  InstructionStatement statements +=  EmptyStatement*)?
          )|
          statements +=  EmptyStatement*)
 ;
@@ -122,8 +119,7 @@ StatementScope:
     (declarations+=VariableDeclaration)*
         ((
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-           statements +=  InstructionStatement
-           statements +=  EmptyStatement*
+            (statements +=  InstructionStatement statements +=  EmptyStatement*)?
          )|
          statements +=  EmptyStatement*)
     '}'    

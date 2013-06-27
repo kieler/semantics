@@ -78,5 +78,25 @@ public abstract class AbstractSCLUiModule extends DefaultUiModule {
 		return de.cau.cs.kieler.scl.ui.contentassist.SCLProposalProvider.class;
 	}
 
+	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
+	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext.Factory> bindContentAssistContext$Factory() {
+		return org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
+	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.antlr.IContentAssistParser> bindIContentAssistParser() {
+		return de.cau.cs.kieler.scl.ui.contentassist.antlr.SCLParser.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
+	public void configureContentAssistLexerProvider(com.google.inject.Binder binder) {
+		binder.bind(de.cau.cs.kieler.scl.ui.contentassist.antlr.internal.InternalSCLLexer.class).toProvider(org.eclipse.xtext.parser.antlr.LexerProvider.create(de.cau.cs.kieler.scl.ui.contentassist.antlr.internal.InternalSCLLexer.class));
+	}
+
+	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
+	public void configureContentAssistLexer(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.LexerUIBindings.CONTENT_ASSIST)).to(de.cau.cs.kieler.scl.ui.contentassist.antlr.internal.InternalSCLLexer.class);
+	}
+
 
 }

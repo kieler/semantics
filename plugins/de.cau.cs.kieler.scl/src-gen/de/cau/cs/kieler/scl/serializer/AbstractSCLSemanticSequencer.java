@@ -903,11 +903,14 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     (
 	 *         expression=Expression 
 	 *         (
-	 *             ((statements+=InstructionStatement | statements+=EmptyStatement)* statements+=InstructionStatement statements+=EmptyStatement*) | 
+	 *             ((statements+=InstructionStatement | statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) | 
 	 *             statements+=EmptyStatement*
 	 *         ) 
 	 *         (
-	 *             ((elseStatements+=InstructionStatement | elseStatements+=EmptyStatement)* elseStatements+=InstructionStatement elseStatements+=EmptyStatement*) | 
+	 *             (
+	 *                 (elseStatements+=InstructionStatement | elseStatements+=EmptyStatement)* 
+	 *                 (elseStatements+=InstructionStatement elseStatements+=EmptyStatement*)?
+	 *             ) | 
 	 *             elseStatements+=EmptyStatement*
 	 *         )?
 	 *     )
@@ -985,7 +988,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *         name=ID 
 	 *         declarations+=VariableDeclaration* 
 	 *         (
-	 *             ((statements+=InstructionStatement | statements+=EmptyStatement)* statements+=InstructionStatement statements+=EmptyStatement*) | 
+	 *             ((statements+=InstructionStatement | statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) | 
 	 *             statements+=EmptyStatement*
 	 *         )
 	 *     )
@@ -1000,7 +1003,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *     (
 	 *         declarations+=VariableDeclaration* 
 	 *         (
-	 *             ((statements+=InstructionStatement | statements+=EmptyStatement)* statements+=InstructionStatement statements+=EmptyStatement*) | 
+	 *             ((statements+=InstructionStatement | statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) | 
 	 *             statements+=EmptyStatement*
 	 *         )
 	 *     )
@@ -1013,7 +1016,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	/**
 	 * Constraint:
 	 *     (
-	 *         ((statements+=InstructionStatement | statements+=EmptyStatement)* statements+=InstructionStatement statements+=EmptyStatement*) | 
+	 *         ((statements+=InstructionStatement | statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) | 
 	 *         statements+=EmptyStatement*
 	 *     )
 	 */
