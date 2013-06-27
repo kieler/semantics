@@ -859,9 +859,17 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             'conditional')
         retList.addAll(lastInstructions);
 
-        // Add this instruction ti the instruction mapping and return the result list
+        // Add this instruction t0 the instruction mapping and return the result list
         (instr as Instruction).addToMapping(kNode, kNode)
-        retList.add(instr as Instruction)           
+        
+        if (instr.elseStatements.size>0) {
+            val lastElseInstructions = instr.elseStatements.createInstructionListFigure(rootNode, kNode, null,
+                'outgoing')
+            retList.addAll(lastElseInstructions)
+        } else {
+            retList.add(instr as Instruction)    
+        }
+                   
         return retList
     }
     
