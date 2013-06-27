@@ -43,18 +43,20 @@ class SCCExtensions {
     }   
 
     def boolean exists(ReactionTrigger trigger) {
-        trigger != null
+        trigger != null && trigger.expression != null
     }   
 
     def boolean exists(Trigger trigger) {
+        if (trigger instanceof ReactionTrigger) return (trigger as ReactionTrigger).exists
         trigger != null
     }   
         
     def boolean exists(ReactionEffect effect) {
-        effect != null
+        effect != null && effect.actions.size > 0
     }   
  
     def boolean exists(Effect effect) {
+        if (effect instanceof ReactionEffect) return (effect as ReactionEffect).exists
         effect != null
     }
        
