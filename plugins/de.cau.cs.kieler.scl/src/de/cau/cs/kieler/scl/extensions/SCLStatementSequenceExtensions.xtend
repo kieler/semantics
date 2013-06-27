@@ -48,7 +48,7 @@ class SCLStatementSequenceExtensions {
     
     // Retrieve the thread list of a given instruction
     def Thread getThread(Instruction instruction) {
-        getThread(instruction.eContainer as Statement);
+        getThread(instruction.eContainer as Statement)
     }
     
     def Thread getThread(Statement statement) {

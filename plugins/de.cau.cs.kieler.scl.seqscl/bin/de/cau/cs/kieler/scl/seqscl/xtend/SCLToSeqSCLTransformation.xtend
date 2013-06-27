@@ -13,6 +13,7 @@ import de.cau.cs.kieler.scl.scl.SclFactory
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.VariableDeclaration
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
 import org.yakindu.sct.model.stext.stext.Expression
@@ -21,6 +22,8 @@ import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 import de.cau.cs.kieler.scl.scl.Assignment
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import java.util.ArrayList
+import org.yakindu.sct.model.stext.stext.LogicalOrExpression
+import org.yakindu.sct.model.stext.stext.LogicalAndExpression
 
 class SCLToSeqSCLTransformation {
 
@@ -207,6 +210,17 @@ class SCLToSeqSCLTransformation {
                 expression = createOrExpression(expression, exp2) 
             }
             guardExpression = expression
+        }
+        
+        if (predecessors.size!=0 && basicBlock.isEqual(sourceProgram.statements.head.getBasicBlockByHead(false))) {
+            val expression = SText.createElementReferenceExpression
+            expression.setReference(program.getDeclarationByName('GO'))
+            
+            if (guardExpression instanceof LogicalOrExpression || guardExpression instanceof LogicalAndExpression) {
+                guardExpression = createParanthesizedExpression(guardExpression)
+            }
+            
+            guardExpression = createOrExpression(expression, guardExpression)
         }
  
         val guardAssignment = createSCLAssignment(
