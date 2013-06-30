@@ -52,6 +52,8 @@ import org.eclipse.xtext.xbase.scoping.featurecalls.OperatorMapping
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
+import java.io.File
+import org.eclipse.emf.common.util.URI
 
 /**
  * Transformation of SCL code into VHDL code.
@@ -59,14 +61,27 @@ import org.yakindu.sct.model.stext.stext.AssignmentOperator
  * @author gjo
  */
 class SCL2VHDL {
+    CharSequence temp
+    String modelname
+    Object input
     
     // General method to create the c simulation interface.
-	def transform (Program program) {
+	def transform (Program program, File modelFile) {
+       
+       if(modelFile != null){
+            input = URI::createFileURI(modelFile.getName());
+            modelname = input.toString
+            temp = modelname.subSequence(0, modelname.indexOf("."))
+            modelname = temp.toString
+            if(modelname.contains("-"))
+               modelname = modelname.split("-").get(1)
+        }
+       
        '''
 	   «/* Generate the header */»
 	   «generateHeader()»
 	   «/* Generate the tick function */»
-	   «generateCode(program)»
+	   «generateCode(program, modelname)»
        '''
    } 	
 
@@ -96,14 +111,14 @@ class SCL2VHDL {
     
    // -------------------------------------------------------------------------   
    
-   def generateCode(Program program){
+   def generateCode(Program program, String modelname){
        
        //Get Input and Output from Model
     val modelInputs = new ArrayList<Variables>
     val modelOutputs = new ArrayList<Variables>
     val modelLocalVariables = new ArrayList<Variables>
         
-    val name = program.name
+    val name = modelname
     val vars = program.declarations
     
     vars.forEach[ variable | 
@@ -136,13 +151,23 @@ class SCL2VHDL {
     
         -- do some stuff
         wait until rising_edge(tick);
-        «signalToVariable(modelInputs)»
-        GO_int := entry_int;
+        --check for Integer value!?
+        if(reset = '1') then
+            «setAllLocalVariables(modelInputs,false)»
+            «setAllLocalVariables(modelOutputs,false)»
+            «setAllLocalVariables(modelLocalVariables,false)»
+        else
+            --update local variables
+            «signalToVariable(modelInputs)»
+            GO_int := entry_int;
+            «setAllLocalVariables(modelOutputs,false)»
         
-        «generateMainProcess(program.statements)»
+            --main program
+            «generateMainProcess(program.statements)»
         
-        «variableToSignal(modelOutputs)»
-        
+            --set outputs
+            «variableToSignal(modelOutputs)»
+        end if;
     end process prog;
     
         «generateInitialTickProcess()»
@@ -151,6 +176,14 @@ class SCL2VHDL {
     '''
        
    }
+    def setAllLocalVariables(ArrayList<Variables> variables, boolean value) { 
+        
+        variables.map[ variable | 
+            '''«variable.name + "_int"» := «value»;'''
+        ].join('\n')
+        
+    }
+
    
     def generateInitialTickProcess() { 
      '''

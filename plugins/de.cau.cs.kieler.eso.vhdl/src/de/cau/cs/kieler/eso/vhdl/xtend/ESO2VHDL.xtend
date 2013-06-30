@@ -43,6 +43,8 @@ import java.io.File
  */
 
 class ESO2VHDL {
+    CharSequence temp
+    String newModelname
     boolean allreadyAdded
 	
 	URI input
@@ -65,13 +67,17 @@ class ESO2VHDL {
 		
 		if(modelFile != null){
 			input = URI::createFileURI(modelFile.getName());
-			modelname = input.trimFileExtension.toString
+			modelname = input.toString
+			temp = modelname.subSequence(0, modelname.indexOf("."))
+			modelname = temp.toString
+			if(modelname.contains("-"))
+			 modelname = modelname.split("-").get(1)
         }    
         
         if(modelname.nullOrEmpty){
-   			name = "noname_tb";
+   			name = "noname_tb"
        	}
-       	else{name = modelname;}
+       	else{name = modelname}
         
        	sclModel = loadModel(modelFile)
        	if(sclModel == null){
@@ -174,7 +180,7 @@ class ESO2VHDL {
 	constant tick_period : time := 100 ns;
 	
 	BEGIN
-		«generateUUT(modelInputs, modelOutputs)»
+		«generateUUT(modelInputs, modelOutputs, name)»
 	
 		«generateTickProcess()»
 
@@ -209,7 +215,7 @@ class ESO2VHDL {
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateUUT(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray) {
+	def generateUUT(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String uutName) {
 		 
 		//compute the mapping from the entity to simulation signals
 		//e.g. A_in => A_in 
@@ -222,7 +228,7 @@ class ESO2VHDL {
 						ins + (if (!outs.nullOrEmpty) ',\n') + '''--Outputs''' + '\n' + outs
 		
 		'''
-		uut: Main_Abo PORT MAP(
+		uut: «uutName» PORT MAP(
 			tick => tick,
 			reset => reset«if(!res.nullOrEmpty)',\n' + '''--Inputs'''+ '\n' + res»
 		);

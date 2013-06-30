@@ -241,7 +241,7 @@ public  class SCLVHDLAutomatedJUnitTest {
         EObject esoModel = ModelUtil.loadEObjectFromModelFile(currentEsoFile);
              
         //Transform model into vhdl file and save it
-        CharSequence transformedSCL2VHDL = (new SCL2VHDL().transform((Program)sclModel));
+        CharSequence transformedSCL2VHDL = (new SCL2VHDL().transform((Program)sclModel, modelFilePath.toFile()));
         IPath vhdlPath = new Path(relativeTempPath + modelFilePath.removeFileExtension().addFileExtension("vhd").lastSegment());
         createWorkspaceFile(vhdlPath, transformedSCL2VHDL.toString());
         

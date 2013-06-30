@@ -13,9 +13,11 @@
  */
 package de.cau.cs.kieler.scl.vhdl;
 
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
 import com.google.inject.Injector;
 
@@ -62,9 +64,14 @@ public class VHDLGenerator extends AbstractModelFileHandler {
 
         public CharSequence doTransformation(EObject modelObject,
                         String commandString, ISelection selection) {
+            
+        File file = (File) ((TreeSelection) selection).getFirstElement();
+               
+        java.io.File ioFile = file.getFullPath().toFile();
+            
                 if (commandString.equals(TRANSFORMATIONCOMMAND)) {
                     CharSequence transformed = (new SCL2VHDL())
-                                    .transform((Program) modelObject);
+                                    .transform((Program) modelObject, ioFile);
                     return transformed;
                 }
                 
