@@ -13,11 +13,10 @@ Program:
 	'module' name = ID
 	(declarations+=VariableDeclaration)*
 	'{'
-        ((
+        (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-            (statements +=  InstructionStatement statements +=  EmptyStatement*)?
-         )|
-         statements +=  EmptyStatement*)
+            (statements +=  InstructionStatement statements += EmptyStatement*)?
+         )
     '}' 
 ;
 
@@ -63,18 +62,15 @@ Assignment:
 
 Conditional:
     'if' expression = Expression 'then'
-        ((
+        (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-            (statements +=  InstructionStatement statements +=  EmptyStatement*)?
-         )|
-         statements +=  EmptyStatement*)
-         (
-             'else'
-        ((
+            (statements +=  InstructionStatement statements += EmptyStatement*)?
+         )
+     ('else'
+        (
             ((elseStatements += InstructionStatement';') | elseStatements += EmptyStatement)*
-            (elseStatements +=  InstructionStatement elseStatements +=  EmptyStatement*)?
-         )|
-         elseStatements +=  EmptyStatement*)
+            (elseStatements +=  InstructionStatement elseStatements += EmptyStatement*)?
+         )
          )?
     'end' 
 ;
@@ -93,11 +89,10 @@ StatementSequence:
 
 Thread:
     {Thread}
-        ((
+        (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-            (statements +=  InstructionStatement statements +=  EmptyStatement*)?
-         )|
-         statements +=  EmptyStatement*)
+            (statements +=  InstructionStatement statements += EmptyStatement*)?
+         )
 ;
 
 Parallel:
@@ -117,10 +112,9 @@ StatementScope:
     {StatementScope}
     '{'
     (declarations+=VariableDeclaration)*
-        ((
+        (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
-            (statements +=  InstructionStatement statements +=  EmptyStatement*)?
-         )|
-         statements +=  EmptyStatement*)
+            (statements +=  InstructionStatement statements += EmptyStatement*)?
+         )
     '}'    
 ;
