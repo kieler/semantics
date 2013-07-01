@@ -140,7 +140,11 @@ class SCL2VHDL {
     
     begin
     prog: process
-    
+    -- initial tick variables
+    variable notInitial : boolean := false;
+    variable notInitialDetect : boolean:= true;
+    variable entry : boolean;
+        
     --local in/out Variables
     «genarateLocalVariables(modelInputs)»
     «genarateLocalVariables(modelOutputs)»
@@ -153,13 +157,21 @@ class SCL2VHDL {
         wait until rising_edge(tick);
         --check for Integer value!?
         if(reset = '1') then
+            --reset initial tick
+            notInitial := false;
+            notInitialDetect := true;
+                
             «setAllLocalVariables(modelInputs,false)»
             «setAllLocalVariables(modelOutputs,false)»
             «setAllLocalVariables(modelLocalVariables,false)»
         else
+            -- set initial tick
+            entry := not notInitial;
+            notInitial := notInitial or notInitialDetect;
+                
             --update local variables
             «signalToVariable(modelInputs)»
-            GO_int := entry_int;
+            GO_int := entry;
             «setAllLocalVariables(modelOutputs,false)»
         
             --main program
@@ -169,9 +181,7 @@ class SCL2VHDL {
             «variableToSignal(modelOutputs)»
         end if;
     end process prog;
-    
-        «generateInitialTickProcess()»
-    
+        
     end behavior;
     '''
        
@@ -234,8 +244,7 @@ class SCL2VHDL {
     def generateMainProcess(EList<Statement> stmList) { 
         
         var str = stmList.map(stm | '''«stm.expand»''').join('\n')
-        str
-        
+        str  
     }
 
     def genarateLocalSignals(ArrayList<Variables> variables) { 
