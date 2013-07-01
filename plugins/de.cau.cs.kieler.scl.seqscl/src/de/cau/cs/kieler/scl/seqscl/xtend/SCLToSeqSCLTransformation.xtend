@@ -192,6 +192,9 @@ class SCLToSeqSCLTransformation {
             expression.setReference(program.getDeclarationByName(predID))
             if (basicBlock.isConditionalPredecessor(predecessors.head)) {
                 var andExp = predecessors.head.getConditionalExpression.copy;
+                if (!basicBlock.isConditionalPredecessorTrueBranch(predecessors.head)) {
+                    andExp = andExp.negate
+                }
                 andExp = andExp.transformExpression(program, sourceProgram);
                 guardExpression = createAndExpression(expression, andExp);                
             } else {
