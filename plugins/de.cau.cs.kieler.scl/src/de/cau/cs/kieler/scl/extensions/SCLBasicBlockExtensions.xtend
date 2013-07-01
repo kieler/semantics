@@ -414,6 +414,11 @@ class SCLBasicBlockExtensions {
     }
     
     def boolean isConditionalPredecessor(BasicBlock basicBlock, BasicBlock predecessor) {
+        if (predecessor.statements.last.isConditional)  return true;
+        return false
+    }
+    
+    def boolean isConditionalPredecessorTrueBranch(BasicBlock basicBlock, BasicBlock predecessor) {
         if (predecessor.statements.last.isConditional) {
             if (predecessor.statements.last.getInstruction.asConditional.statements.head.getBasicBlockByHead(false).isEqual(basicBlock))
                 return true
