@@ -5,8 +5,8 @@
          point="org.eclipse.ui.commands">
       <command
             categoryId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.category"
-            id="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SCCToCoreTransformation"
-            name="SCCToCoreTransformation">
+            id="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.AllCoreTransformations"
+            name="AllCoreTransformations">
       </command>
       <category
             id="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.category"
@@ -17,7 +17,7 @@
          point="org.eclipse.ui.handlers">
       <handler
             class="de.cau.cs.kieler.yakindu.sccharts.coresccharts.handler.SCCModelFileHandler"
-            commandId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SCCToCoreTransformation">
+            commandId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.AllCoreTransformations">
       </handler>
    </extension>
    <extension
@@ -26,7 +26,7 @@
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
                id="de.cau.cs.kieler.yakindu.sccharts.coresccharts.coretransformations"
-               label="SCCharts to Core"
+               label="Transform SCCharts"
                mnemonic="T">
             <separator
                   name="de.cau.cs.kieler.core.ui.separator1"
@@ -37,8 +37,8 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SCCToCoreTransformation"
-               label="SCC to Core Transformation"
+               commandId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.AllCoreTransformations"
+               label="All Core Transformations"
                mnemonic="A"
                style="push">
             <visibleWhen>
