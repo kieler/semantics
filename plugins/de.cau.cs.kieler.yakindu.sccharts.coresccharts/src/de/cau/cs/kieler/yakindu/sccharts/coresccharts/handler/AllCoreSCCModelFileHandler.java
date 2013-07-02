@@ -20,13 +20,13 @@ import de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCTransformations;
  * @kieler.design 2013-07-01 proposed cmot
  * @kieler.rating 2013-07-01 proposed yellow
  */
-public class SCCModelFileHandler extends AbstractConvertModelHandler {
+public class AllCoreSCCModelFileHandler extends AbstractConvertModelHandler {
 
     private static Injector injector = new STextStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
 
-    public static final String SIGNAL_TRANSFORMATION = "de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SignalTransformation";
-    
+    public static final String ALLCORE_TRANSFORMATIONS = "de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.AllCoreTransformations";
+
     // -------------------------------------------------------------------------
 
     public String getDiagramEditorID() {
@@ -47,7 +47,7 @@ public class SCCModelFileHandler extends AbstractConvertModelHandler {
      */
     @Override
     protected String getTargetExtension() {
-        return "transformed.scc";
+        return "core.scc";
     }
 
     // -------------------------------------------------------------------------
@@ -68,12 +68,13 @@ public class SCCModelFileHandler extends AbstractConvertModelHandler {
     @Override
     protected Object transform(EObject model, ExecutionEvent event, ISelection selection) {
         String commandString = event.getCommand().getId().toString();
-        if (commandString.equals(SIGNAL_TRANSFORMATION)) {
+        if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
             EObject transformed = (new SCCTransformations())
-                    .transformSignals((Statechart) model);
+                    .transformAborts((Statechart) model);
+            transformed = (new SCCTransformations())
+                    .transformConditional((Statechart) transformed);
             return transformed;
         }
-
         return null;
     }
 

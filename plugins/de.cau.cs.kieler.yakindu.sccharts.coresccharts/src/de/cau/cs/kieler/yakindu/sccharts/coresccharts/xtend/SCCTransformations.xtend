@@ -14,22 +14,44 @@ import org.yakindu.sct.model.sgraph.SGraphFactory
 import org.yakindu.sct.model.sgraph.State
 import org.yakindu.sct.model.sgraph.Statechart
 
-class SCCToCoreTransformation {
+class SCCTransformations {
  
     //-------------------------------------------------------------------------
-    //--          S C C -  A B O R T S -  T R A N S F O R M A T I O N        --
+    //--        S C C  -  S I G N A L S  -  T R A N S F O R M A T I O N       --
     //-------------------------------------------------------------------------
            
-    // Transforming SCC Aborts.
-    def Statechart transformSCCAborts(Statechart rootStatechart) {
+    // Transforming Signals.
+    def Statechart transformSignals(Statechart rootStatechart) {
+        // Clone the complete SyncCharts region 
+        val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
+        var targetStates = targetRootStatechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();
+
+        for(targetState : ImmutableList::copyOf(targetStates)) {
+            targetState.transformSignals(targetRootStatechart);
+        } 
+        targetRootStatechart;
+    }
+
+     // Traverse all states 
+     def void transformSignals(SyncState state, Statechart targetRootStatechart) {
+        
+     }
+        
+ 
+    //-------------------------------------------------------------------------
+    //--        S C C  -  A B O R T S  -  T R A N S F O R M A T I O N        --
+    //-------------------------------------------------------------------------
+           
+    // Transforming Aborts.
+    def Statechart transformAborts(Statechart rootStatechart) {
         // Clone the complete SyncCharts region 
         val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
         var targetStates = targetRootStatechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
             // This statement we want to modify
-            targetState.transformSCCAborts(targetRootStatechart);
-        }
+            targetState.transformAborts(targetRootStatechart);
+        } 
         
         targetRootStatechart;
     }
@@ -53,7 +75,7 @@ class SCCToCoreTransformation {
     }
 
     // Traverse all states 
-    def void transformSCCAborts(SyncState state, Statechart targetRootStatechart) {
+    def void transformAborts(SyncState state, Statechart targetRootStatechart) {
         
         if (state.isComposite && state.outgoingTransitions.size() > 0) {
             // Remember all outgoing transitions
@@ -322,21 +344,21 @@ class SCCToCoreTransformation {
     //--      S C C -  C O N D I T I O N A L -  T R A N S F O R M A T I O N        --
     //-------------------------------------------------------------------------------
     
-    def Statechart transformSCCConditional(Statechart rootStatechart) {
+    def Statechart transformConditional(Statechart rootStatechart) {
         // Clone the complete SyncCharts region 
         val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
         var targetStates = targetRootStatechart.eAllContents().toIterable().filter(typeof(Choice)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
             // This statement we want to modify
-            targetState.transformSCCConditional(targetRootStatechart);
+            targetState.transformConditional(targetRootStatechart);
         }
         
         targetRootStatechart;
     }
     
     // Traverse all states 
-    def void transformSCCConditional(Choice choice, Statechart targetRootStatechart) {
+    def void transformConditional(Choice choice, Statechart targetRootStatechart) {
               
                 var region = choice.eContainer() as Region; 
                 

@@ -17,6 +17,10 @@
          point="org.eclipse.ui.handlers">
       <handler
             class="de.cau.cs.kieler.yakindu.sccharts.coresccharts.handler.SCCModelFileHandler"
+            commandId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SignalTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.yakindu.sccharts.coresccharts.handler.AllCoreSCCModelFileHandler"
             commandId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.AllCoreTransformations">
       </handler>
    </extension>
@@ -39,6 +43,29 @@
          <command
                commandId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.AllCoreTransformations"
                label="All Core Transformations"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.yakindu.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SignalTransformation"
+               label="Signals"
                mnemonic="A"
                style="push">
             <visibleWhen>
