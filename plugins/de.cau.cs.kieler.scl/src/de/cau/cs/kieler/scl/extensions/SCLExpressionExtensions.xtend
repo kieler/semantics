@@ -21,6 +21,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
 import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import org.yakindu.sct.model.stext.stext.LogicalNotExpression
 
 class SCLExpressionExtensions {
    
@@ -53,6 +54,10 @@ class SCLExpressionExtensions {
 //    }
 
     def Expression negate(Expression exp) {
+        if (exp instanceof LogicalNotExpression) {
+            return (exp as LogicalNotExpression).operand.copy
+        }
+        
         var not = SText.createLogicalNotExpression()
         
         if (exp instanceof ElementReferenceExpression) {
