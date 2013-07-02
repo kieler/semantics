@@ -71,4 +71,12 @@ public class SyncChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
     protected String getExecutionFileName() {
         return "synccharts_s_validation_headless.execution";
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected IPath getExternalRelativeTestPath() {
+        return new Path("../../../models/synccharts/validation");
+    }
 }
