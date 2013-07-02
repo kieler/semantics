@@ -13,10 +13,12 @@ import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCToCoreTransformation;
 
 /**
- * Model transformation handler for extended SCChart to core SCCharts.
+ * The handler to register the context menu action for transformations on SCCharts including all
+ * those that transform an extended SCChart into a core SCChart.
  * 
- * @see org.eclipse.core.commands.IHandler
- * @see org.eclipse.core.commands.AbstractHandler
+ * @author cmot
+ * @kieler.design 2013-07-01 proposed cmot
+ * @kieler.rating 2013-07-01 proposed yellow
  */
 public class SCCModelFileHandler extends AbstractConvertModelHandler {
 
@@ -25,17 +27,20 @@ public class SCCModelFileHandler extends AbstractConvertModelHandler {
 
     public static final String SCCTRANSFORMATIONCOMMAND = "de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.AllCoreTransformations";
 
-    public SCCModelFileHandler() {
-    }
+    // -------------------------------------------------------------------------
 
-    public String getDiagramEditorID () {
+    public String getDiagramEditorID() {
         return StatechartDiagramEditor.ID;
     }
-    
-    protected boolean doOpenEditor(final Object modelObject, final ExecutionEvent event, 
+
+    // -------------------------------------------------------------------------
+
+    protected boolean doOpenEditor(final Object modelObject, final ExecutionEvent event,
             final ISelection selection) {
         return true;
-    }    
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -45,6 +50,8 @@ public class SCCModelFileHandler extends AbstractConvertModelHandler {
         return "core.scc";
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
@@ -52,6 +59,8 @@ public class SCCModelFileHandler extends AbstractConvertModelHandler {
     protected Injector createResourceInjector() {
         return injector;
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -71,4 +80,5 @@ public class SCCModelFileHandler extends AbstractConvertModelHandler {
         return null;
     }
 
+    // -------------------------------------------------------------------------
 }

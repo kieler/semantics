@@ -21,7 +21,6 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: com.google.inject;version="1.3.0",
- de.cau.cs.kieler.scl.handler,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp
 Export-Package: de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend
 
