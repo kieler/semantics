@@ -152,7 +152,7 @@ public interface SynctextPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__NAME = StextPackage.VARIABLE_DEFINITION__NAME;
+  int VARIABLE_DEFINITION__NAME = SGraphPackage.VARIABLE__NAME;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -161,7 +161,7 @@ public interface SynctextPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__TYPE = StextPackage.VARIABLE_DEFINITION__TYPE;
+  int VARIABLE_DEFINITION__TYPE = SGraphPackage.VARIABLE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Owning Type</b></em>' container reference.
@@ -170,7 +170,7 @@ public interface SynctextPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__OWNING_TYPE = StextPackage.VARIABLE_DEFINITION__OWNING_TYPE;
+  int VARIABLE_DEFINITION__OWNING_TYPE = SGraphPackage.VARIABLE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -179,7 +179,7 @@ public interface SynctextPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__READONLY = StextPackage.VARIABLE_DEFINITION__READONLY;
+  int VARIABLE_DEFINITION__READONLY = SGraphPackage.VARIABLE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>External</b></em>' attribute.
@@ -188,7 +188,7 @@ public interface SynctextPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__EXTERNAL = StextPackage.VARIABLE_DEFINITION__EXTERNAL;
+  int VARIABLE_DEFINITION__EXTERNAL = SGraphPackage.VARIABLE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
@@ -197,7 +197,43 @@ public interface SynctextPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__INITIAL_VALUE = StextPackage.VARIABLE_DEFINITION__INITIAL_VALUE;
+  int VARIABLE_DEFINITION__INITIAL_VALUE = SGraphPackage.VARIABLE_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Is Input</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__IS_INPUT = SGraphPackage.VARIABLE_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Is Output</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__IS_OUTPUT = SGraphPackage.VARIABLE_FEATURE_COUNT + 6;
+
+  /**
+   * The feature id for the '<em><b>Is Static</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__IS_STATIC = SGraphPackage.VARIABLE_FEATURE_COUNT + 7;
+
+  /**
+   * The feature id for the '<em><b>Var Combine Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = SGraphPackage.VARIABLE_FEATURE_COUNT + 8;
 
   /**
    * The number of structural features of the '<em>Variable Definition</em>' class.
@@ -206,7 +242,7 @@ public interface SynctextPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION_FEATURE_COUNT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
+  int VARIABLE_DEFINITION_FEATURE_COUNT = SGraphPackage.VARIABLE_FEATURE_COUNT + 9;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.OperationDefinitionImpl <em>Operation Definition</em>}' class.
@@ -796,6 +832,50 @@ public interface SynctextPackage extends EPackage
   EClass getVariableDefinition();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition#isIsInput <em>Is Input</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Input</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition#isIsInput()
+   * @see #getVariableDefinition()
+   * @generated
+   */
+  EAttribute getVariableDefinition_IsInput();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition#isIsOutput <em>Is Output</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Output</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition#isIsOutput()
+   * @see #getVariableDefinition()
+   * @generated
+   */
+  EAttribute getVariableDefinition_IsOutput();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition#isIsStatic <em>Is Static</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Static</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition#isIsStatic()
+   * @see #getVariableDefinition()
+   * @generated
+   */
+  EAttribute getVariableDefinition_IsStatic();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition#getVarCombineOperator <em>Var Combine Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Var Combine Operator</em>'.
+   * @see de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition#getVarCombineOperator()
+   * @see #getVariableDefinition()
+   * @generated
+   */
+  EAttribute getVariableDefinition_VarCombineOperator();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.OperationDefinition <em>Operation Definition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1205,6 +1285,38 @@ public interface SynctextPackage extends EPackage
      * @generated
      */
     EClass VARIABLE_DEFINITION = eINSTANCE.getVariableDefinition();
+
+    /**
+     * The meta object literal for the '<em><b>Is Input</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VARIABLE_DEFINITION__IS_INPUT = eINSTANCE.getVariableDefinition_IsInput();
+
+    /**
+     * The meta object literal for the '<em><b>Is Output</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VARIABLE_DEFINITION__IS_OUTPUT = eINSTANCE.getVariableDefinition_IsOutput();
+
+    /**
+     * The meta object literal for the '<em><b>Is Static</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VARIABLE_DEFINITION__IS_STATIC = eINSTANCE.getVariableDefinition_IsStatic();
+
+    /**
+     * The meta object literal for the '<em><b>Var Combine Operator</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = eINSTANCE.getVariableDefinition_VarCombineOperator();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.model.stext.synctext.impl.OperationDefinitionImpl <em>Operation Definition</em>}' class.

@@ -123,6 +123,7 @@ RULE_WS=12
 '^'=63
 '>>'=89
 'signal'=16
+'static'=21
 '\'none\''=68
 '\'host\''=75
 'else'=48
@@ -164,7 +165,6 @@ RULE_WS=12
 ')'=24
 'oncycle'=52
 '*='=78
-'variable'=21
 'entry'=49
 '%'=67
 'operation'=46

@@ -16,6 +16,11 @@ import "http://www.yakindu.org/base/types/2.0.0" as types
 // Override the SText VariableDefinition rule
 // A variable is a Declaration. It has a Direction, a Name, a Type, an InitialValue and a CombineOperator
 /* ---- variable definition ---- */
-VariableDefinition:
-	{VariableDefinition} (isInput?='input')? (isOutput?='output')? (isStatic?='static')? type=[types::Type|FQN] name=ID
-	('=' initialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';
+//VariableDefinition:
+//	{VariableDefinition} (isInput?='input')? (isOutput?='output')? (isStatic?='static')? type=[types::Type|FQN] name=ID
+//	('=' initialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';
+// cmot: moved to Synctext.xtext
+
+Dummy:
+   variableDefinition = VariableDefinition
+;

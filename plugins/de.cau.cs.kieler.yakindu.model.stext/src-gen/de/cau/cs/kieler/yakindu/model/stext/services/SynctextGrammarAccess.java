@@ -182,41 +182,128 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
 	}
 
-	public class VariableDefinitionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableDefinition");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cVariableDefinitionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cVariableKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+	public class VariableDeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableDeclaration");
+		private final RuleCall cVariableDefinitionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		/// ************************************************ / / *			 Variable Definition				* /
 		//
 		/// ************************************************ / // A dummy VariableDefinition declaration, which will be override by an other grammar 
 		//
-		//VariableDefinition:
+		////VariableDefinition:
 		//
-		//	{VariableDefinition} "variable" name=ID ";";
+		////	{VariableDefinition} 'variable' name=ID ';';
+		//
+		//// CMOT changes, want to use VariableDefinitions from SyncText
+		//
+		//VariableDeclaration returns sgraph::Variable:
+		//
+		//	VariableDefinition;
 		public ParserRule getRule() { return rule; }
 
-		//{VariableDefinition} "variable" name=ID ";"
+		//VariableDefinition
+		public RuleCall getVariableDefinitionParserRuleCall() { return cVariableDefinitionParserRuleCall; }
+	}
+
+	public class VariableDefinitionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableDefinition");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cVariableDefinitionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cIsInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsInputInputKeyword_1_0 = (Keyword)cIsInputAssignment_1.eContents().get(0);
+		private final Assignment cIsOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cIsOutputOutputKeyword_2_0 = (Keyword)cIsOutputAssignment_2.eContents().get(0);
+		private final Assignment cIsStaticAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cIsStaticStaticKeyword_3_0 = (Keyword)cIsStaticAssignment_3.eContents().get(0);
+		private final Assignment cTypeAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final CrossReference cTypeTypeCrossReference_4_0 = (CrossReference)cTypeAssignment_4.eContents().get(0);
+		private final RuleCall cTypeTypeFQNParserRuleCall_4_0_1 = (RuleCall)cTypeTypeCrossReference_4_0.eContents().get(1);
+		private final Assignment cNameAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cNameIDTerminalRuleCall_5_0 = (RuleCall)cNameAssignment_5.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cEqualsSignKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cInitialValueAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cInitialValueExpressionParserRuleCall_6_1_0 = (RuleCall)cInitialValueAssignment_6_1.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cWithKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cVarCombineOperatorAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cVarCombineOperatorCombineOperatorEnumRuleCall_7_1_0 = (RuleCall)cVarCombineOperatorAssignment_7_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		
+		//VariableDefinition:
+		//
+		//	{VariableDefinition} isInput?="input"? isOutput?="output"? isStatic?="static"? type=[types::Type|FQN] name=ID ("="
+		//
+		//	initialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";";
+		public ParserRule getRule() { return rule; }
+
+		//{VariableDefinition} isInput?="input"? isOutput?="output"? isStatic?="static"? type=[types::Type|FQN] name=ID ("="
+		//
+		//initialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{VariableDefinition}
 		public Action getVariableDefinitionAction_0() { return cVariableDefinitionAction_0; }
 
-		//"variable"
-		public Keyword getVariableKeyword_1() { return cVariableKeyword_1; }
+		//isInput?="input"?
+		public Assignment getIsInputAssignment_1() { return cIsInputAssignment_1; }
+
+		//"input"
+		public Keyword getIsInputInputKeyword_1_0() { return cIsInputInputKeyword_1_0; }
+
+		//isOutput?="output"?
+		public Assignment getIsOutputAssignment_2() { return cIsOutputAssignment_2; }
+
+		//"output"
+		public Keyword getIsOutputOutputKeyword_2_0() { return cIsOutputOutputKeyword_2_0; }
+
+		//isStatic?="static"?
+		public Assignment getIsStaticAssignment_3() { return cIsStaticAssignment_3; }
+
+		//"static"
+		public Keyword getIsStaticStaticKeyword_3_0() { return cIsStaticStaticKeyword_3_0; }
+
+		//type=[types::Type|FQN]
+		public Assignment getTypeAssignment_4() { return cTypeAssignment_4; }
+
+		//[types::Type|FQN]
+		public CrossReference getTypeTypeCrossReference_4_0() { return cTypeTypeCrossReference_4_0; }
+
+		//FQN
+		public RuleCall getTypeTypeFQNParserRuleCall_4_0_1() { return cTypeTypeFQNParserRuleCall_4_0_1; }
 
 		//name=ID
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		public Assignment getNameAssignment_5() { return cNameAssignment_5; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		public RuleCall getNameIDTerminalRuleCall_5_0() { return cNameIDTerminalRuleCall_5_0; }
+
+		//("=" initialValue=Expression)?
+		public Group getGroup_6() { return cGroup_6; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_6_0() { return cEqualsSignKeyword_6_0; }
+
+		//initialValue=Expression
+		public Assignment getInitialValueAssignment_6_1() { return cInitialValueAssignment_6_1; }
+
+		//Expression
+		public RuleCall getInitialValueExpressionParserRuleCall_6_1_0() { return cInitialValueExpressionParserRuleCall_6_1_0; }
+
+		//("with" varCombineOperator=CombineOperator)?
+		public Group getGroup_7() { return cGroup_7; }
+
+		//"with"
+		public Keyword getWithKeyword_7_0() { return cWithKeyword_7_0; }
+
+		//varCombineOperator=CombineOperator
+		public Assignment getVarCombineOperatorAssignment_7_1() { return cVarCombineOperatorAssignment_7_1; }
+
+		//CombineOperator
+		public RuleCall getVarCombineOperatorCombineOperatorEnumRuleCall_7_1_0() { return cVarCombineOperatorCombineOperatorEnumRuleCall_7_1_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
+		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
 	}
 
 	public class OperationDefinitionElements extends AbstractParserRuleElementFinder {
@@ -510,6 +597,8 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//// an optional delay and isImmediate option represented with a '#'
 		//
+		//// cmot change: Get rid of extra brackets
+		//
 		//ReactionTrigger returns sgraph::Trigger:
 		//
 		//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? expression=Expression?;
@@ -557,6 +646,8 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cActionsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cActionsExpressionParserRuleCall_2_1_0 = (RuleCall)cActionsAssignment_2_1.eContents().get(0);
 		
+		//// Original code by wah
+		//
 		////{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
 		//
 		////| ('(' guardExpression=Expression ')'))?;
@@ -606,6 +697,12 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cRightOperandAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cRightOperandNumericalUnaryExpressionParserRuleCall_1_2_0 = (RuleCall)cRightOperandAssignment_1_2.eContents().get(0);
 		
+		/// ***************************************** Expressions ******************************************* * / // Override the stext::NumericalMultiplyDivideExpression
+		//
+		//// cmot addition: goal is to have some other divisor ":" instead of "/", because "/" is used to separate
+		//
+		//// trigger / effect.
+		//
 		//NumericalMultiplyDivideExpression returns stext::Expression:
 		//
 		//	NumericalUnaryExpression ({NumericalMultiplyDivideExpression.leftOperand=current} operator=MultiplicativeOperator2
@@ -654,6 +751,12 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuePreReferenceExpressionParserRuleCall_3_0_1 = (RuleCall)cValueAlternatives_3_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
+		/// ***************************************** Expressions ******************************************* * / // Override the stext::EventValueReferenceExpression
+		//
+		//// override 'valueof()' with 'val()', allow val(pre())    
+		//
+		//// cmot change
+		//
 		//EventValueReferenceExpression returns stext::Expression:
 		//
 		//	{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
@@ -700,6 +803,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuePreReferenceExpressionParserRuleCall_3_0_2 = (RuleCall)cValueAlternatives_3_0.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
+		//// Additional pre(), like val(), allow pre(val()) and allow pre(pre())    
+		//
+		//// cmot addition
+		//
 		//PreReferenceExpression returns stext::Expression:
 		//
 		//	{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression |
@@ -754,9 +861,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//// remove the ActiveStateReferenceExpression and the EventValueReferenceExpression
 		//
-		//// and add PreValueExpressionreturns that returns the value of a variable in the previous tick. 
-		//
-		////  | '(' Expression ')'
+		//// and add PreReferenceExpression that returns the previous tick instance of a variable. 
 		//
 		//PrimaryExpression returns stext::Expression:
 		//
@@ -799,24 +904,6 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValueFeatureCallParserRuleCall_3_0 = (RuleCall)cValueAssignment_3.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		////PrimaryExpression returns stext::Expression:
-		//
-		////    PrimitiveValueExpression
-		//
-		////    | FeatureCall
-		//
-		////    | ActiveStateReferenceExpression
-		//
-		////    | PreValueExpression
-		//
-		////    | ParenthesizedExpression
-		//
-		////    | EventValueReferenceExpression
-		//
-		////    //  | '(' Expression ')'
-		//
-		////;
-		//
 		////todo: pre(x) should return the same type of x
 		//
 		//PreValueExpression returns stext::Expression:
@@ -857,6 +944,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cModEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
 		private final Keyword cModPercentSignKeyword_2_0 = (Keyword)cModEnumLiteralDeclaration_2.eContents().get(0);
 		
+		//// New MultiplicativeOperator2 (replacing MultiplicativeOperator with ":" instead of "/")    
+		//
+		//// cmot addition
+		//
 		//enum MultiplicativeOperator2:
 		//
 		//	mul="*" | div=":" | mod="%";
@@ -970,6 +1061,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	private StateScopeElements pStateScope;
 	private SignalDeclarationElements pSignalDeclaration;
 	private SignalDefinitionElements pSignalDefinition;
+	private VariableDeclarationElements pVariableDeclaration;
 	private VariableDefinitionElements pVariableDefinition;
 	private OperationDefinitionElements pOperationDefinition;
 	private LocalReactionElements pLocalReaction;
@@ -1070,9 +1162,28 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	/// ************************************************ / // A dummy VariableDefinition declaration, which will be override by an other grammar 
 	//
+	////VariableDefinition:
+	//
+	////	{VariableDefinition} 'variable' name=ID ';';
+	//
+	//// CMOT changes, want to use VariableDefinitions from SyncText
+	//
+	//VariableDeclaration returns sgraph::Variable:
+	//
+	//	VariableDefinition;
+	public VariableDeclarationElements getVariableDeclarationAccess() {
+		return (pVariableDeclaration != null) ? pVariableDeclaration : (pVariableDeclaration = new VariableDeclarationElements());
+	}
+	
+	public ParserRule getVariableDeclarationRule() {
+		return getVariableDeclarationAccess().getRule();
+	}
+
 	//VariableDefinition:
 	//
-	//	{VariableDefinition} "variable" name=ID ";";
+	//	{VariableDefinition} isInput?="input"? isOutput?="output"? isStatic?="static"? type=[types::Type|FQN] name=ID ("="
+	//
+	//	initialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";";
 	public VariableDefinitionElements getVariableDefinitionAccess() {
 		return (pVariableDefinition != null) ? pVariableDefinition : (pVariableDefinition = new VariableDefinitionElements());
 	}
@@ -1175,6 +1286,8 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// an optional delay and isImmediate option represented with a '#'
 	//
+	//// cmot change: Get rid of extra brackets
+	//
 	//ReactionTrigger returns sgraph::Trigger:
 	//
 	//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? expression=Expression?;
@@ -1186,6 +1299,8 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getReactionTriggerAccess().getRule();
 	}
 
+	//// Original code by wah
+	//
 	////{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
 	//
 	////| ('(' guardExpression=Expression ')'))?;
@@ -1205,6 +1320,12 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getReactionEffectAccess().getRule();
 	}
 
+	/// ***************************************** Expressions ******************************************* * / // Override the stext::NumericalMultiplyDivideExpression
+	//
+	//// cmot addition: goal is to have some other divisor ":" instead of "/", because "/" is used to separate
+	//
+	//// trigger / effect.
+	//
 	//NumericalMultiplyDivideExpression returns stext::Expression:
 	//
 	//	NumericalUnaryExpression ({NumericalMultiplyDivideExpression.leftOperand=current} operator=MultiplicativeOperator2
@@ -1218,6 +1339,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getNumericalMultiplyDivideExpressionAccess().getRule();
 	}
 
+	//// New MultiplicativeOperator2 (replacing MultiplicativeOperator with ":" instead of "/")    
+	//
+	//// cmot addition
+	//
 	//enum MultiplicativeOperator2:
 	//
 	//	mul="*" | div=":" | mod="%";
@@ -1229,6 +1354,12 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getMultiplicativeOperator2Access().getRule();
 	}
 
+	/// ***************************************** Expressions ******************************************* * / // Override the stext::EventValueReferenceExpression
+	//
+	//// override 'valueof()' with 'val()', allow val(pre())    
+	//
+	//// cmot change
+	//
 	//EventValueReferenceExpression returns stext::Expression:
 	//
 	//	{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
@@ -1240,6 +1371,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getEventValueReferenceExpressionAccess().getRule();
 	}
 
+	//// Additional pre(), like val(), allow pre(val()) and allow pre(pre())    
+	//
+	//// cmot addition
+	//
 	//PreReferenceExpression returns stext::Expression:
 	//
 	//	{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression |
@@ -1257,9 +1392,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// remove the ActiveStateReferenceExpression and the EventValueReferenceExpression
 	//
-	//// and add PreValueExpressionreturns that returns the value of a variable in the previous tick. 
-	//
-	////  | '(' Expression ')'
+	//// and add PreReferenceExpression that returns the previous tick instance of a variable. 
 	//
 	//PrimaryExpression returns stext::Expression:
 	//
@@ -1274,24 +1407,6 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getPrimaryExpressionAccess().getRule();
 	}
 
-	////PrimaryExpression returns stext::Expression:
-	//
-	////    PrimitiveValueExpression
-	//
-	////    | FeatureCall
-	//
-	////    | ActiveStateReferenceExpression
-	//
-	////    | PreValueExpression
-	//
-	////    | ParenthesizedExpression
-	//
-	////    | EventValueReferenceExpression
-	//
-	////    //  | '(' Expression ')'
-	//
-	////;
-	//
 	////todo: pre(x) should return the same type of x
 	//
 	//PreValueExpression returns stext::Expression:
@@ -1555,17 +1670,6 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getDirectionRule() {
 		return getDirectionAccess().getRule();
-	}
-
-	/// * ---- variable definition ---- * / VariableDeclaration returns sgraph::Variable:
-	//
-	//	VariableDefinition;
-	public STextGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
-		return gaSText.getVariableDeclarationAccess();
-	}
-	
-	public ParserRule getVariableDeclarationRule() {
-		return getVariableDeclarationAccess().getRule();
 	}
 
 	//VariableFeature returns types::Property:

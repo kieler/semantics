@@ -4,13 +4,13 @@ package de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl;
 
 import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage;
 
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Dummy;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFactory;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpPackage;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
@@ -27,7 +27,7 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass variableDefinitionEClass = null;
+  private EClass dummyEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -100,9 +100,9 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getVariableDefinition()
+  public EClass getDummy()
   {
-    return variableDefinitionEClass;
+    return dummyEClass;
   }
 
   /**
@@ -110,39 +110,9 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableDefinition_IsInput()
+  public EReference getDummy_VariableDefinition()
   {
-    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getVariableDefinition_IsOutput()
-  {
-    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getVariableDefinition_IsStatic()
-  {
-    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getVariableDefinition_VarCombineOperator()
-  {
-    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(3);
+    return (EReference)dummyEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -175,11 +145,8 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     isCreated = true;
 
     // Create classes and their features
-    variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
-    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_INPUT);
-    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_OUTPUT);
-    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__IS_STATIC);
-    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR);
+    dummyEClass = createEClass(DUMMY);
+    createEReference(dummyEClass, DUMMY__VARIABLE_DEFINITION);
   }
 
   /**
@@ -214,14 +181,10 @@ public class SCChartsExpPackageImpl extends EPackageImpl implements SCChartsExpP
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    variableDefinitionEClass.getESuperTypes().add(theSynctextPackage.getVariableDefinition());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVariableDefinition_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariableDefinition_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariableDefinition_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariableDefinition_VarCombineOperator(), theSynctextPackage.getCombineOperator(), "varCombineOperator", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(dummyEClass, Dummy.class, "Dummy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDummy_VariableDefinition(), theSynctextPackage.getVariableDefinition(), null, "variableDefinition", null, 0, 1, Dummy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

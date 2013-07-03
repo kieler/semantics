@@ -20,30 +20,10 @@ import org.yakindu.sct.model.stext.services.STextGrammarAccess;
 public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class VariableDefinitionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableDefinition");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cVariableDefinitionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cIsInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsInputInputKeyword_1_0 = (Keyword)cIsInputAssignment_1.eContents().get(0);
-		private final Assignment cIsOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cIsOutputOutputKeyword_2_0 = (Keyword)cIsOutputAssignment_2.eContents().get(0);
-		private final Assignment cIsStaticAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cIsStaticStaticKeyword_3_0 = (Keyword)cIsStaticAssignment_3.eContents().get(0);
-		private final Assignment cTypeAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final CrossReference cTypeTypeCrossReference_4_0 = (CrossReference)cTypeAssignment_4.eContents().get(0);
-		private final RuleCall cTypeTypeFQNParserRuleCall_4_0_1 = (RuleCall)cTypeTypeCrossReference_4_0.eContents().get(1);
-		private final Assignment cNameAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cNameIDTerminalRuleCall_5_0 = (RuleCall)cNameAssignment_5.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cEqualsSignKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cInitialValueAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cInitialValueExpressionParserRuleCall_6_1_0 = (RuleCall)cInitialValueAssignment_6_1.eContents().get(0);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cWithKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cVarCombineOperatorAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cVarCombineOperatorCombineOperatorEnumRuleCall_7_1_0 = (RuleCall)cVarCombineOperatorAssignment_7_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
+	public class DummyElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Dummy");
+		private final Assignment cVariableDefinitionAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cVariableDefinitionVariableDefinitionParserRuleCall_0 = (RuleCall)cVariableDefinitionAssignment.eContents().get(0);
 		
 		/// ************************************************ / / *			 Variable Definition				* /
 		//
@@ -51,84 +31,28 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//// A variable is a Declaration. It has a Direction, a Name, a Type, an InitialValue and a CombineOperator
 		//
-		/// * ---- variable definition ---- * / VariableDefinition:
+		/// * ---- variable definition ---- * / //VariableDefinition:
 		//
-		//	{VariableDefinition} isInput?="input"? isOutput?="output"? isStatic?="static"? type=[types::Type|FQN] name=ID ("="
+		////	{VariableDefinition} (isInput?='input')? (isOutput?='output')? (isStatic?='static')? type=[types::Type|FQN] name=ID
 		//
-		//	initialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";";
+		////	('=' initialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';
+		//
+		//// cmot: moved to Synctext.xtext
+		//
+		//Dummy:
+		//
+		//	variableDefinition=VariableDefinition;
 		public ParserRule getRule() { return rule; }
 
-		//{VariableDefinition} isInput?="input"? isOutput?="output"? isStatic?="static"? type=[types::Type|FQN] name=ID ("="
-		//
-		//initialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";"
-		public Group getGroup() { return cGroup; }
+		//variableDefinition=VariableDefinition
+		public Assignment getVariableDefinitionAssignment() { return cVariableDefinitionAssignment; }
 
-		//{VariableDefinition}
-		public Action getVariableDefinitionAction_0() { return cVariableDefinitionAction_0; }
-
-		//isInput?="input"?
-		public Assignment getIsInputAssignment_1() { return cIsInputAssignment_1; }
-
-		//"input"
-		public Keyword getIsInputInputKeyword_1_0() { return cIsInputInputKeyword_1_0; }
-
-		//isOutput?="output"?
-		public Assignment getIsOutputAssignment_2() { return cIsOutputAssignment_2; }
-
-		//"output"
-		public Keyword getIsOutputOutputKeyword_2_0() { return cIsOutputOutputKeyword_2_0; }
-
-		//isStatic?="static"?
-		public Assignment getIsStaticAssignment_3() { return cIsStaticAssignment_3; }
-
-		//"static"
-		public Keyword getIsStaticStaticKeyword_3_0() { return cIsStaticStaticKeyword_3_0; }
-
-		//type=[types::Type|FQN]
-		public Assignment getTypeAssignment_4() { return cTypeAssignment_4; }
-
-		//[types::Type|FQN]
-		public CrossReference getTypeTypeCrossReference_4_0() { return cTypeTypeCrossReference_4_0; }
-
-		//FQN
-		public RuleCall getTypeTypeFQNParserRuleCall_4_0_1() { return cTypeTypeFQNParserRuleCall_4_0_1; }
-
-		//name=ID
-		public Assignment getNameAssignment_5() { return cNameAssignment_5; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_5_0() { return cNameIDTerminalRuleCall_5_0; }
-
-		//("=" initialValue=Expression)?
-		public Group getGroup_6() { return cGroup_6; }
-
-		//"="
-		public Keyword getEqualsSignKeyword_6_0() { return cEqualsSignKeyword_6_0; }
-
-		//initialValue=Expression
-		public Assignment getInitialValueAssignment_6_1() { return cInitialValueAssignment_6_1; }
-
-		//Expression
-		public RuleCall getInitialValueExpressionParserRuleCall_6_1_0() { return cInitialValueExpressionParserRuleCall_6_1_0; }
-
-		//("with" varCombineOperator=CombineOperator)?
-		public Group getGroup_7() { return cGroup_7; }
-
-		//"with"
-		public Keyword getWithKeyword_7_0() { return cWithKeyword_7_0; }
-
-		//varCombineOperator=CombineOperator
-		public Assignment getVarCombineOperatorAssignment_7_1() { return cVarCombineOperatorAssignment_7_1; }
-
-		//CombineOperator
-		public RuleCall getVarCombineOperatorCombineOperatorEnumRuleCall_7_1_0() { return cVarCombineOperatorCombineOperatorEnumRuleCall_7_1_0; }
-
-		//";"
-		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
+		//VariableDefinition
+		public RuleCall getVariableDefinitionVariableDefinitionParserRuleCall_0() { return cVariableDefinitionVariableDefinitionParserRuleCall_0; }
 	}
 	
 	
-	private VariableDefinitionElements pVariableDefinition;
+	private DummyElements pDummy;
 	
 	private final Grammar grammar;
 
@@ -174,17 +98,23 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// A variable is a Declaration. It has a Direction, a Name, a Type, an InitialValue and a CombineOperator
 	//
-	/// * ---- variable definition ---- * / VariableDefinition:
+	/// * ---- variable definition ---- * / //VariableDefinition:
 	//
-	//	{VariableDefinition} isInput?="input"? isOutput?="output"? isStatic?="static"? type=[types::Type|FQN] name=ID ("="
+	////	{VariableDefinition} (isInput?='input')? (isOutput?='output')? (isStatic?='static')? type=[types::Type|FQN] name=ID
 	//
-	//	initialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";";
-	public VariableDefinitionElements getVariableDefinitionAccess() {
-		return (pVariableDefinition != null) ? pVariableDefinition : (pVariableDefinition = new VariableDefinitionElements());
+	////	('=' initialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';
+	//
+	//// cmot: moved to Synctext.xtext
+	//
+	//Dummy:
+	//
+	//	variableDefinition=VariableDefinition;
+	public DummyElements getDummyAccess() {
+		return (pDummy != null) ? pDummy : (pDummy = new DummyElements());
 	}
 	
-	public ParserRule getVariableDefinitionRule() {
-		return getVariableDefinitionAccess().getRule();
+	public ParserRule getDummyRule() {
+		return getDummyAccess().getRule();
 	}
 
 	/// *********************************** INTERFACE DECLARATION **************************************** * / ////defines the possible scopes for a state
@@ -224,6 +154,40 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSignalDefinitionRule() {
 		return getSignalDefinitionAccess().getRule();
+	}
+
+	/// ************************************************ / / *			 Variable Definition				* /
+	//
+	/// ************************************************ / // A dummy VariableDefinition declaration, which will be override by an other grammar 
+	//
+	////VariableDefinition:
+	//
+	////	{VariableDefinition} 'variable' name=ID ';';
+	//
+	//// CMOT changes, want to use VariableDefinitions from SyncText
+	//
+	//VariableDeclaration returns sgraph::Variable:
+	//
+	//	VariableDefinition;
+	public SynctextGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
+		return gaSynctext.getVariableDeclarationAccess();
+	}
+	
+	public ParserRule getVariableDeclarationRule() {
+		return getVariableDeclarationAccess().getRule();
+	}
+
+	//VariableDefinition:
+	//
+	//	{VariableDefinition} isInput?="input"? isOutput?="output"? isStatic?="static"? type=[types::Type|FQN] name=ID ("="
+	//
+	//	initialValue=Expression)? ("with" varCombineOperator=CombineOperator)? ";";
+	public SynctextGrammarAccess.VariableDefinitionElements getVariableDefinitionAccess() {
+		return gaSynctext.getVariableDefinitionAccess();
+	}
+	
+	public ParserRule getVariableDefinitionRule() {
+		return getVariableDefinitionAccess().getRule();
 	}
 
 	//OperationDefinition:
@@ -320,6 +284,8 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// an optional delay and isImmediate option represented with a '#'
 	//
+	//// cmot change: Get rid of extra brackets
+	//
 	//ReactionTrigger returns sgraph::Trigger:
 	//
 	//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? expression=Expression?;
@@ -331,6 +297,8 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getReactionTriggerAccess().getRule();
 	}
 
+	//// Original code by wah
+	//
 	////{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
 	//
 	////| ('(' guardExpression=Expression ')'))?;
@@ -350,6 +318,12 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getReactionEffectAccess().getRule();
 	}
 
+	/// ***************************************** Expressions ******************************************* * / // Override the stext::NumericalMultiplyDivideExpression
+	//
+	//// cmot addition: goal is to have some other divisor ":" instead of "/", because "/" is used to separate
+	//
+	//// trigger / effect.
+	//
 	//NumericalMultiplyDivideExpression returns stext::Expression:
 	//
 	//	NumericalUnaryExpression ({NumericalMultiplyDivideExpression.leftOperand=current} operator=MultiplicativeOperator2
@@ -363,6 +337,10 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getNumericalMultiplyDivideExpressionAccess().getRule();
 	}
 
+	//// New MultiplicativeOperator2 (replacing MultiplicativeOperator with ":" instead of "/")    
+	//
+	//// cmot addition
+	//
 	//enum MultiplicativeOperator2:
 	//
 	//	mul="*" | div=":" | mod="%";
@@ -374,6 +352,12 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getMultiplicativeOperator2Access().getRule();
 	}
 
+	/// ***************************************** Expressions ******************************************* * / // Override the stext::EventValueReferenceExpression
+	//
+	//// override 'valueof()' with 'val()', allow val(pre())    
+	//
+	//// cmot change
+	//
 	//EventValueReferenceExpression returns stext::Expression:
 	//
 	//	{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
@@ -385,6 +369,10 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getEventValueReferenceExpressionAccess().getRule();
 	}
 
+	//// Additional pre(), like val(), allow pre(val()) and allow pre(pre())    
+	//
+	//// cmot addition
+	//
 	//PreReferenceExpression returns stext::Expression:
 	//
 	//	{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression |
@@ -402,9 +390,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// remove the ActiveStateReferenceExpression and the EventValueReferenceExpression
 	//
-	//// and add PreValueExpressionreturns that returns the value of a variable in the previous tick. 
-	//
-	////  | '(' Expression ')'
+	//// and add PreReferenceExpression that returns the previous tick instance of a variable. 
 	//
 	//PrimaryExpression returns stext::Expression:
 	//
@@ -419,24 +405,6 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getPrimaryExpressionAccess().getRule();
 	}
 
-	////PrimaryExpression returns stext::Expression:
-	//
-	////    PrimitiveValueExpression
-	//
-	////    | FeatureCall
-	//
-	////    | ActiveStateReferenceExpression
-	//
-	////    | PreValueExpression
-	//
-	////    | ParenthesizedExpression
-	//
-	////    | EventValueReferenceExpression
-	//
-	////    //  | '(' Expression ')'
-	//
-	////;
-	//
 	////todo: pre(x) should return the same type of x
 	//
 	//PreValueExpression returns stext::Expression:
@@ -700,17 +668,6 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getDirectionRule() {
 		return getDirectionAccess().getRule();
-	}
-
-	/// * ---- variable definition ---- * / VariableDeclaration returns sgraph::Variable:
-	//
-	//	VariableDefinition;
-	public STextGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
-		return gaSynctext.getVariableDeclarationAccess();
-	}
-	
-	public ParserRule getVariableDeclarationRule() {
-		return getVariableDeclarationAccess().getRule();
 	}
 
 	//VariableFeature returns types::Property:

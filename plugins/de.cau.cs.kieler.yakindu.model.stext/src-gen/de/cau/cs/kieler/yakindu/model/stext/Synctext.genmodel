@@ -26,7 +26,12 @@
     </genEnums>
     <genClasses ecoreClass="Synctext.ecore#//StateScope"/>
     <genClasses ecoreClass="Synctext.ecore#//SignalDefinition"/>
-    <genClasses ecoreClass="Synctext.ecore#//VariableDefinition"/>
+    <genClasses ecoreClass="Synctext.ecore#//VariableDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//VariableDefinition/isInput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//VariableDefinition/isOutput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//VariableDefinition/isStatic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//VariableDefinition/varCombineOperator"/>
+    </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//OperationDefinition">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Synctext.ecore#//OperationDefinition/functionType"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Synctext.ecore#//OperationDefinition/paramType"/>

@@ -72,14 +72,14 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUnaryOperatorAccess().getAlternatives(), "rule__UnaryOperator__Alternatives");
 					put(grammarAccess.getRelationalOperatorAccess().getAlternatives(), "rule__RelationalOperator__Alternatives");
 					put(grammarAccess.getTimeUnitAccess().getAlternatives(), "rule__TimeUnit__Alternatives");
-					put(grammarAccess.getVariableDefinitionAccess().getGroup(), "rule__VariableDefinition__Group__0");
-					put(grammarAccess.getVariableDefinitionAccess().getGroup_6(), "rule__VariableDefinition__Group_6__0");
-					put(grammarAccess.getVariableDefinitionAccess().getGroup_7(), "rule__VariableDefinition__Group_7__0");
 					put(grammarAccess.getStateScopeAccess().getGroup(), "rule__StateScope__Group__0");
 					put(grammarAccess.getSignalDefinitionAccess().getGroup(), "rule__SignalDefinition__Group__0");
 					put(grammarAccess.getSignalDefinitionAccess().getGroup_5(), "rule__SignalDefinition__Group_5__0");
 					put(grammarAccess.getSignalDefinitionAccess().getGroup_5_2(), "rule__SignalDefinition__Group_5_2__0");
 					put(grammarAccess.getSignalDefinitionAccess().getGroup_5_3(), "rule__SignalDefinition__Group_5_3__0");
+					put(grammarAccess.getVariableDefinitionAccess().getGroup(), "rule__VariableDefinition__Group__0");
+					put(grammarAccess.getVariableDefinitionAccess().getGroup_6(), "rule__VariableDefinition__Group_6__0");
+					put(grammarAccess.getVariableDefinitionAccess().getGroup_7(), "rule__VariableDefinition__Group_7__0");
 					put(grammarAccess.getOperationDefinitionAccess().getGroup(), "rule__OperationDefinition__Group__0");
 					put(grammarAccess.getLocalReactionAccess().getGroup(), "rule__LocalReaction__Group__0");
 					put(grammarAccess.getLocalReactionAccess().getGroup_1(), "rule__LocalReaction__Group_1__0");
@@ -161,13 +161,7 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRealLiteralAccess().getGroup(), "rule__RealLiteral__Group__0");
 					put(grammarAccess.getHexLiteralAccess().getGroup(), "rule__HexLiteral__Group__0");
 					put(grammarAccess.getStringLiteralAccess().getGroup(), "rule__StringLiteral__Group__0");
-					put(grammarAccess.getVariableDefinitionAccess().getIsInputAssignment_1(), "rule__VariableDefinition__IsInputAssignment_1");
-					put(grammarAccess.getVariableDefinitionAccess().getIsOutputAssignment_2(), "rule__VariableDefinition__IsOutputAssignment_2");
-					put(grammarAccess.getVariableDefinitionAccess().getIsStaticAssignment_3(), "rule__VariableDefinition__IsStaticAssignment_3");
-					put(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_4(), "rule__VariableDefinition__TypeAssignment_4");
-					put(grammarAccess.getVariableDefinitionAccess().getNameAssignment_5(), "rule__VariableDefinition__NameAssignment_5");
-					put(grammarAccess.getVariableDefinitionAccess().getInitialValueAssignment_6_1(), "rule__VariableDefinition__InitialValueAssignment_6_1");
-					put(grammarAccess.getVariableDefinitionAccess().getVarCombineOperatorAssignment_7_1(), "rule__VariableDefinition__VarCombineOperatorAssignment_7_1");
+					put(grammarAccess.getDummyAccess().getVariableDefinitionAssignment(), "rule__Dummy__VariableDefinitionAssignment");
 					put(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1(), "rule__StateScope__DeclarationsAssignment_1");
 					put(grammarAccess.getSignalDefinitionAccess().getInputAssignment_1(), "rule__SignalDefinition__InputAssignment_1");
 					put(grammarAccess.getSignalDefinitionAccess().getOutputAssignment_2(), "rule__SignalDefinition__OutputAssignment_2");
@@ -175,6 +169,13 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalDefinitionAccess().getTypeAssignment_5_1(), "rule__SignalDefinition__TypeAssignment_5_1");
 					put(grammarAccess.getSignalDefinitionAccess().getVarInitialValueAssignment_5_2_1(), "rule__SignalDefinition__VarInitialValueAssignment_5_2_1");
 					put(grammarAccess.getSignalDefinitionAccess().getVarCombineOperatorAssignment_5_3_1(), "rule__SignalDefinition__VarCombineOperatorAssignment_5_3_1");
+					put(grammarAccess.getVariableDefinitionAccess().getIsInputAssignment_1(), "rule__VariableDefinition__IsInputAssignment_1");
+					put(grammarAccess.getVariableDefinitionAccess().getIsOutputAssignment_2(), "rule__VariableDefinition__IsOutputAssignment_2");
+					put(grammarAccess.getVariableDefinitionAccess().getIsStaticAssignment_3(), "rule__VariableDefinition__IsStaticAssignment_3");
+					put(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_4(), "rule__VariableDefinition__TypeAssignment_4");
+					put(grammarAccess.getVariableDefinitionAccess().getNameAssignment_5(), "rule__VariableDefinition__NameAssignment_5");
+					put(grammarAccess.getVariableDefinitionAccess().getInitialValueAssignment_6_1(), "rule__VariableDefinition__InitialValueAssignment_6_1");
+					put(grammarAccess.getVariableDefinitionAccess().getVarCombineOperatorAssignment_7_1(), "rule__VariableDefinition__VarCombineOperatorAssignment_7_1");
 					put(grammarAccess.getOperationDefinitionAccess().getFunctionTypeAssignment_2(), "rule__OperationDefinition__FunctionTypeAssignment_2");
 					put(grammarAccess.getOperationDefinitionAccess().getNameAssignment_3(), "rule__OperationDefinition__NameAssignment_3");
 					put(grammarAccess.getOperationDefinitionAccess().getParamTypeAssignment_5(), "rule__OperationDefinition__ParamTypeAssignment_5");
@@ -263,7 +264,7 @@ public class SCChartsExpParser extends AbstractContentAssistParser {
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
 			de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist.antlr.internal.InternalSCChartsExpParser typedParser = (de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist.antlr.internal.InternalSCChartsExpParser) parser;
-			typedParser.entryRuleVariableDefinition();
+			typedParser.entryRuleDummy();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);
