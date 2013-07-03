@@ -181,13 +181,12 @@ class ESO2VHDL {
     ]
     
     // start creating testbench
-    '''
-	«/* Entity declaration from testbench entity */»
+    
+	'''«/* Entity declaration from testbench entity */»
 	ENTITY «entityName»_tb IS    
 	END «entityName»_tb;
 	
 	ARCHITECTURE behavior OF «entityName»_tb IS
-	
 	«/* Generate component port declaration from the to tested VHDL component  */»
 	«generateComponent(modelInputs, modelOutputs, entityName)»
 	
@@ -197,14 +196,12 @@ class ESO2VHDL {
 	--Outputs«/* Declare local signals for all output signals*/»
 	«modelOutputs.map( out |'''«generateVhdlSignalFromVariableWithInitialValue(out,"")»''').join('\n')»
 	
-	«/* Generate control signals, every component (generated from SCL) need a tick and reset port */»
-	--Control
+	--Control«/* Generate control signals, every component (generated from SCL) need a tick and reset port */»
 	signal reset : std_logic := '0';
 	signal tick : std_logic := '0';
 	constant tick_period : time := 100 ns;
 	
-	«/* fill testbench with functionality */»
-	BEGIN
+	BEGIN«/* fill testbench with functionality */»
 	    «/* instantiate the Unit Under Test (SCL-VHDL-model)  */»
 		«generateUUT(modelInputs, modelOutputs, entityName)»
 	    
