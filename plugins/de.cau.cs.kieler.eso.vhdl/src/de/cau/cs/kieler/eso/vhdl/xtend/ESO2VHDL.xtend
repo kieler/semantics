@@ -31,58 +31,84 @@ import org.yakindu.sct.model.stext.stext.impl.BoolLiteralImpl
 import de.cau.cs.kieler.eso.vhdl.Variables
 import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import de.cau.cs.kieler.sim.eso.eso.kvpair
-import java.util.List
 import org.yakindu.sct.model.stext.stext.Expression
 import java.io.File
 
-/*
- * ----- T O D O ---------
+/**
+ * This class transforms a given core ESO tracelist to a VHDL testbench.
+ * The proper SCl model is needed for this transformation
  * 
- * optimize model loading -> with multiple files loaded from fileHandler ???
+ * With the aid of the SCL model the whole entity declaration, the interface declaration
+ * of the tested component and the instantiation of the Unit Under Test (UUT) is done.
+ * The core ESO tracelist is needed to created the simulation process. It contains for each
+ * tick in each trace: set the input signals and test if the output signals have the correct
+ * value in each tick. 
+ * 
+ * A complete runnable VHDL instance is created.
+ * 
+ * Convention: 
+ *      - the SCL and ESO file must have the same name
+ *      - the entity name from the unit under test is derived from the model name
+ *        So in the VHDL file which specifies the uut, the entity must have the model name too
+ *      - the testbench entity gets the model name with an '_tb' extension (TestBench)   
+ * 
+ * 
+ * @author gjo
  * 
  */
-
 class ESO2VHDL {
-    CharSequence temp
-    String newModelname
+    
+    //indicator if a certian variables was already added to a list
     boolean allreadyAdded
 	
-	URI input
-	String name
-	String modelname
-    
+	//contains the current trace number
 	int traceCnt
+	//contains the current tick number
 	int tickCnt
 	
-	String setInputs
-//	String setInputsBack
-	String asserts
-	String simTicks
-	String simTraces
+	//VHDL code variables
+	String setInputs   //contain the code thats sets all variables in each tick
+	String asserts     //contains the code that holds all assertions for each tick
+	String simTick     //contains the code which sets variables and the assertions for all ticks of a trace 
+	String simTraces   //contains the simulation code for all traces
 	
-	Program sclModel
-	
-	 // General method to create the c simulation interface.
+	/**
+	 * Transforms an ESO tracelist to a VHDL testbench 
+	 * 
+	 * @param tl
+	 *         the ESO file tracelist
+	 * 
+	 * @param modelFile
+	 *         the proper SCL model file
+	 * 
+	 */
 	def transformESO2VHDL (tracelist tl, File modelFile) {
 		
+		var String modelname
+		
+		// generate entity name from model filename
+		// only take the first letters until the first dot and
+		// if the name looks like 0-xyz.scl take only xyz
+		// ?!? delete leading numbers
 		if(modelFile != null){
-			input = URI::createFileURI(modelFile.getName());
+			val input = URI::createFileURI(modelFile.getName());
 			modelname = input.toString
-			temp = modelname.subSequence(0, modelname.indexOf("."))
-			modelname = temp.toString
+			val temp = modelname.subSequence(0, modelname.indexOf("."))
+			modelname = temp.toString		  
 			if(modelname.contains("-"))
-			 modelname = modelname.split("-").get(1)
+			     modelname = modelname.split("-").get(1)
         }    
         
+        //the entityname
+        var String name
+        // If there is no name, use a dummy name
+        // should never take place, the compiling will still fail
         if(modelname.nullOrEmpty){
-   			name = "noname_tb"
-       	}
-       	else{name = modelname}
+   			name = "NONAME"
+       	}else{name = modelname}
         
-       	sclModel = loadModel(modelFile)
-       	if(sclModel == null){
-       		//throw failed exception, exit transformation
-       	}
+        // load the proper SCL model
+       	var sclModel = loadModel(modelFile)
        	
        	'''
 		«/* Generate the header */»
@@ -91,25 +117,14 @@ class ESO2VHDL {
 		«createEntity(tl.traces ,name, sclModel.declarations)»
        	'''
    	}
-   	
-	def Program loadModel(File input) { 
-
-        //degug model file
-//        val IPath iPath = new Path(input.toString.subSequence(0,input.toString.indexOf(".")) + ".core.tick.scl")
-
-	    val IPath iPath = new Path(input.toString())
-				
-		val EObject eobject = ModelUtil::loadEObjectFromModelFile(iPath)
-		if(eobject instanceof Program){
-			val Program sclModel = eobject as Program
-			sclModel
-		}else{
-			return null
-		}	
-	}
 
    // -------------------------------------------------------------------------   
-   // Generate the header.
+   /**
+    * Generate the header for generated VHDl code
+    * 
+    * @return VHDL header comment and library include
+    * 
+    */
    def generateHeader() {
    	'''
 	--/*****************************************************************************/
@@ -132,78 +147,103 @@ class ESO2VHDL {
    }
    
     //-------------------------------------------------------------------------
-   	def createEntity(EList<trace> traces, String name, EList<VariableDeclaration> vars){
+    /**
+     * Generates the whole VHDL testbench entity with the whole functionality
+     * 
+     * @param esotracelist
+     *          the whole ESO tracelist for which the testbench should be created
+     * 
+     * @param entityName
+     *          the name for the testbench entity
+     * 
+     * @param vars
+     *          the variable declaration from the proper SCL model  
+     * 
+     * @return the complete VHDL entity including simulation process 
+     */
+   	def createEntity(EList<trace> esoTracelist, String entityName, EList<VariableDeclaration> vars){
 
-    //Get Input and Output from Model
+    // Store input and output variables from SCL model
     val modelInputs = new ArrayList<Variables>
     val modelOutputs = new ArrayList<Variables>
     
+    // Get Input and Output from Model and save them
     vars.forEach[ variable | 
-    	
-    	if(variable.input) {						
-//			if(value != null){
-//				modelInputs.add(createVariableFromModel(variable.name, true, variable.initialValue))
-//			} else{	
-//				modelInputs.add(createVariableFromModel(variable.name, true, false))
-//			}
-			//every time a present variable is needed
-			modelInputs.add(createVariableFromModel(variable, true, false)) 
-		}
-		if(variable.output){					
-//			if(value != null){
-//				modelOutputs.add(createVariableFromModel(variable.name, false, variable.initialValue))	
-//			} else{	
-//				modelOutputs.add(createVariableFromModel(variable.name, false, false))			
-//			}
-			//every time a present variable is needed
-			modelOutputs.add(createVariableFromModel(variable, false, true))
-		}	
+    	if(variable.input) {modelInputs.add(createVariableFromModel(variable, true, false))}
+		if(variable.output){modelOutputs.add(createVariableFromModel(variable, false, true))}
+		// local variables (variable.input == false and variable.output == false) not needed here
+		// modelInput and modelOutput are mainly used to generate VHDL interfaces
     ]
     
+    // start creating testbench
     '''
-	ENTITY «name»_tb IS
-	END «name»_tb;
+	«/* Entity declaration from testbench entity */»
+	ENTITY «entityName»_tb IS    
+	END «entityName»_tb;
 	
-	ARCHITECTURE behavior OF «name»_tb IS
+	ARCHITECTURE behavior OF «entityName»_tb IS
 	
-	«generateComponent(modelInputs, modelOutputs, name)»
+	«/* Generate component port declaration from the to tested VHDL component  */»
+	«generateComponent(modelInputs, modelOutputs, entityName)»
 	
-	--Inputs
-	«modelInputs.map( in |'''signal «in.name» : «getTypeAndInitValue(in)»''').join('\n')»
+	--Inputs«/* Declare local signals for all input signals */»
+	«modelInputs.map( in |'''«generateSignalFromVariableWithInitialValue(in)»''').join('\n')»
 	
-	--Outputs
-	«modelOutputs.map( out |'''signal «out.name» : «getTypeAndInitValue(out)»''').join('\n')»
-		
+	--Outputs«/* Declare local signals for all output signals*/»
+	«modelOutputs.map( out |'''«generateSignalFromVariableWithInitialValue(out)»''').join('\n')»
+	
+	«/* Generate control signals, every component (generated from SCL) need a tick and reset port */»
 	--Control
 	signal reset : std_logic := '0';
 	signal tick : std_logic := '0';
 	constant tick_period : time := 100 ns;
 	
+	«/* fill testbench with functionality */»
 	BEGIN
-		«generateUUT(modelInputs, modelOutputs, name)»
-	
+	    «/* instantiate the Unit Under Test (SCL-VHDL-model)  */»
+		«generateUUT(modelInputs, modelOutputs, entityName)»
+	    
+	    «/* The testbench simulates the tick, generate that process */»
 		«generateTickProcess()»
 
-		«generateSimulation(traces, modelInputs, modelOutputs)»
+	    «/* Here the simulation process is created */»
+		«generateSimulation(esoTracelist, modelInputs, modelOutputs)»
 	
 	END;
     '''
 	}
 	
 	//-------------------------------------------------------------------------
+	/**
+	 * Generate component port declaration from the to tested VHDL component
+	 * 
+	 * @param inputArray 
+	 *         contains all input variables from SCL model
+	 *
+	 * @param outputArray 
+     *         contains all output variables from SCL model
+	 * 
+	 ** @param componentName
+     *          the name for the VHDL component, this name must be the same like the component name from 
+     *          generated component from the SCL model 
+     * 
+     * @return a String which contains VHDL code for the component declaration
+	 */
 	def generateComponent(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String componentName) { 
 	
-		//compute the component 
-		//e.g. A_in : IN boolean; 		
+		// compute the component input and output ports including its type  
+		// e.g. A_in : IN boolean; 		
 		val ins = inputArray.map(input | '''«input.name»: IN «getTypeString(input)»''').join(';\n')
 		val outs = outputArray.map(output | '''«output.name» : OUT «getTypeString(output)»''').join(';\n')
 		
-		//compute the whole component, the last entry in the component has no ';'
-		//if there are no inputs and output res should be empty, not null (null will be a String in vhdl)
+		// compute the whole component, the last entry in the component has no ';' (VHDL syntax)
+		// if there are no inputs and output res should be empty, 
+		// not null (null will be a String in the VHDL code)
 		val res = if(!(ins.nullOrEmpty && outs.nullOrEmpty))
 					 '''--inputs''' + '\n'  + ins + (if(!outs.nullOrEmpty) ';\n') + 
 					 '''--outputs'''+ '\n' + outs 		 
 		
+		// Generate VHDL code
 		'''
 		COMPONENT «componentName»
 		PORT(
@@ -215,18 +255,35 @@ class ESO2VHDL {
 	}
 	
 	//-------------------------------------------------------------------------
+	/**
+     * Generate Unit Under Test (UUT) instantiation from the to tested VHDL component
+     * 
+     * @param inputArray 
+     *         contains all input variables from SCL model
+     *
+     * @param outputArray 
+     *         contains all output variables from SCL model
+     * 
+     ** @param uutName
+     *         the name for the UUT, this name must be the same like the component name from 
+     *         generated component from the SCL model and from the component declaration in the testbench
+     * 
+     * @return a String which contains VHDL code for the component declaration
+     */
 	def generateUUT(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String uutName) {
 		 
-		//compute the mapping from the entity to simulation signals
-		//e.g. A_in => A_in 
+		// compute the mapping from the component to local signals
+		// e.g. A_in => A_in (the component signal name and the local single name are equal)
 		val ins = inputArray.map( input |'''«input.name» => «input.name»''').join(',\n');
 		val outs = outputArray.map( output |'''«output.name» => «output.name»''').join(',\n');
 		
-		//compute the whole port mapping, the last entry in the Port map has no ','
-		//if there are no inputs and output res should be empty, not null (null will be a String in vhdl)
+		// compute the whole signal mapping, the last entry in the Port map has no ',' (VHDL syntax)
+		// if there are no inputs and output res should be empty, 
+		// not null (null will be a String in VHDL code)
 		val res =  if(!(ins.nullOrEmpty && outs.nullOrEmpty))
 						ins + (if (!outs.nullOrEmpty) ',\n') + '''--Outputs''' + '\n' + outs
 		
+		// Generate VHDL code
 		'''
 		uut: «uutName» PORT MAP(
 			tick => tick,
@@ -236,6 +293,13 @@ class ESO2VHDL {
 	}
 	
 	//-------------------------------------------------------------------------
+	/**
+	 * Generates the tick process.
+	 * The tick will be simulated in the testbench
+	 * 
+	 * @return the VHDl code for the tick process
+	 * 
+	 */
 	def generateTickProcess() {
 	'''
 	tick_process: process
@@ -249,7 +313,23 @@ class ESO2VHDL {
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateSimulation(EList<trace> traces, ArrayList<Variables> inputArray, ArrayList<Variables> outputArray) { 
+	/**
+     * Generate the simulation process
+     * Generate a simulation process which sets all inputs according to the ESO tracelist and test
+     * if all outputs carry their values according to the ESO tracelist else a assertion is hurt
+     * 
+     * @param esoTracelist
+     *         the whole tracelist from ESO file
+     * 
+     * @param inputArray 
+     *         contains all input variables from SCL model
+     *
+     * @param outputArray 
+     *         contains all output variables from SCL model
+     * 
+     * @return a String which contains VHDL code for the simulation process
+     */
+	def generateSimulation(EList<trace> esoTracelist, ArrayList<Variables> inputArray, ArrayList<Variables> outputArray) { 
 	
 	'''
 	-- Stimulus process
@@ -258,65 +338,84 @@ class ESO2VHDL {
 		wait for 1 ps;
 		
 		--sim Process
-		«generateSimProcess(traces, inputArray, outputArray)»
+		«/* generate the setting inputs and test output routines */»
+		«generateSimulationAssertions(esoTracelist, inputArray, outputArray)»
 		wait;
 	end process;
 	'''
 	}
 	
 	//-------------------------------------------------------------------------
-	def generateSimProcess(EList<trace> traces, ArrayList<Variables> inputArray, ArrayList<Variables> outputArray) { 
+	/**
+     * Generate simulation assertions
+     * Here are all inputs set according to the ESO tracelist and tested
+     * if all outputs carry their values according to the ESO tracelist else a assertion is hurt
+     * This setting and testing is done for every tick. Between the ticks a reset is generated
+     * 
+     * @param esoTracelist
+     *         the whole tracelist from ESO file
+     * 
+     * @param inputArray 
+     *         contains all input variables from SCL model
+     *
+     * @param outputArray 
+     *         contains all output variables from SCL model
+     * 
+     * @return a String which contains VHDL code for the assertions for all ticks
+     */
+	def generateSimulationAssertions(EList<trace> esoTracelist, ArrayList<Variables> inputArray, ArrayList<Variables> outputArray) { 
 		
+		// VHDL code which waits a certain time
 		val String wait = '''wait for tick_period;''' + '\n' 
-		simTicks = ""
+		
+		// contains VHDL code for each tick
+		simTick = ""
+		// contains the VHDL code all traces 
 		simTraces = ""
+		// a counter, contains the number of the current trace
 		traceCnt = 1
 	
-//		val List<String> inputString = getStringList(inputArray)
-//		val List<String> outputString = getStringList(outputArray)
-	
-		//for all traces and all ticks generate simulation code
-		traces.forEach[ trace | 
-			simTicks = "\n--NEW TRACE\n" + generateVhdlResetCode(wait)	//Reset on every new Trace
-//			simTicks = ""
+		// for all traces and all ticks generate simulation code
+		esoTracelist.forEach[ trace | 
+			
+			// at each new trace generate  the reset code which resets the model
+			simTick = "\n--NEW TRACE\n" + generateVhdlResetCode(wait)	//Reset on every new Trace
+
+            // a counter, it contains the number of the current tick
 			tickCnt = 1
 			
+			// for all ticks inside a trace generate VHDL simulation code
 			trace.ticks.forEach[ tick | 
-				//Set inputs according to the tick
-//				setInputs = getEsoString(tick.extraInfos,"-- ESO: ")
+			    
+				// clear field bevor genarate new code
                 setInputs = ""
-//CHANGE: 27.06.2013 unset variables in ESO should treated as absent/false
-//				setInputs = setInputs + tick.extraInfos.map[ kvp | 
-//					if(inputString.contains(kvp.key)){
-//						'''«kvp.key» <= «getValueFromKvPair(kvp)»''' + (';\n')
-//					}else''''''
-//				].join('')
 			 
+			    // compute which variables must be set with which value
+			    // Variables which are listed in the ESO file in that tick will be set to this value
+			    // all other variables must be set absent
 			    val ArrayList<Variables> allInputs = computeValidVariabeles(inputArray, tick.extraInfos)
 			    
 			    setInputs = setInputs
+			    
+			    // Generate VHDL code 
 				setInputs = setInputs + allInputs.map[ in |
                     '''«in.name» <= «in.value»'''+ (';\n')
                 ].join('')				
-											
+					
+				// if setInputs is null or empty, set it to an empty string, otherwise if it is null
+				// there will be a null written in the VHDL code.					
 				if(setInputs.nullOrEmpty)
 					setInputs = ""
 				
-				//check if all outputs are set, use asserts
-//				asserts = getEsoString(tick.extraInfos,"--ESO: %Output ")
-//				asserts = ""
-//				asserts = asserts + tick.extraInfos.map[ kvp | 
-//					if(outputString.contains(kvp.key)){
-//						'''
-//						assert( «kvp.key» = «getValueFromKvPair(kvp)» )
-//							report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «kvp.key» should have been «getValueFromKvPair(kvp)»"
-//							severity ERROR;''' + '\n'
-//					}else{''''''}
-//				].join('')
-				
-				//make assertions to nearly ALL outputs
-				//only in valued signals which should be absent, the present flag will be tested not the value variable
+				// generate assertions to nearly ALL outputs
+				// all outputs which are mentioned in the current tick in the ESO file are tested 
+				// according to their mentioned value, all unmentioned values must be set to absent,
+				// but only the 'present' variables, because the value from a variable would not be changed
 				val ArrayList<Variables> allAssertions = computeValidVariabeles(outputArray, tick.extraInfos)
+				
+				// Generate VHDL code
+				// The assertion contains the following failing info: in which trace, in which tick, 
+				// which signal and the expected value
 				asserts = ""
                 asserts = asserts + allAssertions.map[ ass |
                     '''
@@ -324,44 +423,62 @@ class ESO2VHDL {
                             report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «ass.name» should have been «ass.value»"
                             severity ERROR;''' + '\n'
                 ].join('')
-				
-// CHANGE 27.06.2013: Das Modell soll die Eingangssignale intern nach jedem tick zurücksetzen
-				//Set all inputs back to initial value
-//				setInputsBack = tick.extraInfos.map[ kvp | 
-//					if(inputString.contains(kvp.key)){
-//						if(!(kvp.key.endsWith("_value"))){
-//							'''«kvp.key» <= false''' + (';\n')
-//						}else ''''''
-//					}else ''''''
-//				].join('')
-				
-				//Compute code that is needed for one tick
-				//simTicks contains (at the end) the complete tick code for ONE trace
-				simTicks =  simTicks + ("\n--".concat(" tick ").concat(tickCnt.toString).concat('\n')) 
-							+ setInputs + wait + asserts //+ setInputsBack 
+								
+				// Compute code that is needed for one tick
+				// simTicks contains (at the end) the complete tick code for ONE trace
+				// add some additional comments 
+				simTick =  simTick + ("\n--".concat(" tick ").concat(tickCnt.toString).concat('\n')) 
+							+ setInputs + wait + asserts 
 							
-				//tick counter shows the current tick in the current trace
+				// the tick counter shows the current tick in the current trace
 				tickCnt = tickCnt + 1
 			]
-			//simTrace contains (at the end) the simulation code for all traces
-			simTraces = simTraces + simTicks 
-//			simTraces =  simTraces + "\n--NEW TRACE\n" + generateVhdlResetCode(wait)	//Reset on every new Trace
+			// simTrace contains (at the end) the simulation code for all traces
+			simTraces = simTraces + simTick 
 						
-			//counter for number of traces
+			// counter for the number of traces
 			traceCnt = traceCnt + 1
 		]
-		//Return simulation code for all traces (included all ticks)
+		// Return simulation code for all traces (including all ticks)
 		simTraces
 	}
 	
-
-
-
     //-------------------------------------------------------------------------
     //------------- H E L P E R - M E T H O D S -------------------------------
 	//-------------------------------------------------------------------------
 	
-	//Computes a String to a given trace number
+	/**
+	 * loads the SCL model from a given file
+	 * 
+	 * @param modelile
+	 *             contains the file which holds the SCL model
+	 * 
+	 * @return the SCL model from file 
+	 */
+	def Program loadModel(File modelFile) { 
+
+        val IPath iPath = new Path(modelFile.toString())
+                
+        val EObject eobject = ModelUtil::loadEObjectFromModelFile(iPath)
+        
+        //check if the file contains an SCL model
+        if(eobject instanceof Program){
+            val Program sclModel = eobject as Program
+            sclModel
+        }else{
+            return null
+        }   
+    }
+    
+	/**
+	 * Computes a string to a given number
+	 * e.g. 1 will be transformed to 1st
+	 * 
+	 * @param number
+	 *         the number which should be transformed to a string
+	 * 
+	 * @return the string number 
+	 */
 	def numberToString(int number) { 
 		switch number{	
 			case number == 1: number.toString + "st"
@@ -371,17 +488,24 @@ class ESO2VHDL {
 		}
 	}
 	
-	//Generates vhdl code for a reset
+	/**
+	 * Generates VHDL code for a reset
+	 * 
+	 * @return the VHDL code for a reset
+	 */
 	def String generateVhdlResetCode(String wait) { 
 		"reset <= '1';\n".concat(wait).concat("reset <= '0';\n");
 	}
 	
-	//Return the ESO instructions as a String
-	def String getEsoString(EList<kvpair> list, String startString) { 
-		'''«startString»«list.map[kvp | '''«kvp.key»«if(true){'''(«getValueFromKvPair(kvp)»)'''}else " "»'''].join(' ').concat("\n")»'''
-	}
-
-	//Returns the value as String
+	/**
+	 * Returns the kvpair value as String
+	 * 
+	 * @param kvp
+	 *         the ESO KeyValuePair
+	 * 
+	 * @return the KeyValuePair value as a string
+	 * 
+	 */
 	def String getValueFromKvPair(kvpair kvp) {
 		
 		val EObject value =  kvp.value
@@ -395,18 +519,33 @@ class ESO2VHDL {
         }
 	}
 	
-	//Returns a vhdl String according to the type of the kvpair
-	def getTypeAndInitValue(Variables v) { 
-
-		val value = v.value
+	/**
+	 * Generates a VHDL signal declaration string according to the given variable
+	 * 
+	 * @param variable
+	 *             the variable for which a signal should be generated
+	 * 
+	 * @return the VHDl code for a signal decalration
+	 *             
+	 */
+	def generateSignalFromVariableWithInitialValue(Variables variable) { 
+        
+		val value = variable.value
 		if(value instanceof Integer){
-			return "integer range 31 downto 0 := " + value.toString + ";"
+			return "signal " + variable.name + " : integer range 31 downto 0 := " + value.toString + ";"
 		}
 		else if(value instanceof Boolean)
-			return "boolean := " + value.toString + ";"			
+			return "signal " + variable.name + " boolean := " + value.toString + ";"			
 	}
-	
-	//Return the kvpair type as a string
+
+	/**
+	 * Generates VHDL code for type initiation for a given variable
+	 * 
+	 * @param variable  
+	 *             the variable for which the VHDl type should returned
+	 * 
+	 * @return the VHDL type
+	 */
 	def getTypeString(Variables v) { 
 		
 		val value = v.value
@@ -417,101 +556,115 @@ class ESO2VHDL {
 		}
 	}
 	
-	//
-	def List<String> getStringList(ArrayList<Variables> vari) { 
-	
-		val ArrayList<String> temp = newArrayList
-		for(i : vari){
-			temp.add(i.name)
-		}
-		return temp
-	}
-	
-	//we must ensure that value which should be present are tested and values which are not
-    //listed in an eso file to be absent, so compute a list which contains this information
+
+    /**
+     * Compute how the variables should be set or tested
+     * 
+     * we must ensure that values which should be present in the current tick, are tested and values which are not
+     * listed in an ESO file to be tested for absence, and that variables which should be set, are set to their value
+     * and variables which are not listed in the current tick, to set absent
+     * so compute a list of variables which contains this information
+     * 
+     * @param variableList
+     *          a list with all needed variables
+     * 
+     * @param extraInfos
+     *          the extraInfos from the current tick
+     * 
+     * @return a list which contains all variables that should be set or tested to a specific value 
+     * 
+     */
     def ArrayList<Variables> computeValidVariabeles(ArrayList<Variables> variableList, EList<kvpair> extraInfos) { 
          val asserts = new ArrayList<Variables>
          allreadyAdded = false
          
+         // check for all variables if they should be set in the current tick 
+         // (they appear in the current tick in the ESO trace). If it should set, do so. 
+         // For all other variables, which are not appear in the current tick do not.
          variableList.forEach[variable | 
              if(!extraInfos.nullOrEmpty){
+                 //check if the current variable appears in the current tick
                  extraInfos.forEach[ kvp |
                      if(variable.name.equals(kvp.key)){
+                         //variable appears in current tick, set it according to the appearance
                          asserts.add(new Variables(kvp.key,false,false,getValueFromKvPair(kvp)))
+                         
+                         //The current tested variable was set already 
                          allreadyAdded = true
                      }
                  ]
              }
+             
+             // This variable should not be emitted/tested in this tick, so set/test all 
+             // variables to absent (false) and let the _valued variables unchanged, 
+             // because this value is remembered across the ticks
              if(!allreadyAdded){
-                 //Because, we cannot say anything about an absent value don't make an assertion
-                 //the pure Signal e.g. F(6) transformed to F and F_value only must be absent
+                 // Because, we cannot say anything about an absent _value variable don't set the variable 
+                 // (make an assertion). A valued Signal e.g. F(6) is transformed to F and F_value,
+                 // F must be set/test to/for absent only
                  if(!(variable.name.contains("_value"))){
-                    asserts.add(variable)
+                    asserts.add(new Variables(variable.name,false,false,false))
                  }    
              }
+             
+             //set false for the next variable
              allreadyAdded = false
          ]
 
          return asserts
     }
     
-//	//create a new instance from variables to save the model variables in a more useable way
-//	def dispatch createVariableFromModel(String name, boolean isinput, Expression initialValue) {
-//
-//			val value1 = initialValue as PrimitiveValueExpression
-//			if(value1.value instanceof IntLiteralImpl){
-//				val value2 = value1.value as IntLiteralImpl
-//				val value3 = value2.value
-//				new Variables(name,true,value3)
-//			}else if (value1.value instanceof BoolLiteralImpl){
-//				val value2 = value1.value as BoolLiteralImpl
-//				val value3 = value2.value
-//				new Variables(name,true,value3)
-//			}		
-//	}
-//	
-//	//create a new instance from variables to save the model variables in a more useable way
-//	def dispatch createVariableFromModel(String name, boolean isinput, boolean initialValue) {
-//		
-//		new Variables(name,isinput,initialValue)
-//	}
-
-
+    /**
+     * create a variable according to a given SCL variable declaration
+     * 
+     * @param variable
+     *          a variable declaration from a SCL model
+     * 
+     * @param isInput
+     *          specifies if the new variable is an input variable
+     * 
+     * @param isOutput
+     *          specifies if the new variable is an output variable
+     * 
+     * @return a new variable
+     * 
+     */
 	def createVariableFromModel(VariableDeclaration variable, boolean isInput, boolean isOutput) {
 		
 		val Expression initialValue = variable.initialValue
 		val name = variable.name
 		
-		// Initial Value
-		// Better to look first after an initial value, because the grammer 
-		// allows: input signal A : integer = false; !!!
+		// The variable has an initial value, so generate a variable with the same name and 
+		// the initial value. The value will be saved as normal int or boolean and not as a
+		// stext type 
 		if(initialValue != null){
+		    
 			val value1 = initialValue as PrimitiveValueExpression
+			
 			if(value1.value instanceof IntLiteralImpl){
+				//value is a kind of an integer format
 				val value2 = value1.value as IntLiteralImpl
 				val value3 = value2.value
 				new Variables(name,isInput,isOutput,value3)
+				
 			}else if (value1.value instanceof BoolLiteralImpl){
+				//the variable is a kind of a boolean type
 				val value2 = value1.value as BoolLiteralImpl
 				val value3 = value2.value
 				new Variables(name,isInput,isOutput,value3)
 			}	
 		}
-		//no initial value
+		// no initial value present
+		// generate a initial value according to the type of the variable
+		// a type must be specified (rvh: synchronous meeting)
 		else{
-			if(variable.type != null){
-				val String type = variable.type.name
-				//In VHDL simulation all used signals should have an initial value
-				if(type == "integer"){
-					new Variables(name,isInput,isOutput,0)
-				}
-				else if(type == "boolean") {
-					new Variables(name,isInput,isOutput,false)
-				}
-				//other values are not supported
-				// TODO  throw exception for unsupported type
-			}//no type specified -> set to boolean
-			else{
+			val String type = variable.type.name
+			// All used signals should have an initial value in a VHDL simulation
+			// otherwise may cause incorrect simulation results
+			if(type == "integer"){
+				new Variables(name,isInput,isOutput,0)
+			}
+			else if(type == "boolean") {
 				new Variables(name,isInput,isOutput,false)
 			}
 		}
