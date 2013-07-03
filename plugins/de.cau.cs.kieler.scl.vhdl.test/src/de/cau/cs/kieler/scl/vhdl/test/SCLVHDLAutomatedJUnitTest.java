@@ -52,7 +52,12 @@ import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.vhdl.xtend.SCL2VHDL;
 import de.cau.cs.kieler.sim.eso.eso.tracelist;
+
 /**
+ * 
+ * 
+ * 
+ * 
  * @author gjo
  *
  */
@@ -93,7 +98,7 @@ public  class SCLVHDLAutomatedJUnitTest {
     private IPath currentEsoFile = null;
     
     /** If in strict mode, require an ESO file for all model files and raise an error otherwise. */
-    public static final boolean STRICT_MODE_REQUIRE_ESO_FOR_ALL_MODEL_FILES = false;
+    private static final boolean STRICT_MODE_REQUIRE_ESO_FOR_ALL_MODEL_FILES = false;
     
     /** The standard simulation tick time in ns  */
     private static int SIMULATION_TICK_TIME_IN_NS = 100;
@@ -116,7 +121,10 @@ public  class SCLVHDLAutomatedJUnitTest {
     // -------------------------------------------------------------------------
     
     /**
-     * @param clazz
+     * Constructor
+     * 
+     * @param esoFile
+     *          the current ESO file
      * @throws Throwable
      */
     public SCLVHDLAutomatedJUnitTest(final IPath esoFile) throws Throwable {
@@ -151,30 +159,28 @@ public  class SCLVHDLAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * Initializes all ESO and model files, initializes KIEM. @BeforeClass can only be used with
+     * Initializes all ESO and model files. @BeforeClass can only be used with
      * static methods so we used @Before and add an extra flag that guards against multiple
      * initializations. The @Before became irrelevant because the initialization is called
-     * anyway from the KiemRunner.
+     * anyway from the VHDLTestRunner.
      */
-//    @BeforeClass
     public void SCLVHDLTestRunnerInitialization() {
         // Only initialize for several consecutive tests iff this is the first test,
         // i.e., the static variable firstTest is true; set it to false in this case
         // it will be reset to true in the @AfterClass wrapup method.
         if (!firstTestFlag) {
-            // We already initialized KIEM and all static lists, we can
+            // We already initialized all static lists, we can
             // safely exit here because re-initialization for EVERY test would
             // result in much overhead!
             return;
         }
         // We are in the first test (of a possible list of severel tests)
-        // we need to initialize KIEM, reset the flag so that we initialize KIEm
+        // we need to reset the flag so that we initialize 
         // just ONCE for a set of consecutive tests
         firstTestFlag = false;
 
         // -----------------------------------------------------------------------------------------
-        // Create links in temp workspace and test if valid input (eso files and execution file)
-
+        
         // First create links to local bundle file in a temporary workspace
         List<IPath> allWorkspaceFiles = createLinksForAllTestFiles(PLUGIN_ID,
                 BUNDLE_TEST_PATH, TEMPORARY_WORKSPACE_FOLDER_NAME);
@@ -198,11 +204,11 @@ public  class SCLVHDLAutomatedJUnitTest {
      */
     @AfterClass
     public static void SCLVHDLTestRunnerWrapup() {
+        
         // Clear all static fields
         esoFiles.clear();
         modelFile.clear();
-        // Reset important firstTestFlag used to initialize KIEM at the
-        // first test of a set of consecutive tests.
+        // Reset important firstTestFlag to initialization only one time
         firstTestFlag = true;
     }
 
@@ -210,50 +216,55 @@ public  class SCLVHDLAutomatedJUnitTest {
 
     /**
      * This generic test will look for model files in a provided test files folder. If for a model
-     * file also an ESO file is found these both serve as a test case. Additionally a valid
-     * execution file has to be defined.
+     * file also an ESO file is found these both serve as a test case. 
+     * 
      * @throws IOException 
      * @throws InterruptedException 
      */
     @Test
     public void SCLVHDLTestRunnerExecution() throws IOException, InterruptedException {
         
-        //Temporary Folder, only needed inner this method, it will be created and also be deleted in this method 
+        // Get model name 
         String modelName = currentEsoFile.removeFileExtension().lastSegment();
         
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
         IPath absolutePath = root.getLocation().append(TEMPORARY_WORKSPACE_FOLDER_NAME);
 
-        //Create a temporary folder, it will be deleted after each JUjnit iteration
+        // Create a temporary folder for each model
         IPath absoluteTempPath = absolutePath.append(modelName);
         File tempDir = absoluteTempPath.toFile();
         tempDir.mkdir();
         
-        //create an relative temporary path from eso file
-        String relativeTempPath = currentEsoFile.removeLastSegments(1).addTrailingSeparator().append(modelName).addTrailingSeparator().toString();
+        // create an relative temporary path from ESO file
+        String relativeTempPath = currentEsoFile.removeLastSegments(1).addTrailingSeparator().
+                append(modelName).addTrailingSeparator().toString();
         
-        //Get Model File path
+        // Get Model File path
         IPath modelFilePath = modelFile.get(currentEsoFile);
          
-        //Load models from File
+        // Load models from File
         EObject sclModel = ModelUtil.loadEObjectFromModelFile(modelFilePath);
         EObject esoModel = ModelUtil.loadEObjectFromModelFile(currentEsoFile);
              
-        //Transform model into vhdl file and save it
-        CharSequence transformedSCL2VHDL = (new SCL2VHDL().transform((Program)sclModel, modelFilePath.toFile()));
-        IPath vhdlPath = new Path(relativeTempPath + modelFilePath.removeFileExtension().addFileExtension("vhd").lastSegment());
+        // Transform SCL model into VHDL file and save it
+        CharSequence transformedSCL2VHDL = (new SCL2VHDL().transform((Program)sclModel, 
+                modelFilePath.toFile()));
+        IPath vhdlPath = new Path(relativeTempPath + modelFilePath.removeFileExtension()
+                .addFileExtension("vhd").lastSegment());
         createWorkspaceFile(vhdlPath, transformedSCL2VHDL.toString());
         
-        //transform eso file to coreEso file and
-        //transform coreEso file ti vhdl testbench
+        // transform ESO file to core ESO file and
         tracelist transformedEso2CoreEso = (new ESO2CoreESO().transformESO2CoreESO((tracelist) esoModel));
-        CharSequence transformedCoreESO2VHDLTB = (new ESO2VHDL().transformESO2VHDL(transformedEso2CoreEso,modelFilePath.toFile()));
-        IPath tbPath = new Path(relativeTempPath + currentEsoFile.removeFileExtension().lastSegment() + "_tb.vhd");
+        //transform core ESO file to VHDl testbench and save it
+        CharSequence transformedCoreESO2VHDLTB = (new ESO2VHDL().transformESO2VHDL(
+                transformedEso2CoreEso,modelFilePath.toFile()));
+        IPath tbPath = new Path(relativeTempPath + currentEsoFile.removeFileExtension()
+                .lastSegment() + "_tb.vhd");
         createWorkspaceFile(tbPath, transformedCoreESO2VHDLTB.toString());
            
-        //generate .prj file the project file contains all vhdl files
-        //so a LinkedList is created with all vhdl files
+        // generate .prj file the project file contains all VHDL files
+        // so a LinkedList is created with all VHDL files
         LinkedList<String> allVhdlFiles = new LinkedList<String>();
         allVhdlFiles.add(vhdlPath.lastSegment());
         allVhdlFiles.add(tbPath.lastSegment());
@@ -261,31 +272,36 @@ public  class SCLVHDLAutomatedJUnitTest {
         IPath prjPath = new Path(relativeTempPath.concat(modelName + PRJ_FILE_NAME_EXTENSION));
         createWorkspaceFile(prjPath, prjFileContent);
            
-        //generate .cmd file
-        //the .cmd file tells the ise simulater how long the simulation schould take
-        //the simulation time is dirived from the number of ticks in the eso file
+        // generate .cmd file
+        // the .cmd file tells the ISE simulator how long the simulation should take
+        // the simulation time is derived from the number of ticks in the ESO file
         String cmdFileContent = createCMDFile(currentEsoFile);
         IPath cmdPath = new Path(relativeTempPath.concat(modelName + CMD_FILE_NAME_EXTENSION));
         createWorkspaceFile(cmdPath, cmdFileContent);
             
-        //generate batch file
-        //the batch file executes the ise tool (compiling and simulation) 
-        String batchFileContent = createBatchFile(currentEsoFile.removeFileExtension().lastSegment() + "_tb", modelName);
+        // generate batch file
+        // the batch file executes the ISE tool (compiling and simulation) 
+        String batchFileContent = createBatchFile(currentEsoFile.removeFileExtension().lastSegment() 
+                + "_tb", modelName);
         IPath batchPath = new Path(relativeTempPath.concat(modelName + BATCH_FILE_NAME_EXTENSION));
         createWorkspaceFile(batchPath, batchFileContent);
             
-        // Execute Batch
-        ProcessBuilder pb = new ProcessBuilder("sh", absoluteTempPath + File.separator + modelName + BATCH_FILE_NAME_EXTENSION);
+        // Execute Batch file (here ISE will start compiling and simulating)
+        ProcessBuilder pb = new ProcessBuilder("sh", absoluteTempPath + File.separator + modelName 
+                + BATCH_FILE_NAME_EXTENSION);
         pb.directory(absoluteTempPath.toFile());
         Process p = pb.start();
         p.waitFor();              
 
-        //the batch file creates an log file which can be checked for errors
-        //so are no errors in the log every thing is fine
+        // the batch file creates an log file which can be checked for errors
+        // so are there no errors in the log everything is fine
         IPath logFilePath = new Path(relativeTempPath + SIMULATION_LOG_FILE_NAME); 
+        // All errors are marked with key: Error
+        // Search in the log file for this key word
         String errorString = stringOccourInFile(logFilePath, "Error" );
         
-        //check if there are any errors
+        // check if there are any errors, if there are the assertion is hit and
+        // all errors are printed into the stack trace
         if(!errorString.isEmpty())
             Assert.fail("\n" + errorString);
     }
@@ -293,24 +309,37 @@ public  class SCLVHDLAutomatedJUnitTest {
     // -------------------------------------------------------------------------
     
     /**
-     * @param logFilePath
-     * @param string
-     * @return
-     * @throws IOException 
+     * Opens a given file and scan it according to the search string
+     * 
+     * Only one occurrence of the error string per line is found in the given file
+     * 
+     * @param relativeFilePath
+     *                  the relative file path to file which should be checked
+     *                  
+     * @param searchString
+     *                  the string to look for
+     *                  
+     * @return a String which contains all founded errors
+     * 
+     * @throws IOException
      */
     private String stringOccourInFile(IPath relativeFilePath, String searchString) throws IOException {
         
         InputStream inStream = ModelUtil.openWorkspaceFile(relativeFilePath);
         String allFoundedSearchString = "";
         
+        //Create new Reader which reads the file
         BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
         String lineIn;
         
+        //read line by line and scan for the search string
         while ((lineIn = br.readLine()) != null) {
             if(lineIn.contains(searchString)){
+                //add the line in which the search string was found
                 allFoundedSearchString += lineIn + "\n";
             }
         }
+        //close stream and reader
         inStream.close();
         br.close();
         
@@ -320,17 +349,25 @@ public  class SCLVHDLAutomatedJUnitTest {
     // -------------------------------------------------------------------------
     
     /**
-     * @param path
+     * Writes a given file content to a given file path
+     * 
+     * @param relativeFilePath
+     *                  relative file path to which the data should be written
      * @param fileContent
-     * @throws IOException 
+     *                  the content which should be written
+     * @throws IOException
      */
     private void createWorkspaceFile(IPath relativeFilePath, String fileContent) throws IOException {
         
+        //Get an output stream to which the content can be written
         OutputStream os = ModelUtil.createWorkspaceFile(relativeFilePath);
         
+        //write byte by byte
         for(int i = 0; i < fileContent.length(); i++){
             os.write(fileContent.charAt(i));
         }
+        
+        //clean up
         os.flush();
         os.close();
     }
@@ -338,36 +375,52 @@ public  class SCLVHDLAutomatedJUnitTest {
     // -------------------------------------------------------------------------
     
     /**
-     * @param prjFilename
-     * @param cmdFilename
-     * @return
-     * @throws FileNotFoundException 
+     * create a batch file
+     * 
+     * This batch file starts the ISE compiler and afterwards the ISE simulation 
+     * 
+     * @param testbenchTopLevelEntityName
+     *                  the name of the top level entity from the testbench file
+     *                  normally it ends wit _tb
+     *                  
+     * @param filename
+     *                  the file name the cmd-file and prj-file have
+     *                  
+     * @return the batch file content
      */
-    private String createBatchFile(String testbenchTopLevelEntityName, String filename) throws FileNotFoundException {
+    private String createBatchFile(String testbenchTopLevelEntityName, String filename){
         
-        //entityname is the same name as testbench filename (convention)
+        // entitynames are the same name as testbench filename (convention)
         
         String batchFileContent = "";
         
         batchFileContent += ""
+                         // set variables with the hardcoded(!) ISE path, prj and cmd file and
+                         // the top level entity
                          +  "ise_path=\"" + ISE_PATH  + "\"\n"
                          +  "project=\"" + filename + PRJ_FILE_NAME_EXTENSION + "\"\n"
                          +  "toplevelEntity=\"" + testbenchTopLevelEntityName + "\"\n"
                          +  "simulation_tcl=\"" + filename + CMD_FILE_NAME_EXTENSION + "\"\n"
                          +  "\n"
                          
+                         //set ISE path
                          +  "export PLATFORM=nt" + "\n"
                          +  "export XILINX=$ise_path" + "\n"
                          +  "export PATH=$PATH:$XILINX/bin/$PLATFORM" + "\n"
                          +  "export LD_LIBRARY_PATH=$XILINX/lib/$PLATFORM" + "\n"
                          +  "\n"
                          
+                         // set binary file name
+                         // build compile and simulation parameter
+                         // set log file name
                          +  "binary=\"tb_" + filename + "_isim_beh\"" + "\n"
                          +  "compile_params=\"-intstyle ise -incremental -o \"$binary\" -prj \"$project" + "\n"
                          +  "sim_params=\"-intstyle ise -tclbatch \"$simulation_tcl\" -log out.log -sdfnowarn\"" + "\n" 
                          +  "tmp_out=\"" + SIMULATION_LOG_FILE_NAME + "\"" + "\n"
                          +  "\n"
                          
+                         // start compiler (fuse) and start simulator (xx.exe sim_params)
+                         // and report all errors to shell
                          +  "fuse $compile_params $toplevelEntity" + "\n"
                          +  "\"./\"$binary\".exe\" $sim_params" + "\n"
                          +  "echo -e out.log | cat out.log | grep 'Error:' | sed 's/at.*ps: //' >> $tmp_out" + "\n"
@@ -379,46 +432,51 @@ public  class SCLVHDLAutomatedJUnitTest {
     // -------------------------------------------------------------------------
     
     /**
-     * @param eso path of the current eso file
-     * @return String content of the .cmd file
-     * @throws IOException 
+     * Creates the command file (cmd)
+     * 
+     * In the command file is specified how long the simulation take place.
+     * Due to all ESO traces have another length, the number of ticks must 
+     * compute to get the simulation time. 
+     * 
+     * @param esoFilepath
+     *               the file path to the ESO file
+     *               
+     * @return cmd file content
+     * 
+     * @throws IOException
      */
-    private String createCMDFile(IPath eso) throws IOException {
+    private String createCMDFile(IPath esoFilepath) throws IOException {
         
         String fileContent = "";
-        int resetCounter = 0;
-        int tickCounter = 0;
+        int counter = 0;
         
-        //Calculate Simulation time,
-        //every output in the eso file correspondents to a tick
-        //every reset in the eso file needs a tick in the testbench
-        //and append some offset
+        // Calculate Simulation time,
+        // every '% Output :' in the ESO file correspondents to a tick and is closed with a ';'
+        // every reset in the ESO file needs a tick in the testbench and is also closed with a ';'
+        // ';' never used in additional cases, so count the ';'
+        // and append some safety offset
         
-        InputStream is = ModelUtil.openBundleOrWorkspaceFile(eso, PLUGIN_ID);
+        // Open ESO file
+        InputStream is = ModelUtil.openBundleOrWorkspaceFile(esoFilepath, PLUGIN_ID);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String lineIn;
-        
-        // Problem!: Grammer allows you to write !reset; and %Output: over more than one line
-        // and/or with whitespaces. Or the whole eso in one line -> not all resets and output were seen
-        // RegExp didnt solve the Problem -> you need the eso file in one line but if there are 10 resets
-        // only one would recognized
+
+        //check line by line
         while ((lineIn = br.readLine()) != null) {
-         
-            //finds &Output: ([\\s]*)%([\\s]*(Output))([\\s]*[:]*)
-            if (lineIn.contains("% Output")){
-                tickCounter++;
-            }
-            //finds !reset; ([\\s]*)!([\\s]*(reset))([\\s]*[;]*)
-            if (lineIn.contains("!reset ;")) {
-                resetCounter++;
+            if (lineIn.contains(";")){
+                // a ';' was found increment counter
+                counter++;
             }
         }
         
+        //clean up
         is.close();
         br.close();
         
-        int simulationTime = (tickCounter + resetCounter + 20) * SIMULATION_TICK_TIME_IN_NS;
+        //calculate simulation time with some offset
+        int simulationTime = (counter + 20) * SIMULATION_TICK_TIME_IN_NS;
         
+        //generate cmd file content
         fileContent = "run " + simulationTime + " ns; \n" +
                "quit";
         
@@ -428,16 +486,18 @@ public  class SCLVHDLAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * Generate .prj file, it contians all used vhdl files
+     * Generate .prj file, it contains all used VHDL files
      * 
-     * @param allVhdlFiles LinkedList which contains all needed vhdl file names for the current run
-     * @return String contains the file content
-     * @throws FileNotFoundException 
+     * @param allVhdlFiles 
+     *                  LinkedList which contains all needed VHDL file names for the current run
+     *                  
+     * @return prj file content
      */
-    private String createPRJFile(LinkedList<String> allVhdlFiles) throws FileNotFoundException {
+    private String createPRJFile(LinkedList<String> allVhdlFiles) {
         
         String prjFileContent = "";
         
+        //add all VHDL files to prj file
         for(String path : allVhdlFiles){
             prjFileContent  += "vhdl work \"" + path + "\"\n";
         }
