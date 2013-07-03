@@ -14,7 +14,12 @@ import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 import de.cau.cs.kieler.sim.eso.eso.tracelist;
 import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
 
-
+/**
+ * Model transformation handler for core ESO to VHDL Testbench. 
+ *
+ * @see org.eclipse.core.commands.IHandler
+ * @see org.eclipse.core.commands.AbstractHandler
+ */
 //@SuppressWarnings("restriction")
 public class VHDLtbGenerator extends AbstractModelFileHandler {
 
@@ -60,15 +65,13 @@ public class VHDLtbGenerator extends AbstractModelFileHandler {
     public CharSequence doTransformation(EObject modelObject,
                     String commandString, ISelection selection) {
 
-        File file;  
-//        if(!(selection == null)){
-            file = (File) ((TreeSelection) selection).getFirstElement();
-//        }else{
-//            file = null;
-//        }            
+        File file = (File) ((TreeSelection) selection).getFirstElement();
 
-        //Eso Core Generation: test.eso transforms to test.core.eso therefore two times removeFileExtension
-        java.io.File ioFile = file.getFullPath().removeFileExtension().addFileExtension("scl").toFile();
+        //The SCl model is needed to transform a core ESO trace to a VHDL testbench
+        //it must have the same name and it must place in the same folder as the ESO file
+        //ESO core generation: test.eso transforms to test.core.eso therefore two times removeFileExtension
+        java.io.File ioFile = file.getFullPath().removeFileExtension()
+                .removeFileExtension().addFileExtension("scl").toFile();
         
         if (commandString.equals(TRANSFORMATIONCOMMAND)) {
             CharSequence transformed = (new ESO2VHDL())

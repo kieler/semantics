@@ -14,17 +14,45 @@
 package de.cau.cs.kieler.eso.vhdl;
 
 /**
- * @author gjohannsen
+ * This class represent a variable.
+ * 
+ * It has a name and can contain any value, intended is boolean and integer.
+ * It can also be specified if this variable is an input, output or when both
+ * is set to false, to be a local variable   
+ * 
+ * 
+ * @author gjo
  *
  */
 public class Variables<T> {
     
+    /** The variable name */
     private String name;
+    
+    /** marks a variable as input */
     private boolean isInput;
+    
+    /** marks a variable as output */
     private boolean isOutput;
+    
+    /** variable contains a boolean value */
     private boolean isBoolean;
+    
+    /** the variables value */
     private T value;
     
+    /**
+     * Variable constructor
+     * 
+     * @param name
+     *          the variable name
+     * @param isInput
+     *          the variable is in input variable
+     * @param isOutput
+     *          the variable is in output variable
+     * @param value
+     *          the variable value
+     */
     public Variables(String name, boolean isInput, boolean isOutput, T value ){
         
         this.name = name;

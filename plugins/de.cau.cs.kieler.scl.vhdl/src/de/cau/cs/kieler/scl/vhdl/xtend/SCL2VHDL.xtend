@@ -161,7 +161,8 @@ class SCL2VHDL {
             notInitial := false;
             notInitialDetect := true;
                 
-            «setAllLocalVariables(modelInputs,false)»
+            --check which of these variables must be set in each tick (!?) see ABO with O1,O2,A(out) and B(out)
+            «setAllLocalVariables(modelInputs,false)» 
             «setAllLocalVariables(modelOutputs,false)»
             «setAllLocalVariables(modelLocalVariables,false)»
         else
@@ -195,29 +196,29 @@ class SCL2VHDL {
     }
 
    
-    def generateInitialTickProcess() { 
-     '''
-     -- create initial Tick
-     initialTick: process
-        variable u_notInitial : boolean := false;
-        variable u_notInitialDetect : boolean:= true;
-        variable u_entry : boolean;
-
-        begin
-            wait until rising_edge(tick);
-        
-            if (reset = '1') then
-                u_notInitial := false;
-                u_notInitialDetect := true;
-                entry_int <= false;
-            else 
-                u_entry := not u_notInitial;
-                u_notInitial := u_notInitial or u_notInitialDetect;
-                entry_int <= u_entry;
-            end if;
-     end process;
-     '''
-    }
+//    def generateInitialTickProcess() { 
+//     '''
+//     -- create initial Tick
+//     initialTick: process
+//        variable u_notInitial : boolean := false;
+//        variable u_notInitialDetect : boolean:= true;
+//        variable u_entry : boolean;
+//
+//        begin
+//            wait until rising_edge(tick);
+//        
+//            if (reset = '1') then
+//                u_notInitial := false;
+//                u_notInitialDetect := true;
+//                entry_int <= false;
+//            else 
+//                u_entry := not u_notInitial;
+//                u_notInitial := u_notInitial or u_notInitialDetect;
+//                entry_int <= u_entry;
+//            end if;
+//     end process;
+//     '''
+//    }
 
     def variableToSignal(ArrayList<Variables> variables) { 
         

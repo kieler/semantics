@@ -25,8 +25,10 @@ import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 import de.cau.cs.kieler.sim.eso.eso.tracelist;
 
 /**
- * @author gjo
+ * Model transformation handler forESO to core ESO. 
  *
+ * @see org.eclipse.core.commands.IHandler
+ * @see org.eclipse.core.commands.AbstractHandler
  */
 public class ESO2CoreESOGenerator extends AbstractModelFileHandler {
 
@@ -68,7 +70,6 @@ private static Injector injector = new STextStandaloneSetup().createInjectorAndD
     public String getTransformationCommand(){
         return TRANSFORMATIONCOMMAND;
     }
-    
 
     public tracelist doTransformation(EObject modelObject,
                     String commandString, ISelection selection) {       
