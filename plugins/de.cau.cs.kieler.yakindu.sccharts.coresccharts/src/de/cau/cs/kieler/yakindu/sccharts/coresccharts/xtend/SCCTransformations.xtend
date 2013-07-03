@@ -5,6 +5,11 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
+//import de.cau.cs.kieler.yakindu.sccharts.model.stext.SignalDeclaration
+import de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition
+import de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition
+import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
+import org.yakindu.base.types.Type;
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.util.stdlib.CloningExtensions
@@ -13,8 +18,36 @@ import org.yakindu.sct.model.sgraph.Region
 import org.yakindu.sct.model.sgraph.SGraphFactory
 import org.yakindu.sct.model.sgraph.State
 import org.yakindu.sct.model.sgraph.Statechart
+import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory
+import org.yakindu.base.types.PrimitiveType
+import org.yakindu.base.types.TypeSystemUtils
+import org.yakindu.base.types.TypesFactory
+
+//import com.google.inject.Guice
+import com.google.inject.Injector
+import org.eclipse.xtext.serializer.ISerializer
+import de.cau.cs.kieler.yakindu.model.stext.SynctextStandaloneSetup
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.SCChartsExpStandaloneSetup
+import org.yakindu.sct.model.stext.STextStandaloneSetup
+
+import static de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCTransformations.*
+import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.emf.ecore.resource.ResourceSet
+import javax.inject.Named
+import org.eclipse.xtext.Constants
+import org.eclipse.emf.common.util.URI
+import javax.inject.Inject
+import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
+
 
 class SCCTransformations {
+ 
+    private static val Injector i = SynctextStandaloneSetup::doSetup();
+    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
+    private static val ResourceSet rSet = i.getInstance(typeof(ResourceSet));
+    private static val STextDefaulTypeSystem ts = i.getInstance(typeof(STextDefaulTypeSystem));
+    @Named(Constants::FILE_EXTENSIONS)
+    @Inject private String fileExt;
  
     //-------------------------------------------------------------------------
     //--        S C C  -  S I G N A L S  -  T R A N S F O R M A T I O N       --
@@ -32,11 +65,108 @@ class SCCTransformations {
         targetRootStatechart;
     }
 
-     // Traverse all states 
+     // For all states do the following:
+     // If the state has a specification, then convert all signals
+     // (a) simple signal S to boolean variable S
+     // (b) valued signal S to two boolean variables S and S_val
      def void transformSignals(SyncState state, Statechart targetRootStatechart) {
+//         if (!state.specification.nullOrEmpty) {
+             // There is a specification, convert it
+             var specification = state.specification;
+             var scope = state.scopes.get(0);
+             //input signal S; --> input boolean S;
+             //input signal S:bool; --> input boolean S; input boolean S_val;
+             //input signal S:integer; --> input boolean S; input integer S_val;
+             if (scope != null) {
+               specification = "";  
+               for (declaration : ImmutableList::copyOf(scope.declarations)) {
+                 if (declaration instanceof SignalDefinition) {
+                     var specificationLine = "";
+                     val signal = declaration as EventDefinition;
+                     val isInput = signal.input;
+                     val isOutput = signal.output;
+                     val type = signal.type;
+                        
+                     
+                     //val typeBool = signalDefinition.type.name.toString.equals("boolean");
+                     //val typeInt = signalDefinition.type.name.toString.equals("integer");
+                     val signalName = declaration.name;
+                     val signalInit = signal.varInitialValue;
+                     val signalCombine = signal.varCombineOperator;
+                     //if (signalDefinition.
+                     
+                     val variable =  SynctextFactory::eINSTANCE.createVariableDefinition;
+                     variable.setName(signalName);
+                     variable.setIsInput(isInput);
+                     variable.setIsOutput(isOutput);
+                     variable.setType(ts.booleanType);
+                     
+                     // Check if this is a valued signal
+                     if (signal.hasType) {
+                         // TODO
+                         if (signalInit != null) {
+                            variable.setInitialValue(signalInit);
+                         }
+                         if (signalCombine != null) {
+                            variable.setInitialValue(signalInit); 
+                         }
+                     }
+                     
+                     // Add variable to the scope
+                     scope.declarations.add(variable);
+                     // Remove signal from the scope
+                     scope.declarations.remove(signal);
+                     
+                     
+                     System::out.println(signal.name + " (Signal)");
+                     System::out.println(variable.name + " (Variable)");
+//                     declaration.setName(declaration.name + "XXX");
+//                     System::out.println(declaration.name );
+                 }
+               }
+               
+//                     specification = "";
+//                     for (declaration : scope.declarations) {
+//                        specification = specification.concat(serializer.serialize(declaration));
+//                     }
+
+                    i.injectMembers(this);
+                     val res = rSet.createResource(URI::createFileURI("dummy."+ System::currentTimeMillis() +state.hashCode + "." +fileExt))
+                     res.contents+= EcoreUtil::copy(scope)
+                     state.setSpecification(serializer.serialize(res.contents.head));
+                     res.unload;
+             }
+             
+             
+  //       }
+         
         
      }
         
+        
+    def Type createBooleanType() {
+            val type = TypesFactory::eINSTANCE.createPrimitiveType();
+            type.setName("boolean");
+            return type;
+    }    
+    def Type createIntegerType() {
+            val type = TypesFactory::eINSTANCE.createPrimitiveType();
+            type.setName("boolean");
+            return type;
+    }    
+        
+    def boolean isBoolean(Type type) {
+        return (type != null && type.name != null && type.name.equals("boolean"));
+    }     
+    def boolean isInteger(Type type) {
+        return (type != null && type.name != null && type.name.equals("integer"));
+    }
+    def boolean hasType(EventDefinition signal) {
+        signal.type.isBoolean || signal.type.isInteger;
+    }     
+    def boolean hasType(VariableDefinition variable) {
+        variable.type.isBoolean || variable.type.isInteger;
+    }     
  
     //-------------------------------------------------------------------------
     //--        S C C  -  A B O R T S  -  T R A N S F O R M A T I O N        --
