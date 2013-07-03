@@ -41,6 +41,7 @@ import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition
 import org.yakindu.sct.model.sgraph.Declaration
+import org.yakindu.base.types.TypesFactory
 
 class SCLCreateExtensions {
   
@@ -167,11 +168,11 @@ class SCLCreateExtensions {
         varDef.setName(name);
         varDef.setInput(false);
         varDef.setOutput(false);
-//        if (!type.nullOrEmpty) {
-//            val primitiveType = YakinduBase.createNamedElement()
-//            primitiveType.setName(type)
-//            varDef.setType(primitiveType as Type)
-//        }
+        if (!type.nullOrEmpty) {
+            val primitiveType = TypesFactory::eINSTANCE.createPrimitiveType
+            primitiveType.setName(type)
+            varDef.setType(primitiveType as Type)
+        }
     }
 
    
