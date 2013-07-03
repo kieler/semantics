@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.eso.vhdl;
+package de.cau.cs.kieler.scl.vhdl;
 
 /**
  * This class represent a variable.

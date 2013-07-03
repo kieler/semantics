@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.eso.vhdl.xtend
 
+import com.google.inject.Guice
 import org.eclipse.emf.common.util.EList
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
@@ -26,12 +27,13 @@ import de.cau.cs.kieler.scl.scl.VariableDeclaration
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.IPath
 import org.eclipse.emf.common.util.URI
-import org.yakindu.sct.model.stext.stext.impl.IntLiteralImpl
-import org.yakindu.sct.model.stext.stext.impl.BoolLiteralImpl
-import de.cau.cs.kieler.eso.vhdl.Variables
-import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
+//import org.yakindu.sct.model.stext.stext.impl.IntLiteralImpl
+//import org.yakindu.sct.model.stext.stext.impl.BoolLiteralImpl
+import de.cau.cs.kieler.scl.vhdl.Variables
+//import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import de.cau.cs.kieler.sim.eso.eso.kvpair
-import org.yakindu.sct.model.stext.stext.Expression
+//import org.yakindu.sct.model.stext.stext.Expression
+import de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension
 import java.io.File
 
 /**
@@ -57,6 +59,9 @@ import java.io.File
  * 
  */
 class ESO2VHDL {
+    
+    extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
+         Guice::createInjector().getInstance(typeof(VHDLExtension))
     
     //indicator if a certian variables was already added to a list
     boolean allreadyAdded
@@ -187,10 +192,10 @@ class ESO2VHDL {
 	«generateComponent(modelInputs, modelOutputs, entityName)»
 	
 	--Inputs«/* Declare local signals for all input signals */»
-	«modelInputs.map( in |'''«generateSignalFromVariableWithInitialValue(in)»''').join('\n')»
+	«modelInputs.map( in |'''«generateVhdlSignalFromVariableWithInitialValue(in,"")»''').join('\n')»
 	
 	--Outputs«/* Declare local signals for all output signals*/»
-	«modelOutputs.map( out |'''«generateSignalFromVariableWithInitialValue(out)»''').join('\n')»
+	«modelOutputs.map( out |'''«generateVhdlSignalFromVariableWithInitialValue(out,"")»''').join('\n')»
 	
 	«/* Generate control signals, every component (generated from SCL) need a tick and reset port */»
 	--Control
@@ -213,46 +218,46 @@ class ESO2VHDL {
     '''
 	}
 	
-	//-------------------------------------------------------------------------
-	/**
-	 * Generate component port declaration from the to tested VHDL component
-	 * 
-	 * @param inputArray 
-	 *         contains all input variables from SCL model
-	 *
-	 * @param outputArray 
-     *         contains all output variables from SCL model
-	 * 
-	 ** @param componentName
-     *          the name for the VHDL component, this name must be the same like the component name from 
-     *          generated component from the SCL model 
-     * 
-     * @return a String which contains VHDL code for the component declaration
-	 */
-	def generateComponent(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String componentName) { 
-	
-		// compute the component input and output ports including its type  
-		// e.g. A_in : IN boolean; 		
-		val ins = inputArray.map(input | '''«input.name»: IN «getTypeString(input)»''').join(';\n')
-		val outs = outputArray.map(output | '''«output.name» : OUT «getTypeString(output)»''').join(';\n')
-		
-		// compute the whole component, the last entry in the component has no ';' (VHDL syntax)
-		// if there are no inputs and output res should be empty, 
-		// not null (null will be a String in the VHDL code)
-		val res = if(!(ins.nullOrEmpty && outs.nullOrEmpty))
-					 '''--inputs''' + '\n'  + ins + (if(!outs.nullOrEmpty) ';\n') + 
-					 '''--outputs'''+ '\n' + outs 		 
-		
-		// Generate VHDL code
-		'''
-		COMPONENT «componentName»
-		PORT(
-			 tick : IN  std_logic;
-			 reset : IN std_logic«if(!res.nullOrEmpty)';\n' + res»
-			);
-		END COMPONENT;
-		'''
-	}
+//	//-------------------------------------------------------------------------
+//	/**
+//	 * Generate component port declaration from the to tested VHDL component
+//	 * 
+//	 * @param inputArray 
+//	 *         contains all input variables from SCL model
+//	 *
+//	 * @param outputArray 
+//     *         contains all output variables from SCL model
+//	 * 
+//	 ** @param componentName
+//     *          the name for the VHDL component, this name must be the same like the component name from 
+//     *          generated component from the SCL model 
+//     * 
+//     * @return a String which contains VHDL code for the component declaration
+//	 */
+//	def generateComponent(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String componentName) { 
+//	
+//		// compute the component input and output ports including its type  
+//		// e.g. A_in : IN boolean; 		
+//		val ins = inputArray.map(input | '''«input.name»: IN «getTypeString(input)»''').join(';\n')
+//		val outs = outputArray.map(output | '''«output.name» : OUT «getTypeString(output)»''').join(';\n')
+//		
+//		// compute the whole component, the last entry in the component has no ';' (VHDL syntax)
+//		// if there are no inputs and output res should be empty, 
+//		// not null (null will be a String in the VHDL code)
+//		val res = if(!(ins.nullOrEmpty && outs.nullOrEmpty))
+//					 '''--inputs''' + '\n'  + ins + (if(!outs.nullOrEmpty) ';\n') + 
+//					 '''--outputs'''+ '\n' + outs 		 
+//		
+//		// Generate VHDL code
+//		'''
+//		COMPONENT «componentName»
+//		PORT(
+//			 tick : IN  std_logic;
+//			 reset : IN std_logic«if(!res.nullOrEmpty)';\n' + res»
+//			);
+//		END COMPONENT;
+//		'''
+//	}
 	
 	//-------------------------------------------------------------------------
 	/**
@@ -519,42 +524,42 @@ class ESO2VHDL {
         }
 	}
 	
-	/**
-	 * Generates a VHDL signal declaration string according to the given variable
-	 * 
-	 * @param variable
-	 *             the variable for which a signal should be generated
-	 * 
-	 * @return the VHDl code for a signal decalration
-	 *             
-	 */
-	def generateSignalFromVariableWithInitialValue(Variables variable) { 
-        
-		val value = variable.value
-		if(value instanceof Integer){
-			return "signal " + variable.name + " : integer range 31 downto 0 := " + value.toString + ";"
-		}
-		else if(value instanceof Boolean)
-			return "signal " + variable.name + " boolean := " + value.toString + ";"			
-	}
+//	/**
+//	 * Generates a VHDL signal declaration string according to the given variable
+//	 * 
+//	 * @param variable
+//	 *             the variable for which a signal should be generated
+//	 * 
+//	 * @return the VHDl code for a signal decalration
+//	 *             
+//	 */
+//	def generateSignalFromVariableWithInitialValue(Variables variable) { 
+//        
+//		val value = variable.value
+//		if(value instanceof Integer){
+//			return "signal " + variable.name + " : integer range 31 downto 0 := " + value.toString + ";"
+//		}
+//		else if(value instanceof Boolean)
+//			return "signal " + variable.name + " boolean := " + value.toString + ";"			
+//	}
 
-	/**
-	 * Generates VHDL code for type initiation for a given variable
-	 * 
-	 * @param variable  
-	 *             the variable for which the VHDl type should returned
-	 * 
-	 * @return the VHDL type
-	 */
-	def getTypeString(Variables v) { 
-		
-		val value = v.value
-		if(value instanceof Integer)
-			return "integer range 31 downto 0"
-		else if(value instanceof Boolean){
-			return "boolean"
-		}
-	}
+//	/**
+//	 * Generates VHDL code for type initiation for a given variable
+//	 * 
+//	 * @param variable  
+//	 *             the variable for which the VHDl type should returned
+//	 * 
+//	 * @return the VHDL type
+//	 */
+//	def getTypeString(Variables v) { 
+//		
+//		val value = v.value
+//		if(value instanceof Integer)
+//			return "integer range 31 downto 0"
+//		else if(value instanceof Boolean){
+//			return "boolean"
+//		}
+//	}
 	
 
     /**
@@ -629,46 +634,46 @@ class ESO2VHDL {
      * @return a new variable
      * 
      */
-	def createVariableFromModel(VariableDeclaration variable, boolean isInput, boolean isOutput) {
-		
-		val Expression initialValue = variable.initialValue
-		val name = variable.name
-		
-		// The variable has an initial value, so generate a variable with the same name and 
-		// the initial value. The value will be saved as normal int or boolean and not as a
-		// stext type 
-		if(initialValue != null){
-		    
-			val value1 = initialValue as PrimitiveValueExpression
-			
-			if(value1.value instanceof IntLiteralImpl){
-				//value is a kind of an integer format
-				val value2 = value1.value as IntLiteralImpl
-				val value3 = value2.value
-				new Variables(name,isInput,isOutput,value3)
-				
-			}else if (value1.value instanceof BoolLiteralImpl){
-				//the variable is a kind of a boolean type
-				val value2 = value1.value as BoolLiteralImpl
-				val value3 = value2.value
-				new Variables(name,isInput,isOutput,value3)
-			}	
-		}
-		// no initial value present
-		// generate a initial value according to the type of the variable
-		// a type must be specified (rvh: synchronous meeting)
-		else{
-			val String type = variable.type.name
-			// All used signals should have an initial value in a VHDL simulation
-			// otherwise may cause incorrect simulation results
-			if(type == "integer"){
-				new Variables(name,isInput,isOutput,0)
-			}
-			else if(type == "boolean") {
-				new Variables(name,isInput,isOutput,false)
-			}
-		}
-		
-	}
+//	def createVariableFromModel(VariableDeclaration variable, boolean isInput, boolean isOutput) {
+//		
+//		val Expression initialValue = variable.initialValue
+//		val name = variable.name
+//		
+//		// The variable has an initial value, so generate a variable with the same name and 
+//		// the initial value. The value will be saved as normal int or boolean and not as a
+//		// stext type 
+//		if(initialValue != null){
+//		    
+//			val value1 = initialValue as PrimitiveValueExpression
+//			
+//			if(value1.value instanceof IntLiteralImpl){
+//				//value is a kind of an integer format
+//				val value2 = value1.value as IntLiteralImpl
+//				val value3 = value2.value
+//				new Variables(name,isInput,isOutput,value3)
+//				
+//			}else if (value1.value instanceof BoolLiteralImpl){
+//				//the variable is a kind of a boolean type
+//				val value2 = value1.value as BoolLiteralImpl
+//				val value3 = value2.value
+//				new Variables(name,isInput,isOutput,value3)
+//			}	
+//		}
+//		// no initial value present
+//		// generate a initial value according to the type of the variable
+//		// a type must be specified (rvh: synchronous meeting)
+//		else{
+//			val String type = variable.type.name
+//			// All used signals should have an initial value in a VHDL simulation
+//			// otherwise may cause incorrect simulation results
+//			if(type == "integer"){
+//				new Variables(name,isInput,isOutput,0)
+//			}
+//			else if(type == "boolean") {
+//				new Variables(name,isInput,isOutput,false)
+//			}
+//		}
+//		
+//	}
 
 }

@@ -13,17 +13,18 @@
  */
  package de.cau.cs.kieler.scl.vhdl.xtend
 
+import com.google.inject.Guice
 import de.cau.cs.kieler.scl.scl.Program
-import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scl.scl.Thread
+//import de.cau.cs.kieler.scl.scl.StatementSequence
+//import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.EmptyStatement
+//import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.InstructionStatement
-import de.cau.cs.kieler.scl.scl.Pause
+//import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Parallel
-import de.cau.cs.kieler.scl.scl.Instruction
+//import de.cau.cs.kieler.scl.scl.Goto
+//import de.cau.cs.kieler.scl.scl.Parallel
+//import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.VariableDeclaration
 
@@ -42,18 +43,19 @@ import org.yakindu.sct.model.stext.stext.ParenthesizedExpression
 import org.yakindu.sct.model.stext.stext.NumericalAddSubtractExpression
 import org.yakindu.sct.model.stext.stext.NumericalMultiplyDivideExpression
 import org.yakindu.sct.model.stext.stext.ShiftExpression
-import org.yakindu.sct.model.stext.stext.AssignmentOperator
+//import org.yakindu.sct.model.stext.stext.AssignmentOperator
 import org.yakindu.sct.model.stext.stext.AdditiveOperator
 
 import java.util.ArrayList
-import de.cau.cs.kieler.eso.vhdl.Variables
+import de.cau.cs.kieler.scl.vhdl.Variables
 import org.eclipse.emf.common.util.EList
-import org.eclipse.xtext.xbase.scoping.featurecalls.OperatorMapping
-import org.yakindu.sct.model.stext.stext.AssignmentOperator
-import org.yakindu.sct.model.stext.stext.AssignmentOperator
-import org.yakindu.sct.model.stext.stext.AssignmentOperator
+//import org.eclipse.xtext.xbase.scoping.featurecalls.OperatorMapping
+//import org.yakindu.sct.model.stext.stext.AssignmentOperator
+//import org.yakindu.sct.model.stext.stext.AssignmentOperator
+//import org.yakindu.sct.model.stext.stext.AssignmentOperator
 import java.io.File
 import org.eclipse.emf.common.util.URI
+import de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension
 
 /**
  * Transformation of SCL code into VHDL code.
@@ -61,6 +63,10 @@ import org.eclipse.emf.common.util.URI
  * @author gjo
  */
 class SCL2VHDL {
+    
+     extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
+         Guice::createInjector().getInstance(typeof(VHDLExtension))
+         
     CharSequence temp
     String modelname
     Object input
@@ -142,7 +148,7 @@ class SCL2VHDL {
     prog: process
     -- initial tick variables
     variable notInitial : boolean := false;
-    variable notInitialDetect : boolean:= true;
+    variable notInitialDetect : boolean := true;
     variable entry : boolean;
         
     --local in/out Variables
@@ -250,7 +256,7 @@ class SCL2VHDL {
 
     def genarateLocalSignals(ArrayList<Variables> variables) { 
         
-        val localVar = variables.map(lVar | '''signal «lVar.name»_int : «getTypeAndInitValue(lVar)»''').join('\n')
+        val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"_int")»''').join('\n')
         
         //else must be an empty String, when not null is written into the file
         if(!(localVar.nullOrEmpty))
@@ -261,7 +267,7 @@ class SCL2VHDL {
     
     def genarateLocalVariables(ArrayList<Variables> variables) { 
         
-        val localVar = variables.map(lVar | '''variable «lVar.name»_int : «getTypeAndInitValue(lVar)»''').join('\n')
+        val localVar = variables.map(lVar | '''«generateVhdlVariabelFromVariableWithInitialValue(lVar,"_int")»''').join('\n')
         
         //else must be an empty String, when not null is written into the file
         if(!(localVar.nullOrEmpty))
@@ -270,95 +276,95 @@ class SCL2VHDL {
             return ''''''
     }
 
-   //-------------------------------------------------------------------------
-    def generateEntity(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String entityName) { 
+//   //-------------------------------------------------------------------------
+//    def generateEntity(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String entityName) { 
+//    
+//        //compute the component 
+//        //e.g. A_in : IN boolean;       
+//        val ins = inputArray.map(input | '''«input.name»: IN «getTypeString(input)»''').join(';\n')
+//        val outs = outputArray.map(output | '''«output.name» : OUT «getTypeString(output)»''').join(';\n')
+//        
+//        //compute the whole component, the last entry in the component has no ';'
+//        //if there are no inputs and output res should be empty, not null (null will be a String in vhdl)
+//        val res = if(!(ins.nullOrEmpty && outs.nullOrEmpty))
+//                     '''--inputs''' + '\n'  + ins + (if(!outs.nullOrEmpty) ';\n') + 
+//                     '''--outputs'''+ '\n' + outs        
+//        
+//        '''
+//        ENTITY «entityName» IS
+//        PORT(
+//             tick : IN  std_logic;
+//             reset : IN std_logic«if(!res.nullOrEmpty)';\n' + res»
+//            );
+//        END «entityName»;
+//        '''
+//    }
     
-        //compute the component 
-        //e.g. A_in : IN boolean;       
-        val ins = inputArray.map(input | '''«input.name»: IN «getTypeString(input)»''').join(';\n')
-        val outs = outputArray.map(output | '''«output.name» : OUT «getTypeString(output)»''').join(';\n')
-        
-        //compute the whole component, the last entry in the component has no ';'
-        //if there are no inputs and output res should be empty, not null (null will be a String in vhdl)
-        val res = if(!(ins.nullOrEmpty && outs.nullOrEmpty))
-                     '''--inputs''' + '\n'  + ins + (if(!outs.nullOrEmpty) ';\n') + 
-                     '''--outputs'''+ '\n' + outs        
-        
-        '''
-        ENTITY «entityName» IS
-        PORT(
-             tick : IN  std_logic;
-             reset : IN std_logic«if(!res.nullOrEmpty)';\n' + res»
-            );
-        END «entityName»;
-        '''
-    }
     
+//    //Returns a vhdl String according to the type of the kvpair
+//    def getTypeAndInitValue(Variables v) { 
+//
+//        val value = v.value
+//        if(value instanceof Integer){
+//            return "integer range 31 downto 0 := " + value.toString + ";"
+//        }
+//        else if(value instanceof Boolean)
+//            return "boolean := " + value.toString + ";"         
+//    }
     
-    //Returns a vhdl String according to the type of the kvpair
-    def getTypeAndInitValue(Variables v) { 
-
-        val value = v.value
-        if(value instanceof Integer){
-            return "integer range 31 downto 0 := " + value.toString + ";"
-        }
-        else if(value instanceof Boolean)
-            return "boolean := " + value.toString + ";"         
-    }
-    
-    //Return the kvpair type as a string
-    def getTypeString(Variables v) { 
-        
-        val value = v.value
-        if(value instanceof Integer)
-            return "integer range 31 downto 0"
-        else if(value instanceof Boolean){
-            return "boolean"
-        }
-    }
+//    //Return the kvpair type as a string
+//    def getTypeString(Variables v) { 
+//        
+//        val value = v.value
+//        if(value instanceof Integer)
+//            return "integer range 31 downto 0"
+//        else if(value instanceof Boolean){
+//            return "boolean"
+//        }
+//    }
     
    // -------------------------------------------------------------------------
    
-    def createVariableFromModel(VariableDeclaration variable, boolean isInput, boolean isOutput) {
-        
-        val Expression initialValue = variable.initialValue
-        val name = variable.name
-        
-        // Initial Value
-        // Better to look first after an initial value, because the grammer 
-        // allows: input signal A : integer = false; !!!
-        if(initialValue != null){
-            val value1 = initialValue as PrimitiveValueExpression
-            if(value1.value instanceof IntLiteral){
-                val value2 = value1.value as IntLiteral
-                val value3 = value2.value
-                new Variables(name,isInput,isOutput,value3)
-            }else if (value1.value instanceof BoolLiteral){
-                val value2 = value1.value as BoolLiteral
-                val value3 = value2.value
-                new Variables(name,isInput,isOutput,value3)
-            }   
-        }
-        //no initial value
-        else{
-            if(variable.type != null){
-                val String type = variable.type.name
-                //In VHDL simulation all used signals should have an initial value
-                if(type == "integer"){
-                    new Variables(name,isInput,isOutput,0)
-                }
-                else if(type == "boolean") {
-                    new Variables(name,isInput,isOutput,false)
-                }
-                //other values are not supported
-                // TODO  throw exception for unsupported type
-            }//no type specified -> set to boolean
-            else{
-                new Variables(name,isInput,isOutput,false)
-            }
-        }
-        
-    }
+//    def createVariableFromModel(VariableDeclaration variable, boolean isInput, boolean isOutput) {
+//        
+//        val Expression initialValue = variable.initialValue
+//        val name = variable.name
+//        
+//        // Initial Value
+//        // Better to look first after an initial value, because the grammer 
+//        // allows: input signal A : integer = false; !!!
+//        if(initialValue != null){
+//            val value1 = initialValue as PrimitiveValueExpression
+//            if(value1.value instanceof IntLiteral){
+//                val value2 = value1.value as IntLiteral
+//                val value3 = value2.value
+//                new Variables(name,isInput,isOutput,value3)
+//            }else if (value1.value instanceof BoolLiteral){
+//                val value2 = value1.value as BoolLiteral
+//                val value3 = value2.value
+//                new Variables(name,isInput,isOutput,value3)
+//            }   
+//        }
+//        //no initial value
+//        else{
+//            if(variable.type != null){
+//                val String type = variable.type.name
+//                //In VHDL simulation all used signals should have an initial value
+//                if(type == "integer"){
+//                    new Variables(name,isInput,isOutput,0)
+//                }
+//                else if(type == "boolean") {
+//                    new Variables(name,isInput,isOutput,false)
+//                }
+//                //other values are not supported
+//                // TODO  throw exception for unsupported type
+//            }//no type specified -> set to boolean
+//            else{
+//                new Variables(name,isInput,isOutput,false)
+//            }
+//        }
+//        
+//    }
    // -------------------------------------------------------------------------
 
    //not used
@@ -497,7 +503,3 @@ class SCL2VHDL {
    // -------------------------------------------------------------------------   
  
 }
-
-
-
-
