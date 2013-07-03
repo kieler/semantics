@@ -2,11 +2,9 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp;
 
-import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextPackage;
-
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,168 +56,54 @@ public interface SCChartsExpPackage extends EPackage
   SCChartsExpPackage eINSTANCE = de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.DummyImpl <em>Dummy</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.VariableDefinitionImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getVariableDefinition()
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.DummyImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getDummy()
    * @generated
    */
-  int VARIABLE_DEFINITION = 0;
+  int DUMMY = 0;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Variable Definition</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__NAME = SynctextPackage.VARIABLE_DEFINITION__NAME;
+  int DUMMY__VARIABLE_DEFINITION = 0;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' reference.
+   * The number of structural features of the '<em>Dummy</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_DEFINITION__TYPE = SynctextPackage.VARIABLE_DEFINITION__TYPE;
-
-  /**
-   * The feature id for the '<em><b>Owning Type</b></em>' container reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__OWNING_TYPE = SynctextPackage.VARIABLE_DEFINITION__OWNING_TYPE;
-
-  /**
-   * The feature id for the '<em><b>Readonly</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__READONLY = SynctextPackage.VARIABLE_DEFINITION__READONLY;
-
-  /**
-   * The feature id for the '<em><b>External</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__EXTERNAL = SynctextPackage.VARIABLE_DEFINITION__EXTERNAL;
-
-  /**
-   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__INITIAL_VALUE = SynctextPackage.VARIABLE_DEFINITION__INITIAL_VALUE;
-
-  /**
-   * The feature id for the '<em><b>Is Input</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__IS_INPUT = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Is Output</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__IS_OUTPUT = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Is Static</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__IS_STATIC = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Var Combine Operator</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 3;
-
-  /**
-   * The number of structural features of the '<em>Variable Definition</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION_FEATURE_COUNT = SynctextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 4;
+  int DUMMY_FEATURE_COUNT = 1;
 
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition <em>Variable Definition</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Dummy <em>Dummy</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Variable Definition</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition
+   * @return the meta object for class '<em>Dummy</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Dummy
    * @generated
    */
-  EClass getVariableDefinition();
+  EClass getDummy();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#isIsInput <em>Is Input</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Dummy#getVariableDefinition <em>Variable Definition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Input</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#isIsInput()
-   * @see #getVariableDefinition()
+   * @return the meta object for the containment reference '<em>Variable Definition</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.Dummy#getVariableDefinition()
+   * @see #getDummy()
    * @generated
    */
-  EAttribute getVariableDefinition_IsInput();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#isIsOutput <em>Is Output</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Output</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#isIsOutput()
-   * @see #getVariableDefinition()
-   * @generated
-   */
-  EAttribute getVariableDefinition_IsOutput();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#isIsStatic <em>Is Static</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Static</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#isIsStatic()
-   * @see #getVariableDefinition()
-   * @generated
-   */
-  EAttribute getVariableDefinition_IsStatic();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#getVarCombineOperator <em>Var Combine Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Var Combine Operator</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition#getVarCombineOperator()
-   * @see #getVariableDefinition()
-   * @generated
-   */
-  EAttribute getVariableDefinition_VarCombineOperator();
+  EReference getDummy_VariableDefinition();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -245,46 +129,22 @@ public interface SCChartsExpPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.DummyImpl <em>Dummy</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.VariableDefinitionImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getVariableDefinition()
+     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.DummyImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpPackageImpl#getDummy()
      * @generated
      */
-    EClass VARIABLE_DEFINITION = eINSTANCE.getVariableDefinition();
+    EClass DUMMY = eINSTANCE.getDummy();
 
     /**
-     * The meta object literal for the '<em><b>Is Input</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Variable Definition</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE_DEFINITION__IS_INPUT = eINSTANCE.getVariableDefinition_IsInput();
-
-    /**
-     * The meta object literal for the '<em><b>Is Output</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VARIABLE_DEFINITION__IS_OUTPUT = eINSTANCE.getVariableDefinition_IsOutput();
-
-    /**
-     * The meta object literal for the '<em><b>Is Static</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VARIABLE_DEFINITION__IS_STATIC = eINSTANCE.getVariableDefinition_IsStatic();
-
-    /**
-     * The meta object literal for the '<em><b>Var Combine Operator</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VARIABLE_DEFINITION__VAR_COMBINE_OPERATOR = eINSTANCE.getVariableDefinition_VarCombineOperator();
+    EReference DUMMY__VARIABLE_DEFINITION = eINSTANCE.getDummy_VariableDefinition();
 
   }
 

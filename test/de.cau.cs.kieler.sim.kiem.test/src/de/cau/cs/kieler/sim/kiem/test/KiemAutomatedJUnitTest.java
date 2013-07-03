@@ -16,9 +16,11 @@ package de.cau.cs.kieler.sim.kiem.test;
 
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
@@ -32,9 +34,14 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -56,6 +63,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kart.KartPlugin;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -124,7 +132,6 @@ public abstract class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
     // ESO file an KART configuration
 
-
     /**
      * The error signal name to observe the KIEM data pool for potential execution errors detected
      * by KART. This is configurable in the KART data component properties and need to be extracted
@@ -178,6 +185,19 @@ public abstract class KiemAutomatedJUnitTest {
      * @return the ESO files
      */
     protected abstract IPath getBundleTestPath();
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Defines an external path relative to the bundle where the model files, the ESO files and the
+     * execution files are located. Note that getBundleTestPath has priority if searching for an
+     * execution file name.
+     * 
+     * E.g., return new Path("../../../models/s/validation");
+     * 
+     * @return the ESO files
+     */
+    protected abstract IPath getExternalRelativeTestPath();
 
     // -------------------------------------------------------------------------
 
@@ -266,8 +286,8 @@ public abstract class KiemAutomatedJUnitTest {
     /**
      * Initializes all ESO and model files, initializes KIEM. @BeforeClass can only be used with
      * static methods so we used @Before and add an extra flag that guards against multiple
-     * initializations. The @Before became irrelevant because the initialization is called
-     * anyway from the KiemRunner.
+     * initializations. The @Before became irrelevant because the initialization is called anyway
+     * from the KiemRunner.
      */
     public void kiemAutomatedJUnitTestInitialization() {
         // Only initialize for several consecutive tests iff this is the first test,
@@ -290,6 +310,10 @@ public abstract class KiemAutomatedJUnitTest {
         // First create links to local bundle file in a temporary workspace
         List<IPath> allWorkspaceFiles = createLinksForAllTestFiles(getPluginId(),
                 getBundleTestPath(), getTemporaryWorkspaceFolderName());
+        List<IPath> allExternalFiles = createLinksForAllExternalTestFiles(getPluginId(),
+                getExternalRelativeTestPath(), getTemporaryWorkspaceFolderName());
+        // Add the external files if there are any specified
+        allWorkspaceFiles.addAll(allExternalFiles);
 
         // Test if a valid execution file is defined
         IPath executionFilePath = getExecutionFilePath(allWorkspaceFiles, getExecutionFileName());
@@ -458,11 +482,11 @@ public abstract class KiemAutomatedJUnitTest {
                     // Remember the pool counter number
                     long poolCounter = execution.getDataPool().getPoolCounter();
                     execution.stepExecutionSync();
-                    
+
                     if (KiemPlugin.getLastError() != null) {
                         logger.debug(KiemPlugin.getLastError());
                     }
-                    
+
                     // Wait until step is done
                     pause();
                     while (!execution.isPaused() && execution.isStarted()) {
@@ -592,6 +616,96 @@ public abstract class KiemAutomatedJUnitTest {
                                 + bundleFileUrl.toString());
             }
         }
+        return allFiles;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Creates links for all external files in a test directory relative to the bundle and returns
+     * all paths as a list.
+     * 
+     * @param pluginId
+     *            the plugin id
+     * @param bundleTestPath
+     *            the bundle test path
+     * @param temporaryWorkspaceFolderName
+     *            the temporary workspace folder name
+     * @return the list
+     */
+    private static List<IPath> createLinksForAllExternalTestFiles(final String pluginId,
+            final IPath bundleTestPath, final String temporaryWorkspaceFolderName) {
+        List<IPath> allFiles = new LinkedList<IPath>();
+        // If the bundle is not ready then there is no image
+        final Bundle bundle = Platform.getBundle(pluginId);
+
+        URL bundleLocation = bundle.getEntry("");
+        URL modelLocation = null;
+        String directoryPathString = null;
+        String filenames[] = null;
+        try {
+            bundleLocation = ModelUtil.getAbsoluteBundlePath(bundleLocation);
+            // file:/C:/DATA/kielergitrepository/semantics/test/de.cau.cs.kieler.s.sim.sc.test/./
+            String modelLocationString = bundleLocation.toString();
+            // Now add relative bundleTestPath
+            modelLocationString += bundleTestPath.toPortableString();
+            modelLocation = URI.create(modelLocationString).toURL();
+            // Now access all files within the modelLocation directory
+            modelLocation = FileLocator.toFileURL(modelLocation);
+
+            File directory = new File(modelLocation.getFile());
+            directoryPathString = directory.getCanonicalPath() + File.separator;
+            filenames = directory.list();
+            // for (String filename : filenames) {
+            // System.out.println(directoryPathString + filename);
+            // }
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
+
+        if (directoryPathString != null && filenames != null) {
+            // Search for all files in the test directory
+            // Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(),
+            // "*.*",
+            // false);
+            logger.debug("testpath:" + bundleTestPath.toString());
+            for (String filename : filenames) {
+                URL bundleFileUrl = null;
+                try {
+                    String fileString = directoryPathString + filename;
+                    fileString = fileString.replace(File.separator, "/");
+                    fileString = "file://" + fileString.replace(" ", "%20");
+                    bundleFileUrl = new URI(fileString).toURL();
+                    logger.debug("FileUrl:" + bundleFileUrl.toString());
+                    IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
+                            temporaryWorkspaceFolderName, false, true);
+                    if (!workspaceFile.exists()) {
+                        throw new RuntimeException(
+                                "Cannot create temporary workspace link for the following bundle file (1) :"
+                                        + bundleFileUrl.toString());
+                    }
+                    IPath filePath = workspaceFile.getFullPath();
+                    allFiles.add(filePath);
+                } catch (CoreException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (2) :"
+                                    + bundleFileUrl.toString());
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (3) :"
+                                    + bundleFileUrl.toString());
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (4) :"
+                                    + bundleFileUrl.toString());
+                } catch (IOException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (5) :"
+                                    + bundleFileUrl.toString());
+                }
+            }
+        }
+
         return allFiles;
     }
 
@@ -797,8 +911,6 @@ public abstract class KiemAutomatedJUnitTest {
         });
 
     }
-
-
 
     // -------------------------------------------------------------------------
 

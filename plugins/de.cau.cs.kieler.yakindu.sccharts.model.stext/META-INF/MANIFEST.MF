@@ -29,7 +29,6 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.formatting,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.generator,
- de.cau.cs.kieler.yakindu.sccharts.model.stext.parseTreeConstruction,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.parser.antlr,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.parser.antlr.internal,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp,
@@ -37,5 +36,6 @@ Export-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.util,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.scoping,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.services,
- de.cau.cs.kieler.yakindu.sccharts.model.stext.validation
+ de.cau.cs.kieler.yakindu.sccharts.model.stext.validation,
+ de.cau.cs.kieler.yakindu.sccharts.model.stext.serializer
 

@@ -44,7 +44,7 @@ Workflow {
 			fragment = ecore.EcoreGeneratorFragment {}
 
 			// the serialization component
-			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+			//fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
 
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {
@@ -124,6 +124,12 @@ Workflow {
 			// fragment = compare.CompareFragment {
 			//    fileExtensions = file.extensions
 			// }
+
+            // the serialization component
+            // Old serializer           
+            //fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+            // New Serializer 2.0
+            fragment = serializer.SerializerFragment {}
 
 			// Serializer 2.0
 			// fragment = serializer.SerializerFragment {}

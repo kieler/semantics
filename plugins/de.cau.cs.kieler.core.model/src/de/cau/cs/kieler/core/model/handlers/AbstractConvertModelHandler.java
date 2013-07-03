@@ -217,14 +217,13 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
                 if (doCreateDiagram(transformedModel, event, selection)) {
                     diagram = ViewService.createDiagram(transformedModel, getDiagramEditorID(),
                             getPreferencesHint());
-                    if (diagram == null) {
-                        throw new NullPointerException("Diagram is null!");
+                    if (diagram != null) {
+                        diagram.setElement(transformedModel);
+                        saveRes.getContents().add(diagram);
                     }
-                    diagram.setElement(transformedModel);
 
                     // Save both the model and the diagram in one resource
                     saveRes.getContents().add(transformedModel);
-                    saveRes.getContents().add(diagram);
                 } else {
                     // Save only the model
                     saveRes.getContents().add(transformedModel);

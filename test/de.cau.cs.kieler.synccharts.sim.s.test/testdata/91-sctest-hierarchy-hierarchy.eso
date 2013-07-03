@@ -1,6 +1,0 @@
-!reset;
-% Output:;
-% Output:O;
-I1 % Output:O1;
-I2 % Output:O2;
-I1 I2 % Output:O1;
