@@ -15,9 +15,7 @@
 package de.cau.cs.kieler.eso.coreeso.xtend
 
 import de.cau.cs.kieler.sim.eso.eso.tracelist
-import de.cau.cs.kieler.sim.eso.eso.EsoInt
 import de.cau.cs.kieler.sim.eso.eso.kvpair
-import de.cau.cs.kieler.sim.eso.eso.EsoBool
 import de.cau.cs.kieler.sim.eso.eso.tick
 import de.cau.cs.kieler.sim.eso.eso.trace
 import de.cau.cs.kieler.sim.eso.eso.EsoFactory
@@ -25,9 +23,9 @@ import org.eclipse.emf.ecore.EObject
 
 /**
  * 
- * This class transforms a given ESO File to a core ESO variant
+ * This class transforms a given ESO tracelist to a core ESO variant
  * 
- * In core ESO no pure or valued signals exists. Instead there are only variables.
+ * In core ESO no pure nor valued signals exists. Instead there are only variables.
  * Valued signals are transformed to a present and value variable
  * 
  */
@@ -37,7 +35,7 @@ class ESO2CoreESO {
 
     /**
      * 
-     * Generates a new ESO tracelist which online contains variables.
+     * Generates a new ESO tracelist which only contains variables.
      * 
      * @param tl original ESO file tracelist
      * 
@@ -111,21 +109,8 @@ class ESO2CoreESO {
 		//variable and signal name are the same
 		kvp.setKey(name)
 		
+		//set value it is the same as the signal value
 		kvp.setValue(valueObject)
-		
-//		//compute the value for the kvpair
-//		if(valueObject instanceof EsoInt){
-//			val EsoInt value = valueObject as EsoInt
-//			var intValue = EsoFactory::eINSTANCE.createEsoInt
-//			intValue.setValue(value.value)
-//			kvp.setValue(intValue)	
-//		}
-//		else if(valueObject instanceof EsoBool){
-//			val EsoBool value = valueObject as EsoBool
-//			val boolValue = EsoFactory::eINSTANCE.createEsoBool
-//			boolValue.setValue(value.value)
-//			kvp.setValue(boolValue)
-//		}
 		
 		return kvp
 	}
@@ -143,9 +128,11 @@ class ESO2CoreESO {
 	def dispatch newKvpair(String name, boolean boolValue){
 		
 		val kvp = EsoFactory::eINSTANCE.createkvpair
+		
 		//variable name is the same as signal name
 		kvp.setKey(name)
 		val value = EsoFactory::eINSTANCE.createEsoBool
+		
 		//set the value of the variable
 		value.setValue(boolValue)
 		kvp.setValue(value)
