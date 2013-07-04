@@ -39,14 +39,18 @@ import org.yakindu.base.types.impl.PrimitiveTypeImpl
 import org.yakindu.base.types.Type
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.VariableDefinition
+import de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition
 import org.yakindu.sct.model.sgraph.Declaration
 import org.yakindu.base.types.TypesFactory
+import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
 
 class SCLCreateExtensions {
   
     @Inject
     extension SCLFactoryExtensions
+    
+    @Inject
+    extension STextDefaulTypeSystem
     
     @Inject
     extension SCLExpressionExtensions
@@ -169,9 +173,11 @@ class SCLCreateExtensions {
         varDef.setInput(false);
         varDef.setOutput(false);
         if (!type.nullOrEmpty) {
-            val primitiveType = TypesFactory::eINSTANCE.createPrimitiveType
-            primitiveType.setName(type)
-            varDef.setType(primitiveType as Type)
+//            val primitiveType = TypesFactory::eINSTANCE.createPrimitiveType
+//            primitiveType.setName(type)
+            varDef.setType(types.findFirst[it.name==type]);
+//                primitiveType as Type
+//            )
         }
     }
 

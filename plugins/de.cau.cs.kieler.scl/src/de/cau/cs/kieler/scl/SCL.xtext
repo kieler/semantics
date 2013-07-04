@@ -25,7 +25,11 @@ Program:
 //;
 
 VariableDeclaration:
-    (input?='input')? (output?='output')? (name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
+    (input?='input')? (output?='output')? (static?='static')? 
+    type=[types::Type|FQN] name=ID
+    ('=' initialValue=Expression)?';'
+//    (input?='input')? (output?='output')? 
+//(name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 ;
 
 Statement:

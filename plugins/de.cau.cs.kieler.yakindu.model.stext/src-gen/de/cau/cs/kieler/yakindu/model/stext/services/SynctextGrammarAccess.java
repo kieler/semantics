@@ -30,9 +30,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDeclarationsOperationDeclarationParserRuleCall_1_0_2 = (RuleCall)cDeclarationsAlternatives_1_0.eContents().get(2);
 		private final RuleCall cDeclarationsLocalReactionParserRuleCall_1_0_3 = (RuleCall)cDeclarationsAlternatives_1_0.eContents().get(3);
 		
-		/// *********************************** INTERFACE DECLARATION **************************************** * / ////defines the possible scopes for a state
+		/// *********************************** INTERFACE DECLARATION **************************************** * /
 		//
-		//StateScope:
+		//////defines the possible scopes for a state
+		// StateScope:
 		//
 		//	{SimpleScope} declarations+=(VariableDeclaration | SignalDeclaration | OperationDeclaration | LocalReaction)*;
 		public ParserRule getRule() { return rule; }
@@ -188,13 +189,15 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		/// ************************************************ / / *			 Variable Definition				* /
 		//
-		/// ************************************************ / // A dummy VariableDefinition declaration, which will be override by an other grammar 
+		/// ************************************************ /
 		//
-		////VariableDefinition:
+		//// A dummy VariableDefinition declaration, which will be override by an other grammar 
+		// //VariableDefinition:
+		//
 		//
 		////	{VariableDefinition} 'variable' name=ID ';';
+		// // CMOT changes, want to use VariableDefinitions from SyncText
 		//
-		//// CMOT changes, want to use VariableDefinitions from SyncText
 		//
 		//VariableDeclaration returns sgraph::Variable:
 		//
@@ -593,11 +596,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cExpressionExpressionParserRuleCall_3_0 = (RuleCall)cExpressionAssignment_3.eContents().get(0);
 		
-		/// ******************************************** TRANSITION ***************************************** * / // The ReactionTrigger is a Trigger and has an Expression, 
+		/// ******************************************** TRANSITION ***************************************** * /
+		//
+		//// The ReactionTrigger is a Trigger and has an Expression, 
+		//
 		//
 		//// an optional delay and isImmediate option represented with a '#'
+		// // cmot change: Get rid of extra brackets
 		//
-		//// cmot change: Get rid of extra brackets
 		//
 		//ReactionTrigger returns sgraph::Trigger:
 		//
@@ -647,16 +653,15 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cActionsExpressionParserRuleCall_2_1_0 = (RuleCall)cActionsAssignment_2_1.eContents().get(0);
 		
 		//// Original code by wah
+		// //{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
 		//
-		////{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
 		//
 		////| ('(' guardExpression=Expression ')'))?;
+		// // The ReactionEffect is an Effect. 
+		// // (';')?;
+		// ReactionEffect returns
 		//
-		//// The ReactionEffect is an Effect. 
-		//
-		//// (';')?;
-		//
-		//ReactionEffect returns sgraph::Effect:
+		//sgraph::Effect:
 		//
 		//	{ReactionEffect} actions+=Expression ("," actions+=Expression)*;
 		public ParserRule getRule() { return rule; }
@@ -697,13 +702,16 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cRightOperandAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cRightOperandNumericalUnaryExpressionParserRuleCall_1_2_0 = (RuleCall)cRightOperandAssignment_1_2.eContents().get(0);
 		
-		/// ***************************************** Expressions ******************************************* * / // Override the stext::NumericalMultiplyDivideExpression
+		/// ***************************************** Expressions ******************************************* * /
+		//
+		//// Override the stext::NumericalMultiplyDivideExpression
+		//
 		//
 		//// cmot addition: goal is to have some other divisor ":" instead of "/", because "/" is used to separate
 		//
-		//// trigger / effect.
 		//
-		//NumericalMultiplyDivideExpression returns stext::Expression:
+		//// trigger / effect.
+		// NumericalMultiplyDivideExpression returns stext::Expression:
 		//
 		//	NumericalUnaryExpression ({NumericalMultiplyDivideExpression.leftOperand=current} operator=MultiplicativeOperator2
 		//
@@ -751,13 +759,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuePreReferenceExpressionParserRuleCall_3_0_1 = (RuleCall)cValueAlternatives_3_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		/// ***************************************** Expressions ******************************************* * / // Override the stext::EventValueReferenceExpression
+		/// ***************************************** Expressions ******************************************* * /
 		//
-		//// override 'valueof()' with 'val()', allow val(pre())    
+		//// Override the stext::EventValueReferenceExpression
+		// // override 'valueof()' with 'val()', allow val(pre())    
+		//
 		//
 		//// cmot change
-		//
-		//EventValueReferenceExpression returns stext::Expression:
+		// EventValueReferenceExpression returns stext::Expression:
 		//
 		//	{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
 		public ParserRule getRule() { return rule; }
@@ -804,10 +813,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//// Additional pre(), like val(), allow pre(val()) and allow pre(pre())    
+		// // cmot addition
+		// PreReferenceExpression
 		//
-		//// cmot addition
-		//
-		//PreReferenceExpression returns stext::Expression:
+		//returns stext::Expression:
 		//
 		//	{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression |
 		//
@@ -857,13 +866,18 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPreReferenceExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cParenthesizedExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
-		/// ***************************************** Expressions ******************************************* * / // Override the stext::PrimaryExpression
+		/// ***************************************** Expressions ******************************************* * /
+		//
+		//// Override the stext::PrimaryExpression
+		//
 		//
 		//// remove the ActiveStateReferenceExpression and the EventValueReferenceExpression
 		//
-		//// and add PreReferenceExpression that returns the previous tick instance of a variable. 
 		//
-		//PrimaryExpression returns stext::Expression:
+		//// and add PreReferenceExpression that returns the previous tick instance of a variable. 
+		// PrimaryExpression returns
+		//
+		//stext::Expression:
 		//
 		//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | EventValueReferenceExpression |
 		//
@@ -905,8 +919,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		////todo: pre(x) should return the same type of x
-		//
-		//PreValueExpression returns stext::Expression:
+		// PreValueExpression returns stext::Expression:
 		//
 		//	{PreValueExpression} "pre" "(" value=FeatureCall ")";
 		public ParserRule getRule() { return rule; }
@@ -945,10 +958,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cModPercentSignKeyword_2_0 = (Keyword)cModEnumLiteralDeclaration_2.eContents().get(0);
 		
 		//// New MultiplicativeOperator2 (replacing MultiplicativeOperator with ":" instead of "/")    
+		// // cmot addition
+		// enum
 		//
-		//// cmot addition
-		//
-		//enum MultiplicativeOperator2:
+		//MultiplicativeOperator2:
 		//
 		//	mul="*" | div=":" | mod="%";
 		public EnumRule getRule() { return rule; }
@@ -1119,9 +1132,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	/// *********************************** INTERFACE DECLARATION **************************************** * / ////defines the possible scopes for a state
+	/// *********************************** INTERFACE DECLARATION **************************************** * /
 	//
-	//StateScope:
+	//////defines the possible scopes for a state
+	// StateScope:
 	//
 	//	{SimpleScope} declarations+=(VariableDeclaration | SignalDeclaration | OperationDeclaration | LocalReaction)*;
 	public StateScopeElements getStateScopeAccess() {
@@ -1160,13 +1174,15 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// ************************************************ / / *			 Variable Definition				* /
 	//
-	/// ************************************************ / // A dummy VariableDefinition declaration, which will be override by an other grammar 
+	/// ************************************************ /
 	//
-	////VariableDefinition:
+	//// A dummy VariableDefinition declaration, which will be override by an other grammar 
+	// //VariableDefinition:
+	//
 	//
 	////	{VariableDefinition} 'variable' name=ID ';';
+	// // CMOT changes, want to use VariableDefinitions from SyncText
 	//
-	//// CMOT changes, want to use VariableDefinitions from SyncText
 	//
 	//VariableDeclaration returns sgraph::Variable:
 	//
@@ -1282,11 +1298,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getExitAccess().getRule();
 	}
 
-	/// ******************************************** TRANSITION ***************************************** * / // The ReactionTrigger is a Trigger and has an Expression, 
+	/// ******************************************** TRANSITION ***************************************** * /
+	//
+	//// The ReactionTrigger is a Trigger and has an Expression, 
+	//
 	//
 	//// an optional delay and isImmediate option represented with a '#'
+	// // cmot change: Get rid of extra brackets
 	//
-	//// cmot change: Get rid of extra brackets
 	//
 	//ReactionTrigger returns sgraph::Trigger:
 	//
@@ -1300,16 +1319,15 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Original code by wah
+	// //{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
 	//
-	////{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);
 	//
 	////| ('(' guardExpression=Expression ')'))?;
+	// // The ReactionEffect is an Effect. 
+	// // (';')?;
+	// ReactionEffect returns
 	//
-	//// The ReactionEffect is an Effect. 
-	//
-	//// (';')?;
-	//
-	//ReactionEffect returns sgraph::Effect:
+	//sgraph::Effect:
 	//
 	//	{ReactionEffect} actions+=Expression ("," actions+=Expression)*;
 	public ReactionEffectElements getReactionEffectAccess() {
@@ -1320,13 +1338,16 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getReactionEffectAccess().getRule();
 	}
 
-	/// ***************************************** Expressions ******************************************* * / // Override the stext::NumericalMultiplyDivideExpression
+	/// ***************************************** Expressions ******************************************* * /
+	//
+	//// Override the stext::NumericalMultiplyDivideExpression
+	//
 	//
 	//// cmot addition: goal is to have some other divisor ":" instead of "/", because "/" is used to separate
 	//
-	//// trigger / effect.
 	//
-	//NumericalMultiplyDivideExpression returns stext::Expression:
+	//// trigger / effect.
+	// NumericalMultiplyDivideExpression returns stext::Expression:
 	//
 	//	NumericalUnaryExpression ({NumericalMultiplyDivideExpression.leftOperand=current} operator=MultiplicativeOperator2
 	//
@@ -1340,10 +1361,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// New MultiplicativeOperator2 (replacing MultiplicativeOperator with ":" instead of "/")    
+	// // cmot addition
+	// enum
 	//
-	//// cmot addition
-	//
-	//enum MultiplicativeOperator2:
+	//MultiplicativeOperator2:
 	//
 	//	mul="*" | div=":" | mod="%";
 	public MultiplicativeOperator2Elements getMultiplicativeOperator2Access() {
@@ -1354,13 +1375,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getMultiplicativeOperator2Access().getRule();
 	}
 
-	/// ***************************************** Expressions ******************************************* * / // Override the stext::EventValueReferenceExpression
+	/// ***************************************** Expressions ******************************************* * /
 	//
-	//// override 'valueof()' with 'val()', allow val(pre())    
+	//// Override the stext::EventValueReferenceExpression
+	// // override 'valueof()' with 'val()', allow val(pre())    
+	//
 	//
 	//// cmot change
-	//
-	//EventValueReferenceExpression returns stext::Expression:
+	// EventValueReferenceExpression returns stext::Expression:
 	//
 	//	{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
 	public EventValueReferenceExpressionElements getEventValueReferenceExpressionAccess() {
@@ -1372,10 +1394,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Additional pre(), like val(), allow pre(val()) and allow pre(pre())    
+	// // cmot addition
+	// PreReferenceExpression
 	//
-	//// cmot addition
-	//
-	//PreReferenceExpression returns stext::Expression:
+	//returns stext::Expression:
 	//
 	//	{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression |
 	//
@@ -1388,13 +1410,18 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getPreReferenceExpressionAccess().getRule();
 	}
 
-	/// ***************************************** Expressions ******************************************* * / // Override the stext::PrimaryExpression
+	/// ***************************************** Expressions ******************************************* * /
+	//
+	//// Override the stext::PrimaryExpression
+	//
 	//
 	//// remove the ActiveStateReferenceExpression and the EventValueReferenceExpression
 	//
-	//// and add PreReferenceExpression that returns the previous tick instance of a variable. 
 	//
-	//PrimaryExpression returns stext::Expression:
+	//// and add PreReferenceExpression that returns the previous tick instance of a variable. 
+	// PrimaryExpression returns
+	//
+	//stext::Expression:
 	//
 	//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | EventValueReferenceExpression |
 	//
@@ -1408,8 +1435,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////todo: pre(x) should return the same type of x
-	//
-	//PreValueExpression returns stext::Expression:
+	// PreValueExpression returns stext::Expression:
 	//
 	//	{PreValueExpression} "pre" "(" value=FeatureCall ")";
 	public PreValueExpressionElements getPreValueExpressionAccess() {

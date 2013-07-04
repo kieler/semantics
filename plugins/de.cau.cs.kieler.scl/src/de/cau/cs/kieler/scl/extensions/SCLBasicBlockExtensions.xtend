@@ -84,7 +84,7 @@ class SCLBasicBlockExtensions {
         if (statement.isConditional) return true
         if (statement.isPause) return true
         
-        var nextStatement = statement.nextStatement
+        var nextStatement = statement.nextStatement;
         
         if (SPLIT_BLOCKS_AT_DEPENDENCY) {
             if ((statement.isAssignment || statement.isConditional) && statement.getInstruction.hasConcurrentTargetDependencies) return true;
@@ -330,9 +330,10 @@ class SCLBasicBlockExtensions {
                 for (block : (stmt.getInstruction as Conditional).statements.head.getBasicBlocks) {
                     if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
                 } 
+                if ((stmt.getInstruction as Conditional).elseStatements.size>0) { 
                 for (block : (stmt.getInstruction as Conditional).elseStatements.head.getBasicBlocks) {
                     if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
-                } 
+                } }
             }
             if (stmt.hasInstruction && stmt.getInstruction instanceof Parallel)
                 // ignore blocks that are already in the list 

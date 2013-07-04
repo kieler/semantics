@@ -18,6 +18,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#isInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#isOutput <em>Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#getInitialValue <em>Initial Value</em>}</li>
  * </ul>
@@ -80,6 +81,32 @@ public interface VariableDeclaration extends Variable
    * @generated
    */
   void setOutput(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Static</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Static</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Static</em>' attribute.
+   * @see #setStatic(boolean)
+   * @see de.cau.cs.kieler.scl.scl.SclPackage#getVariableDeclaration_Static()
+   * @model
+   * @generated
+   */
+  boolean isStatic();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#isStatic <em>Static</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Static</em>' attribute.
+   * @see #isStatic()
+   * @generated
+   */
+  void setStatic(boolean value);
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' reference.
