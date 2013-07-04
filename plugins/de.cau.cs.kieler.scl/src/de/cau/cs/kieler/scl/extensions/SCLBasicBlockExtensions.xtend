@@ -405,7 +405,7 @@ class SCLBasicBlockExtensions {
             val predStmt = basicBlock.getHead.getPreviousInstructionStatementHierarchical
             val predStmtDirect = basicBlock.getHead.previousInstructionStatement
             if (!onlyNull && predStmt != null && predStmt.isConditional && predStmtDirect == null) {
-                val cond = predStmt.getBasicBlockByAnyStatementDepth;
+                val cond = predStmt.getBasicBlockByAnyStatement;
                 predecessors.add(cond)
             } else {
                 if (!onlyNull && predStmt != null && !(predStmt.getInstruction instanceof Goto)) {
