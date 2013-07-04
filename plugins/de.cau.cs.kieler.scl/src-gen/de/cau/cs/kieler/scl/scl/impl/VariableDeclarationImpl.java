@@ -28,6 +28,7 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl#isInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl#isOutput <em>Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl#getInitialValue <em>Initial Value</em>}</li>
  * </ul>
@@ -76,6 +77,26 @@ public class VariableDeclarationImpl extends VariableImpl implements VariableDec
    * @ordered
    */
   protected boolean output = OUTPUT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isStatic() <em>Static</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isStatic()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean STATIC_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isStatic() <em>Static</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isStatic()
+   * @generated
+   * @ordered
+   */
+  protected boolean static_ = STATIC_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' reference.
@@ -162,6 +183,29 @@ public class VariableDeclarationImpl extends VariableImpl implements VariableDec
     output = newOutput;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.VARIABLE_DECLARATION__OUTPUT, oldOutput, output));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isStatic()
+  {
+    return static_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setStatic(boolean newStatic)
+  {
+    boolean oldStatic = static_;
+    static_ = newStatic;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.VARIABLE_DECLARATION__STATIC, oldStatic, static_));
   }
 
   /**
@@ -285,6 +329,8 @@ public class VariableDeclarationImpl extends VariableImpl implements VariableDec
         return isInput();
       case SclPackage.VARIABLE_DECLARATION__OUTPUT:
         return isOutput();
+      case SclPackage.VARIABLE_DECLARATION__STATIC:
+        return isStatic();
       case SclPackage.VARIABLE_DECLARATION__TYPE:
         if (resolve) return getType();
         return basicGetType();
@@ -309,6 +355,9 @@ public class VariableDeclarationImpl extends VariableImpl implements VariableDec
         return;
       case SclPackage.VARIABLE_DECLARATION__OUTPUT:
         setOutput((Boolean)newValue);
+        return;
+      case SclPackage.VARIABLE_DECLARATION__STATIC:
+        setStatic((Boolean)newValue);
         return;
       case SclPackage.VARIABLE_DECLARATION__TYPE:
         setType((Type)newValue);
@@ -336,6 +385,9 @@ public class VariableDeclarationImpl extends VariableImpl implements VariableDec
       case SclPackage.VARIABLE_DECLARATION__OUTPUT:
         setOutput(OUTPUT_EDEFAULT);
         return;
+      case SclPackage.VARIABLE_DECLARATION__STATIC:
+        setStatic(STATIC_EDEFAULT);
+        return;
       case SclPackage.VARIABLE_DECLARATION__TYPE:
         setType((Type)null);
         return;
@@ -360,6 +412,8 @@ public class VariableDeclarationImpl extends VariableImpl implements VariableDec
         return input != INPUT_EDEFAULT;
       case SclPackage.VARIABLE_DECLARATION__OUTPUT:
         return output != OUTPUT_EDEFAULT;
+      case SclPackage.VARIABLE_DECLARATION__STATIC:
+        return static_ != STATIC_EDEFAULT;
       case SclPackage.VARIABLE_DECLARATION__TYPE:
         return type != null;
       case SclPackage.VARIABLE_DECLARATION__INITIAL_VALUE:
@@ -383,6 +437,8 @@ public class VariableDeclarationImpl extends VariableImpl implements VariableDec
     result.append(input);
     result.append(", output: ");
     result.append(output);
+    result.append(", static: ");
+    result.append(static_);
     result.append(')');
     return result.toString();
   }
