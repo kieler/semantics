@@ -114,8 +114,8 @@ public class SynctextSwitch<T> extends Switch<T>
         T result = caseVariableDefinition(variableDefinition);
         if (result == null) result = caseStext_VariableDefinition(variableDefinition);
         if (result == null) result = caseVariable(variableDefinition);
-        if (result == null) result = caseProperty(variableDefinition);
         if (result == null) result = caseDeclaration(variableDefinition);
+        if (result == null) result = caseProperty(variableDefinition);
         if (result == null) result = caseFeature(variableDefinition);
         if (result == null) result = caseNamedElement(variableDefinition);
         if (result == null) result = caseTypedElement(variableDefinition);

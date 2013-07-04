@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
@@ -71,7 +72,11 @@ public class SynctextScopeProvider extends STextScopeProvider {
 //                  Scopes.scopeFor(typeSystemUtils.getEnumerationTypes(typeSystem)).getAllElements()));
 //}	
 	
-
+//	    public IScope scope_ElementReferenceExpression_reference(final EObject context,
+//	            final EReference reference) {
+//	        return null; 
+//	    }  	
+	
 	/**
 	 * Returns a scope with all toplevel declarations of parent States
 	 */

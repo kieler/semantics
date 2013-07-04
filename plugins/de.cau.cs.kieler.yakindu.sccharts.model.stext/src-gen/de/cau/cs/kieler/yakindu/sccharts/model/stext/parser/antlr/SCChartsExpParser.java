@@ -25,7 +25,7 @@ public class SCChartsExpParser extends org.eclipse.xtext.parser.antlr.AbstractAn
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "VariableDefinition";
+		return "Dummy";
 	}
 	
 	public SCChartsExpGrammarAccess getGrammarAccess() {

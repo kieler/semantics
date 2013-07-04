@@ -25,7 +25,6 @@ Import-Package: de.cau.cs.kieler.yakindu.model.sgraph.validator,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.yakindu.model.stext,
  de.cau.cs.kieler.yakindu.model.stext.formatting,
- de.cau.cs.kieler.yakindu.model.stext.parseTreeConstruction,
  de.cau.cs.kieler.yakindu.model.stext.parser.antlr,
  de.cau.cs.kieler.yakindu.model.stext.parser.antlr.internal,
  de.cau.cs.kieler.yakindu.model.stext.scoping,
@@ -35,5 +34,6 @@ Export-Package: de.cau.cs.kieler.yakindu.model.stext,
  de.cau.cs.kieler.yakindu.model.stext.synctext.util,
  de.cau.cs.kieler.yakindu.model.stext.types,
  de.cau.cs.kieler.yakindu.model.stext.utils,
- de.cau.cs.kieler.yakindu.model.stext.validation
+ de.cau.cs.kieler.yakindu.model.stext.validation,
+ de.cau.cs.kieler.yakindu.model.stext.serializer
 

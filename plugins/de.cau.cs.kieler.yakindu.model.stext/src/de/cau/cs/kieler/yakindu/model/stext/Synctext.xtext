@@ -27,9 +27,14 @@ SignalDefinition:
 /*			 Variable Definition				*/
 /************************************************/
 // A dummy VariableDefinition declaration, which will be override by an other grammar 
+//VariableDefinition:
+//	{VariableDefinition} 'variable' name=ID ';';
+// CMOT changes, want to use VariableDefinitions from SyncText
+VariableDeclaration returns sgraph::Variable:VariableDefinition;
 VariableDefinition:
-	{VariableDefinition} 'variable' name=ID ';';
-	
+    {VariableDefinition} (isInput?='input')? (isOutput?='output')? (isStatic?='static')? type=[types::Type|FQN] name=ID
+    ('=' initialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';	
+
 	
 OperationDefinition:
 	{OperationDefinition} 'extern'  functionType=[types::Type|FQN] name=XID '(' paramType=[types::Type|FQN] ')' ';';

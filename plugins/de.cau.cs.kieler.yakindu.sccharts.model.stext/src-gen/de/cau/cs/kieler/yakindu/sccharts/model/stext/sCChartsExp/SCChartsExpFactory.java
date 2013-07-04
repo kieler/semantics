@@ -23,13 +23,13 @@ public interface SCChartsExpFactory extends EFactory
   SCChartsExpFactory eINSTANCE = de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl.SCChartsExpFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Variable Definition</em>'.
+   * Returns a new object of class '<em>Dummy</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable Definition</em>'.
+   * @return a new object of class '<em>Dummy</em>'.
    * @generated
    */
-  VariableDefinition createVariableDefinition();
+  Dummy createDummy();
 
   /**
    * Returns the package supported by this factory.

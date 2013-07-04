@@ -64,7 +64,7 @@ public class SCChartsExpFactoryImpl extends EFactoryImpl implements SCChartsExpF
   {
     switch (eClass.getClassifierID())
     {
-      case SCChartsExpPackage.VARIABLE_DEFINITION: return createVariableDefinition();
+      case SCChartsExpPackage.DUMMY: return createDummy();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -75,10 +75,10 @@ public class SCChartsExpFactoryImpl extends EFactoryImpl implements SCChartsExpF
    * <!-- end-user-doc -->
    * @generated
    */
-  public VariableDefinition createVariableDefinition()
+  public Dummy createDummy()
   {
-    VariableDefinitionImpl variableDefinition = new VariableDefinitionImpl();
-    return variableDefinition;
+    DummyImpl dummy = new DummyImpl();
+    return dummy;
   }
 
   /**

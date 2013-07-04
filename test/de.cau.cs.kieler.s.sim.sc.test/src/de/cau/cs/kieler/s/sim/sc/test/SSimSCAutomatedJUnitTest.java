@@ -29,8 +29,9 @@ public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 
     /**
      * Instantiates a new S-SC simulation test.
-     *
-     * @param esoFile the ESO file
+     * 
+     * @param esoFile
+     *            the ESO file
      */
     public SSimSCAutomatedJUnitTest(final IPath esoFile) {
         super(esoFile);
@@ -48,6 +49,13 @@ public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      */
     protected IPath getBundleTestPath() {
         return new Path("testdata");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected IPath getExternalRelativeTestPath() {
+        return new Path("../../../models/s/validation");
     }
 
     /**
