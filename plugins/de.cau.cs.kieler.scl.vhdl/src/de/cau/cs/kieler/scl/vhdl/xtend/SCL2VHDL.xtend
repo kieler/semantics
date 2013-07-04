@@ -250,8 +250,8 @@ class SCL2VHDL {
 
     def generateMainProcess(EList<Statement> stmList) { 
         
-        var str = stmList.map(stm | '''«stm.expand»''').join('\n')
-        str  
+        var vhdlCode = stmList.map(stm | '''«stm.expand»''').join('\n')
+        vhdlCode  
     }
 
     def genarateLocalSignals(ArrayList<Variables> variables) { 

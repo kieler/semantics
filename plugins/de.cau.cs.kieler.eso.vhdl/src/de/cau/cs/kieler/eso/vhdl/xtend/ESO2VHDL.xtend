@@ -63,19 +63,23 @@ class ESO2VHDL {
     extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
          Guice::createInjector().getInstance(typeof(VHDLExtension))
     
-    //indicator if a certian variables was already added to a list
+    /** indicator if a certian variables was already added to a list */
     boolean allreadyAdded
 	
-	//contains the current trace number
+	/** contains the current trace number */
 	int traceCnt
-	//contains the current tick number
+	/** contains the current tick number */
 	int tickCnt
 	
-	//VHDL code variables
-	String setInputs   //contain the code thats sets all variables in each tick
-	String asserts     //contains the code that holds all assertions for each tick
-	String simTick     //contains the code which sets variables and the assertions for all ticks of a trace 
-	String simTraces   //contains the simulation code for all traces
+	/** VHDL code variables */
+	/** contain the code thats sets all variables in each tick */
+	String setInputs   
+	/** contains the code that holds all assertions for each tick */
+	String asserts     
+	/** contains the code which sets variables and the assertions for all ticks of a trace */ 
+	String simTick     
+	/** contains the simulation code for all traces */
+	String simTraces   
 	
 	/**
 	 * Transforms an ESO tracelist to a VHDL testbench 
