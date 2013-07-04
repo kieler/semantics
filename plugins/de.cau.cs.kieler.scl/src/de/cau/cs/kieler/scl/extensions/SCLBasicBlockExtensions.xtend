@@ -331,9 +331,10 @@ class SCLBasicBlockExtensions {
                     if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
                 } 
                 if ((stmt.getInstruction as Conditional).elseStatements.size>0) { 
-                for (block : (stmt.getInstruction as Conditional).elseStatements.head.getBasicBlocks) {
-                    if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
-                } }
+                    for (block : (stmt.getInstruction as Conditional).elseStatements.head.getBasicBlocks) {
+                        if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
+                    } 
+                }
             }
             if (stmt.hasInstruction && stmt.getInstruction instanceof Parallel)
                 // ignore blocks that are already in the list 
@@ -426,7 +427,7 @@ class SCLBasicBlockExtensions {
         
             if (predStmtDirect.isConditional && predStmt.equals(predStmtDirect)) {
                 val trueBlock = predStmt.getInstruction.asConditional.statements.last.basicBlockByAnyStatementDepth
-                predecessors.add(trueBlock)
+                if (!predecessors.containsEqual(trueBlock)) predecessors.add(trueBlock)
             }
         }
         
