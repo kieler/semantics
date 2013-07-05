@@ -35,6 +35,7 @@ import de.cau.cs.kieler.sim.eso.eso.kvpair
 //import org.yakindu.sct.model.stext.stext.Expression
 import de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension
 import java.io.File
+import java.lang.Character
 
 /**
  * This class transforms a given core ESO tracelist to a VHDL testbench.
@@ -99,23 +100,37 @@ class ESO2VHDL {
 		// only take the first letters until the first dot and
 		// if the name looks like 0-xyz.scl take only xyz
 		// ?!? delete leading numbers
+		// BE CAREFULL!! TO CHANGE THIS COMPUTATION
+        // the same computation take place in the automated JUnit test, these two names must match:
+        // the entityname in vhdl file (here) and the name which will be used for the generated batch file
 		if(modelFile != null){
 			val input = URI::createFileURI(modelFile.getName());
 			modelname = input.toString
 			val temp = modelname.subSequence(0, modelname.indexOf("."))
 			modelname = temp.toString		  
-			if(modelname.contains("-"))
-			     modelname = modelname.split("-").get(1)
+			modelname = modelname.replace("-","_")
+			
+			var firstChar = modelname.charAt(0)
+			
+			while( Character::isDigit(firstChar) || (firstChar == "_")){
+			    if(!modelname.nullOrEmpty){
+			         firstChar = modelname.charAt(0)
+			         val tempp = modelname.subSequence(1, modelname.length).toString
+			         modelname = tempp
+			    }else{
+			        modelname = "no_valid_name"
+			    }
+			}
         }    
         
-        //the entityname
-        var String name
-        // If there is no name, use a dummy name
-        // should never take place, the compiling will still fail
-        if(modelname.nullOrEmpty){
-   			name = "NONAME"
-       	}else{name = modelname}
-        
+//        //the entityname
+//        var String name
+//        // If there is no name, use a dummy name
+//        // should never take place, the compiling will still fail
+//        if(modelname.nullOrEmpty){
+//   			name = "NONAME"
+//       	}else{name = modelname}
+//        
         // load the proper SCL model
        	var sclModel = loadModel(modelFile)
        	
@@ -123,7 +138,7 @@ class ESO2VHDL {
 		«/* Generate the header */»
 		«generateHeader()»
 		«/*Generate entity */»
-		«createEntity(tl.traces ,name, sclModel.declarations)»
+		«createEntity(tl.traces, modelname, sclModel.declarations)»
        	'''
    	}
 

@@ -280,9 +280,31 @@ public  class SCLVHDLAutomatedJUnitTest {
         createWorkspaceFile(cmdPath, cmdFileContent);
             
         // generate batch file
-        // the batch file executes the ISE tool (compiling and simulation) 
-        String batchFileContent = createBatchFile(currentEsoFile.removeFileExtension().lastSegment() 
-                + "_tb", modelName);
+        // the batch file executes the ISE tool (compiling and simulation)
+        
+        // but first of all compute topLevelEntityName, this is the eso file name without leading
+        // numbers and - replaced by _ and the _tb extension
+        // BE CAREFULL!! TO CHANGE THIS COMPUTATION
+        // the same computation take place when transforming eso into vhdl, these two names must match:
+        // the entityname in vhdl file and the name which will be computed here
+        String modelname = modelFilePath.lastSegment().toString();
+        //delete all extensions such core, tick, etc
+        String topLevelEntityName = modelname.subSequence(0, modelname.indexOf(".")).toString(); 
+        //in vhdl only - are allowed
+        topLevelEntityName = topLevelEntityName.replace("-","_");
+          
+        //vhdl entity must start with (A...Z or a..z), better to use RegExp?
+        Character firstChar = topLevelEntityName.charAt(0);
+        while( Character.isDigit(firstChar) || (firstChar == '_')){
+            if(!topLevelEntityName.isEmpty()){
+                 topLevelEntityName = topLevelEntityName.subSequence(1, topLevelEntityName.length()).toString();
+                 firstChar = topLevelEntityName.charAt(0);
+            }else{
+                topLevelEntityName = "no_valid_name";
+            }
+        }
+        
+        String batchFileContent = createBatchFile(topLevelEntityName + "_tb", modelName);
         IPath batchPath = new Path(relativeTempPath.concat(modelName + BATCH_FILE_NAME_EXTENSION));
         createWorkspaceFile(batchPath, batchFileContent);
             

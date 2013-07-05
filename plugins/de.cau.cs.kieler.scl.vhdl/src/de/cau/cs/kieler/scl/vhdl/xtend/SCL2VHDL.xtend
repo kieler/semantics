@@ -67,21 +67,30 @@ class SCL2VHDL {
      extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
          Guice::createInjector().getInstance(typeof(VHDLExtension))
          
-    CharSequence temp
     String modelname
-    Object input
     
     // General method to create the c simulation interface.
 	def transform (Program program, File modelFile) {
-       
+          
        if(modelFile != null){
-            input = URI::createFileURI(modelFile.getName());
+            val input = URI::createFileURI(modelFile.getName());
             modelname = input.toString
-            temp = modelname.subSequence(0, modelname.indexOf("."))
-            modelname = temp.toString
-            if(modelname.contains("-"))
-               modelname = modelname.split("-").get(1)
-        }
+            val temp = modelname.subSequence(0, modelname.indexOf("."))
+            modelname = temp.toString         
+            modelname = modelname.replace("-","_")
+            
+            var firstChar = modelname.charAt(0)
+            
+            while( Character::isDigit(firstChar) || (firstChar == "_")){
+                if(!modelname.nullOrEmpty){
+                     firstChar = modelname.charAt(0)
+                     val tempp = modelname.subSequence(1, modelname.length).toString
+                     modelname = tempp
+                }else{
+                    modelname = "no_valid_name"
+                }
+            }
+        } 
        
        '''
 	   «/* Generate the header */»
