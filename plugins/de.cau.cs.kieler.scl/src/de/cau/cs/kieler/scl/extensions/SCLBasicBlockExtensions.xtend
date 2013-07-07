@@ -302,11 +302,15 @@ class SCLBasicBlockExtensions {
         val basicBlocks = new ArrayList<BasicBlock>;
         val sseq = statement.getParentStatementSequence
         for(stmt : sseq.statements) {
-            basicBlocks.addAll(stmt._getBasicBlocksByStatement)
+            for(bb : stmt._getBasicBlocksByStatement) {
+                if (!basicBlocks.containsEqual(bb)) basicBlocks.add(bb)
+            }
         }
         if (sseq instanceof Conditional) {
             for(stmt : (sseq as Conditional).elseStatements) {
-                basicBlocks.addAll(stmt._getBasicBlocksByStatement)
+                for(bb : stmt._getBasicBlocksByStatement) {
+                    if (!basicBlocks.containsEqual(bb)) basicBlocks.add(bb)
+                }
             }            
         }
         basicBlocks
