@@ -427,7 +427,7 @@ class SCLBasicBlockExtensions {
         
             if (predStmtDirect.isConditional && predStmt.equals(predStmtDirect)) {
                 val trueBlock = predStmt.getInstruction.asConditional.statements.last.basicBlockByAnyStatementDepth
-                if (!predecessors.containsEqual(trueBlock)) predecessors.add(trueBlock)
+                if (trueBlock!=null && !predecessors.containsEqual(trueBlock)) predecessors.add(trueBlock)
             }
         }
         
