@@ -30,6 +30,7 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scl.scl.StatementSequence
 import javax.inject.Inject
 import de.cau.cs.kieler.scl.scl.Statement
+import org.yakindu.sct.model.stext.stext.AssignmentOperator;
 
 class SCLDependencyExtensions {
     
@@ -148,6 +149,7 @@ class SCLDependencyExtensions {
         val asgn1 = (firstInst as Assignment).assignment as AssignmentExpression
         val asgn2 = (secondInst as Assignment).assignment as AssignmentExpression
         
+        if (asgn1.operator != asgn2.operator) return false
         if ((asgn1.varRef as ElementReferenceExpression).reference != (asgn2.varRef as ElementReferenceExpression).reference) return false
         if (asgn1.operator != asgn2.operator) return false
         if (asgn1.expression instanceof PrimitiveValueExpression && asgn2.expression instanceof PrimitiveValueExpression) {
@@ -164,6 +166,7 @@ class SCLDependencyExtensions {
         if (!(instruction instanceof Assignment)) return false
         val asgn = (instruction as Assignment).assignment as AssignmentExpression
         val varRef = asgn.varRef
+        if (asgn.operator != AssignmentOperator::ASSIGN) return false;
         
         if (asgn.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
             filter(e | e.equals(varRef)).size==0) return true
@@ -174,6 +177,7 @@ class SCLDependencyExtensions {
         if (!(instruction instanceof Assignment)) return false
         val asgn = (instruction as Assignment).assignment as AssignmentExpression
         val varRef = asgn.varRef
+        if (asgn.operator != AssignmentOperator::ASSIGN) return true;
         
         if (asgn.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).
             filter(e | e.equals(varRef)).size>0) return true
