@@ -30,6 +30,20 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDeclarationsOperationDeclarationParserRuleCall_1_0_2 = (RuleCall)cDeclarationsAlternatives_1_0.eContents().get(2);
 		private final RuleCall cDeclarationsLocalReactionParserRuleCall_1_0_3 = (RuleCall)cDeclarationsAlternatives_1_0.eContents().get(3);
 		
+		////Root2345:
+		//
+		////    scope=SimpleScope|trigger=ReactionTrigger|reaction=ReactionEffect;
+		//
+		////    
+		//
+		////SimpleScope returns StateScope:
+		//
+		////    StateScope
+		//
+		////;    
+		//
+		////
+		//
 		/// *********************************** INTERFACE DECLARATION **************************************** * / ////defines the possible scopes for a state
 		//
 		//StateScope:
@@ -1119,6 +1133,20 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	////Root2345:
+	//
+	////    scope=SimpleScope|trigger=ReactionTrigger|reaction=ReactionEffect;
+	//
+	////    
+	//
+	////SimpleScope returns StateScope:
+	//
+	////    StateScope
+	//
+	////;    
+	//
+	////
+	//
 	/// *********************************** INTERFACE DECLARATION **************************************** * / ////defines the possible scopes for a state
 	//
 	//StateScope:

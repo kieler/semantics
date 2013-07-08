@@ -9,7 +9,7 @@ import "http://www.yakindu.org/sct/statechart/SText" as stext
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 
-
+    
 /************************************************/
 /*			 Variable Definition				*/
 /************************************************/

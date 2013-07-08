@@ -6,6 +6,7 @@ package de.cau.cs.kieler.yakindu.model.stext;
 import org.eclipse.xtext.linking.ILinker;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.eclipse.xtext.serializer.sequencer.IContextFinder;
 import org.yakindu.base.types.ITypeSystem;
 import org.yakindu.sct.model.sgraph.resource.SCTLinker;
 import org.yakindu.sct.model.sgraph.resource.provider.SCTResourceDescriptionStrategy;
@@ -15,6 +16,7 @@ import org.yakindu.sct.model.stext.scoping.STextGlobalScopeProvider;
 import org.yakindu.sct.model.stext.types.ISTextTypeInferrer;
 import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem;
 
+import de.cau.cs.kieler.yakindu.model.stext.serializer.SynctextContextFinder;
 import de.cau.cs.kieler.yakindu.model.stext.types.SyncTypeInferrer;
 
 /**
@@ -52,5 +54,9 @@ public class SynctextRuntimeModule extends AbstractSynctextRuntimeModule {
 
 	public Class<? extends ISTextTypeInferrer> bindISTextTypeInferrer() {
 		return SyncTypeInferrer.class;
+	}
+	
+	public Class<? extends IContextFinder> bindIContextFinder() {
+	        return SynctextContextFinder.class;
 	}
 }
