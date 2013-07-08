@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -89,8 +90,8 @@ public  class SCLVHDLAutomatedJUnitTest {
     /** The Constant BUNDLE_TEST_PATH. */
     static final IPath BUNDLE_TEST_PATH = new Path ("testdata");
     
-    /** The Constant BUNDLE_TEST_PATH. */
-//    static final IPath MODELS_REPOSITORY_PATH = new Path ("../../models/SCCharts");
+    /** The Constant MODELS_REPOSITORY_PATH. */
+    static final String MODELS_REPOSITORY_PATH = ("../../../models/SCCharts/");
     
     /** The Constant TEMPORARY_WORKSPACE_FOLDER_NAME. */
     static final String TEMPORARY_WORKSPACE_FOLDER_NAME = "temp-scl";
@@ -197,9 +198,13 @@ public  class SCLVHDLAutomatedJUnitTest {
         // First create links to local bundle file in a temporary workspace
         List<IPath> allWorkspaceFiles = createLinksForAllTestFiles(PLUGIN_ID,
                 BUNDLE_TEST_PATH, TEMPORARY_WORKSPACE_FOLDER_NAME);
-//BUNDLE_TEST_PATH
+        
         // Fill esoFiles and modelFile list/hashmap
         fillModelAndEsoFiles(allWorkspaceFiles, DEFAULT_SCL_MODEL_EXTENSITION);
+        
+        //new loading, from models repository
+//        List<IPath> allFiles = loadAllFilesFromModelsRepository(MODELS_REPOSITORY_PATH);
+//        fillModelAndEsoFiles(allFiles, DEFAULT_SCL_MODEL_EXTENSITION);
 
         // Test if ESO files and corresponding model files exist
         if (esoFiles.size() == 0) {
@@ -577,6 +582,7 @@ public  class SCLVHDLAutomatedJUnitTest {
 
         // Search for all files in the test directory
         Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",false);
+        
         while (allBundleFilesUrl.hasMoreElements()) {
             URL bundleFileUrl = allBundleFilesUrl.nextElement();
             try {
@@ -612,6 +618,81 @@ public  class SCLVHDLAutomatedJUnitTest {
         return allFiles;
     }
 
+    //rename if the links to the workspace are not needed (to loadAllFiles for example)
+    public static List<IPath> loadAllFilesFromModelsRepository(String repositoryPath){//final String pluginId,
+//                final String temporaryWorkspaceFolderName){
+
+        File rootFolder = new File(repositoryPath);
+        List<IPath> allFiles = new LinkedList<IPath>();
+//        List<IPath> allWorkspaceFiles = new LinkedList<IPath>();
+        
+        // test if the root folder is readable by the application
+        if (rootFolder.canRead()) {
+            // load files from the directory
+            File[] allFilesFromFolder = rootFolder.listFiles();
+            for (int i = 0; i < allFilesFromFolder.length; i++) {
+                if (allFilesFromFolder[i].isFile()) {
+                    IPath ipath = (IPath) new Path(allFilesFromFolder[i].toString());
+                    allFiles.add( ipath );
+                } else {
+                    //do nothing, take next element
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("The source directory ("
+                    + rootFolder.getAbsolutePath() + ") cannot be read!");
+        }
+        
+        //no workspace links needed
+        return allFiles;
+        
+//        for ( IPath filepath : allFiles) {
+//           // URL bundleFileUrl = allBundleFilesUrl.nextElement();
+//            URL bundleFileUrl = null;
+//            try {
+//                bundleFileUrl = new URL(filepath.toString());
+//            } catch (MalformedURLException e1) {
+//                throw new RuntimeException(
+//                        "Cannot create bundle File URL from the following filepath :"
+//                        + filepath.toString());
+//            }
+//            
+//            try {
+//                
+//                IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
+//                        temporaryWorkspaceFolderName, false, true);
+//                
+//                if (!workspaceFile.exists()) {
+//                    throw new RuntimeException(
+//                            "Cannot create temporary workspace link for the following bundle file (1) :"
+//                                    + bundleFileUrl.toString());
+//                }
+//
+//                IPath workspaceFilePath = workspaceFile.getFullPath();
+//                allWorkspaceFiles.add(workspaceFilePath);
+//                
+//            } catch (CoreException e) {
+//                throw new RuntimeException(
+//                        "Cannot create temporary workspace link for the following bundle file (2) :"
+//                                + bundleFileUrl.toString());
+//            } catch (MalformedURLException e) {
+//                throw new RuntimeException(
+//                        "Cannot create temporary workspace link for the following bundle file (3) :"
+//                                + bundleFileUrl.toString());
+//            } catch (URISyntaxException e) {
+//                throw new RuntimeException(
+//                        "Cannot create temporary workspace link for the following bundle file (4) :"
+//                                + bundleFileUrl.toString());
+//            } catch (IOException e) {
+//                throw new RuntimeException(
+//                        "Cannot create temporary workspace link for the following bundle file (5) :"
+//                                + bundleFileUrl.toString());
+//            }
+//        }
+//        return allWorkspaceFiles;
+ 
+    }
+        
     // -------------------------------------------------------------------------
 
     /**
