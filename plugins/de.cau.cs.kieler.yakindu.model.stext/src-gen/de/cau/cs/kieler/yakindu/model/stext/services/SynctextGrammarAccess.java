@@ -656,7 +656,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cActionsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cActionsExpressionParserRuleCall_1_0 = (RuleCall)cActionsAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cActionsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cActionsExpressionParserRuleCall_2_1_0 = (RuleCall)cActionsAssignment_2_1.eContents().get(0);
 		
@@ -672,10 +672,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//ReactionEffect returns sgraph::Effect:
 		//
-		//	{ReactionEffect} actions+=Expression ("," actions+=Expression)*;
+		//	{ReactionEffect} actions+=Expression (";" actions+=Expression)*;
 		public ParserRule getRule() { return rule; }
 
-		//{ReactionEffect} actions+=Expression ("," actions+=Expression)*
+		//{ReactionEffect} actions+=Expression (";" actions+=Expression)*
 		public Group getGroup() { return cGroup; }
 
 		//{ReactionEffect}
@@ -687,11 +687,11 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//Expression
 		public RuleCall getActionsExpressionParserRuleCall_1_0() { return cActionsExpressionParserRuleCall_1_0; }
 
-		//(=> "," actions+=Expression)*
+		//(=> ";" actions+=Expression)*
 		public Group getGroup_2() { return cGroup_2; }
 
-		//=> ","
-		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		//=> ";"
+		public Keyword getSemicolonKeyword_2_0() { return cSemicolonKeyword_2_0; }
 
 		//actions+=Expression
 		public Assignment getActionsAssignment_2_1() { return cActionsAssignment_2_1; }
@@ -1339,7 +1339,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//ReactionEffect returns sgraph::Effect:
 	//
-	//	{ReactionEffect} actions+=Expression ("," actions+=Expression)*;
+	//	{ReactionEffect} actions+=Expression (";" actions+=Expression)*;
 	public ReactionEffectElements getReactionEffectAccess() {
 		return (pReactionEffect != null) ? pReactionEffect : (pReactionEffect = new ReactionEffectElements());
 	}

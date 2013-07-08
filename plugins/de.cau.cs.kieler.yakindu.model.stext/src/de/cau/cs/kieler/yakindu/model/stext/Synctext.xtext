@@ -84,7 +84,7 @@ ReactionTrigger returns sgraph::Trigger:
 
 	// The ReactionEffect is an Effect. 
 ReactionEffect returns sgraph::Effect:
-	{ReactionEffect} actions+=Expression (=> ',' actions+=Expression)*; // (';')?;
+	{ReactionEffect} actions+=Expression (=> ';' actions+=Expression)*; // (';')?;
 
 
 
