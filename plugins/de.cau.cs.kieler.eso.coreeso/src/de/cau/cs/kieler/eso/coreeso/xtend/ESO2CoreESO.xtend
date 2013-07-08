@@ -58,6 +58,9 @@ class ESO2CoreESO {
 			    //generate a new tick
 				newTick = EsoFactory::eINSTANCE.createtick
 				
+				//add all existing extraInfos to the new extraInfo field
+				newTick.extraInfos.addAll(tick.extraInfos)
+				
 				//transform all input variables from the current tick
 				tick.input.forEach[in |
 					
