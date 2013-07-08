@@ -7,6 +7,13 @@ import "http://www.yakindu.org/sct/statechart/SText" as stext
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 
+//Root2345:
+//    scope=SimpleScope|trigger=ReactionTrigger|reaction=ReactionEffect;
+//    
+//SimpleScope returns StateScope:
+//    StateScope
+//;    
+//
 /*********************************** INTERFACE DECLARATION **************************************** */
 ////defines the possible scopes for a state
 StateScope:

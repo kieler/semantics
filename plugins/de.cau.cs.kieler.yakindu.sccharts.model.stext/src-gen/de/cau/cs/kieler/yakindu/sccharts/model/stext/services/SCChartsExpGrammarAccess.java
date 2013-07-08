@@ -117,6 +117,20 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 		return getDummyAccess().getRule();
 	}
 
+	////Root2345:
+	//
+	////    scope=SimpleScope|trigger=ReactionTrigger|reaction=ReactionEffect;
+	//
+	////    
+	//
+	////SimpleScope returns StateScope:
+	//
+	////    StateScope
+	//
+	////;    
+	//
+	////
+	//
 	/// *********************************** INTERFACE DECLARATION **************************************** * / ////defines the possible scopes for a state
 	//
 	//StateScope:

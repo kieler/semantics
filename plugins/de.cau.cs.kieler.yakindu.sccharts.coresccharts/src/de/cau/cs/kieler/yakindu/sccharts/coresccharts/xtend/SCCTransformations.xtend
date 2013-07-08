@@ -19,6 +19,7 @@ import org.yakindu.sct.model.sgraph.SGraphFactory
 import org.yakindu.sct.model.sgraph.State
 import org.yakindu.sct.model.sgraph.Statechart
 import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory
+import org.yakindu.sct.model.stext.stext.StextFactory
 import org.yakindu.base.types.PrimitiveType
 import org.yakindu.base.types.TypeSystemUtils
 import org.yakindu.base.types.TypesFactory
@@ -38,6 +39,9 @@ import org.eclipse.xtext.Constants
 import org.eclipse.emf.common.util.URI
 import javax.inject.Inject
 import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
+import org.yakindu.sct.model.sgraph.Effect
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
+import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 
 
 class SCCTransformations {
@@ -99,17 +103,62 @@ class SCCTransformations {
                      variable.setName(signalName);
                      variable.setIsInput(isInput);
                      variable.setIsOutput(isOutput);
-                     variable.setType(ts.booleanType);
+                     variable.setType(getBooleanType);
                      
                      // Check if this is a valued signal
                      if (signal.hasType) {
-                         // TODO
-                         if (signalInit != null) {
-                            variable.setInitialValue(signalInit);
-                         }
-                         if (signalCombine != null) {
-                            variable.setInitialValue(signalInit); 
-                         }
+                        val variableVal =  SynctextFactory::eINSTANCE.createVariableDefinition;
+                        variableVal.setName(signalName + "_val");
+                        variableVal.setIsInput(isInput);
+                        variableVal.setIsOutput(isOutput);
+                        variableVal.setType(signal.type);
+                         
+                        if (signalInit != null) {
+                            variableVal.setInitialValue(signalInit);
+                        }
+                        if (signalCombine != null) {
+                            variableVal.setInitialValue(signalInit); 
+                        }
+                        
+                        // Add variable to the scope
+                        scope.declarations.add(variableVal);
+                        
+                        // Change all references
+                        val transitions = state.eAllContents().toIterable().filter(typeof(SyncTransition));
+                        for (transition : transitions) {
+                            val transitionSpecification = transition.specification;
+                            
+                            val effect = transition.effect as ReactionEffect;
+                            if (effect != null) {
+                              for (action : ImmutableList::copyOf(effect.actions)) {
+                                if (action instanceof ElementReferenceExpression) {
+                                    val refExpression = action as ElementReferenceExpression;
+                                    if (refExpression.reference == signal) {
+                                        // Now we know that the signals values is changed here
+                                        val value = refExpression.args;
+                                        val assignmentExpression = StextFactory::eINSTANCE.createAssignmentExpression;
+                                        // Get the first expression only
+                                        assignmentExpression.setExpression(value.get(0));
+                                        val elementReferenceExpression = StextFactory::eINSTANCE.createElementReferenceExpression;
+                                        elementReferenceExpression.setReference(variableVal)
+                                        assignmentExpression.setVarRef(elementReferenceExpression);
+                                        // Add O = 7 and remove O(7) 
+                                        //effect.actions.add(assignmentExpression);
+                                        //effect.actions.remove(action);
+                                    }
+                                }
+                              }
+                            }
+                            
+//                            // Reserialize transition
+//                            state.setSpecification(serializer.serialize(transition));
+//                            i.injectMembers(this);
+//                            val res = rSet.createResource(URI::createFileURI("dummy."+ System::currentTimeMillis() + state.hashCode + "." +fileExt))
+//                            res.contents+= EcoreUtil::copy(transition);
+//                            state.setSpecification(serializer.serialize(res.contents.head));
+//                            res.unload;
+                        }
+                        
                      }
                      
                      // Add variable to the scope
@@ -120,21 +169,29 @@ class SCCTransformations {
                      
                      System::out.println(signal.name + " (Signal)");
                      System::out.println(variable.name + " (Variable)");
-//                     declaration.setName(declaration.name + "XXX");
-//                     System::out.println(declaration.name );
                  }
                }
                
-//                     specification = "";
-//                     for (declaration : scope.declarations) {
-//                        specification = specification.concat(serializer.serialize(declaration));
-//                     }
 
-                    i.injectMembers(this);
-                     val res = rSet.createResource(URI::createFileURI("dummy."+ System::currentTimeMillis() +state.hashCode + "." +fileExt))
-                     res.contents+= EcoreUtil::copy(scope)
-                     state.setSpecification(serializer.serialize(res.contents.head));
-                     res.unload;
+                    /* =================================================
+                     * = WORKAROUND -  Mittwoch, 3. Juli 2013 16:05:09 =
+                     * =================================================
+                     * Hallo Christian,
+                     * im wesentlichen läuft es so wie Du gesagt hast. Wenn Du den SText-Modellteil auf
+                     * den semantischen Objekten ändern willst, kannst Du auf der EMF Resource, wenn Du
+                     * diese auf STextResource castest, setSerializerEnabled(true) setzen. Das sorgt 
+                     * dafür, dass ein EAdapter innerhalb der AbstractSCTResource auf semantischen
+                     *  Änderungen in sText lauscht und den String selbst per serializer updated. 
+                     * Diesen Mechanismus benutzen wir für die Refactorings - allerdings bin ich mir
+                     *  gerade gar nicht sicher ob es die in eurem Branch schon gab. Falls nicht, 
+                     * müssten wir versuchen die Resource in euren Branch einzubauen. 
+                     * Viele Grüße, Andreas Andreas Mülder 
+                     */
+//                     i.injectMembers(this);
+//                     val res = rSet.createResource(URI::createFileURI("dummy."+ System::currentTimeMillis() + state.hashCode + "." +fileExt))
+//                     res.contents+= EcoreUtil::copy(scope)
+//                     state.setSpecification(serializer.serialize(res.contents.head));
+//                     res.unload;
              }
              
              
@@ -144,15 +201,11 @@ class SCCTransformations {
      }
         
         
-    def Type createBooleanType() {
-            val type = TypesFactory::eINSTANCE.createPrimitiveType();
-            type.setName("boolean");
-            return type;
+    def Type getBooleanType() {
+            return ts.booleanType;
     }    
-    def Type createIntegerType() {
-            val type = TypesFactory::eINSTANCE.createPrimitiveType();
-            type.setName("boolean");
-            return type;
+    def Type getIntegerType() {
+            return ts.integerType;
     }    
         
     def boolean isBoolean(Type type) {
