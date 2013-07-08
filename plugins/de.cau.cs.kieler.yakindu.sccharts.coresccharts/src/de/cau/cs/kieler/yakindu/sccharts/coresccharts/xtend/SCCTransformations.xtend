@@ -42,6 +42,12 @@ import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
 import org.yakindu.sct.model.sgraph.Effect
 import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
+import org.yakindu.sct.model.stext.stext.Expression
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
+import de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpression
+import org.yakindu.sct.model.stext.stext.LogicalRelationExpression
+import org.yakindu.sct.model.stext.stext.AssignmentExpression
+import org.eclipse.emf.ecore.EObject
 
 
 class SCCTransformations {
@@ -106,7 +112,7 @@ class SCCTransformations {
                      variable.setType(getBooleanType);
                      
                      // Check if this is a valued signal
-                     if (signal.hasType) {
+                     if (signal.valued) {
                         val variableVal =  SynctextFactory::eINSTANCE.createVariableDefinition;
                         variableVal.setName(signalName + "_val");
                         variableVal.setIsInput(isInput);
@@ -128,11 +134,46 @@ class SCCTransformations {
                         for (transition : transitions) {
                             val transitionSpecification = transition.specification;
                             
+                            val trigger = transition.trigger as ReactionTrigger;
+                            if (trigger != null) {
+                              val valReferences = trigger.eAllContents.toIterable().filter(typeof(EventValueReferenceExpression));
+                              for (valReference : ImmutableList::copyOf(valReferences)) {
+                                  val expression = valReference.value;
+                                  
+                                  // Exchange reference to valued signal within expression with the
+                                  // new value variable
+                                  if (expression instanceof ElementReferenceExpression) {
+                                      val elementReferenceExpression = expression as ElementReferenceExpression;
+                                      
+                                      // Only if the signal is involved
+                                      if (elementReferenceExpression.reference == signal) {
+                                        elementReferenceExpression.setReference(variableVal);    
+                                        val container = valReference.eContainer;
+                                        if (container instanceof ReactionTrigger) {
+                                            val reactionTrigger = ((container as ReactionTrigger));
+                                            reactionTrigger.setExpression(expression);
+                                        }
+                                        else if (container instanceof LogicalRelationExpression) {
+                                            val logicalRealtionExpression = ((container as LogicalRelationExpression));
+                                            if (logicalRealtionExpression.leftOperand == valReference) {
+                                              logicalRealtionExpression.setLeftOperand(expression);
+                                            }
+                                            if (logicalRealtionExpression.rightOperand == valReference) {
+                                              logicalRealtionExpression.setRightOperand(expression);
+                                            }
+                                         }
+                                          
+                                      }
+                                  }
+                              }
+                            }
+
                             val effect = transition.effect as ReactionEffect;
                             if (effect != null) {
                               for (action : ImmutableList::copyOf(effect.actions)) {
                                 if (action instanceof ElementReferenceExpression) {
                                     val refExpression = action as ElementReferenceExpression;
+                                    // Only if the signal is involved
                                     if (refExpression.reference == signal) {
                                         // Now we know that the signals values is changed here
                                         val value = refExpression.args;
@@ -142,9 +183,9 @@ class SCCTransformations {
                                         val elementReferenceExpression = StextFactory::eINSTANCE.createElementReferenceExpression;
                                         elementReferenceExpression.setReference(variableVal)
                                         assignmentExpression.setVarRef(elementReferenceExpression);
-                                        // Add O = 7 and remove O(7) 
-                                        //effect.actions.add(assignmentExpression);
-                                        //effect.actions.remove(action);
+                                        // Add O_val = 7 and remove O(7) 
+                                        
+                                        effect.actions.add(assignmentExpression);
                                     }
                                 }
                               }
@@ -160,6 +201,40 @@ class SCCTransformations {
                         }
                         
                      }
+                     
+
+                        // Change all references
+                        val transitions = state.eAllContents().toIterable().filter(typeof(SyncTransition));
+                        for (transition : transitions) {
+                            val transitionSpecification = transition.specification;
+                            
+                            val effect = transition.effect as ReactionEffect;
+                            if (effect != null) {
+                              for (action : ImmutableList::copyOf(effect.actions)) {
+                                if (action instanceof ElementReferenceExpression) {
+                                    val refExpression = action as ElementReferenceExpression;
+                                    // Only if the signal is involved
+                                    if (refExpression.reference == signal) {
+                                        // Also add O = true to mimic the present status
+                                        val assignmentExpression2 = StextFactory::eINSTANCE.createAssignmentExpression;
+                                        val trueValue = StextFactory::eINSTANCE.createBoolLiteral;
+                                        trueValue.setValue(true);
+                                        val trueValueExpression = StextFactory::eINSTANCE.createPrimitiveValueExpression()
+                                        trueValueExpression.setValue(trueValue);
+                                        assignmentExpression2.setExpression(trueValueExpression);
+                                        val elementReferenceExpression2 = StextFactory::eINSTANCE.createElementReferenceExpression;
+                                        elementReferenceExpression2.setReference(variable)
+                                        assignmentExpression2.setVarRef(elementReferenceExpression2);
+                                        
+                                        val i = effect.actions.indexOf(action);
+                                        effect.actions.add(i, assignmentExpression2);
+                                        effect.actions.remove(action);
+                                    }
+                                }
+                              }
+                            }
+                     }
+                     
                      
                      // Add variable to the scope
                      scope.declarations.add(variable);
@@ -207,6 +282,31 @@ class SCCTransformations {
     def Type getIntegerType() {
             return ts.integerType;
     }    
+    
+    def EObject getRootEObject(EObject eObject) {
+        if (eObject.eContainer != null) {
+            return eObject.eContainer.rootEObject;
+        }
+        return eObject;
+    }
+    
+    def boolean isValued(EventDefinition signal) {
+        // Search the whole model if there is an AssignmentExpression with this signal
+        // or if there is a EventValueReferenceExpression with this signal
+        var found = false;
+        val rootObject = signal.rootEObject;
+        val assignmentExpressions = rootObject.eAllContents.toIterable.filter(typeof(AssignmentExpression));
+        for (assignmentExpression : assignmentExpressions) {
+            found = found || (assignmentExpression.varRef == signal);
+        }
+        val eventValueReferenceExpressions = rootObject.eAllContents.toIterable.filter(typeof(EventValueReferenceExpression));
+        for (eventValueReferenceExpression : eventValueReferenceExpressions) {
+            found = found || (eventValueReferenceExpression.eContainer != null 
+                             && (eventValueReferenceExpression.eContainer.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).filter(e | e.reference == signal).size > 0)
+            );
+        }
+        return found;
+    }
         
     def boolean isBoolean(Type type) {
         return (type != null && type.name != null && type.name.equals("boolean"));
