@@ -69,6 +69,12 @@ class SCLToSeqSCLTransformation {
         var changed = false
         var basicBlockPool = program.statements.head.getAllBasicBlocks 
         while(basicBlockPool.size>0) {
+            Debug("---")
+            var String poolStr = "";
+            for (bb : basicBlockPool) {
+                poolStr = poolStr + bb.basicBlockName + " "
+            }
+            Debug("Blocks in pool: " + poolStr)
             changed = false
             val tempPool = ImmutableList::copyOf(basicBlockPool)
             for(basicBlock : tempPool) {
@@ -77,11 +83,14 @@ class SCLToSeqSCLTransformation {
                 var ready = true
                 
                 for (pred : predecessors) {
-                    if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred)) {ready = false}
+                    if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred) && !basicBlock.isParallelJoin) {ready = false}
                     if (basicBlock.isParallelJoin) {
-                        val guards = pred.getHead.basicBlocks
+                        val guards = pred.getHead.basicBlocks.stripSurface
                         for (guard : guards) {
-                            if (basicBlockPool.containsEqual(guard)) { ready = false }
+                            if (basicBlockPool.containsEqual(guard)) { 
+                                ready = false;
+                                Debug("Join: " + basicBlock.basicBlockName + " guard " + guard.basicBlockName + " failed!")
+                            }
                         }
                     }     
                 }
@@ -125,14 +134,14 @@ class SCLToSeqSCLTransformation {
         val predecessors = basicBlock.getBasicBlockPredecessor;
  
         if (basicBlock.isParallelJoin) {
-            var Expression syncExp = null; 
-            var Expression termExp = null;
+            var Expression syncExp = null 
+            var Expression termExp = null
             for(pred : predecessors) {
                 var Expression handleExp = null;
                 val emptyExp = SText.createLogicalNotExpression;
                 val _parExp  = SText.createParenthesizedExpression
                 var Expression innerExp = null 
-                val guards = pred.getHead.basicBlocks
+                val guards = pred.getHead.basicBlocks.stripSurface
                 val predID = guards.head.basicBlockName;
                 innerExp = SText.createElementReferenceExpression as Expression
                 (innerExp as ElementReferenceExpression).setReference(program.getDeclarationByName(predID))
