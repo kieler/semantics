@@ -1,0 +1,14 @@
+module simple
+input boolean I;
+output boolean O;
+{
+    __A:
+    pause;
+    if ! I then
+        goto __A;
+    end;
+    O = true;
+    __B:
+    pause;
+    goto __B;
+}
