@@ -21,11 +21,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
+//import java.net.MalformedURLException;
+//import java.net.URISyntaxException;
+//import java.net.URL;
 import java.util.Collection;
 import java.util.Enumeration;
+//import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,27 +37,34 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.eclipse.core.resources.IFile;
+//import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
+//import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+//import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Bundle;
+//import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.util.ModelUtil;
-import de.cau.cs.kieler.eso.coreeso.xtend.ESO2CoreESO;
+//import de.cau.cs.kieler.eso.coreeso.xtend.ESO2CoreESO;
 import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.seqscl.xtend.SCLToSeqSCLTransformation;
 import de.cau.cs.kieler.scl.vhdl.xtend.SCL2VHDL;
 import de.cau.cs.kieler.sim.eso.eso.tracelist;
+
+import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
 
 //New Version, when loading SCCharts instead of core SCL
 //import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLTransformation;
@@ -91,7 +102,7 @@ public  class SCLVHDLAutomatedJUnitTest {
     static final IPath BUNDLE_TEST_PATH = new Path ("testdata");
     
     /** The Constant MODELS_REPOSITORY_PATH. */
-    static final String MODELS_REPOSITORY_PATH = ("../../../models/SCCharts/");
+    static final IPath MODELS_REPOSITORY_PATH = new Path("../../../models/SCCharts/");
     
     /** The Constant TEMPORARY_WORKSPACE_FOLDER_NAME. */
     static final String TEMPORARY_WORKSPACE_FOLDER_NAME = "temp-scl";
@@ -203,7 +214,8 @@ public  class SCLVHDLAutomatedJUnitTest {
         fillModelAndEsoFiles(allWorkspaceFiles, DEFAULT_SCL_MODEL_EXTENSITION);
         
         //new loading, from models repository
-//        List<IPath> allFiles = loadAllFilesFromModelsRepository(MODELS_REPOSITORY_PATH);
+//        List<IPath> allFiles = createLinksForAllExternalTestFiles(PLUGIN_ID,
+//                MODELS_REPOSITORY_PATH, TEMPORARY_WORKSPACE_FOLDER_NAME);
 //        fillModelAndEsoFiles(allFiles, DEFAULT_SCL_MODEL_EXTENSITION);
 
         // Test if ESO files and corresponding model files exist
@@ -235,6 +247,8 @@ public  class SCLVHDLAutomatedJUnitTest {
     /**
      * This generic test will look for model files in a provided test files folder. If for a model
      * file also an ESO file is found these both serve as a test case. 
+     * 
+     * Attention: Core Variants will be expected: xy.core.scc and xy.core.eso
      * 
      * @throws IOException 
      * @throws InterruptedException 
@@ -286,13 +300,16 @@ public  class SCLVHDLAutomatedJUnitTest {
         IPath vhdlPath = new Path(relativeTempPath + modelFilePath.removeFileExtension()
                 .addFileExtension("vhd").lastSegment());
         createWorkspaceFile(vhdlPath, sclVhdlModel.toString());
-//end old Versoin
-        
+//end old Version
+  
+        // We expected a core variant from an eso file, therefore we don't need this transformation
         // transform ESO file to core ESO file and
-        tracelist transformedEso2CoreEso = (new ESO2CoreESO().transformESO2CoreESO((tracelist) esoModel));
+        // tracelist transformedEso2CoreEso = (new ESO2CoreESO().transformESO2CoreESO((tracelist) esoModel));
+        
+        
         //transform core ESO file to VHDl testbench and save it
         CharSequence transformedCoreESO2VHDLTB = (new ESO2VHDL().transformESO2VHDL(
-                transformedEso2CoreEso,modelFilePath.toFile()));
+                (tracelist) esoModel,modelFilePath.toFile()));
         IPath tbPath = new Path(relativeTempPath + currentEsoFile.removeFileExtension()
                 .lastSegment() + "_tb.vhd");
         createWorkspaceFile(tbPath, transformedCoreESO2VHDLTB.toString());
@@ -562,6 +579,7 @@ public  class SCLVHDLAutomatedJUnitTest {
     }
     
     // -------------------------------------------------------------------------
+
     
     /**
      * Creates links for all files in the bundles test directory and returns all paths as a list.
@@ -581,20 +599,21 @@ public  class SCLVHDLAutomatedJUnitTest {
         final Bundle bundle = Platform.getBundle(pluginId);
 
         // Search for all files in the test directory
-        Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",false);
-        
+        Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",
+                false);
+//        logger.debug("testpath:" + bundleTestPath.toString());
         while (allBundleFilesUrl.hasMoreElements()) {
             URL bundleFileUrl = allBundleFilesUrl.nextElement();
             try {
+//                logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
+
                 IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
                         temporaryWorkspaceFolderName, false, true);
-                
                 if (!workspaceFile.exists()) {
                     throw new RuntimeException(
                             "Cannot create temporary workspace link for the following bundle file (1) :"
                                     + bundleFileUrl.toString());
                 }
-
                 IPath filePath = workspaceFile.getFullPath();
                 allFiles.add(filePath);
             } catch (CoreException e) {
@@ -617,82 +636,97 @@ public  class SCLVHDLAutomatedJUnitTest {
         }
         return allFiles;
     }
-
-    //rename if the links to the workspace are not needed (to loadAllFiles for example)
-    public static List<IPath> loadAllFilesFromModelsRepository(String repositoryPath){//final String pluginId,
-//                final String temporaryWorkspaceFolderName){
-
-        File rootFolder = new File(repositoryPath);
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Creates links for all external files in a test directory relative to the bundle and returns
+     * all paths as a list.
+     * 
+     * @param pluginId
+     *            the plugin id
+     * @param bundleTestPath
+     *            the bundle test path
+     * @param temporaryWorkspaceFolderName
+     *            the temporary workspace folder name
+     * @return the list
+     */
+    public static List<IPath> createLinksForAllExternalTestFiles(final String pluginId,
+            final IPath bundleTestPath, final String temporaryWorkspaceFolderName) {
         List<IPath> allFiles = new LinkedList<IPath>();
-//        List<IPath> allWorkspaceFiles = new LinkedList<IPath>();
-        
-        // test if the root folder is readable by the application
-        if (rootFolder.canRead()) {
-            // load files from the directory
-            File[] allFilesFromFolder = rootFolder.listFiles();
-            for (int i = 0; i < allFilesFromFolder.length; i++) {
-                if (allFilesFromFolder[i].isFile()) {
-                    IPath ipath = (IPath) new Path(allFilesFromFolder[i].toString());
-                    allFiles.add( ipath );
-                } else {
-                    //do nothing, take next element
+        // If the bundle is not ready then there is no image
+        final Bundle bundle = Platform.getBundle(pluginId);
+
+        URL bundleLocation = bundle.getEntry("");
+        URL modelLocation = null;
+        String directoryPathString = null;
+        String filenames[] = null;
+        try {
+            bundleLocation = ModelUtil.getAbsoluteBundlePath(bundleLocation);
+            // file:/C:/DATA/kielergitrepository/semantics/test/de.cau.cs.kieler.s.sim.sc.test/./
+            String modelLocationString = bundleLocation.toString();
+            // Now add relative bundleTestPath
+            modelLocationString += bundleTestPath.toPortableString();
+            modelLocation = URI.create(modelLocationString).toURL();
+            // Now access all files within the modelLocation directory
+            modelLocation = FileLocator.toFileURL(modelLocation);
+
+            File directory = new File(modelLocation.getFile());
+            directoryPathString = directory.getCanonicalPath() + File.separator;
+            filenames = directory.list();
+            // for (String filename : filenames) {
+            // System.out.println(directoryPathString + filename);
+            // }
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
+
+        if (directoryPathString != null && filenames != null) {
+            // Search for all files in the test directory
+            // Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(),
+            // "*.*",
+            // false);
+//            logger.debug("testpath:" + bundleTestPath.toString());
+            for (String filename : filenames) {
+                URL bundleFileUrl = null;
+                try {
+                    String fileString = directoryPathString + filename;
+                    fileString = fileString.replace(File.separator, "/");
+                    fileString = "file://" + fileString.replace(" ", "%20");
+                    bundleFileUrl = new URI(fileString).toURL();
+//                    logger.debug("FileUrl:" + bundleFileUrl.toString());
+                    IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
+                            temporaryWorkspaceFolderName, false, true);
+                    if (!workspaceFile.exists()) {
+                        throw new RuntimeException(
+                                "Cannot create temporary workspace link for the following bundle file (1) :"
+                                        + bundleFileUrl.toString());
+                    }
+                    IPath filePath = workspaceFile.getFullPath();
+                    allFiles.add(filePath);
+                } catch (CoreException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (2) :"
+                                    + bundleFileUrl.toString());
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (3) :"
+                                    + bundleFileUrl.toString());
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (4) :"
+                                    + bundleFileUrl.toString());
+                } catch (IOException e) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (5) :"
+                                    + bundleFileUrl.toString());
                 }
             }
-        } else {
-            throw new IllegalArgumentException("The source directory ("
-                    + rootFolder.getAbsolutePath() + ") cannot be read!");
         }
-        
-        //no workspace links needed
+
         return allFiles;
-        
-//        for ( IPath filepath : allFiles) {
-//           // URL bundleFileUrl = allBundleFilesUrl.nextElement();
-//            URL bundleFileUrl = null;
-//            try {
-//                bundleFileUrl = new URL(filepath.toString());
-//            } catch (MalformedURLException e1) {
-//                throw new RuntimeException(
-//                        "Cannot create bundle File URL from the following filepath :"
-//                        + filepath.toString());
-//            }
-//            
-//            try {
-//                
-//                IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
-//                        temporaryWorkspaceFolderName, false, true);
-//                
-//                if (!workspaceFile.exists()) {
-//                    throw new RuntimeException(
-//                            "Cannot create temporary workspace link for the following bundle file (1) :"
-//                                    + bundleFileUrl.toString());
-//                }
-//
-//                IPath workspaceFilePath = workspaceFile.getFullPath();
-//                allWorkspaceFiles.add(workspaceFilePath);
-//                
-//            } catch (CoreException e) {
-//                throw new RuntimeException(
-//                        "Cannot create temporary workspace link for the following bundle file (2) :"
-//                                + bundleFileUrl.toString());
-//            } catch (MalformedURLException e) {
-//                throw new RuntimeException(
-//                        "Cannot create temporary workspace link for the following bundle file (3) :"
-//                                + bundleFileUrl.toString());
-//            } catch (URISyntaxException e) {
-//                throw new RuntimeException(
-//                        "Cannot create temporary workspace link for the following bundle file (4) :"
-//                                + bundleFileUrl.toString());
-//            } catch (IOException e) {
-//                throw new RuntimeException(
-//                        "Cannot create temporary workspace link for the following bundle file (5) :"
-//                                + bundleFileUrl.toString());
-//            }
-//        }
-//        return allWorkspaceFiles;
- 
     }
-        
+
     // -------------------------------------------------------------------------
 
     /**
