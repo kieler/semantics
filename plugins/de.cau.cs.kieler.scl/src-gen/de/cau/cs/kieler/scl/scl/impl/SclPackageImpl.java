@@ -276,9 +276,19 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getVariableDeclaration_Static()
+  {
+    return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getVariableDeclaration_Type()
   {
-    return (EReference)variableDeclarationEClass.getEStructuralFeatures().get(2);
+    return (EReference)variableDeclarationEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -288,7 +298,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    */
   public EReference getVariableDeclaration_InitialValue()
   {
-    return (EReference)variableDeclarationEClass.getEStructuralFeatures().get(3);
+    return (EReference)variableDeclarationEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -578,6 +588,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     variableDeclarationEClass = createEClass(VARIABLE_DECLARATION);
     createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__INPUT);
     createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__OUTPUT);
+    createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__STATIC);
     createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
     createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__INITIAL_VALUE);
 
@@ -676,6 +687,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEClass(variableDeclarationEClass, VariableDeclaration.class, "VariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVariableDeclaration_Input(), ecorePackage.getEBoolean(), "input", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getVariableDeclaration_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDeclaration_Static(), ecorePackage.getEBoolean(), "static", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVariableDeclaration_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVariableDeclaration_InitialValue(), theStextPackage.getExpression(), null, "initialValue", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

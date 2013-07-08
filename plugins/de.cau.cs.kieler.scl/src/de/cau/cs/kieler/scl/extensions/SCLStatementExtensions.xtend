@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scl.basicblocks.ParallelJoin
 import de.cau.cs.kieler.scl.basicblocks.ParallelForkImpl
 import de.cau.cs.kieler.scl.basicblocks.ParallelJoinImpl
 import de.cau.cs.kieler.scl.scl.Annotation
+import de.cau.cs.kieler.scl.scl.Program
 
 class SCLStatementExtensions {
     
@@ -142,6 +143,16 @@ class SCLStatementExtensions {
     def boolean hasParameter(Statement statement, String name, String parameter) {
         if (!statement.hasAnnotation(name)) return false
         statement.annotations.filter(e | e.getName == name && e.parameter.contains(parameter)).size > 0    
+    }
+    
+    def boolean hasGlobalAnnotation(Program program, String name) {
+        if (program.statements.size == 0) return false
+        program.statements.head.hasAnnotation(name)
+    }
+    
+    def boolean hasGlobalParameter(Program program, String name, String parameter) {
+        if (!program.hasGlobalAnnotation(name)) return false
+        program.statements.head.annotations.filter(e | e.getName == name && e.parameter.contains(parameter)).size > 0
     }
     
 }

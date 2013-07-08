@@ -205,11 +205,31 @@ class SCLToSeqSCLTransformation {
             if (predecessors.head.isPauseSurface) predID = predID + '_pre'
             var expression = SText.createElementReferenceExpression as Expression
             (expression as ElementReferenceExpression).setReference(program.getDeclarationByName(predID))
+
+            if (basicBlock.isConditionalPredecessor(predecessors.head)) {
+                var andExp = predecessors.head.getConditionalExpression.copy;
+                if (!basicBlock.isConditionalPredecessorTrueBranch(predecessors.head)) {
+                    andExp = andExp.negate
+                }
+                andExp = andExp.transformExpression(program, sourceProgram);
+                expression = createParanthesizedExpression(createAndExpression(expression, andExp));                
+            }
+
             for(Integer i: 1..(predecessors.size - 1)) {
                 var predIDi = predecessors.get(i).getBasicBlockName
                 if (predecessors.get(i).isPauseSurface) predIDi = predIDi + '_pre'
-                val exp2 = SText.createElementReferenceExpression 
-                exp2.setReference(program.getDeclarationByName(predIDi))
+                var exp2 = SText.createElementReferenceExpression as Expression 
+                (exp2 as ElementReferenceExpression).setReference(program.getDeclarationByName(predIDi))
+
+                if (basicBlock.isConditionalPredecessor(predecessors.get(i))) {
+                    var andExp = predecessors.get(i).getConditionalExpression.copy;
+                    if (!basicBlock.isConditionalPredecessorTrueBranch(predecessors.get(i))) {
+                        andExp = andExp.negate
+                    }
+                    andExp = andExp.transformExpression(program, sourceProgram);
+                    exp2 = createParanthesizedExpression(createAndExpression(exp2, andExp));                
+                }
+
                 expression = createOrExpression(expression, exp2) 
             }
             guardExpression = expression

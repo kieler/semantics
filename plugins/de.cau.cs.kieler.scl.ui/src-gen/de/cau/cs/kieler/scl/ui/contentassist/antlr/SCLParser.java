@@ -81,8 +81,7 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProgramAccess().getGroup_4_0_0(), "rule__Program__Group_4_0_0__0");
 					put(grammarAccess.getProgramAccess().getGroup_4_1(), "rule__Program__Group_4_1__0");
 					put(grammarAccess.getVariableDeclarationAccess().getGroup(), "rule__VariableDeclaration__Group__0");
-					put(grammarAccess.getVariableDeclarationAccess().getGroup_3(), "rule__VariableDeclaration__Group_3__0");
-					put(grammarAccess.getVariableDeclarationAccess().getGroup_4(), "rule__VariableDeclaration__Group_4__0");
+					put(grammarAccess.getVariableDeclarationAccess().getGroup_5(), "rule__VariableDeclaration__Group_5__0");
 					put(grammarAccess.getEmptyStatementAccess().getGroup(), "rule__EmptyStatement__Group__0");
 					put(grammarAccess.getEmptyStatementAccess().getGroup_1(), "rule__EmptyStatement__Group_1__0");
 					put(grammarAccess.getInstructionStatementAccess().getGroup(), "rule__InstructionStatement__Group__0");
@@ -201,9 +200,10 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProgramAccess().getStatementsAssignment_4_1_1(), "rule__Program__StatementsAssignment_4_1_1");
 					put(grammarAccess.getVariableDeclarationAccess().getInputAssignment_0(), "rule__VariableDeclaration__InputAssignment_0");
 					put(grammarAccess.getVariableDeclarationAccess().getOutputAssignment_1(), "rule__VariableDeclaration__OutputAssignment_1");
-					put(grammarAccess.getVariableDeclarationAccess().getNameAssignment_2(), "rule__VariableDeclaration__NameAssignment_2");
-					put(grammarAccess.getVariableDeclarationAccess().getTypeAssignment_3_1(), "rule__VariableDeclaration__TypeAssignment_3_1");
-					put(grammarAccess.getVariableDeclarationAccess().getInitialValueAssignment_4_1(), "rule__VariableDeclaration__InitialValueAssignment_4_1");
+					put(grammarAccess.getVariableDeclarationAccess().getStaticAssignment_2(), "rule__VariableDeclaration__StaticAssignment_2");
+					put(grammarAccess.getVariableDeclarationAccess().getTypeAssignment_3(), "rule__VariableDeclaration__TypeAssignment_3");
+					put(grammarAccess.getVariableDeclarationAccess().getNameAssignment_4(), "rule__VariableDeclaration__NameAssignment_4");
+					put(grammarAccess.getVariableDeclarationAccess().getInitialValueAssignment_5_1(), "rule__VariableDeclaration__InitialValueAssignment_5_1");
 					put(grammarAccess.getEmptyStatementAccess().getAnnotationsAssignment_0(), "rule__EmptyStatement__AnnotationsAssignment_0");
 					put(grammarAccess.getEmptyStatementAccess().getLabelAssignment_1_0(), "rule__EmptyStatement__LabelAssignment_1_0");
 					put(grammarAccess.getInstructionStatementAccess().getAnnotationsAssignment_0(), "rule__InstructionStatement__AnnotationsAssignment_0");

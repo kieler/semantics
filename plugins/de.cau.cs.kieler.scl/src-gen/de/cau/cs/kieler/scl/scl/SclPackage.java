@@ -170,13 +170,22 @@ public interface SclPackage extends EPackage
   int VARIABLE_DECLARATION__OUTPUT = SGraphPackage.VARIABLE_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Static</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DECLARATION__STATIC = SGraphPackage.VARIABLE_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>Type</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION__TYPE = SGraphPackage.VARIABLE_FEATURE_COUNT + 2;
+  int VARIABLE_DECLARATION__TYPE = SGraphPackage.VARIABLE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
@@ -185,7 +194,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION__INITIAL_VALUE = SGraphPackage.VARIABLE_FEATURE_COUNT + 3;
+  int VARIABLE_DECLARATION__INITIAL_VALUE = SGraphPackage.VARIABLE_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Variable Declaration</em>' class.
@@ -194,7 +203,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION_FEATURE_COUNT = SGraphPackage.VARIABLE_FEATURE_COUNT + 4;
+  int VARIABLE_DECLARATION_FEATURE_COUNT = SGraphPackage.VARIABLE_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl <em>Statement</em>}' class.
@@ -634,6 +643,17 @@ public interface SclPackage extends EPackage
   EAttribute getVariableDeclaration_Output();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#isStatic <em>Static</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Static</em>'.
+   * @see de.cau.cs.kieler.scl.scl.VariableDeclaration#isStatic()
+   * @see #getVariableDeclaration()
+   * @generated
+   */
+  EAttribute getVariableDeclaration_Static();
+
+  /**
    * Returns the meta object for the reference '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -991,6 +1011,14 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EAttribute VARIABLE_DECLARATION__OUTPUT = eINSTANCE.getVariableDeclaration_Output();
+
+    /**
+     * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VARIABLE_DECLARATION__STATIC = eINSTANCE.getVariableDeclaration_Static();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' reference feature.
