@@ -50,8 +50,14 @@ import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.eso.coreeso.xtend.ESO2CoreESO;
 import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
 import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.seqscl.xtend.SCLToSeqSCLTransformation;
 import de.cau.cs.kieler.scl.vhdl.xtend.SCL2VHDL;
 import de.cau.cs.kieler.sim.eso.eso.tracelist;
+
+//New Version, when loading SCCharts instead of core SCL
+//import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLTransformation;
+//import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLOptimization;
+//import org.yakindu.sct.model.sgraph.Statechart;
 
 /**
  * 
@@ -72,12 +78,19 @@ public  class SCLVHDLAutomatedJUnitTest {
     
     /** The Constant DEFAULT_SCL_FILE_EXTENSITION. */
     static final String DEFAULT_SCL_MODEL_EXTENSITION = "scl";
+ 
+//New Version, when loading SCC instead of SCL
+//    /** The Constant DEFAULT_SCC_FILE_EXTENSITION. */
+//    static final String DEFAULT_SCC_MODEL_EXTENSITION = "scc";
     
     /** The Constant PLUGIN_ID. */
     static final String PLUGIN_ID = "de.cau.cs.kieler.scl.vhdl.test";
     
     /** The Constant BUNDLE_TEST_PATH. */
     static final IPath BUNDLE_TEST_PATH = new Path ("testdata");
+    
+    /** The Constant BUNDLE_TEST_PATH. */
+//    static final IPath MODELS_REPOSITORY_PATH = new Path ("../../models/SCCharts");
     
     /** The Constant TEMPORARY_WORKSPACE_FOLDER_NAME. */
     static final String TEMPORARY_WORKSPACE_FOLDER_NAME = "temp-scl";
@@ -184,7 +197,7 @@ public  class SCLVHDLAutomatedJUnitTest {
         // First create links to local bundle file in a temporary workspace
         List<IPath> allWorkspaceFiles = createLinksForAllTestFiles(PLUGIN_ID,
                 BUNDLE_TEST_PATH, TEMPORARY_WORKSPACE_FOLDER_NAME);
-
+//BUNDLE_TEST_PATH
         // Fill esoFiles and modelFile list/hashmap
         fillModelAndEsoFiles(allWorkspaceFiles, DEFAULT_SCL_MODEL_EXTENSITION);
 
@@ -242,17 +255,33 @@ public  class SCLVHDLAutomatedJUnitTest {
         
         // Get Model File path
         IPath modelFilePath = modelFile.get(currentEsoFile);
-         
+ 
+//new Version for Loading SCCharts instead of SCL
+//        EObject scchart = ModelUtil.loadEObjectFromModelFile(modelFilePath);
+//        EObject esoModel = ModelUtil.loadEObjectFromModelFile(currentEsoFile);
+//        
+//        // Transform SCL model into VHDL file and save it
+//        Program sclmodel = (new CoreToSCLTransformation().transformCoreToSCL((Statechart) scchart,
+//                    CoreToSCLOptimization.OPTIMIZE_DEFAULT));
+//        Program seqSCL = (new SCLToSeqSCLTransformation().transformSCLToSCLControlflow((Program)sclmodel));
+//        CharSequence sclVhdlModel = (new SCL2VHDL().transform(seqSCL, modelFilePath.toFile()));
+//        IPath vhdlPath = new Path(relativeTempPath + modelFilePath.removeFileExtension()
+//                .addFileExtension("vhd").lastSegment());
+//        createWorkspaceFile(vhdlPath, sclVhdlModel.toString());
+//end new Version
+        
+// old Version
         // Load models from File
         EObject sclModel = ModelUtil.loadEObjectFromModelFile(modelFilePath);
-        EObject esoModel = ModelUtil.loadEObjectFromModelFile(currentEsoFile);
-             
+        EObject esoModel = ModelUtil.loadEObjectFromModelFile(currentEsoFile);    
+        
         // Transform SCL model into VHDL file and save it
-        CharSequence transformedSCL2VHDL = (new SCL2VHDL().transform((Program)sclModel, 
-                modelFilePath.toFile()));
+        Program seqSCL = (new SCLToSeqSCLTransformation().transformSCLToSCLControlflow((Program)sclModel));
+        CharSequence sclVhdlModel = (new SCL2VHDL().transform(seqSCL, modelFilePath.toFile()));
         IPath vhdlPath = new Path(relativeTempPath + modelFilePath.removeFileExtension()
                 .addFileExtension("vhd").lastSegment());
-        createWorkspaceFile(vhdlPath, transformedSCL2VHDL.toString());
+        createWorkspaceFile(vhdlPath, sclVhdlModel.toString());
+//end old Versoin
         
         // transform ESO file to core ESO file and
         tracelist transformedEso2CoreEso = (new ESO2CoreESO().transformESO2CoreESO((tracelist) esoModel));
