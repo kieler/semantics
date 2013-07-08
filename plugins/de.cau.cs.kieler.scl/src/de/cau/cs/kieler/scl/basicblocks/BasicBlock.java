@@ -55,6 +55,7 @@ public class BasicBlock {
     }
     
     public boolean isEqual(BasicBlock basicBlock) {
+        if (basicBlock.equals(this)) return true;
         if (basicBlock.getStatements().size()!=this.getStatements().size()) return false;
         if (this.getStatements().size()>0) {
             if (basicBlock.getHead() instanceof InstructionStatement) {

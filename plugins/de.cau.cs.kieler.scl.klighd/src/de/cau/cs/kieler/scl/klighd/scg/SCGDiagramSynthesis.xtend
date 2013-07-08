@@ -201,7 +201,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
         rootNode.addLayoutParam(Properties::THOROUGHNESS, 100)
         rootNode.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
-        if (NODEPLACEMENT_LINEARSEGMENTS) 
+        if (NODEPLACEMENT_LINEARSEGMENTS || program.hasGlobalParameter('placement','linear')) 
             rootNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
 
         // Evaluate the program beginning at the program root
@@ -230,7 +230,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kEntryNode.KRendering.foreground = "gray".color;
         kEntryNode.KRendering.add(factory.createKText.of('entry'));
         rootNode.children.add(kEntryNode)
-        kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+        if (program.hasGlobalParameter('layer', 'separate'))
+            kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
+        else
+            kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
 //        kEntryNode.addNSPortFixed;
                 
         // Create the exit node
@@ -241,7 +244,10 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kExitNode.KRendering.foreground = "gray".color;
         kExitNode.KRendering.add(factory.createKText.of('exit'));
         rootNode.children.add(kExitNode)
-        kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
+        if (program.hasGlobalParameter('layer', 'separate'))
+            kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
+        else
+            kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
         kExitNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
         
         // Add incoming port for the exit node
@@ -611,8 +617,12 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kEntryNode.KRendering.background = "white".color
             kEntryNode.KRendering.add(factory.createKText.of('entry'))
             kContainerNode.children.add(kEntryNode)
-            if (SCGRAPH_FILTER.optionValue != SCGRAPH_WO_HIERARCHY)
-                kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            if (SCGRAPH_FILTER.optionValue != SCGRAPH_WO_HIERARCHY) {
+                if (instr.getStatement.hasParameter('layer', 'separate'))
+                    kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
+                else
+                    kEntryNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            }
             
             // Create exit node
             val kExitNode = ExitObj.createEllipseNode(30,75)
@@ -621,8 +631,12 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
             kExitNode.KRendering.background = "white".color
             kExitNode.KRendering.add(factory.createKText.of('exit'))
             kContainerNode.children.add(kExitNode)
-            if (SCGRAPH_FILTER.optionValue != SCGRAPH_WO_HIERARCHY)
-                kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
+            if (SCGRAPH_FILTER.optionValue != SCGRAPH_WO_HIERARCHY) {
+                if (instr.getStatement.hasParameter('layer', 'separate'))
+                    kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
+                else
+                    kExitNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
+            }
 
             // Create a fixed port at the entry node for outgoing edges.
             kEntryNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);

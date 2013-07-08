@@ -302,11 +302,15 @@ class SCLBasicBlockExtensions {
         val basicBlocks = new ArrayList<BasicBlock>;
         val sseq = statement.getParentStatementSequence
         for(stmt : sseq.statements) {
-            basicBlocks.addAll(stmt._getBasicBlocksByStatement)
+            for(bb : stmt._getBasicBlocksByStatement) {
+                if (!basicBlocks.containsEqual(bb)) basicBlocks.add(bb)
+            }
         }
         if (sseq instanceof Conditional) {
             for(stmt : (sseq as Conditional).elseStatements) {
-                basicBlocks.addAll(stmt._getBasicBlocksByStatement)
+                for(bb : stmt._getBasicBlocksByStatement) {
+                    if (!basicBlocks.containsEqual(bb)) basicBlocks.add(bb)
+                }
             }            
         }
         basicBlocks
@@ -331,9 +335,10 @@ class SCLBasicBlockExtensions {
                     if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
                 } 
                 if ((stmt.getInstruction as Conditional).elseStatements.size>0) { 
-                for (block : (stmt.getInstruction as Conditional).elseStatements.head.getBasicBlocks) {
-                    if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
-                } }
+                    for (block : (stmt.getInstruction as Conditional).elseStatements.head.getBasicBlocks) {
+                        if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
+                    } 
+                }
             }
             if (stmt.hasInstruction && stmt.getInstruction instanceof Parallel)
                 // ignore blocks that are already in the list 
@@ -405,7 +410,7 @@ class SCLBasicBlockExtensions {
             val predStmt = basicBlock.getHead.getPreviousInstructionStatementHierarchical
             val predStmtDirect = basicBlock.getHead.previousInstructionStatement
             if (!onlyNull && predStmt != null && predStmt.isConditional && predStmtDirect == null) {
-                val cond = predStmt.getBasicBlockByAnyStatementDepth;
+                val cond = predStmt.getBasicBlockByAnyStatement;
                 predecessors.add(cond)
             } else {
                 if (!onlyNull && predStmt != null && !(predStmt.getInstruction instanceof Goto)) {
@@ -426,7 +431,7 @@ class SCLBasicBlockExtensions {
         
             if (predStmtDirect.isConditional && predStmt.equals(predStmtDirect)) {
                 val trueBlock = predStmt.getInstruction.asConditional.statements.last.basicBlockByAnyStatementDepth
-                predecessors.add(trueBlock)
+                if (trueBlock!=null && !predecessors.containsEqual(trueBlock)) predecessors.add(trueBlock)
             }
         }
         
