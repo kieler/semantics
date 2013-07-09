@@ -24,38 +24,38 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface SyncgraphFactory extends EFactory {
 	/**
-	 * The singleton instance of the factory.
-	 * <!-- begin-user-doc -->
+     * The singleton instance of the factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	SyncgraphFactory eINSTANCE = de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncgraphFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Sync Transition</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Sync Transition</em>'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Sync Transition</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Sync Transition</em>'.
+     * @generated
+     */
 	SyncTransition createSyncTransition();
 
 	/**
-	 * Returns a new object of class '<em>Sync State</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Sync State</em>'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Sync State</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Sync State</em>'.
+     * @generated
+     */
 	SyncState createSyncState();
 
 	/**
-	 * Returns the package supported by this factory.
-	 * <!-- begin-user-doc -->
+     * Returns the package supported by this factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the package supported by this factory.
-	 * @generated
-	 */
+     * @return the package supported by this factory.
+     * @generated
+     */
 	SyncgraphPackage getSyncgraphPackage();
 
 } //SyncgraphFactory

@@ -19,7 +19,7 @@
     <profile>
       <id>juno42</id>
       <properties>
-        <tycho-version>0.15.0</tycho-version>
+        <tycho-version>0.18.0</tycho-version>
         <targetJdk>1.5</targetJdk>
       </properties>
 
@@ -145,6 +145,7 @@
             <version>0.0.1-SNAPSHOT</version>
           </docletArtifact>
           <useStandardDocletOptions>false</useStandardDocletOptions>
+          <additionalJOption>-p semantics</additionalJOption>
         </configuration>
 
         <!--        <executions>

@@ -17,7 +17,6 @@ package de.cau.cs.kieler.sjl.example;
  *****************************************************************************
  */
 
-import java.io.IOException;
 import de.cau.cs.kieler.sjl.SJLProgramWithSignals;
 
 import de.cau.cs.kieler.sjl.example.simple.State;

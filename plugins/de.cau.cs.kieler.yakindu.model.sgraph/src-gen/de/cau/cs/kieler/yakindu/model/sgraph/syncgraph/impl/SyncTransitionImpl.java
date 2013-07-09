@@ -33,6 +33,7 @@ import org.yakindu.sct.model.sgraph.impl.TransitionImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncTransitionImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncTransitionImpl#isIsHistory <em>Is History</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.impl.SyncTransitionImpl#isIsImmediate <em>Is Immediate</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,190 +41,243 @@ import org.yakindu.sct.model.sgraph.impl.TransitionImpl;
  */
 public class SyncTransitionImpl extends TransitionImpl implements SyncTransition {
 	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
 	protected static final TransitionType TYPE_EDEFAULT = TransitionType.WEAKABORT;
 
 	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
 	protected TransitionType type = TYPE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isIsHistory() <em>Is History</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #isIsHistory() <em>Is History</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isIsHistory()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #isIsHistory()
+     * @generated
+     * @ordered
+     */
 	protected static final boolean IS_HISTORY_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isIsHistory() <em>Is History</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #isIsHistory() <em>Is History</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isIsHistory()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #isIsHistory()
+     * @generated
+     * @ordered
+     */
 	protected boolean isHistory = IS_HISTORY_EDEFAULT;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isIsImmediate()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean IS_IMMEDIATE_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isIsImmediate()
+     * @generated
+     * @ordered
+     */
+    protected boolean isImmediate = IS_IMMEDIATE_EDEFAULT;
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected SyncTransitionImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return SyncgraphPackage.Literals.SYNC_TRANSITION;
-	}
+        return SyncgraphPackage.Literals.SYNC_TRANSITION;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public TransitionType getType() {
-		return type;
-	}
+        return type;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setType(TransitionType newType) {
-		TransitionType oldType = type;
-		type = newType == null ? TYPE_EDEFAULT : newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncgraphPackage.SYNC_TRANSITION__TYPE, oldType, type));
-	}
+        TransitionType oldType = type;
+        type = newType == null ? TYPE_EDEFAULT : newType;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncgraphPackage.SYNC_TRANSITION__TYPE, oldType, type));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public boolean isIsHistory() {
-		return isHistory;
-	}
+        return isHistory;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setIsHistory(boolean newIsHistory) {
-		boolean oldIsHistory = isHistory;
-		isHistory = newIsHistory;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY, oldIsHistory, isHistory));
-	}
+        boolean oldIsHistory = isHistory;
+        isHistory = newIsHistory;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY, oldIsHistory, isHistory));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isIsImmediate() {
+        return isImmediate;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setIsImmediate(boolean newIsImmediate) {
+        boolean oldIsImmediate = isImmediate;
+        isImmediate = newIsImmediate;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SyncgraphPackage.SYNC_TRANSITION__IS_IMMEDIATE, oldIsImmediate, isImmediate));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SyncgraphPackage.SYNC_TRANSITION__TYPE:
-				return getType();
-			case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
-				return isIsHistory();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SyncgraphPackage.SYNC_TRANSITION__TYPE:
+                return getType();
+            case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
+                return isIsHistory();
+            case SyncgraphPackage.SYNC_TRANSITION__IS_IMMEDIATE:
+                return isIsImmediate();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SyncgraphPackage.SYNC_TRANSITION__TYPE:
-				setType((TransitionType)newValue);
-				return;
-			case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
-				setIsHistory((Boolean)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SyncgraphPackage.SYNC_TRANSITION__TYPE:
+                setType((TransitionType)newValue);
+                return;
+            case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
+                setIsHistory((Boolean)newValue);
+                return;
+            case SyncgraphPackage.SYNC_TRANSITION__IS_IMMEDIATE:
+                setIsImmediate((Boolean)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case SyncgraphPackage.SYNC_TRANSITION__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
-			case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
-				setIsHistory(IS_HISTORY_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SyncgraphPackage.SYNC_TRANSITION__TYPE:
+                setType(TYPE_EDEFAULT);
+                return;
+            case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
+                setIsHistory(IS_HISTORY_EDEFAULT);
+                return;
+            case SyncgraphPackage.SYNC_TRANSITION__IS_IMMEDIATE:
+                setIsImmediate(IS_IMMEDIATE_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SyncgraphPackage.SYNC_TRANSITION__TYPE:
-				return type != TYPE_EDEFAULT;
-			case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
-				return isHistory != IS_HISTORY_EDEFAULT;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SyncgraphPackage.SYNC_TRANSITION__TYPE:
+                return type != TYPE_EDEFAULT;
+            case SyncgraphPackage.SYNC_TRANSITION__IS_HISTORY:
+                return isHistory != IS_HISTORY_EDEFAULT;
+            case SyncgraphPackage.SYNC_TRANSITION__IS_IMMEDIATE:
+                return isImmediate != IS_IMMEDIATE_EDEFAULT;
+        }
+        return super.eIsSet(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (type: ");
-		result.append(type);
-		result.append(", isHistory: ");
-		result.append(isHistory);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (type: ");
+        result.append(type);
+        result.append(", isHistory: ");
+        result.append(isHistory);
+        result.append(", isImmediate: ");
+        result.append(isImmediate);
+        result.append(')');
+        return result.toString();
+    }
 
 } //SyncTransitionImpl

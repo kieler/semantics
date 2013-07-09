@@ -16,6 +16,7 @@ package de.cau.cs.kieler.yakindu.ui.editor.parts;
 import org.eclipse.draw2d.Connection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.SWT;
 import org.yakindu.sct.ui.editor.editor.figures.TransitionFigure;
 import org.yakindu.sct.ui.editor.editparts.TransitionEditPart;
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition;
@@ -27,7 +28,9 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
  * to allow switching between the three diferent transition types (weak abort,
  * strong abort, and normal termination).
  * 
- * @author wah
+ * cmot added isImmediate-Visualization 7.6.2013
+ * 
+ * @author wah, cmot
  * @kieler.rating green 2013-04-13
  * 
  */
@@ -100,12 +103,20 @@ public class SyncTransitionEditPart extends TransitionEditPart {
 		EObject element = resolveSemanticElement();
 		if (element instanceof SyncTransition) {
 			boolean isHistory = ((SyncTransition) element).isIsHistory();
+                        boolean isImmediate = ((SyncTransition) element).isIsImmediate();
 			if (isHistory) {
 				transition.setTargetDecoration(TransitionDecorator
 						.createHistoryTargetDecoration());
 			} else {
 				transition.setTargetDecoration(TransitionDecorator
 						.createTransitionTargetDecoration());
+			}
+			if (isImmediate) {
+			    transition.setLineDash(new float[] { 8.0f, 5.0f });
+			    transition.setLineStyle(SWT.LINE_CUSTOM);
+			}
+			else {
+			    transition.setLineStyle(SWT.LINE_SOLID);
 			}
 		}
 	}

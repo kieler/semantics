@@ -20,8 +20,6 @@ import java.io.IOException;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sj.xtend.AuxiliaryStates;
 import de.cau.cs.kieler.s.sj.xtend.S2SJ;
@@ -37,15 +35,6 @@ public class S2SJPlugin extends AbstractUIPlugin {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.s.sc"; //$NON-NLS-1$
-
-    /** The estimated maximum buffer size (string length) used for a pure signal. */
-    private static final int PURE_SIGNAL_BUFFER_CONSTANT = 21;
-
-    /** The estimated maximum buffer size (string length)used for a valued signal. */
-    private static final int VALUED_SIGNAL_BUFFER_CONSTANT = 100;
-
-    /** The minimal buffer size for the communicating buffer of the running SC program. */
-    private static final double MINIMAL_BUFFER_SIZE = 2048;
 
     /** The shared instance. */
     private static S2SJPlugin plugin;

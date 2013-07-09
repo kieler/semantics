@@ -25,8 +25,8 @@ import de.cau.cs.kieler.synccharts.sim.s.SyncChartsSimSPlugin
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 import de.cau.cs.kieler.core.kexpressions.Expression
 import com.google.common.collect.ImmutableList
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.synccharts.Action
@@ -358,7 +358,6 @@ class SyncCharts2Simulation {
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
         for(targetState :  ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
             targetState.transformNormalTermination(targetRootRegion);
         }
         
@@ -460,14 +459,393 @@ class SyncCharts2Simulation {
 
     }
            
+           
 
-     
+    //-------------------------------------------------------------------------
+    //--                S U R F A C E  &   D E P T H                         --
+    //-------------------------------------------------------------------------
+    //@requires: abort transformation (there must not be any weak or strong aborts outgoing from
+    //                                 macro state, hence we just consider simple states here)
+
+    // For every non-hierarchical state S that has outgoing transitions and is of type NORMAL:
+    // Create an auxiliary signal isDepth_S that indicates that the state was
+    // entered in an earlier tick and add it to the parent state P of the parent region R of S.
+    // Modify all triggers of outgoing non-immediate transitions T of S: 1. set them to be
+    // immediate and 2. add "isDepth_S &&" to its trigger.
+    // Modify state S and make it a conditional.
+    // Now walk through all n transitions T_1..n outgoing from S (ordered ascended by their priority):
+    // For T_i create a conditional C_i. Connect C_i-1 and C_i with a true triggered immediate transition
+    // of priority 2. Set priority of T_i to 1. Note that T_i's original priority is now implicitly encoded
+    // by the sequential order of evaluating the conditionals C_1..n.
+    // The last conditional C_n connect with a new a normal state D (the explicit depth of S).
+    // Connect D with C_1 using a transition that emits isDepth_S.
+    
+    // Note that conditionals cannot be marked to be initial. Hence, if a state S is marked initial 
+    // then an additional initial state I with a true triggered immediate transition to S will
+    // be inserted. \code{S} is then marked not to be initial. This is a necessary pre-processing for
+    // the above transformation.
+    
+    def Region transformSurfaceDepth (Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).filter(e | !e.hierarchical).toList();
+
+        // For every state in the SyncChart do the transformation
+        // Iterate over a copy of the list  
+        for(targetState : targetStates) {
+            targetState.transformSurfaceDepth(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+         
+     def void transformSurfaceDepth(State state, Region targetRootRegion) {
+       if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL) {
+         val parentRegion = state.parentRegion;
+         val stateId = state.id;
+         val stateLabel = state.label;
+
+         // SPECIAL CASE OF INITIAL STATES 
+         // Insert a state and a transition here because conditional states cannot be initial
+         if (state.isInitial) {
+             val initialState  = SyncchartsFactory::eINSTANCE.createState();
+             initialState.setId("Initial" + state.hashCode);
+             initialState.setLabel("I"); 
+             initialState.setIsInitial(true);
+             parentRegion.states.add(initialState);
+             state.setIsInitial(false);
+             // Connect             
+             val connect = SyncchartsFactory::eINSTANCE.createTransition();
+             connect.setIsImmediate(true);
+             connect.setLabel("#");
+             connect.setPriority(1);
+             connect.setTargetState(state);
+             initialState.outgoingTransitions.add(connect);
+         }             
+           
+         // Create auxiliary signal
+         var isDepthSignalUID = "isDepth_" + parentRegion.hashCode + "_" + state.id;
+         val isDepthSignal = KExpressionsFactory::eINSTANCE.createSignal();
+         isDepthSignal.setName(isDepthSignalUID);
+         isDepthSignal.setIsInput(false);
+         isDepthSignal.setIsOutput(false);
+         isDepthSignal.setType(ValueType::PURE);
+         parentRegion.parentState.signals.add(isDepthSignal);  
+
+         // Modify triggers of non immediate transitions and make them immediate
+         val nonImmediateTransitions = state.outgoingTransitions.filter(e | !e.isImmediate).toList;
+         val auxiliaryTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
+             auxiliaryTrigger.setValuedObject(isDepthSignal);
+         for (transition : nonImmediateTransitions) {
+             // Make this transition immediate now
+             transition.setIsImmediate(true);
+             // Modify trigger if any
+             if (transition.trigger != null) {
+                 val andAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+                 andAuxiliaryTrigger.setOperator(OperatorType::AND);
+                 andAuxiliaryTrigger.subExpressions.add(auxiliaryTrigger.copy);
+                 andAuxiliaryTrigger.subExpressions.add(transition.trigger);
+                 transition.setTrigger(andAuxiliaryTrigger);
+             }  else {
+                 transition.setTrigger(auxiliaryTrigger.copy);
+             }
+         } 
+
+         // Modify surfaceState (the original state)
+         val surfaceState = state;
+         surfaceState.setType(StateType::CONDITIONAL);
+         surfaceState.setId(stateId + "Surface");
+         surfaceState.setLabel(stateLabel + "Surface");
+         
+         // For every state create a number of surface nodes
+         val orderedTransitionList = state.outgoingTransitions.sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
+         
+         var previousSurfState = surfaceState;
+         var State surfState = null;
+         for (transition : orderedTransitionList) {
+            surfState  = SyncchartsFactory::eINSTANCE.createState();
+            surfState.setType(StateType::CONDITIONAL);
+            surfState.setId(stateId + "Surface" + transition.hashCode);
+            surfState.setLabel(stateLabel + "Surface");
+            parentRegion.states.add(surfState);
+            // Move transition to this state
+            surfState.outgoingTransitions.add(transition);
+            // We can now set the transition priority to 1 (it is reflected implicityly by the sequential order now)
+            transition.setPriority(1);
+            // Connect
+            val connect = SyncchartsFactory::eINSTANCE.createTransition();
+            connect.setIsImmediate(true);
+            connect.setLabel("#");
+            connect.setPriority(2);
+            connect.setTargetState(surfState);
+            previousSurfState.outgoingTransitions.add(connect);
+            // Next cycle
+            previousSurfState = surfState; 
+         }
+         
+         // Add an additional last state that will become depth State
+         val depthState  = SyncchartsFactory::eINSTANCE.createState();
+         depthState.setType(StateType::NORMAL);
+         depthState.setId(stateId); // + "Depth");
+         depthState.setLabel(stateLabel); // + "Depth");
+         parentRegion.states.add(depthState);
+         // Connect
+         val connect = SyncchartsFactory::eINSTANCE.createTransition();
+         connect.setIsImmediate(true);
+         connect.setLabel("#");
+         connect.setPriority(2);
+         connect.setTargetState(depthState);
+         surfState.outgoingTransitions.add(connect);
+         
+         // Connect back depth with surface state
+         val connectBack = SyncchartsFactory::eINSTANCE.createTransition();
+         // This MUST be highest priority so that the control flow restarts and takes other 
+         // outgoing transition.
+         // There should not be any other outgoing transition.
+         connectBack.setPriority(1);
+         connectBack.setTargetState(surfaceState);
+         depthState.outgoingTransitions.add(connectBack);
+         val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
+         auxiliaryEmission.setSignal(isDepthSignal);
+         connectBack.effects.add(auxiliaryEmission);
+         
+       }
+     }
+
+
+
+    //-------------------------------------------------------------------------
+    //--                 S P L I T   T R A N S I T I O N                     --
+    //-------------------------------------------------------------------------
+
+    // For every transition T that has both, a trigger and an effect do the following:
+    // Create a conditional C and add it to the parent of T's source state S_src.
+    // Create a new true triggered immediate effect transition T_eff and move all effects of T to T_eff.
+    // Set the T_eff to have T's target state. Set T to have the target C.
+    // Add T_eff to C's outgoing transitions. 
+    
+    def Region transformSplitTransition (Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+
+        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+
+        // For every transition in the SyncChart do the transformation
+        // Iterate over a copy of the list  
+        for(targetTransition : targetTransitions) {
+            targetTransition.transformSplitTransition(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+         
+     def void transformSplitTransition(Transition transition, Region targetRootRegion) {
+         
+         // Only apply this to transition that have both, a trigger and effects!
+         if (transition.trigger != null && !transition.effects.nullOrEmpty) {
+              val targetState = transition.targetState;
+              val parentRegion = targetState.parentRegion;
+              val triggerTransition = transition;
+             
+             val triggeredState  = SyncchartsFactory::eINSTANCE.createState();
+             triggeredState.setId(targetState.id + "_Triggered_" + targetState.hashCode);
+             triggeredState.setLabel( targetState.id + "_Triggered"); 
+             triggeredState.setType(StateType::CONDITIONAL);
+             parentRegion.states.add(triggeredState);
+             // Create new effect transition             
+             val effectTransition = SyncchartsFactory::eINSTANCE.createTransition();
+             effectTransition.setIsImmediate(true);
+             effectTransition.setLabel("#");
+             effectTransition.setPriority(1);
+             // Move effect to effect transition
+             for (effect : transition.effects) {
+                 effectTransition.effects.add(effect.copy);
+             } 
+             transition.effects.clear;
+             // Re-connect
+             effectTransition.setTargetState(transition.targetState);
+             triggerTransition.setTargetState(triggeredState);
+             triggeredState.outgoingTransitions.add(effectTransition);
+         }
+     }
+
+
+
+    //-------------------------------------------------------------------------
+    //--           F I N A L   S T A T E S    T R A N S I T I O N            --
+    //-------------------------------------------------------------------------
+    
+    // For every region R that contains final states with outgoing transitions do the following:
+    // Create an Abort signal and add it to R's parent state P.
+    // Go through every region of P other then R and search for final states Q_1..n. For all incoming transitions
+    // of all Q_1..n add an emission of Abort.
+    // Find a common final state F of region R that has no outgoing transition. If no one exists, create one.
+    
+    // For every final state S with outgoing transitions inside R do the following:
+    // Finally add an immediate transition with maximal (lowest) priority from S to F triggered by Abort.
+
+
+    def Region transformFinalStateTransition (Region rootRegion) {
+        // Clone the complete SyncCharts region 
+        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+
+        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+
+        // For every state in the SyncChart do the transformation
+        // Iterate over a copy of the list  
+        for(targetState : targetStates) {
+            targetState.transformFinalStateTransition(rootRegion);
+        }
+        
+        targetRootRegion;
+    }
+         
+     def void transformFinalStateTransition(State parentState, Region targetRootRegion) {
+       val parentStatesIsConsidered = parentState.eAllContents().toIterable().filter(typeof(State)).filter(e | e.parentRegion.parentState == parentState && e.isFinal && !e.outgoingTransitions.nullOrEmpty).toList();
+         
+       if (!parentStatesIsConsidered.nullOrEmpty) {
+            // Auxiliary reset signal
+            var auxiliaryResetSignalUID = "Abort" + parentState.hashCode;
+            val auxiliaryResetSignal = KExpressionsFactory::eINSTANCE.createSignal();
+            auxiliaryResetSignal.setName(auxiliaryResetSignalUID);
+            auxiliaryResetSignal.setIsInput(false);
+            auxiliaryResetSignal.setIsOutput(false);
+            auxiliaryResetSignal.setType(ValueType::PURE);
+            parentState.signals.add(auxiliaryResetSignal);
+            
+            // Auxiliary watch master region with macro WatchMasterState and AbortedState
+            val auxiliaryWatchMasterRegion  = SyncchartsFactory::eINSTANCE.createRegion();
+            parentState.regions.add(auxiliaryWatchMasterRegion);
+            auxiliaryWatchMasterRegion.setId("Watch" + parentState.hashCode);
+            val auxiliaryWatchMasterState  = SyncchartsFactory::eINSTANCE.createState();
+            auxiliaryWatchMasterRegion.states.add(auxiliaryWatchMasterState);
+            auxiliaryWatchMasterState.setId("Watch" + parentState.hashCode);
+            auxiliaryWatchMasterState.setLabel("Watch");
+            auxiliaryWatchMasterState.setIsInitial(true);
+            val auxiliaryAbortedState  = SyncchartsFactory::eINSTANCE.createState();
+            auxiliaryWatchMasterRegion.states.add(auxiliaryAbortedState);
+            auxiliaryAbortedState.setId("Aborted" + parentState.hashCode);
+            auxiliaryAbortedState.setLabel("Aborted");
+            auxiliaryAbortedState.setIsFinal(true);
+            // Connect WatchMaster and Aborted state
+            val abortRegionTransition = SyncchartsFactory::eINSTANCE.createTransition();
+            abortRegionTransition.setPriority(1)
+            abortRegionTransition.setType(TransitionType::NORMALTERMINATION);
+            abortRegionTransition.setTargetState(auxiliaryAbortedState);
+            auxiliaryWatchMasterState.outgoingTransitions.add(abortRegionTransition);
+            // In this normal termination emit reset signal for the region           
+            val auxiliaryResetSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+            auxiliaryResetSignalEmission.setSignal(auxiliaryResetSignal);   
+            abortRegionTransition.effects.add(auxiliaryResetSignalEmission);                       
+            
+            // For every parallel region W
+            for (parallelRegion : parentState.regions) {
+                   if (parallelRegion != auxiliaryWatchMasterRegion) {
+                        // Auxiliary term signal - Try to find existing for parallelRegion
+                        val auxiliaryRegionTermSignalUID = "Term" + parallelRegion.hashCode;
+                        var Signal auxiliaryRegionTermSignal = null; 
+                        auxiliaryRegionTermSignal = KExpressionsFactory::eINSTANCE.createSignal();
+                        auxiliaryRegionTermSignal.setName(auxiliaryRegionTermSignalUID);
+                        auxiliaryRegionTermSignal.setIsInput(false);
+                        auxiliaryRegionTermSignal.setIsOutput(false);
+                        auxiliaryRegionTermSignal.setType(ValueType::PURE);
+                        parentState.signals.add(auxiliaryRegionTermSignal);
+                            
+                        for (finalState : parallelRegion.states.filter(e | e.isFinal))  {
+                                for (finalStateTransition : finalState.incomingTransitions) {
+                                   val auxiliaryTermSignalEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                                   auxiliaryTermSignalEmission.setSignal(auxiliaryRegionTermSignal);   
+                                   finalStateTransition.effects.add(auxiliaryTermSignalEmission);                       
+                                }
+                        }
+                        
+                        // Now add regions for all parallelRegions in the auxiliaryWatchMasterState
+                        val auxiliaryWatchRegion  = SyncchartsFactory::eINSTANCE.createRegion();
+                        auxiliaryWatchMasterState.regions.add(auxiliaryWatchRegion);
+                        auxiliaryWatchRegion.setId("Watch" + parallelRegion.hashCode);
+                        val auxiliaryWatchState  = SyncchartsFactory::eINSTANCE.createState();
+                        auxiliaryWatchRegion.states.add(auxiliaryWatchState);
+                        auxiliaryWatchState.setId("I" + parallelRegion.hashCode);
+                        auxiliaryWatchState.setLabel("I");
+                        auxiliaryWatchState.setIsInitial(true);
+                        val auxiliaryTerminatedState  = SyncchartsFactory::eINSTANCE.createState();
+                        auxiliaryWatchRegion.states.add(auxiliaryTerminatedState);
+                        auxiliaryTerminatedState.setId("T" + parallelRegion.hashCode);
+                        auxiliaryTerminatedState.setLabel("T");
+                        auxiliaryTerminatedState.setIsFinal(true);
+                        // Connect
+                        val terminatedRegionTransition = SyncchartsFactory::eINSTANCE.createTransition();
+                        val terminatedRegionTransitionTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                        terminatedRegionTransitionTrigger.setValuedObject(auxiliaryRegionTermSignal);
+                        terminatedRegionTransition.setPriority(1)
+                        terminatedRegionTransition.setIsImmediate(true);
+                        terminatedRegionTransition.setTrigger(terminatedRegionTransitionTrigger);
+                        terminatedRegionTransition.setTargetState(auxiliaryTerminatedState);
+                        auxiliaryWatchState.outgoingTransitions.add(terminatedRegionTransition);
+                   }
+            } // end for every parallelRegion
+           
+            for (region : parentState.regions) {
+                // Consider regions that contain final states with outgoing transitions
+                val consideredFinalStates = region.states.filter(e | e.isFinal && !e.outgoingTransitions.nullOrEmpty);
+
+                if (!consideredFinalStates.nullOrEmpty) {
+                    val parentRegion = region;
+
+                    // Find the one final state for the parentRegion to abort to
+                    var State finalStateAbortTarget = null;
+                    val finalStates = parentRegion.states.filter(e | e.isFinal && e.outgoingTransitions.nullOrEmpty);
+                    if (finalStates.nullOrEmpty) {
+                        // Create one 
+                        finalStateAbortTarget  = SyncchartsFactory::eINSTANCE.createState();
+                        finalStateAbortTarget.setId("final" + parentRegion.hashCode);
+                        finalStateAbortTarget.setLabel("final");
+                        finalStateAbortTarget.setIsInitial(false);
+                        parentRegion.states.add(finalStateAbortTarget);
+                    } else {
+                        finalStateAbortTarget = finalStates.head;
+                    }
+            
+                    // Now handle the consider states, make them non-final and add abort transition
+                    for (state : consideredFinalStates) {
+                        val sourceState = state;
+                        val maxPrio = sourceState.outgoingTransitions.size + 1;
+               
+                        // Set source state not to be final any more
+                        sourceState.setIsFinal(false);
+               
+                        // Add aborting transition
+                        val resetTransition = SyncchartsFactory::eINSTANCE.createTransition();
+                        val auxiliaryResetTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                        auxiliaryResetTrigger.setValuedObject(auxiliaryResetSignal);
+                        resetTransition.setTrigger(auxiliaryResetTrigger);
+                        resetTransition.setPriority(maxPrio)
+                        resetTransition.setIsImmediate(true);
+                        resetTransition.setLabel("#");
+                        resetTransition.setTargetState(finalStateAbortTarget);
+                        sourceState.outgoingTransitions.add(resetTransition);
+                    } // end for
+                } // end if considered states <> null                
+            }
+
+
+           
+       }  // end if considered
+     }
+
+
+
     //-------------------------------------------------------------------------
     //--                   C O U N T   D E L A Y S                           --
     //-------------------------------------------------------------------------
-    // @requires: auxiliary (host) variables
-     
-    // Transforming Count Delays entry function.
+
+    // For every transition T from state S with a count delay n create a region R. Put the
+    // region into S (hence, S may become a macro state). Create a new signal countDelay that is emitted
+    // by the last transition of the auxiliary region R. Create n+1 states within R and connect
+    // these by the same trigger of T just without the count delay. The n+1's state must be final
+    // in order to handle possible outgoing normal terminations of S correctly.
+    
     def Region transformCountDelay (Region rootRegion) {
         // Clone the complete SyncCharts region 
         var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
@@ -484,52 +862,142 @@ class SyncCharts2Simulation {
         targetRootRegion;
     }
          
-     // This will encode count delays in transitions and insert additional counting
-     // host code variables plus modifying the trigger of the count delayed transition
-     // to be immediate and guarded by a host code expression (with the specific
-    // number of ticks).
+     // This will encode count delays in transitions.
      def void transformCountDelay(Transition transition, Region targetRootRegion) {
           if (transition.delay > 1) {
-               // auxiliary signal
-               val auxiliaryVariable = KExpressionsFactory::eINSTANCE.createVariable;
-               val auxiliaryVariableName = "countDelay" + transition.hashCode + "";
-               auxiliaryVariable.setName(auxiliaryVariableName);
-               auxiliaryVariable.setType(ValueType::INT);
-               auxiliaryVariable.setInitialValue("0");
+               val targetRootState = targetRootRegion.states.get(0);
+               val sourceState = transition.sourceState;
+               
+               // Optimization: If there is no outgoing normal termination out of S then do not mark states as final
+               val existsNormalTermination = !(sourceState.parentRegion.parentState.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).nullOrEmpty);
 
-               // add auxiliaryVariable to first (and only) root region state SyncCharts main interface
-                 targetRootRegion.states.get(0).variables.add(auxiliaryVariable);
-                 
-               // add self-loop transition, counting up the variable
-               val selfLoop = SyncchartsFactory::eINSTANCE.createTransition();
-               val state = transition.sourceState;
-               selfLoop.setTargetState(state);
-               selfLoop.setPriority(1);
-               val selfLoopEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
-               selfLoopEffect.setCode(auxiliaryVariableName + "++");
-               selfLoop.effects.add(selfLoopEffect);
-               selfLoop.setTrigger(transition.trigger);
-               state.outgoingTransitions.add(selfLoop);
+               // auxiliary trigger signal
+               var auxiliarySignalUID = "countDelay" + transition.hashCode;
+               val auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
+               auxiliarySignal.setName(auxiliarySignalUID);
+               auxiliarySignal.setIsInput(false);
+               auxiliarySignal.setIsOutput(false);
+               auxiliarySignal.setType(ValueType::PURE);
+               targetRootState.signals.add(auxiliarySignal);
 
-               // calculate a new terminating expression, based on the auxiliary variable
-               val terminatingExpression = KExpressionsFactory::eINSTANCE.createTextExpression;
-               terminatingExpression.setCode(auxiliaryVariableName + " >= " + transition.delay);
-               transition.setTrigger(terminatingExpression);
+               val triggerExpression = transition.trigger;
                
-               // disable old delay, set it to be immediate
-               transition.setDelay(1);
-               transition.setIsImmediate(true);
+
+               // Create auxiliary region R and add it to the source state.
+               // Also add the auxiliary signal to this common parent state
+               val auxiliaryRegion = SyncchartsFactory::eINSTANCE.createRegion()
+               sourceState.regions.add(auxiliaryRegion);
+
+               var delay = 0;
+               var State previousAuxiliaryState = null;
+               var State auxiliaryState = null;
+               while (delay <= transition.delay) {
+                   delay = delay + 1;
+                   previousAuxiliaryState = auxiliaryState;
+                   
+                   auxiliaryState  = SyncchartsFactory::eINSTANCE.createState();
+                   auxiliaryState.setId("delay" + delay);
+                   auxiliaryState.setLabel(delay + "");
+                   auxiliaryState.setIsInitial(delay == 1);
+                   auxiliaryRegion.states.add(auxiliaryState);
+                   
+                   if (previousAuxiliaryState != null) {
+                       val connect = SyncchartsFactory::eINSTANCE.createTransition();
+                       connect.setPriority(2);
+                       connect.targetState = auxiliaryState
+                       previousAuxiliaryState.outgoingTransitions.add(connect);
+                       connect.setTrigger(triggerExpression.copy);
+                       if (delay > transition.delay) {
+                           // Connect last state
+                           val auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
+                           auxiliaryEmission.setSignal(auxiliarySignal);
+                           connect.effects.add(auxiliaryEmission);
+                       } 
+                       
+                       // Make state final (just in case, because there could be
+                       // a normal termination outgoing)
+                       if (existsNormalTermination) {
+                          auxiliaryState.setIsFinal(true);
+                       }
+                   }
+               }
                
-            // reset the variable for all incoming transition
-            val resetEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
-            resetEffect.setCode(auxiliaryVariableName + "= 0");
-            for (incomingTransition : state.incomingTransitions) {
-                // Add reset text effect of incoming transition
-                transition.effects.add(resetEffect);
-            }
-               
+               // Modify original trigger
+               transition.setDelay(0);
+               val auxiliaryTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
+               auxiliaryTrigger.setValuedObject(auxiliarySignal);
+               transition.setTrigger(auxiliaryTrigger);
           }
      }
+     
+//    //-------------------------------------------------------------------------
+//    //--                   C O U N T   D E L A Y S                           --
+//    //-------------------------------------------------------------------------
+//    // @requires: auxiliary (host) variables
+//     
+//    // Transforming Count Delays entry function.
+//    def Region transformCountDelay (Region rootRegion) {
+//        // Clone the complete SyncCharts region 
+//        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+//
+//        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+//
+//        // For every transition in the SyncChart do the transformation
+//        // Iterate over a copy of the list  
+//        for(targetTransition : targetTransitions) {
+//            // This statement we want to modify
+//            targetTransition.transformCountDelay(targetRootRegion);
+//        }
+//        
+//        targetRootRegion;
+//    }
+//         
+//     // This will encode count delays in transitions and insert additional counting
+//     // host code variables plus modifying the trigger of the count delayed transition
+//     // to be immediate and guarded by a host code expression (with the specific
+//    // number of ticks).
+//     def void transformCountDelay(Transition transition, Region targetRootRegion) {
+//          if (transition.delay > 1) {
+//               // auxiliary signal
+//               val auxiliaryVariable = KExpressionsFactory::eINSTANCE.createVariable;
+//               val auxiliaryVariableName = "countDelay" + transition.hashCode + "";
+//               auxiliaryVariable.setName(auxiliaryVariableName);
+//               auxiliaryVariable.setType(ValueType::INT);
+//               auxiliaryVariable.setInitialValue("0");
+//
+//               // add auxiliaryVariable to first (and only) root region state SyncCharts main interface
+//                 targetRootRegion.states.get(0).variables.add(auxiliaryVariable);
+//                 
+//               // add self-loop transition, counting up the variable
+//               val selfLoop = SyncchartsFactory::eINSTANCE.createTransition();
+//               val state = transition.sourceState;
+//               selfLoop.setTargetState(state);
+//               selfLoop.setPriority(1);
+//               val selfLoopEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
+//               selfLoopEffect.setCode(auxiliaryVariableName + "++");
+//               selfLoop.effects.add(selfLoopEffect);
+//               selfLoop.setTrigger(transition.trigger);
+//               state.outgoingTransitions.add(selfLoop);
+//
+//               // calculate a new terminating expression, based on the auxiliary variable
+//               val terminatingExpression = KExpressionsFactory::eINSTANCE.createTextExpression;
+//               terminatingExpression.setCode(auxiliaryVariableName + " >= " + transition.delay);
+//               transition.setTrigger(terminatingExpression);
+//               
+//               // disable old delay, set it to be immediate
+//               transition.setDelay(1);
+//               transition.setIsImmediate(true);
+//               
+//            // reset the variable for all incoming transition
+//            val resetEffect = SyncchartsFactory::eINSTANCE.createTextEffect;
+//            resetEffect.setCode(auxiliaryVariableName + "= 0");
+//            for (incomingTransition : state.incomingTransitions) {
+//                // Add reset text effect of incoming transition
+//                transition.effects.add(resetEffect);
+//            }
+//               
+//          }
+//     }
      
     
     //-------------------------------------------------------------------------

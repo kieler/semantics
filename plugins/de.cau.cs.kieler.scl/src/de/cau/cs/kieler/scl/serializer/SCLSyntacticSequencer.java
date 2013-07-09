@@ -1,0 +1,4 @@
+package de.cau.cs.kieler.scl.serializer;
+
+public class SCLSyntacticSequencer extends AbstractSCLSyntacticSequencer {
+}

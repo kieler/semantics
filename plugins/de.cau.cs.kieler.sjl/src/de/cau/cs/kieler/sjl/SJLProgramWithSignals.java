@@ -26,32 +26,39 @@ import java.util.LinkedList;
  * @kieler.rating 2013-05-23 proposed
  * 
  */
-public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLProgram<State> {
+public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLProgram<State>
+        implements Cloneable {
 
     // -------------------------------------------------------------------------
-    
+
     protected int combineAdd(int a, int b) {
         return a + b;
     }
+
     protected boolean combineAdd(boolean a, boolean b) {
         return a || b;
     }
+
     protected double combineAdd(double a, double b) {
         return a + b;
     }
+
     protected long combineAdd(long a, long b) {
         return a + b;
     }
-    
+
     protected int combineMult(int a, int b) {
         return a * b;
     }
+
     protected boolean combineMult(boolean a, boolean b) {
         return a && b;
     }
+
     protected double combineMult(double a, double b) {
         return a * b;
     }
+
     protected long combineMult(long a, long b) {
         return a * b;
     }
@@ -62,37 +69,43 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
         }
         return b;
     }
+
     protected boolean combineMax(boolean a, boolean b) {
         return a || b;
     }
+
     protected double combineMax(double a, double b) {
         if (a > b) {
             return a;
         }
         return b;
     }
+
     protected long combineMax(long a, long b) {
         if (a > b) {
             return a;
         }
         return b;
     }
-    
+
     protected int combineMin(int a, int b) {
         if (a < b) {
             return a;
         }
         return b;
     }
+
     protected boolean combineMin(boolean a, boolean b) {
         return a && b;
     }
+
     protected double combineMin(double a, double b) {
         if (a < b) {
             return a;
         }
         return b;
     }
+
     protected long combineMin(long a, long b) {
         if (a < b) {
             return a;
@@ -100,49 +113,53 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
         return b;
     }
 
-    
     protected int combineAnd(int a, int b) {
         return a & b;
     }
+
     protected boolean combineAnd(boolean a, boolean b) {
         return a && b;
     }
+
     protected double combineAnd(double a, double b) {
         return a * b;
     }
+
     protected long combineAnd(long a, long b) {
         return a & b;
     }
-    
+
     protected int combineOr(int a, int b) {
         return a | b;
     }
+
     protected boolean combineOr(boolean a, boolean b) {
         return a || b;
     }
+
     protected double combineOr(double a, double b) {
         return a + b;
     }
+
     protected long combineOr(long a, long b) {
         return a | b;
     }
-    
+
     // -------------------------------------------------------------------------
 
     @SuppressWarnings("deprecation")
     public static void main(final String[] args, SJLProgramWithSignals<?> program) {
-        java.io.DataInputStream in = 
-                new java.io.DataInputStream(System.in);
+        java.io.DataInputStream in = new java.io.DataInputStream(System.in);
 
         for (int tick = 0; tick < 20; tick++) {
-            
+
             // Set input signals
             String input;
             program.resetSignals();
-            
+
             try {
                 input = in.readLine().toLowerCase();
-                for(String signalName : program.getSignalNames()) {
+                for (String signalName : program.getSignalNames()) {
                     if (input.contains(signalName.toLowerCase())) {
                         try {
                             program.setInput(signalName, true);
@@ -160,19 +177,20 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            
+
             // Do tick
             program.doTick();
-            
+
             // Debug output
             if (program.isDebug()) {
                 System.out.println(program.getLastDebugMessage());
             }
-            
+
             // Inspect output signals
-            for(String signalName : program.getSignalNames()) {
+            for (String signalName : program.getSignalNames()) {
                 try {
-                    if (program.getOutput(signalName) instanceof Boolean && ((Boolean)program.getOutput(signalName)).booleanValue()) {
+                    if (program.getOutput(signalName) instanceof Boolean
+                            && ((Boolean) program.getOutput(signalName)).booleanValue()) {
                         System.out.print(signalName + " ");
                     }
                 } catch (NoSuchFieldException e) {
@@ -186,15 +204,15 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
                 }
             }
             System.out.println("");
-            
-            if(program.isTerminated()) {
+
+            if (program.isTerminated()) {
                 break;
             }
         }
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Instantiates a new SJLProgramWithSignals.
      * 
@@ -219,6 +237,18 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
         resetOutputSignals();
         // Delegate to doTick() of SJLProgram
         return super.doTick();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean doTick(int number) {
+        // Reset output signals before computing the reaction
+        resetOutputSignals();
+        // Delegate to doTick() of SJLProgram
+        return super.doTick(number);
     }
 
     // -------------------------------------------------------------------------
@@ -375,6 +405,25 @@ public abstract class SJLProgramWithSignals<State extends Enum<?>> extends SJLPr
 
     // -------------------------------------------------------------------------
     
+    /**
+     * Checks by name whether a signal exists in the SJ program.
+     *
+     * @param key the key
+     * @return true, if successful
+     */
+    public boolean hasSignal(String key) {
+        LinkedList<String> fieldNames = getSignalNames();
+        for (String fieldName : fieldNames) {
+            if (fieldName.equals(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // -------------------------------------------------------------------------
+
+
     /**
      * Gets all signal names declared.
      * 

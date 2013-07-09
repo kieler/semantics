@@ -63,7 +63,7 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
     private static final int KIEM_PROPERTY_RUNS = 0;
     private static final int KIEM_PROPERTY_MARKER = 1;
     private static final int KIEM_PROPERTY_CONSOLIDATE = 2;
-    private static final String KIEM_PROPERTY_MARKER_DEFAULT = "benchCycles, benchSource, benchExecutable";
+    private static final String KIEM_PROPERTY_MARKER_DEFAULT = "benchTime, benchSource, benchExecutable";
 
     private static final String BENCHMARK_FILE_ENDING = "csv";
     private static final String BENCHMARK_DATA_SEPARATOR = ",";
@@ -184,6 +184,9 @@ public class BenchmarkDataComponent extends JSONObjectSimulationDataComponent im
                     }
                     if (obj instanceof Integer) {
                         benchmarkDataEntry += ((Integer) obj);
+                    }
+                    if (obj instanceof Double) {
+                        benchmarkDataEntry += ((Double) obj);
                     }
                 } catch (JSONException e) {
                     // Ignore errors

@@ -31,137 +31,137 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class SyncgraphFactoryImpl extends EFactoryImpl implements SyncgraphFactory {
 	/**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static SyncgraphFactory init() {
-		try {
-			SyncgraphFactory theSyncgraphFactory = (SyncgraphFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.org/syncgraph"); 
-			if (theSyncgraphFactory != null) {
-				return theSyncgraphFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new SyncgraphFactoryImpl();
-	}
+        try {
+            SyncgraphFactory theSyncgraphFactory = (SyncgraphFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.org/syncgraph"); 
+            if (theSyncgraphFactory != null) {
+                return theSyncgraphFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new SyncgraphFactoryImpl();
+    }
 
 	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public SyncgraphFactoryImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case SyncgraphPackage.SYNC_TRANSITION: return createSyncTransition();
-			case SyncgraphPackage.SYNC_STATE: return createSyncState();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eClass.getClassifierID()) {
+            case SyncgraphPackage.SYNC_TRANSITION: return createSyncTransition();
+            case SyncgraphPackage.SYNC_STATE: return createSyncState();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
-		switch (eDataType.getClassifierID()) {
-			case SyncgraphPackage.TRANSITION_TYPE:
-				return createTransitionTypeFromString(eDataType, initialValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eDataType.getClassifierID()) {
+            case SyncgraphPackage.TRANSITION_TYPE:
+                return createTransitionTypeFromString(eDataType, initialValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
-		switch (eDataType.getClassifierID()) {
-			case SyncgraphPackage.TRANSITION_TYPE:
-				return convertTransitionTypeToString(eDataType, instanceValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eDataType.getClassifierID()) {
+            case SyncgraphPackage.TRANSITION_TYPE:
+                return convertTransitionTypeToString(eDataType, instanceValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public SyncTransition createSyncTransition() {
-		SyncTransitionImpl syncTransition = new SyncTransitionImpl();
-		return syncTransition;
-	}
+        SyncTransitionImpl syncTransition = new SyncTransitionImpl();
+        return syncTransition;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public SyncState createSyncState() {
-		SyncStateImpl syncState = new SyncStateImpl();
-		return syncState;
-	}
+        SyncStateImpl syncState = new SyncStateImpl();
+        return syncState;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public TransitionType createTransitionTypeFromString(EDataType eDataType, String initialValue) {
-		TransitionType result = TransitionType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
+        TransitionType result = TransitionType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public String convertTransitionTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
+        return instanceValue == null ? null : instanceValue.toString();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public SyncgraphPackage getSyncgraphPackage() {
-		return (SyncgraphPackage)getEPackage();
-	}
+        return (SyncgraphPackage)getEPackage();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
 	@Deprecated
 	public static SyncgraphPackage getPackage() {
-		return SyncgraphPackage.eINSTANCE;
-	}
+        return SyncgraphPackage.eINSTANCE;
+    }
 
 } //SyncgraphFactoryImpl

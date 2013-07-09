@@ -107,7 +107,7 @@ public class SignalsView extends ViewPart {
      * The default color scheme flag. The default color scheme has the black background the other
      * has a white background.
      */
-    private boolean defaultColorScheme = true;
+    private boolean defaultColorScheme = false;
 
     /** The default mode flag. The default mode has a line for each signal. */
     private int drawMode = 0;
@@ -133,6 +133,14 @@ public class SignalsView extends ViewPart {
     public void createPartControl(final Composite parent) {
         // instantiate a plotter, and provide data to it.
         signalsPlotter = new SignalsPlotter(parent);
+
+        // set white color as default
+        defaultColorScheme = false;
+        colors.setBackgroundColor(NONDEFAULTBACKGROUNDCOLOR);
+        colors.setSignalColor2(NONDEFAULTSIGNALCOLOR2);
+        colors.setSignalColorMarker(NONDEFAULTSIGNALCOLORMARKER);
+        colors.setSignalSpareColor(NONDEFAULTSIGNALCOLOR0);
+        signalsPlotter.plot(zoomLevel, colors, drawMode);
 
         // update signalList of plotter and plot
         this.refresh(0);

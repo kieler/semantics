@@ -1,0 +1,23 @@
+!reset;
+%Output:
+;
+
+!reset;
+A
+%Output: B
+;
+
+!reset;
+A(2)
+%Output:B(3)
+;
+
+!reset;
+A(true)
+%Output:B(false)
+;
+
+!reset;
+A B(2) C(false) D(true)
+%Output: B(5) C(true)
+;

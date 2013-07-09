@@ -17,7 +17,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.LinkedList;
@@ -28,7 +30,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kiem.util.AbstractExecution;
+import de.cau.cs.kieler.sim.benchmark.AbstractExecution;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
@@ -46,15 +49,6 @@ public class SCExecution extends AbstractExecution {
     /** The Constant EXECUTABLE_PREFIX. */
     private static final String EXECUTABLE_PREFIX = "SC-GENERATED-EXECUTABLE-";
 
-    /** The Constant BENCHMARK_SIGNAL. */
-    public static final String BENCHMARK_SIGNAL_CYCLES = "benchCycles";
-
-    /** The Constant BENCHMARK_SIGNAL. */
-    public static final String BENCHMARK_SIGNAL_SOURCE = "benchSource";
-
-    /** The Constant BENCHMARK_SIGNAL. */
-    public static final String BENCHMARK_SIGNAL_EXECUTABLE = "benchExecutable";
-
     /** The path for sc. */
     private static final String SC_PATH = "sc";
 
@@ -63,6 +57,18 @@ public class SCExecution extends AbstractExecution {
 
     /** The scl. */
     private boolean scl;
+    
+    /** The execution process. */
+    private Process executionProcess = null;
+
+    /** The execution interface to execution. */
+    private PrintWriter interfaceToExecution;
+
+    /** The execution interface from execution. */
+    private BufferedReader interfaceFromExecution;
+
+    /** The execution interface error. */
+    private BufferedReader interfaceError;
 
     // -------------------------------------------------------------------------
 
@@ -137,7 +143,7 @@ public class SCExecution extends AbstractExecution {
         compile += compileBuf.toString();
 
         // If Cycle counting activated include the header
-        if (this.isCycleCountOrTime()) {
+        if (this.isBenchmark()) {
             compile += " " + bundleLocation + "cycle.h ";
         }
 
@@ -157,7 +163,7 @@ public class SCExecution extends AbstractExecution {
 
         // If debugging AND if no cycle counting, then provide a trace for the
         // SC debug console
-        if (!this.isDebug() || this.isCycleCountOrTime()) {
+        if (!this.isDebug() || this.isBenchmark()) {
             compile += " -D_SC_NOTRACE ";
         }
 
@@ -208,7 +214,8 @@ public class SCExecution extends AbstractExecution {
     @Override
     public String filesPreProcessing(final String filePath) {
         try {
-            return addCycleCounterCode(filePath);
+            //return addCycleCounterCode(filePath);
+            return addTimingCode(filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -243,72 +250,252 @@ public class SCExecution extends AbstractExecution {
     // cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
     // cJSON_AddItemToObject(output, "cycles", value);
 
+//    /**
+//     * Adds cycle counter code.
+//     * 
+//     * @param filePath
+//     *            the file path
+//     * @return the string
+//     * @throws IOException
+//     *             Signals that an I/O exception has occurred.
+//     */
+//    public static String addCycleCounterCode(final String filePath) throws IOException {
+//
+//        String newFilePath = filePath.replace(".c", ".cyclecount.c");
+//
+//        LinkedList<String> fileContent = new LinkedList<String>();
+//
+//        // Load original SC file
+//        FileInputStream fis = new FileInputStream(filePath);
+//        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+//        String lineIn;
+//        while ((lineIn = br.readLine()) != null) {
+//
+//            // Before the main function, add
+//            // #include<cycle.h>
+//            // ticks t0, t1;
+//            if (lineIn.contains("int main")) {
+//                fileContent.add("#include<cycle.h>");
+//                fileContent.add("ticks t0, t1;");
+//            }
+//
+//            // Instead of the tick() function add
+//            // t0 = getticks();
+//            // tick();
+//            // t1 = getticks();
+//            // value = cJSON_CreateObject();
+//            // cJSON_AddItemToObject(value, "value",
+//            // cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));
+//            // cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
+//            // cJSON_AddItemToObject(output, "cycles", value);
+//            if (lineIn.contains("tick();")) {
+//                fileContent.add("t0 = getticks();");
+//                fileContent.add("tick();");
+//                fileContent.add("t1 = getticks();");
+//                // fileContent.add("value = cJSON_CreateObject();");
+//                // fileContent.add("cJSON_AddItemToObject(value, \"value\", "
+//                // + "cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
+//                // fileContent.add("cJSON_AddItemToObject(value, \"present\", cJSON_CreateTrue());");
+//                fileContent.add("cJSON_AddItemToObject(output, \"" + Benchmark.BENCHMARK_SIGNAL_CYCLES + "\""
+//                        + ", cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
+//            } else {
+//                fileContent.add(lineIn);
+//            }
+//        }
+//        br.close();
+//        fis.close();
+//
+//        // Write out SC modified file
+//        PrintWriter out = new PrintWriter(newFilePath);
+//        for (String lineOut : fileContent) {
+//            out.println(lineOut);
+//        }
+//        out.close();
+//
+//        return newFilePath;
+//    }
+
+  /**
+  * Adds timing measurement code.
+  * 
+  * @param filePath
+  *            the file path
+  * @return the string
+  * @throws IOException
+  *             Signals that an I/O exception has occurred.
+  */
+ public static String addTimingCode(final String filePath) throws IOException {
+
+     String newFilePath = filePath.replace(".c", ".timing.c");
+
+     LinkedList<String> fileContent = new LinkedList<String>();
+
+     // Load original SC file
+     FileInputStream fis = new FileInputStream(filePath);
+     BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+     String lineIn;
+     while ((lineIn = br.readLine()) != null) {
+
+         // Before the main function, add
+         // #include<cycle.h>
+         // ticks t0, t1;
+         if (lineIn.contains("int main")) {
+           fileContent.add("#include<usertime.h>");
+           fileContent.add("double t;");
+         }
+         
+         // double elapsed(ticks t1, ticks t0);
+
+         // Instead of the tick() function add
+         // t0 = getticks();
+         // tick();
+         // t1 = getticks();
+         // value = cJSON_CreateObject();
+         // cJSON_AddItemToObject(value, "value",
+         // cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));
+         // cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
+         // cJSON_AddItemToObject(output, "cycles", value);
+         if (lineIn.contains("tick();")) {
+             fileContent.add("resetusertime();");
+             fileContent.add("tick();");
+             fileContent.add("t =  getusertime();");
+             // fileContent.add("value = cJSON_CreateObject();");
+             // fileContent.add("cJSON_AddItemToObject(value, \"value\", "
+             // + "cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
+             // fileContent.add("cJSON_AddItemToObject(value, \"present\", cJSON_CreateTrue());");
+             fileContent.add("cJSON_AddItemToObject(output, \"" + Benchmark.BENCHMARK_SIGNAL_TIME + "\""
+                     + ", cJSON_CreateNumber((double)(((double) t)*1)));");
+         } else {
+             fileContent.add(lineIn);
+         }
+     }
+     br.close();
+     fis.close();
+
+     // Write out SC modified file
+     PrintWriter out = new PrintWriter(newFilePath);
+     for (String lineOut : fileContent) {
+         out.println(lineOut);
+     }
+     out.close();
+
+     return newFilePath;
+ }
+    
+    // -------------------------------------------------------------------------
+    
     /**
-     * Adds cycle counter code.
+     * Start execution and start the execution process.
      * 
-     * @param filePath
-     *            the file path
-     * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public static String addCycleCounterCode(final String filePath) throws IOException {
+    protected boolean doStartExecution() throws IOException {
+        // Start compiled sc code
+        String executable = buildExecutionCommandLine();
+        // executable = "C:\\Users\\delphino\\AppData\\Local\\Temp\\SC.exe";
 
-        String newFilePath = filePath.replace(".c", ".cyclecount.c");
+        executionProcess = Runtime.getRuntime().exec(executable);
 
-        LinkedList<String> fileContent = new LinkedList<String>();
-
-        // Load original SC file
-        FileInputStream fis = new FileInputStream(filePath);
-        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-        String lineIn;
-        while ((lineIn = br.readLine()) != null) {
-
-            // Before the main function, add
-            // #include<cycle.h>
-            // ticks t0, t1;
-            if (lineIn.contains("int main")) {
-                fileContent.add("#include<cycle.h>");
-                fileContent.add("ticks t0, t1;");
-            }
-
-            // Instead of the tick() function add
-            // t0 = getticks();
-            // tick();
-            // t1 = getticks();
-            // value = cJSON_CreateObject();
-            // cJSON_AddItemToObject(value, "value",
-            // cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));
-            // cJSON_AddItemToObject(value, "present", cJSON_CreateTrue());
-            // cJSON_AddItemToObject(output, "cycles", value);
-            if (lineIn.contains("tick();")) {
-                fileContent.add("t0 = getticks();");
-                fileContent.add("tick();");
-                fileContent.add("t1 = getticks();");
-                // fileContent.add("value = cJSON_CreateObject();");
-                // fileContent.add("cJSON_AddItemToObject(value, \"value\", "
-                // + "cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
-                // fileContent.add("cJSON_AddItemToObject(value, \"present\", cJSON_CreateTrue());");
-                fileContent.add("cJSON_AddItemToObject(output, \"" + BENCHMARK_SIGNAL_CYCLES + "\""
-                        + ", cJSON_CreateNumber((double)((double)(t1)-(double)(t0))));");
-            } else {
-                fileContent.add(lineIn);
-            }
-        }
-        br.close();
-        fis.close();
-
-        // Write out SC modified file
-        PrintWriter out = new PrintWriter(newFilePath);
-        for (String lineOut : fileContent) {
-            out.println(lineOut);
-        }
-        out.close();
-
-        return newFilePath;
+        setInterfaceToExecution(new PrintWriter(new OutputStreamWriter(
+                executionProcess.getOutputStream())));
+        setInterfaceFromExecution(new BufferedReader(new InputStreamReader(
+                executionProcess.getInputStream())));
+        setInterfaceError(new BufferedReader(new InputStreamReader(
+                executionProcess.getErrorStream())));
+        
+        return true;
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Stop execution and destroy the execution process.
+     */
+    protected void doStopExecution(final boolean tryToDelete) {
+        // destroy process
+        executionProcess.destroy();
+
+        // close streams
+        getInterfaceToExecution().close();
+        try {
+            getInterfaceFromExecution().close();
+        } catch (IOException e) {
+            // ignore errors
+        }
+        try {
+            getInterfaceError().close();
+        } catch (IOException e) {
+            // ignore errors
+        }
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Compile the filePaths SC files together with the bundled SC core files within the given
+     * outputPath folder. The executable will be randomly named and can later be started after a
+     * successful compilation.
+     * 
+     * @param filePaths
+     *            the file paths
+     * @param modelName
+     *            the model name
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     * @throws InterruptedException
+     *             the interrupted exception
+     */
+    protected File[] doCompile(final List<String> filePaths, final String modelName)
+            throws IOException, InterruptedException {
+
+        try {
+
+            String compile = buildCompileCommandLine(filePaths);
+
+            System.out.println(compile);
+            executionProcess = Runtime.getRuntime().exec(compile);
+
+            InputStream stderr = executionProcess.getErrorStream();
+            InputStreamReader isr = new InputStreamReader(stderr);
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            setCompileError("");
+            while ((line = br.readLine()) != null) {
+                setCompileError(getCompileError() + "\n" + line);
+            }
+            br.close();
+
+            int exitValue = executionProcess.waitFor();
+            if (exitValue != 0) {
+                // Indicate that compilation failed
+                return null;
+            }
+
+            // Test if compiled file exists
+            File[] returnFiles = new File[1];
+            returnFiles[0] = new File(super.getOutputPath() + getExecutableName());
+            return returnFiles;
+
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            if (executionProcess != null) {
+                executionProcess.destroy();
+            }
+            throw e;
+
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
+            if (executionProcess != null) {
+                executionProcess.destroy();
+            }
+            throw e;
+        }
+
+    }
+
+    // -------------------------------------------------------------------------
+
 
     /**
      * Sets the scl option (to use scl instead of sc).
@@ -329,6 +516,75 @@ public class SCExecution extends AbstractExecution {
      */
     public boolean isScl() {
         return scl;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the execution interface to execution.
+     * 
+     * @return the execution interface to execution
+     */
+    public PrintWriter getInterfaceToExecution() {
+        return interfaceToExecution;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the execution interface to execution.
+     * 
+     * @param toSC
+     *            the new execution interface to execution
+     */
+    protected void setInterfaceToExecution(final PrintWriter toSC) {
+        this.interfaceToExecution = toSC;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the execution interface from execution.
+     * 
+     * @return the execution interface from execution
+     */
+    public BufferedReader getInterfaceFromExecution() {
+        return interfaceFromExecution;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the execution interface from execution.
+     * 
+     * @param fromSC
+     *            the new execution interface from execution
+     */
+    protected void setInterfaceFromExecution(final BufferedReader fromSC) {
+        this.interfaceFromExecution = fromSC;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the execution interface error.
+     * 
+     * @return the execution interface error
+     */
+    public BufferedReader getInterfaceError() {
+        return interfaceError;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the execution interface error.
+     * 
+     * @param error
+     *            the new execution interface error
+     */
+    protected void setInterfaceError(final BufferedReader error) {
+        this.interfaceError = error;
     }
 
     // -------------------------------------------------------------------------

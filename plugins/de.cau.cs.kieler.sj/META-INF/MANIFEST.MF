@@ -12,3 +12,4 @@ Export-Package: de.cau.cs.kieler.sj,
 Bundle-ClassPath: jar/EmbeddedSJ.jar,
  jar/SJ.jar,
  .
+Require-Bundle: de.cau.cs.kieler.sjl

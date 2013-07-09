@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sim.SSimPlugin;
@@ -47,13 +48,13 @@ import de.cau.cs.kieler.s.sj.S2SJPlugin;
 import de.cau.cs.kieler.s.sim.xtend.S2Simulation;
 import de.cau.cs.kieler.sjl.SJExecution;
 import de.cau.cs.kieler.sjl.SJLProgramWithSignals;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 /**
@@ -162,6 +163,18 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
     /**
      * {@inheritDoc}
      */
+    public boolean isDirty() {
+        return true;
+        //TODO: A more sophisticated test is necessary (e.g. compare hash of settings & editor).
+        // the following ALONE is NOT sufficient!
+        //return (sjExecution == null || !sjExecution.isCompiled());
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkModelValidation(final EObject rootEObject)
             throws KiemInitializationException {
@@ -224,17 +237,33 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     if (object instanceof JSONObject) {
                         JSONObject sSignalInput = (JSONObject) object;
                         boolean sSignalInputIsPresent = JSONSignalValues.isPresent(sSignalInput);
-                        if (sSignalInputIsPresent) {
-                            program.setInput(sSignalInputName, true);
-                        } else {
-                            program.setInput(sSignalInputName, false);
+                        if (program.hasSignal(sSignalInputName)) {
+                            if (sSignalInputIsPresent) {
+                                program.setInput(sSignalInputName, true);
+                            } else {
+                                program.setInput(sSignalInputName, false);
+                            }
                         }
                     }
                 }
             }
+            
+            // Make a tick (either benchmarked or not)
+            if (this.benchmark) {
+                program.doTick(Benchmark.BENCHMARK_NORMED_RUNS);
+                
+                // Nanoseconds
+                double bench = ((double)program.getLastTickTime()) ;
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
 
-            // Make a tick
-            program.doTick();
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,
+                        this.sjExecution.getSourceFileSize());
+                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE,
+                        this.sjExecution.getExecutableFileSize());
+            } else {
+                program.doTick();
+            }
+
 
             // Inspect the output
 
@@ -249,7 +278,6 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             if (debugConsole) {
                 printConsole("==============| TICK " + computedTick++ + " |==============");
                 printConsole(program.getLastDebugMessage());
-                printConsole("\n");
             }
 
             // For the signals (and possible debug) data
@@ -329,21 +357,6 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                 activeStatementsBuf.append(activeStatement.name + "(" + activeStatement.prio + ")");
             }
             activeStatements = activeStatementsBuf.toString();
-
-            if (this.benchmark) {
-                // TODO: benchmark currently not supported
-
-                // if (sSignalOutput.has(SJExecution.BENCHMARK_SIGNAL_CYCLES)) {
-                // Object bench = sSignalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
-                // returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
-                //
-                // returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_SOURCE,
-                // this.sjExecution.getSourceFileSize());
-                // returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_EXECUTABLE,
-                // this.sjExecution.getExecutableFileSize());
-                //
-                // }
-            }
 
             // Then add normal output signals
             for (String sSignalOutputName : outputSignalList) {
@@ -543,12 +556,10 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
 
             // The file name could contain illegal characters not allowed for naming a Java class
             // therefore take the S-model name instead
-            String className = model.getName(); // scOutput.lastSegment();
-
-            scOutput = scOutput.appendFileExtension("java");
+            String className = model.getName().toLowerCase(); // scOutput.lastSegment();
 
             // Set a random output folder for the compiled files
-            String outputFolder = KiemUtil.generateRandomTempOutputFolder();
+            String outputFolder = ModelUtil.generateRandomTempOutputFolder();
 
             // Check whether SJ compilation should generate additional debug output
             debugConsole = debugConsoleParam;
@@ -560,8 +571,8 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             scOutput = scOutput.trimSegments(1).appendSegment(className)
                     .appendFileExtension("java");
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
-            IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
-            String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
+            IFile scOutputFile = ModelUtil.convertIPathToIFile(scOutputPath);
+            String scOutputString = ModelUtil.getAbsoluteFilePath(scOutputFile);
             S2SJPlugin.generateSJCode(transformedProgram, scOutputString, className, packageName,
                     debug);
 
@@ -592,7 +603,7 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
 
         // start execution of compiled program
-        if (sjExecution.isCompiled()) {
+        if (sjExecution != null && sjExecution.isCompiled()) {
             try {
                 sjExecution.startExecution();
             } catch (IOException e) {

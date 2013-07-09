@@ -45,6 +45,7 @@ import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
 import de.cau.cs.kieler.s.sim.xtend.S2Simulation;
 import de.cau.cs.kieler.sc.SCExecution;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -54,7 +55,6 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
-// TODO: Auto-generated Javadoc
 /**
  * The SimulationDataComponent for simulating S code with and without visualization.
  * 
@@ -238,12 +238,11 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
                     for (int i = 0; i < sSignalOutputArray.length(); i++) {
                         String sSignalOutputName = sSignalOutputArray.getString(i);
                         if (sSignalOutput.get(sSignalOutputName) instanceof JSONObject) {
-                            
-                            JSONObject sSignal = sSignalOutput
-                                    .getJSONObject(sSignalOutputName);
-                            
+
+                            JSONObject sSignal = sSignalOutput.getJSONObject(sSignalOutputName);
+
                             boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignal);
-                            
+
                             // Test if the output variable is an auxiliary signal
                             // that is only there to mark the current S statement
                             // in full_simulation mode of the simulator.
@@ -264,7 +263,7 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
                                     if (sSignal.has("order")) {
                                         order = sSignal.getInt("order");
                                     }
-                                    
+
                                     DebugData activeStatement = new DebugData();
                                     activeStatement.name = statementWithoutAuxiliaryVariableTag;
                                     activeStatement.prio = prio;
@@ -280,32 +279,29 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
                         }
                     }
                 }
-                
 
                 // Sort statements according to their "order"
                 Collections.sort(activeStatementList);
                 // Serialize activeStatementList to activeStatements String
-                for (DebugData activeStatement: activeStatementList) {
+                for (DebugData activeStatement : activeStatementList) {
                     // Insert a "," if not the first statement
                     if (activeStatementsBuf.length() != 0) {
                         activeStatementsBuf.append(",");
                     }
-                    activeStatementsBuf
-                            .append(activeStatement.name + "(" + activeStatement.prio + ")");
+                    activeStatementsBuf.append(activeStatement.name + "(" + activeStatement.prio
+                            + ")");
                 }
                 activeStatements = activeStatementsBuf.toString();
 
                 if (this.benchmark) {
-                    if (sSignalOutput.has(SCExecution.BENCHMARK_SIGNAL_CYCLES)) {
-                        Object bench = sSignalOutput.get(SCExecution.BENCHMARK_SIGNAL_CYCLES);
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_CYCLES, bench);
-
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_SOURCE,
-                                this.scExecution.getSourceFileSize());
-                        returnObj.accumulate(SCExecution.BENCHMARK_SIGNAL_EXECUTABLE,
-                                this.scExecution.getExecutableFileSize());
-
+                    if (sSignalOutput.has(Benchmark.BENCHMARK_SIGNAL_TIME)) {
+                        Object bench = sSignalOutput.get(Benchmark.BENCHMARK_SIGNAL_TIME);
+                        returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
                     }
+                    returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,
+                            this.scExecution.getSourceFileSize());
+                    returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE,
+                            this.scExecution.getExecutableFileSize());
                 }
 
                 // Then add normal output signals
@@ -651,18 +647,18 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * The Class DebugData.
      */
     protected class DebugData implements Comparable<DebugData> {
-        
+
         /** The name. */
         public String name;
-        
+
         /** The prio. */
         public int prio;
-        
+
         /** The order. */
         public int order;
 
@@ -671,7 +667,7 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
          */
         public DebugData() {
         }
-        
+
         /**
          * {@inheritDoc}
          */

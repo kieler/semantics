@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+    <extension point="org.eclipse.ui.newWizards">
+        <wizard    id="de.cau.cs.kieler.kex.ui.newWizard"
+            name="KIELER Examples"
+            class="de.cau.cs.kieler.kex.ui.wizards.importing.ExampleImportWizard"
+            category="org.eclipse.ui.Examples"
+            icon="icons/kiel_16.gif"
+            project="true">
+            <description>Add KIELER examples to your workspace.</description>
+        </wizard>
+    </extension>
+   <extension
+         point="org.eclipse.ui.intro.configExtension">
+      <configExtension
+            configId="org.eclipse.ui.intro.universalConfig"
+            content="intro/introContent.xml">
+      </configExtension>
+   </extension>
+</plugin>

@@ -50,7 +50,9 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphPackage;
  * text area is bound to the right column controls. The Transition type combo
  * and isHistory combo are bound into the left column controls.
  * 
- * @author wah
+ * cmot added isImmediate attribute on 7.6.2013.
+ * 
+ * @author wah, cmot
  * @kieler.rating green 2013-04-13
  */
 public class SyncTransitionPropertySection extends
@@ -59,10 +61,12 @@ public class SyncTransitionPropertySection extends
 	/** TEXT */
 	private static final String COMBO_LABEL_TRANSITION_TYPE = "Transition Type: ";
 	private static final String COMBO_LABEL_TRANSITION_IS_HISTORY = "Is History: ";
+        private static final String COMBO_LABEL_TRANSITION_IS_IMMEDIATE = "Is Immediate: ";
 
 	private Control textControl;
 	private ComboViewer transitionTypeKindViewer;
 	private ComboViewer isHistoryKindViewer;
+        private ComboViewer isImmediateKindViewer;
 
 	@Override
 	protected Layout createLeftColumnLayout() {
@@ -109,6 +113,26 @@ public class SyncTransitionPropertySection extends
 				.applyTo(isHistoryKindViewer.getControl());
 	}
 
+        /**
+         * Create the isImmediate Combo. It allows to select false or true.
+         * 
+         * @param parent
+         *            the parent Composite
+         */
+        private void createIsImmediateControl(Composite parent) {
+                Label kindLabel = getToolkit().createLabel(parent,
+                                COMBO_LABEL_TRANSITION_IS_IMMEDIATE);
+                GridDataFactory.fillDefaults().applyTo(kindLabel);
+                isImmediateKindViewer = new ComboViewer(parent, SWT.READ_ONLY
+                                | SWT.SINGLE);
+                isImmediateKindViewer.setContentProvider(new ArrayContentProvider());
+                isImmediateKindViewer.setLabelProvider(new LabelProvider());
+                isImmediateKindViewer.add(false);
+                isImmediateKindViewer.add(true);
+                GridDataFactory.fillDefaults().grab(true, false)
+                                .applyTo(isImmediateKindViewer.getControl());
+        }	
+	
 	/**
 	 * This method enables to select the transition type
 	 * 
@@ -137,6 +161,7 @@ public class SyncTransitionPropertySection extends
 				.observe(textControl);
 		context.bindValue(uiProperty, modelProperty.observe(eObject));
 		bindTransitionTypeKindControl(context);
+                bindIsImmediateKindControl(context);
 		bindIsHistoryKindControl(context);
 	}
 
@@ -147,7 +172,8 @@ public class SyncTransitionPropertySection extends
 	@Override
 	protected void createRightColumnControls(Composite rightColumn) {
 		createTransitionTypeControl(rightColumn);
-		createIsHistoryControl(rightColumn);
+		createIsImmediateControl(rightColumn);
+                createIsHistoryControl(rightColumn);
 	}
 
 	/**
@@ -186,4 +212,20 @@ public class SyncTransitionPropertySection extends
 				ViewerProperties.singleSelection().observe(isHistoryKindViewer),
 				property.observe(eObject));
 	}
+	
+        /**
+         * This method enables to select the isImmediate attribute. This method binds
+         * the IsImmediate control to enable to change the transition as immediate if
+         * the user changes the combo box value.
+         * 
+         * @param context
+         */
+        private void bindIsImmediateKindControl(EMFDataBindingContext context) {
+                IEMFValueProperty property = EMFEditProperties.value(
+                                TransactionUtil.getEditingDomain(eObject),
+                                SyncgraphPackage.Literals.SYNC_TRANSITION__IS_IMMEDIATE);
+                context.bindValue(
+                                ViewerProperties.singleSelection().observe(isImmediateKindViewer),
+                                property.observe(eObject));
+        }	
 }
