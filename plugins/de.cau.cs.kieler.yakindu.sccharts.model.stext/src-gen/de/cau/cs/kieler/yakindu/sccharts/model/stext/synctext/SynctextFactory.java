@@ -59,49 +59,40 @@ public interface SynctextFactory extends EFactory
   OperationDefinition createOperationDefinition();
 
   /**
-   * Returns a new object of class '<em>Local Reaction</em>'.
+   * Returns a new object of class '<em>Local Entry Reaction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Local Reaction</em>'.
+   * @return a new object of class '<em>Local Entry Reaction</em>'.
    * @generated
    */
-  LocalReaction createLocalReaction();
+  LocalEntryReaction createLocalEntryReaction();
 
   /**
-   * Returns a new object of class '<em>State Reaction</em>'.
+   * Returns a new object of class '<em>Local During Reaction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>State Reaction</em>'.
+   * @return a new object of class '<em>Local During Reaction</em>'.
    * @generated
    */
-  StateReaction createStateReaction();
+  LocalDuringReaction createLocalDuringReaction();
 
   /**
-   * Returns a new object of class '<em>Entry</em>'.
+   * Returns a new object of class '<em>Local Exit Reaction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Entry</em>'.
+   * @return a new object of class '<em>Local Exit Reaction</em>'.
    * @generated
    */
-  Entry createEntry();
+  LocalExitReaction createLocalExitReaction();
 
   /**
-   * Returns a new object of class '<em>Inside</em>'.
+   * Returns a new object of class '<em>Local Suspend Reaction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Inside</em>'.
+   * @return a new object of class '<em>Local Suspend Reaction</em>'.
    * @generated
    */
-  Inside createInside();
-
-  /**
-   * Returns a new object of class '<em>Exit</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Exit</em>'.
-   * @generated
-   */
-  Exit createExit();
+  LocalSuspendReaction createLocalSuspendReaction();
 
   /**
    * Returns a new object of class '<em>Simple Scope</em>'.
@@ -122,13 +113,13 @@ public interface SynctextFactory extends EFactory
   EventDefinition createEventDefinition();
 
   /**
-   * Returns a new object of class '<em>Suspend Effect</em>'.
+   * Returns a new object of class '<em>Declaration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Suspend Effect</em>'.
+   * @return a new object of class '<em>Declaration</em>'.
    * @generated
    */
-  SuspendEffect createSuspendEffect();
+  Declaration createDeclaration();
 
   /**
    * Returns a new object of class '<em>Reaction Trigger</em>'.

@@ -2,30 +2,30 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SuspendEffect;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.yakindu.sct.model.sgraph.impl.EffectImpl;
+import org.yakindu.sct.model.sgraph.impl.DeclarationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Suspend Effect</b></em>'.
+ * An implementation of the model object '<em><b>Local Suspend Reaction</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public class SuspendEffectImpl extends EffectImpl implements SuspendEffect
+public class LocalSuspendReactionImpl extends DeclarationImpl implements LocalSuspendReaction
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected SuspendEffectImpl()
+  protected LocalSuspendReactionImpl()
   {
     super();
   }
@@ -38,7 +38,7 @@ public class SuspendEffectImpl extends EffectImpl implements SuspendEffect
   @Override
   protected EClass eStaticClass()
   {
-    return SynctextPackage.Literals.SUSPEND_EFFECT;
+    return SynctextPackage.Literals.LOCAL_SUSPEND_REACTION;
   }
 
-} //SuspendEffectImpl
+} //LocalSuspendReactionImpl

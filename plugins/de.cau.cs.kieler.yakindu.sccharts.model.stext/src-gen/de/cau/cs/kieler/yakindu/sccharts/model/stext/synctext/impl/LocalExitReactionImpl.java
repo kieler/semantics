@@ -2,30 +2,30 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.StateReaction;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.yakindu.sct.model.sgraph.impl.DeclarationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>State Reaction</b></em>'.
+ * An implementation of the model object '<em><b>Local Exit Reaction</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public class StateReactionImpl extends MinimalEObjectImpl.Container implements StateReaction
+public class LocalExitReactionImpl extends DeclarationImpl implements LocalExitReaction
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected StateReactionImpl()
+  protected LocalExitReactionImpl()
   {
     super();
   }
@@ -38,7 +38,7 @@ public class StateReactionImpl extends MinimalEObjectImpl.Container implements S
   @Override
   protected EClass eStaticClass()
   {
-    return SynctextPackage.Literals.STATE_REACTION;
+    return SynctextPackage.Literals.LOCAL_EXIT_REACTION;
   }
 
-} //StateReactionImpl
+} //LocalExitReactionImpl
