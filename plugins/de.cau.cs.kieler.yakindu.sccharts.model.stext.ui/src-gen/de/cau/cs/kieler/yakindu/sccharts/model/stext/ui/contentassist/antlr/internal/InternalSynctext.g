@@ -4520,7 +4520,7 @@ rule__LocalEntryReaction__Group__1__Impl
 (
 { before(grammarAccess.getLocalEntryReactionAccess().getEntryKeyword_1()); }
 
-	'Entry' 
+	'entry' 
 
 { after(grammarAccess.getLocalEntryReactionAccess().getEntryKeyword_1()); }
 )
@@ -4805,7 +4805,7 @@ rule__LocalDuringReaction__Group__2__Impl
 (
 { before(grammarAccess.getLocalDuringReactionAccess().getDuringKeyword_2()); }
 
-	'During' 
+	'during' 
 
 { after(grammarAccess.getLocalDuringReactionAccess().getDuringKeyword_2()); }
 )
@@ -5033,7 +5033,7 @@ rule__LocalExitReaction__Group__1__Impl
 (
 { before(grammarAccess.getLocalExitReactionAccess().getExitKeyword_1()); }
 
-	'Exit' 
+	'exit' 
 
 { after(grammarAccess.getLocalExitReactionAccess().getExitKeyword_1()); }
 )
@@ -5318,7 +5318,7 @@ rule__LocalSuspendReaction__Group__2__Impl
 (
 { before(grammarAccess.getLocalSuspendReactionAccess().getSuspendKeyword_2()); }
 
-	'Suspend' 
+	'suspend' 
 
 { after(grammarAccess.getLocalSuspendReactionAccess().getSuspendKeyword_2()); }
 )
@@ -11641,7 +11641,7 @@ rule__LocalDuringReaction__IsImmediateAssignment_1
 (
 { before(grammarAccess.getLocalDuringReactionAccess().getIsImmediateImmediateKeyword_1_0()); }
 
-	'Immediate' 
+	'immediate' 
 
 { after(grammarAccess.getLocalDuringReactionAccess().getIsImmediateImmediateKeyword_1_0()); }
 )
@@ -11724,7 +11724,7 @@ rule__LocalSuspendReaction__IsImmediateAssignment_1
 (
 { before(grammarAccess.getLocalSuspendReactionAccess().getIsImmediateImmediateKeyword_1_0()); }
 
-	'Immediate' 
+	'immediate' 
 
 { after(grammarAccess.getLocalSuspendReactionAccess().getIsImmediateImmediateKeyword_1_0()); }
 )

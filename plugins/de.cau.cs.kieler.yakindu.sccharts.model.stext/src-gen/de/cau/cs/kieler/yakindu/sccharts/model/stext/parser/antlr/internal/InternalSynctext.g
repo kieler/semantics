@@ -729,7 +729,7 @@ ruleLocalEntryReaction returns [EObject current=null]
             grammarAccess.getLocalEntryReactionAccess().getLocalEntryReactionAction_0(),
             $current);
     }
-)	otherlv_1='Entry' 
+)	otherlv_1='entry' 
     {
     	newLeafNode(otherlv_1, grammarAccess.getLocalEntryReactionAccess().getEntryKeyword_1());
     }
@@ -813,7 +813,7 @@ ruleLocalDuringReaction returns [EObject current=null]
     }
 )(
 (
-		lv_isImmediate_1_0=	'Immediate' 
+		lv_isImmediate_1_0=	'immediate' 
     {
         newLeafNode(lv_isImmediate_1_0, grammarAccess.getLocalDuringReactionAccess().getIsImmediateImmediateKeyword_1_0());
     }
@@ -822,11 +822,11 @@ ruleLocalDuringReaction returns [EObject current=null]
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getLocalDuringReactionRule());
 	        }
-       		setWithLastConsumed($current, "isImmediate", true, "Immediate");
+       		setWithLastConsumed($current, "isImmediate", true, "immediate");
 	    }
 
 )
-)?	otherlv_2='During' 
+)?	otherlv_2='during' 
     {
     	newLeafNode(otherlv_2, grammarAccess.getLocalDuringReactionAccess().getDuringKeyword_2());
     }
@@ -908,7 +908,7 @@ ruleLocalExitReaction returns [EObject current=null]
             grammarAccess.getLocalExitReactionAccess().getLocalExitReactionAction_0(),
             $current);
     }
-)	otherlv_1='Exit' 
+)	otherlv_1='exit' 
     {
     	newLeafNode(otherlv_1, grammarAccess.getLocalExitReactionAccess().getExitKeyword_1());
     }
@@ -992,7 +992,7 @@ ruleLocalSuspendReaction returns [EObject current=null]
     }
 )(
 (
-		lv_isImmediate_1_0=	'Immediate' 
+		lv_isImmediate_1_0=	'immediate' 
     {
         newLeafNode(lv_isImmediate_1_0, grammarAccess.getLocalSuspendReactionAccess().getIsImmediateImmediateKeyword_1_0());
     }
@@ -1001,11 +1001,11 @@ ruleLocalSuspendReaction returns [EObject current=null]
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getLocalSuspendReactionRule());
 	        }
-       		setWithLastConsumed($current, "isImmediate", true, "Immediate");
+       		setWithLastConsumed($current, "isImmediate", true, "immediate");
 	    }
 
 )
-)?	otherlv_2='Suspend' 
+)?	otherlv_2='suspend' 
     {
     	newLeafNode(otherlv_2, grammarAccess.getLocalSuspendReactionAccess().getSuspendKeyword_2());
     }

@@ -420,16 +420,16 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LocalEntryReaction:
 		//
-		//	{LocalEntryReaction} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+		//	{LocalEntryReaction} "entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
 		public ParserRule getRule() { return rule; }
 
-		//{LocalEntryReaction} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";"
+		//{LocalEntryReaction} "entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";"
 		public Group getGroup() { return cGroup; }
 
 		//{LocalEntryReaction}
 		public Action getLocalEntryReactionAction_0() { return cLocalEntryReactionAction_0; }
 
-		//"Entry"
+		//"entry"
 		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
 
 		//":"
@@ -474,22 +474,22 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LocalDuringReaction:
 		//
-		//	{LocalDuringReaction} isImmediate?="Immediate"? "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";";
+		//	{LocalDuringReaction} isImmediate?="immediate"? "during" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";";
 		public ParserRule getRule() { return rule; }
 
-		//{LocalDuringReaction} isImmediate?="Immediate"? "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";"
+		//{LocalDuringReaction} isImmediate?="immediate"? "during" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";"
 		public Group getGroup() { return cGroup; }
 
 		//{LocalDuringReaction}
 		public Action getLocalDuringReactionAction_0() { return cLocalDuringReactionAction_0; }
 
-		//isImmediate?="Immediate"?
+		//isImmediate?="immediate"?
 		public Assignment getIsImmediateAssignment_1() { return cIsImmediateAssignment_1; }
 
-		//"Immediate"
+		//"immediate"
 		public Keyword getIsImmediateImmediateKeyword_1_0() { return cIsImmediateImmediateKeyword_1_0; }
 
-		//"During"
+		//"during"
 		public Keyword getDuringKeyword_2() { return cDuringKeyword_2; }
 
 		//":"
@@ -530,16 +530,16 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LocalExitReaction:
 		//
-		//	{LocalExitReaction} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+		//	{LocalExitReaction} "exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
 		public ParserRule getRule() { return rule; }
 
-		//{LocalExitReaction} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";"
+		//{LocalExitReaction} "exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";"
 		public Group getGroup() { return cGroup; }
 
 		//{LocalExitReaction}
 		public Action getLocalExitReactionAction_0() { return cLocalExitReactionAction_0; }
 
-		//"Exit"
+		//"exit"
 		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
 
 		//":"
@@ -581,22 +581,22 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LocalSuspendReaction:
 		//
-		//	{LocalSuspendReaction} isImmediate?="Immediate"? "Suspend" ":" trigger=ReactionTrigger? ";";
+		//	{LocalSuspendReaction} isImmediate?="immediate"? "suspend" ":" trigger=ReactionTrigger? ";";
 		public ParserRule getRule() { return rule; }
 
-		//{LocalSuspendReaction} isImmediate?="Immediate"? "Suspend" ":" trigger=ReactionTrigger? ";"
+		//{LocalSuspendReaction} isImmediate?="immediate"? "suspend" ":" trigger=ReactionTrigger? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{LocalSuspendReaction}
 		public Action getLocalSuspendReactionAction_0() { return cLocalSuspendReactionAction_0; }
 
-		//isImmediate?="Immediate"?
+		//isImmediate?="immediate"?
 		public Assignment getIsImmediateAssignment_1() { return cIsImmediateAssignment_1; }
 
-		//"Immediate"
+		//"immediate"
 		public Keyword getIsImmediateImmediateKeyword_1_0() { return cIsImmediateImmediateKeyword_1_0; }
 
-		//"Suspend"
+		//"suspend"
 		public Keyword getSuspendKeyword_2() { return cSuspendKeyword_2; }
 
 		//":"
@@ -1288,7 +1288,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalEntryReaction:
 	//
-	//	{LocalEntryReaction} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+	//	{LocalEntryReaction} "entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
 	public LocalEntryReactionElements getLocalEntryReactionAccess() {
 		return (pLocalEntryReaction != null) ? pLocalEntryReaction : (pLocalEntryReaction = new LocalEntryReactionElements());
 	}
@@ -1299,7 +1299,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalDuringReaction:
 	//
-	//	{LocalDuringReaction} isImmediate?="Immediate"? "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";";
+	//	{LocalDuringReaction} isImmediate?="immediate"? "during" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";";
 	public LocalDuringReactionElements getLocalDuringReactionAccess() {
 		return (pLocalDuringReaction != null) ? pLocalDuringReaction : (pLocalDuringReaction = new LocalDuringReactionElements());
 	}
@@ -1310,7 +1310,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalExitReaction:
 	//
-	//	{LocalExitReaction} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+	//	{LocalExitReaction} "exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
 	public LocalExitReactionElements getLocalExitReactionAccess() {
 		return (pLocalExitReaction != null) ? pLocalExitReaction : (pLocalExitReaction = new LocalExitReactionElements());
 	}
@@ -1321,7 +1321,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalSuspendReaction:
 	//
-	//	{LocalSuspendReaction} isImmediate?="Immediate"? "Suspend" ":" trigger=ReactionTrigger? ";";
+	//	{LocalSuspendReaction} isImmediate?="immediate"? "suspend" ":" trigger=ReactionTrigger? ";";
 	public LocalSuspendReactionElements getLocalSuspendReactionAccess() {
 		return (pLocalSuspendReaction != null) ? pLocalSuspendReaction : (pLocalSuspendReaction = new LocalSuspendReactionElements());
 	}
