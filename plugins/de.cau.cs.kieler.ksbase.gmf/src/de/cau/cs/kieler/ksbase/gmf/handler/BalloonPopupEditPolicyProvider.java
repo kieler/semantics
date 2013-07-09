@@ -26,7 +26,6 @@ import org.eclipse.gmf.runtime.diagram.ui.internal.editparts.NoteAttachmentEditP
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvider;
 
 import de.cau.cs.kieler.core.model.gmf.policies.IBalloonContribution;
-import de.cau.cs.kieler.ksbase.ui.menus.DynamicMenuContributions;
 
 /**
  * Provides an edit policy to create popup balloons.
@@ -88,8 +87,8 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
      */
     private List<IBalloonContribution> getContributions() {
         if (contributions == null) {
-            // FIXME uru!
-//            contributions = DynamicMenuContributions.INSTANCE.getBalloonContributions();
+            // FIXME not supported currently
+            // contributions = DynamicMenuContributions.INSTANCE.getBalloonContributions();
         }
         return contributions;
     }

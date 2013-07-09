@@ -16,4 +16,14 @@
             class="de.cau.cs.kieler.ksbase.gmf.GmfKSBaseHandler">
       </handler>
    </extension>
+      <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="de.cau.cs.kieler.ksbase.gmf.test.ModelObjectTester"
+            id="de.cau.cs.kieler.ksbase.ui.modelObjectTester"
+            namespace="de.cau.cs.kieler.ksbase.ui.modelTesting"
+            properties="isModelInstance"
+            type="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+      </propertyTester>
+   </extension>
 </plugin>

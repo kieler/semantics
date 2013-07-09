@@ -62,7 +62,7 @@ import de.cau.cs.kieler.ksbase.ui.m2m.XtendTransformationEffect;
  * 
  * @author ckru
  * 
- * @deprecated old combination
+ * @deprecated old (unused) combination, can probably be deleted
  */
 public class KSBasECombination extends AbstractCombination implements ITransformationListener {
 
@@ -170,9 +170,6 @@ public class KSBasECombination extends AbstractCombination implements ITransform
             } else { // editor is no Diagram Editor
                      // do xtend2 stuff
                 if (transformation.getTransformationClass() != null) {
-
-                    // TODO call the bitch
-
                     evokeXtend2(transformation, getEObjectSelection(selection), null);
                 }
             }

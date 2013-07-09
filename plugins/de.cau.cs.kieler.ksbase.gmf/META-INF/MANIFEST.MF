@@ -23,4 +23,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: de.cau.cs.kieler.ksbase.gmf,
  de.cau.cs.kieler.ksbase.gmf.handler,
  de.cau.cs.kieler.ksbase.gmf.kivi,
+ de.cau.cs.kieler.ksbase.gmf.test,
  de.cau.cs.kieler.ksbase.gmf.ui.utils

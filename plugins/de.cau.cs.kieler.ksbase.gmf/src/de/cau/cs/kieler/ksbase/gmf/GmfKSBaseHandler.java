@@ -42,8 +42,9 @@ import de.cau.cs.kieler.core.ui.UnsupportedPartException;
 import de.cau.cs.kieler.ksbase.ui.kivi.IKSBasEHandler;
 
 /**
- * @author uru
+ * Implements the selection retrievel etc. for GMF editors.
  * 
+ * @author uru
  */
 public class GmfKSBaseHandler implements IKSBasEHandler {
 
@@ -285,15 +286,12 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
     public void setSelection(final IEditorPart editor, final EditPart part) {
         PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
             public void run() {
-                // if (obj != KSBasECombination.this.lastSelection) {
                 try {
                     editor.getEditorSite().getSelectionProvider()
                             .setSelection(new StructuredSelection(part));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                // }
-
             }
         });
     }
