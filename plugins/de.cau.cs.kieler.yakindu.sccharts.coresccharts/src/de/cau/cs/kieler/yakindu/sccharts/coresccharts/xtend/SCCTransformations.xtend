@@ -48,16 +48,15 @@ import de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpressi
 import org.yakindu.sct.model.stext.stext.LogicalRelationExpression
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import org.eclipse.emf.ecore.EObject
+import org.yakindu.sct.model.stext.stext.BoolLiteral
+import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 
 
 class SCCTransformations {
  
-    private static val Injector i = SynctextStandaloneSetup::doSetup();
-    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
-    private static val ResourceSet rSet = i.getInstance(typeof(ResourceSet));
-    private static val STextDefaulTypeSystem ts = i.getInstance(typeof(STextDefaulTypeSystem));
-    @Named(Constants::FILE_EXTENSIONS)
-    @Inject private String fileExt;
+    private static val Injector synctextInjector = SynctextStandaloneSetup::doSetup();
+    private static val STextDefaulTypeSystem typesystem = synctextInjector.getInstance(typeof(STextDefaulTypeSystem));
+    private static val String variableValueExtension = "_val";
  
     //-------------------------------------------------------------------------
     //--        S C C  -  S I G N A L S  -  T R A N S F O R M A T I O N       --
@@ -77,10 +76,9 @@ class SCCTransformations {
 
      // For all states do the following:
      // If the state has a specification, then convert all signals
-     // (a) simple signal S to boolean variable S
-     // (b) valued signal S to two boolean variables S and S_val
+     // (a) simple signal S to boolean variable S (variablePresent)
+     // (b) valued signal S to two boolean variables S and S_val (variableValue)
      def void transformSignals(SyncState state, Statechart targetRootStatechart) {
-//         if (!state.specification.nullOrEmpty) {
              // There is a specification, convert it
              var specification = state.specification;
              var scope = state.scopes.get(0);
@@ -91,63 +89,56 @@ class SCCTransformations {
                specification = "";  
                for (declaration : ImmutableList::copyOf(scope.declarations)) {
                  if (declaration instanceof SignalDefinition) {
-                     var specificationLine = "";
+                     // Store information about the signal in question
                      val signal = declaration as EventDefinition;
-                     val isInput = signal.input;
-                     val isOutput = signal.output;
-                     val type = signal.type;
-                        
-                     
-                     //val typeBool = signalDefinition.type.name.toString.equals("boolean");
-                     //val typeInt = signalDefinition.type.name.toString.equals("integer");
+                     val signalIsInput = signal.input;
+                     val signalIsOutput = signal.output;
+                     val signalType = signal.type;
                      val signalName = declaration.name;
                      val signalInit = signal.varInitialValue;
                      val signalCombine = signal.varCombineOperator;
-                     //if (signalDefinition.
                      
-                     val variable =  SynctextFactory::eINSTANCE.createVariableDefinition;
-                     variable.setName(signalName);
-                     variable.setIsInput(isInput);
-                     variable.setIsOutput(isOutput);
-                     variable.setType(getBooleanType);
+                     // Create a present variable
+                     val variablePresent = createBooleanVariable(signalName, 
+                                                                 signalIsInput, 
+                                                                 signalIsOutput
+                     );
                      
-                     // Check if this is a valued signal
-                     if (signal.valued) {
-                        val variableVal =  SynctextFactory::eINSTANCE.createVariableDefinition;
-                        variableVal.setName(signalName + "_val");
-                        variableVal.setIsInput(isInput);
-                        variableVal.setIsOutput(isOutput);
-                        variableVal.setType(signal.type);
+                     // Check if this is a valued signal -----------------
+                     if (signal.isValuedSignal) {
                          
+                        // Create a value variable 
+                        val variableValue = createVariable(signalName + variableValueExtension, 
+                                                           signalType, 
+                                                           signalIsInput, 
+                                                           signalIsOutput
+                        ); 
                         if (signalInit != null) {
-                            variableVal.setInitialValue(signalInit);
+                            variableValue.setInitialValue(signalInit);
                         }
                         if (signalCombine != null) {
-                            variableVal.setInitialValue(signalInit); 
+                            variableValue.setInitialValue(signalInit); 
                         }
-                        
-                        // Add variable to the scope
-                        scope.declarations.add(variableVal);
+                        // Add value variable to the scope
+                        scope.declarations.add(variableValue);
                         
                         // Change all references
                         val transitions = state.eAllContents().toIterable().filter(typeof(SyncTransition));
                         for (transition : transitions) {
-                            val transitionSpecification = transition.specification;
                             
+                            // Change all trigger where the value is inspected (val(S) -> S_val)
                             val trigger = transition.trigger as ReactionTrigger;
                             if (trigger != null) {
                               val valReferences = trigger.eAllContents.toIterable().filter(typeof(EventValueReferenceExpression));
                               for (valReference : ImmutableList::copyOf(valReferences)) {
                                   val expression = valReference.value;
-                                  
                                   // Exchange reference to valued signal within expression with the
                                   // new value variable
                                   if (expression instanceof ElementReferenceExpression) {
                                       val elementReferenceExpression = expression as ElementReferenceExpression;
-                                      
                                       // Only if the signal is involved
                                       if (elementReferenceExpression.reference == signal) {
-                                        elementReferenceExpression.setReference(variableVal);    
+                                        elementReferenceExpression.setReference(variableValue);    
                                         val container = valReference.eContainer;
                                         if (container instanceof ReactionTrigger) {
                                             val reactionTrigger = ((container as ReactionTrigger));
@@ -162,12 +153,12 @@ class SCCTransformations {
                                               logicalRealtionExpression.setRightOperand(expression);
                                             }
                                          }
-                                          
                                       }
                                   }
                               }
                             }
 
+                            // Change all effects where the value is set (S(x) -> S_val = x)
                             val effect = transition.effect as ReactionEffect;
                             if (effect != null) {
                               for (action : ImmutableList::copyOf(effect.actions)) {
@@ -177,37 +168,23 @@ class SCCTransformations {
                                     if (refExpression.reference == signal) {
                                         // Now we know that the signals values is changed here
                                         val value = refExpression.args;
-                                        val assignmentExpression = StextFactory::eINSTANCE.createAssignmentExpression;
-                                        // Get the first expression only
-                                        assignmentExpression.setExpression(value.get(0));
-                                        val elementReferenceExpression = StextFactory::eINSTANCE.createElementReferenceExpression;
-                                        elementReferenceExpression.setReference(variableVal)
-                                        assignmentExpression.setVarRef(elementReferenceExpression);
-                                        // Add O_val = 7 and remove O(7) 
-                                        
-                                        effect.actions.add(assignmentExpression);
+                                        // Assign the first expression only
+                                        val assignmentExpression = variableValue.assign(value.get(0));
+                                        // Add to actions at the same position          
+                                        val i = effect.actions.indexOf(action);
+                                        effect.actions.add(i, assignmentExpression);
                                     }
                                 }
                               }
                             }
                             
-//                            // Reserialize transition
-//                            state.setSpecification(serializer.serialize(transition));
-//                            i.injectMembers(this);
-//                            val res = rSet.createResource(URI::createFileURI("dummy."+ System::currentTimeMillis() + state.hashCode + "." +fileExt))
-//                            res.contents+= EcoreUtil::copy(transition);
-//                            state.setSpecification(serializer.serialize(res.contents.head));
-//                            res.unload;
-                        }
+                        } // for all transitions of the model
                         
-                     }
+                     } // end handle valued signal -----------------
                      
-
-                        // Change all references
-                        val transitions = state.eAllContents().toIterable().filter(typeof(SyncTransition));
-                        for (transition : transitions) {
-                            val transitionSpecification = transition.specification;
-                            
+                     // Change all references for the present status
+                     val transitions = state.eAllContents().toIterable().filter(typeof(SyncTransition));
+                     for (transition : transitions) {
                             val effect = transition.effect as ReactionEffect;
                             if (effect != null) {
                               for (action : ImmutableList::copyOf(effect.actions)) {
@@ -216,52 +193,43 @@ class SCCTransformations {
                                     // Only if the signal is involved
                                     if (refExpression.reference == signal) {
                                         // Also add O = true to mimic the present status
-                                        val assignmentExpression2 = StextFactory::eINSTANCE.createAssignmentExpression;
-                                        val trueValue = StextFactory::eINSTANCE.createBoolLiteral;
-                                        trueValue.setValue(true);
-                                        val trueValueExpression = StextFactory::eINSTANCE.createPrimitiveValueExpression()
-                                        trueValueExpression.setValue(trueValue);
-                                        assignmentExpression2.setExpression(trueValueExpression);
-                                        val elementReferenceExpression2 = StextFactory::eINSTANCE.createElementReferenceExpression;
-                                        elementReferenceExpression2.setReference(variable)
-                                        assignmentExpression2.setVarRef(elementReferenceExpression2);
-                                        
+                                        val assignmentExpression = variablePresent.assign(true);
+                                        // Add to actions at the same position          
                                         val i = effect.actions.indexOf(action);
-                                        effect.actions.add(i, assignmentExpression2);
+                                        effect.actions.add(i, assignmentExpression);
                                         effect.actions.remove(action);
                                     }
                                 }
                               }
-                            }
+                        }
                      }
                      
-                     
-                     // Add variable to the scope
-                     scope.declarations.add(variable);
+                     // Add present variable to the scope
+                     scope.declarations.add(variablePresent);
                      // Remove signal from the scope
                      scope.declarations.remove(signal);
-                     
-                     
-                     System::out.println(signal.name + " (Signal)");
-                     System::out.println(variable.name + " (Variable)");
                  }
                }
                
 
-                    /* =================================================
-                     * = WORKAROUND -  Mittwoch, 3. Juli 2013 16:05:09 =
-                     * =================================================
-                     * Hallo Christian,
-                     * im wesentlichen läuft es so wie Du gesagt hast. Wenn Du den SText-Modellteil auf
-                     * den semantischen Objekten ändern willst, kannst Du auf der EMF Resource, wenn Du
-                     * diese auf STextResource castest, setSerializerEnabled(true) setzen. Das sorgt 
-                     * dafür, dass ein EAdapter innerhalb der AbstractSCTResource auf semantischen
-                     *  Änderungen in sText lauscht und den String selbst per serializer updated. 
-                     * Diesen Mechanismus benutzen wir für die Refactorings - allerdings bin ich mir
-                     *  gerade gar nicht sicher ob es die in eurem Branch schon gab. Falls nicht, 
-                     * müssten wir versuchen die Resource in euren Branch einzubauen. 
-                     * Viele Grüße, Andreas Andreas Mülder 
-                     */
+//                    /* =================================================
+//                     * = WORKAROUND -  Mittwoch, 3. Juli 2013 16:05:09 =
+//                     * =================================================
+//                     * Hallo Christian,
+//                     * im wesentlichen läuft es so wie Du gesagt hast. Wenn Du den SText-Modellteil auf
+//                     * den semantischen Objekten ändern willst, kannst Du auf der EMF Resource, wenn Du
+//                     * diese auf STextResource castest, setSerializerEnabled(true) setzen. Das sorgt 
+//                     * dafür, dass ein EAdapter innerhalb der AbstractSCTResource auf semantischen
+//                     *  Änderungen in sText lauscht und den String selbst per serializer updated. 
+//                     * Diesen Mechanismus benutzen wir für die Refactorings - allerdings bin ich mir
+//                     *  gerade gar nicht sicher ob es die in eurem Branch schon gab. Falls nicht, 
+//                     * müssten wir versuchen die Resource in euren Branch einzubauen. 
+//                     * Viele Grüße, Andreas Andreas Mülder 
+//                     */
+//                     private static val ISerializer serializer = synctextInjector.getInstance(typeof(ISerializer));
+//                     private static val ResourceSet rSet = synctextInjector.getInstance(typeof(ResourceSet));
+//                     @Named(Constants::FILE_EXTENSIONS)
+//                     @Inject private String fileExt;
 //                     i.injectMembers(this);
 //                     val res = rSet.createResource(URI::createFileURI("dummy."+ System::currentTimeMillis() + state.hashCode + "." +fileExt))
 //                     res.contents+= EcoreUtil::copy(scope)
@@ -269,28 +237,76 @@ class SCCTransformations {
 //                     res.unload;
              }
              
-             
-  //       }
-         
-        
      }
-        
-        
-    def Type getBooleanType() {
-            return ts.booleanType;
-    }    
-    def Type getIntegerType() {
-            return ts.integerType;
-    }    
-    
-    def EObject getRootEObject(EObject eObject) {
-        if (eObject.eContainer != null) {
-            return eObject.eContainer.rootEObject;
-        }
-        return eObject;
+     
+     
+    //-------------------------------------------------------------------------
+    //--         H E L P E R     C R E A T E     F U N C T I O N S           --
+    //-------------------------------------------------------------------------
+
+    // VARIABLE & REFERENCE CREATION
+
+    def VariableDefinition createBooleanInputVariable(String signalName, boolean isInput, boolean isOutput) {
+       createBooleanVariable(signalName, true, false);   
+    }
+
+    def VariableDefinition createBooleanOutputVariable(String signalName, boolean isInput, boolean isOutput) {
+       createBooleanVariable(signalName, false, true);   
+    }
+
+    def VariableDefinition createBooleanVariable(String signalName, boolean isInput, boolean isOutput) {
+       createVariable(signalName, getBooleanType, isInput, isOutput);   
     }
     
-    def boolean isValued(EventDefinition signal) {
+    def VariableDefinition createVariable(String signalName, Type type, boolean isInput, boolean isOutput) {
+        val variable =  SynctextFactory::eINSTANCE.createVariableDefinition;
+        variable.setName(signalName);
+        variable.setIsInput(isInput);
+        variable.setIsOutput(isOutput);
+        variable.setType(type);
+        variable
+    }
+
+    def ElementReferenceExpression createElementReferenceExpression(EObject variable) {
+       val elementReferenceExpression = StextFactory::eINSTANCE.createElementReferenceExpression;
+       elementReferenceExpression.setReference(variable)
+       elementReferenceExpression;
+    }
+    
+        
+    // EXPRESSION & ASSIGNMENT CREATION     
+        
+    def BoolLiteral createBooleanLiteral(boolean trueOrFalse) {
+       val trueValue = StextFactory::eINSTANCE.createBoolLiteral;
+       trueValue.setValue(trueOrFalse);
+       trueValue;
+    }
+    
+    def PrimitiveValueExpression createBooleanValueExpession(boolean trueOrFalse) {
+       val trueValue = createBooleanLiteral(trueOrFalse);
+       val trueValueExpression = StextFactory::eINSTANCE.createPrimitiveValueExpression()
+       trueValueExpression.setValue(trueValue);
+       trueValueExpression;
+    }
+    
+    def AssignmentExpression assign(EObject variable, Expression expression) {
+       val assignmentExpression = StextFactory::eINSTANCE.createAssignmentExpression;
+       assignmentExpression.setExpression(expression);
+       val elementReferenceExpression = createElementReferenceExpression(variable);
+       assignmentExpression.setVarRef(elementReferenceExpression);
+       assignmentExpression;
+    }
+    
+    def AssignmentExpression assign(EObject variable, boolean trueOrFalse) {
+       val trueValueExpression = createBooleanValueExpession(trueOrFalse);
+       variable.assign(trueValueExpression);
+    }    
+        
+    //-------------------------------------------------------------------------
+    //--  H E L P E R     A D V A N C E D    B A S I C     F U N C T I O N S --
+    //-------------------------------------------------------------------------
+
+    def boolean isValuedSignal(EventDefinition signal) {
         // Search the whole model if there is an AssignmentExpression with this signal
         // or if there is a EventValueReferenceExpression with this signal
         var found = false;
@@ -308,6 +324,25 @@ class SCCTransformations {
         return found;
     }
         
+
+    //-------------------------------------------------------------------------
+    //--          H E L P E R     B A S I C     F U N C T I O N S            --
+    //-------------------------------------------------------------------------
+        
+    def Type getBooleanType() {
+            return typesystem.booleanType;
+    }    
+    def Type getIntegerType() {
+            return typesystem.integerType;
+    }    
+    
+    def EObject getRootEObject(EObject eObject) {
+        if (eObject.eContainer != null) {
+            return eObject.eContainer.rootEObject;
+        }
+        return eObject;
+    }
+    
     def boolean isBoolean(Type type) {
         return (type != null && type.name != null && type.name.equals("boolean"));
     }     
