@@ -17,8 +17,8 @@ import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionEffect
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger
 import java.util.List
 import org.yakindu.sct.model.sgraph.Effect
 import org.yakindu.sct.model.sgraph.Trigger

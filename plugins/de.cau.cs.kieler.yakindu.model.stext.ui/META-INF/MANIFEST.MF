@@ -20,5 +20,6 @@ Import-Package: org.apache.log4j,
  org.yakindu.sct.model.stext.ui.contentassist
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.yakindu.model.stext.ui.contentassist,
- de.cau.cs.kieler.yakindu.model.stext.ui.contentassist.antlr
+ de.cau.cs.kieler.yakindu.model.stext.ui.contentassist.antlr,
+ de.cau.cs.kieler.yakindu.model.stext.ui.contentassist.antlr.internal
 Bundle-Activator: de.cau.cs.kieler.yakindu.model.stext.ui.internal.SynctextActivator

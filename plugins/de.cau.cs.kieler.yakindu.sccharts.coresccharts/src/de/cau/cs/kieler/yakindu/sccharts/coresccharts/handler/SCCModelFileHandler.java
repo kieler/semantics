@@ -22,10 +22,10 @@ import com.google.inject.name.Named;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState;
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition;
-import de.cau.cs.kieler.yakindu.model.stext.SynctextStandaloneSetup;
-import de.cau.cs.kieler.yakindu.model.stext.scoping.SynctextScopeProvider;
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect;
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.SynctextStandaloneSetup;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.scoping.SynctextScopeProvider;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionEffect;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCTransformations;
 
 /**

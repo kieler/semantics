@@ -27,7 +27,7 @@ public class Main {
 			System.err.println("Aborting: no path to EMF resource provided!");
 			return;
 		}
-		Injector injector = new de.cau.cs.kieler.yakindu.sccharts.model.stext.SCChartsExpStandaloneSetupGenerated().createInjectorAndDoEMFRegistration();
+		Injector injector = new de.cau.cs.kieler.yakindu.sccharts.model.stext.SynctextStandaloneSetupGenerated().createInjectorAndDoEMFRegistration();
 		Main main = injector.getInstance(Main.class);
 		main.runGenerator(args[0]);
 	}

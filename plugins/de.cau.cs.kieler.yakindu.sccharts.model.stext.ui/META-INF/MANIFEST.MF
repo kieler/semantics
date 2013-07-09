@@ -17,7 +17,6 @@ Require-Bundle: de.cau.cs.kieler.yakindu.sccharts.model.stext;visibility:=reexpo
  org.eclipse.xtext.ui.codetemplates.ui,
  org.yakindu.sct.model.stext;bundle-version="2.0.0",
  org.yakindu.sct.model.sgraph.ui;bundle-version="2.0.0",
- de.cau.cs.kieler.yakindu.model.stext.ui;bundle-version="0.1.0",
  org.yakindu.sct.model.stext.ui;bundle-version="2.0.0"
 Import-Package: de.itemis.utils.jface.viewers,
  de.itemis.utils.jface.viewers.help,
@@ -34,4 +33,4 @@ Export-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext.ui,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist.antlr,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.contentassist.antlr.internal,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.internal
-Bundle-Activator: de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.internal.SCChartsExpActivator
+Bundle-Activator: de.cau.cs.kieler.yakindu.sccharts.model.stext.ui.internal.SynctextActivator
