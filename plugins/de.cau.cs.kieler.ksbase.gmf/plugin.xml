@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
+      <editpolicyProvider
+            class="de.cau.cs.kieler.ksbase.gmf.handler.TransformationEditPolicyProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+      </editpolicyProvider>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.ksbase.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.ksbase.gmf.GmfKSBaseHandler">
+      </handler>
+   </extension>
+</plugin>
