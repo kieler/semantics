@@ -11,6 +11,24 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
+    <combination
+            active="true"
+            class="de.cau.cs.kieler.synccharts.kivi.RandomLayoutCombination"
+            description="Apply a random layout on all components of the model. Can be used to experiment with other layouters afterwards."
+            name="Random Layout">
+    </combination>
+    <combination
+          active="true"
+          class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterDiagramReinitCombination"
+          description="Performs an automatic layout after a diagram has been reinitialized from its model file"
+          name="Layout After Diagram Reinitialization">
+    </combination>
+     <combination
+            active="true"
+            class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterCollapseExpandCombination"
+            description="Call automatic layout after the collapsed state of a compartment has been changed."
+            name="Layout after Collapse/Expand">
+      </combination>
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.SyncChartsCombination"
             description="Highlights active states during simulation."
@@ -23,13 +41,6 @@
             name="SyncCharts Signal Flow Visualization"
             active="true">
       </combination>
-  <!--    <combination
-            class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterCollapseCombination"
-            description="Performs automatic layout after a node has been collapsed or expanded."
-            name="Layout After CollapseEffect Combination"
-            active="true">
-      </combination>
-      -->
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterModelChangedCombination"
             description="Performs automatic layout after the model has been changed, e.g. a String label has been changed or a compartment has been collapsed or expanded."
