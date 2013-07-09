@@ -14,6 +14,7 @@
  package de.cau.cs.kieler.scl.extensions
 
 import com.google.inject.Inject
+import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.scl.basicblocks.BasicBlock
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
@@ -697,5 +698,61 @@ class SCLBasicBlockExtensions {
         newBlockList
     }
     
+    
+
+    def boolean isASCSchedulable(Program program) {
+        program.ASCPool.size == 0
+    }
+    
+    
+    def List<BasicBlock> ASCPool(Program program) {
+        var changed = false
+        var basicBlockPool = program.statements.head.getAllBasicBlocks 
+        while(basicBlockPool.size>0) {
+            Debug("---")
+            var String poolStr = "";
+            for (bb : basicBlockPool) {
+                poolStr = poolStr + bb.basicBlockName + " "
+            }
+            Debug("Blocks in pool: " + poolStr)
+            changed = false
+            val tempPool = ImmutableList::copyOf(basicBlockPool)
+            for(basicBlock : tempPool) {
+                var predecessors = basicBlock.getBasicBlockPredecessor
+                var depPredecessors = basicBlock.getBasicBlockDependencyPredecessors 
+                var ready = true
+                
+                for (pred : predecessors) {
+                    if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred) && !basicBlock.isParallelJoin) {ready = false}
+                    if (basicBlock.isParallelJoin) {
+                        val guards = pred.getHead.basicBlocks.stripSurface
+                        for (guard : guards) {
+                            if (basicBlockPool.containsEqual(guard)) { 
+                                ready = false;
+                                Debug("Join: " + basicBlock.basicBlockName + " guard " + guard.basicBlockName + " failed!")
+                            }
+                        }
+                    }     
+                }
+                for (pred : depPredecessors) {
+                    if (!pred.head.isPauseSurface && basicBlockPool.containsEqual(pred)) {ready = false}     
+                } 
+                                
+                if (ready) {
+                    basicBlockPool.removeEqual(basicBlock)
+                    changed = true
+                }    
+            }        
+            if (!changed) {
+                Debug("SCL ERROR: Program not schedulable!")
+                for(pool : basicBlockPool) {
+                    Debug("  not scheduled item: " + pool.basicBlockName)
+                }
+                return basicBlockPool
+            }
+        }
+                
+        basicBlockPool
+    }
    
 }

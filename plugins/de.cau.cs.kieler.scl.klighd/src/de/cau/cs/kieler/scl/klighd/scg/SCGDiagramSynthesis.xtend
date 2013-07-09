@@ -310,6 +310,7 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                 it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
             ];       
             val bbDataHolder = new BasicBlockDataHolder()
+            bbDataHolder.SCLProgram = program
             bbDataHolder.NodeData = InstructionMapping.clone as HashMap<Instruction, Pair<KNode, KNode>>
             bbDataHolder.BasicBlockData.addAll(program.statements.head.getAllBasicBlocks)
             kExitNode.data += bbDataHolder        
