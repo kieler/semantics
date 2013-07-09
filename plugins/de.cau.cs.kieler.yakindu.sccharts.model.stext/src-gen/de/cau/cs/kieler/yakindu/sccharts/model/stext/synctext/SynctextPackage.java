@@ -337,13 +337,31 @@ public interface SynctextPackage extends EPackage
   int LOCAL_ENTRY_REACTION__NAME = SGraphPackage.DECLARATION__NAME;
 
   /**
+   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_ENTRY_REACTION__TRIGGER = SGraphPackage.DECLARATION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Effect</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_ENTRY_REACTION__EFFECT = SGraphPackage.DECLARATION_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Local Entry Reaction</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LOCAL_ENTRY_REACTION_FEATURE_COUNT = SGraphPackage.DECLARATION_FEATURE_COUNT + 0;
+  int LOCAL_ENTRY_REACTION_FEATURE_COUNT = SGraphPackage.DECLARATION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.LocalDuringReactionImpl <em>Local During Reaction</em>}' class.
@@ -365,13 +383,40 @@ public interface SynctextPackage extends EPackage
   int LOCAL_DURING_REACTION__NAME = SGraphPackage.DECLARATION__NAME;
 
   /**
+   * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_DURING_REACTION__IS_IMMEDIATE = SGraphPackage.DECLARATION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_DURING_REACTION__TRIGGER = SGraphPackage.DECLARATION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Effect</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_DURING_REACTION__EFFECT = SGraphPackage.DECLARATION_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Local During Reaction</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LOCAL_DURING_REACTION_FEATURE_COUNT = SGraphPackage.DECLARATION_FEATURE_COUNT + 0;
+  int LOCAL_DURING_REACTION_FEATURE_COUNT = SGraphPackage.DECLARATION_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.LocalExitReactionImpl <em>Local Exit Reaction</em>}' class.
@@ -393,13 +438,31 @@ public interface SynctextPackage extends EPackage
   int LOCAL_EXIT_REACTION__NAME = SGraphPackage.DECLARATION__NAME;
 
   /**
+   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_EXIT_REACTION__TRIGGER = SGraphPackage.DECLARATION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Effect</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_EXIT_REACTION__EFFECT = SGraphPackage.DECLARATION_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Local Exit Reaction</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LOCAL_EXIT_REACTION_FEATURE_COUNT = SGraphPackage.DECLARATION_FEATURE_COUNT + 0;
+  int LOCAL_EXIT_REACTION_FEATURE_COUNT = SGraphPackage.DECLARATION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.LocalSuspendReactionImpl <em>Local Suspend Reaction</em>}' class.
@@ -421,13 +484,31 @@ public interface SynctextPackage extends EPackage
   int LOCAL_SUSPEND_REACTION__NAME = SGraphPackage.DECLARATION__NAME;
 
   /**
+   * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_SUSPEND_REACTION__IS_IMMEDIATE = SGraphPackage.DECLARATION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_SUSPEND_REACTION__TRIGGER = SGraphPackage.DECLARATION_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Local Suspend Reaction</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LOCAL_SUSPEND_REACTION_FEATURE_COUNT = SGraphPackage.DECLARATION_FEATURE_COUNT + 0;
+  int LOCAL_SUSPEND_REACTION_FEATURE_COUNT = SGraphPackage.DECLARATION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SimpleScopeImpl <em>Simple Scope</em>}' class.
@@ -549,52 +630,6 @@ public interface SynctextPackage extends EPackage
   int EVENT_DEFINITION_FEATURE_COUNT = SIGNAL_DEFINITION_FEATURE_COUNT + 5;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.DeclarationImpl <em>Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.DeclarationImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getDeclaration()
-   * @generated
-   */
-  int DECLARATION = 10;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DECLARATION__NAME = LOCAL_ENTRY_REACTION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DECLARATION__TRIGGER = LOCAL_ENTRY_REACTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Effect</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DECLARATION__EFFECT = LOCAL_ENTRY_REACTION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DECLARATION_FEATURE_COUNT = LOCAL_ENTRY_REACTION_FEATURE_COUNT + 2;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.ReactionTriggerImpl <em>Reaction Trigger</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -602,7 +637,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getReactionTrigger()
    * @generated
    */
-  int REACTION_TRIGGER = 11;
+  int REACTION_TRIGGER = 10;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' attribute.
@@ -648,7 +683,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getReactionEffect()
    * @generated
    */
-  int REACTION_EFFECT = 12;
+  int REACTION_EFFECT = 11;
 
   /**
    * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -676,7 +711,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getNumericalMultiplyDivideExpression()
    * @generated
    */
-  int NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION = 13;
+  int NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION = 12;
 
   /**
    * The feature id for the '<em><b>Left Operand</b></em>' containment reference.
@@ -722,7 +757,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getEventValueReferenceExpression()
    * @generated
    */
-  int EVENT_VALUE_REFERENCE_EXPRESSION = 14;
+  int EVENT_VALUE_REFERENCE_EXPRESSION = 13;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -750,7 +785,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getPreValueExpression()
    * @generated
    */
-  int PRE_VALUE_EXPRESSION = 15;
+  int PRE_VALUE_EXPRESSION = 14;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -778,7 +813,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getMultiplicativeOperator2()
    * @generated
    */
-  int MULTIPLICATIVE_OPERATOR2 = 16;
+  int MULTIPLICATIVE_OPERATOR2 = 15;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.CombineOperator <em>Combine Operator</em>}' enum.
@@ -788,7 +823,7 @@ public interface SynctextPackage extends EPackage
    * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getCombineOperator()
    * @generated
    */
-  int COMBINE_OPERATOR = 17;
+  int COMBINE_OPERATOR = 16;
 
 
   /**
@@ -908,6 +943,28 @@ public interface SynctextPackage extends EPackage
   EClass getLocalEntryReaction();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction#getTrigger <em>Trigger</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Trigger</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction#getTrigger()
+   * @see #getLocalEntryReaction()
+   * @generated
+   */
+  EReference getLocalEntryReaction_Trigger();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction#getEffect <em>Effect</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Effect</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction#getEffect()
+   * @see #getLocalEntryReaction()
+   * @generated
+   */
+  EReference getLocalEntryReaction_Effect();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction <em>Local During Reaction</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -916,6 +973,39 @@ public interface SynctextPackage extends EPackage
    * @generated
    */
   EClass getLocalDuringReaction();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction#isIsImmediate <em>Is Immediate</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Immediate</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction#isIsImmediate()
+   * @see #getLocalDuringReaction()
+   * @generated
+   */
+  EAttribute getLocalDuringReaction_IsImmediate();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction#getTrigger <em>Trigger</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Trigger</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction#getTrigger()
+   * @see #getLocalDuringReaction()
+   * @generated
+   */
+  EReference getLocalDuringReaction_Trigger();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction#getEffect <em>Effect</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Effect</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction#getEffect()
+   * @see #getLocalDuringReaction()
+   * @generated
+   */
+  EReference getLocalDuringReaction_Effect();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction <em>Local Exit Reaction</em>}'.
@@ -928,6 +1018,28 @@ public interface SynctextPackage extends EPackage
   EClass getLocalExitReaction();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction#getTrigger <em>Trigger</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Trigger</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction#getTrigger()
+   * @see #getLocalExitReaction()
+   * @generated
+   */
+  EReference getLocalExitReaction_Trigger();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction#getEffect <em>Effect</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Effect</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction#getEffect()
+   * @see #getLocalExitReaction()
+   * @generated
+   */
+  EReference getLocalExitReaction_Effect();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction <em>Local Suspend Reaction</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -936,6 +1048,28 @@ public interface SynctextPackage extends EPackage
    * @generated
    */
   EClass getLocalSuspendReaction();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction#isIsImmediate <em>Is Immediate</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Immediate</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction#isIsImmediate()
+   * @see #getLocalSuspendReaction()
+   * @generated
+   */
+  EAttribute getLocalSuspendReaction_IsImmediate();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction#getTrigger <em>Trigger</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Trigger</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction#getTrigger()
+   * @see #getLocalSuspendReaction()
+   * @generated
+   */
+  EReference getLocalSuspendReaction_Trigger();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SimpleScope <em>Simple Scope</em>}'.
@@ -1011,38 +1145,6 @@ public interface SynctextPackage extends EPackage
    * @generated
    */
   EAttribute getEventDefinition_VarCombineOperator();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration <em>Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Declaration</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration
-   * @generated
-   */
-  EClass getDeclaration();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration#getTrigger <em>Trigger</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Trigger</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration#getTrigger()
-   * @see #getDeclaration()
-   * @generated
-   */
-  EReference getDeclaration_Trigger();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration#getEffect <em>Effect</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Effect</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration#getEffect()
-   * @see #getDeclaration()
-   * @generated
-   */
-  EReference getDeclaration_Effect();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger <em>Reaction Trigger</em>}'.
@@ -1335,6 +1437,22 @@ public interface SynctextPackage extends EPackage
     EClass LOCAL_ENTRY_REACTION = eINSTANCE.getLocalEntryReaction();
 
     /**
+     * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_ENTRY_REACTION__TRIGGER = eINSTANCE.getLocalEntryReaction_Trigger();
+
+    /**
+     * The meta object literal for the '<em><b>Effect</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_ENTRY_REACTION__EFFECT = eINSTANCE.getLocalEntryReaction_Effect();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.LocalDuringReactionImpl <em>Local During Reaction</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1343,6 +1461,30 @@ public interface SynctextPackage extends EPackage
      * @generated
      */
     EClass LOCAL_DURING_REACTION = eINSTANCE.getLocalDuringReaction();
+
+    /**
+     * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LOCAL_DURING_REACTION__IS_IMMEDIATE = eINSTANCE.getLocalDuringReaction_IsImmediate();
+
+    /**
+     * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_DURING_REACTION__TRIGGER = eINSTANCE.getLocalDuringReaction_Trigger();
+
+    /**
+     * The meta object literal for the '<em><b>Effect</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_DURING_REACTION__EFFECT = eINSTANCE.getLocalDuringReaction_Effect();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.LocalExitReactionImpl <em>Local Exit Reaction</em>}' class.
@@ -1355,6 +1497,22 @@ public interface SynctextPackage extends EPackage
     EClass LOCAL_EXIT_REACTION = eINSTANCE.getLocalExitReaction();
 
     /**
+     * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_EXIT_REACTION__TRIGGER = eINSTANCE.getLocalExitReaction_Trigger();
+
+    /**
+     * The meta object literal for the '<em><b>Effect</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_EXIT_REACTION__EFFECT = eINSTANCE.getLocalExitReaction_Effect();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.LocalSuspendReactionImpl <em>Local Suspend Reaction</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1363,6 +1521,22 @@ public interface SynctextPackage extends EPackage
      * @generated
      */
     EClass LOCAL_SUSPEND_REACTION = eINSTANCE.getLocalSuspendReaction();
+
+    /**
+     * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LOCAL_SUSPEND_REACTION__IS_IMMEDIATE = eINSTANCE.getLocalSuspendReaction_IsImmediate();
+
+    /**
+     * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_SUSPEND_REACTION__TRIGGER = eINSTANCE.getLocalSuspendReaction_Trigger();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SimpleScopeImpl <em>Simple Scope</em>}' class.
@@ -1423,32 +1597,6 @@ public interface SynctextPackage extends EPackage
      * @generated
      */
     EAttribute EVENT_DEFINITION__VAR_COMBINE_OPERATOR = eINSTANCE.getEventDefinition_VarCombineOperator();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.DeclarationImpl <em>Declaration</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.DeclarationImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getDeclaration()
-     * @generated
-     */
-    EClass DECLARATION = eINSTANCE.getDeclaration();
-
-    /**
-     * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DECLARATION__TRIGGER = eINSTANCE.getDeclaration_Trigger();
-
-    /**
-     * The meta object literal for the '<em><b>Effect</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DECLARATION__EFFECT = eINSTANCE.getDeclaration_Effect();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.ReactionTriggerImpl <em>Reaction Trigger</em>}' class.

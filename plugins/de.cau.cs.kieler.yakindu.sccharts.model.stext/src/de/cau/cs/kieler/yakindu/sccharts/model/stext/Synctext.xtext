@@ -55,13 +55,15 @@ OperationDefinition:
     {OperationDefinition} 'extern'  functionType=[types::Type|FQN] name=XID '(' paramType=[types::Type|FQN] ')' ';';
     
 LocalEntryReaction:
-   {Declaration} 'Entry' ':' (trigger=ReactionTrigger)? ('/' effect=ReactionEffect) ';';
+  {LocalEntryReaction} 'entry' ':' (trigger=ReactionTrigger)? ('/' effect=ReactionEffect) ';';
 LocalDuringReaction:
-   {Declaration} 'During' ':' (trigger=ReactionTrigger)? '/' effect=ReactionEffect ';';
+  {LocalDuringReaction} (isImmediate?='immediate')? 'during' ':' (trigger=ReactionTrigger)? '/' effect=ReactionEffect ';';
 LocalExitReaction:
-   {Declaration} 'Exit' ':' (trigger=ReactionTrigger)? ('/' effect=ReactionEffect) ';';
+  {LocalExitReaction} 'exit' ':' (trigger=ReactionTrigger)? ('/' effect=ReactionEffect) ';';
 LocalSuspendReaction:
-   {Declaration} 'Suspend' ':' (trigger=ReactionTrigger)? ';';
+  {LocalSuspendReaction} (isImmediate?='immediate')? 'suspend' ':' (trigger=ReactionTrigger)? ';';
+
+//{Declaration}    
 
 
 /******************************************** TRANSITION ***************************************** */

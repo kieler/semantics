@@ -75,7 +75,6 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
       case SynctextPackage.LOCAL_SUSPEND_REACTION: return createLocalSuspendReaction();
       case SynctextPackage.SIMPLE_SCOPE: return createSimpleScope();
       case SynctextPackage.EVENT_DEFINITION: return createEventDefinition();
-      case SynctextPackage.DECLARATION: return createDeclaration();
       case SynctextPackage.REACTION_TRIGGER: return createReactionTrigger();
       case SynctextPackage.REACTION_EFFECT: return createReactionEffect();
       case SynctextPackage.NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION: return createNumericalMultiplyDivideExpression();
@@ -232,17 +231,6 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
   {
     EventDefinitionImpl eventDefinition = new EventDefinitionImpl();
     return eventDefinition;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Declaration createDeclaration()
-  {
-    DeclarationImpl declaration = new DeclarationImpl();
-    return declaration;
   }
 
   /**

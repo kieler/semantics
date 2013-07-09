@@ -16,6 +16,7 @@ import org.yakindu.base.types.Operation;
 import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypedElement;
 
+import org.yakindu.sct.model.sgraph.Declaration;
 import org.yakindu.sct.model.sgraph.Effect;
 import org.yakindu.sct.model.sgraph.Event;
 import org.yakindu.sct.model.sgraph.Scope;
@@ -101,7 +102,7 @@ public class SynctextSwitch<T> extends Switch<T>
         SignalDefinition signalDefinition = (SignalDefinition)theEObject;
         T result = caseSignalDefinition(signalDefinition);
         if (result == null) result = caseEvent(signalDefinition);
-        if (result == null) result = caseSGraph_Declaration(signalDefinition);
+        if (result == null) result = caseDeclaration(signalDefinition);
         if (result == null) result = caseNamedElement(signalDefinition);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -112,7 +113,7 @@ public class SynctextSwitch<T> extends Switch<T>
         T result = caseVariableDefinition(variableDefinition);
         if (result == null) result = caseStext_VariableDefinition(variableDefinition);
         if (result == null) result = caseVariable(variableDefinition);
-        if (result == null) result = caseSGraph_Declaration(variableDefinition);
+        if (result == null) result = caseDeclaration(variableDefinition);
         if (result == null) result = caseProperty(variableDefinition);
         if (result == null) result = caseFeature(variableDefinition);
         if (result == null) result = caseNamedElement(variableDefinition);
@@ -125,7 +126,7 @@ public class SynctextSwitch<T> extends Switch<T>
         OperationDefinition operationDefinition = (OperationDefinition)theEObject;
         T result = caseOperationDefinition(operationDefinition);
         if (result == null) result = caseStext_OperationDefinition(operationDefinition);
-        if (result == null) result = caseSGraph_Declaration(operationDefinition);
+        if (result == null) result = caseDeclaration(operationDefinition);
         if (result == null) result = caseOperation(operationDefinition);
         if (result == null) result = caseFeature(operationDefinition);
         if (result == null) result = caseNamedElement(operationDefinition);
@@ -137,7 +138,7 @@ public class SynctextSwitch<T> extends Switch<T>
       {
         LocalEntryReaction localEntryReaction = (LocalEntryReaction)theEObject;
         T result = caseLocalEntryReaction(localEntryReaction);
-        if (result == null) result = caseSGraph_Declaration(localEntryReaction);
+        if (result == null) result = caseDeclaration(localEntryReaction);
         if (result == null) result = caseNamedElement(localEntryReaction);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -146,7 +147,7 @@ public class SynctextSwitch<T> extends Switch<T>
       {
         LocalDuringReaction localDuringReaction = (LocalDuringReaction)theEObject;
         T result = caseLocalDuringReaction(localDuringReaction);
-        if (result == null) result = caseSGraph_Declaration(localDuringReaction);
+        if (result == null) result = caseDeclaration(localDuringReaction);
         if (result == null) result = caseNamedElement(localDuringReaction);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -155,7 +156,7 @@ public class SynctextSwitch<T> extends Switch<T>
       {
         LocalExitReaction localExitReaction = (LocalExitReaction)theEObject;
         T result = caseLocalExitReaction(localExitReaction);
-        if (result == null) result = caseSGraph_Declaration(localExitReaction);
+        if (result == null) result = caseDeclaration(localExitReaction);
         if (result == null) result = caseNamedElement(localExitReaction);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -164,7 +165,7 @@ public class SynctextSwitch<T> extends Switch<T>
       {
         LocalSuspendReaction localSuspendReaction = (LocalSuspendReaction)theEObject;
         T result = caseLocalSuspendReaction(localSuspendReaction);
-        if (result == null) result = caseSGraph_Declaration(localSuspendReaction);
+        if (result == null) result = caseDeclaration(localSuspendReaction);
         if (result == null) result = caseNamedElement(localSuspendReaction);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -184,21 +185,8 @@ public class SynctextSwitch<T> extends Switch<T>
         T result = caseEventDefinition(eventDefinition);
         if (result == null) result = caseSignalDefinition(eventDefinition);
         if (result == null) result = caseEvent(eventDefinition);
-        if (result == null) result = caseSGraph_Declaration(eventDefinition);
+        if (result == null) result = caseDeclaration(eventDefinition);
         if (result == null) result = caseNamedElement(eventDefinition);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SynctextPackage.DECLARATION:
-      {
-        Declaration declaration = (Declaration)theEObject;
-        T result = caseDeclaration(declaration);
-        if (result == null) result = caseLocalEntryReaction(declaration);
-        if (result == null) result = caseLocalDuringReaction(declaration);
-        if (result == null) result = caseLocalExitReaction(declaration);
-        if (result == null) result = caseLocalSuspendReaction(declaration);
-        if (result == null) result = caseSGraph_Declaration(declaration);
-        if (result == null) result = caseNamedElement(declaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -410,22 +398,6 @@ public class SynctextSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Declaration</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDeclaration(Declaration object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Reaction Trigger</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -548,7 +520,7 @@ public class SynctextSwitch<T> extends Switch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSGraph_Declaration(org.yakindu.sct.model.sgraph.Declaration object)
+  public T caseDeclaration(Declaration object)
   {
     return null;
   }
