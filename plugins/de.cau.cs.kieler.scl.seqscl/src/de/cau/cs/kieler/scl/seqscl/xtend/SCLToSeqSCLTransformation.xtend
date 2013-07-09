@@ -67,7 +67,8 @@ class SCLToSeqSCLTransformation {
 
 
         var changed = false
-        var basicBlockPool = program.statements.head.getAllBasicBlocks 
+        var basicBlockPool = basicBlocks.copy
+//        var basicBlockPool = program.statements.head.getAllBasicBlocks 
         while(basicBlockPool.size>0) {
             Debug("---")
             var String poolStr = "";
@@ -131,7 +132,7 @@ class SCLToSeqSCLTransformation {
     
     def List<Statement> transformBasicBlock(Program program, Program sourceProgram, BasicBlock basicBlock) {
         var newStatements = createNewStatementList
-        val predecessors = basicBlock.getBasicBlockPredecessor;
+        val predecessors = basicBlock.getBasicBlockPredecessor
  
         if (basicBlock.isParallelJoin) {
             var unreachableJoin = false

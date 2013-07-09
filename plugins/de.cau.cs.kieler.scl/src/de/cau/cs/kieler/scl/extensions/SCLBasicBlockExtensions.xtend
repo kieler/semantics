@@ -125,13 +125,13 @@ class SCLBasicBlockExtensions {
         val instructionStatement = statement.instructionStatement
         val bBox = new ArrayList<Statement>
         if (instructionStatement == null) return bBox
-        val sseq = instructionStatement.getParentStatementSequence;
+        val sseq = instructionStatement.getParentStatementSequence
         
         if (instructionStatement.isGoto) { 
             if (instructionStatement.instruction.asGoto.getTargetStatement?.getInstructionStatement?.instruction == null) return bBox
             var statementHier = instructionStatement.previousStatementHierarchical
             if (statementHier == null) statementHier = instructionStatement.instruction.asGoto.getTargetStatement
-            return getBasicBlockStatements(statementHier, isDepth)
+            return getBasicBlockStatements(statementHier, false)
         }
         
         // Transform statement to EObject Statement in case it is a statement that holds
@@ -278,7 +278,11 @@ class SCLBasicBlockExtensions {
     def BasicBlock getBasicBlockByAnyStatementDepth(Statement statement) {
         val statements = statement.getBasicBlockStatements(true)
         if (statements.head == null) return null
-        getBasicBlockByHead(statements.head, true)
+        if (statements.head.isConditional) {
+            return getBasicBlockByHead(statements.head, false)
+        } else {
+            getBasicBlockByHead(statements.head, true)
+        }
     }
 
     // Returns the hashcode id of the basic block
