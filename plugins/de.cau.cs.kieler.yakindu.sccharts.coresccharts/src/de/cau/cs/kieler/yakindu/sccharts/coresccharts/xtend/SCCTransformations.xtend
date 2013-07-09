@@ -34,6 +34,13 @@ import org.yakindu.sct.model.stext.stext.StextFactory
 import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
 
 import static de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCTransformations.*
+import org.yakindu.sct.model.stext.stext.LogicalOrExpression
+import org.yakindu.sct.model.sgraph.Effect
+import org.yakindu.sct.model.sgraph.Trigger
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction
 
 
 class SCCTransformations {
@@ -152,11 +159,13 @@ class SCCTransformations {
                                     if (refExpression.reference == signal) {
                                         // Now we know that the signals values is changed here
                                         val value = refExpression.args;
-                                        // Assign the first expression only
-                                        val assignmentExpression = variableValue.assign(value.get(0));
-                                        // Add to actions at the same position          
-                                        val i = effect.actions.indexOf(action);
-                                        effect.actions.add(i, assignmentExpression);
+                                        if (!value.nullOrEmpty) {
+                                            // Assign the first expression only
+                                            val assignmentExpression = variableValue.assign(value.get(0));
+                                            // Add to actions at the same position          
+                                            val i = effect.actions.indexOf(action);
+                                            effect.actions.add(i, assignmentExpression);
+                                        }
                                     }
                                 }
                               }
@@ -177,7 +186,7 @@ class SCCTransformations {
                                     // Only if the signal is involved
                                     if (refExpression.reference == signal) {
                                         // Also add O = true to mimic the present status
-                                        val assignmentExpression = variablePresent.assign(true);
+                                        val assignmentExpression = variablePresent.assignRelative(true);
                                         // Add to actions at the same position          
                                         val i = effect.actions.indexOf(action);
                                         effect.actions.add(i, assignmentExpression);
@@ -192,6 +201,13 @@ class SCCTransformations {
                      scope.declarations.add(variablePresent);
                      // Remove signal from the scope
                      scope.declarations.remove(signal);
+                   
+                     
+                     // Add a reset as an absolute write during/inside action
+                     val effect = createEmtyReaction();
+                     effect.actions.add(variablePresent.assign(false));
+                     val insideReaction = createDuringReaction(null, effect);
+                     scope.declarations.add(insideReaction);
                  }
                }
                
@@ -223,13 +239,61 @@ class SCCTransformations {
              
      }
      
+    //-------------------------------------------------------------------------
+    //--        H E L P E R     S C C H A R T     F U N C T I O N S          --
+    //-------------------------------------------------------------------------
+    
+    def AssignmentExpression assignRelative(EObject variable, boolean trueOrFalse) {
+       val trueValueExpression = createBooleanValueExpession(trueOrFalse);
+       val elementReferenceExpression = createElementReferenceExpression(variable);
+       val logicalOrExpression = createLogicalOrExpression(trueValueExpression, elementReferenceExpression);
+       variable.assign(logicalOrExpression)
+    }
+
      
     //-------------------------------------------------------------------------
     //--         H E L P E R     C R E A T E     F U N C T I O N S           --
     //-------------------------------------------------------------------------
+    
+    // SCCHART
+    
+    // Effects
+    def ReactionEffect createEmtyReaction() {
+         val reactionEffect = SynctextFactory::eINSTANCE.createReactionEffect;
+         reactionEffect
+    }
+   
+    
+    // Trigger
+    
+    def ReactionTrigger createTrueTrigger() {
+        val reactionTrigger = SynctextFactory::eINSTANCE.createReactionTrigger;
+        reactionTrigger.setExpression(createBooleanValueExpession(true));
+        reactionTrigger
+    }
+    
+    // Entry, Inside, Exit Actions
+    def LocalEntryReaction createEntryReaction(Trigger trigger, Effect effect) {
+        var reaction = SynctextFactory::eINSTANCE.createLocalEntryReaction
+        reaction.setTrigger(trigger);
+        reaction.setEffect(effect);
+        reaction
+    }
+    def LocalDuringReaction createDuringReaction(Trigger trigger, Effect effect) {
+        var reaction = SynctextFactory::eINSTANCE.createLocalDuringReaction
+        reaction.setTrigger(trigger);
+        reaction.setEffect(effect);
+        reaction
+    }
+    def LocalExitReaction createExitReaction(Trigger trigger, Effect effect) {
+        var reaction = SynctextFactory::eINSTANCE.createLocalExitReaction
+        reaction.setTrigger(trigger);
+        reaction.setEffect(effect);
+        reaction
+    }
 
     // VARIABLE & REFERENCE CREATION
-
+    
     def VariableDefinition createBooleanInputVariable(String signalName, boolean isInput, boolean isOutput) {
        createBooleanVariable(signalName, true, false);   
     }
@@ -260,6 +324,14 @@ class SCCTransformations {
         
     // EXPRESSION & ASSIGNMENT CREATION     
         
+    def LogicalOrExpression createLogicalOrExpression(Expression expressionLeft, Expression expressionRight) {
+       val logicalOrExpression = StextFactory::eINSTANCE.createLogicalOrExpression();
+       logicalOrExpression.setLeftOperand(expressionLeft);
+       logicalOrExpression.setRightOperand(expressionRight);
+       logicalOrExpression;
+    }
+
+        
     def BoolLiteral createBooleanLiteral(boolean trueOrFalse) {
        val trueValue = StextFactory::eINSTANCE.createBoolLiteral;
        trueValue.setValue(trueOrFalse);
@@ -285,6 +357,7 @@ class SCCTransformations {
        val trueValueExpression = createBooleanValueExpession(trueOrFalse);
        variable.assign(trueValueExpression);
     }    
+    
         
     //-------------------------------------------------------------------------
     //--  H E L P E R     A D V A N C E D    B A S I C     F U N C T I O N S --
@@ -295,9 +368,9 @@ class SCCTransformations {
         // or if there is a EventValueReferenceExpression with this signal
         var found = false;
         val rootObject = signal.rootEObject;
-        val assignmentExpressions = rootObject.eAllContents.toIterable.filter(typeof(AssignmentExpression));
-        for (assignmentExpression : assignmentExpressions) {
-            found = found || (assignmentExpression.varRef == signal);
+        val elementReferenceExpressions = rootObject.eAllContents.toIterable.filter(typeof(ElementReferenceExpression));
+        for (elementReferenceExpression : elementReferenceExpressions) {
+            found = found || (elementReferenceExpression.reference == signal && elementReferenceExpression.operationCall);
         }
         val eventValueReferenceExpressions = rootObject.eAllContents.toIterable.filter(typeof(EventValueReferenceExpression));
         for (eventValueReferenceExpression : eventValueReferenceExpressions) {
