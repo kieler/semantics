@@ -134,6 +134,7 @@ class SCLToSeqSCLTransformation {
         val predecessors = basicBlock.getBasicBlockPredecessor;
  
         if (basicBlock.isParallelJoin) {
+            var unreachableJoin = false
             var Expression syncExp = null 
             var Expression termExp = null
             for(pred : predecessors) {
@@ -174,9 +175,14 @@ class SCLToSeqSCLTransformation {
                 newStatements.add(emptyAssignment)
                 
                 handleExp = handleExp.addOrExpression(createElementReferenceExpression(program.getDeclarationByName(pred.emptyBlockName)))
-                syncExp = syncExp.addAndExpression(createParanthesizedExpression(handleExp))
+                if (handleExp != null) 
+                    syncExp = syncExp.addAndExpression(createParanthesizedExpression(handleExp))
             }        
-            syncExp = syncExp.addAndExpression(createParanthesizedExpression(termExp))
+            if (termExp != null) {
+                syncExp = syncExp.addAndExpression(createParanthesizedExpression(termExp))
+            } else {
+                unreachableJoin = true
+            }
 
             val guardAssignment = createSCLAssignment(
                 createAssignmentExpression(program.getDeclarationByNameAsElemRef(basicBlock.basicBlockName),
