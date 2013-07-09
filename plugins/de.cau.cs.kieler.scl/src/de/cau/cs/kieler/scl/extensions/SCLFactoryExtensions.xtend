@@ -15,8 +15,7 @@ package de.cau.cs.kieler.scl.extensions
 
 import org.yakindu.sct.model.sgraph.SGraphFactory
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
-import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.SCChartsExpFactory
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextFactory
 import org.yakindu.sct.model.stext.stext.StextFactory
 import org.yakindu.base.base.BaseFactory
 import org.yakindu.base.types.TypesFactory
@@ -33,8 +32,6 @@ class SCLFactoryExtensions {
     def SyncGraph() { SyncgraphFactory::eINSTANCE }
     
     def SyncText() { SynctextFactory::eINSTANCE }
-    
-    def SCCExp() { SCChartsExpFactory::eINSTANCE }
     
     def YakinduBase() { BaseFactory::eINSTANCE }
     

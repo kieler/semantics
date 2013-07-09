@@ -18,7 +18,7 @@ import java.util.List;
 
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.ksbase.ui.utils.AbstractCutCopyPasteCommandFactory;
+import de.cau.cs.kieler.ksbase.gmf.ui.utils.AbstractCutCopyPasteCommandFactory;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;

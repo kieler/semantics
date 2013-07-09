@@ -19,8 +19,7 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.antlr.runtime,
  org.eclipse.xtext.common.types,
  de.cau.cs.kieler.yakindu.model.sgraph;bundle-version="0.1.0",
- org.eclipse.core.runtime;bundle-version="3.8.0",
- de.cau.cs.kieler.yakindu.model.stext;bundle-version="0.1.0"
+ org.eclipse.core.runtime;bundle-version="3.8.0"
 Import-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext.validation,
  de.itemis.xtext.utils.jface.viewers,
  org.apache.log4j,
@@ -31,11 +30,12 @@ Export-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.generator,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.parser.antlr,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.parser.antlr.internal,
- de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp,
- de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.impl,
- de.cau.cs.kieler.yakindu.sccharts.model.stext.sCChartsExp.util,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.scoping,
+ de.cau.cs.kieler.yakindu.sccharts.model.stext.serializer,
  de.cau.cs.kieler.yakindu.sccharts.model.stext.services,
- de.cau.cs.kieler.yakindu.sccharts.model.stext.validation,
- de.cau.cs.kieler.yakindu.sccharts.model.stext.serializer
+ de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext,
+ de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl,
+ de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.util,
+ de.cau.cs.kieler.yakindu.sccharts.model.stext.types,
+ de.cau.cs.kieler.yakindu.sccharts.model.stext.validation
 

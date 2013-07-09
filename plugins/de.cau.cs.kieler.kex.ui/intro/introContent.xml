@@ -1,0 +1,14 @@
+<introContent>
+      <extensionContent
+        id="de.cau.cs.kieler.intro.import-wizard"
+        name="Import Wizard"
+        path="samples/@de.cau.cs.kieler.intro.samples/examples/import-wizard">
+		<link
+		   label="Import Examples"
+		   url="http://org.eclipse.ui.intro/runAction?pluginId=de.cau.cs.kieler.kex.ui&amp;class=de.cau.cs.kieler.kex.ui.actions.ImportWizardAction&amp;id=de.cau.cs.kieler.kex.ui.importWizardAction"
+		   id="kieler-samples-link"
+		   style-id="content-link">
+		   <text>Opens a wizard to import examples</text>
+		</link>
+      </extensionContent>
+</introContent>

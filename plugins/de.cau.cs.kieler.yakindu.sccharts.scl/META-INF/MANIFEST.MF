@@ -22,6 +22,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.yakindu.sccharts.coresccharts;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Import-Package: de.cau.cs.kieler.yakindu.model.stext.synctext
+Import-Package: de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext
 Export-Package: de.cau.cs.kieler.yakindu.sccharts.scl.handler,
  de.cau.cs.kieler.yakindu.sccharts.scl.xtend
