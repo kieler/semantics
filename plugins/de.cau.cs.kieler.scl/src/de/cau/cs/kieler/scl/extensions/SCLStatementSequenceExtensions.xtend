@@ -98,6 +98,7 @@ class SCLStatementSequenceExtensions {
     }
     
     def StatementSequence getParentStatementSequence(Statement statement) {
+        if (statement == null) return null
         var container = statement.eContainer
         if (container == null && statement.hasInstruction) container = statement.getInstruction
         while (container != null) {
