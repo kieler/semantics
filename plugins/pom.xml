@@ -46,6 +46,7 @@
     <module>de.cau.cs.kieler.kex</module>
     <module>de.cau.cs.kieler.kex.ui</module>
     <module>de.cau.cs.kieler.kies</module>
+    <module>de.cau.cs.kieler.ksbase.gmf</module>
     <module>de.cau.cs.kieler.kvid</module>
     <module>de.cau.cs.kieler.kvid.ui</module>
     <module>de.cau.cs.kieler.maude</module>
