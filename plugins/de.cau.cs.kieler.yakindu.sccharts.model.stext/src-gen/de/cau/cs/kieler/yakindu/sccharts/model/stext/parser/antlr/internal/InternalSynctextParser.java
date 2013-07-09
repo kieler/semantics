@@ -1908,7 +1908,7 @@ public class InternalSynctextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getLocalEntryReactionAccess().getDeclarationAction_0(),
+                          grammarAccess.getLocalEntryReactionAccess().getLocalEntryReactionAction_0(),
                           current);
                   
             }
@@ -2129,7 +2129,7 @@ public class InternalSynctextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getLocalDuringReactionAccess().getDeclarationAction_0(),
+                          grammarAccess.getLocalDuringReactionAccess().getLocalDuringReactionAction_0(),
                           current);
                   
             }
@@ -2344,7 +2344,7 @@ public class InternalSynctextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getLocalExitReactionAccess().getDeclarationAction_0(),
+                          grammarAccess.getLocalExitReactionAccess().getLocalExitReactionAction_0(),
                           current);
                   
             }
@@ -2562,7 +2562,7 @@ public class InternalSynctextParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getLocalSuspendReactionAccess().getDeclarationAction_0(),
+                          grammarAccess.getLocalSuspendReactionAccess().getLocalSuspendReactionAction_0(),
                           current);
                   
             }

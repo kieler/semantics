@@ -726,7 +726,7 @@ ruleLocalEntryReaction returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getLocalEntryReactionAccess().getDeclarationAction_0(),
+            grammarAccess.getLocalEntryReactionAccess().getLocalEntryReactionAction_0(),
             $current);
     }
 )	otherlv_1='Entry' 
@@ -808,7 +808,7 @@ ruleLocalDuringReaction returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getLocalDuringReactionAccess().getDeclarationAction_0(),
+            grammarAccess.getLocalDuringReactionAccess().getLocalDuringReactionAction_0(),
             $current);
     }
 )	otherlv_1='During' 
@@ -890,7 +890,7 @@ ruleLocalExitReaction returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getLocalExitReactionAccess().getDeclarationAction_0(),
+            grammarAccess.getLocalExitReactionAccess().getLocalExitReactionAction_0(),
             $current);
     }
 )	otherlv_1='Exit' 
@@ -972,7 +972,7 @@ ruleLocalSuspendReaction returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getLocalSuspendReactionAccess().getDeclarationAction_0(),
+            grammarAccess.getLocalSuspendReactionAccess().getLocalSuspendReactionAction_0(),
             $current);
     }
 )	otherlv_1='Suspend' 

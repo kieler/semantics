@@ -3,7 +3,6 @@
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.CombineOperator;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction;
@@ -114,13 +113,6 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * @generated
    */
   private EClass eventDefinitionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass declarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -352,9 +344,49 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getLocalEntryReaction_Trigger()
+  {
+    return (EReference)localEntryReactionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLocalEntryReaction_Effect()
+  {
+    return (EReference)localEntryReactionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getLocalDuringReaction()
   {
     return localDuringReactionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLocalDuringReaction_Trigger()
+  {
+    return (EReference)localDuringReactionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLocalDuringReaction_Effect()
+  {
+    return (EReference)localDuringReactionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -372,9 +404,39 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getLocalExitReaction_Trigger()
+  {
+    return (EReference)localExitReactionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLocalExitReaction_Effect()
+  {
+    return (EReference)localExitReactionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getLocalSuspendReaction()
   {
     return localSuspendReactionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLocalSuspendReaction_Trigger()
+  {
+    return (EReference)localSuspendReactionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -445,36 +507,6 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
   public EAttribute getEventDefinition_VarCombineOperator()
   {
     return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getDeclaration()
-  {
-    return declarationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getDeclaration_Trigger()
-  {
-    return (EReference)declarationEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getDeclaration_Effect()
-  {
-    return (EReference)declarationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -682,12 +714,19 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     createEReference(operationDefinitionEClass, OPERATION_DEFINITION__PARAM_TYPE);
 
     localEntryReactionEClass = createEClass(LOCAL_ENTRY_REACTION);
+    createEReference(localEntryReactionEClass, LOCAL_ENTRY_REACTION__TRIGGER);
+    createEReference(localEntryReactionEClass, LOCAL_ENTRY_REACTION__EFFECT);
 
     localDuringReactionEClass = createEClass(LOCAL_DURING_REACTION);
+    createEReference(localDuringReactionEClass, LOCAL_DURING_REACTION__TRIGGER);
+    createEReference(localDuringReactionEClass, LOCAL_DURING_REACTION__EFFECT);
 
     localExitReactionEClass = createEClass(LOCAL_EXIT_REACTION);
+    createEReference(localExitReactionEClass, LOCAL_EXIT_REACTION__TRIGGER);
+    createEReference(localExitReactionEClass, LOCAL_EXIT_REACTION__EFFECT);
 
     localSuspendReactionEClass = createEClass(LOCAL_SUSPEND_REACTION);
+    createEReference(localSuspendReactionEClass, LOCAL_SUSPEND_REACTION__TRIGGER);
 
     simpleScopeEClass = createEClass(SIMPLE_SCOPE);
 
@@ -697,10 +736,6 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     createEReference(eventDefinitionEClass, EVENT_DEFINITION__TYPE);
     createEReference(eventDefinitionEClass, EVENT_DEFINITION__VAR_INITIAL_VALUE);
     createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__VAR_COMBINE_OPERATOR);
-
-    declarationEClass = createEClass(DECLARATION);
-    createEReference(declarationEClass, DECLARATION__TRIGGER);
-    createEReference(declarationEClass, DECLARATION__EFFECT);
 
     reactionTriggerEClass = createEClass(REACTION_TRIGGER);
     createEAttribute(reactionTriggerEClass, REACTION_TRIGGER__DELAY);
@@ -771,10 +806,6 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     localSuspendReactionEClass.getESuperTypes().add(theSGraphPackage.getDeclaration());
     simpleScopeEClass.getESuperTypes().add(this.getStateScope());
     eventDefinitionEClass.getESuperTypes().add(this.getSignalDefinition());
-    declarationEClass.getESuperTypes().add(this.getLocalEntryReaction());
-    declarationEClass.getESuperTypes().add(this.getLocalDuringReaction());
-    declarationEClass.getESuperTypes().add(this.getLocalExitReaction());
-    declarationEClass.getESuperTypes().add(this.getLocalSuspendReaction());
     reactionTriggerEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
     reactionEffectEClass.getESuperTypes().add(theSGraphPackage.getEffect());
     numericalMultiplyDivideExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
@@ -797,12 +828,19 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     initEReference(getOperationDefinition_ParamType(), theTypesPackage.getType(), null, "paramType", null, 0, 1, OperationDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(localEntryReactionEClass, LocalEntryReaction.class, "LocalEntryReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLocalEntryReaction_Trigger(), theSGraphPackage.getTrigger(), null, "trigger", null, 0, 1, LocalEntryReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLocalEntryReaction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, LocalEntryReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(localDuringReactionEClass, LocalDuringReaction.class, "LocalDuringReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLocalDuringReaction_Trigger(), theSGraphPackage.getTrigger(), null, "trigger", null, 0, 1, LocalDuringReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLocalDuringReaction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, LocalDuringReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(localExitReactionEClass, LocalExitReaction.class, "LocalExitReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLocalExitReaction_Trigger(), theSGraphPackage.getTrigger(), null, "trigger", null, 0, 1, LocalExitReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLocalExitReaction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, LocalExitReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(localSuspendReactionEClass, LocalSuspendReaction.class, "LocalSuspendReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLocalSuspendReaction_Trigger(), theSGraphPackage.getTrigger(), null, "trigger", null, 0, 1, LocalSuspendReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(simpleScopeEClass, SimpleScope.class, "SimpleScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -812,10 +850,6 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     initEReference(getEventDefinition_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEventDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEventDefinition_VarCombineOperator(), this.getCombineOperator(), "varCombineOperator", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(declarationEClass, Declaration.class, "Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDeclaration_Trigger(), theSGraphPackage.getTrigger(), null, "trigger", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDeclaration_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(reactionTriggerEClass, ReactionTrigger.class, "ReactionTrigger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getReactionTrigger_Delay(), ecorePackage.getEInt(), "delay", null, 0, 1, ReactionTrigger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

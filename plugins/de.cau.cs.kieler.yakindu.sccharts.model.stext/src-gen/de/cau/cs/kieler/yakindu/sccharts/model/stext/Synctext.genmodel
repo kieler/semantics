@@ -36,10 +36,21 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Synctext.ecore#//OperationDefinition/functionType"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Synctext.ecore#//OperationDefinition/paramType"/>
     </genClasses>
-    <genClasses ecoreClass="Synctext.ecore#//LocalEntryReaction"/>
-    <genClasses ecoreClass="Synctext.ecore#//LocalDuringReaction"/>
-    <genClasses ecoreClass="Synctext.ecore#//LocalExitReaction"/>
-    <genClasses ecoreClass="Synctext.ecore#//LocalSuspendReaction"/>
+    <genClasses ecoreClass="Synctext.ecore#//LocalEntryReaction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalEntryReaction/trigger"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalEntryReaction/effect"/>
+    </genClasses>
+    <genClasses ecoreClass="Synctext.ecore#//LocalDuringReaction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalDuringReaction/trigger"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalDuringReaction/effect"/>
+    </genClasses>
+    <genClasses ecoreClass="Synctext.ecore#//LocalExitReaction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalExitReaction/trigger"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalExitReaction/effect"/>
+    </genClasses>
+    <genClasses ecoreClass="Synctext.ecore#//LocalSuspendReaction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalSuspendReaction/trigger"/>
+    </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//SimpleScope"/>
     <genClasses ecoreClass="Synctext.ecore#//EventDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/Input"/>
@@ -47,10 +58,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventDefinition/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventDefinition/varInitialValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/varCombineOperator"/>
-    </genClasses>
-    <genClasses ecoreClass="Synctext.ecore#//Declaration">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//Declaration/trigger"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//Declaration/effect"/>
     </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//ReactionTrigger">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//ReactionTrigger/delay"/>

@@ -4487,11 +4487,11 @@ rule__LocalEntryReaction__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getLocalEntryReactionAccess().getDeclarationAction_0()); }
+{ before(grammarAccess.getLocalEntryReactionAccess().getLocalEntryReactionAction_0()); }
 (
 
 )
-{ after(grammarAccess.getLocalEntryReactionAccess().getDeclarationAction_0()); }
+{ after(grammarAccess.getLocalEntryReactionAccess().getLocalEntryReactionAction_0()); }
 )
 
 ;
@@ -4743,11 +4743,11 @@ rule__LocalDuringReaction__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getLocalDuringReactionAccess().getDeclarationAction_0()); }
+{ before(grammarAccess.getLocalDuringReactionAccess().getLocalDuringReactionAction_0()); }
 (
 
 )
-{ after(grammarAccess.getLocalDuringReactionAccess().getDeclarationAction_0()); }
+{ after(grammarAccess.getLocalDuringReactionAccess().getLocalDuringReactionAction_0()); }
 )
 
 ;
@@ -4969,11 +4969,11 @@ rule__LocalExitReaction__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getLocalExitReactionAccess().getDeclarationAction_0()); }
+{ before(grammarAccess.getLocalExitReactionAccess().getLocalExitReactionAction_0()); }
 (
 
 )
-{ after(grammarAccess.getLocalExitReactionAccess().getDeclarationAction_0()); }
+{ after(grammarAccess.getLocalExitReactionAccess().getLocalExitReactionAction_0()); }
 )
 
 ;
@@ -5225,11 +5225,11 @@ rule__LocalSuspendReaction__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getLocalSuspendReactionAccess().getDeclarationAction_0()); }
+{ before(grammarAccess.getLocalSuspendReactionAccess().getLocalSuspendReactionAction_0()); }
 (
 
 )
-{ after(grammarAccess.getLocalSuspendReactionAccess().getDeclarationAction_0()); }
+{ after(grammarAccess.getLocalSuspendReactionAccess().getLocalSuspendReactionAction_0()); }
 )
 
 ;

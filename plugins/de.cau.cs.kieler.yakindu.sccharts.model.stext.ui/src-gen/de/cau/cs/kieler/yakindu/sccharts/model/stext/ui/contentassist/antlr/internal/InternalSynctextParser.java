@@ -14078,7 +14078,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:4490:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLocalEntryReactionAccess().getDeclarationAction_0()); 
+               before(grammarAccess.getLocalEntryReactionAccess().getLocalEntryReactionAction_0()); 
             }
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:4491:1: ()
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:4493:1: 
@@ -14086,7 +14086,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLocalEntryReactionAccess().getDeclarationAction_0()); 
+               after(grammarAccess.getLocalEntryReactionAccess().getLocalEntryReactionAction_0()); 
             }
 
             }
@@ -14748,7 +14748,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:4746:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLocalDuringReactionAccess().getDeclarationAction_0()); 
+               before(grammarAccess.getLocalDuringReactionAccess().getLocalDuringReactionAction_0()); 
             }
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:4747:1: ()
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:4749:1: 
@@ -14756,7 +14756,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLocalDuringReactionAccess().getDeclarationAction_0()); 
+               after(grammarAccess.getLocalDuringReactionAccess().getLocalDuringReactionAction_0()); 
             }
 
             }
@@ -15334,7 +15334,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:4972:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLocalExitReactionAccess().getDeclarationAction_0()); 
+               before(grammarAccess.getLocalExitReactionAccess().getLocalExitReactionAction_0()); 
             }
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:4973:1: ()
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:4975:1: 
@@ -15342,7 +15342,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLocalExitReactionAccess().getDeclarationAction_0()); 
+               after(grammarAccess.getLocalExitReactionAccess().getLocalExitReactionAction_0()); 
             }
 
             }
@@ -16004,7 +16004,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:5228:1: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getLocalSuspendReactionAccess().getDeclarationAction_0()); 
+               before(grammarAccess.getLocalSuspendReactionAccess().getLocalSuspendReactionAction_0()); 
             }
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:5229:1: ()
             // ../de.cau.cs.kieler.yakindu.sccharts.model.stext.ui/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/ui/contentassist/antlr/internal/InternalSynctext.g:5231:1: 
@@ -16012,7 +16012,7 @@ public class InternalSynctextParser extends AbstractInternalContentAssistParser 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getLocalSuspendReactionAccess().getDeclarationAction_0()); 
+               after(grammarAccess.getLocalSuspendReactionAccess().getLocalSuspendReactionAction_0()); 
             }
 
             }

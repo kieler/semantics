@@ -190,7 +190,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Action">
           <type metamodel="/0/@metamodelDeclarations.0">
-            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//Declaration"/>
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//LocalEntryReaction"/>
           </type>
         </elements>
         <elements xsi:type="xtext:Keyword" value="Entry"/>
@@ -214,7 +214,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Action">
           <type metamodel="/0/@metamodelDeclarations.0">
-            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//Declaration"/>
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//LocalDuringReaction"/>
           </type>
         </elements>
         <elements xsi:type="xtext:Keyword" value="During"/>
@@ -236,7 +236,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Action">
           <type metamodel="/0/@metamodelDeclarations.0">
-            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//Declaration"/>
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//LocalExitReaction"/>
           </type>
         </elements>
         <elements xsi:type="xtext:Keyword" value="Exit"/>
@@ -260,7 +260,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Action">
           <type metamodel="/0/@metamodelDeclarations.0">
-            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//Declaration"/>
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//LocalSuspendReaction"/>
           </type>
         </elements>
         <elements xsi:type="xtext:Keyword" value="Suspend"/>

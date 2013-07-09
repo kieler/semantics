@@ -407,7 +407,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	public class LocalEntryReactionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalEntryReaction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cDeclarationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cLocalEntryReactionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cEntryKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -420,14 +420,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LocalEntryReaction:
 		//
-		//	{Declaration} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+		//	{LocalEntryReaction} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
 		public ParserRule getRule() { return rule; }
 
-		//{Declaration} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";"
+		//{LocalEntryReaction} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";"
 		public Group getGroup() { return cGroup; }
 
-		//{Declaration}
-		public Action getDeclarationAction_0() { return cDeclarationAction_0; }
+		//{LocalEntryReaction}
+		public Action getLocalEntryReactionAction_0() { return cLocalEntryReactionAction_0; }
 
 		//"Entry"
 		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
@@ -460,7 +460,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	public class LocalDuringReactionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalDuringReaction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cDeclarationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cLocalDuringReactionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cDuringKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -472,14 +472,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LocalDuringReaction:
 		//
-		//	{Declaration} "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";";
+		//	{LocalDuringReaction} "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";";
 		public ParserRule getRule() { return rule; }
 
-		//{Declaration} "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";"
+		//{LocalDuringReaction} "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";"
 		public Group getGroup() { return cGroup; }
 
-		//{Declaration}
-		public Action getDeclarationAction_0() { return cDeclarationAction_0; }
+		//{LocalDuringReaction}
+		public Action getLocalDuringReactionAction_0() { return cLocalDuringReactionAction_0; }
 
 		//"During"
 		public Keyword getDuringKeyword_1() { return cDuringKeyword_1; }
@@ -509,7 +509,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	public class LocalExitReactionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalExitReaction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cDeclarationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cLocalExitReactionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cExitKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -522,14 +522,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LocalExitReaction:
 		//
-		//	{Declaration} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+		//	{LocalExitReaction} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
 		public ParserRule getRule() { return rule; }
 
-		//{Declaration} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";"
+		//{LocalExitReaction} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";"
 		public Group getGroup() { return cGroup; }
 
-		//{Declaration}
-		public Action getDeclarationAction_0() { return cDeclarationAction_0; }
+		//{LocalExitReaction}
+		public Action getLocalExitReactionAction_0() { return cLocalExitReactionAction_0; }
 
 		//"Exit"
 		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
@@ -562,7 +562,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	public class LocalSuspendReactionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalSuspendReaction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cDeclarationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cLocalSuspendReactionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cSuspendKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -571,14 +571,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//LocalSuspendReaction:
 		//
-		//	{Declaration} "Suspend" ":" trigger=ReactionTrigger? ";";
+		//	{LocalSuspendReaction} "Suspend" ":" trigger=ReactionTrigger? ";";
 		public ParserRule getRule() { return rule; }
 
-		//{Declaration} "Suspend" ":" trigger=ReactionTrigger? ";"
+		//{LocalSuspendReaction} "Suspend" ":" trigger=ReactionTrigger? ";"
 		public Group getGroup() { return cGroup; }
 
-		//{Declaration}
-		public Action getDeclarationAction_0() { return cDeclarationAction_0; }
+		//{LocalSuspendReaction}
+		public Action getLocalSuspendReactionAction_0() { return cLocalSuspendReactionAction_0; }
 
 		//"Suspend"
 		public Keyword getSuspendKeyword_1() { return cSuspendKeyword_1; }
@@ -605,6 +605,8 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		
+		////{Declaration}    
+		//
 		/// ******************************************** TRANSITION ***************************************** * / // The ReactionTrigger is a Trigger and has an Expression, 
 		//
 		//// an optional delay and isImmediate option represented with a '#'
@@ -1270,7 +1272,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalEntryReaction:
 	//
-	//	{Declaration} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+	//	{LocalEntryReaction} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
 	public LocalEntryReactionElements getLocalEntryReactionAccess() {
 		return (pLocalEntryReaction != null) ? pLocalEntryReaction : (pLocalEntryReaction = new LocalEntryReactionElements());
 	}
@@ -1281,7 +1283,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalDuringReaction:
 	//
-	//	{Declaration} "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";";
+	//	{LocalDuringReaction} "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";";
 	public LocalDuringReactionElements getLocalDuringReactionAccess() {
 		return (pLocalDuringReaction != null) ? pLocalDuringReaction : (pLocalDuringReaction = new LocalDuringReactionElements());
 	}
@@ -1292,7 +1294,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalExitReaction:
 	//
-	//	{Declaration} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+	//	{LocalExitReaction} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
 	public LocalExitReactionElements getLocalExitReactionAccess() {
 		return (pLocalExitReaction != null) ? pLocalExitReaction : (pLocalExitReaction = new LocalExitReactionElements());
 	}
@@ -1303,7 +1305,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//LocalSuspendReaction:
 	//
-	//	{Declaration} "Suspend" ":" trigger=ReactionTrigger? ";";
+	//	{LocalSuspendReaction} "Suspend" ":" trigger=ReactionTrigger? ";";
 	public LocalSuspendReactionElements getLocalSuspendReactionAccess() {
 		return (pLocalSuspendReaction != null) ? pLocalSuspendReaction : (pLocalSuspendReaction = new LocalSuspendReactionElements());
 	}
@@ -1312,6 +1314,8 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getLocalSuspendReactionAccess().getRule();
 	}
 
+	////{Declaration}    
+	//
 	/// ******************************************** TRANSITION ***************************************** * / // The ReactionTrigger is a Trigger and has an Expression, 
 	//
 	//// an optional delay and isImmediate option represented with a '#'

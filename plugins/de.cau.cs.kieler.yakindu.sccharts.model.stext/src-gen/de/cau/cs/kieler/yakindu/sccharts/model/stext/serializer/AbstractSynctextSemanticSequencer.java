@@ -3,8 +3,11 @@ package de.cau.cs.kieler.yakindu.sccharts.model.stext.serializer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.services.SynctextGrammarAccess;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.NumericalMultiplyDivideExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.OperationDefinition;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression;
@@ -666,28 +669,6 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == SynctextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case SynctextPackage.DECLARATION:
-				if(context == grammarAccess.getDeclarationRule()) {
-					sequence_Declaration_LocalDuringReaction_LocalEntryReaction_LocalExitReaction_LocalSuspendReaction(context, (Declaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getLocalDuringReactionRule()) {
-					sequence_LocalDuringReaction(context, (Declaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getLocalEntryReactionRule()) {
-					sequence_LocalEntryReaction(context, (Declaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getLocalExitReactionRule()) {
-					sequence_LocalExitReaction(context, (Declaration) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getLocalSuspendReactionRule()) {
-					sequence_LocalSuspendReaction(context, (Declaration) semanticObject); 
-					return; 
-				}
-				else break;
 			case SynctextPackage.EVENT_DEFINITION:
 				if(context == grammarAccess.getDeclarationRule() ||
 				   context == grammarAccess.getSignalDeclarationRule() ||
@@ -733,6 +714,34 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 				}
 				else if(context == grammarAccess.getPreReferenceExpressionRule()) {
 					sequence_PreReferenceExpression(context, (EventValueReferenceExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case SynctextPackage.LOCAL_DURING_REACTION:
+				if(context == grammarAccess.getDeclarationRule() ||
+				   context == grammarAccess.getLocalDuringReactionRule()) {
+					sequence_LocalDuringReaction(context, (LocalDuringReaction) semanticObject); 
+					return; 
+				}
+				else break;
+			case SynctextPackage.LOCAL_ENTRY_REACTION:
+				if(context == grammarAccess.getDeclarationRule() ||
+				   context == grammarAccess.getLocalEntryReactionRule()) {
+					sequence_LocalEntryReaction(context, (LocalEntryReaction) semanticObject); 
+					return; 
+				}
+				else break;
+			case SynctextPackage.LOCAL_EXIT_REACTION:
+				if(context == grammarAccess.getDeclarationRule() ||
+				   context == grammarAccess.getLocalExitReactionRule()) {
+					sequence_LocalExitReaction(context, (LocalExitReaction) semanticObject); 
+					return; 
+				}
+				else break;
+			case SynctextPackage.LOCAL_SUSPEND_REACTION:
+				if(context == grammarAccess.getDeclarationRule() ||
+				   context == grammarAccess.getLocalSuspendReactionRule()) {
+					sequence_LocalSuspendReaction(context, (LocalSuspendReaction) semanticObject); 
 					return; 
 				}
 				else break;
@@ -828,20 +837,6 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         (trigger=ReactionTrigger? effect=ReactionEffect) | 
-	 *         (trigger=ReactionTrigger? effect=ReactionEffect) | 
-	 *         (trigger=ReactionTrigger? effect=ReactionEffect) | 
-	 *         (trigger=ReactionTrigger?)
-	 *     )
-	 */
-	protected void sequence_Declaration_LocalDuringReaction_LocalEntryReaction_LocalExitReaction_LocalSuspendReaction(EObject context, Declaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
 	 *     (value=FeatureCall | value=PreReferenceExpression)
 	 */
 	protected void sequence_EventValueReferenceExpression(EObject context, EventValueReferenceExpression semanticObject) {
@@ -862,7 +857,7 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	 * Constraint:
 	 *     (trigger=ReactionTrigger? effect=ReactionEffect)
 	 */
-	protected void sequence_LocalDuringReaction(EObject context, Declaration semanticObject) {
+	protected void sequence_LocalDuringReaction(EObject context, LocalDuringReaction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -871,7 +866,7 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	 * Constraint:
 	 *     (trigger=ReactionTrigger? effect=ReactionEffect)
 	 */
-	protected void sequence_LocalEntryReaction(EObject context, Declaration semanticObject) {
+	protected void sequence_LocalEntryReaction(EObject context, LocalEntryReaction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -880,7 +875,7 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	 * Constraint:
 	 *     (trigger=ReactionTrigger? effect=ReactionEffect)
 	 */
-	protected void sequence_LocalExitReaction(EObject context, Declaration semanticObject) {
+	protected void sequence_LocalExitReaction(EObject context, LocalExitReaction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -898,7 +893,7 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	 * Constraint:
 	 *     (trigger=ReactionTrigger?)
 	 */
-	protected void sequence_LocalSuspendReaction(EObject context, Declaration semanticObject) {
+	protected void sequence_LocalSuspendReaction(EObject context, LocalSuspendReaction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

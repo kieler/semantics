@@ -113,15 +113,6 @@ public interface SynctextFactory extends EFactory
   EventDefinition createEventDefinition();
 
   /**
-   * Returns a new object of class '<em>Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Declaration</em>'.
-   * @generated
-   */
-  Declaration createDeclaration();
-
-  /**
    * Returns a new object of class '<em>Reaction Trigger</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

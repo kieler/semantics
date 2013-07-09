@@ -14,10 +14,28 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="functionType" eType="ecore:EClass ../../../../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="paramType" eType="ecore:EClass ../../../../../../../../../../org.yakindu.base.types/model/types.ecore#//Type"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LocalEntryReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LocalDuringReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LocalExitReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LocalSuspendReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalEntryReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalDuringReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalExitReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalSuspendReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="MultiplicativeOperator2">
     <eLiterals name="mul" literal="*"/>
     <eLiterals name="div" value="1" literal=":"/>
@@ -41,12 +59,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="varInitialValue" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="varCombineOperator" eType="#//CombineOperator"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Declaration" eSuperTypes="#//LocalEntryReaction #//LocalDuringReaction #//LocalExitReaction #//LocalSuspendReaction">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReactionTrigger" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
