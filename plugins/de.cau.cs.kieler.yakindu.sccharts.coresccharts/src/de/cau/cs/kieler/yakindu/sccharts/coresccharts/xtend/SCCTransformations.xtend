@@ -1,55 +1,39 @@
 package de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend
 
 import com.google.common.collect.ImmutableList
+import com.google.inject.Injector
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
-//import de.cau.cs.kieler.yakindu.sccharts.model.stext.SignalDeclaration
-import de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition
-import de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition
+import de.cau.cs.kieler.yakindu.model.stext.SynctextStandaloneSetup
 import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
-import org.yakindu.base.types.Type;
+import de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpression
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
+import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
+import de.cau.cs.kieler.yakindu.model.stext.synctext.SignalDefinition
+import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory
+import de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition
 import java.util.ArrayList
 import java.util.List
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.util.stdlib.CloningExtensions
+import org.yakindu.base.types.Type
 import org.yakindu.sct.model.sgraph.Choice
 import org.yakindu.sct.model.sgraph.Region
 import org.yakindu.sct.model.sgraph.SGraphFactory
 import org.yakindu.sct.model.sgraph.State
 import org.yakindu.sct.model.sgraph.Statechart
-import de.cau.cs.kieler.yakindu.model.stext.synctext.SynctextFactory
-import org.yakindu.sct.model.stext.stext.StextFactory
-import org.yakindu.base.types.PrimitiveType
-import org.yakindu.base.types.TypeSystemUtils
-import org.yakindu.base.types.TypesFactory
-
-//import com.google.inject.Guice
-import com.google.inject.Injector
-import org.eclipse.xtext.serializer.ISerializer
-import de.cau.cs.kieler.yakindu.model.stext.SynctextStandaloneSetup
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.SCChartsExpStandaloneSetup
-import org.yakindu.sct.model.stext.STextStandaloneSetup
-
-import static de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCTransformations.*
-import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.emf.ecore.resource.ResourceSet
-import javax.inject.Named
-import org.eclipse.xtext.Constants
-import org.eclipse.emf.common.util.URI
-import javax.inject.Inject
-import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
-import org.yakindu.sct.model.sgraph.Effect
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
+import org.yakindu.sct.model.stext.stext.AssignmentExpression
+import org.yakindu.sct.model.stext.stext.BoolLiteral
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import org.yakindu.sct.model.stext.stext.Expression
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
-import de.cau.cs.kieler.yakindu.model.stext.synctext.EventValueReferenceExpression
 import org.yakindu.sct.model.stext.stext.LogicalRelationExpression
-import org.yakindu.sct.model.stext.stext.AssignmentExpression
-import org.eclipse.emf.ecore.EObject
-import org.yakindu.sct.model.stext.stext.BoolLiteral
 import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
+import org.yakindu.sct.model.stext.stext.StextFactory
+import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
+
+import static de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCTransformations.*
 
 
 class SCCTransformations {
