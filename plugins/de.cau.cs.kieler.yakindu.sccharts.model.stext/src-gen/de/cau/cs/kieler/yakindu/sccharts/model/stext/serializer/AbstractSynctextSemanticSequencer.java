@@ -855,7 +855,7 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (trigger=ReactionTrigger? effect=ReactionEffect)
+	 *     (isImmediate?='Immediate'? trigger=ReactionTrigger? effect=ReactionEffect)
 	 */
 	protected void sequence_LocalDuringReaction(EObject context, LocalDuringReaction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -891,7 +891,7 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (trigger=ReactionTrigger?)
+	 *     (isImmediate?='Immediate'? trigger=ReactionTrigger?)
 	 */
 	protected void sequence_LocalSuspendReaction(EObject context, LocalSuspendReaction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

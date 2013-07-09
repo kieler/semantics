@@ -374,9 +374,19 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getLocalDuringReaction_IsImmediate()
+  {
+    return (EAttribute)localDuringReactionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getLocalDuringReaction_Trigger()
   {
-    return (EReference)localDuringReactionEClass.getEStructuralFeatures().get(0);
+    return (EReference)localDuringReactionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -386,7 +396,7 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    */
   public EReference getLocalDuringReaction_Effect()
   {
-    return (EReference)localDuringReactionEClass.getEStructuralFeatures().get(1);
+    return (EReference)localDuringReactionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -434,9 +444,19 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getLocalSuspendReaction_IsImmediate()
+  {
+    return (EAttribute)localSuspendReactionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getLocalSuspendReaction_Trigger()
   {
-    return (EReference)localSuspendReactionEClass.getEStructuralFeatures().get(0);
+    return (EReference)localSuspendReactionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -718,6 +738,7 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     createEReference(localEntryReactionEClass, LOCAL_ENTRY_REACTION__EFFECT);
 
     localDuringReactionEClass = createEClass(LOCAL_DURING_REACTION);
+    createEAttribute(localDuringReactionEClass, LOCAL_DURING_REACTION__IS_IMMEDIATE);
     createEReference(localDuringReactionEClass, LOCAL_DURING_REACTION__TRIGGER);
     createEReference(localDuringReactionEClass, LOCAL_DURING_REACTION__EFFECT);
 
@@ -726,6 +747,7 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     createEReference(localExitReactionEClass, LOCAL_EXIT_REACTION__EFFECT);
 
     localSuspendReactionEClass = createEClass(LOCAL_SUSPEND_REACTION);
+    createEAttribute(localSuspendReactionEClass, LOCAL_SUSPEND_REACTION__IS_IMMEDIATE);
     createEReference(localSuspendReactionEClass, LOCAL_SUSPEND_REACTION__TRIGGER);
 
     simpleScopeEClass = createEClass(SIMPLE_SCOPE);
@@ -832,6 +854,7 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     initEReference(getLocalEntryReaction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, LocalEntryReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(localDuringReactionEClass, LocalDuringReaction.class, "LocalDuringReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLocalDuringReaction_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, LocalDuringReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLocalDuringReaction_Trigger(), theSGraphPackage.getTrigger(), null, "trigger", null, 0, 1, LocalDuringReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLocalDuringReaction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, LocalDuringReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -840,6 +863,7 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     initEReference(getLocalExitReaction_Effect(), theSGraphPackage.getEffect(), null, "effect", null, 0, 1, LocalExitReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(localSuspendReactionEClass, LocalSuspendReaction.class, "LocalSuspendReaction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLocalSuspendReaction_IsImmediate(), ecorePackage.getEBoolean(), "isImmediate", null, 0, 1, LocalSuspendReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLocalSuspendReaction_Trigger(), theSGraphPackage.getTrigger(), null, "trigger", null, 0, 1, LocalSuspendReaction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(simpleScopeEClass, SimpleScope.class, "SimpleScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

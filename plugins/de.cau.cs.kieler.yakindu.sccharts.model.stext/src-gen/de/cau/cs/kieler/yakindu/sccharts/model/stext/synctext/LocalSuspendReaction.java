@@ -13,6 +13,7 @@ import org.yakindu.sct.model.sgraph.Trigger;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction#isIsImmediate <em>Is Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction#getTrigger <em>Trigger</em>}</li>
  * </ul>
  * </p>
@@ -23,6 +24,32 @@ import org.yakindu.sct.model.sgraph.Trigger;
  */
 public interface LocalSuspendReaction extends Declaration
 {
+  /**
+   * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Is Immediate</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Is Immediate</em>' attribute.
+   * @see #setIsImmediate(boolean)
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getLocalSuspendReaction_IsImmediate()
+   * @model
+   * @generated
+   */
+  boolean isIsImmediate();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction#isIsImmediate <em>Is Immediate</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Is Immediate</em>' attribute.
+   * @see #isIsImmediate()
+   * @generated
+   */
+  void setIsImmediate(boolean value);
+
   /**
    * Returns the value of the '<em><b>Trigger</b></em>' containment reference.
    * <!-- begin-user-doc -->

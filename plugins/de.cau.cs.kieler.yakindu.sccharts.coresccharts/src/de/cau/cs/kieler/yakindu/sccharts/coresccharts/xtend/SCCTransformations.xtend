@@ -206,7 +206,7 @@ class SCCTransformations {
                      // Add a reset as an absolute write during/inside action
                      val effect = createEmtyReaction();
                      effect.actions.add(variablePresent.assign(false));
-                     val insideReaction = createDuringReaction(null, effect);
+                     val insideReaction = createDuringReaction(null, effect, true);
                      scope.declarations.add(insideReaction);
                  }
                }
@@ -279,10 +279,11 @@ class SCCTransformations {
         reaction.setEffect(effect);
         reaction
     }
-    def LocalDuringReaction createDuringReaction(Trigger trigger, Effect effect) {
+    def LocalDuringReaction createDuringReaction(Trigger trigger, Effect effect, boolean isImmediate) {
         var reaction = SynctextFactory::eINSTANCE.createLocalDuringReaction
         reaction.setTrigger(trigger);
         reaction.setEffect(effect);
+        reaction.setIsImmediate(isImmediate);
         reaction
     }
     def LocalExitReaction createExitReaction(Trigger trigger, Effect effect) {

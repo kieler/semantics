@@ -21,6 +21,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocalDuringReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Effect"
@@ -33,6 +34,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocalSuspendReaction" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Declaration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.ecore#//Trigger"
         containment="true"/>
   </eClassifiers>

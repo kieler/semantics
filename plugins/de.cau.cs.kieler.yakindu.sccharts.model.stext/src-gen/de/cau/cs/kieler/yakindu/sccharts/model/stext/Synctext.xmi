@@ -217,6 +217,9 @@
             <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//LocalDuringReaction"/>
           </type>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="isImmediate" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="Immediate"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="During"/>
         <elements xsi:type="xtext:Keyword" value=":"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="trigger" operator="=">
@@ -262,6 +265,9 @@
           <type metamodel="/0/@metamodelDeclarations.0">
             <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//LocalSuspendReaction"/>
           </type>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="isImmediate" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="Immediate"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="Suspend"/>
         <elements xsi:type="xtext:Keyword" value=":"/>

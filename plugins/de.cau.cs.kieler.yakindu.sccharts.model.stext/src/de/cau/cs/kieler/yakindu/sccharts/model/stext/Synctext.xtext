@@ -57,11 +57,11 @@ OperationDefinition:
 LocalEntryReaction:
   {LocalEntryReaction} 'Entry' ':' (trigger=ReactionTrigger)? ('/' effect=ReactionEffect) ';';
 LocalDuringReaction:
-  {LocalDuringReaction} 'During' ':' (trigger=ReactionTrigger)? '/' effect=ReactionEffect ';';
+  {LocalDuringReaction} (isImmediate?='Immediate')? 'During' ':' (trigger=ReactionTrigger)? '/' effect=ReactionEffect ';';
 LocalExitReaction:
   {LocalExitReaction} 'Exit' ':' (trigger=ReactionTrigger)? ('/' effect=ReactionEffect) ';';
 LocalSuspendReaction:
-  {LocalSuspendReaction} 'Suspend' ':' (trigger=ReactionTrigger)? ';';
+  {LocalSuspendReaction} (isImmediate?='Immediate')? 'Suspend' ':' (trigger=ReactionTrigger)? ';';
 
 //{Declaration}    
 

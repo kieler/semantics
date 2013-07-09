@@ -41,6 +41,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalEntryReaction/effect"/>
     </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//LocalDuringReaction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//LocalDuringReaction/isImmediate"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalDuringReaction/trigger"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalDuringReaction/effect"/>
     </genClasses>
@@ -49,6 +50,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalExitReaction/effect"/>
     </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//LocalSuspendReaction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//LocalSuspendReaction/isImmediate"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//LocalSuspendReaction/trigger"/>
     </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//SimpleScope"/>
