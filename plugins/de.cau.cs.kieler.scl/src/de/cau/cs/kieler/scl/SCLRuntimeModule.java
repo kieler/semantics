@@ -15,7 +15,7 @@ import org.yakindu.sct.model.stext.scoping.STextGlobalScopeProvider;
 import org.yakindu.sct.model.stext.types.ISTextTypeInferrer;
 import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem;
 
-import de.cau.cs.kieler.yakindu.model.stext.types.SyncTypeInferrer;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.types.SyncTypeInferrer;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.

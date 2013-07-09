@@ -23,15 +23,15 @@ import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.scl.VariableDeclaration
 import org.yakindu.sct.model.sgraph.Event
-import de.cau.cs.kieler.yakindu.model.stext.synctext.EventDefinition
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition
 import de.cau.cs.kieler.scl.scl.Assignment
 import org.yakindu.sct.model.sgraph.Effect
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionEffect
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionEffect
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import de.cau.cs.kieler.scl.scl.Conditional
 import org.yakindu.sct.model.sgraph.Trigger
-import de.cau.cs.kieler.yakindu.model.stext.synctext.ReactionTrigger
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -39,7 +39,7 @@ import org.yakindu.base.types.impl.PrimitiveTypeImpl
 import org.yakindu.base.types.Type
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
-import de.cau.cs.kieler.yakindu.model.stext.synctext.VariableDefinition
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
 import org.yakindu.sct.model.sgraph.Declaration
 import org.yakindu.base.types.TypesFactory
 import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
