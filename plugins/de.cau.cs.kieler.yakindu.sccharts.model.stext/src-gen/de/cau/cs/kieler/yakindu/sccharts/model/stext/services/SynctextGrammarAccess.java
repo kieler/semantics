@@ -24,56 +24,73 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cSimpleScopeAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cDeclarationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Alternatives cDeclarationsAlternatives_1_0 = (Alternatives)cDeclarationsAssignment_1.eContents().get(0);
-		private final RuleCall cDeclarationsVariableDeclarationParserRuleCall_1_0_0 = (RuleCall)cDeclarationsAlternatives_1_0.eContents().get(0);
-		private final RuleCall cDeclarationsSignalDeclarationParserRuleCall_1_0_1 = (RuleCall)cDeclarationsAlternatives_1_0.eContents().get(1);
-		private final RuleCall cDeclarationsOperationDeclarationParserRuleCall_1_0_2 = (RuleCall)cDeclarationsAlternatives_1_0.eContents().get(2);
-		private final RuleCall cDeclarationsLocalReactionParserRuleCall_1_0_3 = (RuleCall)cDeclarationsAlternatives_1_0.eContents().get(3);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_1_0 = (RuleCall)cDeclarationsAssignment_1.eContents().get(0);
 		
-		////Root2345:
-		//
-		////    scope=SimpleScope|trigger=ReactionTrigger|reaction=ReactionEffect;
-		//
-		////    
-		//
-		////SimpleScope returns StateScope:
-		//
-		////    StateScope
-		//
-		////;    
-		//
-		////
-		//
 		/// *********************************** INTERFACE DECLARATION **************************************** * / ////defines the possible scopes for a state
 		//
 		//StateScope:
 		//
-		//	{SimpleScope} declarations+=(VariableDeclaration | SignalDeclaration | OperationDeclaration | LocalReaction)*;
+		//	{SimpleScope} declarations+=Declaration*;
 		public ParserRule getRule() { return rule; }
 
-		//{SimpleScope} declarations+=(VariableDeclaration | SignalDeclaration | OperationDeclaration | LocalReaction)*
+		//{SimpleScope} declarations+=Declaration*
 		public Group getGroup() { return cGroup; }
 
 		//{SimpleScope}
 		public Action getSimpleScopeAction_0() { return cSimpleScopeAction_0; }
 
-		//declarations+=(VariableDeclaration | SignalDeclaration | OperationDeclaration | LocalReaction)*
+		//declarations+=Declaration*
 		public Assignment getDeclarationsAssignment_1() { return cDeclarationsAssignment_1; }
 
-		//VariableDeclaration | SignalDeclaration | OperationDeclaration | LocalReaction
-		public Alternatives getDeclarationsAlternatives_1_0() { return cDeclarationsAlternatives_1_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_1_0() { return cDeclarationsDeclarationParserRuleCall_1_0; }
+	}
+
+	public class DeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Declaration");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cLocalEntryReactionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cLocalDuringReactionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cLocalExitReactionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cLocalSuspendReactionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cVariableDeclarationParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cSignalDeclarationParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cOperationDeclarationParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		
+		/// * ---- declarations ----
+		//
+		//a definition is a top level element of a definition scope. * / Declaration returns sgraph::Declaration:
+		//
+		//	LocalEntryReaction | LocalDuringReaction | LocalExitReaction | LocalSuspendReaction | VariableDeclaration |
+		//
+		//	SignalDeclaration | OperationDeclaration;
+		public ParserRule getRule() { return rule; }
+
+		//LocalEntryReaction | LocalDuringReaction | LocalExitReaction | LocalSuspendReaction | VariableDeclaration |
+		//
+		//SignalDeclaration | OperationDeclaration
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//LocalEntryReaction
+		public RuleCall getLocalEntryReactionParserRuleCall_0() { return cLocalEntryReactionParserRuleCall_0; }
+
+		//LocalDuringReaction
+		public RuleCall getLocalDuringReactionParserRuleCall_1() { return cLocalDuringReactionParserRuleCall_1; }
+
+		//LocalExitReaction
+		public RuleCall getLocalExitReactionParserRuleCall_2() { return cLocalExitReactionParserRuleCall_2; }
+
+		//LocalSuspendReaction
+		public RuleCall getLocalSuspendReactionParserRuleCall_3() { return cLocalSuspendReactionParserRuleCall_3; }
 
 		//VariableDeclaration
-		public RuleCall getDeclarationsVariableDeclarationParserRuleCall_1_0_0() { return cDeclarationsVariableDeclarationParserRuleCall_1_0_0; }
+		public RuleCall getVariableDeclarationParserRuleCall_4() { return cVariableDeclarationParserRuleCall_4; }
 
 		//SignalDeclaration
-		public RuleCall getDeclarationsSignalDeclarationParserRuleCall_1_0_1() { return cDeclarationsSignalDeclarationParserRuleCall_1_0_1; }
+		public RuleCall getSignalDeclarationParserRuleCall_5() { return cSignalDeclarationParserRuleCall_5; }
 
 		//OperationDeclaration
-		public RuleCall getDeclarationsOperationDeclarationParserRuleCall_1_0_2() { return cDeclarationsOperationDeclarationParserRuleCall_1_0_2; }
-
-		//LocalReaction
-		public RuleCall getDeclarationsLocalReactionParserRuleCall_1_0_3() { return cDeclarationsLocalReactionParserRuleCall_1_0_3; }
+		public RuleCall getOperationDeclarationParserRuleCall_6() { return cOperationDeclarationParserRuleCall_6; }
 	}
 
 	public class SignalDeclarationElements extends AbstractParserRuleElementFinder {
@@ -337,7 +354,9 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		private final Keyword cSemicolonKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
-		//OperationDefinition:
+		/// ************************************************ / / *			   	LocalReactions  		        * /
+		//
+		/// ************************************************ / OperationDefinition:
 		//
 		//	{OperationDefinition} "extern" functionType=[types::Type|FQN] name=XID "(" paramType=[types::Type|FQN] ")" ";";
 		public ParserRule getRule() { return rule; }
@@ -385,213 +404,235 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSemicolonKeyword_7() { return cSemicolonKeyword_7; }
 	}
 
-	public class LocalReactionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalReaction");
+	public class LocalEntryReactionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalEntryReaction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cTriggerAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Alternatives cTriggerAlternatives_0_0 = (Alternatives)cTriggerAssignment_0.eContents().get(0);
-		private final RuleCall cTriggerLocalReactionTriggerParserRuleCall_0_0_0 = (RuleCall)cTriggerAlternatives_0_0.eContents().get(0);
-		private final RuleCall cTriggerReactionTriggerParserRuleCall_0_0_1 = (RuleCall)cTriggerAlternatives_0_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cSolidusKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cEffectAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final Alternatives cEffectAlternatives_1_1_0 = (Alternatives)cEffectAssignment_1_1.eContents().get(0);
-		private final RuleCall cEffectReactionEffectParserRuleCall_1_1_0_0 = (RuleCall)cEffectAlternatives_1_1_0.eContents().get(0);
-		private final RuleCall cEffectSuspendEffectParserRuleCall_1_1_0_1 = (RuleCall)cEffectAlternatives_1_1_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Action cDeclarationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cEntryKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTriggerReactionTriggerParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cSolidusKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cEffectAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cEffectReactionEffectParserRuleCall_4_1_0 = (RuleCall)cEffectAssignment_4_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		/// ************************************************ / / *			 	LocalReactionScope					* /
+		//LocalEntryReaction:
 		//
-		/// ************************************************ / LocalReaction:
-		//
-		//	trigger=(LocalReactionTrigger | ReactionTrigger)? ("/" effect=(ReactionEffect | SuspendEffect)) ";";
+		//	{Declaration} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
 		public ParserRule getRule() { return rule; }
 
-		//trigger=(LocalReactionTrigger | ReactionTrigger)? ("/" effect=(ReactionEffect | SuspendEffect)) ";"
+		//{Declaration} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";"
 		public Group getGroup() { return cGroup; }
 
-		//trigger=(LocalReactionTrigger | ReactionTrigger)?
-		public Assignment getTriggerAssignment_0() { return cTriggerAssignment_0; }
+		//{Declaration}
+		public Action getDeclarationAction_0() { return cDeclarationAction_0; }
 
-		//LocalReactionTrigger | ReactionTrigger
-		public Alternatives getTriggerAlternatives_0_0() { return cTriggerAlternatives_0_0; }
+		//"Entry"
+		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
 
-		//LocalReactionTrigger
-		public RuleCall getTriggerLocalReactionTriggerParserRuleCall_0_0_0() { return cTriggerLocalReactionTriggerParserRuleCall_0_0_0; }
+		//":"
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+
+		//trigger=ReactionTrigger?
+		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
 
 		//ReactionTrigger
-		public RuleCall getTriggerReactionTriggerParserRuleCall_0_0_1() { return cTriggerReactionTriggerParserRuleCall_0_0_1; }
+		public RuleCall getTriggerReactionTriggerParserRuleCall_3_0() { return cTriggerReactionTriggerParserRuleCall_3_0; }
 
-		//"/" effect=(ReactionEffect | SuspendEffect)
-		public Group getGroup_1() { return cGroup_1; }
+		//"/" effect=ReactionEffect
+		public Group getGroup_4() { return cGroup_4; }
 
 		//"/"
-		public Keyword getSolidusKeyword_1_0() { return cSolidusKeyword_1_0; }
+		public Keyword getSolidusKeyword_4_0() { return cSolidusKeyword_4_0; }
 
-		//effect=(ReactionEffect | SuspendEffect)
-		public Assignment getEffectAssignment_1_1() { return cEffectAssignment_1_1; }
-
-		//ReactionEffect | SuspendEffect
-		public Alternatives getEffectAlternatives_1_1_0() { return cEffectAlternatives_1_1_0; }
+		//effect=ReactionEffect
+		public Assignment getEffectAssignment_4_1() { return cEffectAssignment_4_1; }
 
 		//ReactionEffect
-		public RuleCall getEffectReactionEffectParserRuleCall_1_1_0_0() { return cEffectReactionEffectParserRuleCall_1_1_0_0; }
-
-		//SuspendEffect
-		public RuleCall getEffectSuspendEffectParserRuleCall_1_1_0_1() { return cEffectSuspendEffectParserRuleCall_1_1_0_1; }
+		public RuleCall getEffectReactionEffectParserRuleCall_4_1_0() { return cEffectReactionEffectParserRuleCall_4_1_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 
-	public class SuspendEffectElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SuspendEffect");
+	public class LocalDuringReactionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalDuringReaction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cSuspendEffectAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cSuspendKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Action cDeclarationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cDuringKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTriggerReactionTriggerParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
+		private final Keyword cSolidusKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cEffectAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cEffectReactionEffectParserRuleCall_5_0 = (RuleCall)cEffectAssignment_5.eContents().get(0);
+		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
-		//SuspendEffect returns sgraph::Effect:
+		//LocalDuringReaction:
 		//
-		//	{SuspendEffect} "Suspend";
+		//	{Declaration} "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";";
 		public ParserRule getRule() { return rule; }
 
-		//{SuspendEffect} "Suspend"
+		//{Declaration} "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";"
 		public Group getGroup() { return cGroup; }
 
-		//{SuspendEffect}
-		public Action getSuspendEffectAction_0() { return cSuspendEffectAction_0; }
+		//{Declaration}
+		public Action getDeclarationAction_0() { return cDeclarationAction_0; }
+
+		//"During"
+		public Keyword getDuringKeyword_1() { return cDuringKeyword_1; }
+
+		//":"
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+
+		//trigger=ReactionTrigger?
+		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
+
+		//ReactionTrigger
+		public RuleCall getTriggerReactionTriggerParserRuleCall_3_0() { return cTriggerReactionTriggerParserRuleCall_3_0; }
+
+		//"/"
+		public Keyword getSolidusKeyword_4() { return cSolidusKeyword_4; }
+
+		//effect=ReactionEffect
+		public Assignment getEffectAssignment_5() { return cEffectAssignment_5; }
+
+		//ReactionEffect
+		public RuleCall getEffectReactionEffectParserRuleCall_5_0() { return cEffectReactionEffectParserRuleCall_5_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
+	}
+
+	public class LocalExitReactionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalExitReaction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDeclarationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cExitKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTriggerReactionTriggerParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cSolidusKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cEffectAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cEffectReactionEffectParserRuleCall_4_1_0 = (RuleCall)cEffectAssignment_4_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//LocalExitReaction:
+		//
+		//	{Declaration} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+		public ParserRule getRule() { return rule; }
+
+		//{Declaration} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";"
+		public Group getGroup() { return cGroup; }
+
+		//{Declaration}
+		public Action getDeclarationAction_0() { return cDeclarationAction_0; }
+
+		//"Exit"
+		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
+
+		//":"
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+
+		//trigger=ReactionTrigger?
+		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
+
+		//ReactionTrigger
+		public RuleCall getTriggerReactionTriggerParserRuleCall_3_0() { return cTriggerReactionTriggerParserRuleCall_3_0; }
+
+		//"/" effect=ReactionEffect
+		public Group getGroup_4() { return cGroup_4; }
+
+		//"/"
+		public Keyword getSolidusKeyword_4_0() { return cSolidusKeyword_4_0; }
+
+		//effect=ReactionEffect
+		public Assignment getEffectAssignment_4_1() { return cEffectAssignment_4_1; }
+
+		//ReactionEffect
+		public RuleCall getEffectReactionEffectParserRuleCall_4_1_0() { return cEffectReactionEffectParserRuleCall_4_1_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+	}
+
+	public class LocalSuspendReactionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalSuspendReaction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDeclarationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cSuspendKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTriggerReactionTriggerParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//LocalSuspendReaction:
+		//
+		//	{Declaration} "Suspend" ":" trigger=ReactionTrigger? ";";
+		public ParserRule getRule() { return rule; }
+
+		//{Declaration} "Suspend" ":" trigger=ReactionTrigger? ";"
+		public Group getGroup() { return cGroup; }
+
+		//{Declaration}
+		public Action getDeclarationAction_0() { return cDeclarationAction_0; }
 
 		//"Suspend"
 		public Keyword getSuspendKeyword_1() { return cSuspendKeyword_1; }
+
+		//":"
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+
+		//trigger=ReactionTrigger?
+		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
+
+		//ReactionTrigger
+		public RuleCall getTriggerReactionTriggerParserRuleCall_3_0() { return cTriggerReactionTriggerParserRuleCall_3_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 
 	public class LocalReactionTriggerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalReactionTrigger");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cReactionTriggerAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cStateReactionAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cStateReactionStateReactionParserRuleCall_1_0 = (RuleCall)cStateReactionAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cColonKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cReactionTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cReactionTriggerReactionTriggerParserRuleCall_2_1_0 = (RuleCall)cReactionTriggerAssignment_2_1.eContents().get(0);
+		private final Assignment cDelayAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cDelayINTTerminalRuleCall_1_0 = (RuleCall)cDelayAssignment_1.eContents().get(0);
+		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		
+		/// ******************************************** TRANSITION ***************************************** * / // The ReactionTrigger is a Trigger and has an Expression, 
+		//
+		//// an optional delay and isImmediate option represented with a '#'
+		//
+		//// cmot change: Get rid of extra brackets
+		//
 		//LocalReactionTrigger returns sgraph::Trigger:
 		//
-		//	{ReactionTrigger} stateReaction=StateReaction (":" reactionTrigger=ReactionTrigger?)?;
+		//	{ReactionTrigger} delay=INT? expression=Expression?;
 		public ParserRule getRule() { return rule; }
 
-		//{ReactionTrigger} stateReaction=StateReaction (":" reactionTrigger=ReactionTrigger?)?
+		//{ReactionTrigger} delay=INT? expression=Expression?
 		public Group getGroup() { return cGroup; }
 
 		//{ReactionTrigger}
 		public Action getReactionTriggerAction_0() { return cReactionTriggerAction_0; }
 
-		//stateReaction=StateReaction
-		public Assignment getStateReactionAssignment_1() { return cStateReactionAssignment_1; }
+		//delay=INT?
+		public Assignment getDelayAssignment_1() { return cDelayAssignment_1; }
 
-		//StateReaction
-		public RuleCall getStateReactionStateReactionParserRuleCall_1_0() { return cStateReactionStateReactionParserRuleCall_1_0; }
+		//INT
+		public RuleCall getDelayINTTerminalRuleCall_1_0() { return cDelayINTTerminalRuleCall_1_0; }
 
-		//(":" reactionTrigger=ReactionTrigger?)?
-		public Group getGroup_2() { return cGroup_2; }
+		//expression=Expression?
+		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
 
-		//":"
-		public Keyword getColonKeyword_2_0() { return cColonKeyword_2_0; }
-
-		//reactionTrigger=ReactionTrigger?
-		public Assignment getReactionTriggerAssignment_2_1() { return cReactionTriggerAssignment_2_1; }
-
-		//ReactionTrigger
-		public RuleCall getReactionTriggerReactionTriggerParserRuleCall_2_1_0() { return cReactionTriggerReactionTriggerParserRuleCall_2_1_0; }
-	}
-
-	public class StateReactionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StateReaction");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cEntryParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cInsideParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cExitParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		
-		//StateReaction:
-		//
-		//	Entry | Inside | Exit;
-		public ParserRule getRule() { return rule; }
-
-		//Entry | Inside | Exit
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//Entry
-		public RuleCall getEntryParserRuleCall_0() { return cEntryParserRuleCall_0; }
-
-		//Inside
-		public RuleCall getInsideParserRuleCall_1() { return cInsideParserRuleCall_1; }
-
-		//Exit
-		public RuleCall getExitParserRuleCall_2() { return cExitParserRuleCall_2; }
-	}
-
-	public class EntryElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Entry");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cEntryAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cEntryKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		
-		//Entry:
-		//
-		//	{Entry} "Entry";
-		public ParserRule getRule() { return rule; }
-
-		//{Entry} "Entry"
-		public Group getGroup() { return cGroup; }
-
-		//{Entry}
-		public Action getEntryAction_0() { return cEntryAction_0; }
-
-		//"Entry"
-		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
-	}
-
-	public class InsideElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Inside");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cInsideAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cDuringKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		
-		//Inside:
-		//
-		//	{Inside} "During";
-		public ParserRule getRule() { return rule; }
-
-		//{Inside} "During"
-		public Group getGroup() { return cGroup; }
-
-		//{Inside}
-		public Action getInsideAction_0() { return cInsideAction_0; }
-
-		//"During"
-		public Keyword getDuringKeyword_1() { return cDuringKeyword_1; }
-	}
-
-	public class ExitElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Exit");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cExitAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cExitKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		
-		//Exit:
-		//
-		//	{Exit} "Exit";
-		public ParserRule getRule() { return rule; }
-
-		//{Exit} "Exit"
-		public Group getGroup() { return cGroup; }
-
-		//{Exit}
-		public Action getExitAction_0() { return cExitAction_0; }
-
-		//"Exit"
-		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_2_0() { return cExpressionExpressionParserRuleCall_2_0; }
 	}
 
 	public class ReactionTriggerElements extends AbstractParserRuleElementFinder {
@@ -607,12 +648,6 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cExpressionExpressionParserRuleCall_3_0 = (RuleCall)cExpressionAssignment_3.eContents().get(0);
 		
-		/// ******************************************** TRANSITION ***************************************** * / // The ReactionTrigger is a Trigger and has an Expression, 
-		//
-		//// an optional delay and isImmediate option represented with a '#'
-		//
-		//// cmot change: Get rid of extra brackets
-		//
 		//ReactionTrigger returns sgraph::Trigger:
 		//
 		//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? expression=Expression?;
@@ -1073,18 +1108,17 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	private StateScopeElements pStateScope;
+	private DeclarationElements pDeclaration;
 	private SignalDeclarationElements pSignalDeclaration;
 	private SignalDefinitionElements pSignalDefinition;
 	private VariableDeclarationElements pVariableDeclaration;
 	private VariableDefinitionElements pVariableDefinition;
 	private OperationDefinitionElements pOperationDefinition;
-	private LocalReactionElements pLocalReaction;
-	private SuspendEffectElements pSuspendEffect;
+	private LocalEntryReactionElements pLocalEntryReaction;
+	private LocalDuringReactionElements pLocalDuringReaction;
+	private LocalExitReactionElements pLocalExitReaction;
+	private LocalSuspendReactionElements pLocalSuspendReaction;
 	private LocalReactionTriggerElements pLocalReactionTrigger;
-	private StateReactionElements pStateReaction;
-	private EntryElements pEntry;
-	private InsideElements pInside;
-	private ExitElements pExit;
 	private ReactionTriggerElements pReactionTrigger;
 	private ReactionEffectElements pReactionEffect;
 	private NumericalMultiplyDivideExpressionElements pNumericalMultiplyDivideExpression;
@@ -1133,31 +1167,32 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	////Root2345:
-	//
-	////    scope=SimpleScope|trigger=ReactionTrigger|reaction=ReactionEffect;
-	//
-	////    
-	//
-	////SimpleScope returns StateScope:
-	//
-	////    StateScope
-	//
-	////;    
-	//
-	////
-	//
 	/// *********************************** INTERFACE DECLARATION **************************************** * / ////defines the possible scopes for a state
 	//
 	//StateScope:
 	//
-	//	{SimpleScope} declarations+=(VariableDeclaration | SignalDeclaration | OperationDeclaration | LocalReaction)*;
+	//	{SimpleScope} declarations+=Declaration*;
 	public StateScopeElements getStateScopeAccess() {
 		return (pStateScope != null) ? pStateScope : (pStateScope = new StateScopeElements());
 	}
 	
 	public ParserRule getStateScopeRule() {
 		return getStateScopeAccess().getRule();
+	}
+
+	/// * ---- declarations ----
+	//
+	//a definition is a top level element of a definition scope. * / Declaration returns sgraph::Declaration:
+	//
+	//	LocalEntryReaction | LocalDuringReaction | LocalExitReaction | LocalSuspendReaction | VariableDeclaration |
+	//
+	//	SignalDeclaration | OperationDeclaration;
+	public DeclarationElements getDeclarationAccess() {
+		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());
+	}
+	
+	public ParserRule getDeclarationRule() {
+		return getDeclarationAccess().getRule();
 	}
 
 	/// ************************************************ / / *			 Signal Definition				* /
@@ -1220,7 +1255,9 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableDefinitionAccess().getRule();
 	}
 
-	//OperationDefinition:
+	/// ************************************************ / / *			   	LocalReactions  		        * /
+	//
+	/// ************************************************ / OperationDefinition:
 	//
 	//	{OperationDefinition} "extern" functionType=[types::Type|FQN] name=XID "(" paramType=[types::Type|FQN] ")" ";";
 	public OperationDefinitionElements getOperationDefinitionAccess() {
@@ -1231,83 +1268,48 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getOperationDefinitionAccess().getRule();
 	}
 
-	/// ************************************************ / / *			 	LocalReactionScope					* /
+	//LocalEntryReaction:
 	//
-	/// ************************************************ / LocalReaction:
-	//
-	//	trigger=(LocalReactionTrigger | ReactionTrigger)? ("/" effect=(ReactionEffect | SuspendEffect)) ";";
-	public LocalReactionElements getLocalReactionAccess() {
-		return (pLocalReaction != null) ? pLocalReaction : (pLocalReaction = new LocalReactionElements());
+	//	{Declaration} "Entry" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+	public LocalEntryReactionElements getLocalEntryReactionAccess() {
+		return (pLocalEntryReaction != null) ? pLocalEntryReaction : (pLocalEntryReaction = new LocalEntryReactionElements());
 	}
 	
-	public ParserRule getLocalReactionRule() {
-		return getLocalReactionAccess().getRule();
+	public ParserRule getLocalEntryReactionRule() {
+		return getLocalEntryReactionAccess().getRule();
 	}
 
-	//SuspendEffect returns sgraph::Effect:
+	//LocalDuringReaction:
 	//
-	//	{SuspendEffect} "Suspend";
-	public SuspendEffectElements getSuspendEffectAccess() {
-		return (pSuspendEffect != null) ? pSuspendEffect : (pSuspendEffect = new SuspendEffectElements());
+	//	{Declaration} "During" ":" trigger=ReactionTrigger? "/" effect=ReactionEffect ";";
+	public LocalDuringReactionElements getLocalDuringReactionAccess() {
+		return (pLocalDuringReaction != null) ? pLocalDuringReaction : (pLocalDuringReaction = new LocalDuringReactionElements());
 	}
 	
-	public ParserRule getSuspendEffectRule() {
-		return getSuspendEffectAccess().getRule();
+	public ParserRule getLocalDuringReactionRule() {
+		return getLocalDuringReactionAccess().getRule();
 	}
 
-	//LocalReactionTrigger returns sgraph::Trigger:
+	//LocalExitReaction:
 	//
-	//	{ReactionTrigger} stateReaction=StateReaction (":" reactionTrigger=ReactionTrigger?)?;
-	public LocalReactionTriggerElements getLocalReactionTriggerAccess() {
-		return (pLocalReactionTrigger != null) ? pLocalReactionTrigger : (pLocalReactionTrigger = new LocalReactionTriggerElements());
+	//	{Declaration} "Exit" ":" trigger=ReactionTrigger? ("/" effect=ReactionEffect) ";";
+	public LocalExitReactionElements getLocalExitReactionAccess() {
+		return (pLocalExitReaction != null) ? pLocalExitReaction : (pLocalExitReaction = new LocalExitReactionElements());
 	}
 	
-	public ParserRule getLocalReactionTriggerRule() {
-		return getLocalReactionTriggerAccess().getRule();
+	public ParserRule getLocalExitReactionRule() {
+		return getLocalExitReactionAccess().getRule();
 	}
 
-	//StateReaction:
+	//LocalSuspendReaction:
 	//
-	//	Entry | Inside | Exit;
-	public StateReactionElements getStateReactionAccess() {
-		return (pStateReaction != null) ? pStateReaction : (pStateReaction = new StateReactionElements());
+	//	{Declaration} "Suspend" ":" trigger=ReactionTrigger? ";";
+	public LocalSuspendReactionElements getLocalSuspendReactionAccess() {
+		return (pLocalSuspendReaction != null) ? pLocalSuspendReaction : (pLocalSuspendReaction = new LocalSuspendReactionElements());
 	}
 	
-	public ParserRule getStateReactionRule() {
-		return getStateReactionAccess().getRule();
-	}
-
-	//Entry:
-	//
-	//	{Entry} "Entry";
-	public EntryElements getEntryAccess() {
-		return (pEntry != null) ? pEntry : (pEntry = new EntryElements());
-	}
-	
-	public ParserRule getEntryRule() {
-		return getEntryAccess().getRule();
-	}
-
-	//Inside:
-	//
-	//	{Inside} "During";
-	public InsideElements getInsideAccess() {
-		return (pInside != null) ? pInside : (pInside = new InsideElements());
-	}
-	
-	public ParserRule getInsideRule() {
-		return getInsideAccess().getRule();
-	}
-
-	//Exit:
-	//
-	//	{Exit} "Exit";
-	public ExitElements getExitAccess() {
-		return (pExit != null) ? pExit : (pExit = new ExitElements());
-	}
-	
-	public ParserRule getExitRule() {
-		return getExitAccess().getRule();
+	public ParserRule getLocalSuspendReactionRule() {
+		return getLocalSuspendReactionAccess().getRule();
 	}
 
 	/// ******************************************** TRANSITION ***************************************** * / // The ReactionTrigger is a Trigger and has an Expression, 
@@ -1316,6 +1318,17 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// cmot change: Get rid of extra brackets
 	//
+	//LocalReactionTrigger returns sgraph::Trigger:
+	//
+	//	{ReactionTrigger} delay=INT? expression=Expression?;
+	public LocalReactionTriggerElements getLocalReactionTriggerAccess() {
+		return (pLocalReactionTrigger != null) ? pLocalReactionTrigger : (pLocalReactionTrigger = new LocalReactionTriggerElements());
+	}
+	
+	public ParserRule getLocalReactionTriggerRule() {
+		return getLocalReactionTriggerAccess().getRule();
+	}
+
 	//ReactionTrigger returns sgraph::Trigger:
 	//
 	//	{ReactionTrigger} (labelPriority=INT ":")? delay=INT? expression=Expression?;
@@ -1637,22 +1650,6 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		return getInternalScopeAccess().getRule();
 	}
 
-	/// * ---- declarations ----
-	//a definition is a top level element of a definition scope. * / //		| Entrypoint 
-	//
-	//
-	////		| Exitpoint
-	// Declaration returns sgraph::Declaration:
-	//
-	//	EventDeclarartion | VariableDeclaration | OperationDeclaration | LocalReaction;
-	public STextGrammarAccess.DeclarationElements getDeclarationAccess() {
-		return gaSText.getDeclarationAccess();
-	}
-	
-	public ParserRule getDeclarationRule() {
-		return getDeclarationAccess().getRule();
-	}
-
 	/// * ---- event definition ---- * / EventDeclarartion returns sgraph::Event:
 	//
 	//	EventDefinition;
@@ -1789,6 +1786,17 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getReactionRule() {
 		return getReactionAccess().getRule();
+	}
+
+	//LocalReaction:
+	//
+	//	trigger=ReactionTrigger => ("/" effect=ReactionEffect);
+	public STextGrammarAccess.LocalReactionElements getLocalReactionAccess() {
+		return gaSText.getLocalReactionAccess();
+	}
+	
+	public ParserRule getLocalReactionRule() {
+		return getLocalReactionAccess().getRule();
 	}
 
 	//TransitionReaction:

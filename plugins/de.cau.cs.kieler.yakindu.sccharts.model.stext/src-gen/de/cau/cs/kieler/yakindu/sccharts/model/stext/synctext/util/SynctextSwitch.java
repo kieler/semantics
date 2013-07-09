@@ -16,10 +16,8 @@ import org.yakindu.base.types.Operation;
 import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypedElement;
 
-import org.yakindu.sct.model.sgraph.Declaration;
 import org.yakindu.sct.model.sgraph.Effect;
 import org.yakindu.sct.model.sgraph.Event;
-import org.yakindu.sct.model.sgraph.Reaction;
 import org.yakindu.sct.model.sgraph.Scope;
 import org.yakindu.sct.model.sgraph.Statement;
 import org.yakindu.sct.model.sgraph.Trigger;
@@ -103,7 +101,7 @@ public class SynctextSwitch<T> extends Switch<T>
         SignalDefinition signalDefinition = (SignalDefinition)theEObject;
         T result = caseSignalDefinition(signalDefinition);
         if (result == null) result = caseEvent(signalDefinition);
-        if (result == null) result = caseDeclaration(signalDefinition);
+        if (result == null) result = caseSGraph_Declaration(signalDefinition);
         if (result == null) result = caseNamedElement(signalDefinition);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -114,7 +112,7 @@ public class SynctextSwitch<T> extends Switch<T>
         T result = caseVariableDefinition(variableDefinition);
         if (result == null) result = caseStext_VariableDefinition(variableDefinition);
         if (result == null) result = caseVariable(variableDefinition);
-        if (result == null) result = caseDeclaration(variableDefinition);
+        if (result == null) result = caseSGraph_Declaration(variableDefinition);
         if (result == null) result = caseProperty(variableDefinition);
         if (result == null) result = caseFeature(variableDefinition);
         if (result == null) result = caseNamedElement(variableDefinition);
@@ -127,7 +125,7 @@ public class SynctextSwitch<T> extends Switch<T>
         OperationDefinition operationDefinition = (OperationDefinition)theEObject;
         T result = caseOperationDefinition(operationDefinition);
         if (result == null) result = caseStext_OperationDefinition(operationDefinition);
-        if (result == null) result = caseDeclaration(operationDefinition);
+        if (result == null) result = caseSGraph_Declaration(operationDefinition);
         if (result == null) result = caseOperation(operationDefinition);
         if (result == null) result = caseFeature(operationDefinition);
         if (result == null) result = caseNamedElement(operationDefinition);
@@ -135,45 +133,39 @@ public class SynctextSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SynctextPackage.LOCAL_REACTION:
+      case SynctextPackage.LOCAL_ENTRY_REACTION:
       {
-        LocalReaction localReaction = (LocalReaction)theEObject;
-        T result = caseLocalReaction(localReaction);
-        if (result == null) result = caseStext_LocalReaction(localReaction);
-        if (result == null) result = caseDeclaration(localReaction);
-        if (result == null) result = caseReaction(localReaction);
-        if (result == null) result = caseNamedElement(localReaction);
+        LocalEntryReaction localEntryReaction = (LocalEntryReaction)theEObject;
+        T result = caseLocalEntryReaction(localEntryReaction);
+        if (result == null) result = caseSGraph_Declaration(localEntryReaction);
+        if (result == null) result = caseNamedElement(localEntryReaction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SynctextPackage.STATE_REACTION:
+      case SynctextPackage.LOCAL_DURING_REACTION:
       {
-        StateReaction stateReaction = (StateReaction)theEObject;
-        T result = caseStateReaction(stateReaction);
+        LocalDuringReaction localDuringReaction = (LocalDuringReaction)theEObject;
+        T result = caseLocalDuringReaction(localDuringReaction);
+        if (result == null) result = caseSGraph_Declaration(localDuringReaction);
+        if (result == null) result = caseNamedElement(localDuringReaction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SynctextPackage.ENTRY:
+      case SynctextPackage.LOCAL_EXIT_REACTION:
       {
-        Entry entry = (Entry)theEObject;
-        T result = caseEntry(entry);
-        if (result == null) result = caseStateReaction(entry);
+        LocalExitReaction localExitReaction = (LocalExitReaction)theEObject;
+        T result = caseLocalExitReaction(localExitReaction);
+        if (result == null) result = caseSGraph_Declaration(localExitReaction);
+        if (result == null) result = caseNamedElement(localExitReaction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SynctextPackage.INSIDE:
+      case SynctextPackage.LOCAL_SUSPEND_REACTION:
       {
-        Inside inside = (Inside)theEObject;
-        T result = caseInside(inside);
-        if (result == null) result = caseStateReaction(inside);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SynctextPackage.EXIT:
-      {
-        Exit exit = (Exit)theEObject;
-        T result = caseExit(exit);
-        if (result == null) result = caseStateReaction(exit);
+        LocalSuspendReaction localSuspendReaction = (LocalSuspendReaction)theEObject;
+        T result = caseLocalSuspendReaction(localSuspendReaction);
+        if (result == null) result = caseSGraph_Declaration(localSuspendReaction);
+        if (result == null) result = caseNamedElement(localSuspendReaction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -192,16 +184,21 @@ public class SynctextSwitch<T> extends Switch<T>
         T result = caseEventDefinition(eventDefinition);
         if (result == null) result = caseSignalDefinition(eventDefinition);
         if (result == null) result = caseEvent(eventDefinition);
-        if (result == null) result = caseDeclaration(eventDefinition);
+        if (result == null) result = caseSGraph_Declaration(eventDefinition);
         if (result == null) result = caseNamedElement(eventDefinition);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SynctextPackage.SUSPEND_EFFECT:
+      case SynctextPackage.DECLARATION:
       {
-        SuspendEffect suspendEffect = (SuspendEffect)theEObject;
-        T result = caseSuspendEffect(suspendEffect);
-        if (result == null) result = caseEffect(suspendEffect);
+        Declaration declaration = (Declaration)theEObject;
+        T result = caseDeclaration(declaration);
+        if (result == null) result = caseLocalEntryReaction(declaration);
+        if (result == null) result = caseLocalDuringReaction(declaration);
+        if (result == null) result = caseLocalExitReaction(declaration);
+        if (result == null) result = caseLocalSuspendReaction(declaration);
+        if (result == null) result = caseSGraph_Declaration(declaration);
+        if (result == null) result = caseNamedElement(declaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -317,81 +314,65 @@ public class SynctextSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Local Reaction</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Local Entry Reaction</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Local Reaction</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Local Entry Reaction</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseLocalReaction(LocalReaction object)
+  public T caseLocalEntryReaction(LocalEntryReaction object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>State Reaction</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Local During Reaction</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>State Reaction</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Local During Reaction</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseStateReaction(StateReaction object)
+  public T caseLocalDuringReaction(LocalDuringReaction object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Entry</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Local Exit Reaction</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Entry</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Local Exit Reaction</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseEntry(Entry object)
+  public T caseLocalExitReaction(LocalExitReaction object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Inside</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Local Suspend Reaction</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Inside</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Local Suspend Reaction</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseInside(Inside object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Exit</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Exit</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseExit(Exit object)
+  public T caseLocalSuspendReaction(LocalSuspendReaction object)
   {
     return null;
   }
@@ -429,17 +410,17 @@ public class SynctextSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Suspend Effect</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Declaration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Suspend Effect</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Declaration</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSuspendEffect(SuspendEffect object)
+  public T caseDeclaration(Declaration object)
   {
     return null;
   }
@@ -567,7 +548,7 @@ public class SynctextSwitch<T> extends Switch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseDeclaration(Declaration object)
+  public T caseSGraph_Declaration(org.yakindu.sct.model.sgraph.Declaration object)
   {
     return null;
   }
@@ -701,33 +682,17 @@ public class SynctextSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Reaction</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Trigger</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Reaction</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Trigger</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseReaction(Reaction object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Local Reaction</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Local Reaction</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStext_LocalReaction(org.yakindu.sct.model.stext.stext.LocalReaction object)
+  public T caseTrigger(Trigger object)
   {
     return null;
   }
@@ -744,22 +709,6 @@ public class SynctextSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEffect(Effect object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Trigger</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Trigger</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTrigger(Trigger object)
   {
     return null;
   }

@@ -14,11 +14,9 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger#getStateReaction <em>State Reaction</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger#getReactionTrigger <em>Reaction Trigger</em>}</li>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger#getLabelPriority <em>Label Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger#getLabelPriority <em>Label Priority</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,84 +26,6 @@ import org.yakindu.sct.model.stext.stext.Expression;
  */
 public interface ReactionTrigger extends Trigger
 {
-  /**
-   * Returns the value of the '<em><b>State Reaction</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>State Reaction</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>State Reaction</em>' containment reference.
-   * @see #setStateReaction(StateReaction)
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getReactionTrigger_StateReaction()
-   * @model containment="true"
-   * @generated
-   */
-  StateReaction getStateReaction();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger#getStateReaction <em>State Reaction</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>State Reaction</em>' containment reference.
-   * @see #getStateReaction()
-   * @generated
-   */
-  void setStateReaction(StateReaction value);
-
-  /**
-   * Returns the value of the '<em><b>Reaction Trigger</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Reaction Trigger</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Reaction Trigger</em>' containment reference.
-   * @see #setReactionTrigger(Trigger)
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getReactionTrigger_ReactionTrigger()
-   * @model containment="true"
-   * @generated
-   */
-  Trigger getReactionTrigger();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger#getReactionTrigger <em>Reaction Trigger</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Reaction Trigger</em>' containment reference.
-   * @see #getReactionTrigger()
-   * @generated
-   */
-  void setReactionTrigger(Trigger value);
-
-  /**
-   * Returns the value of the '<em><b>Label Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Label Priority</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Label Priority</em>' attribute.
-   * @see #setLabelPriority(int)
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getReactionTrigger_LabelPriority()
-   * @model
-   * @generated
-   */
-  int getLabelPriority();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger#getLabelPriority <em>Label Priority</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Label Priority</em>' attribute.
-   * @see #getLabelPriority()
-   * @generated
-   */
-  void setLabelPriority(int value);
-
   /**
    * Returns the value of the '<em><b>Delay</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -157,5 +77,31 @@ public interface ReactionTrigger extends Trigger
    * @generated
    */
   void setExpression(Expression value);
+
+  /**
+   * Returns the value of the '<em><b>Label Priority</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Label Priority</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Label Priority</em>' attribute.
+   * @see #setLabelPriority(int)
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getReactionTrigger_LabelPriority()
+   * @model
+   * @generated
+   */
+  int getLabelPriority();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger#getLabelPriority <em>Label Priority</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Label Priority</em>' attribute.
+   * @see #getLabelPriority()
+   * @generated
+   */
+  void setLabelPriority(int value);
 
 } // ReactionTrigger

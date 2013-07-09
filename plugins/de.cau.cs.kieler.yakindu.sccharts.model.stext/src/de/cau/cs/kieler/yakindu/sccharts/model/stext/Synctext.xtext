@@ -7,17 +7,21 @@ import "http://www.yakindu.org/sct/statechart/SText" as stext
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 
-//Root2345:
-//    scope=SimpleScope|trigger=ReactionTrigger|reaction=ReactionEffect;
-//    
-//SimpleScope returns StateScope:
-//    StateScope
-//;    
-//
 /*********************************** INTERFACE DECLARATION **************************************** */
 ////defines the possible scopes for a state
 StateScope:
-	{SimpleScope} declarations+=(VariableDeclaration | SignalDeclaration| OperationDeclaration | LocalReaction)*;
+    {SimpleScope} declarations+=(Declaration)*;
+
+
+    /* ---- declarations ----
+a definition is a top level element of a definition scope. */
+Declaration returns sgraph::Declaration:
+        LocalEntryReaction | LocalDuringReaction | LocalExitReaction | LocalSuspendReaction
+        | VariableDeclaration 
+        | SignalDeclaration 
+        | OperationDeclaration 
+;
+
 
 /************************************************/
 /*			 Signal Definition				*/
@@ -29,6 +33,7 @@ SignalDefinition:
 	name=ID (':' type=[types::Type|FQN]
 	('=' varInitialValue=Expression)?
 	('with' varCombineOperator=CombineOperator)?)? ';';
+
 
 /************************************************/
 /*			 Variable Definition				*/
@@ -42,41 +47,32 @@ VariableDefinition:
     {VariableDefinition} (isInput?='input')? (isOutput?='output')? (isStatic?='static')? type=[types::Type|FQN] name=ID
     ('=' initialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';	
 
-	
+
+/************************************************/
+/*			   	LocalReactions  		        */
+/************************************************/
 OperationDefinition:
-	{OperationDefinition} 'extern'  functionType=[types::Type|FQN] name=XID '(' paramType=[types::Type|FQN] ')' ';';
-	
+    {OperationDefinition} 'extern'  functionType=[types::Type|FQN] name=XID '(' paramType=[types::Type|FQN] ')' ';';
+    
+LocalEntryReaction:
+   {Declaration} 'Entry' ':' (trigger=ReactionTrigger)? ('/' effect=ReactionEffect) ';';
+LocalDuringReaction:
+   {Declaration} 'During' ':' (trigger=ReactionTrigger)? '/' effect=ReactionEffect ';';
+LocalExitReaction:
+   {Declaration} 'Exit' ':' (trigger=ReactionTrigger)? ('/' effect=ReactionEffect) ';';
+LocalSuspendReaction:
+   {Declaration} 'Suspend' ':' (trigger=ReactionTrigger)? ';';
 
-/************************************************/
-/*			 	LocalReactionScope					*/
-/************************************************/
-LocalReaction:
-	(trigger=(LocalReactionTrigger | ReactionTrigger))? ('/' effect=(ReactionEffect | SuspendEffect)) ';';
-
-SuspendEffect returns sgraph::Effect:
-	{SuspendEffect} 'Suspend';
-
-LocalReactionTrigger returns sgraph::Trigger:
-	{ReactionTrigger} stateReaction=StateReaction (':' reactionTrigger=ReactionTrigger?)?;
-
-StateReaction:
-	Entry | Inside | Exit;
-
-Entry:
-	{Entry} 'Entry';
-
-Inside:
-	{Inside} 'During';
-
-Exit:
-	{Exit} 'Exit';
 
 /******************************************** TRANSITION ***************************************** */
 // The ReactionTrigger is a Trigger and has an Expression, 
 // an optional delay and isImmediate option represented with a '#'
 // cmot change: Get rid of extra brackets
+LocalReactionTrigger returns sgraph::Trigger:
+    {ReactionTrigger} (delay=INT)? (expression=Expression)?;
 ReactionTrigger returns sgraph::Trigger:
-	{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? (expression=Expression)?;
+    {ReactionTrigger} (labelPriority=INT':')? (delay=INT)? (expression=Expression)?;
+
 
     // Original code by wah
     //{ReactionTrigger} (labelPriority=INT':')? (delay=INT)? ((trigger=RegularEventSpec);

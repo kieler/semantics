@@ -18,10 +18,8 @@ import org.yakindu.base.types.Operation;
 import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypedElement;
 
-import org.yakindu.sct.model.sgraph.Declaration;
 import org.yakindu.sct.model.sgraph.Effect;
 import org.yakindu.sct.model.sgraph.Event;
-import org.yakindu.sct.model.sgraph.Reaction;
 import org.yakindu.sct.model.sgraph.Scope;
 import org.yakindu.sct.model.sgraph.Statement;
 import org.yakindu.sct.model.sgraph.Trigger;
@@ -113,29 +111,24 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
         return createOperationDefinitionAdapter();
       }
       @Override
-      public Adapter caseLocalReaction(LocalReaction object)
+      public Adapter caseLocalEntryReaction(LocalEntryReaction object)
       {
-        return createLocalReactionAdapter();
+        return createLocalEntryReactionAdapter();
       }
       @Override
-      public Adapter caseStateReaction(StateReaction object)
+      public Adapter caseLocalDuringReaction(LocalDuringReaction object)
       {
-        return createStateReactionAdapter();
+        return createLocalDuringReactionAdapter();
       }
       @Override
-      public Adapter caseEntry(Entry object)
+      public Adapter caseLocalExitReaction(LocalExitReaction object)
       {
-        return createEntryAdapter();
+        return createLocalExitReactionAdapter();
       }
       @Override
-      public Adapter caseInside(Inside object)
+      public Adapter caseLocalSuspendReaction(LocalSuspendReaction object)
       {
-        return createInsideAdapter();
-      }
-      @Override
-      public Adapter caseExit(Exit object)
-      {
-        return createExitAdapter();
+        return createLocalSuspendReactionAdapter();
       }
       @Override
       public Adapter caseSimpleScope(SimpleScope object)
@@ -148,9 +141,9 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
         return createEventDefinitionAdapter();
       }
       @Override
-      public Adapter caseSuspendEffect(SuspendEffect object)
+      public Adapter caseDeclaration(Declaration object)
       {
-        return createSuspendEffectAdapter();
+        return createDeclarationAdapter();
       }
       @Override
       public Adapter caseReactionTrigger(ReactionTrigger object)
@@ -188,9 +181,9 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
         return createNamedElementAdapter();
       }
       @Override
-      public Adapter caseDeclaration(Declaration object)
+      public Adapter caseSGraph_Declaration(org.yakindu.sct.model.sgraph.Declaration object)
       {
-        return createDeclarationAdapter();
+        return createSGraph_DeclarationAdapter();
       }
       @Override
       public Adapter caseEvent(Event object)
@@ -233,24 +226,14 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
         return createStext_OperationDefinitionAdapter();
       }
       @Override
-      public Adapter caseReaction(Reaction object)
+      public Adapter caseTrigger(Trigger object)
       {
-        return createReactionAdapter();
-      }
-      @Override
-      public Adapter caseStext_LocalReaction(org.yakindu.sct.model.stext.stext.LocalReaction object)
-      {
-        return createStext_LocalReactionAdapter();
+        return createTriggerAdapter();
       }
       @Override
       public Adapter caseEffect(Effect object)
       {
         return createEffectAdapter();
-      }
-      @Override
-      public Adapter caseTrigger(Trigger object)
-      {
-        return createTriggerAdapter();
       }
       @Override
       public Adapter caseStatement(Statement object)
@@ -345,76 +328,61 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalReaction <em>Local Reaction</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction <em>Local Entry Reaction</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalReaction
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction
    * @generated
    */
-  public Adapter createLocalReactionAdapter()
+  public Adapter createLocalEntryReactionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.StateReaction <em>State Reaction</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction <em>Local During Reaction</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.StateReaction
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction
    * @generated
    */
-  public Adapter createStateReactionAdapter()
+  public Adapter createLocalDuringReactionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Entry <em>Entry</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction <em>Local Exit Reaction</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Entry
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction
    * @generated
    */
-  public Adapter createEntryAdapter()
+  public Adapter createLocalExitReactionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Inside <em>Inside</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction <em>Local Suspend Reaction</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Inside
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction
    * @generated
    */
-  public Adapter createInsideAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Exit <em>Exit</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Exit
-   * @generated
-   */
-  public Adapter createExitAdapter()
+  public Adapter createLocalSuspendReactionAdapter()
   {
     return null;
   }
@@ -450,16 +418,16 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SuspendEffect <em>Suspend Effect</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration <em>Declaration</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SuspendEffect
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration
    * @generated
    */
-  public Adapter createSuspendEffectAdapter()
+  public Adapter createDeclarationAdapter()
   {
     return null;
   }
@@ -579,7 +547,7 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
    * @see org.yakindu.sct.model.sgraph.Declaration
    * @generated
    */
-  public Adapter createDeclarationAdapter()
+  public Adapter createSGraph_DeclarationAdapter()
   {
     return null;
   }
@@ -705,31 +673,16 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Reaction <em>Reaction</em>}'.
+   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Trigger <em>Trigger</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Reaction
+   * @see org.yakindu.sct.model.sgraph.Trigger
    * @generated
    */
-  public Adapter createReactionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.LocalReaction <em>Local Reaction</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.stext.stext.LocalReaction
-   * @generated
-   */
-  public Adapter createStext_LocalReactionAdapter()
+  public Adapter createTriggerAdapter()
   {
     return null;
   }
@@ -745,21 +698,6 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEffectAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Trigger <em>Trigger</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Trigger
-   * @generated
-   */
-  public Adapter createTriggerAdapter()
   {
     return null;
   }

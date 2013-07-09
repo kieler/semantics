@@ -95,71 +95,134 @@ ruleStateScope returns [EObject current=null]
     }
 )(
 (
-(
 		{ 
-	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsVariableDeclarationParserRuleCall_1_0_0()); 
+	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsDeclarationParserRuleCall_1_0()); 
 	    }
-		lv_declarations_1_1=ruleVariableDeclaration		{
+		lv_declarations_1_0=ruleDeclaration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
 	        }
        		add(
        			$current, 
        			"declarations",
-        		lv_declarations_1_1, 
-        		"VariableDeclaration");
+        		lv_declarations_1_0, 
+        		"Declaration");
 	        afterParserOrEnumRuleCall();
 	    }
-
-    |		{ 
-	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsSignalDeclarationParserRuleCall_1_0_1()); 
-	    }
-		lv_declarations_1_2=ruleSignalDeclaration		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
-	        }
-       		add(
-       			$current, 
-       			"declarations",
-        		lv_declarations_1_2, 
-        		"SignalDeclaration");
-	        afterParserOrEnumRuleCall();
-	    }
-
-    |		{ 
-	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsOperationDeclarationParserRuleCall_1_0_2()); 
-	    }
-		lv_declarations_1_3=ruleOperationDeclaration		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
-	        }
-       		add(
-       			$current, 
-       			"declarations",
-        		lv_declarations_1_3, 
-        		"OperationDeclaration");
-	        afterParserOrEnumRuleCall();
-	    }
-
-    |		{ 
-	        newCompositeNode(grammarAccess.getStateScopeAccess().getDeclarationsLocalReactionParserRuleCall_1_0_3()); 
-	    }
-		lv_declarations_1_4=ruleLocalReaction		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getStateScopeRule());
-	        }
-       		add(
-       			$current, 
-       			"declarations",
-        		lv_declarations_1_4, 
-        		"LocalReaction");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
 
 )
 )*)
+;
+
+
+
+
+
+// Entry rule entryRuleDeclaration
+entryRuleDeclaration returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getDeclarationRule()); }
+	 iv_ruleDeclaration=ruleDeclaration 
+	 { $current=$iv_ruleDeclaration.current; } 
+	 EOF 
+;
+
+// Rule Declaration
+ruleDeclaration returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getDeclarationAccess().getLocalEntryReactionParserRuleCall_0()); 
+    }
+    this_LocalEntryReaction_0=ruleLocalEntryReaction
+    { 
+        $current = $this_LocalEntryReaction_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getDeclarationAccess().getLocalDuringReactionParserRuleCall_1()); 
+    }
+    this_LocalDuringReaction_1=ruleLocalDuringReaction
+    { 
+        $current = $this_LocalDuringReaction_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getDeclarationAccess().getLocalExitReactionParserRuleCall_2()); 
+    }
+    this_LocalExitReaction_2=ruleLocalExitReaction
+    { 
+        $current = $this_LocalExitReaction_2.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getDeclarationAccess().getLocalSuspendReactionParserRuleCall_3()); 
+    }
+    this_LocalSuspendReaction_3=ruleLocalSuspendReaction
+    { 
+        $current = $this_LocalSuspendReaction_3.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getDeclarationAccess().getVariableDeclarationParserRuleCall_4()); 
+    }
+    this_VariableDeclaration_4=ruleVariableDeclaration
+    { 
+        $current = $this_VariableDeclaration_4.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getDeclarationAccess().getSignalDeclarationParserRuleCall_5()); 
+    }
+    this_SignalDeclaration_5=ruleSignalDeclaration
+    { 
+        $current = $this_SignalDeclaration_5.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getDeclarationAccess().getOperationDeclarationParserRuleCall_6()); 
+    }
+    this_OperationDeclaration_6=ruleOperationDeclaration
+    { 
+        $current = $this_OperationDeclaration_6.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
 ;
 
 
@@ -643,118 +706,17 @@ ruleOperationDefinition returns [EObject current=null]
 
 
 
-// Entry rule entryRuleLocalReaction
-entryRuleLocalReaction returns [EObject current=null] 
+// Entry rule entryRuleLocalEntryReaction
+entryRuleLocalEntryReaction returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getLocalReactionRule()); }
-	 iv_ruleLocalReaction=ruleLocalReaction 
-	 { $current=$iv_ruleLocalReaction.current; } 
+	{ newCompositeNode(grammarAccess.getLocalEntryReactionRule()); }
+	 iv_ruleLocalEntryReaction=ruleLocalEntryReaction 
+	 { $current=$iv_ruleLocalEntryReaction.current; } 
 	 EOF 
 ;
 
-// Rule LocalReaction
-ruleLocalReaction returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLocalReactionAccess().getTriggerLocalReactionTriggerParserRuleCall_0_0_0()); 
-	    }
-		lv_trigger_0_1=ruleLocalReactionTrigger		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLocalReactionRule());
-	        }
-       		set(
-       			$current, 
-       			"trigger",
-        		lv_trigger_0_1, 
-        		"LocalReactionTrigger");
-	        afterParserOrEnumRuleCall();
-	    }
-
-    |		{ 
-	        newCompositeNode(grammarAccess.getLocalReactionAccess().getTriggerReactionTriggerParserRuleCall_0_0_1()); 
-	    }
-		lv_trigger_0_2=ruleReactionTrigger		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLocalReactionRule());
-	        }
-       		set(
-       			$current, 
-       			"trigger",
-        		lv_trigger_0_2, 
-        		"ReactionTrigger");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-
-)
-)?(	otherlv_1='/' 
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getLocalReactionAccess().getSolidusKeyword_1_0());
-    }
-(
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLocalReactionAccess().getEffectReactionEffectParserRuleCall_1_1_0_0()); 
-	    }
-		lv_effect_2_1=ruleReactionEffect		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLocalReactionRule());
-	        }
-       		set(
-       			$current, 
-       			"effect",
-        		lv_effect_2_1, 
-        		"ReactionEffect");
-	        afterParserOrEnumRuleCall();
-	    }
-
-    |		{ 
-	        newCompositeNode(grammarAccess.getLocalReactionAccess().getEffectSuspendEffectParserRuleCall_1_1_0_1()); 
-	    }
-		lv_effect_2_2=ruleSuspendEffect		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLocalReactionRule());
-	        }
-       		set(
-       			$current, 
-       			"effect",
-        		lv_effect_2_2, 
-        		"SuspendEffect");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-
-)
-))	otherlv_3=';' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getLocalReactionAccess().getSemicolonKeyword_2());
-    }
-)
-;
-
-
-
-
-
-// Entry rule entryRuleSuspendEffect
-entryRuleSuspendEffect returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getSuspendEffectRule()); }
-	 iv_ruleSuspendEffect=ruleSuspendEffect 
-	 { $current=$iv_ruleSuspendEffect.current; } 
-	 EOF 
-;
-
-// Rule SuspendEffect
-ruleSuspendEffect returns [EObject current=null] 
+// Rule LocalEntryReaction
+ruleLocalEntryReaction returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -764,175 +726,60 @@ ruleSuspendEffect returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getSuspendEffectAccess().getSuspendEffectAction_0(),
-            $current);
-    }
-)	otherlv_1='Suspend' 
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getSuspendEffectAccess().getSuspendKeyword_1());
-    }
-)
-;
-
-
-
-
-
-// Entry rule entryRuleLocalReactionTrigger
-entryRuleLocalReactionTrigger returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getLocalReactionTriggerRule()); }
-	 iv_ruleLocalReactionTrigger=ruleLocalReactionTrigger 
-	 { $current=$iv_ruleLocalReactionTrigger.current; } 
-	 EOF 
-;
-
-// Rule LocalReactionTrigger
-ruleLocalReactionTrigger returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-	{ 
-	  /* */ 
-	}
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getLocalReactionTriggerAccess().getReactionTriggerAction_0(),
-            $current);
-    }
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLocalReactionTriggerAccess().getStateReactionStateReactionParserRuleCall_1_0()); 
-	    }
-		lv_stateReaction_1_0=ruleStateReaction		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLocalReactionTriggerRule());
-	        }
-       		set(
-       			$current, 
-       			"stateReaction",
-        		lv_stateReaction_1_0, 
-        		"StateReaction");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(	otherlv_2=':' 
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getLocalReactionTriggerAccess().getColonKeyword_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getLocalReactionTriggerAccess().getReactionTriggerReactionTriggerParserRuleCall_2_1_0()); 
-	    }
-		lv_reactionTrigger_3_0=ruleReactionTrigger		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getLocalReactionTriggerRule());
-	        }
-       		set(
-       			$current, 
-       			"reactionTrigger",
-        		lv_reactionTrigger_3_0, 
-        		"ReactionTrigger");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)?)?)
-;
-
-
-
-
-
-// Entry rule entryRuleStateReaction
-entryRuleStateReaction returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getStateReactionRule()); }
-	 iv_ruleStateReaction=ruleStateReaction 
-	 { $current=$iv_ruleStateReaction.current; } 
-	 EOF 
-;
-
-// Rule StateReaction
-ruleStateReaction returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getStateReactionAccess().getEntryParserRuleCall_0()); 
-    }
-    this_Entry_0=ruleEntry
-    { 
-        $current = $this_Entry_0.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getStateReactionAccess().getInsideParserRuleCall_1()); 
-    }
-    this_Inside_1=ruleInside
-    { 
-        $current = $this_Inside_1.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        newCompositeNode(grammarAccess.getStateReactionAccess().getExitParserRuleCall_2()); 
-    }
-    this_Exit_2=ruleExit
-    { 
-        $current = $this_Exit_2.current; 
-        afterParserOrEnumRuleCall();
-    }
-)
-;
-
-
-
-
-
-// Entry rule entryRuleEntry
-entryRuleEntry returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getEntryRule()); }
-	 iv_ruleEntry=ruleEntry 
-	 { $current=$iv_ruleEntry.current; } 
-	 EOF 
-;
-
-// Rule Entry
-ruleEntry returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-	{ 
-	  /* */ 
-	}
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getEntryAccess().getEntryAction_0(),
+            grammarAccess.getLocalEntryReactionAccess().getDeclarationAction_0(),
             $current);
     }
 )	otherlv_1='Entry' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getEntryAccess().getEntryKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getLocalEntryReactionAccess().getEntryKeyword_1());
+    }
+	otherlv_2=':' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getLocalEntryReactionAccess().getColonKeyword_2());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLocalEntryReactionAccess().getTriggerReactionTriggerParserRuleCall_3_0()); 
+	    }
+		lv_trigger_3_0=ruleReactionTrigger		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLocalEntryReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"trigger",
+        		lv_trigger_3_0, 
+        		"ReactionTrigger");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?(	otherlv_4='/' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getLocalEntryReactionAccess().getSolidusKeyword_4_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLocalEntryReactionAccess().getEffectReactionEffectParserRuleCall_4_1_0()); 
+	    }
+		lv_effect_5_0=ruleReactionEffect		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLocalEntryReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"effect",
+        		lv_effect_5_0, 
+        		"ReactionEffect");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))	otherlv_6=';' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getLocalEntryReactionAccess().getSemicolonKeyword_5());
     }
 )
 ;
@@ -941,17 +788,17 @@ ruleEntry returns [EObject current=null]
 
 
 
-// Entry rule entryRuleInside
-entryRuleInside returns [EObject current=null] 
+// Entry rule entryRuleLocalDuringReaction
+entryRuleLocalDuringReaction returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getInsideRule()); }
-	 iv_ruleInside=ruleInside 
-	 { $current=$iv_ruleInside.current; } 
+	{ newCompositeNode(grammarAccess.getLocalDuringReactionRule()); }
+	 iv_ruleLocalDuringReaction=ruleLocalDuringReaction 
+	 { $current=$iv_ruleLocalDuringReaction.current; } 
 	 EOF 
 ;
 
-// Rule Inside
-ruleInside returns [EObject current=null] 
+// Rule LocalDuringReaction
+ruleLocalDuringReaction returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -961,12 +808,60 @@ ruleInside returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getInsideAccess().getInsideAction_0(),
+            grammarAccess.getLocalDuringReactionAccess().getDeclarationAction_0(),
             $current);
     }
 )	otherlv_1='During' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getInsideAccess().getDuringKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getLocalDuringReactionAccess().getDuringKeyword_1());
+    }
+	otherlv_2=':' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getLocalDuringReactionAccess().getColonKeyword_2());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLocalDuringReactionAccess().getTriggerReactionTriggerParserRuleCall_3_0()); 
+	    }
+		lv_trigger_3_0=ruleReactionTrigger		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLocalDuringReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"trigger",
+        		lv_trigger_3_0, 
+        		"ReactionTrigger");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?	otherlv_4='/' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getLocalDuringReactionAccess().getSolidusKeyword_4());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLocalDuringReactionAccess().getEffectReactionEffectParserRuleCall_5_0()); 
+	    }
+		lv_effect_5_0=ruleReactionEffect		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLocalDuringReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"effect",
+        		lv_effect_5_0, 
+        		"ReactionEffect");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_6=';' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getLocalDuringReactionAccess().getSemicolonKeyword_6());
     }
 )
 ;
@@ -975,17 +870,17 @@ ruleInside returns [EObject current=null]
 
 
 
-// Entry rule entryRuleExit
-entryRuleExit returns [EObject current=null] 
+// Entry rule entryRuleLocalExitReaction
+entryRuleLocalExitReaction returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getExitRule()); }
-	 iv_ruleExit=ruleExit 
-	 { $current=$iv_ruleExit.current; } 
+	{ newCompositeNode(grammarAccess.getLocalExitReactionRule()); }
+	 iv_ruleLocalExitReaction=ruleLocalExitReaction 
+	 { $current=$iv_ruleLocalExitReaction.current; } 
 	 EOF 
 ;
 
-// Rule Exit
-ruleExit returns [EObject current=null] 
+// Rule LocalExitReaction
+ruleLocalExitReaction returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -995,15 +890,125 @@ ruleExit returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getExitAccess().getExitAction_0(),
+            grammarAccess.getLocalExitReactionAccess().getDeclarationAction_0(),
             $current);
     }
 )	otherlv_1='Exit' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getExitAccess().getExitKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getLocalExitReactionAccess().getExitKeyword_1());
+    }
+	otherlv_2=':' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getLocalExitReactionAccess().getColonKeyword_2());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLocalExitReactionAccess().getTriggerReactionTriggerParserRuleCall_3_0()); 
+	    }
+		lv_trigger_3_0=ruleReactionTrigger		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLocalExitReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"trigger",
+        		lv_trigger_3_0, 
+        		"ReactionTrigger");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?(	otherlv_4='/' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getLocalExitReactionAccess().getSolidusKeyword_4_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLocalExitReactionAccess().getEffectReactionEffectParserRuleCall_4_1_0()); 
+	    }
+		lv_effect_5_0=ruleReactionEffect		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLocalExitReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"effect",
+        		lv_effect_5_0, 
+        		"ReactionEffect");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))	otherlv_6=';' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getLocalExitReactionAccess().getSemicolonKeyword_5());
     }
 )
 ;
+
+
+
+
+
+// Entry rule entryRuleLocalSuspendReaction
+entryRuleLocalSuspendReaction returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getLocalSuspendReactionRule()); }
+	 iv_ruleLocalSuspendReaction=ruleLocalSuspendReaction 
+	 { $current=$iv_ruleLocalSuspendReaction.current; } 
+	 EOF 
+;
+
+// Rule LocalSuspendReaction
+ruleLocalSuspendReaction returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getLocalSuspendReactionAccess().getDeclarationAction_0(),
+            $current);
+    }
+)	otherlv_1='Suspend' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getLocalSuspendReactionAccess().getSuspendKeyword_1());
+    }
+	otherlv_2=':' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getLocalSuspendReactionAccess().getColonKeyword_2());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLocalSuspendReactionAccess().getTriggerReactionTriggerParserRuleCall_3_0()); 
+	    }
+		lv_trigger_3_0=ruleReactionTrigger		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLocalSuspendReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"trigger",
+        		lv_trigger_3_0, 
+        		"ReactionTrigger");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?	otherlv_4=';' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getLocalSuspendReactionAccess().getSemicolonKeyword_4());
+    }
+)
+;
+
+
 
 
 
@@ -2118,8 +2123,6 @@ ruleInternalScope returns [EObject current=null]
 
 
 
-
-
 // Entry rule entryRuleEventDeclarartion
 entryRuleEventDeclarartion returns [EObject current=null] 
 	:
@@ -2491,6 +2494,72 @@ ruleFQN returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
     ;
 
 
+
+
+
+
+
+// Entry rule entryRuleLocalReaction
+entryRuleLocalReaction returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getLocalReactionRule()); }
+	 iv_ruleLocalReaction=ruleLocalReaction 
+	 { $current=$iv_ruleLocalReaction.current; } 
+	 EOF 
+;
+
+// Rule LocalReaction
+ruleLocalReaction returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLocalReactionAccess().getTriggerReactionTriggerParserRuleCall_0_0()); 
+	    }
+		lv_trigger_0_0=ruleReactionTrigger		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLocalReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"trigger",
+        		lv_trigger_0_0, 
+        		"ReactionTrigger");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(((	'/' 
+(
+(
+ruleReactionEffect
+)
+)))=>(	otherlv_1='/' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getLocalReactionAccess().getSolidusKeyword_1_0_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLocalReactionAccess().getEffectReactionEffectParserRuleCall_1_0_1_0()); 
+	    }
+		lv_effect_2_0=ruleReactionEffect		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLocalReactionRule());
+	        }
+       		set(
+       			$current, 
+       			"effect",
+        		lv_effect_2_0, 
+        		"ReactionEffect");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))))
+;
 
 
 

@@ -37,10 +37,7 @@ public class SynctextParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getStateScopeAccess().getDeclarationsAlternatives_1_0(), "rule__StateScope__DeclarationsAlternatives_1_0");
-					put(grammarAccess.getLocalReactionAccess().getTriggerAlternatives_0_0(), "rule__LocalReaction__TriggerAlternatives_0_0");
-					put(grammarAccess.getLocalReactionAccess().getEffectAlternatives_1_1_0(), "rule__LocalReaction__EffectAlternatives_1_1_0");
-					put(grammarAccess.getStateReactionAccess().getAlternatives(), "rule__StateReaction__Alternatives");
+					put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
 					put(grammarAccess.getEventValueReferenceExpressionAccess().getValueAlternatives_3_0(), "rule__EventValueReferenceExpression__ValueAlternatives_3_0");
 					put(grammarAccess.getPreReferenceExpressionAccess().getValueAlternatives_3_0(), "rule__PreReferenceExpression__ValueAlternatives_3_0");
 					put(grammarAccess.getPrimaryExpressionAccess().getAlternatives(), "rule__PrimaryExpression__Alternatives");
@@ -49,7 +46,6 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStatechartScopeAccess().getAlternatives(), "rule__StatechartScope__Alternatives");
 					put(grammarAccess.getInterfaceScopeAccess().getDeclarationsAlternatives_4_0(), "rule__InterfaceScope__DeclarationsAlternatives_4_0");
 					put(grammarAccess.getInternalScopeAccess().getDeclarationsAlternatives_3_0(), "rule__InternalScope__DeclarationsAlternatives_3_0");
-					put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
 					put(grammarAccess.getXIDAccess().getAlternatives(), "rule__XID__Alternatives");
 					put(grammarAccess.getReactionAccess().getAlternatives(), "rule__Reaction__Alternatives");
 					put(grammarAccess.getStextTriggerAccess().getAlternatives(), "rule__StextTrigger__Alternatives");
@@ -81,14 +77,13 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDefinitionAccess().getGroup_6(), "rule__VariableDefinition__Group_6__0");
 					put(grammarAccess.getVariableDefinitionAccess().getGroup_7(), "rule__VariableDefinition__Group_7__0");
 					put(grammarAccess.getOperationDefinitionAccess().getGroup(), "rule__OperationDefinition__Group__0");
-					put(grammarAccess.getLocalReactionAccess().getGroup(), "rule__LocalReaction__Group__0");
-					put(grammarAccess.getLocalReactionAccess().getGroup_1(), "rule__LocalReaction__Group_1__0");
-					put(grammarAccess.getSuspendEffectAccess().getGroup(), "rule__SuspendEffect__Group__0");
+					put(grammarAccess.getLocalEntryReactionAccess().getGroup(), "rule__LocalEntryReaction__Group__0");
+					put(grammarAccess.getLocalEntryReactionAccess().getGroup_4(), "rule__LocalEntryReaction__Group_4__0");
+					put(grammarAccess.getLocalDuringReactionAccess().getGroup(), "rule__LocalDuringReaction__Group__0");
+					put(grammarAccess.getLocalExitReactionAccess().getGroup(), "rule__LocalExitReaction__Group__0");
+					put(grammarAccess.getLocalExitReactionAccess().getGroup_4(), "rule__LocalExitReaction__Group_4__0");
+					put(grammarAccess.getLocalSuspendReactionAccess().getGroup(), "rule__LocalSuspendReaction__Group__0");
 					put(grammarAccess.getLocalReactionTriggerAccess().getGroup(), "rule__LocalReactionTrigger__Group__0");
-					put(grammarAccess.getLocalReactionTriggerAccess().getGroup_2(), "rule__LocalReactionTrigger__Group_2__0");
-					put(grammarAccess.getEntryAccess().getGroup(), "rule__Entry__Group__0");
-					put(grammarAccess.getInsideAccess().getGroup(), "rule__Inside__Group__0");
-					put(grammarAccess.getExitAccess().getGroup(), "rule__Exit__Group__0");
 					put(grammarAccess.getReactionTriggerAccess().getGroup(), "rule__ReactionTrigger__Group__0");
 					put(grammarAccess.getReactionTriggerAccess().getGroup_1(), "rule__ReactionTrigger__Group_1__0");
 					put(grammarAccess.getReactionEffectAccess().getGroup(), "rule__ReactionEffect__Group__0");
@@ -110,6 +105,9 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 					put(grammarAccess.getFQNAccess().getGroup(), "rule__FQN__Group__0");
 					put(grammarAccess.getFQNAccess().getGroup_1(), "rule__FQN__Group_1__0");
+					put(grammarAccess.getLocalReactionAccess().getGroup(), "rule__LocalReaction__Group__0");
+					put(grammarAccess.getLocalReactionAccess().getGroup_1(), "rule__LocalReaction__Group_1__0");
+					put(grammarAccess.getLocalReactionAccess().getGroup_1_0(), "rule__LocalReaction__Group_1_0__0");
 					put(grammarAccess.getTransitionReactionAccess().getGroup(), "rule__TransitionReaction__Group__0");
 					put(grammarAccess.getTransitionReactionAccess().getGroup_2(), "rule__TransitionReaction__Group_2__0");
 					put(grammarAccess.getTransitionReactionAccess().getGroup_3(), "rule__TransitionReaction__Group_3__0");
@@ -178,10 +176,15 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getOperationDefinitionAccess().getFunctionTypeAssignment_2(), "rule__OperationDefinition__FunctionTypeAssignment_2");
 					put(grammarAccess.getOperationDefinitionAccess().getNameAssignment_3(), "rule__OperationDefinition__NameAssignment_3");
 					put(grammarAccess.getOperationDefinitionAccess().getParamTypeAssignment_5(), "rule__OperationDefinition__ParamTypeAssignment_5");
-					put(grammarAccess.getLocalReactionAccess().getTriggerAssignment_0(), "rule__LocalReaction__TriggerAssignment_0");
-					put(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_1(), "rule__LocalReaction__EffectAssignment_1_1");
-					put(grammarAccess.getLocalReactionTriggerAccess().getStateReactionAssignment_1(), "rule__LocalReactionTrigger__StateReactionAssignment_1");
-					put(grammarAccess.getLocalReactionTriggerAccess().getReactionTriggerAssignment_2_1(), "rule__LocalReactionTrigger__ReactionTriggerAssignment_2_1");
+					put(grammarAccess.getLocalEntryReactionAccess().getTriggerAssignment_3(), "rule__LocalEntryReaction__TriggerAssignment_3");
+					put(grammarAccess.getLocalEntryReactionAccess().getEffectAssignment_4_1(), "rule__LocalEntryReaction__EffectAssignment_4_1");
+					put(grammarAccess.getLocalDuringReactionAccess().getTriggerAssignment_3(), "rule__LocalDuringReaction__TriggerAssignment_3");
+					put(grammarAccess.getLocalDuringReactionAccess().getEffectAssignment_5(), "rule__LocalDuringReaction__EffectAssignment_5");
+					put(grammarAccess.getLocalExitReactionAccess().getTriggerAssignment_3(), "rule__LocalExitReaction__TriggerAssignment_3");
+					put(grammarAccess.getLocalExitReactionAccess().getEffectAssignment_4_1(), "rule__LocalExitReaction__EffectAssignment_4_1");
+					put(grammarAccess.getLocalSuspendReactionAccess().getTriggerAssignment_3(), "rule__LocalSuspendReaction__TriggerAssignment_3");
+					put(grammarAccess.getLocalReactionTriggerAccess().getDelayAssignment_1(), "rule__LocalReactionTrigger__DelayAssignment_1");
+					put(grammarAccess.getLocalReactionTriggerAccess().getExpressionAssignment_2(), "rule__LocalReactionTrigger__ExpressionAssignment_2");
 					put(grammarAccess.getReactionTriggerAccess().getLabelPriorityAssignment_1_0(), "rule__ReactionTrigger__LabelPriorityAssignment_1_0");
 					put(grammarAccess.getReactionTriggerAccess().getDelayAssignment_2(), "rule__ReactionTrigger__DelayAssignment_2");
 					put(grammarAccess.getReactionTriggerAccess().getExpressionAssignment_3(), "rule__ReactionTrigger__ExpressionAssignment_3");
@@ -208,6 +211,8 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEventDefinitionAccess().getTypeAssignment_3_1(), "rule__EventDefinition__TypeAssignment_3_1");
 					put(grammarAccess.getParameterAccess().getNameAssignment_0(), "rule__Parameter__NameAssignment_0");
 					put(grammarAccess.getParameterAccess().getTypeAssignment_2(), "rule__Parameter__TypeAssignment_2");
+					put(grammarAccess.getLocalReactionAccess().getTriggerAssignment_0(), "rule__LocalReaction__TriggerAssignment_0");
+					put(grammarAccess.getLocalReactionAccess().getEffectAssignment_1_0_1(), "rule__LocalReaction__EffectAssignment_1_0_1");
 					put(grammarAccess.getTransitionReactionAccess().getTriggerAssignment_1(), "rule__TransitionReaction__TriggerAssignment_1");
 					put(grammarAccess.getTransitionReactionAccess().getEffectAssignment_2_1(), "rule__TransitionReaction__EffectAssignment_2_1");
 					put(grammarAccess.getTransitionReactionAccess().getPropertiesAssignment_3_1(), "rule__TransitionReaction__PropertiesAssignment_3_1");

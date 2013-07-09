@@ -69,14 +69,13 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
       case SynctextPackage.SIGNAL_DEFINITION: return createSignalDefinition();
       case SynctextPackage.VARIABLE_DEFINITION: return createVariableDefinition();
       case SynctextPackage.OPERATION_DEFINITION: return createOperationDefinition();
-      case SynctextPackage.LOCAL_REACTION: return createLocalReaction();
-      case SynctextPackage.STATE_REACTION: return createStateReaction();
-      case SynctextPackage.ENTRY: return createEntry();
-      case SynctextPackage.INSIDE: return createInside();
-      case SynctextPackage.EXIT: return createExit();
+      case SynctextPackage.LOCAL_ENTRY_REACTION: return createLocalEntryReaction();
+      case SynctextPackage.LOCAL_DURING_REACTION: return createLocalDuringReaction();
+      case SynctextPackage.LOCAL_EXIT_REACTION: return createLocalExitReaction();
+      case SynctextPackage.LOCAL_SUSPEND_REACTION: return createLocalSuspendReaction();
       case SynctextPackage.SIMPLE_SCOPE: return createSimpleScope();
       case SynctextPackage.EVENT_DEFINITION: return createEventDefinition();
-      case SynctextPackage.SUSPEND_EFFECT: return createSuspendEffect();
+      case SynctextPackage.DECLARATION: return createDeclaration();
       case SynctextPackage.REACTION_TRIGGER: return createReactionTrigger();
       case SynctextPackage.REACTION_EFFECT: return createReactionEffect();
       case SynctextPackage.NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION: return createNumericalMultiplyDivideExpression();
@@ -174,10 +173,10 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public LocalReaction createLocalReaction()
+  public LocalEntryReaction createLocalEntryReaction()
   {
-    LocalReactionImpl localReaction = new LocalReactionImpl();
-    return localReaction;
+    LocalEntryReactionImpl localEntryReaction = new LocalEntryReactionImpl();
+    return localEntryReaction;
   }
 
   /**
@@ -185,10 +184,10 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public StateReaction createStateReaction()
+  public LocalDuringReaction createLocalDuringReaction()
   {
-    StateReactionImpl stateReaction = new StateReactionImpl();
-    return stateReaction;
+    LocalDuringReactionImpl localDuringReaction = new LocalDuringReactionImpl();
+    return localDuringReaction;
   }
 
   /**
@@ -196,10 +195,10 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Entry createEntry()
+  public LocalExitReaction createLocalExitReaction()
   {
-    EntryImpl entry = new EntryImpl();
-    return entry;
+    LocalExitReactionImpl localExitReaction = new LocalExitReactionImpl();
+    return localExitReaction;
   }
 
   /**
@@ -207,21 +206,10 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Inside createInside()
+  public LocalSuspendReaction createLocalSuspendReaction()
   {
-    InsideImpl inside = new InsideImpl();
-    return inside;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Exit createExit()
-  {
-    ExitImpl exit = new ExitImpl();
-    return exit;
+    LocalSuspendReactionImpl localSuspendReaction = new LocalSuspendReactionImpl();
+    return localSuspendReaction;
   }
 
   /**
@@ -251,10 +239,10 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public SuspendEffect createSuspendEffect()
+  public Declaration createDeclaration()
   {
-    SuspendEffectImpl suspendEffect = new SuspendEffectImpl();
-    return suspendEffect;
+    DeclarationImpl declaration = new DeclarationImpl();
+    return declaration;
   }
 
   /**
