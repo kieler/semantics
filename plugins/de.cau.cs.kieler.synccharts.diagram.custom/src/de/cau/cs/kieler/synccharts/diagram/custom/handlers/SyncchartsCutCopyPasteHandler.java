@@ -82,7 +82,8 @@ public class SyncchartsCutCopyPasteHandler extends AbstractCutCopyPasteHandler {
      */
     @Override
     protected ICutCopyPasteCommandFactory getCommandFactory() {
-        return new SyncchartsCutCopyPasteCommandFactory();
+        //return new SyncchartsCutCopyPasteCommandFactory();
+        return null;
     }
 
 }

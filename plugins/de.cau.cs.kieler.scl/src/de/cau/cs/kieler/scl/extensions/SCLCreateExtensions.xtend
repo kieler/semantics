@@ -198,7 +198,15 @@ class SCLCreateExtensions {
 //                    assignments.add(assignment)
 //                ]
                     val assignment = SCL.createAssignment()
-                    assignment.assignment = action.copy as AssignmentExpression
+                    if (action instanceof ElementReferenceExpression) {
+                        assignment.assignment = SText.createAssignmentExpression
+                        val asgn = assignment.assignment as AssignmentExpression
+                        asgn.varRef = action.copy as ElementReferenceExpression
+                        asgn.setOperator(AssignmentOperator::ASSIGN)
+                        asgn.setExpression(assignBoolean(true))    
+                    } else {
+                        assignment.assignment = action.copy as AssignmentExpression
+                    }
                     assignment.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [
                         it.reference = (it.reference as Declaration).createVariableDeclaration();
                     ]
