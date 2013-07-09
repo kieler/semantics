@@ -172,9 +172,12 @@ public class SCCModelFileHandler extends AbstractConvertModelHandler {
             // these parts, the SynctextContextFinder specialization is necessary.
             String trigger = serializeEObject(rtrigger);
             String effect = serializeEObject(reffect);
-            if (effect.length() > 0) {
-                transition.setSpecification(trigger + "/" + effect);
-            } else {
+            if (effect.length() > 0 && trigger.length() > 0) {
+                transition.setSpecification(trigger + " / " + effect);
+            } else if (effect.length() > 0) {
+                transition.setSpecification("/ " + effect);
+            }
+            else {
                 transition.setSpecification(trigger);
             }
         }

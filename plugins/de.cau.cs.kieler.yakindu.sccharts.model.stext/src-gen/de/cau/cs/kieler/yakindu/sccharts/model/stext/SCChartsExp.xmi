@@ -346,7 +346,7 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.49"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Keyword" predicated="true" value=","/>
+          <elements xsi:type="xtext:Keyword" predicated="true" value=";"/>
           <elements xsi:type="xtext:Assignment" feature="actions" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.49"/>
           </elements>

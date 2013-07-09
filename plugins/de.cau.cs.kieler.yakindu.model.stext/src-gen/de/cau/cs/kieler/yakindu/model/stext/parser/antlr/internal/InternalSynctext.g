@@ -1138,10 +1138,10 @@ ruleReactionEffect returns [EObject current=null]
 	    }
 
 )
-)(((	',' 
-)=>	otherlv_2=',' 
+)(((	';' 
+)=>	otherlv_2=';' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getReactionEffectAccess().getCommaKeyword_2_0());
+    	newLeafNode(otherlv_2, grammarAccess.getReactionEffectAccess().getSemicolonKeyword_2_0());
     }
 )(
 (

@@ -79,6 +79,7 @@ class SeqSCLToSTransformation {
             vari.setType(decl.getType.toKType)
             vari.setIsInput(decl.input)
             vari.setIsOutput(decl.output)
+            vari.setCombineOperator(CombineOperator::NONE);
 //            if (decl.initialValue != null) 
 //                vari.setInitialValue(serializer.serialize(decl.initialValue).correctSerialization) 
                 

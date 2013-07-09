@@ -5454,11 +5454,11 @@ rule__ReactionEffect__Group_2__0__Impl
     }
 :
 (
-{ before(grammarAccess.getReactionEffectAccess().getCommaKeyword_2_0()); }
+{ before(grammarAccess.getReactionEffectAccess().getSemicolonKeyword_2_0()); }
 (
-	',' 
+	';' 
 )
-{ after(grammarAccess.getReactionEffectAccess().getCommaKeyword_2_0()); }
+{ after(grammarAccess.getReactionEffectAccess().getSemicolonKeyword_2_0()); }
 )
 
 ;

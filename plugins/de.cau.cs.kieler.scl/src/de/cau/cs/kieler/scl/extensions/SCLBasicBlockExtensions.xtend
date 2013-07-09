@@ -297,7 +297,7 @@ class SCLBasicBlockExtensions {
             }
         }
     }
-    
+     
     def List<BasicBlock> getBasicBlocks(Statement statement) {
         val basicBlocks = new ArrayList<BasicBlock>;
         val sseq = statement.getParentStatementSequence
@@ -479,7 +479,12 @@ class SCLBasicBlockExtensions {
         if (basicBlock.statements.head.trueInstruction instanceof ParallelJoin) return true
         return false
     }
-    
+   
+    def boolean isParallelFork(BasicBlock basicBlock) {
+        if (basicBlock.statements.last.trueInstruction instanceof ParallelFork) return true
+        return false
+    }
+
     def List<BasicBlock> getBasicBlockDependencyPredecessors(BasicBlock basicBlock) {
         val predecessors = new ArrayList<BasicBlock>;
         
@@ -562,4 +567,69 @@ class SCLBasicBlockExtensions {
         return false
     }
     
+
+    def List<BasicBlock> stripSurface(List<BasicBlock> basicBlocks) {
+        val newBlockList = new ArrayList<BasicBlock>;
+        var cfpassed = false
+        var foundNestedSurface = false;
+        var foundSurface = false; 
+        
+        for(bb : basicBlocks) {
+            if (bb.isParallelJoin) {
+                if (bb.getHead.getInstruction.eAllContents.toIterable.filter(typeof(Pause)).size>0) {
+                    foundNestedSurface = true
+                }
+            }
+            if (bb.statements.last.isConditional ||
+                bb.statements.last.isParallel ||
+                bb.statements.last.isGoto 
+            ) {
+                cfpassed = true
+            } 
+            if (bb.isPauseSurface && !cfpassed) {
+                foundSurface = true
+            }
+        }
+        if (!foundSurface && !foundNestedSurface) {
+            newBlockList.addAll(basicBlocks)
+            return newBlockList
+        }
+        
+        if (foundNestedSurface) {
+            newBlockList.addAll(basicBlocks)
+            for(bb : basicBlocks) {
+                if (bb.isParallelJoin) {
+                    val predecessors = bb.getBasicBlockPredecessor
+                    for (preds : predecessors) { 
+                        val guards = preds.getHead.basicBlocks
+                        for (nested : guards) {
+                            newBlockList.removeEqual(nested)
+                        }
+                    }
+                }
+                if (bb.isParallelFork) {
+                    newBlockList.removeEqual(bb);
+                }
+            }
+            return newBlockList                
+        }
+            
+        var skip = true
+        for(bb : basicBlocks) {
+            if (skip==true) {
+                if (!foundNestedSurface && bb.isPauseSurface) {
+                    skip = false
+                }
+                if (foundNestedSurface && bb.isParallelJoin) {
+                    skip = false
+                }
+            } else {
+                newBlockList.add(bb)
+            }
+        }
+        
+        newBlockList
+    }
+    
+   
 }

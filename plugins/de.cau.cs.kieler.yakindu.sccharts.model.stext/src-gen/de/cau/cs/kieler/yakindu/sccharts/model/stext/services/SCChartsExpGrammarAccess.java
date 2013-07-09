@@ -323,7 +323,7 @@ public class SCChartsExpGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//ReactionEffect returns sgraph::Effect:
 	//
-	//	{ReactionEffect} actions+=Expression ("," actions+=Expression)*;
+	//	{ReactionEffect} actions+=Expression (";" actions+=Expression)*;
 	public SynctextGrammarAccess.ReactionEffectElements getReactionEffectAccess() {
 		return gaSynctext.getReactionEffectAccess();
 	}
