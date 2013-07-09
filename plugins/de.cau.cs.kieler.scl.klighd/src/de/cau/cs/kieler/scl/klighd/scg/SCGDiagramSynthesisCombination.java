@@ -29,6 +29,8 @@ public class SCGDiagramSynthesisCombination extends AbstractCombination {
           // the replacement is needed since the secondary view ids seem to be required
           //  to be free of ':', which will be violated on windows determining them this way. 
         
+        if (id.contains(".tick.scl")) { return; }
+        
         if (state.getEventType().equals(EventType.CLOSED)) {
             this.schedule(new KlighdCloseDiagramEffect(id));
         } else {
