@@ -41,6 +41,8 @@ import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction
+import org.eclipse.emf.common.util.EList
+import org.yakindu.sct.model.sgraph.Declaration
 
 
 class SCCTransformations {
@@ -48,15 +50,16 @@ class SCCTransformations {
     private static val Injector synctextInjector = SynctextStandaloneSetup::doSetup();
     private static val STextDefaulTypeSystem typesystem = synctextInjector.getInstance(typeof(STextDefaulTypeSystem));
     private static val String variableValueExtension = "_val";
+    private static val String outputSignalExtension = "_out";
 
     //-------------------------------------------------------------------------
     //--        S C C  -  D U R I N G  -  T R A N S F O R M A T I O N       --
     //-------------------------------------------------------------------------
-    // Transforming Signals.
+    // Transforming During Actions.
     def Statechart transformDuring(Statechart rootStatechart) {
         // Clone the complete SyncCharts region 
         val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
-        var targetStates = targetRootStatechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();
+        var targetStates = targetRootStatechart.allContents.filter(typeof(SyncState)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
             targetState.transformDuring(targetRootStatechart);
@@ -74,9 +77,7 @@ class SCCTransformations {
     //    to t1, else move them to t2
     //  5. Remove the during action from the state declarations  
      def void transformDuring(SyncState state, Statechart targetRootStatechart) {
-         val stateScope = state.scopes.get(0);
-         if (stateScope != null) {
-             val duringActions = stateScope.declarations.filter(typeof(LocalDuringReaction));
+             val duringActions = state.declarations.filter(typeof(LocalDuringReaction));
              for (duringAction : ImmutableList::copyOf(duringActions)) {
                  val region = state.createRegion;
                  val s1 = region.createInitialState("S1");
@@ -90,11 +91,50 @@ class SCCTransformations {
                      t2.setTrigger(duringAction.trigger);
                      t2.setEffect(duringAction.effect);
                  }
-                 stateScope.declarations.remove(duringAction);
+                 state.declarations.remove(duringAction);
              }
-         }
      }
      
+    //-------------------------------------------------------------------------
+    //--        S C C  -  S I G N A L S  -  T R A N S F O R M A T I O N       --
+    //-------------------------------------------------------------------------
+
+    // Transforming InputOutput Signals.
+    def Statechart transformInputOutputSignal(Statechart rootStatechart) {
+        // Clone the complete SyncCharts region 
+        val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
+        var targetStates = targetRootStatechart.allContents.filter(typeof(SyncState)).toList();
+
+        for(targetState : ImmutableList::copyOf(targetStates)) {
+            targetState.transformInputOutputSignal(targetRootStatechart);
+        } 
+        targetRootStatechart;
+    }
+
+    // For every state do the following:
+    // Inspect its declarations, if there is an input output signal (variable) s
+    // 1. Create a new output signal (variable) s_out and add it to the state
+    // 2. For all actions, where s is written, replace with s_out
+    // 3. Make s just an input signal
+     def void transformInputOutputSignal(SyncState state, Statechart targetRootStatechart) {
+             val inputOutputSignals = state.declarations.filter(typeof(SignalDefinition)).filter(e | (e as EventDefinition).isInput && (e as EventDefinition).isOutput);
+             for (inputOutputSignal : ImmutableList::copyOf(inputOutputSignals)) {
+                 val signal = inputOutputSignal as EventDefinition;
+                 signal.setIsOutput(false);
+                 
+                 val replacement = state.createOutputSignal(signal.name + outputSignalExtension);
+                 state.replaceInAllInnerReactionEffects(inputOutputSignal, replacement); 
+             }
+
+             val inputOutputVariables = state.declarations.filter(typeof(VariableDefinition)).filter(e | (e as VariableDefinition).isInput && (e as VariableDefinition).isOutput);
+             for (inputOutputVariable : ImmutableList::copyOf(inputOutputVariables)) {
+                 val variable = inputOutputVariable as VariableDefinition;
+                 variable.setIsOutput(false);
+                 
+                 val replacement = state.createOutputVariable(variable.name + outputSignalExtension, variable.type);
+                 state.replaceInAllInnerReactionEffects(inputOutputVariable, replacement); 
+             }
+     }
  
     //-------------------------------------------------------------------------
     //--        S C C  -  S I G N A L S  -  T R A N S F O R M A T I O N       --
@@ -104,7 +144,7 @@ class SCCTransformations {
     def Statechart transformSignal(Statechart rootStatechart) {
         // Clone the complete SyncCharts region 
         val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
-        var targetStates = targetRootStatechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();
+        var targetStates = targetRootStatechart.allContents.filter(typeof(SyncState)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
             targetState.transformSignal(targetRootStatechart);
@@ -117,20 +157,15 @@ class SCCTransformations {
      // (a) simple signal S to boolean variable S (variablePresent)
      // (b) valued signal S to two boolean variables S and S_val (variableValue)
      def void transformSignal(SyncState state, Statechart targetRootStatechart) {
-             // There is a specification, convert it
-             var specification = state.specification;
-             var scope = state.scopes.get(0);
              //input signal S; --> input boolean S;
              //input signal S:bool; --> input boolean S; input boolean S_val;
              //input signal S:integer; --> input boolean S; input integer S_val;
-             if (scope != null) {
-               specification = "";  
-               for (declaration : ImmutableList::copyOf(scope.declarations)) {
+               for (declaration : ImmutableList::copyOf(state.declarations)) {
                  if (declaration instanceof SignalDefinition) {
                      // Store information about the signal in question
                      val signal = declaration as EventDefinition;
-                     val signalIsInput = signal.input;
-                     val signalIsOutput = signal.output;
+                     val signalIsInput = signal.isInput;
+                     val signalIsOutput = signal.isOutput;
                      val signalType = signal.type;
                      val signalName = declaration.name;
                      val signalInit = signal.varInitialValue;
@@ -158,76 +193,82 @@ class SCCTransformations {
                             variableValue.setInitialValue(signalInit); 
                         }
                         // Add value variable to the scope
-                        scope.declarations.add(variableValue);
+                        state.declarations.add(variableValue);
                         
-                        // Change all references
-                        val transitions = state.eAllContents().toIterable().filter(typeof(SyncTransition));
-                        for (transition : transitions) {
-                            
-                            // Change all trigger where the value is inspected (val(S) -> S_val)
-                            val trigger = transition.trigger as ReactionTrigger;
-                            if (trigger != null) {
-                              val valReferences = trigger.eAllContents.toIterable().filter(typeof(EventValueReferenceExpression));
-                              for (valReference : ImmutableList::copyOf(valReferences)) {
-                                  val expression = valReference.value;
-                                  // Exchange reference to valued signal within expression with the
-                                  // new value variable
-                                  if (expression instanceof ElementReferenceExpression) {
-                                      val elementReferenceExpression = expression as ElementReferenceExpression;
-                                      // Only if the signal is involved
-                                      if (elementReferenceExpression.reference == signal) {
-                                        elementReferenceExpression.setReference(variableValue);    
-                                        val container = valReference.eContainer;
-                                        if (container instanceof ReactionTrigger) {
-                                            val reactionTrigger = ((container as ReactionTrigger));
-                                            reactionTrigger.setExpression(expression);
-                                        }
-                                        else if (container instanceof LogicalRelationExpression) {
-                                            val logicalRealtionExpression = ((container as LogicalRelationExpression));
-                                            if (logicalRealtionExpression.leftOperand == valReference) {
-                                              logicalRealtionExpression.setLeftOperand(expression);
-                                            }
-                                            if (logicalRealtionExpression.rightOperand == valReference) {
-                                              logicalRealtionExpression.setRightOperand(expression);
-                                            }
-                                         }
-                                      }
-                                  }
-                              }
-                            }
-
-                            // Change all effects where the value is set (S(x) -> S_val = x)
-                            val effect = transition.effect as ReactionEffect;
-                            if (effect != null) {
-                              for (action : ImmutableList::copyOf(effect.actions)) {
-                                if (action instanceof ElementReferenceExpression) {
-                                    val refExpression = action as ElementReferenceExpression;
-                                    // Only if the signal is involved
-                                    if (refExpression.reference == signal) {
-                                        // Now we know that the signals values is changed here
-                                        val value = refExpression.args;
-                                        if (!value.nullOrEmpty) {
-                                            // Assign the first expression only
-                                            val assignmentExpression = variableValue.assign(value.get(0));
-                                            // Add to actions at the same position          
-                                            val i = effect.actions.indexOf(action);
-                                            effect.actions.add(i, assignmentExpression);
-                                        }
-                                    }
-                                }
-                              }
-                            }
-                            
-                        } // for all transitions of the model
+                        // Replace signal by variableValue in all inner ReactionTriggers
+                        state.replaceInAllInnerReactionTrigger(signal, variableValue);
+                        
+                        // Replace signal by variableValue in all inner ReactionEffects
+                        state.replaceInAllInnerReactionEffects(signal, variableValue); 
+                        
+                        
+//                        // Change all references
+//                        val transitions = state.allContents.filter(typeof(SyncTransition));
+//                        for (transition : transitions) {
+//                            
+//                            // Change all trigger where the value is inspected (val(S) -> S_val)
+//                            val trigger = transition.trigger as ReactionTrigger;
+//                            if (trigger != null) {
+//                              val valReferences = trigger.eAllContents.toIterable().filter(typeof(EventValueReferenceExpression));
+//                              for (valReference : ImmutableList::copyOf(valReferences)) {
+//                                  val expression = valReference.value;
+//                                  // Exchange reference to valued signal within expression with the
+//                                  // new value variable
+//                                  if (expression instanceof ElementReferenceExpression) {
+//                                      val elementReferenceExpression = expression as ElementReferenceExpression;
+//                                      // Only if the signal is involved
+//                                      if (elementReferenceExpression.reference == signal) {
+//                                        elementReferenceExpression.setReference(variableValue);    
+//                                        val container = valReference.eContainer;
+//                                        if (container instanceof ReactionTrigger) {
+//                                            val reactionTrigger = ((container as ReactionTrigger));
+//                                            reactionTrigger.setExpression(expression);
+//                                        }
+//                                        else if (container instanceof LogicalRelationExpression) {
+//                                            val logicalRealtionExpression = ((container as LogicalRelationExpression));
+//                                            if (logicalRealtionExpression.leftOperand == valReference) {
+//                                              logicalRealtionExpression.setLeftOperand(expression);
+//                                            }
+//                                            if (logicalRealtionExpression.rightOperand == valReference) {
+//                                              logicalRealtionExpression.setRightOperand(expression);
+//                                            }
+//                                         }
+//                                      }
+//                                  }
+//                              }
+//                            }
+//
+//
+//                            // Change all effects where the value is set (S(x) -> S_val = x)
+//                            val effect = transition.effect as ReactionEffect;
+//                            if (effect != null) {
+//                              for (action : ImmutableList::copyOf(effect.actions)) {
+//                                if (action instanceof ElementReferenceExpression) {
+//                                    val refExpression = action as ElementReferenceExpression;
+//                                    // Only if the signal is involved
+//                                    if (refExpression.reference == signal) {
+//                                        // Now we know that the signals values is changed here
+//                                        val value = refExpression.args;
+//                                        if (!value.nullOrEmpty) {
+//                                            // Assign the first expression only
+//                                            val assignmentExpression = variableValue.assign(value.get(0));
+//                                            // Add to actions at the same position          
+//                                            val i = effect.actions.indexOf(action);
+//                                            effect.actions.add(i, assignmentExpression);
+//                                        }
+//                                    }
+//                                }
+//                              }
+//                            }
+//                            
+//                        } // for all transitions of the model
                         
                      } // end handle valued signal -----------------
                      
                      // Change all references for the present status
-                     val transitions = state.eAllContents().toIterable().filter(typeof(SyncTransition));
-                     for (transition : transitions) {
-                            val effect = transition.effect as ReactionEffect;
-                            if (effect != null) {
-                              for (action : ImmutableList::copyOf(effect.actions)) {
+                     val effects = state.allContents.filter(typeof(ReactionEffect));
+                     for (effect : effects) {
+                          for (action : ImmutableList::copyOf(effect.actions)) {
                                 if (action instanceof ElementReferenceExpression) {
                                     val refExpression = action as ElementReferenceExpression;
                                     // Only if the signal is involved
@@ -240,25 +281,21 @@ class SCCTransformations {
                                         effect.actions.remove(action);
                                     }
                                 }
-                              }
-                        }
+                          }
                      }
                      
                      // Add present variable to the scope
-                     scope.declarations.add(variablePresent);
+                     state.declarations.add(variablePresent);
                      // Remove signal from the scope
-                     scope.declarations.remove(signal);
-                   
+                     state.declarations.remove(signal);
                      
                      // Add a reset as an absolute write during/inside action
-                     val effect = createEmtyReaction();
-                     effect.actions.add(variablePresent.assign(false));
-                     val insideReaction = createDuringReaction(null, effect, true);
-                     scope.declarations.add(insideReaction);
+                     val duringEffect = createEmtyReaction();
+                     duringEffect.actions.add(variablePresent.assign(false));
+                     val insideReaction = createDuringReaction(null, duringEffect, true);
+                     state.declarations.add(insideReaction);
                  }
-               }
                
-
 //                    /* =================================================
 //                     * = WORKAROUND -  Mittwoch, 3. Juli 2013 16:05:09 =
 //                     * =================================================
@@ -289,6 +326,89 @@ class SCCTransformations {
     //-------------------------------------------------------------------------
     //--        H E L P E R     S C C H A R T     F U N C T I O N S          --
     //-------------------------------------------------------------------------
+
+    // Advances Signal Reference Operations
+    def void replaceInAllInnerReactionEffects(EObject container, EObject toBeReplaced, EObject replacement) {
+       val allEffects = container.allContents.filter(typeof(ReactionEffect));
+          for (effect : allEffects) {
+              val elementReferenceExpressions = effect.allContents.filter(typeof(ElementReferenceExpression)).filter(e | e.reference == toBeReplaced)
+              for (elementReferenceExpression : elementReferenceExpressions) {
+                  elementReferenceExpression.setReference(replacement);
+              }
+      }        
+    }
+    
+    def void replaceInAllInnerReactionEffects(EObject container, EventDefinition toBeReplaced, VariableDefinition replacement) {
+       val allEffects = container.allContents.filter(typeof(ReactionEffect));
+          // Change all trigger where the value is inspected (val(S) -> S_val)
+          for (effect : allEffects) {
+                   // Change all effects where the value is set (S(x) -> S_val = x)
+                   for (action : ImmutableList::copyOf(effect.actions)) {
+                         if (action instanceof AssignmentExpression) {
+                               val assignmentExpression = action as AssignmentExpression;
+                               assignmentExpression.eAllContents
+                         }
+                         // Signal case
+                         if (action instanceof ElementReferenceExpression) {
+                               val refExpression = action as ElementReferenceExpression;
+                               // Only if the signal is involved
+                               if (refExpression.reference == toBeReplaced) {
+                                     // Now we know that the signals values is changed here
+                                     val value = refExpression.args;
+                                     // Add to actions at the same position          
+                                     val i = effect.actions.indexOf(action);
+                                     if (!value.nullOrEmpty) {
+                                         // Assign the first expression only
+                                         val assignmentExpression = replacement.assign(value.get(0));
+                                         effect.actions.add(i, assignmentExpression);
+                                     } else {
+                                         // Signal case
+                                         refExpression.setReference(replacement);
+                                     }
+                               }
+                        }
+            }
+        }
+    }
+
+    
+    // Advances Signal Reference Operations
+    def void replaceInAllInnerReactionTrigger(EObject container, EObject toBeReplaced, EObject replacement) {
+       // Change all references
+       val allTrigger = container.allContents.filter(typeof(ReactionTrigger));
+          for (trigger : allTrigger) {
+              // Change all trigger where the value is inspected (val(S) -> S_val)
+              if (trigger != null) {
+                   val valReferences = trigger.eAllContents.toIterable().filter(typeof(EventValueReferenceExpression));
+                   for (valReference : ImmutableList::copyOf(valReferences)) {
+                         val expression = valReference.value;
+                         // Exchange reference to valued signal within expression with the
+                         // new value variable
+                         if (expression instanceof ElementReferenceExpression) {
+                              val elementReferenceExpression = expression as ElementReferenceExpression;
+                              // Only if the signal is involved
+                              if (elementReferenceExpression.reference == toBeReplaced) {
+                                   elementReferenceExpression.setReference(replacement);    
+                                   val innerContainer = valReference.eContainer;
+                                   if (innerContainer instanceof ReactionTrigger) {
+                                       val reactionTrigger = ((innerContainer as ReactionTrigger));
+                                       reactionTrigger.setExpression(expression);
+                                   }
+                                   else if (innerContainer instanceof LogicalRelationExpression) {
+                                       val logicalRealtionExpression = ((innerContainer as LogicalRelationExpression));
+                                       if (logicalRealtionExpression.leftOperand == valReference) {
+                                            logicalRealtionExpression.setLeftOperand(expression);
+                                       }
+                                       if (logicalRealtionExpression.rightOperand == valReference) {
+                                            logicalRealtionExpression.setRightOperand(expression);
+                                       }
+                                  }
+                              }
+                        }
+                  }
+              }
+         }
+    }
     
     def AssignmentExpression assignRelative(EObject variable, boolean trueOrFalse) {
        val trueValueExpression = createBooleanValueExpession(trueOrFalse);
@@ -296,6 +416,54 @@ class SCCTransformations {
        val logicalOrExpression = createLogicalOrExpression(trueValueExpression, elementReferenceExpression);
        variable.assign(logicalOrExpression)
     }
+    
+    def List<Declaration> getDeclarations(SyncState state) {
+        val stateScope = state.scopes.get(0);
+        if (stateScope != null) {
+            return stateScope.declarations;
+        }
+        var List<Declaration> emptyList = <Declaration> newLinkedList;
+        return emptyList;
+    }
+    
+    // Advanced Variable Creation
+
+    def VariableDefinition createInputVariable(SyncState state, String name, Type type) {
+        val variable = state.createVariable(name, type);
+        (variable as VariableDefinition).setIsInput(true);
+        variable;
+    }
+    def VariableDefinition createOutputVariable(SyncState state, String name, Type type) {
+        val variable = state.createVariable(name, type);
+        (variable as VariableDefinition).setIsOutput(true);
+        variable;
+    }
+    def VariableDefinition createVariable(SyncState state, String name, Type type) {
+        val variable = createVariable(name, type, false, false);
+        variable.setName(name);
+        state.declarations.add(variable);
+        variable;
+    }  
+    
+    // Advanced Signal Creation
+    
+    def SignalDefinition createInputSignal(SyncState state, String name) {
+        val signal = state.createSignal(name);
+        (signal as EventDefinition).setIsInput(true);
+        signal;
+    }
+    def SignalDefinition createOutputSignal(SyncState state, String name) {
+        val signal = state.createSignal(name);
+        (signal as EventDefinition).setIsOutput(true);
+        signal;
+    }
+    def SignalDefinition createSignal(SyncState state, String name) {
+        //val signal = SynctextFactory::eINSTANCE.createSignalDefinition;
+        val signal = SynctextFactory::eINSTANCE.createEventDefinition;
+        signal.setName(name);
+        state.declarations.add(signal);
+        signal;
+    }  
     
     // Transition Creation
     
@@ -506,6 +674,10 @@ class SCCTransformations {
     def boolean hasType(VariableDefinition variable) {
         variable.type.isBoolean || variable.type.isInteger;
     }     
+    
+    def allContents(EObject eObject) {
+        eObject.eAllContents.toIterable();
+    }
  
     //-------------------------------------------------------------------------
     //--        S C C  -  A B O R T S  -  T R A N S F O R M A T I O N        --
@@ -515,7 +687,7 @@ class SCCTransformations {
     def Statechart transformAborts(Statechart rootStatechart) {
         // Clone the complete SyncCharts region 
         val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
-        var targetStates = targetRootStatechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();
+        var targetStates = targetRootStatechart.allContents.filter(typeof(SyncState)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
             // This statement we want to modify
@@ -816,7 +988,7 @@ class SCCTransformations {
     def Statechart transformConditional(Statechart rootStatechart) {
         // Clone the complete SyncCharts region 
         val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
-        var targetStates = targetRootStatechart.eAllContents().toIterable().filter(typeof(Choice)).toList();
+        var targetStates = targetRootStatechart.allContents.filter(typeof(Choice)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
             // This statement we want to modify
