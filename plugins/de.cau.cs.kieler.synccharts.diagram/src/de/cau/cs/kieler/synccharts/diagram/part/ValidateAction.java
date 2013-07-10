@@ -34,7 +34,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.actions.WorkspaceModifyDelegatingOperation;
 
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.model.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsMarkerNavigationProvider;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsValidationProvider;
 

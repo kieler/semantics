@@ -17,8 +17,8 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 import de.cau.cs.kieler.synccharts.custom.Messages;
+import de.cau.cs.kieler.synccharts.custom.SyncChartsCustomPlugin;
 
 /**
  * Main preference page for the KIELER SyncCharts project. All subprojects should put their
@@ -50,7 +50,7 @@ public class KielerSyncChartsPreferencePage extends FieldEditorPreferencePage
      * {@inheritDoc}
      */
     public void init(final IWorkbench workbench) {
-        setPreferenceStore(CoreUIPlugin.getDefault().getPreferenceStore());
+        setPreferenceStore(SyncChartsCustomPlugin.getDefault().getPreferenceStore());
     }
 
 }

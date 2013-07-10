@@ -29,7 +29,6 @@
     <module>de.cau.cs.kieler.core.model.xtend</module>
     <module>de.cau.cs.kieler.core.model.xtext</module>
     <module>de.cau.cs.kieler.core.product</module>
-    <module>de.cau.cs.kieler.core.ui</module>
     <module>de.cau.cs.kieler.esterel</module>
     <module>de.cau.cs.kieler.esterel.cec</module>
     <module>de.cau.cs.kieler.esterel.cec.linux.x86</module>

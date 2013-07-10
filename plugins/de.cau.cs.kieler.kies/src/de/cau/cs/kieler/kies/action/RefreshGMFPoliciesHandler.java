@@ -20,7 +20,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.model.gmf.effects.RefreshGMFEditPoliciesEffect;
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.model.util.EditorUtils;
 
 /**
  * An abstract handler for testing purposes only.

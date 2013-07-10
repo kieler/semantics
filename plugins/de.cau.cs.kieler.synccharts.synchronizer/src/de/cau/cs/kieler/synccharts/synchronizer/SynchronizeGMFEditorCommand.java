@@ -27,7 +27,7 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.model.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.custom.SyncchartsUtil;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 

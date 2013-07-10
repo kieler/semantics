@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.ui.util;
+package de.cau.cs.kieler.kvid.ui.displays;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -29,12 +29,12 @@ import org.eclipse.swt.graphics.RGB;
  * 
  * @author jjc
  */
-public final class CoreUiUtil {
+public final class ImageUtil {
     
     /**
      * There shouldn't be an instance of this class.
      */
-    private CoreUiUtil() { }
+    private ImageUtil() { }
     
     /**
      * Converts a given AWT {@link Image} in it's SWT representation.

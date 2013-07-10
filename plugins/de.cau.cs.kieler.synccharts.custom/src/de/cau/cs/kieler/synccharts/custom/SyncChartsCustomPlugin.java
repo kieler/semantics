@@ -14,7 +14,7 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.custom;
 
-import org.eclipse.core.runtime.Plugin;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
  * @author msp
  * @kieler.ignore (excluded from review process)
  */
-public class SyncChartsCustomPlugin extends Plugin {
+public class SyncChartsCustomPlugin extends AbstractUIPlugin {
 
     /** the plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.custom";

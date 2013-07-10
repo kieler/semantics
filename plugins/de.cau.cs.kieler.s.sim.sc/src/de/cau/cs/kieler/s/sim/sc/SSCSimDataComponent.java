@@ -40,7 +40,7 @@ import org.json.JSONObject;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
+import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
 import de.cau.cs.kieler.s.sim.xtend.S2Simulation;

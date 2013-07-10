@@ -18,7 +18,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 
-import de.cau.cs.kieler.core.ui.KielerModelException;
+import de.cau.cs.kieler.core.model.KielerModelException;
 
 /**
  * A KielerModelException that also contains Diagnostic information. A

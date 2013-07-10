@@ -60,8 +60,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
-import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.maude.MaudeInterfacePlugin;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;

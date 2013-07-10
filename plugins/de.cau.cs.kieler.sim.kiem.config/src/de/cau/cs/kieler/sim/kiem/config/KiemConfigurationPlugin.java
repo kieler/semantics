@@ -22,8 +22,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.AbstractStatusHandler;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler;
-import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
+import de.cau.cs.kieler.core.model.util.GenericErrorHandler;
+import de.cau.cs.kieler.core.model.util.GenericErrorHandler.StatusListener;
 import de.cau.cs.kieler.sim.kiem.config.managers.AbstractManager;
 
 /**

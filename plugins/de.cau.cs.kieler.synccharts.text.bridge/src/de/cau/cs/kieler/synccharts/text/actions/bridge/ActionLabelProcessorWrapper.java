@@ -27,8 +27,8 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.model.KielerModelException;
 import de.cau.cs.kieler.core.model.util.PossiblyEmptyCompoundCommand;
-import de.cau.cs.kieler.core.ui.KielerModelException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
