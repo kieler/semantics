@@ -55,8 +55,8 @@ class BasicBlockModifier implements IStyleModifier {
     private static val BASICBLOCK_COLOR_BLUE = 180         
 
     private static val BASICBLOCK_COLOR_RED2 = 255         
-    private static val BASICBLOCK_COLOR_GREEN2 = 64         
-    private static val BASICBLOCK_COLOR_BLUE2 = 128         
+    private static val BASICBLOCK_COLOR_GREEN2 = 32         
+    private static val BASICBLOCK_COLOR_BLUE2 = 32         
          
     private float BBPADDING = 5.0f  
 
@@ -71,22 +71,27 @@ class BasicBlockModifier implements IStyleModifier {
         return KimlUtil::createInitializedLabel(labeledElement)
     }
     
-    def KPolyline createFrameShape() {
+    def KPolyline createFrameShape(boolean schedulable) {
         KRenderingFactory::eINSTANCE.createKPolyline() => [
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0);
-            it.setForegroundColor(BASICBLOCK_COLOR_RED, BASICBLOCK_COLOR_GREEN, BASICBLOCK_COLOR_BLUE)
+            if (schedulable) {
+                it.setForegroundColor(BASICBLOCK_COLOR_RED, BASICBLOCK_COLOR_GREEN, BASICBLOCK_COLOR_BLUE)
+            } else {
+                it.setForegroundColor(BASICBLOCK_COLOR_RED2, BASICBLOCK_COLOR_GREEN2, BASICBLOCK_COLOR_BLUE2)
+                it.setLineWidth(2.0f)
+            }
          ];        
     }
 
     def KNode createFrameNode(Object o, BasicBlock basicBlock, 
-        float left, float top, float right, float bottom
+        float left, float top, float right, float bottom, boolean schedulable
     ) {
         val node = o.node;
-        val shape = createFrameShape
+        val shape = createFrameShape(schedulable)
         node.data.add(shape)
         val shapeLayout = node.getData(typeof(KShapeLayout))
         shapeLayout.height = bottom - top
@@ -187,9 +192,13 @@ class BasicBlockModifier implements IStyleModifier {
         val rootNode = node.eContainer as KNode
 
         val bBDH = node.getData(typeof(BasicBlockDataHolder))
+        val ASCPool = bBDH.SCLProgram.ASCPool
         
         for(basicBlock : bBDH.BasicBlockData) {        
             val obj = new Object()
+            
+            var schedulable = true
+            if (ASCPool.containsEqual(basicBlock)) schedulable = false
         
             var bbLeft = 100000.0f 
             var bbTop = 100000.0f 
@@ -228,7 +237,7 @@ class BasicBlockModifier implements IStyleModifier {
                 bbBottom = bbBottom + bbParentShapeLayout.ypos
                 bbNodeParent = bbNodeParent.parent
             }       
-            val kNode = obj.createFrameNode(basicBlock, bbLeft, bbTop, bbRight, bbBottom);
+            val kNode = obj.createFrameNode(basicBlock, bbLeft, bbTop, bbRight, bbBottom, schedulable);
             rootNode.children.add(kNode)
         }        
         

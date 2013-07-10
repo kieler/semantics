@@ -29,13 +29,32 @@ public class BasicBlock {
     
     protected ArrayList<Statement> statements;
     
+    public String CachedName;
+    public String CachedEmptyName;
+    public int CachedIndex;
+    public List<BasicBlock> CachedPredecessors;
+    public List<BasicBlock> CachedSuccessors;
+    public List<BasicBlock> CachedDependencyPredecessors;
+    
     public BasicBlock() {
         statements = new ArrayList<Statement>();
+        CachedName = "";
+        CachedEmptyName = "";
+        CachedIndex = -1;
+        CachedPredecessors = new ArrayList<BasicBlock>();
+        CachedSuccessors = new ArrayList<BasicBlock>();
+        CachedDependencyPredecessors = new ArrayList<BasicBlock>();
     }
     
     public BasicBlock(Statement headStatement) {
         statements = new ArrayList<Statement>();
         getStatements().add(headStatement);
+        CachedName = "";
+        CachedEmptyName = "";
+        CachedIndex = -1;
+        CachedPredecessors = new ArrayList<BasicBlock>();
+        CachedSuccessors = new ArrayList<BasicBlock>();
+        CachedDependencyPredecessors = new ArrayList<BasicBlock>();
     }
     
     public void add(Statement statement) {
@@ -75,4 +94,5 @@ public class BasicBlock {
         }
         return true;
     }
+    
 }

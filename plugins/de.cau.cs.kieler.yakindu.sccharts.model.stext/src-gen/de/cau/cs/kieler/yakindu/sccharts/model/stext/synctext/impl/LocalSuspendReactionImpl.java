@@ -24,6 +24,7 @@ import org.yakindu.sct.model.sgraph.impl.DeclarationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.LocalSuspendReactionImpl#isIsImmediate <em>Is Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.LocalSuspendReactionImpl#getTrigger <em>Trigger</em>}</li>
  * </ul>
  * </p>
@@ -32,6 +33,26 @@ import org.yakindu.sct.model.sgraph.impl.DeclarationImpl;
  */
 public class LocalSuspendReactionImpl extends DeclarationImpl implements LocalSuspendReaction
 {
+  /**
+   * The default value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIsImmediate()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean IS_IMMEDIATE_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIsImmediate()
+   * @generated
+   * @ordered
+   */
+  protected boolean isImmediate = IS_IMMEDIATE_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getTrigger() <em>Trigger</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -61,6 +82,29 @@ public class LocalSuspendReactionImpl extends DeclarationImpl implements LocalSu
   protected EClass eStaticClass()
   {
     return SynctextPackage.Literals.LOCAL_SUSPEND_REACTION;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isIsImmediate()
+  {
+    return isImmediate;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setIsImmediate(boolean newIsImmediate)
+  {
+    boolean oldIsImmediate = isImmediate;
+    isImmediate = newIsImmediate;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.LOCAL_SUSPEND_REACTION__IS_IMMEDIATE, oldIsImmediate, isImmediate));
   }
 
   /**
@@ -137,6 +181,8 @@ public class LocalSuspendReactionImpl extends DeclarationImpl implements LocalSu
   {
     switch (featureID)
     {
+      case SynctextPackage.LOCAL_SUSPEND_REACTION__IS_IMMEDIATE:
+        return isIsImmediate();
       case SynctextPackage.LOCAL_SUSPEND_REACTION__TRIGGER:
         return getTrigger();
     }
@@ -153,6 +199,9 @@ public class LocalSuspendReactionImpl extends DeclarationImpl implements LocalSu
   {
     switch (featureID)
     {
+      case SynctextPackage.LOCAL_SUSPEND_REACTION__IS_IMMEDIATE:
+        setIsImmediate((Boolean)newValue);
+        return;
       case SynctextPackage.LOCAL_SUSPEND_REACTION__TRIGGER:
         setTrigger((Trigger)newValue);
         return;
@@ -170,6 +219,9 @@ public class LocalSuspendReactionImpl extends DeclarationImpl implements LocalSu
   {
     switch (featureID)
     {
+      case SynctextPackage.LOCAL_SUSPEND_REACTION__IS_IMMEDIATE:
+        setIsImmediate(IS_IMMEDIATE_EDEFAULT);
+        return;
       case SynctextPackage.LOCAL_SUSPEND_REACTION__TRIGGER:
         setTrigger((Trigger)null);
         return;
@@ -187,10 +239,29 @@ public class LocalSuspendReactionImpl extends DeclarationImpl implements LocalSu
   {
     switch (featureID)
     {
+      case SynctextPackage.LOCAL_SUSPEND_REACTION__IS_IMMEDIATE:
+        return isImmediate != IS_IMMEDIATE_EDEFAULT;
       case SynctextPackage.LOCAL_SUSPEND_REACTION__TRIGGER:
         return trigger != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (isImmediate: ");
+    result.append(isImmediate);
+    result.append(')');
+    return result.toString();
   }
 
 } //LocalSuspendReactionImpl
