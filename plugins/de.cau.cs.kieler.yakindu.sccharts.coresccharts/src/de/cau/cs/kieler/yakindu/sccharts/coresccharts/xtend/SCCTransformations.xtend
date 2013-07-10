@@ -64,12 +64,15 @@ class SCCTransformations {
         targetRootStatechart;
     }
 
-     // For every state s:
-     // Inspect its declarations, if there is a during action I/O,
-     // 1. Create a region inside s
-     // 2. Create two states, initial state s1 and state s2
-     // 3. Connect s1 and s2 with transitions t1:s1->s2, t2:s2->s1 with t1 immediate
-     // 4. if during action is immediate move it to t1, else move it to t2
+    // For every state do the following:
+    // Inspect its declarations, if there is a during action trigger/effect,
+    // 1. Create a new region inside state
+    // 2. Create two states s1 and s2 with s1 initial
+    // 3. Connect s1 and s2 with transitions t1:s1->s2, t2:s2->s1 
+    //    with t1 immediate
+    // 4. If during action is immediate move its triggers and effects
+    //    to t1, else move them to t2
+    //  5. Remove the during action from the state declarations  
      def void transformDuring(SyncState state, Statechart targetRootStatechart) {
          val stateScope = state.scopes.get(0);
          if (stateScope != null) {
