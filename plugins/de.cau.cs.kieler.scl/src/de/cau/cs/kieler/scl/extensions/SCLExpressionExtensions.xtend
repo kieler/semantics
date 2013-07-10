@@ -20,7 +20,7 @@ import org.yakindu.sct.model.stext.stext.RegularEventSpec
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
-import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
 import org.yakindu.sct.model.stext.stext.LogicalNotExpression
 
 class SCLExpressionExtensions {
@@ -85,7 +85,7 @@ class SCLExpressionExtensions {
         newExp
     }
 
-    def Expression createElementReferenceExpression(VariableDeclaration varDec) {
+    def Expression createElementReferenceExpression(VariableDefinition varDec) {
         val exp = SText.createElementReferenceExpression 
         exp.setReference(varDec)
         exp

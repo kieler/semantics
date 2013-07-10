@@ -6,6 +6,7 @@ import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
+import de.cau.cs.kieler.scl.scl.EventDefinition;
 import de.cau.cs.kieler.scl.scl.Goto;
 import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.InstructionStatement;
@@ -13,10 +14,10 @@ import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.SignalDefinition;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
-import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -26,7 +27,7 @@ import org.eclipse.emf.ecore.util.Switch;
 import org.yakindu.base.base.NamedElement;
 
 import org.yakindu.sct.model.sgraph.Declaration;
-import org.yakindu.sct.model.sgraph.Variable;
+import org.yakindu.sct.model.sgraph.Event;
 
 /**
  * <!-- begin-user-doc -->
@@ -96,16 +97,6 @@ public class SclSwitch<T> extends Switch<T>
         Program program = (Program)theEObject;
         T result = caseProgram(program);
         if (result == null) result = caseStatementSequence(program);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SclPackage.VARIABLE_DECLARATION:
-      {
-        VariableDeclaration variableDeclaration = (VariableDeclaration)theEObject;
-        T result = caseVariableDeclaration(variableDeclaration);
-        if (result == null) result = caseVariable(variableDeclaration);
-        if (result == null) result = caseDeclaration(variableDeclaration);
-        if (result == null) result = caseNamedElement(variableDeclaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -211,6 +202,29 @@ public class SclSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SclPackage.SIGNAL_DEFINITION:
+      {
+        SignalDefinition signalDefinition = (SignalDefinition)theEObject;
+        T result = caseSignalDefinition(signalDefinition);
+        if (result == null) result = caseSynctext_SignalDefinition(signalDefinition);
+        if (result == null) result = caseEvent(signalDefinition);
+        if (result == null) result = caseDeclaration(signalDefinition);
+        if (result == null) result = caseNamedElement(signalDefinition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SclPackage.EVENT_DEFINITION:
+      {
+        EventDefinition eventDefinition = (EventDefinition)theEObject;
+        T result = caseEventDefinition(eventDefinition);
+        if (result == null) result = caseSignalDefinition(eventDefinition);
+        if (result == null) result = caseSynctext_SignalDefinition(eventDefinition);
+        if (result == null) result = caseEvent(eventDefinition);
+        if (result == null) result = caseDeclaration(eventDefinition);
+        if (result == null) result = caseNamedElement(eventDefinition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -227,22 +241,6 @@ public class SclSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseProgram(Program object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVariableDeclaration(VariableDeclaration object)
   {
     return null;
   }
@@ -456,6 +454,38 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Signal Definition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Signal Definition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSignalDefinition(SignalDefinition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Event Definition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Event Definition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEventDefinition(EventDefinition object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Named Element</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -488,17 +518,33 @@ public class SclSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Event</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Event</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseVariable(Variable object)
+  public T caseEvent(Event object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Signal Definition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Signal Definition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSynctext_SignalDefinition(de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SignalDefinition object)
   {
     return null;
   }

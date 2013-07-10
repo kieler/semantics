@@ -87,7 +87,7 @@ class CoreToSCLTransformation {
 
         // Add all declarations of the main state to the declaration of the program.
         for(declaration : mainState.scopes.get(0).declarations) {
-           targetProgram.declarations.add(createVariableDeclaration(declaration));
+           targetProgram.definitions.add(createVariableDeclaration(declaration));
         }
         
         // Create a list of statements for the main state (and all including regions and states) and

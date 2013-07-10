@@ -19,8 +19,10 @@ Workflow {
         registerGenModelFile = "platform:/resource/org.yakindu.sct.model.stext/model/SText.genmodel"
         registerGeneratedEPackage = "org.yakindu.sct.model.sgraph.SGraphPackage"
         registerGenModelFile = "platform:/resource/org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel"
-        registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"      
-        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+//        registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"      
+//        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+        registerGeneratedEPackage = "de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage"      
+        registerGenModelFile = "platform:/resource/de.cau.cs.kieler.yakindu.sccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/Synctext.genmodel"
   	}
 
 	component = DirectoryCleaner {

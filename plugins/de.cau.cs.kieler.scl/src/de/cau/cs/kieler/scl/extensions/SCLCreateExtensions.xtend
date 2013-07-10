@@ -21,7 +21,7 @@ import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.StatementScope
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Thread
-import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
 import org.yakindu.sct.model.sgraph.Event
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition
 import de.cau.cs.kieler.scl.scl.Assignment
@@ -137,19 +137,19 @@ class SCLCreateExtensions {
     
    
    // Create a new VariableDeclaration object
-    def VariableDeclaration createSCLVariableDeclaration() {
-        SCL.createVariableDeclaration()
+    def VariableDefinition createSCLVariableDefinition() {
+        SyncText.createVariableDefinition()
     }
     
     // Create a new VariableDeclaration or return an old one, if it already exists in the given context
-    def VariableDeclaration create varDef: SCL.createVariableDeclaration()
+    def VariableDefinition create varDef: SyncText.createVariableDefinition()
         createVariableDeclaration(Declaration definition) {
 
         varDef.setName(definition.getName());
         if (definition instanceof EventDefinition) {
             val eventDefinition = definition as EventDefinition;
-            varDef.setInput(eventDefinition.isInput());
-            varDef.setOutput(eventDefinition.isOutput());
+            varDef.setIsInput(eventDefinition.isInput());
+            varDef.setIsOutput(eventDefinition.isOutput());
             if (eventDefinition.varInitialValue != null) varDef.setInitialValue(eventDefinition.varInitialValue)
             
             if (eventDefinition.getType() != null) {
@@ -158,20 +158,20 @@ class SCLCreateExtensions {
         }
         if (definition instanceof VariableDefinition) {
             val varD = definition as VariableDefinition
-            varDef.setInput(varD.isInput)
-            varDef.setOutput(varD.isOutput)
+            varDef.setIsInput(varD.isInput)
+            varDef.setIsOutput(varD.isOutput)
             if (varD.initialValue != null) varDef.setInitialValue(varD.initialValue)
             if (varD.type != null) varDef.setType(varD.type)
         }
     }
 
 
-    def VariableDeclaration create varDef: SCL.createVariableDeclaration()
-        createVariableDeclaration(String name, String type) {
+    def VariableDefinition create varDef: SyncText.createVariableDefinition()
+        createVariableDefinition(String name, String type) {
 
         varDef.setName(name);
-        varDef.setInput(false);
-        varDef.setOutput(false);
+        varDef.setIsInput(false);
+        varDef.setIsOutput(false);
         if (!type.nullOrEmpty) {
 //            val primitiveType = TypesFactory::eINSTANCE.createPrimitiveType
 //            primitiveType.setName(type)
@@ -219,7 +219,7 @@ class SCLCreateExtensions {
         assignments;    
     }
     
-    def Assignment createSCLAssignment(Expression expression, VariableDeclaration declRef) {
+    def Assignment createSCLAssignment(Expression expression, VariableDefinition declRef) {
         val assignment = SCL.createAssignment()
         assignment.assignment = expression
         assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
@@ -229,7 +229,7 @@ class SCLCreateExtensions {
         assignment
     }
     
-    def Assignment createSCLAssignment(VariableDeclaration firstDecl, VariableDeclaration secondDecl) {
+    def Assignment createSCLAssignment(VariableDefinition firstDecl, VariableDefinition secondDecl) {
         val assignment = SCL.createAssignment()
         
         val elemRef1 = SText.createElementReferenceExpression()

@@ -6,6 +6,7 @@ import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
+import de.cau.cs.kieler.scl.scl.EventDefinition;
 import de.cau.cs.kieler.scl.scl.Goto;
 import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.InstructionStatement;
@@ -14,10 +15,10 @@ import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclFactory;
 import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.SignalDefinition;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
-import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -80,7 +81,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
     switch (eClass.getClassifierID())
     {
       case SclPackage.PROGRAM: return createProgram();
-      case SclPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
       case SclPackage.STATEMENT: return createStatement();
       case SclPackage.EMPTY_STATEMENT: return createEmptyStatement();
       case SclPackage.INSTRUCTION_STATEMENT: return createInstructionStatement();
@@ -94,6 +94,8 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
       case SclPackage.PARALLEL: return createParallel();
       case SclPackage.PAUSE: return createPause();
       case SclPackage.STATEMENT_SCOPE: return createStatementScope();
+      case SclPackage.SIGNAL_DEFINITION: return createSignalDefinition();
+      case SclPackage.EVENT_DEFINITION: return createEventDefinition();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -108,17 +110,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     ProgramImpl program = new ProgramImpl();
     return program;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public VariableDeclaration createVariableDeclaration()
-  {
-    VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
-    return variableDeclaration;
   }
 
   /**
@@ -262,6 +253,28 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     StatementScopeImpl statementScope = new StatementScopeImpl();
     return statementScope;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SignalDefinition createSignalDefinition()
+  {
+    SignalDefinitionImpl signalDefinition = new SignalDefinitionImpl();
+    return signalDefinition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EventDefinition createEventDefinition()
+  {
+    EventDefinitionImpl eventDefinition = new EventDefinitionImpl();
+    return eventDefinition;
   }
 
   /**

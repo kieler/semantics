@@ -16,7 +16,7 @@ import org.yakindu.sct.model.stext.stext.Expression
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
@@ -73,12 +73,12 @@ class SeqSCLToSTransformation {
         val targetProgram = SFactory.createProgram()
         targetProgram.setName(program.getName())
 
-        for(decl : program.declarations) {
+        for(decl : program.definitions) {
             val vari = KFactory.createSignal
             vari.setName(decl.getName)
             vari.setType(decl.getType.toKType)
-            vari.setIsInput(decl.input)
-            vari.setIsOutput(decl.output)
+            vari.setIsInput(decl.isInput)
+            vari.setIsOutput(decl.isOutput)
             vari.setCombineOperator(CombineOperator::NONE);
 //            if (decl.initialValue != null) 
 //                vari.setInitialValue(serializer.serialize(decl.initialValue).correctSerialization) 

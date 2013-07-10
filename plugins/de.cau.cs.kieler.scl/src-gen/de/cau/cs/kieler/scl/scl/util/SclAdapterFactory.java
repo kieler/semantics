@@ -6,6 +6,7 @@ import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
+import de.cau.cs.kieler.scl.scl.EventDefinition;
 import de.cau.cs.kieler.scl.scl.Goto;
 import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.InstructionStatement;
@@ -13,10 +14,10 @@ import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.SignalDefinition;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
-import de.cau.cs.kieler.scl.scl.VariableDeclaration;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.yakindu.base.base.NamedElement;
 
 import org.yakindu.sct.model.sgraph.Declaration;
-import org.yakindu.sct.model.sgraph.Variable;
+import org.yakindu.sct.model.sgraph.Event;
 
 /**
  * <!-- begin-user-doc -->
@@ -99,11 +100,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createProgramAdapter();
       }
       @Override
-      public Adapter caseVariableDeclaration(VariableDeclaration object)
-      {
-        return createVariableDeclarationAdapter();
-      }
-      @Override
       public Adapter caseStatement(Statement object)
       {
         return createStatementAdapter();
@@ -169,6 +165,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createStatementScopeAdapter();
       }
       @Override
+      public Adapter caseSignalDefinition(SignalDefinition object)
+      {
+        return createSignalDefinitionAdapter();
+      }
+      @Override
+      public Adapter caseEventDefinition(EventDefinition object)
+      {
+        return createEventDefinitionAdapter();
+      }
+      @Override
       public Adapter caseNamedElement(NamedElement object)
       {
         return createNamedElementAdapter();
@@ -179,9 +185,14 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createDeclarationAdapter();
       }
       @Override
-      public Adapter caseVariable(Variable object)
+      public Adapter caseEvent(Event object)
       {
-        return createVariableAdapter();
+        return createEventAdapter();
+      }
+      @Override
+      public Adapter caseSynctext_SignalDefinition(de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SignalDefinition object)
+      {
+        return createSynctext_SignalDefinitionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -216,21 +227,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createProgramAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration <em>Variable Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.VariableDeclaration
-   * @generated
-   */
-  public Adapter createVariableDeclarationAdapter()
   {
     return null;
   }
@@ -431,6 +427,36 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.SignalDefinition <em>Signal Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.SignalDefinition
+   * @generated
+   */
+  public Adapter createSignalDefinitionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.EventDefinition <em>Event Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.EventDefinition
+   * @generated
+   */
+  public Adapter createEventDefinitionAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.yakindu.base.base.NamedElement <em>Named Element</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -461,16 +487,31 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Variable <em>Variable</em>}'.
+   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Event <em>Event</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Variable
+   * @see org.yakindu.sct.model.sgraph.Event
    * @generated
    */
-  public Adapter createVariableAdapter()
+  public Adapter createEventAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SignalDefinition <em>Signal Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SignalDefinition
+   * @generated
+   */
+  public Adapter createSynctext_SignalDefinitionAdapter()
   {
     return null;
   }

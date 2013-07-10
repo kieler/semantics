@@ -32,15 +32,6 @@ public interface SclFactory extends EFactory
   Program createProgram();
 
   /**
-   * Returns a new object of class '<em>Variable Declaration</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable Declaration</em>'.
-   * @generated
-   */
-  VariableDeclaration createVariableDeclaration();
-
-  /**
    * Returns a new object of class '<em>Statement</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -156,6 +147,24 @@ public interface SclFactory extends EFactory
    * @generated
    */
   StatementScope createStatementScope();
+
+  /**
+   * Returns a new object of class '<em>Signal Definition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Signal Definition</em>'.
+   * @generated
+   */
+  SignalDefinition createSignalDefinition();
+
+  /**
+   * Returns a new object of class '<em>Event Definition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Event Definition</em>'.
+   * @generated
+   */
+  EventDefinition createEventDefinition();
 
   /**
    * Returns the package supported by this factory.
