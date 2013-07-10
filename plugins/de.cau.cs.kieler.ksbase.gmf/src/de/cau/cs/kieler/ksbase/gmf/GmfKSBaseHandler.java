@@ -169,7 +169,7 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
 
         if (workbenchPart instanceof DiagramDocumentEditor) {
             final DiagramDocumentEditor diagramEditor = (DiagramDocumentEditor) workbenchPart;
-            // lastEditor = (DiagramDocumentEditor) editor;
+            lastEditor = (DiagramDocumentEditor) diagramEditor;
             // Its guaranteed to return a list, can't check for generics.
             @SuppressWarnings("unchecked")
             List<EditPart> selectedParts =
@@ -225,7 +225,9 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
     }
 
     public void performPostProcessing() {
-        refreshEditPolicy(lastEditor);
+        if(lastEditor != null) {
+            refreshEditPolicy(lastEditor);
+        }
     }
 
     /**
