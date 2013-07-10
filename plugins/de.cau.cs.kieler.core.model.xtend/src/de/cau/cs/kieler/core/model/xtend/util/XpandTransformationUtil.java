@@ -38,9 +38,9 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
 import de.cau.cs.kieler.core.model.m2m.TransformException;
+import de.cau.cs.kieler.core.model.util.MonitoredOperation;
+import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.core.model.xtend.m2m.M2MProgressMonitor;
-import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * Utility class for performing model to text transformations using xpand.

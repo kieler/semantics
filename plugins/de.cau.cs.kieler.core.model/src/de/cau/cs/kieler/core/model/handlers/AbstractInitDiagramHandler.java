@@ -61,8 +61,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.triggers.ReInitDiagramDoneTrigger;
-import de.cau.cs.kieler.core.ui.CoreUIPlugin;
-import de.cau.cs.kieler.core.ui.commands.AffectedFileSelectionDialog;
+import de.cau.cs.kieler.core.model.util.AffectedFileSelectionDialog;
 import de.cau.cs.kieler.core.util.Maybe;
 
 /**
@@ -349,7 +348,7 @@ public abstract class AbstractInitDiagramHandler extends AbstractHandler {
             return null;
         }
         if (modelRoot == null) {
-            IStatus status = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
+            IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
                             "Unable to read the domain model from the given file.");
             StatusManager.getManager().handle(status, StatusManager.LOG);
             return null;

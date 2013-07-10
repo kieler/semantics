@@ -24,13 +24,10 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.ui.CoreUIPlugin;
-import de.cau.cs.kieler.core.ui.UnsupportedPartException;
-
 /**
  * A service for providing bridges to graphical editing frameworks.
  * 
- * FIXME this service is still too specific and should be generalized
+ * FIXME this service is still too specific and should be generalized (consider the adapter pattern)
  * 
  * @kieler.ignore We'd like to get rid of this.
  * @author msp
@@ -155,7 +152,7 @@ public final class GraphicalFrameworkService {
                     }
                     insertBridge(bridge, id, priority);
                 } catch (CoreException exception) {
-                    StatusManager.getManager().handle(exception, CoreUIPlugin.PLUGIN_ID);
+                    StatusManager.getManager().handle(exception, CoreModelPlugin.PLUGIN_ID);
                 }
             }
         }
