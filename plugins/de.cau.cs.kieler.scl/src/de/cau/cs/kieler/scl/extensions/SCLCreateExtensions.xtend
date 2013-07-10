@@ -145,7 +145,6 @@ class SCLCreateExtensions {
     // Create a new VariableDeclaration or return an old one, if it already exists in the given context
     def VariableDefinition create varDef: SCL.createVariableDefinition()
         createVariableDeclaration(Declaration definition) {
-
         varDef.setName(definition.getName());
         if (definition instanceof EventDefinition) {
             val eventDefinition = definition as EventDefinition;
@@ -157,8 +156,8 @@ class SCLCreateExtensions {
                 varDef.setType(eventDefinition.getType());
             }
         }
-        if (definition instanceof VariableDefinition) {
-            val varD = definition as VariableDefinition
+        if (definition instanceof de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition) {
+            val varD = definition as de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
             varDef.setInput(varD.isInput)
             varDef.setOutput(varD.isOutput)
             if (varD.initialValue != null) varDef.setInitialValue(varD.initialValue)
