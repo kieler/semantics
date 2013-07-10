@@ -20,7 +20,7 @@ import org.yakindu.sct.model.stext.stext.RegularEventSpec
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
+import de.cau.cs.kieler.scl.scl.VariableDefinition
 import org.yakindu.sct.model.stext.stext.LogicalNotExpression
 
 class SCLExpressionExtensions {

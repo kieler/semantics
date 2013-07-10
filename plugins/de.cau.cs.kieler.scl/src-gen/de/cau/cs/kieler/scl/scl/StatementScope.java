@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -26,7 +24,7 @@ public interface StatementScope extends Instruction, StatementSequence
 {
   /**
    * Returns the value of the '<em><b>Definitions</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition}.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.VariableDefinition}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Definitions</em>' containment reference list isn't clear,

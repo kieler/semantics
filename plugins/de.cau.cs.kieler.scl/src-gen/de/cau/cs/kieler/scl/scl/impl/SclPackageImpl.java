@@ -6,7 +6,6 @@ import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
-import de.cau.cs.kieler.scl.scl.EventDefinition;
 import de.cau.cs.kieler.scl.scl.Goto;
 import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.InstructionStatement;
@@ -15,12 +14,10 @@ import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclFactory;
 import de.cau.cs.kieler.scl.scl.SclPackage;
-import de.cau.cs.kieler.scl.scl.SignalDefinition;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
-
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage;
+import de.cau.cs.kieler.scl.scl.VariableDefinition;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -28,8 +25,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import org.yakindu.base.types.TypesPackage;
 
 import org.yakindu.sct.model.stext.stext.StextPackage;
 
@@ -47,6 +42,13 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * @generated
    */
   private EClass programEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass variableDefinitionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -140,20 +142,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
   private EClass statementScopeEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass signalDefinitionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass eventDefinitionEClass = null;
-
-  /**
    * Creates an instance of the model <b>Package</b>, registered with
    * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
    * package URI value.
@@ -202,7 +190,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     isInited = true;
 
     // Initialize simple dependencies
-    SynctextPackage.eINSTANCE.eClass();
+    StextPackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theSclPackage.createPackageContents();
@@ -247,6 +235,46 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
   public EReference getProgram_Definitions()
   {
     return (EReference)programEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getVariableDefinition()
+  {
+    return variableDefinitionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getVariableDefinition_Input()
+  {
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getVariableDefinition_Output()
+  {
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getVariableDefinition_Static()
+  {
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -504,76 +532,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSignalDefinition()
-  {
-    return signalDefinitionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getEventDefinition()
-  {
-    return eventDefinitionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getEventDefinition_Input()
-  {
-    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getEventDefinition_Output()
-  {
-    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEventDefinition_Type()
-  {
-    return (EReference)eventDefinitionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEventDefinition_VarInitialValue()
-  {
-    return (EReference)eventDefinitionEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getEventDefinition_VarCombineOperator()
-  {
-    return (EAttribute)eventDefinitionEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public SclFactory getSclFactory()
   {
     return (SclFactory)getEFactoryInstance();
@@ -602,6 +560,11 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     programEClass = createEClass(PROGRAM);
     createEAttribute(programEClass, PROGRAM__NAME);
     createEReference(programEClass, PROGRAM__DEFINITIONS);
+
+    variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__INPUT);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__OUTPUT);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__STATIC);
 
     statementEClass = createEClass(STATEMENT);
     createEReference(statementEClass, STATEMENT__ANNOTATIONS);
@@ -640,15 +603,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     statementScopeEClass = createEClass(STATEMENT_SCOPE);
     createEReference(statementScopeEClass, STATEMENT_SCOPE__DEFINITIONS);
-
-    signalDefinitionEClass = createEClass(SIGNAL_DEFINITION);
-
-    eventDefinitionEClass = createEClass(EVENT_DEFINITION);
-    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__INPUT);
-    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__OUTPUT);
-    createEReference(eventDefinitionEClass, EVENT_DEFINITION__TYPE);
-    createEReference(eventDefinitionEClass, EVENT_DEFINITION__VAR_INITIAL_VALUE);
-    createEAttribute(eventDefinitionEClass, EVENT_DEFINITION__VAR_COMBINE_OPERATOR);
   }
 
   /**
@@ -676,9 +630,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
-    SynctextPackage theSynctextPackage = (SynctextPackage)EPackage.Registry.INSTANCE.getEPackage(SynctextPackage.eNS_URI);
     StextPackage theStextPackage = (StextPackage)EPackage.Registry.INSTANCE.getEPackage(StextPackage.eNS_URI);
-    TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
 
     // Create type parameters
 
@@ -686,6 +638,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     // Add supertypes to classes
     programEClass.getESuperTypes().add(this.getStatementSequence());
+    variableDefinitionEClass.getESuperTypes().add(theStextPackage.getVariableDefinition());
     emptyStatementEClass.getESuperTypes().add(this.getStatement());
     instructionStatementEClass.getESuperTypes().add(this.getStatement());
     assignmentEClass.getESuperTypes().add(this.getInstruction());
@@ -697,13 +650,16 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     pauseEClass.getESuperTypes().add(this.getInstruction());
     statementScopeEClass.getESuperTypes().add(this.getInstruction());
     statementScopeEClass.getESuperTypes().add(this.getStatementSequence());
-    signalDefinitionEClass.getESuperTypes().add(theSynctextPackage.getSignalDefinition());
-    eventDefinitionEClass.getESuperTypes().add(this.getSignalDefinition());
 
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getProgram_Name(), ecorePackage.getEString(), "name", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProgram_Definitions(), theSynctextPackage.getVariableDefinition(), null, "definitions", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProgram_Definitions(), this.getVariableDefinition(), null, "definitions", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getVariableDefinition_Input(), ecorePackage.getEBoolean(), "input", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDefinition_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDefinition_Static(), ecorePackage.getEBoolean(), "static", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getStatement_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -741,16 +697,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(statementScopeEClass, StatementScope.class, "StatementScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStatementScope_Definitions(), theSynctextPackage.getVariableDefinition(), null, "definitions", null, 0, -1, StatementScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(signalDefinitionEClass, SignalDefinition.class, "SignalDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(eventDefinitionEClass, EventDefinition.class, "EventDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getEventDefinition_Input(), ecorePackage.getEBoolean(), "Input", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getEventDefinition_Output(), ecorePackage.getEBoolean(), "Output", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEventDefinition_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEventDefinition_VarInitialValue(), theStextPackage.getExpression(), null, "varInitialValue", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getEventDefinition_VarCombineOperator(), theSynctextPackage.getCombineOperator(), "varCombineOperator", null, 0, 1, EventDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatementScope_Definitions(), this.getVariableDefinition(), null, "definitions", null, 0, -1, StatementScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

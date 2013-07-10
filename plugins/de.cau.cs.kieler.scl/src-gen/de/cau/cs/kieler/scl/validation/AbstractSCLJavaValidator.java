@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.validation.SynctextJavaValidator;
+import org.yakindu.sct.model.stext.validation.STextJavaValidator;
 import org.eclipse.xtext.validation.ComposedChecks;
 
 @ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class, org.eclipse.xtext.validation.NamesAreUniqueValidator.class})
-public class AbstractSCLJavaValidator extends SynctextJavaValidator {
+public class AbstractSCLJavaValidator extends STextJavaValidator {
 
 	@Override
 	protected List<EPackage> getEPackages() {

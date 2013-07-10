@@ -4,8 +4,7 @@ package de.cau.cs.kieler.scl.scl.impl;
 
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
-
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition;
+import de.cau.cs.kieler.scl.scl.VariableDefinition;
 
 import java.util.Collection;
 

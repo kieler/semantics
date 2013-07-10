@@ -6,8 +6,7 @@ import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
-
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition;
+import de.cau.cs.kieler.scl.scl.VariableDefinition;
 
 import java.util.Collection;
 

@@ -6,7 +6,6 @@ import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
-import de.cau.cs.kieler.scl.scl.EventDefinition;
 import de.cau.cs.kieler.scl.scl.Goto;
 import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.InstructionStatement;
@@ -14,10 +13,10 @@ import de.cau.cs.kieler.scl.scl.Parallel;
 import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
-import de.cau.cs.kieler.scl.scl.SignalDefinition;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
+import de.cau.cs.kieler.scl.scl.VariableDefinition;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -28,8 +27,12 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.yakindu.base.base.NamedElement;
 
+import org.yakindu.base.types.Feature;
+import org.yakindu.base.types.Property;
+import org.yakindu.base.types.TypedElement;
+
 import org.yakindu.sct.model.sgraph.Declaration;
-import org.yakindu.sct.model.sgraph.Event;
+import org.yakindu.sct.model.sgraph.Variable;
 
 /**
  * <!-- begin-user-doc -->
@@ -100,6 +103,11 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createProgramAdapter();
       }
       @Override
+      public Adapter caseVariableDefinition(VariableDefinition object)
+      {
+        return createVariableDefinitionAdapter();
+      }
+      @Override
       public Adapter caseStatement(Statement object)
       {
         return createStatementAdapter();
@@ -165,16 +173,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createStatementScopeAdapter();
       }
       @Override
-      public Adapter caseSignalDefinition(SignalDefinition object)
-      {
-        return createSignalDefinitionAdapter();
-      }
-      @Override
-      public Adapter caseEventDefinition(EventDefinition object)
-      {
-        return createEventDefinitionAdapter();
-      }
-      @Override
       public Adapter caseNamedElement(NamedElement object)
       {
         return createNamedElementAdapter();
@@ -185,14 +183,29 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createDeclarationAdapter();
       }
       @Override
-      public Adapter caseEvent(Event object)
+      public Adapter caseVariable(Variable object)
       {
-        return createEventAdapter();
+        return createVariableAdapter();
       }
       @Override
-      public Adapter caseSynctext_SignalDefinition(de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SignalDefinition object)
+      public Adapter caseTypedElement(TypedElement object)
       {
-        return createSynctext_SignalDefinitionAdapter();
+        return createTypedElementAdapter();
+      }
+      @Override
+      public Adapter caseFeature(Feature object)
+      {
+        return createFeatureAdapter();
+      }
+      @Override
+      public Adapter caseProperty(Property object)
+      {
+        return createPropertyAdapter();
+      }
+      @Override
+      public Adapter caseStext_VariableDefinition(org.yakindu.sct.model.stext.stext.VariableDefinition object)
+      {
+        return createStext_VariableDefinitionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -227,6 +240,21 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createProgramAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.VariableDefinition <em>Variable Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.scl.scl.VariableDefinition
+   * @generated
+   */
+  public Adapter createVariableDefinitionAdapter()
   {
     return null;
   }
@@ -427,36 +455,6 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.SignalDefinition <em>Signal Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.SignalDefinition
-   * @generated
-   */
-  public Adapter createSignalDefinitionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.EventDefinition <em>Event Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.EventDefinition
-   * @generated
-   */
-  public Adapter createEventDefinitionAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.yakindu.base.base.NamedElement <em>Named Element</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -487,31 +485,76 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Event <em>Event</em>}'.
+   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.sgraph.Variable <em>Variable</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.yakindu.sct.model.sgraph.Event
+   * @see org.yakindu.sct.model.sgraph.Variable
    * @generated
    */
-  public Adapter createEventAdapter()
+  public Adapter createVariableAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SignalDefinition <em>Signal Definition</em>}'.
+   * Creates a new adapter for an object of class '{@link org.yakindu.base.types.TypedElement <em>Typed Element</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SignalDefinition
+   * @see org.yakindu.base.types.TypedElement
    * @generated
    */
-  public Adapter createSynctext_SignalDefinitionAdapter()
+  public Adapter createTypedElementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.base.types.Feature <em>Feature</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.base.types.Feature
+   * @generated
+   */
+  public Adapter createFeatureAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.base.types.Property <em>Property</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.base.types.Property
+   * @generated
+   */
+  public Adapter createPropertyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.VariableDefinition <em>Variable Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.sct.model.stext.stext.VariableDefinition
+   * @generated
+   */
+  public Adapter createStext_VariableDefinitionAdapter()
   {
     return null;
   }

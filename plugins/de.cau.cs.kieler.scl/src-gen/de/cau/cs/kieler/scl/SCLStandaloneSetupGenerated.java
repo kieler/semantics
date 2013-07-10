@@ -15,7 +15,7 @@ import com.google.inject.Injector;
 public class SCLStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.yakindu.sccharts.model.stext.SynctextStandaloneSetup.doSetup();
+		org.yakindu.sct.model.stext.STextStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

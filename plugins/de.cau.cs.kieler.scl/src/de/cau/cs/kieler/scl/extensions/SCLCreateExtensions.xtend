@@ -21,7 +21,8 @@ import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.StatementScope
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Thread
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
+//import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
+import de.cau.cs.kieler.scl.scl.VariableDefinition
 import org.yakindu.sct.model.sgraph.Event
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition
 import de.cau.cs.kieler.scl.scl.Assignment
@@ -39,7 +40,7 @@ import org.yakindu.base.types.impl.PrimitiveTypeImpl
 import org.yakindu.base.types.Type
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
+//import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
 import org.yakindu.sct.model.sgraph.Declaration
 import org.yakindu.base.types.TypesFactory
 import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
@@ -71,7 +72,7 @@ class SCLCreateExtensions {
     
     // Create a new list of EObjects and insert the first instruction
     def createNewStatementList(Statement statement) {
-        createNewStatementList.add(statement)
+        createNewStatementList.add(statement);
     }
     
     def createNewInstructionList(Instruction instruction) {
@@ -138,18 +139,18 @@ class SCLCreateExtensions {
    
    // Create a new VariableDeclaration object
     def VariableDefinition createSCLVariableDefinition() {
-        SyncText.createVariableDefinition()
+        SCL.createVariableDefinition()
     }
     
     // Create a new VariableDeclaration or return an old one, if it already exists in the given context
-    def VariableDefinition create varDef: SyncText.createVariableDefinition()
+    def VariableDefinition create varDef: SCL.createVariableDefinition()
         createVariableDeclaration(Declaration definition) {
 
         varDef.setName(definition.getName());
         if (definition instanceof EventDefinition) {
             val eventDefinition = definition as EventDefinition;
-            varDef.setIsInput(eventDefinition.isInput());
-            varDef.setIsOutput(eventDefinition.isOutput());
+            varDef.setInput(eventDefinition.isInput());
+            varDef.setOutput(eventDefinition.isOutput());
             if (eventDefinition.varInitialValue != null) varDef.setInitialValue(eventDefinition.varInitialValue)
             
             if (eventDefinition.getType() != null) {
@@ -158,20 +159,20 @@ class SCLCreateExtensions {
         }
         if (definition instanceof VariableDefinition) {
             val varD = definition as VariableDefinition
-            varDef.setIsInput(varD.isInput)
-            varDef.setIsOutput(varD.isOutput)
+            varDef.setInput(varD.isInput)
+            varDef.setOutput(varD.isOutput)
             if (varD.initialValue != null) varDef.setInitialValue(varD.initialValue)
             if (varD.type != null) varDef.setType(varD.type)
         }
     }
 
 
-    def VariableDefinition create varDef: SyncText.createVariableDefinition()
+    def VariableDefinition create varDef: SCL.createVariableDefinition()
         createVariableDefinition(String name, String type) {
 
         varDef.setName(name);
-        varDef.setIsInput(false);
-        varDef.setIsOutput(false);
+        varDef.setInput(false);
+        varDef.setOutput(false);
         if (!type.nullOrEmpty) {
 //            val primitiveType = TypesFactory::eINSTANCE.createPrimitiveType
 //            primitiveType.setName(type)
@@ -255,7 +256,7 @@ class SCLCreateExtensions {
     
     // Create a new scl conditional and take the given stext trigger as true trigger for the conditional. 
     def Conditional createSCLConditional(Trigger trigger) {
-        var conditional = SCL.createConditional();
+        var conditional = SCL.createConditional()
         if (trigger instanceof ReactionTrigger) {
             val reactionTrigger = trigger as ReactionTrigger;
 //            if (reactionTrigger.guardExpression != null) {

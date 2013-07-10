@@ -4,12 +4,17 @@
     editorDirectory="/de.cau.cs.kieler.scl.editor/src" modelPluginID="de.cau.cs.kieler.scl"
     forceOverwrite="true" modelName="SCL" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.scl.edit"
-    editorPluginID="de.cau.cs.kieler.scl.editor" runtimeVersion="2.8" usedGenPackages="../../../../../../../de.cau.cs.kieler.yakindu.sccharts.model.stext/src-gen/de/cau/cs/kieler/yakindu/sccharts/model/stext/Synctext.genmodel#//synctext ../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../org.yakindu.base.types/model/types.genmodel#//types ../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
+    editorPluginID="de.cau.cs.kieler.scl.editor" runtimeVersion="2.8" usedGenPackages="../../../../../../../org.yakindu.base.types/model/base.genmodel#//base ../../../../../../../org.yakindu.base.types/model/types.genmodel#//types ../../../../../../../org.yakindu.sct.model.sgraph/model/emf/sgraph.genmodel#//sgraph ../../../../../../../org.yakindu.sct.model.stext/model/SText.genmodel#//stext">
   <genPackages prefix="Scl" basePackage="de.cau.cs.kieler.scl" disposableProviderFactory="true"
       ecorePackage="SCL.ecore#/">
     <genClasses ecoreClass="SCL.ecore#//Program">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//Program/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Program/definitions"/>
+    </genClasses>
+    <genClasses ecoreClass="SCL.ecore#//VariableDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//VariableDefinition/input"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//VariableDefinition/output"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//VariableDefinition/static"/>
     </genClasses>
     <genClasses ecoreClass="SCL.ecore#//Statement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//Statement/annotations"/>
@@ -45,14 +50,6 @@
     <genClasses ecoreClass="SCL.ecore#//Pause"/>
     <genClasses ecoreClass="SCL.ecore#//StatementScope">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//StatementScope/definitions"/>
-    </genClasses>
-    <genClasses ecoreClass="SCL.ecore#//SignalDefinition"/>
-    <genClasses ecoreClass="SCL.ecore#//EventDefinition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//EventDefinition/Input"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//EventDefinition/Output"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SCL.ecore#//EventDefinition/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SCL.ecore#//EventDefinition/varInitialValue"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SCL.ecore#//EventDefinition/varCombineOperator"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

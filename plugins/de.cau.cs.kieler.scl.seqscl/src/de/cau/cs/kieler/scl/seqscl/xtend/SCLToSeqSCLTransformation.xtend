@@ -14,7 +14,7 @@ import de.cau.cs.kieler.scl.scl.SclFactory
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.InstructionStatement
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
+import de.cau.cs.kieler.scl.scl.VariableDefinition
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression

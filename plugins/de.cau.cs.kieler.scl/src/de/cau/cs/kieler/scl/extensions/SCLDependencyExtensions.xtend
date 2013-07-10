@@ -23,7 +23,7 @@ import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import org.yakindu.sct.model.stext.stext.BoolLiteral
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
+import de.cau.cs.kieler.scl.scl.VariableDefinition
 import java.util.List
 import de.cau.cs.kieler.scl.scl.Instruction
 import org.eclipse.emf.common.util.EList
