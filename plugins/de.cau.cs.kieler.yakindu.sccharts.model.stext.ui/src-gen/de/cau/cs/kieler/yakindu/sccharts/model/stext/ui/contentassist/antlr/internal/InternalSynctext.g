@@ -3380,9 +3380,9 @@ rule__SignalDefinition__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getSignalDefinitionAccess().getInputAssignment_1()); }
-(rule__SignalDefinition__InputAssignment_1)?
-{ after(grammarAccess.getSignalDefinitionAccess().getInputAssignment_1()); }
+{ before(grammarAccess.getSignalDefinitionAccess().getIsInputAssignment_1()); }
+(rule__SignalDefinition__IsInputAssignment_1)?
+{ after(grammarAccess.getSignalDefinitionAccess().getIsInputAssignment_1()); }
 )
 
 ;
@@ -3409,9 +3409,9 @@ rule__SignalDefinition__Group__2__Impl
     }
 :
 (
-{ before(grammarAccess.getSignalDefinitionAccess().getOutputAssignment_2()); }
-(rule__SignalDefinition__OutputAssignment_2)?
-{ after(grammarAccess.getSignalDefinitionAccess().getOutputAssignment_2()); }
+{ before(grammarAccess.getSignalDefinitionAccess().getIsOutputAssignment_2()); }
+(rule__SignalDefinition__IsOutputAssignment_2)?
+{ after(grammarAccess.getSignalDefinitionAccess().getIsOutputAssignment_2()); }
 )
 
 ;
@@ -11305,22 +11305,22 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__SignalDefinition__InputAssignment_1
+rule__SignalDefinition__IsInputAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0()); }
+{ before(grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0()); }
 (
-{ before(grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0()); }
+{ before(grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0()); }
 
 	'input' 
 
-{ after(grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0()); }
+{ after(grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0()); }
 )
 
-{ after(grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0()); }
+{ after(grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0()); }
 )
 
 ;
@@ -11328,22 +11328,22 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__SignalDefinition__OutputAssignment_2
+rule__SignalDefinition__IsOutputAssignment_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0()); }
+{ before(grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0()); }
 (
-{ before(grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0()); }
+{ before(grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0()); }
 
 	'output' 
 
-{ after(grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0()); }
+{ after(grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0()); }
 )
 
-{ after(grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0()); }
+{ after(grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0()); }
 )
 
 ;

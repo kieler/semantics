@@ -62,7 +62,7 @@ public abstract class AbstractSynctextSyntacticSequencer extends AbstractSyntact
 	
 	/**
 	 * Syntax:
-	 *     'else' | 'default'
+	 *     'default' | 'else'
 	 */
 	protected void emit_DefaultTrigger_DefaultKeyword_1_0_or_ElseKeyword_1_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

@@ -978,7 +978,7 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (Input?='input'? Output?='output'? name=ID (type=[Type|FQN] varInitialValue=Expression? varCombineOperator=CombineOperator?)?)
+	 *     (isInput?='input'? isOutput?='output'? name=ID (type=[Type|FQN] varInitialValue=Expression? varCombineOperator=CombineOperator?)?)
 	 */
 	protected void sequence_SignalDefinition(EObject context, de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

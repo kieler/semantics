@@ -287,31 +287,31 @@ ruleSignalDefinition returns [EObject current=null]
     }
 )(
 (
-		lv_Input_1_0=	'input' 
+		lv_isInput_1_0=	'input' 
     {
-        newLeafNode(lv_Input_1_0, grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0());
+        newLeafNode(lv_isInput_1_0, grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getSignalDefinitionRule());
 	        }
-       		setWithLastConsumed($current, "Input", true, "input");
+       		setWithLastConsumed($current, "isInput", true, "input");
 	    }
 
 )
 )?(
 (
-		lv_Output_2_0=	'output' 
+		lv_isOutput_2_0=	'output' 
     {
-        newLeafNode(lv_Output_2_0, grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0());
+        newLeafNode(lv_isOutput_2_0, grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getSignalDefinitionRule());
 	        }
-       		setWithLastConsumed($current, "Output", true, "output");
+       		setWithLastConsumed($current, "isOutput", true, "output");
 	    }
 
 )

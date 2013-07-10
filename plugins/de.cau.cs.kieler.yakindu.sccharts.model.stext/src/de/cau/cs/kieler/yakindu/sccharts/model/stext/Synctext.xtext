@@ -29,7 +29,7 @@ Declaration returns sgraph::Declaration:
 SignalDeclaration returns sgraph::Event:
 	SignalDefinition;
 SignalDefinition:
-	{EventDefinition} (Input?='input')? (Output?='output')? 'signal'
+	{EventDefinition} (isInput?='input')? (isOutput?='output')? 'signal'
 	name=ID (':' type=[types::Type|FQN]
 	('=' varInitialValue=Expression)?
 	('with' varCombineOperator=CombineOperator)?)? ';';

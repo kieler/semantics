@@ -112,10 +112,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SignalDefinition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cEventDefinitionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cInputInputKeyword_1_0 = (Keyword)cInputAssignment_1.eContents().get(0);
-		private final Assignment cOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cOutputOutputKeyword_2_0 = (Keyword)cOutputAssignment_2.eContents().get(0);
+		private final Assignment cIsInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsInputInputKeyword_1_0 = (Keyword)cIsInputAssignment_1.eContents().get(0);
+		private final Assignment cIsOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cIsOutputOutputKeyword_2_0 = (Keyword)cIsOutputAssignment_2.eContents().get(0);
 		private final Keyword cSignalKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cNameIDTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
@@ -136,12 +136,12 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SignalDefinition:
 		//
-		//	{EventDefinition} Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+		//	{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
 		//
 		//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//{EventDefinition} Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+		//{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
 		//
 		//varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";"
 		public Group getGroup() { return cGroup; }
@@ -149,17 +149,17 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//{EventDefinition}
 		public Action getEventDefinitionAction_0() { return cEventDefinitionAction_0; }
 
-		//Input?="input"?
-		public Assignment getInputAssignment_1() { return cInputAssignment_1; }
+		//isInput?="input"?
+		public Assignment getIsInputAssignment_1() { return cIsInputAssignment_1; }
 
 		//"input"
-		public Keyword getInputInputKeyword_1_0() { return cInputInputKeyword_1_0; }
+		public Keyword getIsInputInputKeyword_1_0() { return cIsInputInputKeyword_1_0; }
 
-		//Output?="output"?
-		public Assignment getOutputAssignment_2() { return cOutputAssignment_2; }
+		//isOutput?="output"?
+		public Assignment getIsOutputAssignment_2() { return cIsOutputAssignment_2; }
 
 		//"output"
-		public Keyword getOutputOutputKeyword_2_0() { return cOutputOutputKeyword_2_0; }
+		public Keyword getIsOutputOutputKeyword_2_0() { return cIsOutputOutputKeyword_2_0; }
 
 		//"signal"
 		public Keyword getSignalKeyword_3() { return cSignalKeyword_3; }
@@ -1228,7 +1228,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SignalDefinition:
 	//
-	//	{EventDefinition} Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+	//	{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
 	//
 	//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";";
 	public SignalDefinitionElements getSignalDefinitionAccess() {

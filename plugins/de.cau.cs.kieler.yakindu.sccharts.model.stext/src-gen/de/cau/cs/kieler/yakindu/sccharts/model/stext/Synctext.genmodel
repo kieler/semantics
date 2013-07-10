@@ -55,8 +55,8 @@
     </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//SimpleScope"/>
     <genClasses ecoreClass="Synctext.ecore#//EventDefinition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/Input"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/Output"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/isInput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/isOutput"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventDefinition/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventDefinition/varInitialValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/varCombineOperator"/>

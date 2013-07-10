@@ -61,10 +61,10 @@
             <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//EventDefinition"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="Input" operator="?=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="isInput" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="input"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="Output" operator="?=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="isOutput" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="output"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="signal"/>
