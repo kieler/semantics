@@ -1,0 +1,43 @@
+<introContent>
+
+    <extensionContent
+        id="de.cau.cs.kieler.intro.overview"
+        name="KIELER Project"
+        path="overview/@"
+        style="css/intro.css">
+        <group
+            label=""
+            id="de.cau.cs.kieler.intro.overview.group"
+            style-id="content-group">
+            <link 
+                label="KIELER Project"
+                url="http://informatik.uni-kiel.de/rtsys/kieler/"
+                id="kieler-overview-link"
+                style-id="content-link">
+                <text>The KIELER project aims at enhancing the pragmatics of graphical model-based system design.</text>
+            </link>
+        </group>
+    </extensionContent>
+   
+    <extensionContent
+        id="de.cau.cs.kieler.intro.samples"
+        name="KIELER Examples"
+        path="samples/@"
+        style="css/intro.css">
+         <group
+            label="KIELER Quick Start"
+            id="quickstarts"
+            style-id="content-group">
+            <text style-id="group-description">Quickstart examples create a project with at least one example.</text>
+            <anchor id="quickstarts.anchor"/>
+         </group>
+        <group
+            label="KIELER Examples"
+            id="examples"
+            style-id="content-group">
+	        <text style-id="group-description">The following examples help you become familiar with KIELER.</text>
+		 	<anchor id="import-wizard"/>
+    	 </group>
+    </extensionContent>
+
+</introContent>
