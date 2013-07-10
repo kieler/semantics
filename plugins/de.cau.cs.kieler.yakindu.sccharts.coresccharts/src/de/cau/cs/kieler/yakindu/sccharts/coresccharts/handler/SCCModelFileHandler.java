@@ -42,6 +42,7 @@ import de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCTransformations;
 public class SCCModelFileHandler extends AbstractConvertModelHandler {
 
     public static final String SIGNAL_TRANSFORMATION = "de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SignalTransformation";
+    public static final String DURING_TRANSFORMATION = "de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.DuringTransformation";
 
     // -------------------------------------------------------------------------
     
@@ -151,8 +152,10 @@ public class SCCModelFileHandler extends AbstractConvertModelHandler {
         // Do the customized serialization of a state scope for the declarations of a
         // state. Note that here the original ContextFinder is sufficient because it will
         // return the StateScope object which is a correct context for serialization.
-        String scope = serializeEObject(state.getScopes().get(0));
-        state.setSpecification(scope);
+        if (state.getScopes().size() > 0) {
+            String scope = serializeEObject(state.getScopes().get(0));
+            state.setSpecification(scope);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -191,20 +194,22 @@ public class SCCModelFileHandler extends AbstractConvertModelHandler {
     @Override
     protected Object transform(EObject model, ExecutionEvent event, ISelection selection) {
         String commandString = event.getCommand().getId().toString();
+        EObject transformed = null;
+        // Call the model transformation (this creates a copy of the model containing the
+        // refactored model).
         if (commandString.equals(SIGNAL_TRANSFORMATION)) {
-            // Call the model transformation (this creates a copy of the model containing the
-            // refactored model).
-            EObject transformed = (new SCCTransformations()).transformSignals((Statechart) model);
+            transformed = (new SCCTransformations()).transformSignal((Statechart) model);
+        } else if (commandString.equals(DURING_TRANSFORMATION)) {
+            transformed = (new SCCTransformations()).transformDuring((Statechart) model);
+        }
 
+        if (transformed != null) {
             // Traverse thru the whole refactored Yakindu model and re-serialize all specification
             // fields
             // for states and transitions.
             reSerializeModel(transformed);
-
-            return transformed;
         }
-
-        return null;
+        return transformed;
     }
 
     // -------------------------------------------------------------------------
