@@ -8,7 +8,6 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncgraphFactory
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.SynctextStandaloneSetup
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionEffect
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SignalDefinition
@@ -43,6 +42,7 @@ import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReactio
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction
 import org.eclipse.emf.common.util.EList
 import org.yakindu.sct.model.sgraph.Declaration
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValueReferenceExpression
 
 
 class SCCTransformations {
@@ -121,9 +121,19 @@ class SCCTransformations {
              for (inputOutputSignal : ImmutableList::copyOf(inputOutputSignals)) {
                  val signal = inputOutputSignal as EventDefinition;
                  signal.setIsOutput(false);
-                 
+
                  val replacement = state.createOutputSignal(signal.name + outputSignalExtension);
                  state.replaceInAllInnerReactionEffects(inputOutputSignal, replacement); 
+                 
+                 val region = state.createRegion;
+                 val s = region.createInitialState("I");
+                 val t = s.createTransition(s);
+                 
+                 val effect = createEmtyReaction();
+                 effect.actions.add(replacement.assign(true));
+                 t.setEffect(effect);
+                 //t.setTrigger(signal)
+                 
              }
 
              val inputOutputVariables = state.declarations.filter(typeof(VariableDefinition)).filter(e | (e as VariableDefinition).isInput && (e as VariableDefinition).isOutput);
@@ -379,7 +389,7 @@ class SCCTransformations {
           for (trigger : allTrigger) {
               // Change all trigger where the value is inspected (val(S) -> S_val)
               if (trigger != null) {
-                   val valReferences = trigger.eAllContents.toIterable().filter(typeof(EventValueReferenceExpression));
+                   val valReferences = trigger.eAllContents.toIterable().filter(typeof(ValueReferenceExpression));
                    for (valReference : ImmutableList::copyOf(valReferences)) {
                          val expression = valReference.value;
                          // Exchange reference to valued signal within expression with the
@@ -425,6 +435,8 @@ class SCCTransformations {
         var List<Declaration> emptyList = <Declaration> newLinkedList;
         return emptyList;
     }
+    
+    // Advanced Trigger Creation
     
     // Advanced Variable Creation
 
@@ -583,9 +595,12 @@ class SCCTransformations {
        elementReferenceExpression;
     }
     
+    //def
+    //xxx 
+    
         
     // EXPRESSION & ASSIGNMENT CREATION     
-        
+    
     def LogicalOrExpression createLogicalOrExpression(Expression expressionLeft, Expression expressionRight) {
        val logicalOrExpression = StextFactory::eINSTANCE.createLogicalOrExpression();
        logicalOrExpression.setLeftOperand(expressionLeft);
@@ -634,10 +649,10 @@ class SCCTransformations {
         for (elementReferenceExpression : elementReferenceExpressions) {
             found = found || (elementReferenceExpression.reference == signal && elementReferenceExpression.operationCall);
         }
-        val eventValueReferenceExpressions = rootObject.eAllContents.toIterable.filter(typeof(EventValueReferenceExpression));
-        for (eventValueReferenceExpression : eventValueReferenceExpressions) {
-            found = found || (eventValueReferenceExpression.eContainer != null 
-                             && (eventValueReferenceExpression.eContainer.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).filter(e | e.reference == signal).size > 0)
+        val valueReferenceExpressions = rootObject.eAllContents.toIterable.filter(typeof(ValueReferenceExpression));
+        for (valueReferenceExpression : valueReferenceExpressions) {
+            found = found || (valueReferenceExpression.eContainer != null 
+                             && (valueReferenceExpression.eContainer.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).filter(e | e.reference == signal).size > 0)
             );
         }
         return found;
@@ -678,6 +693,14 @@ class SCCTransformations {
     def allContents(EObject eObject) {
         eObject.eAllContents.toIterable();
     }
+
+
+    
+    //==================================================================================================
+    //==================================================================================================
+    //==================================================================================================
+
+
  
     //-------------------------------------------------------------------------
     //--        S C C  -  A B O R T S  -  T R A N S F O R M A T I O N        --
