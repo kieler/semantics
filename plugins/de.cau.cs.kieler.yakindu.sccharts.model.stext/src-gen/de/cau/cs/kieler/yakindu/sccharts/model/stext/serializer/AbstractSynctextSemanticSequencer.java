@@ -10,12 +10,11 @@ import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReacti
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.NumericalMultiplyDivideExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.OperationDefinition;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionEffect;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SimpleScope;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValueReferenceExpression;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -785,12 +784,6 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 					return; 
 				}
 				else break;
-			case SynctextPackage.PRE_VALUE_EXPRESSION:
-				if(context == grammarAccess.getPreValueExpressionRule()) {
-					sequence_PreValueExpression(context, (PreValueExpression) semanticObject); 
-					return; 
-				}
-				else break;
 			case SynctextPackage.REACTION_EFFECT:
 				if(context == grammarAccess.getReactionEffectRule()) {
 					sequence_ReactionEffect(context, (ReactionEffect) semanticObject); 
@@ -815,7 +808,7 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 					return; 
 				}
 				else break;
-			case SynctextPackage.VALUE_REFERENCE_EXPRESSION:
+			case SynctextPackage.VAL_REFERENCE_EXPRESSION:
 				if(context == grammarAccess.getAssignmentExpressionRule() ||
 				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
 				   context == grammarAccess.getBitwiseAndExpressionRule() ||
@@ -843,8 +836,8 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 				   context == grammarAccess.getShiftExpressionRule() ||
 				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
 				   context == grammarAccess.getStatementExpressionRule() ||
-				   context == grammarAccess.getValueReferenceExpressionRule()) {
-					sequence_ValueReferenceExpression(context, (ValueReferenceExpression) semanticObject); 
+				   context == grammarAccess.getValReferenceExpressionRule()) {
+					sequence_ValReferenceExpression(context, (ValReferenceExpression) semanticObject); 
 					return; 
 				}
 				else break;
@@ -951,26 +944,10 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (value=FeatureCall | value=ValueReferenceExpression | value=PreReferenceExpression)
+	 *     (expression=FeatureCall | expression=ValReferenceExpression | expression=PreReferenceExpression)
 	 */
 	protected void sequence_PreReferenceExpression(EObject context, PreReferenceExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     value=FeatureCall
-	 */
-	protected void sequence_PreValueExpression(EObject context, PreValueExpression semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SynctextPackage.Literals.PRE_VALUE_EXPRESSION__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SynctextPackage.Literals.PRE_VALUE_EXPRESSION__VALUE));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getPreValueExpressionAccess().getValueFeatureCallParserRuleCall_3_0(), semanticObject.getValue());
-		feeder.finish();
 	}
 	
 	
@@ -1012,9 +989,9 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (value=FeatureCall | value=PreReferenceExpression)
+	 *     (expression=FeatureCall | expression=PreReferenceExpression)
 	 */
-	protected void sequence_ValueReferenceExpression(EObject context, ValueReferenceExpression semanticObject) {
+	protected void sequence_ValReferenceExpression(EObject context, ValReferenceExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -40,7 +40,7 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition;
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.TransitionType;
 import de.cau.cs.kieler.yakindu.model.sgraph.validator.SyncGraphJavaValidator;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionEffect;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage;
@@ -154,7 +154,7 @@ public class SynctextJavaValidator extends STextJavaValidator {
 				/**
 				 * Check that no value is assigned to a pre operator
 				 */
-				if (((AssignmentExpression) exp).getVarRef() instanceof PreValueExpression) {
+				if (((AssignmentExpression) exp).getVarRef() instanceof PreReferenceExpression) {
 					error(PRE_ASSIGNMENT,
 							SynctextPackage.Literals.REACTION_EFFECT__ACTIONS);
 				}

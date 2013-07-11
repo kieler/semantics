@@ -1281,17 +1281,17 @@ ruleNumericalMultiplyDivideExpression returns [EObject current=null]
 
 
 
-// Entry rule entryRuleValueReferenceExpression
-entryRuleValueReferenceExpression returns [EObject current=null] 
+// Entry rule entryRuleValReferenceExpression
+entryRuleValReferenceExpression returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getValueReferenceExpressionRule()); }
-	 iv_ruleValueReferenceExpression=ruleValueReferenceExpression 
-	 { $current=$iv_ruleValueReferenceExpression.current; } 
+	{ newCompositeNode(grammarAccess.getValReferenceExpressionRule()); }
+	 iv_ruleValReferenceExpression=ruleValReferenceExpression 
+	 { $current=$iv_ruleValReferenceExpression.current; } 
 	 EOF 
 ;
 
-// Rule ValueReferenceExpression
-ruleValueReferenceExpression returns [EObject current=null] 
+// Rule ValReferenceExpression
+ruleValReferenceExpression returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -1301,46 +1301,46 @@ ruleValueReferenceExpression returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getValueReferenceExpressionAccess().getValueReferenceExpressionAction_0(),
+            grammarAccess.getValReferenceExpressionAccess().getValReferenceExpressionAction_0(),
             $current);
     }
 )	otherlv_1='val' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getValueReferenceExpressionAccess().getValKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getValReferenceExpressionAccess().getValKeyword_1());
     }
 	otherlv_2='(' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getValueReferenceExpressionAccess().getLeftParenthesisKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getValReferenceExpressionAccess().getLeftParenthesisKeyword_2());
     }
 (
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getValueReferenceExpressionAccess().getValueFeatureCallParserRuleCall_3_0_0()); 
+	        newCompositeNode(grammarAccess.getValReferenceExpressionAccess().getExpressionFeatureCallParserRuleCall_3_0_0()); 
 	    }
-		lv_value_3_1=ruleFeatureCall		{
+		lv_expression_3_1=ruleFeatureCall		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getValueReferenceExpressionRule());
+	            $current = createModelElementForParent(grammarAccess.getValReferenceExpressionRule());
 	        }
        		set(
        			$current, 
-       			"value",
-        		lv_value_3_1, 
+       			"expression",
+        		lv_expression_3_1, 
         		"FeatureCall");
 	        afterParserOrEnumRuleCall();
 	    }
 
     |		{ 
-	        newCompositeNode(grammarAccess.getValueReferenceExpressionAccess().getValuePreReferenceExpressionParserRuleCall_3_0_1()); 
+	        newCompositeNode(grammarAccess.getValReferenceExpressionAccess().getExpressionPreReferenceExpressionParserRuleCall_3_0_1()); 
 	    }
-		lv_value_3_2=rulePreReferenceExpression		{
+		lv_expression_3_2=rulePreReferenceExpression		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getValueReferenceExpressionRule());
+	            $current = createModelElementForParent(grammarAccess.getValReferenceExpressionRule());
 	        }
        		set(
        			$current, 
-       			"value",
-        		lv_value_3_2, 
+       			"expression",
+        		lv_expression_3_2, 
         		"PreReferenceExpression");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1350,7 +1350,7 @@ ruleValueReferenceExpression returns [EObject current=null]
 )
 )	otherlv_4=')' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getValueReferenceExpressionAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getValReferenceExpressionAccess().getRightParenthesisKeyword_4());
     }
 )
 ;
@@ -1394,46 +1394,46 @@ rulePreReferenceExpression returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getValueFeatureCallParserRuleCall_3_0_0()); 
+	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getExpressionFeatureCallParserRuleCall_3_0_0()); 
 	    }
-		lv_value_3_1=ruleFeatureCall		{
+		lv_expression_3_1=ruleFeatureCall		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPreReferenceExpressionRule());
 	        }
        		set(
        			$current, 
-       			"value",
-        		lv_value_3_1, 
+       			"expression",
+        		lv_expression_3_1, 
         		"FeatureCall");
 	        afterParserOrEnumRuleCall();
 	    }
 
     |		{ 
-	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getValueValueReferenceExpressionParserRuleCall_3_0_1()); 
+	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getExpressionValReferenceExpressionParserRuleCall_3_0_1()); 
 	    }
-		lv_value_3_2=ruleValueReferenceExpression		{
+		lv_expression_3_2=ruleValReferenceExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPreReferenceExpressionRule());
 	        }
        		set(
        			$current, 
-       			"value",
-        		lv_value_3_2, 
-        		"ValueReferenceExpression");
+       			"expression",
+        		lv_expression_3_2, 
+        		"ValReferenceExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
     |		{ 
-	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getValuePreReferenceExpressionParserRuleCall_3_0_2()); 
+	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getExpressionPreReferenceExpressionParserRuleCall_3_0_2()); 
 	    }
-		lv_value_3_3=rulePreReferenceExpression		{
+		lv_expression_3_3=rulePreReferenceExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPreReferenceExpressionRule());
 	        }
        		set(
        			$current, 
-       			"value",
-        		lv_value_3_3, 
+       			"expression",
+        		lv_expression_3_3, 
         		"PreReferenceExpression");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1510,11 +1510,11 @@ rulePrimaryExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getValueReferenceExpressionParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getValReferenceExpressionParserRuleCall_3()); 
     }
-    this_ValueReferenceExpression_3=ruleValueReferenceExpression
+    this_ValReferenceExpression_3=ruleValReferenceExpression
     { 
-        $current = $this_ValueReferenceExpression_3.current; 
+        $current = $this_ValReferenceExpression_3.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -1545,8 +1545,6 @@ rulePrimaryExpression returns [EObject current=null]
     }
 )
 ;
-
-
 
 
 

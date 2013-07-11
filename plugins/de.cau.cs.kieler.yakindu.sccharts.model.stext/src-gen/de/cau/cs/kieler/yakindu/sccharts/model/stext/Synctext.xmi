@@ -90,7 +90,7 @@
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="with"/>
             <elements xsi:type="xtext:Assignment" feature="varCombineOperator" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.19"/>
             </elements>
           </elements>
         </elements>
@@ -142,7 +142,7 @@
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="with"/>
           <elements xsi:type="xtext:Assignment" feature="varCombineOperator" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.19"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value=";"/>
@@ -380,19 +380,19 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="ValueReferenceExpression">
+    <rules xsi:type="xtext:ParserRule" name="ValReferenceExpression">
       <type metamodel="/0/@metamodelDeclarations.2">
         <classifier xsi:type="ecore:EClass" href="http://www.yakindu.org/sct/statechart/SText#//Expression"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Action">
           <type metamodel="/0/@metamodelDeclarations.0">
-            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//ValueReferenceExpression"/>
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//ValReferenceExpression"/>
           </type>
         </elements>
         <elements xsi:type="xtext:Keyword" value="val"/>
         <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:Assignment" feature="value" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="expression" operator="=">
           <terminal xsi:type="xtext:Alternatives">
             <elements xsi:type="xtext:RuleCall" rule="/1/@rules.65"/>
             <elements xsi:type="xtext:RuleCall" rule="/0/@rules.17"/>
@@ -413,7 +413,7 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="pre"/>
         <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:Assignment" feature="value" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="expression" operator="=">
           <terminal xsi:type="xtext:Alternatives">
             <elements xsi:type="xtext:RuleCall" rule="/1/@rules.65"/>
             <elements xsi:type="xtext:RuleCall" rule="/0/@rules.16"/>
@@ -434,24 +434,6 @@
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.16"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.17"/>
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.69"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="PreValueExpression">
-      <type metamodel="/0/@metamodelDeclarations.2">
-        <classifier xsi:type="ecore:EClass" href="http://www.yakindu.org/sct/statechart/SText#//Expression"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Action">
-          <type metamodel="/0/@metamodelDeclarations.0">
-            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/yakindu/sccharts/stext/#//PreValueExpression"/>
-          </type>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="pre"/>
-        <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:Assignment" feature="value" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.65"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value=")"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="CombineOperator">

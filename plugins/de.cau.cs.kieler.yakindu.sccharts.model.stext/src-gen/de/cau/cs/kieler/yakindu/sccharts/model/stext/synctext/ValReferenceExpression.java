@@ -6,21 +6,21 @@ import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Pre Reference Expression</b></em>'.
+ * A representation of the model object '<em><b>Val Reference Expression</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getPreReferenceExpression()
+ * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getValReferenceExpression()
  * @model
  * @generated
  */
-public interface PreReferenceExpression extends Expression
+public interface ValReferenceExpression extends Expression
 {
   /**
    * Returns the value of the '<em><b>Expression</b></em>' containment reference.
@@ -32,14 +32,14 @@ public interface PreReferenceExpression extends Expression
    * <!-- end-user-doc -->
    * @return the value of the '<em>Expression</em>' containment reference.
    * @see #setExpression(Expression)
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getPreReferenceExpression_Expression()
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getValReferenceExpression_Expression()
    * @model containment="true"
    * @generated
    */
   Expression getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression#getExpression <em>Expression</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Expression</em>' containment reference.
@@ -48,4 +48,4 @@ public interface PreReferenceExpression extends Expression
    */
   void setExpression(Expression value);
 
-} // PreReferenceExpression
+} // ValReferenceExpression

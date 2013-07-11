@@ -24,7 +24,8 @@ import org.yakindu.sct.model.stext.stext.EventValueReferenceExpression
 import org.yakindu.sct.model.stext.stext.FeatureCall
 import org.yakindu.sct.model.stext.types.ISTextTypeSystem
 import org.yakindu.sct.model.stext.types.STextDefaultTypeInferrer
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition
 //import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression
 //import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition
@@ -58,7 +59,7 @@ class SyncTypeInferrer extends STextDefaultTypeInferrer{
 		if(featureCall.feature instanceof Event /*ntDefinition*/ 
 			&& !(featureCall.eContainer instanceof EventRaisingExpression) 
 			&&!(featureCall.eContainer instanceof EventValueReferenceExpression)
-			&&!(featureCall.eContainer instanceof PreValueExpression)
+			&&!(featureCall.eContainer instanceof PreReferenceExpression)
 		){
 			return new InferenceResult(getBooleanType)
 		}
@@ -82,7 +83,7 @@ class SyncTypeInferrer extends STextDefaultTypeInferrer{
 		if(expression.reference instanceof EventDefinition 
 			&& !(expression.eContainer instanceof EventRaisingExpression
 				|| expression.eContainer instanceof EventValueReferenceExpression
-				|| expression.eContainer instanceof PreValueExpression
+				|| expression.eContainer instanceof PreReferenceExpression
 				)){
 			return new InferenceResult(getBooleanType)
 		}
@@ -94,8 +95,8 @@ class SyncTypeInferrer extends STextDefaultTypeInferrer{
 	/**
  	 * Pre(int) operator should have the type of int.
  	 */
-	def dispatch InferenceResult doInferType(PreValueExpression expression){
-		return inferType(expression.value)
+	def dispatch InferenceResult doInferType(PreReferenceExpression expression){
+		return inferType(expression.expression);
 	}
 	
 }

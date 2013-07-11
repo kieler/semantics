@@ -215,12 +215,12 @@ public class SynctextSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SynctextPackage.VALUE_REFERENCE_EXPRESSION:
+      case SynctextPackage.VAL_REFERENCE_EXPRESSION:
       {
-        ValueReferenceExpression valueReferenceExpression = (ValueReferenceExpression)theEObject;
-        T result = caseValueReferenceExpression(valueReferenceExpression);
-        if (result == null) result = caseExpression(valueReferenceExpression);
-        if (result == null) result = caseStatement(valueReferenceExpression);
+        ValReferenceExpression valReferenceExpression = (ValReferenceExpression)theEObject;
+        T result = caseValReferenceExpression(valReferenceExpression);
+        if (result == null) result = caseExpression(valReferenceExpression);
+        if (result == null) result = caseStatement(valReferenceExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -230,15 +230,6 @@ public class SynctextSwitch<T> extends Switch<T>
         T result = casePreReferenceExpression(preReferenceExpression);
         if (result == null) result = caseExpression(preReferenceExpression);
         if (result == null) result = caseStatement(preReferenceExpression);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SynctextPackage.PRE_VALUE_EXPRESSION:
-      {
-        PreValueExpression preValueExpression = (PreValueExpression)theEObject;
-        T result = casePreValueExpression(preValueExpression);
-        if (result == null) result = caseExpression(preValueExpression);
-        if (result == null) result = caseStatement(preValueExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -455,17 +446,17 @@ public class SynctextSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Value Reference Expression</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Val Reference Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Value Reference Expression</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Val Reference Expression</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseValueReferenceExpression(ValueReferenceExpression object)
+  public T caseValReferenceExpression(ValReferenceExpression object)
   {
     return null;
   }
@@ -482,22 +473,6 @@ public class SynctextSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePreReferenceExpression(PreReferenceExpression object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Pre Value Expression</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Pre Value Expression</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T casePreValueExpression(PreValueExpression object)
   {
     return null;
   }

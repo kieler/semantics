@@ -54,7 +54,7 @@ public abstract class AbstractSynctextSyntacticSequencer extends AbstractSyntact
 
 	/**
 	 * Syntax:
-	 *     'oncycle' | 'always'
+	 *     'always' | 'oncycle'
 	 */
 	protected void emit_AlwaysEvent_AlwaysKeyword_1_0_or_OncycleKeyword_1_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
