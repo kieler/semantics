@@ -47,7 +47,7 @@ import de.cau.cs.kieler.core.model.gmf.effects.RefreshGMFEditPoliciesEffect;
 import de.cau.cs.kieler.core.model.gmf.triggers.ModelChangeTrigger.ActiveEditorState;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
+import de.cau.cs.kieler.core.model.util.MonitoredOperation;
 import de.cau.cs.kieler.kies.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.Activator;
 import de.cau.cs.kieler.kies.EsterelToSyncChartDataComponent;

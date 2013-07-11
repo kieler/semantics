@@ -23,7 +23,7 @@ import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.m2m.TransformationObserver;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
+import de.cau.cs.kieler.core.model.util.MonitoredOperation;
 
 /**
  * A KiVi effect that executes a specific transformation.

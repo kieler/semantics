@@ -31,8 +31,8 @@ import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.core.kivi.listeners.GlobalPartAdapter;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
-import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 
 /**
  * This class is responsible for gathering the data contributed through the
@@ -47,7 +47,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     private static Map<String, String> ePackages = new HashMap<String, String>();
     /** The list of validation registries. */
     private static List<IValidationRegistry> registries = new LinkedList<IValidationRegistry>();
-
+    
     /**
      * The map for mapping ePackage IDs to the elements containing the validate
      * action.
@@ -86,8 +86,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
             }
         }
 
-        CombinedWorkbenchListener.addPartListener(this);
-        CombinedWorkbenchListener.receiveAlreadyOpenedParts(this);
+        new GlobalPartAdapter(this);
     }
 
     /**

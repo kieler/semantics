@@ -28,7 +28,7 @@ import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
+import de.cau.cs.kieler.core.model.util.MonitoredOperation;
 import de.cau.cs.kieler.kies.Activator;
 import de.cau.cs.kieler.kies.util.TransformationUtil;
 import de.cau.cs.kieler.kies.util.TransformationUtil.TransformationType;

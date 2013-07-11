@@ -25,8 +25,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.ui.CoreUIPlugin;
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.model.CoreModelPlugin;
+import de.cau.cs.kieler.core.model.util.EditorUtils;
 
 /**
  * A Command handler that removes all problem markers from the currently opened
@@ -68,7 +68,7 @@ public class RemoveMarkerHandler extends AbstractHandler {
                 }
             } catch (Exception e) {
                 Status myStatus = new Status(IStatus.ERROR,
-                        CoreUIPlugin.PLUGIN_ID,
+                        CoreModelPlugin.PLUGIN_ID,
                         "Some Problem markers could not be removed: "
                                 + e.getClass().getName(), e);
                 StatusManager.getManager().handle(myStatus, StatusManager.SHOW);

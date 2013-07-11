@@ -12,7 +12,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.ecore,
  org.json;visibility:=reexport,
  de.cau.cs.kieler.core,
- de.cau.cs.kieler.core.ui,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.config
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

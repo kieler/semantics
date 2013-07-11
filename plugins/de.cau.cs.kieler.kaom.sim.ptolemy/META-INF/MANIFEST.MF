@@ -16,8 +16,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.ptolemy;bundle-version="8.0.0",
  org.json,
  de.cau.cs.kieler.sim.kiem,
- de.cau.cs.kieler.core.ui,
  de.cau.cs.kieler.core,
+ de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sim.ptolemy,
  de.cau.cs.kieler.sim.signals
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
