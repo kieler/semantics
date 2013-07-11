@@ -36,7 +36,7 @@ import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.gmf.GmfFrameworkBridge;
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.model.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Pair;
 
 /**

@@ -38,7 +38,7 @@ import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
-import de.cau.cs.kieler.core.ui.UnsupportedPartException;
+import de.cau.cs.kieler.core.model.UnsupportedPartException;
 import de.cau.cs.kieler.ksbase.ui.kivi.IKSBasEHandler;
 
 /**
@@ -233,7 +233,6 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void transformationExecuted(String transformationName, Object[] parameters,
             Object result, EObject select) {
         if (lastEditor != null) {
@@ -325,7 +324,6 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
     /**
      * {@inheritDoc}
      */
-    @Override
     public boolean isPerformLayout() {
         return true;
     }
@@ -333,7 +331,6 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
     /**
      * {@inheritDoc}
      */
-    @Override
     public EObject getLayoutRoot() {
         return lastRootObject;
     }
@@ -341,7 +338,6 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
     /**
      * {@inheritDoc}
      */
-    @Override
     public TransactionalEditingDomain getEditingDomain() {
         if (lastEditor instanceof DiagramDocumentEditor) {
             final DiagramDocumentEditor diagramEditor = (DiagramDocumentEditor) lastEditor;

@@ -18,6 +18,7 @@ import org.yakindu.base.types.Operation;
 import org.yakindu.base.types.Property;
 import org.yakindu.base.types.TypedElement;
 
+import org.yakindu.sct.model.sgraph.Declaration;
 import org.yakindu.sct.model.sgraph.Effect;
 import org.yakindu.sct.model.sgraph.Event;
 import org.yakindu.sct.model.sgraph.Scope;
@@ -141,11 +142,6 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
         return createEventDefinitionAdapter();
       }
       @Override
-      public Adapter caseDeclaration(Declaration object)
-      {
-        return createDeclarationAdapter();
-      }
-      @Override
       public Adapter caseReactionTrigger(ReactionTrigger object)
       {
         return createReactionTriggerAdapter();
@@ -181,9 +177,9 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
         return createNamedElementAdapter();
       }
       @Override
-      public Adapter caseSGraph_Declaration(org.yakindu.sct.model.sgraph.Declaration object)
+      public Adapter caseDeclaration(Declaration object)
       {
-        return createSGraph_DeclarationAdapter();
+        return createDeclarationAdapter();
       }
       @Override
       public Adapter caseEvent(Event object)
@@ -418,21 +414,6 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration <em>Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.Declaration
-   * @generated
-   */
-  public Adapter createDeclarationAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger <em>Reaction Trigger</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -547,7 +528,7 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
    * @see org.yakindu.sct.model.sgraph.Declaration
    * @generated
    */
-  public Adapter createSGraph_DeclarationAdapter()
+  public Adapter createDeclarationAdapter()
   {
     return null;
   }

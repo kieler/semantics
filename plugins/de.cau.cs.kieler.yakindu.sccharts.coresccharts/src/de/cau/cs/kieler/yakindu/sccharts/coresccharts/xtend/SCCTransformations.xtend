@@ -34,6 +34,13 @@ import org.yakindu.sct.model.stext.stext.StextFactory
 import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
 
 import static de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCTransformations.*
+import org.yakindu.sct.model.stext.stext.LogicalOrExpression
+import org.yakindu.sct.model.sgraph.Effect
+import org.yakindu.sct.model.sgraph.Trigger
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction
 
 
 class SCCTransformations {
@@ -41,19 +48,66 @@ class SCCTransformations {
     private static val Injector synctextInjector = SynctextStandaloneSetup::doSetup();
     private static val STextDefaulTypeSystem typesystem = synctextInjector.getInstance(typeof(STextDefaulTypeSystem));
     private static val String variableValueExtension = "_val";
+
+    //-------------------------------------------------------------------------
+    //--        S C C  -  D U R I N G  -  T R A N S F O R M A T I O N       --
+    //-------------------------------------------------------------------------
+    // Transforming Signals.
+    def Statechart transformDuring(Statechart rootStatechart) {
+        // Clone the complete SyncCharts region 
+        val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
+        var targetStates = targetRootStatechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();
+
+        for(targetState : ImmutableList::copyOf(targetStates)) {
+            targetState.transformDuring(targetRootStatechart);
+        } 
+        targetRootStatechart;
+    }
+
+    // For every state do the following:
+    // Inspect its declarations, if there is a during action trigger/effect,
+    // 1. Create a new region inside state
+    // 2. Create two states s1 and s2 with s1 initial
+    // 3. Connect s1 and s2 with transitions t1:s1->s2, t2:s2->s1 
+    //    with t1 immediate
+    // 4. If during action is immediate move its triggers and effects
+    //    to t1, else move them to t2
+    //  5. Remove the during action from the state declarations  
+     def void transformDuring(SyncState state, Statechart targetRootStatechart) {
+         val stateScope = state.scopes.get(0);
+         if (stateScope != null) {
+             val duringActions = stateScope.declarations.filter(typeof(LocalDuringReaction));
+             for (duringAction : ImmutableList::copyOf(duringActions)) {
+                 val region = state.createRegion;
+                 val s1 = region.createInitialState("S1");
+                 val s2 = region.createState("S2");
+                 val t1 = s1.createImmediateTransition(s2);
+                 val t2 = s2.createTransition(s1);
+                 if (duringAction.isImmediate) {
+                     t1.setTrigger(duringAction.trigger);
+                     t1.setEffect(duringAction.effect);
+                 } else {
+                     t2.setTrigger(duringAction.trigger);
+                     t2.setEffect(duringAction.effect);
+                 }
+                 stateScope.declarations.remove(duringAction);
+             }
+         }
+     }
+     
  
     //-------------------------------------------------------------------------
     //--        S C C  -  S I G N A L S  -  T R A N S F O R M A T I O N       --
     //-------------------------------------------------------------------------
            
     // Transforming Signals.
-    def Statechart transformSignals(Statechart rootStatechart) {
+    def Statechart transformSignal(Statechart rootStatechart) {
         // Clone the complete SyncCharts region 
         val targetRootStatechart = CloningExtensions::clone(rootStatechart) as Statechart;
         var targetStates = targetRootStatechart.eAllContents().toIterable().filter(typeof(SyncState)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
-            targetState.transformSignals(targetRootStatechart);
+            targetState.transformSignal(targetRootStatechart);
         } 
         targetRootStatechart;
     }
@@ -62,7 +116,7 @@ class SCCTransformations {
      // If the state has a specification, then convert all signals
      // (a) simple signal S to boolean variable S (variablePresent)
      // (b) valued signal S to two boolean variables S and S_val (variableValue)
-     def void transformSignals(SyncState state, Statechart targetRootStatechart) {
+     def void transformSignal(SyncState state, Statechart targetRootStatechart) {
              // There is a specification, convert it
              var specification = state.specification;
              var scope = state.scopes.get(0);
@@ -152,11 +206,13 @@ class SCCTransformations {
                                     if (refExpression.reference == signal) {
                                         // Now we know that the signals values is changed here
                                         val value = refExpression.args;
-                                        // Assign the first expression only
-                                        val assignmentExpression = variableValue.assign(value.get(0));
-                                        // Add to actions at the same position          
-                                        val i = effect.actions.indexOf(action);
-                                        effect.actions.add(i, assignmentExpression);
+                                        if (!value.nullOrEmpty) {
+                                            // Assign the first expression only
+                                            val assignmentExpression = variableValue.assign(value.get(0));
+                                            // Add to actions at the same position          
+                                            val i = effect.actions.indexOf(action);
+                                            effect.actions.add(i, assignmentExpression);
+                                        }
                                     }
                                 }
                               }
@@ -177,7 +233,7 @@ class SCCTransformations {
                                     // Only if the signal is involved
                                     if (refExpression.reference == signal) {
                                         // Also add O = true to mimic the present status
-                                        val assignmentExpression = variablePresent.assign(true);
+                                        val assignmentExpression = variablePresent.assignRelative(true);
                                         // Add to actions at the same position          
                                         val i = effect.actions.indexOf(action);
                                         effect.actions.add(i, assignmentExpression);
@@ -192,6 +248,13 @@ class SCCTransformations {
                      scope.declarations.add(variablePresent);
                      // Remove signal from the scope
                      scope.declarations.remove(signal);
+                   
+                     
+                     // Add a reset as an absolute write during/inside action
+                     val effect = createEmtyReaction();
+                     effect.actions.add(variablePresent.assign(false));
+                     val insideReaction = createDuringReaction(null, effect, true);
+                     scope.declarations.add(insideReaction);
                  }
                }
                
@@ -223,13 +286,108 @@ class SCCTransformations {
              
      }
      
+    //-------------------------------------------------------------------------
+    //--        H E L P E R     S C C H A R T     F U N C T I O N S          --
+    //-------------------------------------------------------------------------
+    
+    def AssignmentExpression assignRelative(EObject variable, boolean trueOrFalse) {
+       val trueValueExpression = createBooleanValueExpession(trueOrFalse);
+       val elementReferenceExpression = createElementReferenceExpression(variable);
+       val logicalOrExpression = createLogicalOrExpression(trueValueExpression, elementReferenceExpression);
+       variable.assign(logicalOrExpression)
+    }
+    
+    // Transition Creation
+    
+    def SyncTransition createHistoryTransition(SyncState sourceState, SyncState targetState) {
+        val transition = createTransition(sourceState, targetState);
+        transition.setIsHistory(true);
+        transition;
+    }
+    def SyncTransition createImmediateTransition(SyncState sourceState, SyncState targetState) {
+        val transition = createTransition(sourceState, targetState);
+        transition.setIsImmediate(true);
+        transition;
+    }
+    def SyncTransition createTransition(SyncState sourceState, SyncState targetState) {
+        val transition = SyncgraphFactory::eINSTANCE.createSyncTransition;
+        sourceState.outgoingTransitions.add(transition);
+        transition.setTarget(targetState);
+        transition;
+    }
+    
+    // State Creation
+    
+    def SyncState createInitialState(Region parentRegion, String name) {
+        val state = createState(parentRegion, name);
+        state.setIsInitial(true);
+        state;
+    }
+    def SyncState createFinalState(Region parentRegion, String name) {
+        val state = createState(parentRegion, name);
+        state.setIsFinal(true);
+        state;
+    }
+    def SyncState createState(Region parentRegion, String name) {
+        val state = SyncgraphFactory::eINSTANCE.createSyncState;
+        state.setName(name);
+        // Add new state to parent region
+        parentRegion.vertices.add(state);
+        state;
+    }
+
+    // Region Creation
+    
+    def Region createRegion(SyncState parentState) {
+        val region = SGraphFactory::eINSTANCE.createRegion;
+        parentState.regions.add(region);
+        region;
+    }
      
     //-------------------------------------------------------------------------
     //--         H E L P E R     C R E A T E     F U N C T I O N S           --
     //-------------------------------------------------------------------------
+    
+    // SCCHART
+    
+    // Effects
+    def ReactionEffect createEmtyReaction() {
+         val reactionEffect = SynctextFactory::eINSTANCE.createReactionEffect;
+         reactionEffect
+    }
+   
+    
+    // Trigger
+    
+    def ReactionTrigger createTrueTrigger() {
+        val reactionTrigger = SynctextFactory::eINSTANCE.createReactionTrigger;
+        reactionTrigger.setExpression(createBooleanValueExpession(true));
+        reactionTrigger
+    }
+    
+    // Entry, Inside, Exit Actions
+    def LocalEntryReaction createEntryReaction(Trigger trigger, Effect effect) {
+        var reaction = SynctextFactory::eINSTANCE.createLocalEntryReaction
+        reaction.setTrigger(trigger);
+        reaction.setEffect(effect);
+        reaction
+    }
+    def LocalDuringReaction createDuringReaction(Trigger trigger, Effect effect, boolean isImmediate) {
+        var reaction = SynctextFactory::eINSTANCE.createLocalDuringReaction
+        reaction.setTrigger(trigger);
+        reaction.setEffect(effect);
+        reaction.setIsImmediate(isImmediate);
+        reaction
+    }
+    def LocalExitReaction createExitReaction(Trigger trigger, Effect effect) {
+        var reaction = SynctextFactory::eINSTANCE.createLocalExitReaction
+        reaction.setTrigger(trigger);
+        reaction.setEffect(effect);
+        reaction
+    }
 
     // VARIABLE & REFERENCE CREATION
-
+    
     def VariableDefinition createBooleanInputVariable(String signalName, boolean isInput, boolean isOutput) {
        createBooleanVariable(signalName, true, false);   
     }
@@ -260,6 +418,14 @@ class SCCTransformations {
         
     // EXPRESSION & ASSIGNMENT CREATION     
         
+    def LogicalOrExpression createLogicalOrExpression(Expression expressionLeft, Expression expressionRight) {
+       val logicalOrExpression = StextFactory::eINSTANCE.createLogicalOrExpression();
+       logicalOrExpression.setLeftOperand(expressionLeft);
+       logicalOrExpression.setRightOperand(expressionRight);
+       logicalOrExpression;
+    }
+
+        
     def BoolLiteral createBooleanLiteral(boolean trueOrFalse) {
        val trueValue = StextFactory::eINSTANCE.createBoolLiteral;
        trueValue.setValue(trueOrFalse);
@@ -285,6 +451,7 @@ class SCCTransformations {
        val trueValueExpression = createBooleanValueExpession(trueOrFalse);
        variable.assign(trueValueExpression);
     }    
+    
         
     //-------------------------------------------------------------------------
     //--  H E L P E R     A D V A N C E D    B A S I C     F U N C T I O N S --
@@ -295,9 +462,9 @@ class SCCTransformations {
         // or if there is a EventValueReferenceExpression with this signal
         var found = false;
         val rootObject = signal.rootEObject;
-        val assignmentExpressions = rootObject.eAllContents.toIterable.filter(typeof(AssignmentExpression));
-        for (assignmentExpression : assignmentExpressions) {
-            found = found || (assignmentExpression.varRef == signal);
+        val elementReferenceExpressions = rootObject.eAllContents.toIterable.filter(typeof(ElementReferenceExpression));
+        for (elementReferenceExpression : elementReferenceExpressions) {
+            found = found || (elementReferenceExpression.reference == signal && elementReferenceExpression.operationCall);
         }
         val eventValueReferenceExpressions = rootObject.eAllContents.toIterable.filter(typeof(EventValueReferenceExpression));
         for (eventValueReferenceExpression : eventValueReferenceExpressions) {

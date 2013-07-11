@@ -22,12 +22,14 @@ import de.cau.cs.kieler.core.kgraph.impl.KGraphDataImpl;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.scl.basicblocks.BasicBlock;
 import de.cau.cs.kieler.scl.scl.Instruction;
+import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.Statement;
 
 public class BasicBlockDataHolder extends KGraphDataImpl {
 
     public List<BasicBlock> BasicBlockData;
     public HashMap<Instruction, Pair<KNode, KNode>> NodeData;
+    public Program SCLProgram;
     
 //    BasicBlockDataHolder(Statement rootStatement) {
 //        BasicBlockRootStatement = rootStatement;
@@ -37,6 +39,7 @@ public class BasicBlockDataHolder extends KGraphDataImpl {
     BasicBlockDataHolder() {
         BasicBlockData = new ArrayList<BasicBlock>();
         NodeData = new HashMap<Instruction, Pair<KNode, KNode>>();
+        SCLProgram = null;
     }
     
 }

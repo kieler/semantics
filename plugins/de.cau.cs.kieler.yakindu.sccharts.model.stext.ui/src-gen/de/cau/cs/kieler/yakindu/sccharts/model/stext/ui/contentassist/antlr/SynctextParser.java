@@ -178,11 +178,13 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getOperationDefinitionAccess().getParamTypeAssignment_5(), "rule__OperationDefinition__ParamTypeAssignment_5");
 					put(grammarAccess.getLocalEntryReactionAccess().getTriggerAssignment_3(), "rule__LocalEntryReaction__TriggerAssignment_3");
 					put(grammarAccess.getLocalEntryReactionAccess().getEffectAssignment_4_1(), "rule__LocalEntryReaction__EffectAssignment_4_1");
-					put(grammarAccess.getLocalDuringReactionAccess().getTriggerAssignment_3(), "rule__LocalDuringReaction__TriggerAssignment_3");
-					put(grammarAccess.getLocalDuringReactionAccess().getEffectAssignment_5(), "rule__LocalDuringReaction__EffectAssignment_5");
+					put(grammarAccess.getLocalDuringReactionAccess().getIsImmediateAssignment_1(), "rule__LocalDuringReaction__IsImmediateAssignment_1");
+					put(grammarAccess.getLocalDuringReactionAccess().getTriggerAssignment_4(), "rule__LocalDuringReaction__TriggerAssignment_4");
+					put(grammarAccess.getLocalDuringReactionAccess().getEffectAssignment_6(), "rule__LocalDuringReaction__EffectAssignment_6");
 					put(grammarAccess.getLocalExitReactionAccess().getTriggerAssignment_3(), "rule__LocalExitReaction__TriggerAssignment_3");
 					put(grammarAccess.getLocalExitReactionAccess().getEffectAssignment_4_1(), "rule__LocalExitReaction__EffectAssignment_4_1");
-					put(grammarAccess.getLocalSuspendReactionAccess().getTriggerAssignment_3(), "rule__LocalSuspendReaction__TriggerAssignment_3");
+					put(grammarAccess.getLocalSuspendReactionAccess().getIsImmediateAssignment_1(), "rule__LocalSuspendReaction__IsImmediateAssignment_1");
+					put(grammarAccess.getLocalSuspendReactionAccess().getTriggerAssignment_4(), "rule__LocalSuspendReaction__TriggerAssignment_4");
 					put(grammarAccess.getLocalReactionTriggerAccess().getDelayAssignment_1(), "rule__LocalReactionTrigger__DelayAssignment_1");
 					put(grammarAccess.getLocalReactionTriggerAccess().getExpressionAssignment_2(), "rule__LocalReactionTrigger__ExpressionAssignment_2");
 					put(grammarAccess.getReactionTriggerAccess().getLabelPriorityAssignment_1_0(), "rule__ReactionTrigger__LabelPriorityAssignment_1_0");

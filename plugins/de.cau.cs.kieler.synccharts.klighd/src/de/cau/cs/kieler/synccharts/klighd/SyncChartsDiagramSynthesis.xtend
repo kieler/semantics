@@ -170,7 +170,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 
                 it.addText(s.label).putToLookUpWith(s) => [
                     it.fontSize = 11;
-                    it.setGridPlacementData().setMaxCellHeight(40)
+                    it.setGridPlacementData().setMaxCellHeightEx(40)
                         .from(LEFT, 10, 0, TOP, 10, 0)
                         .to(RIGHT, 10, 0, BOTTOM, 10, 0);
                 ];

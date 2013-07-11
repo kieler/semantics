@@ -31,9 +31,9 @@ import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
 import de.cau.cs.kieler.core.kivi.ITriggerState;
+import de.cau.cs.kieler.core.kivi.listeners.GlobalPartAdapter;
+import de.cau.cs.kieler.core.model.util.EditorUtils;
 import de.cau.cs.kieler.core.model.xtext.triggers.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState.EventType;
-import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
 
 // SUPPRESS CHECKSTYLE PREVIOUS 10 LineLength
 
@@ -60,14 +60,14 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
      */
     private XtextEditor currentEditor = null;
 
+    private GlobalPartAdapter globalPartAdapter;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("deprecation")
     public void register() {
-        CombinedWorkbenchListener.addPartListener(this);
+        globalPartAdapter = new GlobalPartAdapter(this);
         this.partActivated(EditorUtils.getLastActiveEditor());
     }
 
@@ -76,7 +76,7 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
      */
     @Override
     public void unregister() {
-        CombinedWorkbenchListener.removePartListener(this);
+        globalPartAdapter.unregister();
     }
 
     private void attachToXtextEditor(final XtextEditor editor, final boolean opened) {

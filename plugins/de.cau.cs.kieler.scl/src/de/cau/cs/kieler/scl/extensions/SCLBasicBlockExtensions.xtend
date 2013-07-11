@@ -14,6 +14,7 @@
  package de.cau.cs.kieler.scl.extensions
 
 import com.google.inject.Inject
+import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.scl.basicblocks.BasicBlock
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
@@ -35,6 +36,8 @@ import de.cau.cs.kieler.scl.basicblocks.ParallelJoinImpl
 import org.yakindu.sct.model.stext.stext.Expression
 import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.scl.StatementSequence
+import java.util.HashMap
+import de.cau.cs.kieler.scl.scl.Program
 
 class SCLBasicBlockExtensions {
     
@@ -53,6 +56,12 @@ class SCLBasicBlockExtensions {
     
     public static val BASICBLOCKPREFIX = 'g';
     public static val EMPTYBLOCKPREFIX = 'e';
+    
+    public var HashMap<Program, ArrayList<BasicBlock>> CachedPrograms
+    
+    def SCLBasicExtensions() {
+        CachedPrograms = new HashMap<Program, ArrayList<BasicBlock>>
+    }
     
     // Decides whether or not a statement is the beginning of a new basic block.
     def boolean isBasicBlockFirst(Statement statement) {
@@ -117,13 +126,13 @@ class SCLBasicBlockExtensions {
         val instructionStatement = statement.instructionStatement
         val bBox = new ArrayList<Statement>
         if (instructionStatement == null) return bBox
-        val sseq = instructionStatement.getParentStatementSequence;
+        val sseq = instructionStatement.getParentStatementSequence
         
         if (instructionStatement.isGoto) { 
             if (instructionStatement.instruction.asGoto.getTargetStatement?.getInstructionStatement?.instruction == null) return bBox
             var statementHier = instructionStatement.previousStatementHierarchical
             if (statementHier == null) statementHier = instructionStatement.instruction.asGoto.getTargetStatement
-            return getBasicBlockStatements(statementHier, isDepth)
+            return getBasicBlockStatements(statementHier, false)
         }
         
         // Transform statement to EObject Statement in case it is a statement that holds
@@ -270,7 +279,11 @@ class SCLBasicBlockExtensions {
     def BasicBlock getBasicBlockByAnyStatementDepth(Statement statement) {
         val statements = statement.getBasicBlockStatements(true)
         if (statements.head == null) return null
-        getBasicBlockByHead(statements.head, true)
+        if (statements.head.isConditional) {
+            return getBasicBlockByHead(statements.head, false)
+        } else {
+            getBasicBlockByHead(statements.head, true)
+        }
     }
 
     // Returns the hashcode id of the basic block
@@ -297,14 +310,25 @@ class SCLBasicBlockExtensions {
             }
         }
     }
+    
+    def List<BasicBlock> copy(List<BasicBlock> basicBlocks) {
+        val newList = new ArrayList<BasicBlock>
+        for(bb : basicBlocks) {
+            newList.add(bb)
+        }
+        newList
+    }
      
     def List<BasicBlock> getBasicBlocks(Statement statement) {
         val basicBlocks = new ArrayList<BasicBlock>;
         val sseq = statement.getParentStatementSequence
+        var c = 0
         for(stmt : sseq.statements) {
             for(bb : stmt._getBasicBlocksByStatement) {
                 if (!basicBlocks.containsEqual(bb)) basicBlocks.add(bb)
             }
+            c = c + 1
+//            Debug("Evaluated bb : " + c.toString)
         }
         if (sseq instanceof Conditional) {
             for(stmt : (sseq as Conditional).elseStatements) {
@@ -351,12 +375,20 @@ class SCLBasicBlockExtensions {
     }
     
     def List<BasicBlock> getAllBasicBlocks(Statement statement) {
-        // check if instruction is pausedepth or pausesurface
-//        if (statement.isEmpty) return getBasicBlocks(statement.getProgram.statements.head)
-//        var instruction = statement.instruction
-//        if (statement.isPauseSurface) instruction = (statement.instruction as PauseSurfaceImpl).PauseReference
-//        if (statement.isPauseDepth) instruction = (statement.instruction as PauseDepthImpl).PauseReference
-        getBasicBlocks(statement.getProgram.statements.head);
+        val program = statement.getProgram
+        
+        if (CachedPrograms == null) {
+            CachedPrograms = new HashMap<Program, ArrayList<BasicBlock>>
+        }
+        if (CachedPrograms.containsKey(program)) {
+            return CachedPrograms.get(program)
+        }
+        
+        val basicBlocks = getBasicBlocks(program.statements.head);
+        
+        CachedPrograms.put(program, basicBlocks as ArrayList<BasicBlock>)
+        
+        basicBlocks
     }
     
     def int getAllBasicBlocksCount(Statement statement) {
@@ -364,20 +396,40 @@ class SCLBasicBlockExtensions {
     }
     
     def int getBasicBlockIndex(BasicBlock basicBlock) {
+        if (basicBlock.CachedIndex>-1) return basicBlock.CachedIndex;
         var c = 0
         for(block : basicBlock.getHead.getAllBasicBlocks) {
-            if (basicBlock.isEqual(block)) return c        
+            if (basicBlock.isEqual(block)) {
+                basicBlock.CachedIndex = c 
+                return c
+            }        
             c = c + 1
         }
         c = -1
     }
     
     def String getBasicBlockName(BasicBlock basicBlock) {
-        BASICBLOCKPREFIX + basicBlock.getBasicBlockIndex.toString
+        var String name = ""
+        if (!basicBlock.CachedName.nullOrEmpty) {
+            name = basicBlock.CachedName
+        } else {
+            name = BASICBLOCKPREFIX + basicBlock.getBasicBlockIndex.toString
+            basicBlock.CachedName = name
+        }
+        
+        name
     }
 
     def String getEmptyBlockName(BasicBlock basicBlock) {
-        EMPTYBLOCKPREFIX + basicBlock.getBasicBlockIndex.toString
+        var String name = ""
+        if (!basicBlock.CachedEmptyName.nullOrEmpty) {
+            name = basicBlock.CachedEmptyName
+        } else {
+            name = EMPTYBLOCKPREFIX + basicBlock.getBasicBlockIndex.toString
+            basicBlock.CachedEmptyName = name
+        }
+        
+        name
     }
     
     def String getBasicBlockName(BasicBlock basicBlock, boolean emptyBlock) {
@@ -391,6 +443,10 @@ class SCLBasicBlockExtensions {
     
     def List<BasicBlock> getBasicBlockPredecessor(BasicBlock basicBlock) {
         val predecessors = new ArrayList<BasicBlock>;
+        if (!basicBlock.CachedPredecessors.nullOrEmpty) {
+            predecessors.addAll(basicBlock.CachedPredecessors)
+            return predecessors;
+        }
 
         if (basicBlock.statements.head.isParallelJoin) {
             for(thread : basicBlock.statements.head.getInstruction.asParallel.threads) {
@@ -440,7 +496,8 @@ class SCLBasicBlockExtensions {
             val sourceBlock = (goto.eContainer as Statement).getBasicBlockByAnyStatementDepth
             predecessors.add(sourceBlock)
         }
-         
+
+        basicBlock.CachedPredecessors.addAll(predecessors)         
         predecessors
     }
     
@@ -487,6 +544,10 @@ class SCLBasicBlockExtensions {
 
     def List<BasicBlock> getBasicBlockDependencyPredecessors(BasicBlock basicBlock) {
         val predecessors = new ArrayList<BasicBlock>;
+        if (!basicBlock.CachedDependencyPredecessors.nullOrEmpty) {
+            predecessors.addAll(basicBlock.CachedDependencyPredecessors)
+            return predecessors;
+        }
         
         if (!SPLIT_BLOCKS_AT_DEPENDENCY) return predecessors
         if (!basicBlock.getHead.getInstruction.hasConcurrentDependencies) return predecessors;
@@ -502,12 +563,17 @@ class SCLBasicBlockExtensions {
                 }
         }         
               
+        basicBlock.CachedDependencyPredecessors.addAll(predecessors)
         predecessors
     }
     
     
     def List<BasicBlock> getBasicBlockSuccessor(BasicBlock basicBlock) {
         val successors = new ArrayList<BasicBlock>;
+        if (!basicBlock.CachedSuccessors.nullOrEmpty) {
+            successors.addAll(basicBlock.CachedSuccessors)
+            return successors;
+        }        
         
         if (basicBlock.statements.last.isParallelFork) {
             for(thread : basicBlock.statements.last.getInstruction.asParallel.threads) {
@@ -543,7 +609,8 @@ class SCLBasicBlockExtensions {
         if (nextStmt != null) {
             successors.add(nextStmt.getBasicBlockByAnyStatement)
         } 
-        
+
+        basicBlock.CachedSuccessors.addAll(successors)        
         successors
     }
     
@@ -631,5 +698,61 @@ class SCLBasicBlockExtensions {
         newBlockList
     }
     
+    
+
+    def boolean isASCSchedulable(Program program) {
+        program.ASCPool.size == 0
+    }
+    
+    
+    def List<BasicBlock> ASCPool(Program program) {
+        var changed = false
+        var basicBlockPool = program.statements.head.getAllBasicBlocks 
+        while(basicBlockPool.size>0) {
+            Debug("---")
+            var String poolStr = "";
+            for (bb : basicBlockPool) {
+                poolStr = poolStr + bb.basicBlockName + " "
+            }
+            Debug("Blocks in pool: " + poolStr)
+            changed = false
+            val tempPool = ImmutableList::copyOf(basicBlockPool)
+            for(basicBlock : tempPool) {
+                var predecessors = basicBlock.getBasicBlockPredecessor
+                var depPredecessors = basicBlock.getBasicBlockDependencyPredecessors 
+                var ready = true
+                
+                for (pred : predecessors) {
+                    if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred) && !basicBlock.isParallelJoin) {ready = false}
+                    if (basicBlock.isParallelJoin) {
+                        val guards = pred.getHead.basicBlocks.stripSurface
+                        for (guard : guards) {
+                            if (basicBlockPool.containsEqual(guard)) { 
+                                ready = false;
+                                Debug("Join: " + basicBlock.basicBlockName + " guard " + guard.basicBlockName + " failed!")
+                            }
+                        }
+                    }     
+                }
+                for (pred : depPredecessors) {
+                    if (!pred.head.isPauseSurface && basicBlockPool.containsEqual(pred)) {ready = false}     
+                } 
+                                
+                if (ready) {
+                    basicBlockPool.removeEqual(basicBlock)
+                    changed = true
+                }    
+            }        
+            if (!changed) {
+                Debug("SCL ERROR: Program not schedulable!")
+                for(pool : basicBlockPool) {
+                    Debug("  not scheduled item: " + pool.basicBlockName)
+                }
+                return basicBlockPool
+            }
+        }
+                
+        basicBlockPool
+    }
    
 }

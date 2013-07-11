@@ -15,7 +15,7 @@ package de.cau.cs.kieler.core.model.xtend.m2m;
 
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 
-import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
+import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 
 /**
  * 
