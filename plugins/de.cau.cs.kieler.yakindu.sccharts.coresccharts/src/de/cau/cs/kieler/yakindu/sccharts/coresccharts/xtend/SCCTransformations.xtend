@@ -42,7 +42,8 @@ import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReactio
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction
 import org.eclipse.emf.common.util.EList
 import org.yakindu.sct.model.sgraph.Declaration
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValueReferenceExpression
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression
 
 
 class SCCTransformations {
@@ -389,9 +390,9 @@ class SCCTransformations {
           for (trigger : allTrigger) {
               // Change all trigger where the value is inspected (val(S) -> S_val)
               if (trigger != null) {
-                   val valReferences = trigger.eAllContents.toIterable().filter(typeof(ValueReferenceExpression));
+                   val valReferences = trigger.eAllContents.toIterable().filter(typeof(ValReferenceExpression));
                    for (valReference : ImmutableList::copyOf(valReferences)) {
-                         val expression = valReference.value;
+                         val expression = valReference.expression;
                          // Exchange reference to valued signal within expression with the
                          // new value variable
                          if (expression instanceof ElementReferenceExpression) {
@@ -595,9 +596,27 @@ class SCCTransformations {
        elementReferenceExpression;
     }
     
-    //def
-    //xxx 
+    // PRE and VAL REFERENCE CREATION
     
+    def ValReferenceExpression createValReferenceExpression(EObject signal) {
+        val elementReferenceExpression = signal.createElementReferenceExpression;
+        elementReferenceExpression.createValReferenceExpression;
+    }
+    def ValReferenceExpression createValReferenceExpression(Expression expression) {
+        val valReferenceExpression = SynctextFactory::eINSTANCE.createValReferenceExpression();
+        valReferenceExpression.setExpression(expression);
+        valReferenceExpression;
+    }
+    
+    def PreReferenceExpression createPreReferenceExpression(EObject signal) {
+        val elementReferenceExpression = signal.createElementReferenceExpression;
+        elementReferenceExpression.createPreReferenceExpression;
+    }
+    def PreReferenceExpression createPreReferenceExpression(Expression expression) {
+        val preReferenceExpression = SynctextFactory::eINSTANCE.createPreReferenceExpression();
+        preReferenceExpression.setExpression(expression);
+        preReferenceExpression;
+    }
         
     // EXPRESSION & ASSIGNMENT CREATION     
     
@@ -649,10 +668,10 @@ class SCCTransformations {
         for (elementReferenceExpression : elementReferenceExpressions) {
             found = found || (elementReferenceExpression.reference == signal && elementReferenceExpression.operationCall);
         }
-        val valueReferenceExpressions = rootObject.eAllContents.toIterable.filter(typeof(ValueReferenceExpression));
-        for (valueReferenceExpression : valueReferenceExpressions) {
-            found = found || (valueReferenceExpression.eContainer != null 
-                             && (valueReferenceExpression.eContainer.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).filter(e | e.reference == signal).size > 0)
+        val valReferenceExpressions = rootObject.eAllContents.toIterable.filter(typeof(ValReferenceExpression));
+        for (valReferenceExpression : valReferenceExpressions) {
+            found = found || (valReferenceExpression.eContainer != null 
+                             && (valReferenceExpression.eContainer.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).filter(e | e.reference == signal).size > 0)
             );
         }
         return found;
