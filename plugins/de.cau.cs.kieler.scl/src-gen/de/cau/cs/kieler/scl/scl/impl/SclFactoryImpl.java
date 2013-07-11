@@ -17,7 +17,7 @@ import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
-import de.cau.cs.kieler.scl.scl.VariableDeclaration;
+import de.cau.cs.kieler.scl.scl.VariableDefinition;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -80,7 +80,7 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
     switch (eClass.getClassifierID())
     {
       case SclPackage.PROGRAM: return createProgram();
-      case SclPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
+      case SclPackage.VARIABLE_DEFINITION: return createVariableDefinition();
       case SclPackage.STATEMENT: return createStatement();
       case SclPackage.EMPTY_STATEMENT: return createEmptyStatement();
       case SclPackage.INSTRUCTION_STATEMENT: return createInstructionStatement();
@@ -115,10 +115,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public VariableDeclaration createVariableDeclaration()
+  public VariableDefinition createVariableDefinition()
   {
-    VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
-    return variableDeclaration;
+    VariableDefinitionImpl variableDefinition = new VariableDefinitionImpl();
+    return variableDefinition;
   }
 
   /**

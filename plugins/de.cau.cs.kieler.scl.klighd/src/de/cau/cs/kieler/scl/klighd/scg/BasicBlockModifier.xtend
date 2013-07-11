@@ -103,7 +103,7 @@ class BasicBlockModifier implements IStyleModifier {
         node.KRendering.background = "red".color
 
         val headLabel = node.createLabel() => [
-            it.text = 'g' + basicBlock.getBasicBlockIndex
+            it.text = basicBlock.getBasicBlockName
             it.data += renderingFactory.createKText().setFontName(KlighdConstants::DEFAULT_FONT_NAME).
                 setFontSize(5).setForegroundColor(BASICBLOCK_COLOR_RED, BASICBLOCK_COLOR_GREEN, BASICBLOCK_COLOR_BLUE);
         ]

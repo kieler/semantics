@@ -1,17 +1,19 @@
-grammar de.cau.cs.kieler.scl.SCL with org.yakindu.sct.model.stext.SText 
+grammar de.cau.cs.kieler.scl.SCL with org.yakindu.sct.model.stext.SText
+//grammar de.cau.cs.kieler.scl.SCL with de.cau.cs.kieler.yakindu.sccharts.model.stext.Synctext
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://www.yakindu.org/sct/sgraph/2.0.0" as sgraph
 import "http://www.yakindu.org/base/types/2.0.0" as types
 import "http://www.yakindu.org/base/base/2.0.0" as base
 import "http://www.yakindu.org/sct/statechart/SText" as stext
+//import "http://kieler.cs.cau.de/yakindu/sccharts/stext/" as synctext
 //import "http://kieler.cs.cau.de/annotations" as annotations
 
 generate scl "http://www.cau.de/cs/kieler/scl/scl"
 
 Program:
 	'module' name = ID
-	(declarations+=VariableDeclaration)*
+	(definitions+=VariableDefinition)*
 	'{'
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
@@ -24,12 +26,14 @@ Program:
 //    '@' name=ID value=STRING
 //;
 
-VariableDeclaration:
+VariableDefinition:
     (input?='input')? (output?='output')? (static?='static')? 
     type=[types::Type|FQN] name=ID
     ('=' initialValue=Expression)?';'
+    
 //    (input?='input')? (output?='output')? 
 //(name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
+
 ;
 
 Statement:
@@ -115,10 +119,16 @@ Pause:
 StatementScope:
     {StatementScope}
     '{'
-    (declarations+=VariableDeclaration)*
+    (definitions+=VariableDefinition)*
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
             (statements +=  InstructionStatement statements += EmptyStatement*)?
          )
     '}'    
 ;
+
+//SignalDefinition:
+//    {EventDefinition} (Input?='input')? (Output?='output')? 'signal'
+//    name=ID (':' type=[types::Type|FQN]
+//    ('=' varInitialValue=Expression)?
+//    ('with' varCombineOperator=CombineOperator)?)? ';';

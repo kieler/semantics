@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.ui,
  org.yakindu.sct.model.stext.resource;bundle-version="2.0.0",
  de.cau.cs.kieler.scl,
  de.cau.cs.kieler.s;bundle-version="0.3.1",
- de.cau.cs.kieler.core.kexpressions;bundle-version="0.4.1"
+ de.cau.cs.kieler.core.kexpressions;bundle-version="0.4.1",
+ de.cau.cs.kieler.yakindu.sccharts.model.stext;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.core.model.handlers,

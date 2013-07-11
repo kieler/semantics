@@ -21,7 +21,8 @@ import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.StatementScope
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Thread
-import de.cau.cs.kieler.scl.scl.VariableDeclaration
+//import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
+import de.cau.cs.kieler.scl.scl.VariableDefinition
 import org.yakindu.sct.model.sgraph.Event
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition
 import de.cau.cs.kieler.scl.scl.Assignment
@@ -39,7 +40,7 @@ import org.yakindu.base.types.impl.PrimitiveTypeImpl
 import org.yakindu.base.types.Type
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
+//import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
 import org.yakindu.sct.model.sgraph.Declaration
 import org.yakindu.base.types.TypesFactory
 import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
@@ -71,7 +72,7 @@ class SCLCreateExtensions {
     
     // Create a new list of EObjects and insert the first instruction
     def createNewStatementList(Statement statement) {
-        createNewStatementList.add(statement)
+        createNewStatementList.add(statement);
     }
     
     def createNewInstructionList(Instruction instruction) {
@@ -137,14 +138,13 @@ class SCLCreateExtensions {
     
    
    // Create a new VariableDeclaration object
-    def VariableDeclaration createSCLVariableDeclaration() {
-        SCL.createVariableDeclaration()
+    def VariableDefinition createSCLVariableDefinition() {
+        SCL.createVariableDefinition()
     }
     
     // Create a new VariableDeclaration or return an old one, if it already exists in the given context
-    def VariableDeclaration create varDef: SCL.createVariableDeclaration()
+    def VariableDefinition create varDef: SCL.createVariableDefinition()
         createVariableDeclaration(Declaration definition) {
-
         varDef.setName(definition.getName());
         if (definition instanceof EventDefinition) {
             val eventDefinition = definition as EventDefinition;
@@ -156,8 +156,8 @@ class SCLCreateExtensions {
                 varDef.setType(eventDefinition.getType());
             }
         }
-        if (definition instanceof VariableDefinition) {
-            val varD = definition as VariableDefinition
+        if (definition instanceof de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition) {
+            val varD = definition as de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition
             varDef.setInput(varD.isInput)
             varDef.setOutput(varD.isOutput)
             if (varD.initialValue != null) varDef.setInitialValue(varD.initialValue)
@@ -166,8 +166,8 @@ class SCLCreateExtensions {
     }
 
 
-    def VariableDeclaration create varDef: SCL.createVariableDeclaration()
-        createVariableDeclaration(String name, String type) {
+    def VariableDefinition create varDef: SCL.createVariableDefinition()
+        createVariableDefinition(String name, String type) {
 
         varDef.setName(name);
         varDef.setInput(false);
@@ -219,7 +219,7 @@ class SCLCreateExtensions {
         assignments;    
     }
     
-    def Assignment createSCLAssignment(Expression expression, VariableDeclaration declRef) {
+    def Assignment createSCLAssignment(Expression expression, VariableDefinition declRef) {
         val assignment = SCL.createAssignment()
         assignment.assignment = expression
         assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
@@ -229,7 +229,7 @@ class SCLCreateExtensions {
         assignment
     }
     
-    def Assignment createSCLAssignment(VariableDeclaration firstDecl, VariableDeclaration secondDecl) {
+    def Assignment createSCLAssignment(VariableDefinition firstDecl, VariableDefinition secondDecl) {
         val assignment = SCL.createAssignment()
         
         val elemRef1 = SText.createElementReferenceExpression()
@@ -255,7 +255,7 @@ class SCLCreateExtensions {
     
     // Create a new scl conditional and take the given stext trigger as true trigger for the conditional. 
     def Conditional createSCLConditional(Trigger trigger) {
-        var conditional = SCL.createConditional();
+        var conditional = SCL.createConditional()
         if (trigger instanceof ReactionTrigger) {
             val reactionTrigger = trigger as ReactionTrigger;
 //            if (reactionTrigger.guardExpression != null) {
