@@ -6,21 +6,21 @@ import org.yakindu.sct.model.stext.stext.Expression;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Event Value Reference Expression</b></em>'.
+ * A representation of the model object '<em><b>Value Reference Expression</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValueReferenceExpression#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getEventValueReferenceExpression()
+ * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getValueReferenceExpression()
  * @model
  * @generated
  */
-public interface EventValueReferenceExpression extends Expression
+public interface ValueReferenceExpression extends Expression
 {
   /**
    * Returns the value of the '<em><b>Value</b></em>' containment reference.
@@ -32,14 +32,14 @@ public interface EventValueReferenceExpression extends Expression
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
    * @see #setValue(Expression)
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getEventValueReferenceExpression_Value()
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage#getValueReferenceExpression_Value()
    * @model containment="true"
    * @generated
    */
   Expression getValue();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression#getValue <em>Value</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValueReferenceExpression#getValue <em>Value</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Value</em>' containment reference.
@@ -48,4 +48,4 @@ public interface EventValueReferenceExpression extends Expression
    */
   void setValue(Expression value);
 
-} // EventValueReferenceExpression
+} // ValueReferenceExpression

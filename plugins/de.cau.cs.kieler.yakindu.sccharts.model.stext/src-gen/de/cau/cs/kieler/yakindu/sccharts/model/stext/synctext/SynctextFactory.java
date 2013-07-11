@@ -140,13 +140,22 @@ public interface SynctextFactory extends EFactory
   NumericalMultiplyDivideExpression createNumericalMultiplyDivideExpression();
 
   /**
-   * Returns a new object of class '<em>Event Value Reference Expression</em>'.
+   * Returns a new object of class '<em>Value Reference Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Event Value Reference Expression</em>'.
+   * @return a new object of class '<em>Value Reference Expression</em>'.
    * @generated
    */
-  EventValueReferenceExpression createEventValueReferenceExpression();
+  ValueReferenceExpression createValueReferenceExpression();
+
+  /**
+   * Returns a new object of class '<em>Pre Reference Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Pre Reference Expression</em>'.
+   * @generated
+   */
+  PreReferenceExpression createPreReferenceExpression();
 
   /**
    * Returns a new object of class '<em>Pre Value Expression</em>'.

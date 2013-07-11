@@ -806,10 +806,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getRightOperandNumericalUnaryExpressionParserRuleCall_1_2_0() { return cRightOperandNumericalUnaryExpressionParserRuleCall_1_2_0; }
 	}
 
-	public class EventValueReferenceExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EventValueReferenceExpression");
+	public class ValueReferenceExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValueReferenceExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cEventValueReferenceExpressionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cValueReferenceExpressionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cValKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -824,16 +824,16 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//// cmot change
 		//
-		//EventValueReferenceExpression returns stext::Expression:
+		//ValueReferenceExpression returns stext::Expression:
 		//
-		//	{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
+		//	{ValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
 		public ParserRule getRule() { return rule; }
 
-		//{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")"
+		//{ValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")"
 		public Group getGroup() { return cGroup; }
 
-		//{EventValueReferenceExpression}
-		public Action getEventValueReferenceExpressionAction_0() { return cEventValueReferenceExpressionAction_0; }
+		//{ValueReferenceExpression}
+		public Action getValueReferenceExpressionAction_0() { return cValueReferenceExpressionAction_0; }
 
 		//"val"
 		public Keyword getValKeyword_1() { return cValKeyword_1; }
@@ -860,13 +860,13 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	public class PreReferenceExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PreReferenceExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cEventValueReferenceExpressionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cPreReferenceExpressionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cPreKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Alternatives cValueAlternatives_3_0 = (Alternatives)cValueAssignment_3.eContents().get(0);
 		private final RuleCall cValueFeatureCallParserRuleCall_3_0_0 = (RuleCall)cValueAlternatives_3_0.eContents().get(0);
-		private final RuleCall cValueEventValueReferenceExpressionParserRuleCall_3_0_1 = (RuleCall)cValueAlternatives_3_0.eContents().get(1);
+		private final RuleCall cValueValueReferenceExpressionParserRuleCall_3_0_1 = (RuleCall)cValueAlternatives_3_0.eContents().get(1);
 		private final RuleCall cValuePreReferenceExpressionParserRuleCall_3_0_2 = (RuleCall)cValueAlternatives_3_0.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
@@ -876,18 +876,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//PreReferenceExpression returns stext::Expression:
 		//
-		//	{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression |
-		//
-		//	PreReferenceExpression) ")";
+		//	{PreReferenceExpression} "pre" "(" value=(FeatureCall | ValueReferenceExpression | PreReferenceExpression) ")";
 		public ParserRule getRule() { return rule; }
 
-		//{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression | PreReferenceExpression)
-		//
-		//")"
+		//{PreReferenceExpression} "pre" "(" value=(FeatureCall | ValueReferenceExpression | PreReferenceExpression) ")"
 		public Group getGroup() { return cGroup; }
 
-		//{EventValueReferenceExpression}
-		public Action getEventValueReferenceExpressionAction_0() { return cEventValueReferenceExpressionAction_0; }
+		//{PreReferenceExpression}
+		public Action getPreReferenceExpressionAction_0() { return cPreReferenceExpressionAction_0; }
 
 		//"pre"
 		public Keyword getPreKeyword_1() { return cPreKeyword_1; }
@@ -895,17 +891,17 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 
-		//value=(FeatureCall | EventValueReferenceExpression | PreReferenceExpression)
+		//value=(FeatureCall | ValueReferenceExpression | PreReferenceExpression)
 		public Assignment getValueAssignment_3() { return cValueAssignment_3; }
 
-		//FeatureCall | EventValueReferenceExpression | PreReferenceExpression
+		//FeatureCall | ValueReferenceExpression | PreReferenceExpression
 		public Alternatives getValueAlternatives_3_0() { return cValueAlternatives_3_0; }
 
 		//FeatureCall
 		public RuleCall getValueFeatureCallParserRuleCall_3_0_0() { return cValueFeatureCallParserRuleCall_3_0_0; }
 
-		//EventValueReferenceExpression
-		public RuleCall getValueEventValueReferenceExpressionParserRuleCall_3_0_1() { return cValueEventValueReferenceExpressionParserRuleCall_3_0_1; }
+		//ValueReferenceExpression
+		public RuleCall getValueValueReferenceExpressionParserRuleCall_3_0_1() { return cValueValueReferenceExpressionParserRuleCall_3_0_1; }
 
 		//PreReferenceExpression
 		public RuleCall getValuePreReferenceExpressionParserRuleCall_3_0_2() { return cValuePreReferenceExpressionParserRuleCall_3_0_2; }
@@ -920,7 +916,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPrimitiveValueExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cFeatureCallParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cActiveStateReferenceExpressionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cEventValueReferenceExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cValueReferenceExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cPreReferenceExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cParenthesizedExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
@@ -932,12 +928,12 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//PrimaryExpression returns stext::Expression:
 		//
-		//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | EventValueReferenceExpression |
+		//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | ValueReferenceExpression |
 		//
 		//	PreReferenceExpression | ParenthesizedExpression;
 		public ParserRule getRule() { return rule; }
 
-		//PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | EventValueReferenceExpression |
+		//PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | ValueReferenceExpression |
 		//
 		//PreReferenceExpression | ParenthesizedExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -951,8 +947,8 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//ActiveStateReferenceExpression
 		public RuleCall getActiveStateReferenceExpressionParserRuleCall_2() { return cActiveStateReferenceExpressionParserRuleCall_2; }
 
-		//EventValueReferenceExpression
-		public RuleCall getEventValueReferenceExpressionParserRuleCall_3() { return cEventValueReferenceExpressionParserRuleCall_3; }
+		//ValueReferenceExpression
+		public RuleCall getValueReferenceExpressionParserRuleCall_3() { return cValueReferenceExpressionParserRuleCall_3; }
 
 		//PreReferenceExpression
 		public RuleCall getPreReferenceExpressionParserRuleCall_4() { return cPreReferenceExpressionParserRuleCall_4; }
@@ -1141,7 +1137,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	private ReactionEffectElements pReactionEffect;
 	private NumericalMultiplyDivideExpressionElements pNumericalMultiplyDivideExpression;
 	private MultiplicativeOperator2Elements unknownRuleMultiplicativeOperator2;
-	private EventValueReferenceExpressionElements pEventValueReferenceExpression;
+	private ValueReferenceExpressionElements pValueReferenceExpression;
 	private PreReferenceExpressionElements pPreReferenceExpression;
 	private PrimaryExpressionElements pPrimaryExpression;
 	private PreValueExpressionElements pPreValueExpression;
@@ -1421,15 +1417,15 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// cmot change
 	//
-	//EventValueReferenceExpression returns stext::Expression:
+	//ValueReferenceExpression returns stext::Expression:
 	//
-	//	{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
-	public EventValueReferenceExpressionElements getEventValueReferenceExpressionAccess() {
-		return (pEventValueReferenceExpression != null) ? pEventValueReferenceExpression : (pEventValueReferenceExpression = new EventValueReferenceExpressionElements());
+	//	{ValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
+	public ValueReferenceExpressionElements getValueReferenceExpressionAccess() {
+		return (pValueReferenceExpression != null) ? pValueReferenceExpression : (pValueReferenceExpression = new ValueReferenceExpressionElements());
 	}
 	
-	public ParserRule getEventValueReferenceExpressionRule() {
-		return getEventValueReferenceExpressionAccess().getRule();
+	public ParserRule getValueReferenceExpressionRule() {
+		return getValueReferenceExpressionAccess().getRule();
 	}
 
 	//// Additional pre(), like val(), allow pre(val()) and allow pre(pre())    
@@ -1438,9 +1434,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//PreReferenceExpression returns stext::Expression:
 	//
-	//	{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression |
-	//
-	//	PreReferenceExpression) ")";
+	//	{PreReferenceExpression} "pre" "(" value=(FeatureCall | ValueReferenceExpression | PreReferenceExpression) ")";
 	public PreReferenceExpressionElements getPreReferenceExpressionAccess() {
 		return (pPreReferenceExpression != null) ? pPreReferenceExpression : (pPreReferenceExpression = new PreReferenceExpressionElements());
 	}
@@ -1457,7 +1451,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//PrimaryExpression returns stext::Expression:
 	//
-	//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | EventValueReferenceExpression |
+	//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | ValueReferenceExpression |
 	//
 	//	PreReferenceExpression | ParenthesizedExpression;
 	public PrimaryExpressionElements getPrimaryExpressionAccess() {
@@ -2187,6 +2181,17 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getElementReferenceExpressionRule() {
 		return getElementReferenceExpressionAccess().getRule();
+	}
+
+	//EventValueReferenceExpression returns Expression:
+	//
+	//	{EventValueReferenceExpression} "valueof" "(" value=FeatureCall ")";
+	public STextGrammarAccess.EventValueReferenceExpressionElements getEventValueReferenceExpressionAccess() {
+		return gaSText.getEventValueReferenceExpressionAccess();
+	}
+	
+	public ParserRule getEventValueReferenceExpressionRule() {
+		return getEventValueReferenceExpressionAccess().getRule();
 	}
 
 	//ActiveStateReferenceExpression returns Expression:

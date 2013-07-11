@@ -3,18 +3,19 @@ package de.cau.cs.kieler.yakindu.sccharts.model.stext.serializer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.services.SynctextGrammarAccess;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReaction;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.NumericalMultiplyDivideExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.OperationDefinition;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionEffect;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SimpleScope;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValueReferenceExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -43,6 +44,7 @@ import org.yakindu.sct.model.stext.stext.EntryEvent;
 import org.yakindu.sct.model.stext.stext.EntryPointSpec;
 import org.yakindu.sct.model.stext.stext.EventDefinition;
 import org.yakindu.sct.model.stext.stext.EventRaisingExpression;
+import org.yakindu.sct.model.stext.stext.EventValueReferenceExpression;
 import org.yakindu.sct.model.stext.stext.ExitEvent;
 import org.yakindu.sct.model.stext.stext.ExitPointSpec;
 import org.yakindu.sct.model.stext.stext.FeatureCall;
@@ -277,6 +279,12 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 			case StextPackage.EVENT_RAISING_EXPRESSION:
 				if(context == grammarAccess.getEventRaisingExpressionRule()) {
 					sequence_EventRaisingExpression(context, (EventRaisingExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case StextPackage.EVENT_VALUE_REFERENCE_EXPRESSION:
+				if(context == grammarAccess.getEventValueReferenceExpressionRule()) {
+					sequence_EventValueReferenceExpression(context, (EventValueReferenceExpression) semanticObject); 
 					return; 
 				}
 				else break;
@@ -677,46 +685,6 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 					return; 
 				}
 				else break;
-			case SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION:
-				if(context == grammarAccess.getEventValueReferenceExpressionRule()) {
-					sequence_EventValueReferenceExpression(context, (EventValueReferenceExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalUnaryExpressionRule() ||
-				   context == grammarAccess.getPrimaryExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_EventValueReferenceExpression_PreReferenceExpression_PrimaryExpression(context, (EventValueReferenceExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getPreReferenceExpressionRule()) {
-					sequence_PreReferenceExpression(context, (EventValueReferenceExpression) semanticObject); 
-					return; 
-				}
-				else break;
 			case SynctextPackage.LOCAL_DURING_REACTION:
 				if(context == grammarAccess.getDeclarationRule() ||
 				   context == grammarAccess.getLocalDuringReactionRule()) {
@@ -784,6 +752,39 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 					return; 
 				}
 				else break;
+			case SynctextPackage.PRE_REFERENCE_EXPRESSION:
+				if(context == grammarAccess.getAssignmentExpressionRule() ||
+				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
+				   context == grammarAccess.getBitwiseAndExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getBitwiseOrExpressionRule() ||
+				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getBitwiseXorExpressionRule() ||
+				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getConditionalExpressionRule() ||
+				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getLogicalNotExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getLogicalRelationExpressionRule() ||
+				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
+				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
+				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getNumericalUnaryExpressionRule() ||
+				   context == grammarAccess.getPreReferenceExpressionRule() ||
+				   context == grammarAccess.getPrimaryExpressionRule() ||
+				   context == grammarAccess.getShiftExpressionRule() ||
+				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getStatementExpressionRule()) {
+					sequence_PreReferenceExpression(context, (PreReferenceExpression) semanticObject); 
+					return; 
+				}
+				else break;
 			case SynctextPackage.PRE_VALUE_EXPRESSION:
 				if(context == grammarAccess.getPreValueExpressionRule()) {
 					sequence_PreValueExpression(context, (PreValueExpression) semanticObject); 
@@ -814,6 +815,39 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 					return; 
 				}
 				else break;
+			case SynctextPackage.VALUE_REFERENCE_EXPRESSION:
+				if(context == grammarAccess.getAssignmentExpressionRule() ||
+				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
+				   context == grammarAccess.getBitwiseAndExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getBitwiseOrExpressionRule() ||
+				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getBitwiseXorExpressionRule() ||
+				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getConditionalExpressionRule() ||
+				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getLogicalNotExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getLogicalRelationExpressionRule() ||
+				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
+				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
+				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getNumericalUnaryExpressionRule() ||
+				   context == grammarAccess.getPrimaryExpressionRule() ||
+				   context == grammarAccess.getShiftExpressionRule() ||
+				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
+				   context == grammarAccess.getStatementExpressionRule() ||
+				   context == grammarAccess.getValueReferenceExpressionRule()) {
+					sequence_ValueReferenceExpression(context, (ValueReferenceExpression) semanticObject); 
+					return; 
+				}
+				else break;
 			case SynctextPackage.VARIABLE_DEFINITION:
 				if(context == grammarAccess.getDeclarationRule() ||
 				   context == grammarAccess.getVariableDeclarationRule() ||
@@ -834,24 +868,6 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
-	
-	/**
-	 * Constraint:
-	 *     (value=FeatureCall | value=PreReferenceExpression)
-	 */
-	protected void sequence_EventValueReferenceExpression(EObject context, EventValueReferenceExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (value=FeatureCall | value=PreReferenceExpression | value=FeatureCall | value=EventValueReferenceExpression | value=PreReferenceExpression)
-	 */
-	protected void sequence_EventValueReferenceExpression_PreReferenceExpression_PrimaryExpression(EObject context, EventValueReferenceExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
 	
 	/**
 	 * Constraint:
@@ -935,9 +951,9 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (value=FeatureCall | value=EventValueReferenceExpression | value=PreReferenceExpression)
+	 *     (value=FeatureCall | value=ValueReferenceExpression | value=PreReferenceExpression)
 	 */
-	protected void sequence_PreReferenceExpression(EObject context, EventValueReferenceExpression semanticObject) {
+	protected void sequence_PreReferenceExpression(EObject context, PreReferenceExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -990,6 +1006,15 @@ public abstract class AbstractSynctextSemanticSequencer extends STextSemanticSeq
 	 *     (declarations+=Declaration*)
 	 */
 	protected void sequence_StateScope(EObject context, SimpleScope semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (value=FeatureCall | value=PreReferenceExpression)
+	 */
+	protected void sequence_ValueReferenceExpression(EObject context, ValueReferenceExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

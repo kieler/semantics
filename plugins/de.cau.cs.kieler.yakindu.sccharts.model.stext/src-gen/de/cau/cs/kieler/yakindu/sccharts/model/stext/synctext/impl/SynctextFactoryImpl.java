@@ -78,7 +78,8 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
       case SynctextPackage.REACTION_TRIGGER: return createReactionTrigger();
       case SynctextPackage.REACTION_EFFECT: return createReactionEffect();
       case SynctextPackage.NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION: return createNumericalMultiplyDivideExpression();
-      case SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION: return createEventValueReferenceExpression();
+      case SynctextPackage.VALUE_REFERENCE_EXPRESSION: return createValueReferenceExpression();
+      case SynctextPackage.PRE_REFERENCE_EXPRESSION: return createPreReferenceExpression();
       case SynctextPackage.PRE_VALUE_EXPRESSION: return createPreValueExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -271,10 +272,21 @@ public class SynctextFactoryImpl extends EFactoryImpl implements SynctextFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public EventValueReferenceExpression createEventValueReferenceExpression()
+  public ValueReferenceExpression createValueReferenceExpression()
   {
-    EventValueReferenceExpressionImpl eventValueReferenceExpression = new EventValueReferenceExpressionImpl();
-    return eventValueReferenceExpression;
+    ValueReferenceExpressionImpl valueReferenceExpression = new ValueReferenceExpressionImpl();
+    return valueReferenceExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PreReferenceExpression createPreReferenceExpression()
+  {
+    PreReferenceExpressionImpl preReferenceExpression = new PreReferenceExpressionImpl();
+    return preReferenceExpression;
   }
 
   /**

@@ -4,7 +4,6 @@ package de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl;
 
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.CombineOperator;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition;
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalDuringReaction;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalEntryReaction;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalExitReaction;
@@ -12,6 +11,7 @@ import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.LocalSuspendReacti
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.MultiplicativeOperator2;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.NumericalMultiplyDivideExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.OperationDefinition;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionEffect;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ReactionTrigger;
@@ -20,6 +20,7 @@ import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SimpleScope;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.StateScope;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextFactory;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValueReferenceExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.VariableDefinition;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -140,7 +141,14 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass eventValueReferenceExpressionEClass = null;
+  private EClass valueReferenceExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass preReferenceExpressionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -634,9 +642,9 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getEventValueReferenceExpression()
+  public EClass getValueReferenceExpression()
   {
-    return eventValueReferenceExpressionEClass;
+    return valueReferenceExpressionEClass;
   }
 
   /**
@@ -644,9 +652,29 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getEventValueReferenceExpression_Value()
+  public EReference getValueReferenceExpression_Value()
   {
-    return (EReference)eventValueReferenceExpressionEClass.getEStructuralFeatures().get(0);
+    return (EReference)valueReferenceExpressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPreReferenceExpression()
+  {
+    return preReferenceExpressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPreReferenceExpression_Value()
+  {
+    return (EReference)preReferenceExpressionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -772,8 +800,11 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     createEAttribute(numericalMultiplyDivideExpressionEClass, NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__OPERATOR);
     createEReference(numericalMultiplyDivideExpressionEClass, NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__RIGHT_OPERAND);
 
-    eventValueReferenceExpressionEClass = createEClass(EVENT_VALUE_REFERENCE_EXPRESSION);
-    createEReference(eventValueReferenceExpressionEClass, EVENT_VALUE_REFERENCE_EXPRESSION__VALUE);
+    valueReferenceExpressionEClass = createEClass(VALUE_REFERENCE_EXPRESSION);
+    createEReference(valueReferenceExpressionEClass, VALUE_REFERENCE_EXPRESSION__VALUE);
+
+    preReferenceExpressionEClass = createEClass(PRE_REFERENCE_EXPRESSION);
+    createEReference(preReferenceExpressionEClass, PRE_REFERENCE_EXPRESSION__VALUE);
 
     preValueExpressionEClass = createEClass(PRE_VALUE_EXPRESSION);
     createEReference(preValueExpressionEClass, PRE_VALUE_EXPRESSION__VALUE);
@@ -831,7 +862,8 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     reactionTriggerEClass.getESuperTypes().add(theSGraphPackage.getTrigger());
     reactionEffectEClass.getESuperTypes().add(theSGraphPackage.getEffect());
     numericalMultiplyDivideExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
-    eventValueReferenceExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
+    valueReferenceExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
+    preReferenceExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
     preValueExpressionEClass.getESuperTypes().add(theStextPackage.getExpression());
 
     // Initialize classes and features; add operations and parameters
@@ -888,8 +920,11 @@ public class SynctextPackageImpl extends EPackageImpl implements SynctextPackage
     initEAttribute(getNumericalMultiplyDivideExpression_Operator(), this.getMultiplicativeOperator2(), "operator", null, 0, 1, NumericalMultiplyDivideExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNumericalMultiplyDivideExpression_RightOperand(), theStextPackage.getExpression(), null, "rightOperand", null, 0, 1, NumericalMultiplyDivideExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(eventValueReferenceExpressionEClass, EventValueReferenceExpression.class, "EventValueReferenceExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEventValueReferenceExpression_Value(), theStextPackage.getExpression(), null, "value", null, 0, 1, EventValueReferenceExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(valueReferenceExpressionEClass, ValueReferenceExpression.class, "ValueReferenceExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getValueReferenceExpression_Value(), theStextPackage.getExpression(), null, "value", null, 0, 1, ValueReferenceExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(preReferenceExpressionEClass, PreReferenceExpression.class, "PreReferenceExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPreReferenceExpression_Value(), theStextPackage.getExpression(), null, "value", null, 0, 1, PreReferenceExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(preValueExpressionEClass, PreValueExpression.class, "PreValueExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPreValueExpression_Value(), theStextPackage.getExpression(), null, "value", null, 0, 1, PreValueExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

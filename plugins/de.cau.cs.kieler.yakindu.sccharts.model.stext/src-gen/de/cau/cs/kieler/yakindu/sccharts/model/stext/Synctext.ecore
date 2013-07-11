@@ -80,7 +80,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="rightOperand" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EventValueReferenceExpression" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression">
+  <eClassifiers xsi:type="ecore:EClass" name="ValueReferenceExpression" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PreReferenceExpression" eSuperTypes="../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass ../../../../../../../../../../org.yakindu.sct.model.stext/model/SText.ecore#//Expression"
         containment="true"/>
   </eClassifiers>

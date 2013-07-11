@@ -74,8 +74,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//NumericalMultiplyDivideExpression/operator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//NumericalMultiplyDivideExpression/rightOperand"/>
     </genClasses>
-    <genClasses ecoreClass="Synctext.ecore#//EventValueReferenceExpression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventValueReferenceExpression/value"/>
+    <genClasses ecoreClass="Synctext.ecore#//ValueReferenceExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//ValueReferenceExpression/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Synctext.ecore#//PreReferenceExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//PreReferenceExpression/value"/>
     </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//PreValueExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//PreValueExpression/value"/>

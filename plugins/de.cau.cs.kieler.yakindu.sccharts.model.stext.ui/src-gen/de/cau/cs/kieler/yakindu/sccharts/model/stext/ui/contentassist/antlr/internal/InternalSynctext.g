@@ -451,25 +451,25 @@ finally {
 
 
 
-// Entry rule entryRuleEventValueReferenceExpression
-entryRuleEventValueReferenceExpression 
+// Entry rule entryRuleValueReferenceExpression
+entryRuleValueReferenceExpression 
 :
-{ before(grammarAccess.getEventValueReferenceExpressionRule()); }
-	 ruleEventValueReferenceExpression
-{ after(grammarAccess.getEventValueReferenceExpressionRule()); } 
+{ before(grammarAccess.getValueReferenceExpressionRule()); }
+	 ruleValueReferenceExpression
+{ after(grammarAccess.getValueReferenceExpressionRule()); } 
 	 EOF 
 ;
 
-// Rule EventValueReferenceExpression
-ruleEventValueReferenceExpression
+// Rule ValueReferenceExpression
+ruleValueReferenceExpression
     @init {
 		int stackSize = keepStackSize();
     }
 	:
 (
-{ before(grammarAccess.getEventValueReferenceExpressionAccess().getGroup()); }
-(rule__EventValueReferenceExpression__Group__0)
-{ after(grammarAccess.getEventValueReferenceExpressionAccess().getGroup()); }
+{ before(grammarAccess.getValueReferenceExpressionAccess().getGroup()); }
+(rule__ValueReferenceExpression__Group__0)
+{ after(grammarAccess.getValueReferenceExpressionAccess().getGroup()); }
 )
 
 ;
@@ -1793,6 +1793,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleActiveStateReferenceExpression
 entryRuleActiveStateReferenceExpression 
 :
@@ -2262,21 +2264,21 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__EventValueReferenceExpression__ValueAlternatives_3_0
+rule__ValueReferenceExpression__ValueAlternatives_3_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getEventValueReferenceExpressionAccess().getValueFeatureCallParserRuleCall_3_0_0()); }
+{ before(grammarAccess.getValueReferenceExpressionAccess().getValueFeatureCallParserRuleCall_3_0_0()); }
 	ruleFeatureCall
-{ after(grammarAccess.getEventValueReferenceExpressionAccess().getValueFeatureCallParserRuleCall_3_0_0()); }
+{ after(grammarAccess.getValueReferenceExpressionAccess().getValueFeatureCallParserRuleCall_3_0_0()); }
 )
 
     |(
-{ before(grammarAccess.getEventValueReferenceExpressionAccess().getValuePreReferenceExpressionParserRuleCall_3_0_1()); }
+{ before(grammarAccess.getValueReferenceExpressionAccess().getValuePreReferenceExpressionParserRuleCall_3_0_1()); }
 	rulePreReferenceExpression
-{ after(grammarAccess.getEventValueReferenceExpressionAccess().getValuePreReferenceExpressionParserRuleCall_3_0_1()); }
+{ after(grammarAccess.getValueReferenceExpressionAccess().getValuePreReferenceExpressionParserRuleCall_3_0_1()); }
 )
 
 ;
@@ -2296,9 +2298,9 @@ rule__PreReferenceExpression__ValueAlternatives_3_0
 )
 
     |(
-{ before(grammarAccess.getPreReferenceExpressionAccess().getValueEventValueReferenceExpressionParserRuleCall_3_0_1()); }
-	ruleEventValueReferenceExpression
-{ after(grammarAccess.getPreReferenceExpressionAccess().getValueEventValueReferenceExpressionParserRuleCall_3_0_1()); }
+{ before(grammarAccess.getPreReferenceExpressionAccess().getValueValueReferenceExpressionParserRuleCall_3_0_1()); }
+	ruleValueReferenceExpression
+{ after(grammarAccess.getPreReferenceExpressionAccess().getValueValueReferenceExpressionParserRuleCall_3_0_1()); }
 )
 
     |(
@@ -2336,9 +2338,9 @@ rule__PrimaryExpression__Alternatives
 )
 
     |(
-{ before(grammarAccess.getPrimaryExpressionAccess().getEventValueReferenceExpressionParserRuleCall_3()); }
-	ruleEventValueReferenceExpression
-{ after(grammarAccess.getPrimaryExpressionAccess().getEventValueReferenceExpressionParserRuleCall_3()); }
+{ before(grammarAccess.getPrimaryExpressionAccess().getValueReferenceExpressionParserRuleCall_3()); }
+	ruleValueReferenceExpression
+{ after(grammarAccess.getPrimaryExpressionAccess().getValueReferenceExpressionParserRuleCall_3()); }
 )
 
     |(
@@ -5932,29 +5934,29 @@ finally {
 
 
 
-rule__EventValueReferenceExpression__Group__0
+rule__ValueReferenceExpression__Group__0
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__EventValueReferenceExpression__Group__0__Impl
-	rule__EventValueReferenceExpression__Group__1
+	rule__ValueReferenceExpression__Group__0__Impl
+	rule__ValueReferenceExpression__Group__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__EventValueReferenceExpression__Group__0__Impl
+rule__ValueReferenceExpression__Group__0__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getEventValueReferenceExpressionAccess().getEventValueReferenceExpressionAction_0()); }
+{ before(grammarAccess.getValueReferenceExpressionAccess().getValueReferenceExpressionAction_0()); }
 (
 
 )
-{ after(grammarAccess.getEventValueReferenceExpressionAccess().getEventValueReferenceExpressionAction_0()); }
+{ after(grammarAccess.getValueReferenceExpressionAccess().getValueReferenceExpressionAction_0()); }
 )
 
 ;
@@ -5963,29 +5965,29 @@ finally {
 }
 
 
-rule__EventValueReferenceExpression__Group__1
+rule__ValueReferenceExpression__Group__1
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__EventValueReferenceExpression__Group__1__Impl
-	rule__EventValueReferenceExpression__Group__2
+	rule__ValueReferenceExpression__Group__1__Impl
+	rule__ValueReferenceExpression__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__EventValueReferenceExpression__Group__1__Impl
+rule__ValueReferenceExpression__Group__1__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getEventValueReferenceExpressionAccess().getValKeyword_1()); }
+{ before(grammarAccess.getValueReferenceExpressionAccess().getValKeyword_1()); }
 
 	'val' 
 
-{ after(grammarAccess.getEventValueReferenceExpressionAccess().getValKeyword_1()); }
+{ after(grammarAccess.getValueReferenceExpressionAccess().getValKeyword_1()); }
 )
 
 ;
@@ -5994,29 +5996,29 @@ finally {
 }
 
 
-rule__EventValueReferenceExpression__Group__2
+rule__ValueReferenceExpression__Group__2
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__EventValueReferenceExpression__Group__2__Impl
-	rule__EventValueReferenceExpression__Group__3
+	rule__ValueReferenceExpression__Group__2__Impl
+	rule__ValueReferenceExpression__Group__3
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__EventValueReferenceExpression__Group__2__Impl
+rule__ValueReferenceExpression__Group__2__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getEventValueReferenceExpressionAccess().getLeftParenthesisKeyword_2()); }
+{ before(grammarAccess.getValueReferenceExpressionAccess().getLeftParenthesisKeyword_2()); }
 
 	'(' 
 
-{ after(grammarAccess.getEventValueReferenceExpressionAccess().getLeftParenthesisKeyword_2()); }
+{ after(grammarAccess.getValueReferenceExpressionAccess().getLeftParenthesisKeyword_2()); }
 )
 
 ;
@@ -6025,27 +6027,27 @@ finally {
 }
 
 
-rule__EventValueReferenceExpression__Group__3
+rule__ValueReferenceExpression__Group__3
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__EventValueReferenceExpression__Group__3__Impl
-	rule__EventValueReferenceExpression__Group__4
+	rule__ValueReferenceExpression__Group__3__Impl
+	rule__ValueReferenceExpression__Group__4
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__EventValueReferenceExpression__Group__3__Impl
+rule__ValueReferenceExpression__Group__3__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getEventValueReferenceExpressionAccess().getValueAssignment_3()); }
-(rule__EventValueReferenceExpression__ValueAssignment_3)
-{ after(grammarAccess.getEventValueReferenceExpressionAccess().getValueAssignment_3()); }
+{ before(grammarAccess.getValueReferenceExpressionAccess().getValueAssignment_3()); }
+(rule__ValueReferenceExpression__ValueAssignment_3)
+{ after(grammarAccess.getValueReferenceExpressionAccess().getValueAssignment_3()); }
 )
 
 ;
@@ -6054,28 +6056,28 @@ finally {
 }
 
 
-rule__EventValueReferenceExpression__Group__4
+rule__ValueReferenceExpression__Group__4
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__EventValueReferenceExpression__Group__4__Impl
+	rule__ValueReferenceExpression__Group__4__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__EventValueReferenceExpression__Group__4__Impl
+rule__ValueReferenceExpression__Group__4__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getEventValueReferenceExpressionAccess().getRightParenthesisKeyword_4()); }
+{ before(grammarAccess.getValueReferenceExpressionAccess().getRightParenthesisKeyword_4()); }
 
 	')' 
 
-{ after(grammarAccess.getEventValueReferenceExpressionAccess().getRightParenthesisKeyword_4()); }
+{ after(grammarAccess.getValueReferenceExpressionAccess().getRightParenthesisKeyword_4()); }
 )
 
 ;
@@ -6112,11 +6114,11 @@ rule__PreReferenceExpression__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getPreReferenceExpressionAccess().getEventValueReferenceExpressionAction_0()); }
+{ before(grammarAccess.getPreReferenceExpressionAccess().getPreReferenceExpressionAction_0()); }
 (
 
 )
-{ after(grammarAccess.getPreReferenceExpressionAccess().getEventValueReferenceExpressionAction_0()); }
+{ after(grammarAccess.getPreReferenceExpressionAccess().getPreReferenceExpressionAction_0()); }
 )
 
 ;
@@ -10683,6 +10685,7 @@ finally {
 
 
 
+
 rule__ActiveStateReferenceExpression__Group__0
     @init {
 		int stackSize = keepStackSize();
@@ -11859,15 +11862,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__EventValueReferenceExpression__ValueAssignment_3
+rule__ValueReferenceExpression__ValueAssignment_3
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getEventValueReferenceExpressionAccess().getValueAlternatives_3_0()); }
-(rule__EventValueReferenceExpression__ValueAlternatives_3_0)
-{ after(grammarAccess.getEventValueReferenceExpressionAccess().getValueAlternatives_3_0()); }
+{ before(grammarAccess.getValueReferenceExpressionAccess().getValueAlternatives_3_0()); }
+(rule__ValueReferenceExpression__ValueAlternatives_3_0)
+{ after(grammarAccess.getValueReferenceExpressionAccess().getValueAlternatives_3_0()); }
 )
 
 ;
@@ -12691,6 +12694,7 @@ rule__ElementReferenceExpression__ArgsAssignment_2_1_1_1
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__ActiveStateReferenceExpression__ValueAssignment_3
     @init {

@@ -215,12 +215,21 @@ public class SynctextSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION:
+      case SynctextPackage.VALUE_REFERENCE_EXPRESSION:
       {
-        EventValueReferenceExpression eventValueReferenceExpression = (EventValueReferenceExpression)theEObject;
-        T result = caseEventValueReferenceExpression(eventValueReferenceExpression);
-        if (result == null) result = caseExpression(eventValueReferenceExpression);
-        if (result == null) result = caseStatement(eventValueReferenceExpression);
+        ValueReferenceExpression valueReferenceExpression = (ValueReferenceExpression)theEObject;
+        T result = caseValueReferenceExpression(valueReferenceExpression);
+        if (result == null) result = caseExpression(valueReferenceExpression);
+        if (result == null) result = caseStatement(valueReferenceExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SynctextPackage.PRE_REFERENCE_EXPRESSION:
+      {
+        PreReferenceExpression preReferenceExpression = (PreReferenceExpression)theEObject;
+        T result = casePreReferenceExpression(preReferenceExpression);
+        if (result == null) result = caseExpression(preReferenceExpression);
+        if (result == null) result = caseStatement(preReferenceExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -446,17 +455,33 @@ public class SynctextSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Event Value Reference Expression</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Value Reference Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Event Value Reference Expression</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Value Reference Expression</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseEventValueReferenceExpression(EventValueReferenceExpression object)
+  public T caseValueReferenceExpression(ValueReferenceExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Pre Reference Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Pre Reference Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePreReferenceExpression(PreReferenceExpression object)
   {
     return null;
   }

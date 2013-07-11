@@ -2,8 +2,8 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl;
 
-import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression;
 import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.SynctextPackage;
+import de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValueReferenceExpression;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -19,18 +19,18 @@ import org.yakindu.sct.model.stext.stext.impl.ExpressionImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Event Value Reference Expression</b></em>'.
+ * An implementation of the model object '<em><b>Value Reference Expression</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.EventValueReferenceExpressionImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.ValueReferenceExpressionImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class EventValueReferenceExpressionImpl extends ExpressionImpl implements EventValueReferenceExpression
+public class ValueReferenceExpressionImpl extends ExpressionImpl implements ValueReferenceExpression
 {
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
@@ -47,7 +47,7 @@ public class EventValueReferenceExpressionImpl extends ExpressionImpl implements
    * <!-- end-user-doc -->
    * @generated
    */
-  protected EventValueReferenceExpressionImpl()
+  protected ValueReferenceExpressionImpl()
   {
     super();
   }
@@ -60,7 +60,7 @@ public class EventValueReferenceExpressionImpl extends ExpressionImpl implements
   @Override
   protected EClass eStaticClass()
   {
-    return SynctextPackage.Literals.EVENT_VALUE_REFERENCE_EXPRESSION;
+    return SynctextPackage.Literals.VALUE_REFERENCE_EXPRESSION;
   }
 
   /**
@@ -84,7 +84,7 @@ public class EventValueReferenceExpressionImpl extends ExpressionImpl implements
     value = newValue;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION__VALUE, oldValue, newValue);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SynctextPackage.VALUE_REFERENCE_EXPRESSION__VALUE, oldValue, newValue);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -101,14 +101,14 @@ public class EventValueReferenceExpressionImpl extends ExpressionImpl implements
     {
       NotificationChain msgs = null;
       if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION__VALUE, null, msgs);
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SynctextPackage.VALUE_REFERENCE_EXPRESSION__VALUE, null, msgs);
       if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION__VALUE, null, msgs);
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SynctextPackage.VALUE_REFERENCE_EXPRESSION__VALUE, null, msgs);
       msgs = basicSetValue(newValue, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION__VALUE, newValue, newValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, SynctextPackage.VALUE_REFERENCE_EXPRESSION__VALUE, newValue, newValue));
   }
 
   /**
@@ -121,7 +121,7 @@ public class EventValueReferenceExpressionImpl extends ExpressionImpl implements
   {
     switch (featureID)
     {
-      case SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION__VALUE:
+      case SynctextPackage.VALUE_REFERENCE_EXPRESSION__VALUE:
         return basicSetValue(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -137,7 +137,7 @@ public class EventValueReferenceExpressionImpl extends ExpressionImpl implements
   {
     switch (featureID)
     {
-      case SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION__VALUE:
+      case SynctextPackage.VALUE_REFERENCE_EXPRESSION__VALUE:
         return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -153,7 +153,7 @@ public class EventValueReferenceExpressionImpl extends ExpressionImpl implements
   {
     switch (featureID)
     {
-      case SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION__VALUE:
+      case SynctextPackage.VALUE_REFERENCE_EXPRESSION__VALUE:
         setValue((Expression)newValue);
         return;
     }
@@ -170,7 +170,7 @@ public class EventValueReferenceExpressionImpl extends ExpressionImpl implements
   {
     switch (featureID)
     {
-      case SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION__VALUE:
+      case SynctextPackage.VALUE_REFERENCE_EXPRESSION__VALUE:
         setValue((Expression)null);
         return;
     }
@@ -187,10 +187,10 @@ public class EventValueReferenceExpressionImpl extends ExpressionImpl implements
   {
     switch (featureID)
     {
-      case SynctextPackage.EVENT_VALUE_REFERENCE_EXPRESSION__VALUE:
+      case SynctextPackage.VALUE_REFERENCE_EXPRESSION__VALUE:
         return value != null;
     }
     return super.eIsSet(featureID);
   }
 
-} //EventValueReferenceExpressionImpl
+} //ValueReferenceExpressionImpl
