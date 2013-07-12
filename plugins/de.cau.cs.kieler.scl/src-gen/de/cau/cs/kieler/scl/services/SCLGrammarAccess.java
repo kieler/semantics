@@ -139,14 +139,13 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		////KeyStringValueAnnotation returns annotations::StringAnnotation:
+		// //    '@' name=ID value=STRING
+		// //;
 		//
-		////    '@' name=ID value=STRING
-		//
-		////;
 		//
 		////    (input?='input')? (output?='output')? 
+		// //(name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 		//
-		////(name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 		//
 		//VariableDefinition:
 		//
@@ -282,13 +281,15 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//InstructionStatement:
 		//
 		//	annotations+=Annotation* //        (label = ID ':')?
+		// instruction=(Assignment | Conditional | Goto | Parallel | Pause
 		//
-		//	instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope);
+		//	| StatementScope);
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* //        (label = ID ':')?
+		// instruction=(Assignment | Conditional | Goto | Parallel | Pause |
 		//
-		//instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
+		//StatementScope)
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -298,8 +299,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
 		////        (label = ID ':')?
-		//
-		//instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
+		// instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
 		public Assignment getInstructionAssignment_1() { return cInstructionAssignment_1; }
 
 		//Assignment | Conditional | Goto | Parallel | Pause | StatementScope
@@ -377,8 +377,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cParameterIDTerminalRuleCall_2_2_1_0 = (RuleCall)cParameterAssignment_2_2_1.eContents().get(0);
 		
 		////terminal SL_ANNOTATION     : '@' !('\n'|'\r')* ('\r'? '\n')?;
-		//
-		//Annotation:
+		// Annotation:
 		//
 		//	"@" name=ID (":" parameter+=ID ("," parameter+=ID)*)?;
 		public ParserRule getRule() { return rule; }
@@ -630,12 +629,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatementScopeParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		////AbstractThread:
-		//
-		////    Thread | Program
-		//
-		////;
-		//
-		//StatementSequence:
+		// //    Thread | Program
+		// //;
+		// StatementSequence:
 		//
 		//	Thread | Program | Conditional | StatementScope;
 		public ParserRule getRule() { return rule; }
@@ -824,12 +820,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		////SignalDefinition:
+		// //    {EventDefinition} (Input?='input')? (Output?='output')? 'signal'
 		//
-		////    {EventDefinition} (Input?='input')? (Output?='output')? 'signal'
 		//
 		////    name=ID (':' type=[types::Type|FQN]
+		// //    ('=' varInitialValue=Expression)?
 		//
-		////    ('=' varInitialValue=Expression)?
 		//
 		////    ('with' varCombineOperator=CombineOperator)?)? ';'; StatementScope:
 		//
@@ -969,14 +965,13 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////KeyStringValueAnnotation returns annotations::StringAnnotation:
+	// //    '@' name=ID value=STRING
+	// //;
 	//
-	////    '@' name=ID value=STRING
-	//
-	////;
 	//
 	////    (input?='input')? (output?='output')? 
+	// //(name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 	//
-	////(name=ID)(':'type=[types::Type])?('='initialValue=Expression)?';'
 	//
 	//VariableDefinition:
 	//
@@ -1016,8 +1011,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//InstructionStatement:
 	//
 	//	annotations+=Annotation* //        (label = ID ':')?
+	// instruction=(Assignment | Conditional | Goto | Parallel | Pause
 	//
-	//	instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope);
+	//	| StatementScope);
 	public InstructionStatementElements getInstructionStatementAccess() {
 		return (pInstructionStatement != null) ? pInstructionStatement : (pInstructionStatement = new InstructionStatementElements());
 	}
@@ -1038,8 +1034,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////terminal SL_ANNOTATION     : '@' !('\n'|'\r')* ('\r'? '\n')?;
-	//
-	//Annotation:
+	// Annotation:
 	//
 	//	"@" name=ID (":" parameter+=ID ("," parameter+=ID)*)?;
 	public AnnotationElements getAnnotationAccess() {
@@ -1088,12 +1083,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////AbstractThread:
-	//
-	////    Thread | Program
-	//
-	////;
-	//
-	//StatementSequence:
+	// //    Thread | Program
+	// //;
+	// StatementSequence:
 	//
 	//	Thread | Program | Conditional | StatementScope;
 	public StatementSequenceElements getStatementSequenceAccess() {
@@ -1140,12 +1132,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////SignalDefinition:
+	// //    {EventDefinition} (Input?='input')? (Output?='output')? 'signal'
 	//
-	////    {EventDefinition} (Input?='input')? (Output?='output')? 'signal'
 	//
 	////    name=ID (':' type=[types::Type|FQN]
+	// //    ('=' varInitialValue=Expression)?
 	//
-	////    ('=' varInitialValue=Expression)?
 	//
 	////    ('with' varCombineOperator=CombineOperator)?)? ';'; StatementScope:
 	//
