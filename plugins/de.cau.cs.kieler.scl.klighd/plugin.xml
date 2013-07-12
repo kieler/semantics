@@ -2,11 +2,11 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="de.cau.cs.kieler.klighd.modelTransformations">
-      <transformation
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+      <diagramSynthesis
             class="de.cau.cs.kieler.klighd.transformations.GuiceBasedTransformationFactory:de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis"
             id="de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis">
-      </transformation>
+      </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
@@ -17,7 +17,7 @@
       </combination>
    </extension>
    <extension
-         point="de.cau.cs.kieler.klighd.layoutPostProcessors">
+         point="de.cau.cs.kieler.klighd.extensions">
       <styleModifier
             class="de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
             id="de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier">
