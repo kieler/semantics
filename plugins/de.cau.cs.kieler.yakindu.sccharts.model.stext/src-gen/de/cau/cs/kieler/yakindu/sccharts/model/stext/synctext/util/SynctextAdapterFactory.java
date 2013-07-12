@@ -157,14 +157,14 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
         return createNumericalMultiplyDivideExpressionAdapter();
       }
       @Override
-      public Adapter caseEventValueReferenceExpression(EventValueReferenceExpression object)
+      public Adapter caseValReferenceExpression(ValReferenceExpression object)
       {
-        return createEventValueReferenceExpressionAdapter();
+        return createValReferenceExpressionAdapter();
       }
       @Override
-      public Adapter casePreValueExpression(PreValueExpression object)
+      public Adapter casePreReferenceExpression(PreReferenceExpression object)
       {
-        return createPreValueExpressionAdapter();
+        return createPreReferenceExpressionAdapter();
       }
       @Override
       public Adapter caseScope(Scope object)
@@ -459,31 +459,31 @@ public class SynctextAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression <em>Event Value Reference Expression</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression <em>Val Reference Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression
    * @generated
    */
-  public Adapter createEventValueReferenceExpressionAdapter()
+  public Adapter createValReferenceExpressionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression <em>Pre Value Expression</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression <em>Pre Reference Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression
    * @generated
    */
-  public Adapter createPreValueExpressionAdapter()
+  public Adapter createPreReferenceExpressionAdapter()
   {
     return null;
   }

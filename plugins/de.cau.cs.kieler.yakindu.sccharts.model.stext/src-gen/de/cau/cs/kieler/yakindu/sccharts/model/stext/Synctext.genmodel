@@ -55,8 +55,8 @@
     </genClasses>
     <genClasses ecoreClass="Synctext.ecore#//SimpleScope"/>
     <genClasses ecoreClass="Synctext.ecore#//EventDefinition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/Input"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/Output"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/isInput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/isOutput"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventDefinition/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventDefinition/varInitialValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//EventDefinition/varCombineOperator"/>
@@ -74,11 +74,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Synctext.ecore#//NumericalMultiplyDivideExpression/operator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//NumericalMultiplyDivideExpression/rightOperand"/>
     </genClasses>
-    <genClasses ecoreClass="Synctext.ecore#//EventValueReferenceExpression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//EventValueReferenceExpression/value"/>
+    <genClasses ecoreClass="Synctext.ecore#//ValReferenceExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//ValReferenceExpression/expression"/>
     </genClasses>
-    <genClasses ecoreClass="Synctext.ecore#//PreValueExpression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//PreValueExpression/value"/>
+    <genClasses ecoreClass="Synctext.ecore#//PreReferenceExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Synctext.ecore#//PreReferenceExpression/expression"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

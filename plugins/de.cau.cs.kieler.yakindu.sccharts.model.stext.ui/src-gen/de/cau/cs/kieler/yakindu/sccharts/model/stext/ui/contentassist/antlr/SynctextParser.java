@@ -38,8 +38,8 @@ public class SynctextParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
-					put(grammarAccess.getEventValueReferenceExpressionAccess().getValueAlternatives_3_0(), "rule__EventValueReferenceExpression__ValueAlternatives_3_0");
-					put(grammarAccess.getPreReferenceExpressionAccess().getValueAlternatives_3_0(), "rule__PreReferenceExpression__ValueAlternatives_3_0");
+					put(grammarAccess.getValReferenceExpressionAccess().getExpressionAlternatives_3_0(), "rule__ValReferenceExpression__ExpressionAlternatives_3_0");
+					put(grammarAccess.getPreReferenceExpressionAccess().getExpressionAlternatives_3_0(), "rule__PreReferenceExpression__ExpressionAlternatives_3_0");
 					put(grammarAccess.getPrimaryExpressionAccess().getAlternatives(), "rule__PrimaryExpression__Alternatives");
 					put(grammarAccess.getDefRootAccess().getAlternatives(), "rule__DefRoot__Alternatives");
 					put(grammarAccess.getScopeAccess().getAlternatives(), "rule__Scope__Alternatives");
@@ -90,9 +90,8 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReactionEffectAccess().getGroup_2(), "rule__ReactionEffect__Group_2__0");
 					put(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getGroup(), "rule__NumericalMultiplyDivideExpression__Group__0");
 					put(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getGroup_1(), "rule__NumericalMultiplyDivideExpression__Group_1__0");
-					put(grammarAccess.getEventValueReferenceExpressionAccess().getGroup(), "rule__EventValueReferenceExpression__Group__0");
+					put(grammarAccess.getValReferenceExpressionAccess().getGroup(), "rule__ValReferenceExpression__Group__0");
 					put(grammarAccess.getPreReferenceExpressionAccess().getGroup(), "rule__PreReferenceExpression__Group__0");
-					put(grammarAccess.getPreValueExpressionAccess().getGroup(), "rule__PreValueExpression__Group__0");
 					put(grammarAccess.getStatechartRootAccess().getGroup(), "rule__StatechartRoot__Group__0");
 					put(grammarAccess.getStateRootAccess().getGroup(), "rule__StateRoot__Group__0");
 					put(grammarAccess.getTransitionRootAccess().getGroup(), "rule__TransitionRoot__Group__0");
@@ -152,6 +151,7 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getElementReferenceExpressionAccess().getGroup_2(), "rule__ElementReferenceExpression__Group_2__0");
 					put(grammarAccess.getElementReferenceExpressionAccess().getGroup_2_1(), "rule__ElementReferenceExpression__Group_2_1__0");
 					put(grammarAccess.getElementReferenceExpressionAccess().getGroup_2_1_1(), "rule__ElementReferenceExpression__Group_2_1_1__0");
+					put(grammarAccess.getEventValueReferenceExpressionAccess().getGroup(), "rule__EventValueReferenceExpression__Group__0");
 					put(grammarAccess.getActiveStateReferenceExpressionAccess().getGroup(), "rule__ActiveStateReferenceExpression__Group__0");
 					put(grammarAccess.getParenthesizedExpressionAccess().getGroup(), "rule__ParenthesizedExpression__Group__0");
 					put(grammarAccess.getBoolLiteralAccess().getGroup(), "rule__BoolLiteral__Group__0");
@@ -160,8 +160,8 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getHexLiteralAccess().getGroup(), "rule__HexLiteral__Group__0");
 					put(grammarAccess.getStringLiteralAccess().getGroup(), "rule__StringLiteral__Group__0");
 					put(grammarAccess.getStateScopeAccess().getDeclarationsAssignment_1(), "rule__StateScope__DeclarationsAssignment_1");
-					put(grammarAccess.getSignalDefinitionAccess().getInputAssignment_1(), "rule__SignalDefinition__InputAssignment_1");
-					put(grammarAccess.getSignalDefinitionAccess().getOutputAssignment_2(), "rule__SignalDefinition__OutputAssignment_2");
+					put(grammarAccess.getSignalDefinitionAccess().getIsInputAssignment_1(), "rule__SignalDefinition__IsInputAssignment_1");
+					put(grammarAccess.getSignalDefinitionAccess().getIsOutputAssignment_2(), "rule__SignalDefinition__IsOutputAssignment_2");
 					put(grammarAccess.getSignalDefinitionAccess().getNameAssignment_4(), "rule__SignalDefinition__NameAssignment_4");
 					put(grammarAccess.getSignalDefinitionAccess().getTypeAssignment_5_1(), "rule__SignalDefinition__TypeAssignment_5_1");
 					put(grammarAccess.getSignalDefinitionAccess().getVarInitialValueAssignment_5_2_1(), "rule__SignalDefinition__VarInitialValueAssignment_5_2_1");
@@ -194,9 +194,8 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReactionEffectAccess().getActionsAssignment_2_1(), "rule__ReactionEffect__ActionsAssignment_2_1");
 					put(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getOperatorAssignment_1_1(), "rule__NumericalMultiplyDivideExpression__OperatorAssignment_1_1");
 					put(grammarAccess.getNumericalMultiplyDivideExpressionAccess().getRightOperandAssignment_1_2(), "rule__NumericalMultiplyDivideExpression__RightOperandAssignment_1_2");
-					put(grammarAccess.getEventValueReferenceExpressionAccess().getValueAssignment_3(), "rule__EventValueReferenceExpression__ValueAssignment_3");
-					put(grammarAccess.getPreReferenceExpressionAccess().getValueAssignment_3(), "rule__PreReferenceExpression__ValueAssignment_3");
-					put(grammarAccess.getPreValueExpressionAccess().getValueAssignment_3(), "rule__PreValueExpression__ValueAssignment_3");
+					put(grammarAccess.getValReferenceExpressionAccess().getExpressionAssignment_3(), "rule__ValReferenceExpression__ExpressionAssignment_3");
+					put(grammarAccess.getPreReferenceExpressionAccess().getExpressionAssignment_3(), "rule__PreReferenceExpression__ExpressionAssignment_3");
 					put(grammarAccess.getRootAccess().getRootsAssignment(), "rule__Root__RootsAssignment");
 					put(grammarAccess.getStatechartRootAccess().getDefAssignment_1(), "rule__StatechartRoot__DefAssignment_1");
 					put(grammarAccess.getStateRootAccess().getDefAssignment_1(), "rule__StateRoot__DefAssignment_1");
@@ -253,6 +252,7 @@ public class SynctextParser extends AbstractContentAssistParser {
 					put(grammarAccess.getElementReferenceExpressionAccess().getOperationCallAssignment_2_0(), "rule__ElementReferenceExpression__OperationCallAssignment_2_0");
 					put(grammarAccess.getElementReferenceExpressionAccess().getArgsAssignment_2_1_0(), "rule__ElementReferenceExpression__ArgsAssignment_2_1_0");
 					put(grammarAccess.getElementReferenceExpressionAccess().getArgsAssignment_2_1_1_1(), "rule__ElementReferenceExpression__ArgsAssignment_2_1_1_1");
+					put(grammarAccess.getEventValueReferenceExpressionAccess().getValueAssignment_3(), "rule__EventValueReferenceExpression__ValueAssignment_3");
 					put(grammarAccess.getActiveStateReferenceExpressionAccess().getValueAssignment_3(), "rule__ActiveStateReferenceExpression__ValueAssignment_3");
 					put(grammarAccess.getParenthesizedExpressionAccess().getExpressionAssignment_2(), "rule__ParenthesizedExpression__ExpressionAssignment_2");
 					put(grammarAccess.getBoolLiteralAccess().getValueAssignment_1(), "rule__BoolLiteral__ValueAssignment_1");

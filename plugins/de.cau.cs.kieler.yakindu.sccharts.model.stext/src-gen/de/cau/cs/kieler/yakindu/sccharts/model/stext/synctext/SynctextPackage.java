@@ -576,22 +576,22 @@ public interface SynctextPackage extends EPackage
   int EVENT_DEFINITION__NAME = SIGNAL_DEFINITION__NAME;
 
   /**
-   * The feature id for the '<em><b>Input</b></em>' attribute.
+   * The feature id for the '<em><b>Is Input</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT_DEFINITION__INPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 0;
+  int EVENT_DEFINITION__IS_INPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Output</b></em>' attribute.
+   * The feature id for the '<em><b>Is Output</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT_DEFINITION__OUTPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 1;
+  int EVENT_DEFINITION__IS_OUTPUT = SIGNAL_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -750,60 +750,60 @@ public interface SynctextPackage extends EPackage
   int NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 3;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.EventValueReferenceExpressionImpl <em>Event Value Reference Expression</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.ValReferenceExpressionImpl <em>Val Reference Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.EventValueReferenceExpressionImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getEventValueReferenceExpression()
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.ValReferenceExpressionImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getValReferenceExpression()
    * @generated
    */
-  int EVENT_VALUE_REFERENCE_EXPRESSION = 13;
+  int VAL_REFERENCE_EXPRESSION = 13;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT_VALUE_REFERENCE_EXPRESSION__VALUE = StextPackage.EXPRESSION_FEATURE_COUNT + 0;
+  int VAL_REFERENCE_EXPRESSION__EXPRESSION = StextPackage.EXPRESSION_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Event Value Reference Expression</em>' class.
+   * The number of structural features of the '<em>Val Reference Expression</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT_VALUE_REFERENCE_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
+  int VAL_REFERENCE_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.PreValueExpressionImpl <em>Pre Value Expression</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.PreReferenceExpressionImpl <em>Pre Reference Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.PreValueExpressionImpl
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getPreValueExpression()
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.PreReferenceExpressionImpl
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getPreReferenceExpression()
    * @generated
    */
-  int PRE_VALUE_EXPRESSION = 14;
+  int PRE_REFERENCE_EXPRESSION = 14;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRE_VALUE_EXPRESSION__VALUE = StextPackage.EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Pre Value Expression</em>' class.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRE_VALUE_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
+  int PRE_REFERENCE_EXPRESSION__EXPRESSION = StextPackage.EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Pre Reference Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRE_REFERENCE_EXPRESSION_FEATURE_COUNT = StextPackage.EXPRESSION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.MultiplicativeOperator2 <em>Multiplicative Operator2</em>}' enum.
@@ -1092,26 +1092,26 @@ public interface SynctextPackage extends EPackage
   EClass getEventDefinition();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition#isInput <em>Input</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition#isIsInput <em>Is Input</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Input</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition#isInput()
+   * @return the meta object for the attribute '<em>Is Input</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition#isIsInput()
    * @see #getEventDefinition()
    * @generated
    */
-  EAttribute getEventDefinition_Input();
+  EAttribute getEventDefinition_IsInput();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition#isOutput <em>Output</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition#isIsOutput <em>Is Output</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Output</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition#isOutput()
+   * @return the meta object for the attribute '<em>Is Output</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition#isIsOutput()
    * @see #getEventDefinition()
    * @generated
    */
-  EAttribute getEventDefinition_Output();
+  EAttribute getEventDefinition_IsOutput();
 
   /**
    * Returns the meta object for the reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventDefinition#getType <em>Type</em>}'.
@@ -1254,46 +1254,46 @@ public interface SynctextPackage extends EPackage
   EReference getNumericalMultiplyDivideExpression_RightOperand();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression <em>Event Value Reference Expression</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression <em>Val Reference Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Event Value Reference Expression</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression
+   * @return the meta object for class '<em>Val Reference Expression</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression
    * @generated
    */
-  EClass getEventValueReferenceExpression();
+  EClass getValReferenceExpression();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression#getValue <em>Value</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.EventValueReferenceExpression#getValue()
-   * @see #getEventValueReferenceExpression()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.ValReferenceExpression#getExpression()
+   * @see #getValReferenceExpression()
    * @generated
    */
-  EReference getEventValueReferenceExpression_Value();
+  EReference getValReferenceExpression_Expression();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression <em>Pre Value Expression</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression <em>Pre Reference Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Pre Value Expression</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression
+   * @return the meta object for class '<em>Pre Reference Expression</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression
    * @generated
    */
-  EClass getPreValueExpression();
+  EClass getPreReferenceExpression();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression#getValue <em>Value</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreValueExpression#getValue()
-   * @see #getPreValueExpression()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.PreReferenceExpression#getExpression()
+   * @see #getPreReferenceExpression()
    * @generated
    */
-  EReference getPreValueExpression_Value();
+  EReference getPreReferenceExpression_Expression();
 
   /**
    * Returns the meta object for enum '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.MultiplicativeOperator2 <em>Multiplicative Operator2</em>}'.
@@ -1559,20 +1559,20 @@ public interface SynctextPackage extends EPackage
     EClass EVENT_DEFINITION = eINSTANCE.getEventDefinition();
 
     /**
-     * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Is Input</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute EVENT_DEFINITION__INPUT = eINSTANCE.getEventDefinition_Input();
+    EAttribute EVENT_DEFINITION__IS_INPUT = eINSTANCE.getEventDefinition_IsInput();
 
     /**
-     * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Is Output</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute EVENT_DEFINITION__OUTPUT = eINSTANCE.getEventDefinition_Output();
+    EAttribute EVENT_DEFINITION__IS_OUTPUT = eINSTANCE.getEventDefinition_IsOutput();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' reference feature.
@@ -1685,40 +1685,40 @@ public interface SynctextPackage extends EPackage
     EReference NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION__RIGHT_OPERAND = eINSTANCE.getNumericalMultiplyDivideExpression_RightOperand();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.EventValueReferenceExpressionImpl <em>Event Value Reference Expression</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.ValReferenceExpressionImpl <em>Val Reference Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.EventValueReferenceExpressionImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getEventValueReferenceExpression()
+     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.ValReferenceExpressionImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getValReferenceExpression()
      * @generated
      */
-    EClass EVENT_VALUE_REFERENCE_EXPRESSION = eINSTANCE.getEventValueReferenceExpression();
+    EClass VAL_REFERENCE_EXPRESSION = eINSTANCE.getValReferenceExpression();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference EVENT_VALUE_REFERENCE_EXPRESSION__VALUE = eINSTANCE.getEventValueReferenceExpression_Value();
+    EReference VAL_REFERENCE_EXPRESSION__EXPRESSION = eINSTANCE.getValReferenceExpression_Expression();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.PreValueExpressionImpl <em>Pre Value Expression</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.PreReferenceExpressionImpl <em>Pre Reference Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.PreValueExpressionImpl
-     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getPreValueExpression()
+     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.PreReferenceExpressionImpl
+     * @see de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.impl.SynctextPackageImpl#getPreReferenceExpression()
      * @generated
      */
-    EClass PRE_VALUE_EXPRESSION = eINSTANCE.getPreValueExpression();
+    EClass PRE_REFERENCE_EXPRESSION = eINSTANCE.getPreReferenceExpression();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PRE_VALUE_EXPRESSION__VALUE = eINSTANCE.getPreValueExpression_Value();
+    EReference PRE_REFERENCE_EXPRESSION__EXPRESSION = eINSTANCE.getPreReferenceExpression_Expression();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.yakindu.sccharts.model.stext.synctext.MultiplicativeOperator2 <em>Multiplicative Operator2</em>}' enum.

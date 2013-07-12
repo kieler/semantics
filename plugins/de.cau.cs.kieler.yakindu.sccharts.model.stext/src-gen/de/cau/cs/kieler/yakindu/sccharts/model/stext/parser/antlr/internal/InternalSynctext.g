@@ -287,31 +287,31 @@ ruleSignalDefinition returns [EObject current=null]
     }
 )(
 (
-		lv_Input_1_0=	'input' 
+		lv_isInput_1_0=	'input' 
     {
-        newLeafNode(lv_Input_1_0, grammarAccess.getSignalDefinitionAccess().getInputInputKeyword_1_0());
+        newLeafNode(lv_isInput_1_0, grammarAccess.getSignalDefinitionAccess().getIsInputInputKeyword_1_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getSignalDefinitionRule());
 	        }
-       		setWithLastConsumed($current, "Input", true, "input");
+       		setWithLastConsumed($current, "isInput", true, "input");
 	    }
 
 )
 )?(
 (
-		lv_Output_2_0=	'output' 
+		lv_isOutput_2_0=	'output' 
     {
-        newLeafNode(lv_Output_2_0, grammarAccess.getSignalDefinitionAccess().getOutputOutputKeyword_2_0());
+        newLeafNode(lv_isOutput_2_0, grammarAccess.getSignalDefinitionAccess().getIsOutputOutputKeyword_2_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getSignalDefinitionRule());
 	        }
-       		setWithLastConsumed($current, "Output", true, "output");
+       		setWithLastConsumed($current, "isOutput", true, "output");
 	    }
 
 )
@@ -1281,17 +1281,17 @@ ruleNumericalMultiplyDivideExpression returns [EObject current=null]
 
 
 
-// Entry rule entryRuleEventValueReferenceExpression
-entryRuleEventValueReferenceExpression returns [EObject current=null] 
+// Entry rule entryRuleValReferenceExpression
+entryRuleValReferenceExpression returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getEventValueReferenceExpressionRule()); }
-	 iv_ruleEventValueReferenceExpression=ruleEventValueReferenceExpression 
-	 { $current=$iv_ruleEventValueReferenceExpression.current; } 
+	{ newCompositeNode(grammarAccess.getValReferenceExpressionRule()); }
+	 iv_ruleValReferenceExpression=ruleValReferenceExpression 
+	 { $current=$iv_ruleValReferenceExpression.current; } 
 	 EOF 
 ;
 
-// Rule EventValueReferenceExpression
-ruleEventValueReferenceExpression returns [EObject current=null] 
+// Rule ValReferenceExpression
+ruleValReferenceExpression returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -1301,46 +1301,46 @@ ruleEventValueReferenceExpression returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getEventValueReferenceExpressionAccess().getEventValueReferenceExpressionAction_0(),
+            grammarAccess.getValReferenceExpressionAccess().getValReferenceExpressionAction_0(),
             $current);
     }
 )	otherlv_1='val' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getEventValueReferenceExpressionAccess().getValKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getValReferenceExpressionAccess().getValKeyword_1());
     }
 	otherlv_2='(' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getEventValueReferenceExpressionAccess().getLeftParenthesisKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getValReferenceExpressionAccess().getLeftParenthesisKeyword_2());
     }
 (
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getEventValueReferenceExpressionAccess().getValueFeatureCallParserRuleCall_3_0_0()); 
+	        newCompositeNode(grammarAccess.getValReferenceExpressionAccess().getExpressionFeatureCallParserRuleCall_3_0_0()); 
 	    }
-		lv_value_3_1=ruleFeatureCall		{
+		lv_expression_3_1=ruleFeatureCall		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getEventValueReferenceExpressionRule());
+	            $current = createModelElementForParent(grammarAccess.getValReferenceExpressionRule());
 	        }
        		set(
        			$current, 
-       			"value",
-        		lv_value_3_1, 
+       			"expression",
+        		lv_expression_3_1, 
         		"FeatureCall");
 	        afterParserOrEnumRuleCall();
 	    }
 
     |		{ 
-	        newCompositeNode(grammarAccess.getEventValueReferenceExpressionAccess().getValuePreReferenceExpressionParserRuleCall_3_0_1()); 
+	        newCompositeNode(grammarAccess.getValReferenceExpressionAccess().getExpressionPreReferenceExpressionParserRuleCall_3_0_1()); 
 	    }
-		lv_value_3_2=rulePreReferenceExpression		{
+		lv_expression_3_2=rulePreReferenceExpression		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getEventValueReferenceExpressionRule());
+	            $current = createModelElementForParent(grammarAccess.getValReferenceExpressionRule());
 	        }
        		set(
        			$current, 
-       			"value",
-        		lv_value_3_2, 
+       			"expression",
+        		lv_expression_3_2, 
         		"PreReferenceExpression");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1350,7 +1350,7 @@ ruleEventValueReferenceExpression returns [EObject current=null]
 )
 )	otherlv_4=')' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getEventValueReferenceExpressionAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getValReferenceExpressionAccess().getRightParenthesisKeyword_4());
     }
 )
 ;
@@ -1379,7 +1379,7 @@ rulePreReferenceExpression returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getPreReferenceExpressionAccess().getEventValueReferenceExpressionAction_0(),
+            grammarAccess.getPreReferenceExpressionAccess().getPreReferenceExpressionAction_0(),
             $current);
     }
 )	otherlv_1='pre' 
@@ -1394,46 +1394,46 @@ rulePreReferenceExpression returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getValueFeatureCallParserRuleCall_3_0_0()); 
+	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getExpressionFeatureCallParserRuleCall_3_0_0()); 
 	    }
-		lv_value_3_1=ruleFeatureCall		{
+		lv_expression_3_1=ruleFeatureCall		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPreReferenceExpressionRule());
 	        }
        		set(
        			$current, 
-       			"value",
-        		lv_value_3_1, 
+       			"expression",
+        		lv_expression_3_1, 
         		"FeatureCall");
 	        afterParserOrEnumRuleCall();
 	    }
 
     |		{ 
-	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getValueEventValueReferenceExpressionParserRuleCall_3_0_1()); 
+	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getExpressionValReferenceExpressionParserRuleCall_3_0_1()); 
 	    }
-		lv_value_3_2=ruleEventValueReferenceExpression		{
+		lv_expression_3_2=ruleValReferenceExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPreReferenceExpressionRule());
 	        }
        		set(
        			$current, 
-       			"value",
-        		lv_value_3_2, 
-        		"EventValueReferenceExpression");
+       			"expression",
+        		lv_expression_3_2, 
+        		"ValReferenceExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
     |		{ 
-	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getValuePreReferenceExpressionParserRuleCall_3_0_2()); 
+	        newCompositeNode(grammarAccess.getPreReferenceExpressionAccess().getExpressionPreReferenceExpressionParserRuleCall_3_0_2()); 
 	    }
-		lv_value_3_3=rulePreReferenceExpression		{
+		lv_expression_3_3=rulePreReferenceExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPreReferenceExpressionRule());
 	        }
        		set(
        			$current, 
-       			"value",
-        		lv_value_3_3, 
+       			"expression",
+        		lv_expression_3_3, 
         		"PreReferenceExpression");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1510,11 +1510,11 @@ rulePrimaryExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getEventValueReferenceExpressionParserRuleCall_3()); 
+        newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getValReferenceExpressionParserRuleCall_3()); 
     }
-    this_EventValueReferenceExpression_3=ruleEventValueReferenceExpression
+    this_ValReferenceExpression_3=ruleValReferenceExpression
     { 
-        $current = $this_EventValueReferenceExpression_3.current; 
+        $current = $this_ValReferenceExpression_3.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -1545,8 +1545,6 @@ rulePrimaryExpression returns [EObject current=null]
     }
 )
 ;
-
-
 
 
 
@@ -4366,6 +4364,8 @@ ruleElementReferenceExpression returns [EObject current=null]
     }
 )?)
 ;
+
+
 
 
 
