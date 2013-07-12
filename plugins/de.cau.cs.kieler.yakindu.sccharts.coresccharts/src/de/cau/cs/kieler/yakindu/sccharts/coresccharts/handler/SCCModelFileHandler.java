@@ -42,6 +42,7 @@ import de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCTransformations;
 public class SCCModelFileHandler extends AbstractConvertModelHandler {
 
     public static final String SIGNAL_TRANSFORMATION = "de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.SignalTransformation";
+    public static final String INPUTOUTPUTSIGNAL_TRANSFORMATION = "de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.InputOutputSignalTransformation";
     public static final String DURING_TRANSFORMATION = "de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.DuringTransformation";
 
     // -------------------------------------------------------------------------
@@ -199,6 +200,8 @@ public class SCCModelFileHandler extends AbstractConvertModelHandler {
         // refactored model).
         if (commandString.equals(SIGNAL_TRANSFORMATION)) {
             transformed = (new SCCTransformations()).transformSignal((Statechart) model);
+        } else if (commandString.equals(INPUTOUTPUTSIGNAL_TRANSFORMATION)) {
+            transformed = (new SCCTransformations()).transformInputOutputSignal((Statechart) model);
         } else if (commandString.equals(DURING_TRANSFORMATION)) {
             transformed = (new SCCTransformations()).transformDuring((Statechart) model);
         }

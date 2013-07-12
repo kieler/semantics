@@ -36,9 +36,8 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
-import de.cau.cs.kieler.core.ui.KielerModelException;
-import de.cau.cs.kieler.core.ui.Messages;
-import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
+import de.cau.cs.kieler.core.model.KielerModelException;
+import de.cau.cs.kieler.core.model.util.GenericErrorHandler.StatusListener;
 
 /**
  * A StatusHandler that displays error messages for KielerModelException Status
@@ -217,8 +216,7 @@ public class ModelErrorHandler implements StatusListener, IStartup {
                     } catch (Exception e) {
                         e.printStackTrace();
                         status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
-                                Messages.ModelErrorHandler_MarkerCreationError
-                                + " (" + msg + ")");
+                                "Could not create problem marker in diagram. (" + msg + ")");
                     }
                 }
             });

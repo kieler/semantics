@@ -13,7 +13,7 @@ import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.StatementScope;
-import de.cau.cs.kieler.scl.scl.VariableDeclaration;
+import de.cau.cs.kieler.scl.scl.VariableDefinition;
 import de.cau.cs.kieler.scl.services.SCLGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -78,7 +78,6 @@ import org.yakindu.sct.model.stext.stext.TimeEventSpec;
 import org.yakindu.sct.model.stext.stext.TransitionReaction;
 import org.yakindu.sct.model.stext.stext.TransitionRoot;
 import org.yakindu.sct.model.stext.stext.TransitionSpecification;
-import org.yakindu.sct.model.stext.stext.VariableDefinition;
 
 @SuppressWarnings("all")
 public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequencer {
@@ -166,10 +165,12 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 					return; 
 				}
 				else break;
-			case SclPackage.VARIABLE_DECLARATION:
+			case SclPackage.VARIABLE_DEFINITION:
 				if(context == grammarAccess.getDeclarationRule() ||
-				   context == grammarAccess.getVariableDeclarationRule()) {
-					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+				   context == grammarAccess.getVariableDeclarationRule() ||
+				   context == grammarAccess.getVariableDefinitionRule() ||
+				   context == grammarAccess.getVariableFeatureRule()) {
+					sequence_VariableDefinition(context, (VariableDefinition) semanticObject); 
 					return; 
 				}
 				else break;
@@ -854,13 +855,6 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 					return; 
 				}
 				else break;
-			case StextPackage.VARIABLE_DEFINITION:
-				if(context == grammarAccess.getVariableDefinitionRule() ||
-				   context == grammarAccess.getVariableFeatureRule()) {
-					sequence_VariableDefinition(context, (VariableDefinition) semanticObject); 
-					return; 
-				}
-				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == TypesPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case TypesPackage.PARAMETER:
@@ -981,7 +975,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         name=ID 
-	 *         declarations+=VariableDeclaration* 
+	 *         definitions+=VariableDefinition* 
 	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 
 	 *         (statements+=InstructionStatement statements+=EmptyStatement*)?
 	 *     )
@@ -994,7 +988,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	/**
 	 * Constraint:
 	 *     (
-	 *         declarations+=VariableDeclaration* 
+	 *         definitions+=VariableDefinition* 
 	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 
 	 *         (statements+=InstructionStatement statements+=EmptyStatement*)?
 	 *     )
@@ -1024,7 +1018,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 *         initialValue=Expression?
 	 *     )
 	 */
-	protected void sequence_VariableDeclaration(EObject context, VariableDeclaration semanticObject) {
+	protected void sequence_VariableDefinition(EObject context, VariableDefinition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ *
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ *
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.core.model.handlers;
 
 import java.io.BufferedWriter;
@@ -35,7 +48,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -54,9 +66,7 @@ import de.cau.cs.kieler.core.model.util.ModelUtil;
  * necessary (on purpose).
  * 
  * @author ssm
- * 
  */
-
 public abstract class AbstractConvertModelHandler extends AbstractHandler {
 
     /** 
@@ -308,7 +318,7 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
                 .getActivePage();
         FileEditorInput fileInput = new FileEditorInput(file2);
         try {
-            IEditorPart editor = wbPage.openEditor(fileInput, desc.getId());
+            wbPage.openEditor(fileInput, desc.getId());
         } catch (PartInitException e) {
             e.printStackTrace();
         }

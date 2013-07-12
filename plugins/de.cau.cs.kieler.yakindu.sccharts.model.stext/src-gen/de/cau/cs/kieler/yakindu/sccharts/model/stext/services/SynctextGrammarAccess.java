@@ -112,10 +112,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SignalDefinition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cEventDefinitionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cInputInputKeyword_1_0 = (Keyword)cInputAssignment_1.eContents().get(0);
-		private final Assignment cOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cOutputOutputKeyword_2_0 = (Keyword)cOutputAssignment_2.eContents().get(0);
+		private final Assignment cIsInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsInputInputKeyword_1_0 = (Keyword)cIsInputAssignment_1.eContents().get(0);
+		private final Assignment cIsOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cIsOutputOutputKeyword_2_0 = (Keyword)cIsOutputAssignment_2.eContents().get(0);
 		private final Keyword cSignalKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cNameIDTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
@@ -136,12 +136,12 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SignalDefinition:
 		//
-		//	{EventDefinition} Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+		//	{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
 		//
 		//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//{EventDefinition} Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+		//{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
 		//
 		//varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";"
 		public Group getGroup() { return cGroup; }
@@ -149,17 +149,17 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//{EventDefinition}
 		public Action getEventDefinitionAction_0() { return cEventDefinitionAction_0; }
 
-		//Input?="input"?
-		public Assignment getInputAssignment_1() { return cInputAssignment_1; }
+		//isInput?="input"?
+		public Assignment getIsInputAssignment_1() { return cIsInputAssignment_1; }
 
 		//"input"
-		public Keyword getInputInputKeyword_1_0() { return cInputInputKeyword_1_0; }
+		public Keyword getIsInputInputKeyword_1_0() { return cIsInputInputKeyword_1_0; }
 
-		//Output?="output"?
-		public Assignment getOutputAssignment_2() { return cOutputAssignment_2; }
+		//isOutput?="output"?
+		public Assignment getIsOutputAssignment_2() { return cIsOutputAssignment_2; }
 
 		//"output"
-		public Keyword getOutputOutputKeyword_2_0() { return cOutputOutputKeyword_2_0; }
+		public Keyword getIsOutputOutputKeyword_2_0() { return cIsOutputOutputKeyword_2_0; }
 
 		//"signal"
 		public Keyword getSignalKeyword_3() { return cSignalKeyword_3; }
@@ -806,16 +806,16 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getRightOperandNumericalUnaryExpressionParserRuleCall_1_2_0() { return cRightOperandNumericalUnaryExpressionParserRuleCall_1_2_0; }
 	}
 
-	public class EventValueReferenceExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EventValueReferenceExpression");
+	public class ValReferenceExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValReferenceExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cEventValueReferenceExpressionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cValReferenceExpressionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cValKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Alternatives cValueAlternatives_3_0 = (Alternatives)cValueAssignment_3.eContents().get(0);
-		private final RuleCall cValueFeatureCallParserRuleCall_3_0_0 = (RuleCall)cValueAlternatives_3_0.eContents().get(0);
-		private final RuleCall cValuePreReferenceExpressionParserRuleCall_3_0_1 = (RuleCall)cValueAlternatives_3_0.eContents().get(1);
+		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Alternatives cExpressionAlternatives_3_0 = (Alternatives)cExpressionAssignment_3.eContents().get(0);
+		private final RuleCall cExpressionFeatureCallParserRuleCall_3_0_0 = (RuleCall)cExpressionAlternatives_3_0.eContents().get(0);
+		private final RuleCall cExpressionPreReferenceExpressionParserRuleCall_3_0_1 = (RuleCall)cExpressionAlternatives_3_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		/// ***************************************** Expressions ******************************************* * / // Override the stext::EventValueReferenceExpression
@@ -824,16 +824,16 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//// cmot change
 		//
-		//EventValueReferenceExpression returns stext::Expression:
+		//ValReferenceExpression returns stext::Expression:
 		//
-		//	{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
+		//	{ValReferenceExpression} "val" "(" expression=(FeatureCall | PreReferenceExpression) ")";
 		public ParserRule getRule() { return rule; }
 
-		//{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")"
+		//{ValReferenceExpression} "val" "(" expression=(FeatureCall | PreReferenceExpression) ")"
 		public Group getGroup() { return cGroup; }
 
-		//{EventValueReferenceExpression}
-		public Action getEventValueReferenceExpressionAction_0() { return cEventValueReferenceExpressionAction_0; }
+		//{ValReferenceExpression}
+		public Action getValReferenceExpressionAction_0() { return cValReferenceExpressionAction_0; }
 
 		//"val"
 		public Keyword getValKeyword_1() { return cValKeyword_1; }
@@ -841,17 +841,17 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 
-		//value=(FeatureCall | PreReferenceExpression)
-		public Assignment getValueAssignment_3() { return cValueAssignment_3; }
+		//expression=(FeatureCall | PreReferenceExpression)
+		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
 
 		//FeatureCall | PreReferenceExpression
-		public Alternatives getValueAlternatives_3_0() { return cValueAlternatives_3_0; }
+		public Alternatives getExpressionAlternatives_3_0() { return cExpressionAlternatives_3_0; }
 
 		//FeatureCall
-		public RuleCall getValueFeatureCallParserRuleCall_3_0_0() { return cValueFeatureCallParserRuleCall_3_0_0; }
+		public RuleCall getExpressionFeatureCallParserRuleCall_3_0_0() { return cExpressionFeatureCallParserRuleCall_3_0_0; }
 
 		//PreReferenceExpression
-		public RuleCall getValuePreReferenceExpressionParserRuleCall_3_0_1() { return cValuePreReferenceExpressionParserRuleCall_3_0_1; }
+		public RuleCall getExpressionPreReferenceExpressionParserRuleCall_3_0_1() { return cExpressionPreReferenceExpressionParserRuleCall_3_0_1; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
@@ -860,14 +860,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	public class PreReferenceExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PreReferenceExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cEventValueReferenceExpressionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Action cPreReferenceExpressionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cPreKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Alternatives cValueAlternatives_3_0 = (Alternatives)cValueAssignment_3.eContents().get(0);
-		private final RuleCall cValueFeatureCallParserRuleCall_3_0_0 = (RuleCall)cValueAlternatives_3_0.eContents().get(0);
-		private final RuleCall cValueEventValueReferenceExpressionParserRuleCall_3_0_1 = (RuleCall)cValueAlternatives_3_0.eContents().get(1);
-		private final RuleCall cValuePreReferenceExpressionParserRuleCall_3_0_2 = (RuleCall)cValueAlternatives_3_0.eContents().get(2);
+		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Alternatives cExpressionAlternatives_3_0 = (Alternatives)cExpressionAssignment_3.eContents().get(0);
+		private final RuleCall cExpressionFeatureCallParserRuleCall_3_0_0 = (RuleCall)cExpressionAlternatives_3_0.eContents().get(0);
+		private final RuleCall cExpressionValReferenceExpressionParserRuleCall_3_0_1 = (RuleCall)cExpressionAlternatives_3_0.eContents().get(1);
+		private final RuleCall cExpressionPreReferenceExpressionParserRuleCall_3_0_2 = (RuleCall)cExpressionAlternatives_3_0.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//// Additional pre(), like val(), allow pre(val()) and allow pre(pre())    
@@ -876,18 +876,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//PreReferenceExpression returns stext::Expression:
 		//
-		//	{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression |
-		//
-		//	PreReferenceExpression) ")";
+		//	{PreReferenceExpression} "pre" "(" expression=(FeatureCall | ValReferenceExpression | PreReferenceExpression) ")";
 		public ParserRule getRule() { return rule; }
 
-		//{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression | PreReferenceExpression)
-		//
-		//")"
+		//{PreReferenceExpression} "pre" "(" expression=(FeatureCall | ValReferenceExpression | PreReferenceExpression) ")"
 		public Group getGroup() { return cGroup; }
 
-		//{EventValueReferenceExpression}
-		public Action getEventValueReferenceExpressionAction_0() { return cEventValueReferenceExpressionAction_0; }
+		//{PreReferenceExpression}
+		public Action getPreReferenceExpressionAction_0() { return cPreReferenceExpressionAction_0; }
 
 		//"pre"
 		public Keyword getPreKeyword_1() { return cPreKeyword_1; }
@@ -895,20 +891,20 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 
-		//value=(FeatureCall | EventValueReferenceExpression | PreReferenceExpression)
-		public Assignment getValueAssignment_3() { return cValueAssignment_3; }
+		//expression=(FeatureCall | ValReferenceExpression | PreReferenceExpression)
+		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
 
-		//FeatureCall | EventValueReferenceExpression | PreReferenceExpression
-		public Alternatives getValueAlternatives_3_0() { return cValueAlternatives_3_0; }
+		//FeatureCall | ValReferenceExpression | PreReferenceExpression
+		public Alternatives getExpressionAlternatives_3_0() { return cExpressionAlternatives_3_0; }
 
 		//FeatureCall
-		public RuleCall getValueFeatureCallParserRuleCall_3_0_0() { return cValueFeatureCallParserRuleCall_3_0_0; }
+		public RuleCall getExpressionFeatureCallParserRuleCall_3_0_0() { return cExpressionFeatureCallParserRuleCall_3_0_0; }
 
-		//EventValueReferenceExpression
-		public RuleCall getValueEventValueReferenceExpressionParserRuleCall_3_0_1() { return cValueEventValueReferenceExpressionParserRuleCall_3_0_1; }
+		//ValReferenceExpression
+		public RuleCall getExpressionValReferenceExpressionParserRuleCall_3_0_1() { return cExpressionValReferenceExpressionParserRuleCall_3_0_1; }
 
 		//PreReferenceExpression
-		public RuleCall getValuePreReferenceExpressionParserRuleCall_3_0_2() { return cValuePreReferenceExpressionParserRuleCall_3_0_2; }
+		public RuleCall getExpressionPreReferenceExpressionParserRuleCall_3_0_2() { return cExpressionPreReferenceExpressionParserRuleCall_3_0_2; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
@@ -920,7 +916,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPrimitiveValueExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cFeatureCallParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cActiveStateReferenceExpressionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cEventValueReferenceExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cValReferenceExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cPreReferenceExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cParenthesizedExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
@@ -932,12 +928,12 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//PrimaryExpression returns stext::Expression:
 		//
-		//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | EventValueReferenceExpression |
+		//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | ValReferenceExpression |
 		//
 		//	PreReferenceExpression | ParenthesizedExpression;
 		public ParserRule getRule() { return rule; }
 
-		//PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | EventValueReferenceExpression |
+		//PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | ValReferenceExpression |
 		//
 		//PreReferenceExpression | ParenthesizedExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -951,53 +947,14 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		//ActiveStateReferenceExpression
 		public RuleCall getActiveStateReferenceExpressionParserRuleCall_2() { return cActiveStateReferenceExpressionParserRuleCall_2; }
 
-		//EventValueReferenceExpression
-		public RuleCall getEventValueReferenceExpressionParserRuleCall_3() { return cEventValueReferenceExpressionParserRuleCall_3; }
+		//ValReferenceExpression
+		public RuleCall getValReferenceExpressionParserRuleCall_3() { return cValReferenceExpressionParserRuleCall_3; }
 
 		//PreReferenceExpression
 		public RuleCall getPreReferenceExpressionParserRuleCall_4() { return cPreReferenceExpressionParserRuleCall_4; }
 
 		//ParenthesizedExpression
 		public RuleCall getParenthesizedExpressionParserRuleCall_5() { return cParenthesizedExpressionParserRuleCall_5; }
-	}
-
-	public class PreValueExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PreValueExpression");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cPreValueExpressionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cPreKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cValueFeatureCallParserRuleCall_3_0 = (RuleCall)cValueAssignment_3.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		
-		////todo: pre(x) should return the same type of x
-		//
-		//PreValueExpression returns stext::Expression:
-		//
-		//	{PreValueExpression} "pre" "(" value=FeatureCall ")";
-		public ParserRule getRule() { return rule; }
-
-		//{PreValueExpression} "pre" "(" value=FeatureCall ")"
-		public Group getGroup() { return cGroup; }
-
-		//{PreValueExpression}
-		public Action getPreValueExpressionAction_0() { return cPreValueExpressionAction_0; }
-
-		//"pre"
-		public Keyword getPreKeyword_1() { return cPreKeyword_1; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
-
-		//value=FeatureCall
-		public Assignment getValueAssignment_3() { return cValueAssignment_3; }
-
-		//FeatureCall
-		public RuleCall getValueFeatureCallParserRuleCall_3_0() { return cValueFeatureCallParserRuleCall_3_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 	}
 	
 	
@@ -1062,6 +1019,12 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
 		private final Keyword cHOSTHostKeyword_7_0 = (Keyword)cHOSTEnumLiteralDeclaration_7.eContents().get(0);
 		
+		////todo: pre(x) should return the same type of x
+		//
+		////PreValueExpression returns stext::Expression:
+		//
+		////	{PreValueExpression} 'pre' '(' value=FeatureCall ')';
+		//
 		/// ***************************************** COMBINE OPERATORS ************************************* * / enum
 		//
 		//CombineOperator:
@@ -1141,10 +1104,9 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	private ReactionEffectElements pReactionEffect;
 	private NumericalMultiplyDivideExpressionElements pNumericalMultiplyDivideExpression;
 	private MultiplicativeOperator2Elements unknownRuleMultiplicativeOperator2;
-	private EventValueReferenceExpressionElements pEventValueReferenceExpression;
+	private ValReferenceExpressionElements pValReferenceExpression;
 	private PreReferenceExpressionElements pPreReferenceExpression;
 	private PrimaryExpressionElements pPrimaryExpression;
-	private PreValueExpressionElements pPreValueExpression;
 	private CombineOperatorElements unknownRuleCombineOperator;
 	
 	private final Grammar grammar;
@@ -1228,7 +1190,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SignalDefinition:
 	//
-	//	{EventDefinition} Input?="input"? Output?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
+	//	{EventDefinition} isInput?="input"? isOutput?="output"? "signal" name=ID (":" type=[types::Type|FQN] ("="
 	//
 	//	varInitialValue=Expression)? ("with" varCombineOperator=CombineOperator)?)? ";";
 	public SignalDefinitionElements getSignalDefinitionAccess() {
@@ -1421,15 +1383,15 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// cmot change
 	//
-	//EventValueReferenceExpression returns stext::Expression:
+	//ValReferenceExpression returns stext::Expression:
 	//
-	//	{EventValueReferenceExpression} "val" "(" value=(FeatureCall | PreReferenceExpression) ")";
-	public EventValueReferenceExpressionElements getEventValueReferenceExpressionAccess() {
-		return (pEventValueReferenceExpression != null) ? pEventValueReferenceExpression : (pEventValueReferenceExpression = new EventValueReferenceExpressionElements());
+	//	{ValReferenceExpression} "val" "(" expression=(FeatureCall | PreReferenceExpression) ")";
+	public ValReferenceExpressionElements getValReferenceExpressionAccess() {
+		return (pValReferenceExpression != null) ? pValReferenceExpression : (pValReferenceExpression = new ValReferenceExpressionElements());
 	}
 	
-	public ParserRule getEventValueReferenceExpressionRule() {
-		return getEventValueReferenceExpressionAccess().getRule();
+	public ParserRule getValReferenceExpressionRule() {
+		return getValReferenceExpressionAccess().getRule();
 	}
 
 	//// Additional pre(), like val(), allow pre(val()) and allow pre(pre())    
@@ -1438,9 +1400,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//PreReferenceExpression returns stext::Expression:
 	//
-	//	{EventValueReferenceExpression} "pre" "(" value=(FeatureCall | EventValueReferenceExpression |
-	//
-	//	PreReferenceExpression) ")";
+	//	{PreReferenceExpression} "pre" "(" expression=(FeatureCall | ValReferenceExpression | PreReferenceExpression) ")";
 	public PreReferenceExpressionElements getPreReferenceExpressionAccess() {
 		return (pPreReferenceExpression != null) ? pPreReferenceExpression : (pPreReferenceExpression = new PreReferenceExpressionElements());
 	}
@@ -1457,7 +1417,7 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//PrimaryExpression returns stext::Expression:
 	//
-	//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | EventValueReferenceExpression |
+	//	PrimitiveValueExpression | FeatureCall | ActiveStateReferenceExpression | ValReferenceExpression |
 	//
 	//	PreReferenceExpression | ParenthesizedExpression;
 	public PrimaryExpressionElements getPrimaryExpressionAccess() {
@@ -1470,17 +1430,10 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 
 	////todo: pre(x) should return the same type of x
 	//
-	//PreValueExpression returns stext::Expression:
+	////PreValueExpression returns stext::Expression:
 	//
-	//	{PreValueExpression} "pre" "(" value=FeatureCall ")";
-	public PreValueExpressionElements getPreValueExpressionAccess() {
-		return (pPreValueExpression != null) ? pPreValueExpression : (pPreValueExpression = new PreValueExpressionElements());
-	}
-	
-	public ParserRule getPreValueExpressionRule() {
-		return getPreValueExpressionAccess().getRule();
-	}
-
+	////	{PreValueExpression} 'pre' '(' value=FeatureCall ')';
+	//
 	/// ***************************************** COMBINE OPERATORS ************************************* * / enum
 	//
 	//CombineOperator:
@@ -2187,6 +2140,17 @@ public class SynctextGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getElementReferenceExpressionRule() {
 		return getElementReferenceExpressionAccess().getRule();
+	}
+
+	//EventValueReferenceExpression returns Expression:
+	//
+	//	{EventValueReferenceExpression} "valueof" "(" value=FeatureCall ")";
+	public STextGrammarAccess.EventValueReferenceExpressionElements getEventValueReferenceExpressionAccess() {
+		return gaSText.getEventValueReferenceExpressionAccess();
+	}
+	
+	public ParserRule getEventValueReferenceExpressionRule() {
+		return getEventValueReferenceExpressionAccess().getRule();
 	}
 
 	//ActiveStateReferenceExpression returns Expression:

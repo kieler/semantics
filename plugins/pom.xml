@@ -20,6 +20,10 @@
 <!--
     <module>../test</module>
 -->
+    <module>de.cau.cs.kieler.core.annotations</module>
+    <module>de.cau.cs.kieler.core.annotations.edit</module>
+    <module>de.cau.cs.kieler.core.annotations.text</module>
+    <module>de.cau.cs.kieler.core.annotations.text.ui</module>
     <module>de.cau.cs.kieler.core.kexpressions</module>
     <module>de.cau.cs.kieler.core.kexpressions.edit</module>
     <module>de.cau.cs.kieler.core.kexpressions.ui</module>
@@ -29,7 +33,6 @@
     <module>de.cau.cs.kieler.core.model.xtend</module>
     <module>de.cau.cs.kieler.core.model.xtext</module>
     <module>de.cau.cs.kieler.core.product</module>
-    <module>de.cau.cs.kieler.core.ui</module>
     <module>de.cau.cs.kieler.esterel</module>
     <module>de.cau.cs.kieler.esterel.cec</module>
     <module>de.cau.cs.kieler.esterel.cec.linux.x86</module>
@@ -42,13 +45,12 @@
     <module>de.cau.cs.kieler.esterel.examples</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
     <module>de.cau.cs.kieler.kaom.sim.ptolemy</module>
+    <module>de.cau.cs.kieler.karma</module>
     <module>de.cau.cs.kieler.kev</module>
     <module>de.cau.cs.kieler.kex</module>
     <module>de.cau.cs.kieler.kex.ui</module>
     <module>de.cau.cs.kieler.kies</module>
     <module>de.cau.cs.kieler.ksbase.gmf</module>
-    <module>de.cau.cs.kieler.kvid</module>
-    <module>de.cau.cs.kieler.kvid.ui</module>
     <module>de.cau.cs.kieler.maude</module>
     <module>de.cau.cs.kieler.s</module>
     <module>de.cau.cs.kieler.s.sc</module>
@@ -101,7 +103,6 @@
     <module>de.cau.cs.kieler.synccharts.text</module>
     <module>de.cau.cs.kieler.synccharts.text.bridge</module>
     <module>de.cau.cs.kieler.synccharts.text.ui</module>
-    <module>de.tu_berlin.cs.tfs.muvitorkit</module>
     <module>org.json</module>
   </modules>
 

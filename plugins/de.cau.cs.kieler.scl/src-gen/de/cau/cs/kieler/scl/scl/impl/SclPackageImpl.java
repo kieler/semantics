@@ -17,7 +17,7 @@ import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
-import de.cau.cs.kieler.scl.scl.VariableDeclaration;
+import de.cau.cs.kieler.scl.scl.VariableDefinition;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -25,10 +25,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import org.yakindu.base.types.TypesPackage;
-
-import org.yakindu.sct.model.sgraph.SGraphPackage;
 
 import org.yakindu.sct.model.stext.stext.StextPackage;
 
@@ -52,7 +48,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass variableDeclarationEClass = null;
+  private EClass variableDefinitionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -236,7 +232,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProgram_Declarations()
+  public EReference getProgram_Definitions()
   {
     return (EReference)programEClass.getEStructuralFeatures().get(1);
   }
@@ -246,9 +242,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getVariableDeclaration()
+  public EClass getVariableDefinition()
   {
-    return variableDeclarationEClass;
+    return variableDefinitionEClass;
   }
 
   /**
@@ -256,9 +252,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableDeclaration_Input()
+  public EAttribute getVariableDefinition_Input()
   {
-    return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -266,9 +262,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableDeclaration_Output()
+  public EAttribute getVariableDefinition_Output()
   {
-    return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -276,29 +272,9 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariableDeclaration_Static()
+  public EAttribute getVariableDefinition_Static()
   {
-    return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getVariableDeclaration_Type()
-  {
-    return (EReference)variableDeclarationEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getVariableDeclaration_InitialValue()
-  {
-    return (EReference)variableDeclarationEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)variableDefinitionEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -546,7 +522,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStatementScope_Declarations()
+  public EReference getStatementScope_Definitions()
   {
     return (EReference)statementScopeEClass.getEStructuralFeatures().get(0);
   }
@@ -583,14 +559,12 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     // Create classes and their features
     programEClass = createEClass(PROGRAM);
     createEAttribute(programEClass, PROGRAM__NAME);
-    createEReference(programEClass, PROGRAM__DECLARATIONS);
+    createEReference(programEClass, PROGRAM__DEFINITIONS);
 
-    variableDeclarationEClass = createEClass(VARIABLE_DECLARATION);
-    createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__INPUT);
-    createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__OUTPUT);
-    createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__STATIC);
-    createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
-    createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__INITIAL_VALUE);
+    variableDefinitionEClass = createEClass(VARIABLE_DEFINITION);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__INPUT);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__OUTPUT);
+    createEAttribute(variableDefinitionEClass, VARIABLE_DEFINITION__STATIC);
 
     statementEClass = createEClass(STATEMENT);
     createEReference(statementEClass, STATEMENT__ANNOTATIONS);
@@ -628,7 +602,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     pauseEClass = createEClass(PAUSE);
 
     statementScopeEClass = createEClass(STATEMENT_SCOPE);
-    createEReference(statementScopeEClass, STATEMENT_SCOPE__DECLARATIONS);
+    createEReference(statementScopeEClass, STATEMENT_SCOPE__DEFINITIONS);
   }
 
   /**
@@ -656,8 +630,6 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
-    SGraphPackage theSGraphPackage = (SGraphPackage)EPackage.Registry.INSTANCE.getEPackage(SGraphPackage.eNS_URI);
-    TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
     StextPackage theStextPackage = (StextPackage)EPackage.Registry.INSTANCE.getEPackage(StextPackage.eNS_URI);
 
     // Create type parameters
@@ -666,7 +638,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     // Add supertypes to classes
     programEClass.getESuperTypes().add(this.getStatementSequence());
-    variableDeclarationEClass.getESuperTypes().add(theSGraphPackage.getVariable());
+    variableDefinitionEClass.getESuperTypes().add(theStextPackage.getVariableDefinition());
     emptyStatementEClass.getESuperTypes().add(this.getStatement());
     instructionStatementEClass.getESuperTypes().add(this.getStatement());
     assignmentEClass.getESuperTypes().add(this.getInstruction());
@@ -682,14 +654,12 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getProgram_Name(), ecorePackage.getEString(), "name", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProgram_Declarations(), this.getVariableDeclaration(), null, "declarations", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProgram_Definitions(), this.getVariableDefinition(), null, "definitions", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(variableDeclarationEClass, VariableDeclaration.class, "VariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVariableDeclaration_Input(), ecorePackage.getEBoolean(), "input", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariableDeclaration_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getVariableDeclaration_Static(), ecorePackage.getEBoolean(), "static", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getVariableDeclaration_Type(), theTypesPackage.getType(), null, "type", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getVariableDeclaration_InitialValue(), theStextPackage.getExpression(), null, "initialValue", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(variableDefinitionEClass, VariableDefinition.class, "VariableDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getVariableDefinition_Input(), ecorePackage.getEBoolean(), "input", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDefinition_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariableDefinition_Static(), ecorePackage.getEBoolean(), "static", null, 0, 1, VariableDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getStatement_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -727,7 +697,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(statementScopeEClass, StatementScope.class, "StatementScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStatementScope_Declarations(), this.getVariableDeclaration(), null, "declarations", null, 0, -1, StatementScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatementScope_Definitions(), this.getVariableDefinition(), null, "definitions", null, 0, -1, StatementScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

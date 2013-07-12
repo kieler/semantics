@@ -29,7 +29,7 @@ Declaration returns sgraph::Declaration:
 SignalDeclaration returns sgraph::Event:
 	SignalDefinition;
 SignalDefinition:
-	{EventDefinition} (Input?='input')? (Output?='output')? 'signal'
+	{EventDefinition} (isInput?='input')? (isOutput?='output')? 'signal'
 	name=ID (':' type=[types::Type|FQN]
 	('=' varInitialValue=Expression)?
 	('with' varCombineOperator=CombineOperator)?)? ';';
@@ -106,13 +106,13 @@ enum MultiplicativeOperator2:
 // Override the stext::EventValueReferenceExpression
 // override 'valueof()' with 'val()', allow val(pre())    
 // cmot change
-EventValueReferenceExpression returns stext::Expression:
-  {EventValueReferenceExpression} 'val'  '(' value=(FeatureCall|PreReferenceExpression) ')';
+ValReferenceExpression returns stext::Expression:
+  {ValReferenceExpression} 'val'  '(' expression=(FeatureCall|PreReferenceExpression) ')';
     
 // Additional pre(), like val(), allow pre(val()) and allow pre(pre())    
 // cmot addition
 PreReferenceExpression returns stext::Expression:
-  {EventValueReferenceExpression} 'pre'  '(' value=(FeatureCall|EventValueReferenceExpression|PreReferenceExpression) ')';
+  {PreReferenceExpression} 'pre'  '(' expression=(FeatureCall|ValReferenceExpression|PreReferenceExpression) ')';
     
 
 
@@ -124,7 +124,7 @@ PrimaryExpression returns stext::Expression:
     PrimitiveValueExpression 
     | FeatureCall 
     | ActiveStateReferenceExpression 
-    | EventValueReferenceExpression
+    | ValReferenceExpression
     | PreReferenceExpression  
     | ParenthesizedExpression
 ; 
@@ -132,8 +132,8 @@ PrimaryExpression returns stext::Expression:
 
 
 //todo: pre(x) should return the same type of x
-PreValueExpression returns stext::Expression:
-	{PreValueExpression} 'pre' '(' value=FeatureCall ')';
+//PreValueExpression returns stext::Expression:
+//	{PreValueExpression} 'pre' '(' value=FeatureCall ')';
 
 /***************************************** COMBINE OPERATORS ************************************* */
 enum CombineOperator returns CombineOperator:

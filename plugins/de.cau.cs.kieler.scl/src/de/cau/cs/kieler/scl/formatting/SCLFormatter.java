@@ -61,8 +61,8 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
             
    
             // Variable Declaration
-            c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword_6());
-            c.setLinewrap(1).after(f.getVariableDeclarationRule());
+//            c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword);
+//            c.setLinewrap(1).after(f.getVariableDeclarationRule());
         
             // Parallel
             c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());

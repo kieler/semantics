@@ -31,11 +31,11 @@ import org.eclipse.ui.part.FileEditorInput;
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
+import de.cau.cs.kieler.core.kivi.listeners.GlobalPartAdapter;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.IPropertyHolder;
 import de.cau.cs.kieler.core.properties.MapPropertyHolder;
 import de.cau.cs.kieler.core.properties.Property;
-import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 
 /**
  * A part trigger that fires trigger states if the active part has been switched.
@@ -72,10 +72,11 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
     public static final IProperty<IPath> EDITOR_INPUT_PATH = new Property<IPath>(
             EDITOR_INPUT_PATH_ID);
 
-    private static PartTrigger instance = null;
+    private static PartTrigger instance;
 
-    private IEditorPart currentActiveEditor = null;
-    private IWorkbenchPart currentActivePart = null;
+    private IEditorPart currentActiveEditor;
+    private IWorkbenchPart currentActivePart;
+    private GlobalPartAdapter globalPartAdapter;
 
     // private IWorkbenchPart lastActive = null;
 
@@ -83,13 +84,14 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
     public void register() {
         if (instance == null) {
             instance = this;
-            CombinedWorkbenchListener.addPartListener(instance);
+            globalPartAdapter = new GlobalPartAdapter(instance);
             // CombinedWorkbenchListener.addPartListener2(instance);
         }
     }
 
     @Override
     public void unregister() {
+        globalPartAdapter.unregister();
     }
 
     /*****************************

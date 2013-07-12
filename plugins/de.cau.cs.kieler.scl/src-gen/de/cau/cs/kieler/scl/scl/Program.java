@@ -13,7 +13,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Program#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.Program#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.Program#getDefinitions <em>Definitions</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,19 +50,19 @@ public interface Program extends StatementSequence
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.VariableDeclaration}.
+   * Returns the value of the '<em><b>Definitions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.scl.scl.VariableDefinition}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Definitions</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Declarations</em>' containment reference list.
-   * @see de.cau.cs.kieler.scl.scl.SclPackage#getProgram_Declarations()
+   * @return the value of the '<em>Definitions</em>' containment reference list.
+   * @see de.cau.cs.kieler.scl.scl.SclPackage#getProgram_Definitions()
    * @model containment="true"
    * @generated
    */
-  EList<VariableDeclaration> getDeclarations();
+  EList<VariableDefinition> getDefinitions();
 
 } // Program

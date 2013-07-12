@@ -381,12 +381,15 @@ class SCLBasicBlockExtensions {
             CachedPrograms = new HashMap<Program, ArrayList<BasicBlock>>
         }
         if (CachedPrograms.containsKey(program)) {
-            return CachedPrograms.get(program)
+            val cache = CachedPrograms.get(program)
+            if (cache.size>0) return cache
         }
         
         val basicBlocks = getBasicBlocks(program.statements.head);
         
         CachedPrograms.put(program, basicBlocks as ArrayList<BasicBlock>)
+        val ArrayList<BasicBlock> hashmap = CachedPrograms.get(program)
+        Debug(hashmap.toString);
         
         basicBlocks
     }
@@ -398,7 +401,8 @@ class SCLBasicBlockExtensions {
     def int getBasicBlockIndex(BasicBlock basicBlock) {
         if (basicBlock.CachedIndex>-1) return basicBlock.CachedIndex;
         var c = 0
-        for(block : basicBlock.getHead.getAllBasicBlocks) {
+        val basicBlocks = basicBlock.getHead.getAllBasicBlocks
+        for(block : basicBlocks) {
             if (basicBlock.isEqual(block)) {
                 basicBlock.CachedIndex = c 
                 return c
@@ -409,7 +413,7 @@ class SCLBasicBlockExtensions {
     }
     
     def String getBasicBlockName(BasicBlock basicBlock) {
-        var String name = ""
+        var String name = "";
         if (!basicBlock.CachedName.nullOrEmpty) {
             name = basicBlock.CachedName
         } else {

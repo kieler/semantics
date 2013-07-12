@@ -80,8 +80,8 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProgramAccess().getGroup_4(), "rule__Program__Group_4__0");
 					put(grammarAccess.getProgramAccess().getGroup_4_0_0(), "rule__Program__Group_4_0_0__0");
 					put(grammarAccess.getProgramAccess().getGroup_4_1(), "rule__Program__Group_4_1__0");
-					put(grammarAccess.getVariableDeclarationAccess().getGroup(), "rule__VariableDeclaration__Group__0");
-					put(grammarAccess.getVariableDeclarationAccess().getGroup_5(), "rule__VariableDeclaration__Group_5__0");
+					put(grammarAccess.getVariableDefinitionAccess().getGroup(), "rule__VariableDefinition__Group__0");
+					put(grammarAccess.getVariableDefinitionAccess().getGroup_5(), "rule__VariableDefinition__Group_5__0");
 					put(grammarAccess.getEmptyStatementAccess().getGroup(), "rule__EmptyStatement__Group__0");
 					put(grammarAccess.getEmptyStatementAccess().getGroup_1(), "rule__EmptyStatement__Group_1__0");
 					put(grammarAccess.getInstructionStatementAccess().getGroup(), "rule__InstructionStatement__Group__0");
@@ -119,8 +119,6 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getInternalScopeAccess().getGroup(), "rule__InternalScope__Group__0");
 					put(grammarAccess.getEventDefinitionAccess().getGroup(), "rule__EventDefinition__Group__0");
 					put(grammarAccess.getEventDefinitionAccess().getGroup_3(), "rule__EventDefinition__Group_3__0");
-					put(grammarAccess.getVariableDefinitionAccess().getGroup(), "rule__VariableDefinition__Group__0");
-					put(grammarAccess.getVariableDefinitionAccess().getGroup_6(), "rule__VariableDefinition__Group_6__0");
 					put(grammarAccess.getOperationDefinitionAccess().getGroup(), "rule__OperationDefinition__Group__0");
 					put(grammarAccess.getOperationDefinitionAccess().getGroup_4(), "rule__OperationDefinition__Group_4__0");
 					put(grammarAccess.getOperationDefinitionAccess().getGroup_4_1(), "rule__OperationDefinition__Group_4_1__0");
@@ -193,17 +191,17 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getHexLiteralAccess().getGroup(), "rule__HexLiteral__Group__0");
 					put(grammarAccess.getStringLiteralAccess().getGroup(), "rule__StringLiteral__Group__0");
 					put(grammarAccess.getProgramAccess().getNameAssignment_1(), "rule__Program__NameAssignment_1");
-					put(grammarAccess.getProgramAccess().getDeclarationsAssignment_2(), "rule__Program__DeclarationsAssignment_2");
+					put(grammarAccess.getProgramAccess().getDefinitionsAssignment_2(), "rule__Program__DefinitionsAssignment_2");
 					put(grammarAccess.getProgramAccess().getStatementsAssignment_4_0_0_0(), "rule__Program__StatementsAssignment_4_0_0_0");
 					put(grammarAccess.getProgramAccess().getStatementsAssignment_4_0_1(), "rule__Program__StatementsAssignment_4_0_1");
 					put(grammarAccess.getProgramAccess().getStatementsAssignment_4_1_0(), "rule__Program__StatementsAssignment_4_1_0");
 					put(grammarAccess.getProgramAccess().getStatementsAssignment_4_1_1(), "rule__Program__StatementsAssignment_4_1_1");
-					put(grammarAccess.getVariableDeclarationAccess().getInputAssignment_0(), "rule__VariableDeclaration__InputAssignment_0");
-					put(grammarAccess.getVariableDeclarationAccess().getOutputAssignment_1(), "rule__VariableDeclaration__OutputAssignment_1");
-					put(grammarAccess.getVariableDeclarationAccess().getStaticAssignment_2(), "rule__VariableDeclaration__StaticAssignment_2");
-					put(grammarAccess.getVariableDeclarationAccess().getTypeAssignment_3(), "rule__VariableDeclaration__TypeAssignment_3");
-					put(grammarAccess.getVariableDeclarationAccess().getNameAssignment_4(), "rule__VariableDeclaration__NameAssignment_4");
-					put(grammarAccess.getVariableDeclarationAccess().getInitialValueAssignment_5_1(), "rule__VariableDeclaration__InitialValueAssignment_5_1");
+					put(grammarAccess.getVariableDefinitionAccess().getInputAssignment_0(), "rule__VariableDefinition__InputAssignment_0");
+					put(grammarAccess.getVariableDefinitionAccess().getOutputAssignment_1(), "rule__VariableDefinition__OutputAssignment_1");
+					put(grammarAccess.getVariableDefinitionAccess().getStaticAssignment_2(), "rule__VariableDefinition__StaticAssignment_2");
+					put(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_3(), "rule__VariableDefinition__TypeAssignment_3");
+					put(grammarAccess.getVariableDefinitionAccess().getNameAssignment_4(), "rule__VariableDefinition__NameAssignment_4");
+					put(grammarAccess.getVariableDefinitionAccess().getInitialValueAssignment_5_1(), "rule__VariableDefinition__InitialValueAssignment_5_1");
 					put(grammarAccess.getEmptyStatementAccess().getAnnotationsAssignment_0(), "rule__EmptyStatement__AnnotationsAssignment_0");
 					put(grammarAccess.getEmptyStatementAccess().getLabelAssignment_1_0(), "rule__EmptyStatement__LabelAssignment_1_0");
 					put(grammarAccess.getInstructionStatementAccess().getAnnotationsAssignment_0(), "rule__InstructionStatement__AnnotationsAssignment_0");
@@ -228,7 +226,7 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getThreadAccess().getStatementsAssignment_1_1_1(), "rule__Thread__StatementsAssignment_1_1_1");
 					put(grammarAccess.getParallelAccess().getThreadsAssignment_1_0(), "rule__Parallel__ThreadsAssignment_1_0");
 					put(grammarAccess.getParallelAccess().getThreadsAssignment_1_1_1(), "rule__Parallel__ThreadsAssignment_1_1_1");
-					put(grammarAccess.getStatementScopeAccess().getDeclarationsAssignment_2(), "rule__StatementScope__DeclarationsAssignment_2");
+					put(grammarAccess.getStatementScopeAccess().getDefinitionsAssignment_2(), "rule__StatementScope__DefinitionsAssignment_2");
 					put(grammarAccess.getStatementScopeAccess().getStatementsAssignment_3_0_0_0(), "rule__StatementScope__StatementsAssignment_3_0_0_0");
 					put(grammarAccess.getStatementScopeAccess().getStatementsAssignment_3_0_1(), "rule__StatementScope__StatementsAssignment_3_0_1");
 					put(grammarAccess.getStatementScopeAccess().getStatementsAssignment_3_1_0(), "rule__StatementScope__StatementsAssignment_3_1_0");
@@ -248,11 +246,6 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEventDefinitionAccess().getDirectionAssignment_0(), "rule__EventDefinition__DirectionAssignment_0");
 					put(grammarAccess.getEventDefinitionAccess().getNameAssignment_2(), "rule__EventDefinition__NameAssignment_2");
 					put(grammarAccess.getEventDefinitionAccess().getTypeAssignment_3_1(), "rule__EventDefinition__TypeAssignment_3_1");
-					put(grammarAccess.getVariableDefinitionAccess().getReadonlyAssignment_2_0(), "rule__VariableDefinition__ReadonlyAssignment_2_0");
-					put(grammarAccess.getVariableDefinitionAccess().getExternalAssignment_2_1(), "rule__VariableDefinition__ExternalAssignment_2_1");
-					put(grammarAccess.getVariableDefinitionAccess().getNameAssignment_3(), "rule__VariableDefinition__NameAssignment_3");
-					put(grammarAccess.getVariableDefinitionAccess().getTypeAssignment_5(), "rule__VariableDefinition__TypeAssignment_5");
-					put(grammarAccess.getVariableDefinitionAccess().getInitialValueAssignment_6_1(), "rule__VariableDefinition__InitialValueAssignment_6_1");
 					put(grammarAccess.getOperationDefinitionAccess().getNameAssignment_2(), "rule__OperationDefinition__NameAssignment_2");
 					put(grammarAccess.getOperationDefinitionAccess().getParametersAssignment_4_0(), "rule__OperationDefinition__ParametersAssignment_4_0");
 					put(grammarAccess.getOperationDefinitionAccess().getParametersAssignment_4_1_1(), "rule__OperationDefinition__ParametersAssignment_4_1_1");
@@ -315,7 +308,6 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRealLiteralAccess().getValueAssignment_1(), "rule__RealLiteral__ValueAssignment_1");
 					put(grammarAccess.getHexLiteralAccess().getValueAssignment_1(), "rule__HexLiteral__ValueAssignment_1");
 					put(grammarAccess.getStringLiteralAccess().getValueAssignment_1(), "rule__StringLiteral__ValueAssignment_1");
-					put(grammarAccess.getVariableDefinitionAccess().getUnorderedGroup_2(), "rule__VariableDefinition__UnorderedGroup_2");
 				}
 			};
 		}

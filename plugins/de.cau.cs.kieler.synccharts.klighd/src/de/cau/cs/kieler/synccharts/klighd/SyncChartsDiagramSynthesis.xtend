@@ -1,4 +1,16 @@
-
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.klighd
 
 import java.util.List
@@ -66,6 +78,9 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
     @Inject
     extension KColorExtensions
+    
+    @Inject
+    extension AnnotationsExtensions
     
     override transform(Region model) {
         return model.translate();
@@ -170,7 +185,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 
                 it.addText(s.label).putToLookUpWith(s) => [
                     it.fontSize = 11;
-                    it.setGridPlacementData().setMaxCellHeight(40)
+                    it.setGridPlacementData().setMaxCellHeightEx(40)
                         .from(LEFT, 10, 0, TOP, 10, 0)
                         .to(RIGHT, 10, 0, BOTTOM, 10, 0);
                 ];

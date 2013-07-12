@@ -16,7 +16,7 @@ import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
-import de.cau.cs.kieler.scl.scl.VariableDeclaration;
+import de.cau.cs.kieler.scl.scl.VariableDefinition;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -26,6 +26,10 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 
 import org.yakindu.base.base.NamedElement;
+
+import org.yakindu.base.types.Feature;
+import org.yakindu.base.types.Property;
+import org.yakindu.base.types.TypedElement;
 
 import org.yakindu.sct.model.sgraph.Declaration;
 import org.yakindu.sct.model.sgraph.Variable;
@@ -99,9 +103,9 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createProgramAdapter();
       }
       @Override
-      public Adapter caseVariableDeclaration(VariableDeclaration object)
+      public Adapter caseVariableDefinition(VariableDefinition object)
       {
-        return createVariableDeclarationAdapter();
+        return createVariableDefinitionAdapter();
       }
       @Override
       public Adapter caseStatement(Statement object)
@@ -184,6 +188,26 @@ public class SclAdapterFactory extends AdapterFactoryImpl
         return createVariableAdapter();
       }
       @Override
+      public Adapter caseTypedElement(TypedElement object)
+      {
+        return createTypedElementAdapter();
+      }
+      @Override
+      public Adapter caseFeature(Feature object)
+      {
+        return createFeatureAdapter();
+      }
+      @Override
+      public Adapter caseProperty(Property object)
+      {
+        return createPropertyAdapter();
+      }
+      @Override
+      public Adapter caseStext_VariableDefinition(org.yakindu.sct.model.stext.stext.VariableDefinition object)
+      {
+        return createStext_VariableDefinitionAdapter();
+      }
+      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -221,16 +245,16 @@ public class SclAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration <em>Variable Declaration</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.scl.VariableDefinition <em>Variable Definition</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.scl.scl.VariableDeclaration
+   * @see de.cau.cs.kieler.scl.scl.VariableDefinition
    * @generated
    */
-  public Adapter createVariableDeclarationAdapter()
+  public Adapter createVariableDefinitionAdapter()
   {
     return null;
   }
@@ -471,6 +495,66 @@ public class SclAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVariableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.base.types.TypedElement <em>Typed Element</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.base.types.TypedElement
+   * @generated
+   */
+  public Adapter createTypedElementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.base.types.Feature <em>Feature</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.base.types.Feature
+   * @generated
+   */
+  public Adapter createFeatureAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.base.types.Property <em>Property</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.base.types.Property
+   * @generated
+   */
+  public Adapter createPropertyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.yakindu.sct.model.stext.stext.VariableDefinition <em>Variable Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.yakindu.sct.model.stext.stext.VariableDefinition
+   * @generated
+   */
+  public Adapter createStext_VariableDefinitionAdapter()
   {
     return null;
   }

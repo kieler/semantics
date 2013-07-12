@@ -38,7 +38,7 @@ import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
-import de.cau.cs.kieler.core.ui.UnsupportedPartException;
+import de.cau.cs.kieler.core.model.UnsupportedPartException;
 import de.cau.cs.kieler.ksbase.ui.kivi.IKSBasEHandler;
 
 /**
@@ -169,7 +169,7 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
 
         if (workbenchPart instanceof DiagramDocumentEditor) {
             final DiagramDocumentEditor diagramEditor = (DiagramDocumentEditor) workbenchPart;
-            // lastEditor = (DiagramDocumentEditor) editor;
+            lastEditor = (DiagramDocumentEditor) diagramEditor;
             // Its guaranteed to return a list, can't check for generics.
             @SuppressWarnings("unchecked")
             List<EditPart> selectedParts =
@@ -225,13 +225,14 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
     }
 
     public void performPostProcessing() {
-        refreshEditPolicy(lastEditor);
+        if(lastEditor != null) {
+            refreshEditPolicy(lastEditor);
+        }
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void transformationExecuted(String transformationName, Object[] parameters,
             Object result, EObject select) {
         if (lastEditor != null) {
@@ -323,7 +324,6 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
     /**
      * {@inheritDoc}
      */
-    @Override
     public boolean isPerformLayout() {
         return true;
     }
@@ -331,7 +331,6 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
     /**
      * {@inheritDoc}
      */
-    @Override
     public EObject getLayoutRoot() {
         return lastRootObject;
     }
@@ -339,7 +338,6 @@ public class GmfKSBaseHandler implements IKSBasEHandler {
     /**
      * {@inheritDoc}
      */
-    @Override
     public TransactionalEditingDomain getEditingDomain() {
         if (lastEditor instanceof DiagramDocumentEditor) {
             final DiagramDocumentEditor diagramEditor = (DiagramDocumentEditor) lastEditor;

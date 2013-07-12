@@ -23,7 +23,7 @@ import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import org.yakindu.sct.model.stext.stext.BoolLiteral
-import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import de.cau.cs.kieler.scl.scl.VariableDefinition
 import java.util.List
 import de.cau.cs.kieler.scl.scl.Instruction
 import org.eclipse.emf.common.util.EList
@@ -184,13 +184,13 @@ class SCLDependencyExtensions {
         return false
     }
     
-    def VariableDeclaration getWriteRef(Instruction instruction) {
+    def VariableDefinition getWriteRef(Instruction instruction) {
         if (!(instruction instanceof Assignment)) return null
         val asgn = (instruction as Assignment).assignment as AssignmentExpression
-        return ((asgn.varRef as ElementReferenceExpression).reference as VariableDeclaration)
+        return ((asgn.varRef as ElementReferenceExpression).reference as VariableDefinition)
     }
     
-    def boolean isReader(Instruction instruction, VariableDeclaration vardec) {
+    def boolean isReader(Instruction instruction, VariableDefinition vardec) {
         if (instruction instanceof Assignment) {
             val asgn = (instruction as Assignment).assignment as AssignmentExpression
             if (asgn.expression.eAllContents.toIterable.filter(typeof(ElementReferenceExpression)).

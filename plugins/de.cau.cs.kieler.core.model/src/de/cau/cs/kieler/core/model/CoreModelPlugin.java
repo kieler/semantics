@@ -24,8 +24,8 @@ import org.eclipse.ui.statushandlers.AbstractStatusHandler;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.util.GenericErrorHandler;
 import de.cau.cs.kieler.core.model.util.ModelErrorHandler;
-import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler;
 
 /**
  * The activator class controls the plug-in life cycle.

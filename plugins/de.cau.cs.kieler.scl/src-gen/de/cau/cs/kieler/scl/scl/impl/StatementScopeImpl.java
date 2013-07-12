@@ -6,7 +6,7 @@ import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
-import de.cau.cs.kieler.scl.scl.VariableDeclaration;
+import de.cau.cs.kieler.scl.scl.VariableDefinition;
 
 import java.util.Collection;
 
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getStatements <em>Statements</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getDefinitions <em>Definitions</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,14 +47,14 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
   protected EList<Statement> statements;
 
   /**
-   * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+   * The cached value of the '{@link #getDefinitions() <em>Definitions</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getDeclarations()
+   * @see #getDefinitions()
    * @generated
    * @ordered
    */
-  protected EList<VariableDeclaration> declarations;
+  protected EList<VariableDefinition> definitions;
 
   /**
    * <!-- begin-user-doc -->
@@ -96,13 +96,13 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<VariableDeclaration> getDeclarations()
+  public EList<VariableDefinition> getDefinitions()
   {
-    if (declarations == null)
+    if (definitions == null)
     {
-      declarations = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, SclPackage.STATEMENT_SCOPE__DECLARATIONS);
+      definitions = new EObjectContainmentEList<VariableDefinition>(VariableDefinition.class, this, SclPackage.STATEMENT_SCOPE__DEFINITIONS);
     }
-    return declarations;
+    return definitions;
   }
 
   /**
@@ -117,8 +117,8 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
     {
       case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
-      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-        return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+      case SclPackage.STATEMENT_SCOPE__DEFINITIONS:
+        return ((InternalEList<?>)getDefinitions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -135,8 +135,8 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
     {
       case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         return getStatements();
-      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-        return getDeclarations();
+      case SclPackage.STATEMENT_SCOPE__DEFINITIONS:
+        return getDefinitions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -156,9 +156,9 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
         getStatements().clear();
         getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
-      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-        getDeclarations().clear();
-        getDeclarations().addAll((Collection<? extends VariableDeclaration>)newValue);
+      case SclPackage.STATEMENT_SCOPE__DEFINITIONS:
+        getDefinitions().clear();
+        getDefinitions().addAll((Collection<? extends VariableDefinition>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -177,8 +177,8 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
       case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         getStatements().clear();
         return;
-      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-        getDeclarations().clear();
+      case SclPackage.STATEMENT_SCOPE__DEFINITIONS:
+        getDefinitions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -196,8 +196,8 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
     {
       case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         return statements != null && !statements.isEmpty();
-      case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-        return declarations != null && !declarations.isEmpty();
+      case SclPackage.STATEMENT_SCOPE__DEFINITIONS:
+        return definitions != null && !definitions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

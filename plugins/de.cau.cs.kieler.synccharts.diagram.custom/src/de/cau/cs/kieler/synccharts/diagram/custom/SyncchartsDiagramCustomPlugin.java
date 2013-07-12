@@ -28,8 +28,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.kivi.listeners.GlobalPartAdapter;
+import de.cau.cs.kieler.core.model.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.custom.update.UpdateResourceFactoryImpl;
 import de.cau.cs.kieler.synccharts.diagram.custom.commands.InitSyncchartsDiagramHandler;
 import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
@@ -60,10 +60,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         instance = this;
-        CombinedWorkbenchListener.addPageListener(this);
-        CombinedWorkbenchListener.addPartListener(this);
-        CombinedWorkbenchListener.receiveAlreadyOpenedPages(this);
-        CombinedWorkbenchListener.receiveAlreadyOpenedParts(this);
+        new GlobalPartAdapter(this);
         UpdateResourceFactoryImpl
                 .setReInitDiagramCommand(new InitSyncchartsDiagramHandler());
     }

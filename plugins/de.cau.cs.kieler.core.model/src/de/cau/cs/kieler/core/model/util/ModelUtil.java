@@ -42,8 +42,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorSite;
 import org.osgi.framework.Bundle;
 
 /**

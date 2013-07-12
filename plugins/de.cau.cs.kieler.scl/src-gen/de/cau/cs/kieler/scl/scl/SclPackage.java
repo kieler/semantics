@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
-import org.yakindu.sct.model.sgraph.SGraphPackage;
+import org.yakindu.sct.model.stext.stext.StextPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -115,13 +115,13 @@ public interface SclPackage extends EPackage
   int PROGRAM__NAME = STATEMENT_SEQUENCE_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Definitions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__DECLARATIONS = STATEMENT_SEQUENCE_FEATURE_COUNT + 1;
+  int PROGRAM__DEFINITIONS = STATEMENT_SEQUENCE_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -133,14 +133,14 @@ public interface SclPackage extends EPackage
   int PROGRAM_FEATURE_COUNT = STATEMENT_SEQUENCE_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl
-   * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getVariableDeclaration()
+   * @see de.cau.cs.kieler.scl.scl.impl.VariableDefinitionImpl
+   * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getVariableDefinition()
    * @generated
    */
-  int VARIABLE_DECLARATION = 1;
+  int VARIABLE_DEFINITION = 1;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -149,34 +149,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION__NAME = SGraphPackage.VARIABLE__NAME;
-
-  /**
-   * The feature id for the '<em><b>Input</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DECLARATION__INPUT = SGraphPackage.VARIABLE_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Output</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DECLARATION__OUTPUT = SGraphPackage.VARIABLE_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Static</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DECLARATION__STATIC = SGraphPackage.VARIABLE_FEATURE_COUNT + 2;
+  int VARIABLE_DEFINITION__NAME = StextPackage.VARIABLE_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -185,7 +158,34 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION__TYPE = SGraphPackage.VARIABLE_FEATURE_COUNT + 3;
+  int VARIABLE_DEFINITION__TYPE = StextPackage.VARIABLE_DEFINITION__TYPE;
+
+  /**
+   * The feature id for the '<em><b>Owning Type</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__OWNING_TYPE = StextPackage.VARIABLE_DEFINITION__OWNING_TYPE;
+
+  /**
+   * The feature id for the '<em><b>Readonly</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__READONLY = StextPackage.VARIABLE_DEFINITION__READONLY;
+
+  /**
+   * The feature id for the '<em><b>External</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__EXTERNAL = StextPackage.VARIABLE_DEFINITION__EXTERNAL;
 
   /**
    * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
@@ -194,16 +194,43 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION__INITIAL_VALUE = SGraphPackage.VARIABLE_FEATURE_COUNT + 4;
+  int VARIABLE_DEFINITION__INITIAL_VALUE = StextPackage.VARIABLE_DEFINITION__INITIAL_VALUE;
 
   /**
-   * The number of structural features of the '<em>Variable Declaration</em>' class.
+   * The feature id for the '<em><b>Input</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VARIABLE_DECLARATION_FEATURE_COUNT = SGraphPackage.VARIABLE_FEATURE_COUNT + 5;
+  int VARIABLE_DEFINITION__INPUT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Output</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__OUTPUT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Static</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION__STATIC = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Variable Definition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DEFINITION_FEATURE_COUNT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl <em>Statement</em>}' class.
@@ -560,13 +587,13 @@ public interface SclPackage extends EPackage
   int STATEMENT_SCOPE__STATEMENTS = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Definitions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATEMENT_SCOPE__DECLARATIONS = INSTRUCTION_FEATURE_COUNT + 1;
+  int STATEMENT_SCOPE__DEFINITIONS = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Statement Scope</em>' class.
@@ -600,80 +627,58 @@ public interface SclPackage extends EPackage
   EAttribute getProgram_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Program#getDeclarations <em>Declarations</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Program#getDefinitions <em>Definitions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Declarations</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Program#getDeclarations()
+   * @return the meta object for the containment reference list '<em>Definitions</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Program#getDefinitions()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_Declarations();
+  EReference getProgram_Definitions();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration <em>Variable Declaration</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.VariableDefinition <em>Variable Definition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Variable Declaration</em>'.
-   * @see de.cau.cs.kieler.scl.scl.VariableDeclaration
+   * @return the meta object for class '<em>Variable Definition</em>'.
+   * @see de.cau.cs.kieler.scl.scl.VariableDefinition
    * @generated
    */
-  EClass getVariableDeclaration();
+  EClass getVariableDefinition();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#isInput <em>Input</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.VariableDefinition#isInput <em>Input</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Input</em>'.
-   * @see de.cau.cs.kieler.scl.scl.VariableDeclaration#isInput()
-   * @see #getVariableDeclaration()
+   * @see de.cau.cs.kieler.scl.scl.VariableDefinition#isInput()
+   * @see #getVariableDefinition()
    * @generated
    */
-  EAttribute getVariableDeclaration_Input();
+  EAttribute getVariableDefinition_Input();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#isOutput <em>Output</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.VariableDefinition#isOutput <em>Output</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Output</em>'.
-   * @see de.cau.cs.kieler.scl.scl.VariableDeclaration#isOutput()
-   * @see #getVariableDeclaration()
+   * @see de.cau.cs.kieler.scl.scl.VariableDefinition#isOutput()
+   * @see #getVariableDefinition()
    * @generated
    */
-  EAttribute getVariableDeclaration_Output();
+  EAttribute getVariableDefinition_Output();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#isStatic <em>Static</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.VariableDefinition#isStatic <em>Static</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Static</em>'.
-   * @see de.cau.cs.kieler.scl.scl.VariableDeclaration#isStatic()
-   * @see #getVariableDeclaration()
+   * @see de.cau.cs.kieler.scl.scl.VariableDefinition#isStatic()
+   * @see #getVariableDefinition()
    * @generated
    */
-  EAttribute getVariableDeclaration_Static();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Type</em>'.
-   * @see de.cau.cs.kieler.scl.scl.VariableDeclaration#getType()
-   * @see #getVariableDeclaration()
-   * @generated
-   */
-  EReference getVariableDeclaration_Type();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.scl.VariableDeclaration#getInitialValue <em>Initial Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Initial Value</em>'.
-   * @see de.cau.cs.kieler.scl.scl.VariableDeclaration#getInitialValue()
-   * @see #getVariableDeclaration()
-   * @generated
-   */
-  EReference getVariableDeclaration_InitialValue();
+  EAttribute getVariableDefinition_Static();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Statement <em>Statement</em>}'.
@@ -927,15 +932,15 @@ public interface SclPackage extends EPackage
   EClass getStatementScope();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementScope#getDeclarations <em>Declarations</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementScope#getDefinitions <em>Definitions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Declarations</em>'.
-   * @see de.cau.cs.kieler.scl.scl.StatementScope#getDeclarations()
+   * @return the meta object for the containment reference list '<em>Definitions</em>'.
+   * @see de.cau.cs.kieler.scl.scl.StatementScope#getDefinitions()
    * @see #getStatementScope()
    * @generated
    */
-  EReference getStatementScope_Declarations();
+  EReference getStatementScope_Definitions();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -979,22 +984,22 @@ public interface SclPackage extends EPackage
     EAttribute PROGRAM__NAME = eINSTANCE.getProgram_Name();
 
     /**
-     * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Definitions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__DECLARATIONS = eINSTANCE.getProgram_Declarations();
+    EReference PROGRAM__DEFINITIONS = eINSTANCE.getProgram_Definitions();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scl.scl.impl.VariableDeclarationImpl
-     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getVariableDeclaration()
+     * @see de.cau.cs.kieler.scl.scl.impl.VariableDefinitionImpl
+     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getVariableDefinition()
      * @generated
      */
-    EClass VARIABLE_DECLARATION = eINSTANCE.getVariableDeclaration();
+    EClass VARIABLE_DEFINITION = eINSTANCE.getVariableDefinition();
 
     /**
      * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
@@ -1002,7 +1007,7 @@ public interface SclPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE_DECLARATION__INPUT = eINSTANCE.getVariableDeclaration_Input();
+    EAttribute VARIABLE_DEFINITION__INPUT = eINSTANCE.getVariableDefinition_Input();
 
     /**
      * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
@@ -1010,7 +1015,7 @@ public interface SclPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE_DECLARATION__OUTPUT = eINSTANCE.getVariableDeclaration_Output();
+    EAttribute VARIABLE_DEFINITION__OUTPUT = eINSTANCE.getVariableDefinition_Output();
 
     /**
      * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
@@ -1018,23 +1023,7 @@ public interface SclPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VARIABLE_DECLARATION__STATIC = eINSTANCE.getVariableDeclaration_Static();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference VARIABLE_DECLARATION__TYPE = eINSTANCE.getVariableDeclaration_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference VARIABLE_DECLARATION__INITIAL_VALUE = eINSTANCE.getVariableDeclaration_InitialValue();
+    EAttribute VARIABLE_DEFINITION__STATIC = eINSTANCE.getVariableDefinition_Static();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl <em>Statement</em>}' class.
@@ -1255,12 +1244,12 @@ public interface SclPackage extends EPackage
     EClass STATEMENT_SCOPE = eINSTANCE.getStatementScope();
 
     /**
-     * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Definitions</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference STATEMENT_SCOPE__DECLARATIONS = eINSTANCE.getStatementScope_Declarations();
+    EReference STATEMENT_SCOPE__DEFINITIONS = eINSTANCE.getStatementScope_Definitions();
 
   }
 

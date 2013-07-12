@@ -32,13 +32,13 @@ public interface SclFactory extends EFactory
   Program createProgram();
 
   /**
-   * Returns a new object of class '<em>Variable Declaration</em>'.
+   * Returns a new object of class '<em>Variable Definition</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable Declaration</em>'.
+   * @return a new object of class '<em>Variable Definition</em>'.
    * @generated
    */
-  VariableDeclaration createVariableDeclaration();
+  VariableDefinition createVariableDefinition();
 
   /**
    * Returns a new object of class '<em>Statement</em>'.

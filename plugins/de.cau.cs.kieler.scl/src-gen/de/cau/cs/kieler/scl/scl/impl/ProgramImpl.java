@@ -4,7 +4,7 @@ package de.cau.cs.kieler.scl.scl.impl;
 
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
-import de.cau.cs.kieler.scl.scl.VariableDeclaration;
+import de.cau.cs.kieler.scl.scl.VariableDefinition;
 
 import java.util.Collection;
 
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getDefinitions <em>Definitions</em>}</li>
  * </ul>
  * </p>
  *
@@ -58,14 +58,14 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+   * The cached value of the '{@link #getDefinitions() <em>Definitions</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getDeclarations()
+   * @see #getDefinitions()
    * @generated
    * @ordered
    */
-  protected EList<VariableDeclaration> declarations;
+  protected EList<VariableDefinition> definitions;
 
   /**
    * <!-- begin-user-doc -->
@@ -116,13 +116,13 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<VariableDeclaration> getDeclarations()
+  public EList<VariableDefinition> getDefinitions()
   {
-    if (declarations == null)
+    if (definitions == null)
     {
-      declarations = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, SclPackage.PROGRAM__DECLARATIONS);
+      definitions = new EObjectContainmentEList<VariableDefinition>(VariableDefinition.class, this, SclPackage.PROGRAM__DEFINITIONS);
     }
-    return declarations;
+    return definitions;
   }
 
   /**
@@ -135,8 +135,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
-      case SclPackage.PROGRAM__DECLARATIONS:
-        return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+      case SclPackage.PROGRAM__DEFINITIONS:
+        return ((InternalEList<?>)getDefinitions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -153,8 +153,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
     {
       case SclPackage.PROGRAM__NAME:
         return getName();
-      case SclPackage.PROGRAM__DECLARATIONS:
-        return getDeclarations();
+      case SclPackage.PROGRAM__DEFINITIONS:
+        return getDefinitions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -173,9 +173,9 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
       case SclPackage.PROGRAM__NAME:
         setName((String)newValue);
         return;
-      case SclPackage.PROGRAM__DECLARATIONS:
-        getDeclarations().clear();
-        getDeclarations().addAll((Collection<? extends VariableDeclaration>)newValue);
+      case SclPackage.PROGRAM__DEFINITIONS:
+        getDefinitions().clear();
+        getDefinitions().addAll((Collection<? extends VariableDefinition>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -194,8 +194,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
       case SclPackage.PROGRAM__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case SclPackage.PROGRAM__DECLARATIONS:
-        getDeclarations().clear();
+      case SclPackage.PROGRAM__DEFINITIONS:
+        getDefinitions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -213,8 +213,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
     {
       case SclPackage.PROGRAM__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case SclPackage.PROGRAM__DECLARATIONS:
-        return declarations != null && !declarations.isEmpty();
+      case SclPackage.PROGRAM__DEFINITIONS:
+        return definitions != null && !definitions.isEmpty();
     }
     return super.eIsSet(featureID);
   }
