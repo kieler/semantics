@@ -45,19 +45,6 @@ class CoreToSCLOptimization {
     @Inject
     extension SCLStatementExtensions
     
-    // Flags for the different optimizations.
-    // A description of each optimization is found at the beginning of the corresponding method.
-    public static int OPTIMIZE_NONE             = 0
-    public static int OPTIMIZE_GOTO             = 1
-    public static int OPTIMIZE_LABEL            = 2
-    public static int OPTIMIZE_SELFLOOP         = 4
-    public static int OPTIMIZE_STATEPOSITION    = 8
-    public static int OPTIMIZE_TRANSITIONONCE   = 16                // not implemented yet
-    public static int OPTIMIZE_TRANSITIONWTO    = 32                // not implemented yet
-    public static int OPTIMIZE_DEFAULT          = OPTIMIZE_GOTO + 
-                                                  OPTIMIZE_LABEL + 
-                                                  OPTIMIZE_SELFLOOP; 
-    
     /* OPTIMIZE_SELFLOOP
      *
      * Negates the expression of a conditional in the first list and swaps the statement lists of the 
