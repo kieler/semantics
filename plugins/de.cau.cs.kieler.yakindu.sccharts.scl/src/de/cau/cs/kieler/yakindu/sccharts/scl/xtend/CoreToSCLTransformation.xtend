@@ -71,7 +71,7 @@ class CoreToSCLTransformation {
      * This method will create the declarations of the scl program and calls the function to transform 
      * the main state. Including regions and states will be transformed recursively.
      */ 
-    def Program transformCoreToSCL(Statechart rootStatechart, EnumSet<SCLOptimization> optimizations) {
+    def Program transformCoreToSCL(Statechart rootStatechart, EnumSet<SCLOptimizations> optimizations) {
         var targetProgram = SclFactory::eINSTANCE.createProgram();
 
         // Since yakindu statecharts begin with a region our main state is the first state in the first
@@ -100,7 +100,7 @@ class CoreToSCLTransformation {
      * The method calls the state transformation method for every state in this region and selected 
      * optimization are invoked. 
      */
-    def List<Statement> transformCoreRegion(Region region, EnumSet<SCLOptimization> optimizations) {
+    def List<Statement> transformCoreRegion(Region region, EnumSet<SCLOptimizations> optimizations) {
         var newStatements = createNewStatementList()
         
         // List of all states in this region. 
@@ -116,7 +116,7 @@ class CoreToSCLTransformation {
         }
         
         // If selected execute the state position optimization.
-        if (optimizations.contains(SCLOptimization::STATEPOSITION)) {
+        if (optimizations.contains(SCLOptimizations::STATEPOSITION)) {
             stateInstructions = stateInstructions.optimizeStateSetPosition
         }
         
@@ -126,9 +126,9 @@ class CoreToSCLTransformation {
         }
         
         // Run optimizations if selected.
-        if (optimizations.contains(SCLOptimization::GOTO)) 
+        if (optimizations.contains(SCLOptimizations::GOTO)) 
             newStatements = newStatements.optimizeGoto 
-        if (optimizations.contains(SCLOptimization::LABEL)) 
+        if (optimizations.contains(SCLOptimizations::LABEL)) 
             newStatements = newStatements.optimizeLabel 
         
         newStatements
@@ -142,7 +142,7 @@ class CoreToSCLTransformation {
      * If it is not and if the state is not a final state, all transitions are transformed. 
      * If the state is a final state, nothing besides adding a label is done.
      */
-    def List<Statement> transformCoreState(SyncState state, EnumSet<SCLOptimization> optimizations) {
+    def List<Statement> transformCoreState(SyncState state, EnumSet<SCLOptimizations> optimizations) {
         var newStatements = createNewStatementList()
         
         // The ID of the state is its hierarchical name.
@@ -215,7 +215,7 @@ class CoreToSCLTransformation {
      * If the SELFLOOP OPTIMIZATION is selected and it is possible to swap the statement lists, the 
      * method for this optimization is called.
      */
-    def List<Statement> transformStateTransitions(SyncState state, EnumSet<SCLOptimization> optimizations) {
+    def List<Statement> transformStateTransitions(SyncState state, EnumSet<SCLOptimizations> optimizations) {
         var iS = createNewStatementList()
         
         // Create lists for all transitions, immediate transitions and transitions to self.
@@ -251,7 +251,7 @@ class CoreToSCLTransformation {
             // Trigger SELFLOOP OPTIMIZATION, if possible.
             // The optimization is possible, if there is already a default transition (already present or
             // added by the transformation) and there are only two transitions.
-            if (optimizations.contains(SCLOptimization::SELFLOOP) &&
+            if (optimizations.contains(SCLOptimizations::SELFLOOP) &&
                ((transitions.size==2 && selfTransitions.size==1 && selfTransitions.head.trigger == null) 
 //                   ||
 //                (transitions.size==1 && selfTransitions.size!=1)
@@ -272,7 +272,7 @@ class CoreToSCLTransformation {
         
         // Same as above. If there are only two transitions and one of them is going to self, invoke
         // SELFLOOP OPTIMIZATION if selected.
-        if (optimizations.contains(SCLOptimization::SELFLOOP) &&
+        if (optimizations.contains(SCLOptimizations::SELFLOOP) &&
            ((transitions.size==2 && selfTransitions.size==1 && selfTransitions.head.trigger == null) ||
             (transitions.size==1 && selfTransitions.size!=1))) {
                 

@@ -27,7 +27,7 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLTransformation;
 import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLOptimization;
-import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.SCLOptimization;
+import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.SCLOptimizations;
 import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 
 /**
@@ -92,30 +92,30 @@ public class SCLModelFileHandler extends AbstractModelFileHandler {
     // Executed when the transformation is invoked.
     public EObject doTransformation(EObject modelObject, String commandString, ISelection selection) {
 
-        final EnumSet<SCLOptimization> opt = EnumSet.noneOf(SCLOptimization.class);
+        final EnumSet<SCLOptimizations> opt = EnumSet.noneOf(SCLOptimizations.class);
         // Use the default transformation optimizations or
         // use the optimization selected in the context menu.
-        opt.add(SCLOptimization.GOTO);
-        opt.add(SCLOptimization.LABEL);
-        opt.add(SCLOptimization.SELFLOOP);
+        opt.add(SCLOptimizations.GOTO);
+        opt.add(SCLOptimizations.LABEL);
+        opt.add(SCLOptimizations.SELFLOOP);
         if (commandString.equals(SCLTRANSFORMATIONCOMMANDNOOPT)) {
             opt.clear();
         }
         if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYGOTO)) {
             opt.clear();
-            opt.add(SCLOptimization.GOTO);
+            opt.add(SCLOptimizations.GOTO);
         }
         if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYLABEL)) {
             opt.clear();
-            opt.add(SCLOptimization.LABEL);
+            opt.add(SCLOptimizations.LABEL);
         }
         if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYSELFLOOP)) {
             opt.clear();
-            opt.add(SCLOptimization.SELFLOOP);
+            opt.add(SCLOptimizations.SELFLOOP);
         }
         if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYSTATEPOSITION)) {
             opt.clear();
-            opt.add(SCLOptimization.STATEPOSITION);
+            opt.add(SCLOptimizations.STATEPOSITION);
         }
 
         // Invoke the transformation via guice...

@@ -1,6 +1,6 @@
 package de.cau.cs.kieler.yakindu.sccharts.scl.xtend;
 
-public enum SCLOptimization {
+public enum SCLOptimizations {
     NONE,
     GOTO,
     LABEL,
