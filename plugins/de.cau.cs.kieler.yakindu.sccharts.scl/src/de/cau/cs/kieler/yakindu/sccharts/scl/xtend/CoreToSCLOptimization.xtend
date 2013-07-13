@@ -78,7 +78,7 @@ class CoreToSCLOptimization {
         val newStatements = createNewStatementList()
         
         // Iterate through all statements
-        for(Integer i: 0..(statements.size - 1)) {
+        for(int i: 0..(statements.size - 1)) {
             // Since xtend does not know a common next or continue instruction
             // we are going to remember which instruction must be skipped. 
             var boolean skip = false
@@ -87,13 +87,13 @@ class CoreToSCLOptimization {
             // if the statement is a goto statement and has succeeding statements...
             if (statement.hasInstruction && statement.instruction instanceof Goto && i < statements.size - 1) {
                 // ... search the next instruction statement.
-                var Integer nextIndex = new Integer(i + 1)
-                var nextStatement = statements.get(nextIndex)
+//                var nextIndex = i + 1
+                var nextStatement = statements.get(i + 1)
 //                while ((nextIndex < statements.size - 1) && (nextStatement instanceof EmptyStatement)) { 
-                while ((nextIndex < statements.size - 1) && (nextStatement.label.nullOrEmpty)) { 
-                    nextIndex = nextIndex + 1;
-                    nextStatement = statements.get(nextIndex) 
-                }
+//                while ((nextIndex < statements.size - 1) && (nextStatement.label.nullOrEmpty)) { 
+//                    nextIndex = nextIndex + 1;
+//                    nextStatement = statements.get(nextIndex) 
+//                }
                 // If the succeeding instruction statement is the target statement of the goto jump,
                 // mark it as 'to be skipped'.
                 if (nextStatement!=null && nextStatement.label==statement.getInstruction.asGoto.targetLabel) { skip = true }  
