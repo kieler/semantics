@@ -23,7 +23,7 @@ import de.cau.cs.kieler.sim.eso.eso.EsoInt
 import de.cau.cs.kieler.sim.eso.eso.EsoBool
 import de.cau.cs.kieler.core.model.util.ModelUtil
 import de.cau.cs.kieler.scl.scl.Program
-import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import de.cau.cs.kieler.scl.scl.VariableDefinition
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.IPath
 import org.eclipse.emf.common.util.URI
@@ -138,7 +138,7 @@ class ESO2VHDL {
 		«/* Generate the header */»
 		«generateHeader()»
 		«/*Generate entity */»
-		«createEntity(tl.traces, modelname, sclModel.declarations)»
+		«createEntity(tl.traces, modelname, sclModel.definitions)»
        	'''
    	}
 
@@ -185,7 +185,7 @@ class ESO2VHDL {
      * 
      * @return the complete VHDL entity including simulation process 
      */
-   	def createEntity(EList<trace> esoTracelist, String entityName, EList<VariableDeclaration> vars){
+   	def createEntity(EList<trace> esoTracelist, String entityName, EList<VariableDefinition> vars){
 
     // Store input and output variables from SCL model
     val modelInputs = new ArrayList<Variables>

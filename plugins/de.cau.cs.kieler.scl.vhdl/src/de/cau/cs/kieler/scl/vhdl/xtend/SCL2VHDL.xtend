@@ -26,7 +26,7 @@ import de.cau.cs.kieler.scl.scl.Conditional
 //import de.cau.cs.kieler.scl.scl.Parallel
 //import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.Assignment
-import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import de.cau.cs.kieler.scl.scl.VariableDefinition
 
 import org.yakindu.sct.model.stext.stext.IntLiteral
 import org.yakindu.sct.model.stext.stext.BoolLiteral
@@ -134,7 +134,7 @@ class SCL2VHDL {
     val modelLocalVariables = new ArrayList<Variables>
         
     val name = modelname
-    val vars = program.declarations
+    val vars = program.definitions
     
     vars.forEach[ variable | 
         if(variable.input)                      
@@ -436,7 +436,7 @@ class SCL2VHDL {
    }  
    
    // Expand a Variable Declaration, all internal signals have an "_int" at the end
-   def dispatch expand(VariableDeclaration vari) {
+   def dispatch expand(VariableDefinition vari) {
     '''«vari.name»_int'''
    }
    

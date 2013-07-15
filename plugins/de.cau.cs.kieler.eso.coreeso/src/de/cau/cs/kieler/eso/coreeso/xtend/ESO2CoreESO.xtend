@@ -93,6 +93,7 @@ class ESO2CoreESO {
 		
 		//return new tracelist
 		return newTl
+//		return tl
 	}
 	
 	/**

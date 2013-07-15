@@ -1,7 +1,7 @@
 package de.cau.cs.kieler.scl.vhdl.extensions
 
 import de.cau.cs.kieler.scl.vhdl.Variables
-import de.cau.cs.kieler.scl.scl.VariableDeclaration
+import de.cau.cs.kieler.scl.scl.VariableDefinition
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import org.yakindu.sct.model.stext.stext.impl.BoolLiteralImpl
@@ -224,7 +224,7 @@ class VHDLExtension {
      * @return a new variable
      * 
      */
-    def createVariableFromModel(VariableDeclaration variable, boolean isInput, boolean isOutput) {
+    def createVariableFromModel(VariableDefinition variable, boolean isInput, boolean isOutput) {
         
         val Expression initialValue = variable.initialValue
         val name = variable.name
