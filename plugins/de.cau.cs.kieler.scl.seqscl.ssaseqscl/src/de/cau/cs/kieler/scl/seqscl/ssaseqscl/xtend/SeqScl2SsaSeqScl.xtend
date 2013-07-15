@@ -108,72 +108,23 @@ class SeqScl2SsaSeqScl {
 //            targetProgram.statements.add(stm.copy)
 
             if(stm.assignment){
-                val assignment = doSSA((stm as InstructionStatement).instruction as Assignment, targetProgram)
+                val assignment = doAssignmentSSA((stm as InstructionStatement).instruction as Assignment, targetProgram)
                 targetProgram.statements.add(assignment)
-                
-//                val ass  = (stm as InstructionStatement).instruction as Assignment
-//                val assExp = ass.assignment as AssignmentExpression
-//                val elemRefExp = assExp.varRef as ElementReferenceExpression
-//                val vardef = elemRefExp.reference as VariableDefinition
-//                
-//                val name = ((assExp.expression as ElementReferenceExpression).reference as VariableDefinition).name
-//                
-//                val int ssaIndex = hmAll.get(vardef.name) + 1
-//                hmAll.put(vardef.name,ssaIndex)
-//           
-////                vardef.setName(vardef.name + "__" + ssaIndex)
-//           
-//                val ssaName = vardef.name + "__" + ssaIndex
-//                targetProgram.definitions.add(createVariableDefinition(ssaName, 'boolean'))
-//                
-//                val temp = stm.copy
-//                val t = ((((temp as InstructionStatement).instruction as Assignment).assignment) as AssignmentExpression)
-//               
-//               val ssaName2 = name + "__" + hmAll.get(name)
-//               
-//               val assignment = createSCLAssignment(
-//                    targetProgram.getDefinitionByName(ssaName),
-//                    targetProgram.getDefinitionByName(ssaName2)              
-//                ).createStatement
-//               
-////                val assignment = createSCLAssignment(
-////                    createAssignmentExpression(targetProgram.getDefinitionByNameAsElemRef(ssaName),
-////                        targetProgram.getDefinitionByNameAsElemRef(ssaName) as Expression
-////                    ),
-////                    program.getDefinitionByName(ssaName)              
-////                ).createStatement
-////                
-//                targetProgram.statements.add(assignment)
-                
-       
-//               
-////                targetProgram.statements.add(stm.copy) 
-//                               
-//                val temp4 = SText.createElementReferenceExpression()  as Expression
-//                (temp4 as ElementReferenceExpression).setReference(vardef)
-//                
-//        //        val temp4 = SclFactory::eINSTANCE.createAssignment()
-//        //        temp4.setAssignment(createAssignmentExpression(temp2,temp.expression))
-//        //        
-//        //        targetProgram.statements.add(createStatement(temp4) )
-//                
-//                val stmList = createNewStatementList
-//                stmList.add(createSCLAssignment(createAssignmentExpression(elemRefExp,assExp.expression),vardef).createStatement)
-//               
-//                targetProgram.statements.addAll(stmList)
-                
+                                
             }else if(stm.conditional){
                 //doSSAtoConditional(stm as Conditional)
+                
+                val conditional = doConditionalSSA(((stm as InstructionStatement).instruction as Conditional), targetProgram )
+                targetProgram.statements.add(conditional)
             }
             //nothing to do with other types
-            
         ]
 
         return targetProgram
         
     }
     
-    def Statement doSSA(Assignment ass, Program targetProgram) { 
+    def Statement doAssignmentSSA(Assignment ass, Program targetProgram) { 
         
         //Get variable name
         val assExp = ass.assignment as AssignmentExpression
@@ -186,9 +137,7 @@ class SeqScl2SsaSeqScl {
             //set all variable usage in exp to new ssa variable
             copyAssExp.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[eRefExp |
                   val name = (eRefExp.reference as VariableDefinition).name
-                  val newName = name + "__" + hmAll.get(name)   
-                  targetProgram.definitions.add(createVariableDefinition(newName, 'boolean'))
-                  
+                  val newName = name + "__" + hmAll.get(name)                     
                   eRefExp.reference = targetProgram.getDefinitionByName(newName)
             ]
         }else{ //right operator is only a variable expression
@@ -213,8 +162,7 @@ class SeqScl2SsaSeqScl {
 
         return assignment.createStatement    
     }
-
-    
+  
     def VariableDefinition getDefinitionByName(Program program, String name) {
         program.definitions.filter(e | e.getName() == name).head
     }
@@ -227,8 +175,37 @@ class SeqScl2SsaSeqScl {
     }
    
     
-    def void doSSAtoConditional(Conditional cond) { 
+    def Statement doConditionalSSA(Conditional cond, Program targetProgram) { 
+       
+       val condE = cond.expression
+       val trueStms = cond.statements
+       
+       val condExp = condE.copy 
+       if(!(condExp instanceof ElementReferenceExpression)){
+            //set all variable usage in exp to new ssa variable
+            condExp.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[exp |
+                  val name = (exp.reference as VariableDefinition).name
+                  val newName = name + "__" + hmAll.get(name)                     
+                  exp.reference = targetProgram.getDefinitionByName(newName)
+            ]
+        }else{ //right operator is only a variable expression
+            val name = ((condExp as ElementReferenceExpression).reference as VariableDefinition).name
+            val newName = name + "__" + hmAll.get(name)
+            (condExp as ElementReferenceExpression).reference = targetProgram.getDefinitionByName(newName)
+        }
+       
+       val newCond = SCL.createConditional
+       trueStms.forEach[ stm | 
+           val assStm = doAssignmentSSA((stm as InstructionStatement).instruction as Assignment, targetProgram)
         
+           newCond.statements.add(assStm)    
+       ]       
+       
+       newCond.setExpression(condExp)       
+       
+       //Insert Phi function here
+       
+       newCond.createStatement 
     }
     
    def getAllVariables(EList<VariableDefinition> vars, HashMap hmInputs, HashMap hmOutputs, HashMap hmLocals ){
