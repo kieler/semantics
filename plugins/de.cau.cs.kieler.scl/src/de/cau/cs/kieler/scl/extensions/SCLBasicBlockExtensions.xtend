@@ -77,7 +77,7 @@ class SCLBasicBlockExtensions {
         if (prevStatement.isConditional) return true
         if (prevStatement.isGoto) return true 
         if (SPLIT_BLOCKS_AT_DEPENDENCY) {
-            if ((prevStatement.isAssignment || prevStatement.isConditional) && prevStatement.getInstruction.hasConcurrentTargetDependencies) return true;
+//            if ((prevStatement.isAssignment || prevStatement.isConditional) && prevStatement.getInstruction.hasConcurrentTargetDependencies) return true;
             if ((statement.isAssignment || statement.isConditional) && statement.getInstruction.hasConcurrentTargetDependencies) return true;
         }
 
