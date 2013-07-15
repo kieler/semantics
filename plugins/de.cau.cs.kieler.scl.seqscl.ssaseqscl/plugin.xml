@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.category"
+            id="de.cau.cs.kieler.scl.seqscl.ssaseqscl.SeqScl2SsaSeqScl"
+            name="SeqScl2SsaSeqScl">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.scl.seqscl.ssaseqscl.SSAGenerator"
+            commandId="de.cau.cs.kieler.scl.seqscl.ssaseqscl.SeqScl2SsaSeqScl">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.scl.seqscl.ssaseqscl.SeqScl2SsaSeqScl"
+               label="Transform SeqSCL to an SSA Variant"
+               mnemonic="V"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scl">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>
