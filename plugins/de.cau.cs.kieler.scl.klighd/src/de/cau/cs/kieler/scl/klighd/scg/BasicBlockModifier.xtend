@@ -98,7 +98,7 @@ class BasicBlockModifier implements IStyleModifier {
         shapeLayout.width = right - left        
         shapeLayout.xpos = left
         shapeLayout.ypos = top
-        shapeLayout.setProperty(KlighdConstants::KLIGHD_SELECTION_UNPICKABLE, true)
+//        shapeLayout.setProperty(KlighdConstants::KLIGHD_SELECTION_UNPICKABLE, true)
 
         node.KRendering.background = "red".color
 

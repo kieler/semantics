@@ -797,7 +797,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kDepthNode.KRendering.add(factory.createKLineWidth.of(2));
         kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
         if (PAUSEDEPTH_FIRST)
-        if (!instr.getStatement.hasAnnotation(SCLANNOTATION_DEPTH_INLINE))
+        if (!instr.getStatement.getProgram.hasGlobalParameter('inline', 'depth') &&
+            !instr.getStatement.hasAnnotation(SCLANNOTATION_DEPTH_INLINE))
             kDepthNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             
         // Add all nodes to their parents 
