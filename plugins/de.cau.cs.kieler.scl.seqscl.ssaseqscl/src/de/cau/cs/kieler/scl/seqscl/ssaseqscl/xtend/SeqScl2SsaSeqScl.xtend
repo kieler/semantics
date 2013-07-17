@@ -97,17 +97,17 @@ class SeqScl2SsaSeqScl {
             //nothing to do with other types, because there are no other types
         ]
 
-        //Assign Outputs
-        assingSSAVariableToOutput(targetProgram, program)
-    
         //Assign all Pre Values
         assignSSAPreValues(targetProgram, program)
+        
+        //Assign Outputs
+        assingSSAVariableToOutput(targetProgram, program)
         
         return targetProgram
     }
     
     //---------------------------------------------------------------------------------------------
-    //copy all definitions from the origial program to the target program according to the new use case
+    //copy all definitions from the original program to the target program according to the new use case
     def setAlldefinitions(Program targetProgram, Program program) {
         
         //add all variables
@@ -124,7 +124,7 @@ class SeqScl2SsaSeqScl {
                 //get a feedback loop in hardware
                 val newSSAName = definition.name + "__" + 0
                 targetProgram.definitions.add(definition.copy)
-                targetProgram.getDefinitionByName(definition.name).setInput(false)
+                targetProgram.getDefinitionByName(definition.name).setOutput(false)
                 targetProgram.getDefinitionByName(definition.name).name = newSSAName
                 
                 //original output definition is also needed
@@ -144,9 +144,9 @@ class SeqScl2SsaSeqScl {
                     //do this in assignment method
                     
 // compute only needed __0
-                    val newSSAName = definition.name + "__" + 0
-                    targetProgram.definitions.add(definition.copy)
-                    targetProgram.getDefinitionByName(definition.name).name = newSSAName
+//                    val newSSAName = definition.name + "__" + 0
+//                    targetProgram.definitions.add(definition.copy)
+//                    targetProgram.getDefinitionByName(definition.name).name = newSSAName
                 }
             }
         ]
@@ -203,9 +203,11 @@ class SeqScl2SsaSeqScl {
            if(hmAll.get(name) == -1){
                newName = name + "__" + 0
 // !!!!!
-//               if(targetProgram.getDefinitionByName(name) == null){
-//                    targetProgram.definitions.add(createVariableDefinition(newName, 'boolean')) 
-//               }
+                val temp = targetProgram.getDefinitionByName(newName)
+               if( temp == null){
+                    targetProgram.definitions.add(createVariableDefinition(newName, 'boolean'))
+                    hmAll.put(name,0) 
+               }
 // !!!!!                   
            }else{
                //return the last assignment
@@ -229,26 +231,6 @@ class SeqScl2SsaSeqScl {
         val vardef = elemRefExp.reference as VariableDefinition
         
         // --------------------------------------        
-        // Compute right Operator Expression
-        // --------------------------------------
-        val copyAssExp = assExp.copy
-        //if there are more then only a variable reference, than transform all
-        //used variable references in the right operand
-        if(!(copyAssExp.expression instanceof ElementReferenceExpression)){
-            
-            //set all variable usages in the right operand to new SSA variable
-            copyAssExp.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[eRefExp |
-                  val name = (eRefExp.reference as VariableDefinition).name
-                  val newName = getSSAVariableName(targetProgram, program, name)
-                  eRefExp.reference = targetProgram.getDefinitionByName(newName)
-            ]
-        }else{ //right operator is only a variable expression, set this one to the current SSA index
-            val name = ((copyAssExp.expression as ElementReferenceExpression).reference as VariableDefinition).name
-            val newName = getSSAVariableName(targetProgram, program, name)
-            (copyAssExp.expression as ElementReferenceExpression).reference = targetProgram.getDefinitionByName(newName)
-        }
-        
-        // --------------------------------------        
         // Compute left Operator Expression
         // a new SSA variable will be created
         // --------------------------------------
@@ -265,7 +247,7 @@ class SeqScl2SsaSeqScl {
         }
         
         //save current index
-        hmAll.put(vardef.name,ssaIndexVarDef)
+//        hmAll.put(vardef.name,ssaIndexVarDef)
         
         //create new variable with ssa index
         val ssaName = vardef.name + "__" + ssaIndexVarDef
@@ -275,7 +257,31 @@ class SeqScl2SsaSeqScl {
   //      if(!(ssaIndexVarDef == 0)){
             targetProgram.definitions.add(createVariableDefinition(ssaName, 'boolean'))
   //      }
-                
+          
+        // --------------------------------------        
+        // Compute right Operator Expression
+        // --------------------------------------
+        val copyAssExp = assExp.copy
+        //if there are more then only a variable reference, than transform all
+        //used variable references in the right operand
+        if(!(copyAssExp.expression instanceof ElementReferenceExpression)){
+            
+            //set all variable usages in the right operand to new SSA variable
+            copyAssExp.expression.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[eRefExp |
+                  val name = (eRefExp.reference as VariableDefinition).name
+                  val newName = getSSAVariableName(targetProgram, program, name)
+                  eRefExp.reference = targetProgram.getDefinitionByName(newName)
+            ]
+        }else{ //right operator is only a variable expression, set this one to the current SSA index
+            val name = ((copyAssExp.expression as ElementReferenceExpression).reference as VariableDefinition).name
+            val newName = getSSAVariableName(targetProgram, program, name)
+            (copyAssExp.expression as ElementReferenceExpression).reference = targetProgram.getDefinitionByName(newName)
+        }
+           
+        //save current index here, because g2 = g2 || true should result in g2__1 = g2__0 || true
+        //if you assign it earlier it results in g2__1 = g2__1 || true that is false
+        hmAll.put(vardef.name,ssaIndexVarDef)   
+           
         //Create new Assignment statement
         val assignment = SCL.createAssignment()
         val assignmentExp = createAssignmentExpression(targetProgram.getDefinitionByNameAsElemRef(ssaName),
