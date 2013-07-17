@@ -12,7 +12,7 @@
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.transformations.GuiceBasedTransformationFactory:de.cau.cs.kieler.synccharts.klighd.SyncChartsDiagramSynthesis"
-            id="de.cau.cs.kieler.synccharts.klighd.diagramSynthese">
+            id="de.cau.cs.kieler.synccharts.klighd.diagramSynthesis">
       </diagramSynthesis>
    </extension>
    <extension
@@ -22,6 +22,77 @@
             class="de.cau.cs.kieler.synccharts.klighd.SyncChartsShowDiagramCombination"
             name="Show SyncCharts Diagrams with KLighD">
       </combination>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kiml.layoutInfo">
+      <option
+            class="de.cau.cs.kieler.synccharts.Region"
+            option="de.cau.cs.kieler.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.stateMachine">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.boxes">
+      </option>
+      <option
+            class="de.cau.cs.kieler.core.kexpressions.Signal"
+            option="de.cau.cs.kieler.noLayout"
+            value="true">
+      </option>
+      <option
+            class="de.cau.cs.kieler.core.kexpressions.Variable"
+            option="de.cau.cs.kieler.noLayout"
+            value="true">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.spacing"
+            value="1.0">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.borderSpacing"
+            value="2.0">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.sizeConstraint"
+            value="[MINIMUM_SIZE, DEFAULT_MINIMUM_SIZE]">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.expandNodes"
+            value="true">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.interactive"
+            value="true">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.Region"
+            option="de.cau.cs.kieler.spacing"
+            value="40.0">
+      </option>
+      <!-- option
+            class="de.cau.cs.kieler.synccharts.Region"
+            option="de.cau.cs.kieler.borderSpacing"
+            value="1.0">
+      </option -->
+      <option
+            class="de.cau.cs.kieler.synccharts.Region"
+            option="de.cau.cs.kieler.direction"
+            value="RIGHT">
+      </option>
+      <semanticOption
+            class="de.cau.cs.kieler.synccharts.Scope"
+            config="de.cau.cs.kieler.synccharts.klighd.layout.HVLayoutConfig">
+      </semanticOption>
+      <semanticOption
+            class="de.cau.cs.kieler.synccharts.Scope"
+            config="de.cau.cs.kieler.synccharts.klighd.layout.AnnotationsLayoutConfig">
+      </semanticOption>
    </extension>
 
 </plugin>
