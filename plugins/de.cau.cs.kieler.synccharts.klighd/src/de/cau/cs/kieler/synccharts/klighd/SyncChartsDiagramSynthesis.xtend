@@ -13,8 +13,10 @@
  */
 package de.cau.cs.kieler.synccharts.klighd
 
+import java.util.Collection
 import java.util.List
 import javax.inject.Inject
+import com.google.common.collect.ImmutableMap
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KEdge
@@ -31,6 +33,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
@@ -81,6 +84,10 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
     @Inject
     extension AnnotationsExtensions
+    
+    override public getRecommendedLayoutOptions() {
+        return ImmutableMap.<IProperty<?>, Collection<?>>of(LayoutOptions::SPACING, newArrayList(0, 255));
+    }
     
     override transform(Region model) {
         return model.translate();
@@ -245,12 +252,14 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
             scopeProvider.parent = t.sourceState;
             val label = serializer.serialize(t.copy => [
-                    TMP_RES.contents.clear;
-                    TMP_RES.contents += it;
+                TMP_RES.contents += it;
             ]);
+            TMP_RES.contents.clear;
+
             t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
                 label, 11, KlighdConstants::DEFAULT_FONT_NAME
             );
+
             t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
                 if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)
             ), 11, KlighdConstants::DEFAULT_FONT_NAME); 
