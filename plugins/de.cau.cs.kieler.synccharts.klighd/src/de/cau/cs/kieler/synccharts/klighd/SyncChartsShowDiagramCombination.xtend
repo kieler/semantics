@@ -23,18 +23,23 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
 import java.util.Collections
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.incremental.UpdateStrategy
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
+import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
 
-class SyncChartsShowDiagramCombination extends AbstractCombination {
+class SyncChartsShowDiagramCombination extends UpdateXtextModelKLighDCombination {
     
-    private static val ResourceSet resSet = new ResourceSetImpl(); 
+    private static val ResourceSet resSet = new ResourceSetImpl();
+
+    new() {
+        this.updateStrategy = UpdateStrategy::ID;
+    }
+    
     /**
      * The 'execute()' method, see doc of {@link AbstractCombination}.
      */    
-    def public void execute(PartTrigger$EditorState es, SelectionTrigger$SelectionState selectionState
-        //, KlighdSelectionTrigger$KlighdSelectionState klighdSelectionState
-        ) {
-        
+    def public void execute(PartTrigger$EditorState es, SelectionTrigger$SelectionState selectionState) {
+            
         if (this.latestState() == es) {
            //inputPath = es.getProperty(PartTrigger::EDITOR_INPUT_PATH) as IPath;
            return; // do only react on selectionState
@@ -62,5 +67,5 @@ class SyncChartsShowDiagramCombination extends AbstractCombination {
                 }
             }
         }
-    }    
+    }
 }

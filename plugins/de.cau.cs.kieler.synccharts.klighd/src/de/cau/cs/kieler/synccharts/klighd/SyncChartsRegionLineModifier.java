@@ -29,7 +29,7 @@ import de.cau.cs.kieler.klighd.util.ModelingUtil;
  * 
  * @author chsch
  */
-public class RegionLineModifier implements IStyleModifier {
+public class SyncChartsRegionLineModifier implements IStyleModifier {
 
     /**
      * {@inheritDoc}.<br>
@@ -51,16 +51,11 @@ public class RegionLineModifier implements IStyleModifier {
             // an emergency exit in case something really weird happened.
             return false;
         }
-        // KShapeLayout parentlayout = parent.getData(KShapeLayout.class);
 
         if (polyline.getPoints().size() != 2) {
             // cannot determine direction of border, so no possibility to set visibility
             return false;
         }
-        
-        // KPosition start = polyline.getPoints().get(0);
-        // KPosition end = polyline.getPoints().get(polyline.getPoints().size() - 1);
-        // if (isRightOf(end, start, parentlayout.getWidth())) {
         
         // chsch: simpler implementation
         if (isHorizontal(polyline)) {

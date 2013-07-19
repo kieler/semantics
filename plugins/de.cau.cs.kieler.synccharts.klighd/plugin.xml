@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <styleModifier
-            class="de.cau.cs.kieler.synccharts.klighd.RegionLineModifier"
+            class="de.cau.cs.kieler.synccharts.klighd.SyncChartsRegionLineModifier"
             id="de.cau.cs.kieler.synccharts.klighd.regionLineModifier">
       </styleModifier>
    </extension>
