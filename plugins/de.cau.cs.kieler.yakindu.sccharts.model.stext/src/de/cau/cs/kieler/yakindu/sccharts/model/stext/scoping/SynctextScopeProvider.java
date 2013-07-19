@@ -18,8 +18,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
@@ -95,6 +97,12 @@ public class SynctextScopeProvider extends STextScopeProvider {
     protected IScope getUnnamedTopLevelScope(final EObject context, EReference reference) {
         final ContextElementAdapter provider = (ContextElementAdapter) EcoreUtil
                 .getExistingAdapter(context.eResource(), ContextElementAdapter.class);
+        if (context == null) {
+            return IScope.NULLSCOPE;
+        }
+        // Explicit resolve
+        EcoreUtil.resolve(reference, reference.eResource()); 
+        EcoreUtil.resolve(context, context.eResource()); 
         Statechart statechart = getStatechart(context);
         if (statechart == null) {
             return IScope.NULLSCOPE;

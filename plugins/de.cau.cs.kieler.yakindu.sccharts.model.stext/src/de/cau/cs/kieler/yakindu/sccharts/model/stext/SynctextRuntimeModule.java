@@ -16,6 +16,7 @@ package de.cau.cs.kieler.yakindu.sccharts.model.stext;
 import org.eclipse.xtext.linking.ILinker;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.serializer.sequencer.IContextFinder;
 import org.yakindu.base.types.ITypeSystem;
 import org.yakindu.sct.model.sgraph.resource.SCTLinker;
@@ -39,6 +40,15 @@ public class SynctextRuntimeModule extends AbstractSynctextRuntimeModule {
         super.bindIGlobalScopeProvider();
         return STextGlobalScopeProvider.class;
     }
+
+//    public Class<? extends XtextResource> bindXtextResource() {
+//        return XtextResource.class;
+//    }
+
+//  @Override
+//  public Class<? extends XtextResource> bindXtextResource() {
+//      return SyncTextLinker.class;
+//  }
 
     @Override
     public Class<? extends ILinker> bindILinker() {

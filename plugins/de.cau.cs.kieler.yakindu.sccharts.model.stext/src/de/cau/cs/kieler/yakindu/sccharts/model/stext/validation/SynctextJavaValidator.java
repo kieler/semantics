@@ -228,10 +228,10 @@ public class SynctextJavaValidator extends STextJavaValidator {
 	@Override
 	@Check(CheckType.FAST)
 	public void checkOperationArguments_FeatureCall(final FeatureCall call) {
+	    
 	}
 	@Override
 	@Check(CheckType.FAST)
 	public void checkOperationArguments_TypedElementReferenceExpression(final ElementReferenceExpression call) {
-		
 	}
 }
