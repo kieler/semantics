@@ -94,7 +94,10 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     }
     
     override public getRecommendedLayoutOptions() {
-        return ImmutableMap::<IProperty<?>, Collection<?>>of(LayoutOptions::SPACING, newArrayList(0, 255));
+        return ImmutableMap::<IProperty<?>, Collection<?>>of(
+            LayoutOptions::SPACING, newArrayList(0, 255),
+            LayoutOptions::ALGORITHM, emptyList
+        );
     }
     
     override transform(Region model) {
@@ -127,7 +130,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.invisible = true;
                 // it.invisible = false;
                 it.foreground = "red".color;
-                it.addText("Region:") => [
+                it.addText("Region:" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
                     it.foreground = "gray".color
                     it.fontSize = 11                    
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -147,7 +150,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.invisible = true;
                     it.invisible.modifierId = "de.cau.cs.kieler.synccharts.klighd.regionLineModifier";
                 ];
-                it.addChildArea();
+                it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
             ];
         ];
     }
@@ -226,9 +229,10 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         .setGridPlacementData() //.from(LEFT, 0, 0, TOP, 30, 0).to(RIGHT, 0, 0, TOP, 30, 0)
                         .maxCellHeight = 1;                        
                     
-                    it.addChildArea()
-                        .setGridPlacementData() //.from(LEFT, 0, 0, TOP, 30, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                        .minCellHeight = 40;
+                    it.addChildArea().setGridPlacementData() => [
+                        from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                        minCellHeight = 40;
+                    ];
                 }
             ];
 
@@ -266,9 +270,11 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 ]);
                 TMP_RES.contents.clear;
     
-                t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-                    label, 11, KlighdConstants::DEFAULT_FONT_NAME
-                );
+                if (!label.empty) {
+                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
+                        label, 11, KlighdConstants::DEFAULT_FONT_NAME
+                    );
+                }
             }
             if (SHOW_PRIORITY_LABELS.optionBooleanValue) {
                 t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
