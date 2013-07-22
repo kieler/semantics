@@ -21,7 +21,6 @@ import de.cau.cs.kieler.core.krendering.KPosition;
 import de.cau.cs.kieler.core.krendering.KRenderingPackage;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.klighd.IStyleModifier;
-import de.cau.cs.kieler.klighd.StyleModificationContext;
 import de.cau.cs.kieler.klighd.util.ModelingUtil;
 
 /**
@@ -44,7 +43,7 @@ public class SyncChartsRegionLineModifier implements IStyleModifier {
         KPolyline polyline = (KPolyline) style.eContainer();
 
         KNode regionNode = ModelingUtil.eContainerOfType(style, KNode.class);
-        KShapeLayout layout = regionNode.getData(KShapeLayout.class);
+        KShapeLayout layout = (KShapeLayout) context.getLayoutData();
 
         KNode parent = regionNode.getParent();
         if (parent == null) {

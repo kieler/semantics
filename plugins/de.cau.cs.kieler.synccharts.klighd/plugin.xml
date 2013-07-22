@@ -93,6 +93,10 @@
             class="de.cau.cs.kieler.synccharts.Scope"
             config="de.cau.cs.kieler.synccharts.klighd.layout.AnnotationsLayoutConfig">
       </semanticOption>
+      <semanticOption
+            class="de.cau.cs.kieler.synccharts.State"
+            config="de.cau.cs.kieler.synccharts.klighd.layout.StateLayoutConfig">
+      </semanticOption>
    </extension>
 
 </plugin>
