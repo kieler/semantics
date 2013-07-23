@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <styleModifier
-            class="de.cau.cs.kieler.synccharts.klighd.RegionLineModifier"
+            class="de.cau.cs.kieler.synccharts.klighd.SyncChartsRegionLineModifier"
             id="de.cau.cs.kieler.synccharts.klighd.regionLineModifier">
       </styleModifier>
    </extension>
@@ -92,6 +92,10 @@
       <semanticOption
             class="de.cau.cs.kieler.synccharts.Scope"
             config="de.cau.cs.kieler.synccharts.klighd.layout.AnnotationsLayoutConfig">
+      </semanticOption>
+      <semanticOption
+            class="de.cau.cs.kieler.synccharts.State"
+            config="de.cau.cs.kieler.synccharts.klighd.layout.StateLayoutConfig">
       </semanticOption>
    </extension>
 

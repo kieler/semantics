@@ -21,7 +21,6 @@ import de.cau.cs.kieler.core.krendering.KPosition;
 import de.cau.cs.kieler.core.krendering.KRenderingPackage;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.klighd.IStyleModifier;
-import de.cau.cs.kieler.klighd.StyleModificationContext;
 import de.cau.cs.kieler.klighd.util.ModelingUtil;
 
 /**
@@ -29,7 +28,7 @@ import de.cau.cs.kieler.klighd.util.ModelingUtil;
  * 
  * @author chsch
  */
-public class RegionLineModifier implements IStyleModifier {
+public class SyncChartsRegionLineModifier implements IStyleModifier {
 
     /**
      * {@inheritDoc}.<br>
@@ -44,23 +43,18 @@ public class RegionLineModifier implements IStyleModifier {
         KPolyline polyline = (KPolyline) style.eContainer();
 
         KNode regionNode = ModelingUtil.eContainerOfType(style, KNode.class);
-        KShapeLayout layout = regionNode.getData(KShapeLayout.class);
+        KShapeLayout layout = (KShapeLayout) context.getLayoutData();
 
         KNode parent = regionNode.getParent();
         if (parent == null) {
             // an emergency exit in case something really weird happened.
             return false;
         }
-        // KShapeLayout parentlayout = parent.getData(KShapeLayout.class);
 
         if (polyline.getPoints().size() != 2) {
             // cannot determine direction of border, so no possibility to set visibility
             return false;
         }
-        
-        // KPosition start = polyline.getPoints().get(0);
-        // KPosition end = polyline.getPoints().get(polyline.getPoints().size() - 1);
-        // if (isRightOf(end, start, parentlayout.getWidth())) {
         
         // chsch: simpler implementation
         if (isHorizontal(polyline)) {

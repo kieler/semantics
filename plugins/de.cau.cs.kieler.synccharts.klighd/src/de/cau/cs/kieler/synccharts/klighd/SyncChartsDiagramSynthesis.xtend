@@ -13,20 +13,17 @@
  */
 package de.cau.cs.kieler.synccharts.klighd
 
-import java.util.Collection
-import java.util.List
-import javax.inject.Inject
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
 import com.google.inject.Injector
-import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.krendering.LineStyle
+import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.KDecoratorPlacementData
 import de.cau.cs.kieler.core.krendering.KPolygon
 import de.cau.cs.kieler.core.krendering.KPolyline
 import de.cau.cs.kieler.core.krendering.KRendering
+import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
@@ -35,21 +32,25 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.TransformationOption
 import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
+import de.cau.cs.kieler.synccharts.Region
 import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.StateType
-import de.cau.cs.kieler.synccharts.Region
 import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.synccharts.text.actions.ActionsStandaloneSetup
 import de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider
+import java.util.Collection
+import java.util.List
+import javax.inject.Inject
+import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -88,15 +89,27 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         
     private static val TransformationOption SHOW_PRIORITY_LABELS
         = TransformationOption::createCheckOption("Show transition priorities", false);
+
+    private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
+        = TransformationOption::createCheckOption("Show signal declarations", false);
+
+// some options for testing purposes        
+//    private static val TransformationOption TEST
+//        = TransformationOption::createChoiceOption("TEST", ImmutableList.of("A", "B", "C"), "A");
+//    
+//    private static val TransformationOption TEST2
+//        = TransformationOption::createRangeOption("TEST2", Pair::of(0,100f), 30f);
     
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS);
+        return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS, SHOW_SIGNAL_DECLARATIONS);
+//        return ImmutableSet::of(SHOW_LABELS, TEST, SHOW_PRIORITY_LABELS, TEST2);
     }
     
     override public getRecommendedLayoutOptions() {
         return ImmutableMap::<IProperty<?>, Collection<?>>of(
-            LayoutOptions::SPACING, newArrayList(0, 255),
-            LayoutOptions::ALGORITHM, emptyList
+            LayoutOptions::ALGORITHM, emptyList,
+            LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[ it.name ],
+            LayoutOptions::SPACING, newArrayList(0, 255)
         );
     }
     
@@ -209,7 +222,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 ];
                 
                 
-                if (!s.signals.empty) {
+                if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue && !s.signals.empty) {
                     it.addRectangle => [
                         it.invisible = true;
                         it.setGridPlacementData.setMaxCellHeight(40);
