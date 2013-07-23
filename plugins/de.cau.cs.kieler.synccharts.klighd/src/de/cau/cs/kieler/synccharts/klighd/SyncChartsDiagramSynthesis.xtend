@@ -13,8 +13,11 @@
  */
 package de.cau.cs.kieler.synccharts.klighd
 
+import java.util.Collection
 import java.util.List
 import javax.inject.Inject
+import com.google.common.collect.ImmutableMap
+import com.google.common.collect.ImmutableSet
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KEdge
@@ -31,10 +34,11 @@ import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kiml.options.Direction
+import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.TransformationOption
 import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
 import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.StateType
@@ -79,8 +83,22 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     @Inject
     extension KColorExtensions
     
-    @Inject
-    extension AnnotationsExtensions
+    private static val TransformationOption SHOW_LABELS
+        = TransformationOption::createCheckOption("Show transition labels", true);
+        
+    private static val TransformationOption SHOW_PRIORITY_LABELS
+        = TransformationOption::createCheckOption("Show transition priorities", false);
+    
+    override public getTransformationOptions() {
+        return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS);
+    }
+    
+    override public getRecommendedLayoutOptions() {
+        return ImmutableMap::<IProperty<?>, Collection<?>>of(
+            LayoutOptions::SPACING, newArrayList(0, 255),
+            LayoutOptions::ALGORITHM, emptyList
+        );
+    }
     
     override transform(Region model) {
         return model.translate();
@@ -93,16 +111,17 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     def dispatch KNode translate(Region r) {
         return r.createNode().putToLookUpWith(r) => [ node |
-            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
-            node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT);
-            node.addLayoutParam(LayoutOptions::SPACING, 40f);
+            // node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
+            // node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);
+            // node.setLayoutOption(LayoutOptions::SPACING, 40f);
             if (r.states.size > 1) {
-                //node.addLayoutParam(KlighdConstants::EXPAND, false);
+                //node.setLayoutOption(KlighdConstants::EXPAND, false);
             }
-            node.transferAnnotationsOf(r);
-            
-            for (s : r.states) node.children += s.translate;
-                        
+
+            for (s : r.states) {
+                node.children += s.translate;
+            }
+
             if (r.eContainer == null) {
                 return;
             }
@@ -111,7 +130,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.invisible = true;
                 // it.invisible = false;
                 it.foreground = "red".color;
-                it.addText("Region:") => [
+                it.addText("Region:" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
                     it.foreground = "gray".color
                     it.fontSize = 11                    
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -131,18 +150,17 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.invisible = true;
                     it.invisible.modifierId = "de.cau.cs.kieler.synccharts.klighd.regionLineModifier";
                 ];
-                it.addChildArea();
+                it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
             ];
         ];
     }
     
     def dispatch KNode translate(State s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            node.addLayoutParam(LayoutOptions::EXPAND_NODES, true);
-            node.addLayoutParam(LayoutOptions::BORDER_SPACING, 2f);
-            node.addLayoutParam(LayoutOptions::SPACING, 0f);
-            node.transferAnnotationsOf(s);
+            // node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
+            // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
+            // node.setLayoutOption(LayoutOptions::SPACING, 0f);
+            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val conditional = s.type == StateType::CONDITIONAL;
             val simpleState = s.signals.empty && s.regions.empty;
@@ -211,9 +229,10 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         .setGridPlacementData() //.from(LEFT, 0, 0, TOP, 30, 0).to(RIGHT, 0, 0, TOP, 30, 0)
                         .maxCellHeight = 1;                        
                     
-                    it.addChildArea()
-                        .setGridPlacementData() //.from(LEFT, 0, 0, TOP, 30, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                        .minCellHeight = 40;
+                    it.addChildArea().setGridPlacementData() => [
+                        from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                        minCellHeight = 40;
+                    ];
                 }
             ];
 
@@ -235,6 +254,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         (it.placementData as KDecoratorPlacementData).absolute = -15.0f;
                     }
                 ];
+                // it.lineCap = LineCap::CAP_ROUND;
                 switch (t.type) {
                     case TransitionType::STRONGABORT:
                         it.addStrongAbortionDecorator 
@@ -243,17 +263,24 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 };
             ];
 
-            scopeProvider.parent = t.sourceState;
-            val label = serializer.serialize(t.copy => [
-                    TMP_RES.contents.clear;
+            if (SHOW_LABELS.optionBooleanValue) {
+                scopeProvider.parent = t.sourceState;
+                val label = serializer.serialize(t.copy => [
                     TMP_RES.contents += it;
-            ]);
-            t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-                label, 11, KlighdConstants::DEFAULT_FONT_NAME
-            );
-            t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
-                if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)
-            ), 11, KlighdConstants::DEFAULT_FONT_NAME); 
+                ]);
+                TMP_RES.contents.clear;
+    
+                if (!label.empty) {
+                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
+                        label, 11, KlighdConstants::DEFAULT_FONT_NAME
+                    );
+                }
+            }
+            if (SHOW_PRIORITY_LABELS.optionBooleanValue) {
+                t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
+                    if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)
+                ), 11, KlighdConstants::DEFAULT_FONT_NAME);
+            }
         ];
     }
     

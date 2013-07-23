@@ -116,7 +116,9 @@ Workflow {
 			// }
 			
 			// quickfix API 
-			fragment = quickfix.QuickfixProviderFragment {}			
+			fragment = quickfix.QuickfixProviderFragment {}
+			
+			fragment = refactoring.RefactorElementNameFragment {}
 		}
 	}
 }
