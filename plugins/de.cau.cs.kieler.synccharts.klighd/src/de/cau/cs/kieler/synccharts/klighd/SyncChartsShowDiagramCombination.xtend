@@ -20,7 +20,7 @@ import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
 import de.cau.cs.kieler.klighd.incremental.UpdateStrategy
 import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
-import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState
+import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTrigger$XtextModelChangeState
 import java.util.Collections
 import org.eclipse.core.resources.IFile
 import org.eclipse.emf.common.util.URI
