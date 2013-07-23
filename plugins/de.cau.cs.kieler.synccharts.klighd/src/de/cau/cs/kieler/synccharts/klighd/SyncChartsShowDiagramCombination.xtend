@@ -26,13 +26,14 @@ import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.incremental.UpdateStrategy
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
+import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTrigger$XtextModelChangeState
 
 class SyncChartsShowDiagramCombination extends UpdateXtextModelKLighDCombination {
     
     private static val ResourceSet resSet = new ResourceSetImpl();
 
-    new() {
-        this.updateStrategy = UpdateStrategy::ID;
+    override getRequestedUpdateStrategy(XtextModelChangeState state) {
+        return UpdateStrategy.ID;
     }
     
     /**
