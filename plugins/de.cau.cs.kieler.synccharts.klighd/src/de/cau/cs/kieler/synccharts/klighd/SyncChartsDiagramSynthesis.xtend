@@ -90,6 +90,9 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val TransformationOption SHOW_PRIORITY_LABELS
         = TransformationOption::createCheckOption("Show transition priorities", false);
 
+    private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
+        = TransformationOption::createCheckOption("Show signal declarations", false);
+
 // some options for testing purposes        
 //    private static val TransformationOption TEST
 //        = TransformationOption::createChoiceOption("TEST", ImmutableList.of("A", "B", "C"), "A");
@@ -98,14 +101,14 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 //        = TransformationOption::createRangeOption("TEST2", Pair::of(0,100f), 30f);
     
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS);
+        return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS, SHOW_SIGNAL_DECLARATIONS);
 //        return ImmutableSet::of(SHOW_LABELS, TEST, SHOW_PRIORITY_LABELS, TEST2);
     }
     
     override public getRecommendedLayoutOptions() {
         return ImmutableMap::<IProperty<?>, Collection<?>>of(
             LayoutOptions::ALGORITHM, emptyList,
-            LayoutOptions::DIRECTION, Direction::values.sort,
+            LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[ it.name ],
             LayoutOptions::SPACING, newArrayList(0, 255)
         );
     }
@@ -219,7 +222,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 ];
                 
                 
-                if (!s.signals.empty) {
+                if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue && !s.signals.empty) {
                     it.addRectangle => [
                         it.invisible = true;
                         it.setGridPlacementData.setMaxCellHeight(40);

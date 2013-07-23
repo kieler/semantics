@@ -38,7 +38,7 @@ class SyncChartsShowDiagramCombination extends UpdateXtextModelKLighDCombination
     /**
      * The 'execute()' method, see doc of {@link AbstractCombination}.
      */    
-    def public void execute(PartTrigger.EditorState es, SelectionTrigger.SelectionState selectionState) {
+    def public void execute(PartTrigger$EditorState es, SelectionTrigger$SelectionState selectionState) {
             
         if (this.latestState() == es) {
            //inputPath = es.getProperty(PartTrigger::EDITOR_INPUT_PATH) as IPath;
