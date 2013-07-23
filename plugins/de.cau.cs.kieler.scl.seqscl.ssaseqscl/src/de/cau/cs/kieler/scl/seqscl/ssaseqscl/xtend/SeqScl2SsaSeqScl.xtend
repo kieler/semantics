@@ -79,7 +79,7 @@ class SeqScl2SsaSeqScl {
         //set the program name
         targetProgram.setName(program.getName + "_ssa")
 
-        //add all definitions from the curretn program to the target program, respectively to their usage
+        //add all definitions from the current program to the target program, respectively to their usage
         targetProgram.setAlldefinitions(program)
  
         //transform all statements to an SSA form
@@ -121,7 +121,7 @@ class SeqScl2SsaSeqScl {
             }else if(definition.output){
                 
                 //add a pre version from all outputs, because all outputs will
-                //get a feedback loop in hardware
+                //get a feedback loop in hardware including a flip flop (register)
                 val newSSAName = definition.name + "__" + 0
                 targetProgram.definitions.add(definition.copy)
                 targetProgram.getDefinitionByName(definition.name).setOutput(false)
@@ -156,7 +156,9 @@ class SeqScl2SsaSeqScl {
     //---------------------------------------------------------------------------------------------
     //at the end of the program all pre values must be assigned with the latest assignment
     def assignSSAPreValues(Program targetProgram, Program program) { 
-        
+ 
+//!!! program  not needed ?
+
         val stmList = createNewStatementList
         
         //create an assignment for every definition that has a '__0'
@@ -169,7 +171,7 @@ class SeqScl2SsaSeqScl {
                 //get the hashmap key, the key has no '__' extension
                 val hmKey = defName.subSequence(0,defName.indexOf("__")).toString
                 
-                //get the latest assingment
+                //get the latest assignment
                 val latestAssignment = getSSAVariableName(targetProgram, program, hmKey)
                 
                 //assign the latest assignment to the pre value ('__0')
@@ -203,7 +205,7 @@ class SeqScl2SsaSeqScl {
            if(hmAll.get(name) == -1){
                newName = name + "__" + 0
 // !!!!!
-                val temp = targetProgram.getDefinitionByName(newName)
+               val temp = targetProgram.getDefinitionByName(newName)
                if( temp == null){
                     targetProgram.definitions.add(createVariableDefinition(newName, 'boolean'))
                     hmAll.put(name,0) 
@@ -352,10 +354,10 @@ class SeqScl2SsaSeqScl {
         //The phi function has the same condition as the predecessor conditional
         phiFunc.setExpression(conditionExpression)
         
-        // maka a copy from all definitions, becuase this function adds new definitions
+        // make a copy from all definitions, because this function adds new definitions
         val tempDefinitions = targetProgram.definitions.copyAll
         
-        //copy current hashmap, because the original hashmap will be changesd in this function
+        //copy current hashmap, because the original hashmap will be changed in this function
         val tempHm = new HashMap<String,Integer>()
         tempHm.putAll(currentHm)
         
