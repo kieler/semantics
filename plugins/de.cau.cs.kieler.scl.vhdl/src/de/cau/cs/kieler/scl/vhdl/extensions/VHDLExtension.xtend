@@ -122,7 +122,7 @@ class VHDLExtension {
         // if there are no inputs and output res should be empty, 
         // not null (null will be a String in the VHDL code)
         val res = if(!(ins.nullOrEmpty && outs.nullOrEmpty))
-                     '''--inputs''' + '\n'  + ins + (if(!outs.nullOrEmpty) ';\n') + 
+                     '''--inputs''' + '\n'  + ins + (if(!(outs.nullOrEmpty || ins.nullOrEmpty)){ ';\n'}else{'\n'}) + 
                      '''--outputs'''+ '\n' + outs
         
         return res

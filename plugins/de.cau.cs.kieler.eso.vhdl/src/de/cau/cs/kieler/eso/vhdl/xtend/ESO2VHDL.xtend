@@ -302,7 +302,8 @@ class ESO2VHDL {
 		// if there are no inputs and output res should be empty, 
 		// not null (null will be a String in VHDL code)
 		val res =  if(!(ins.nullOrEmpty && outs.nullOrEmpty))
-						ins + (if (!outs.nullOrEmpty) ',\n') + '''--Outputs''' + '\n' + outs
+						ins + (if(!(outs.nullOrEmpty || ins.nullOrEmpty)){ ',\n'}else{'\n'}) + 
+						'''--Outputs''' + '\n' + outs
 		
 		// Generate VHDL code
 		'''
