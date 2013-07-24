@@ -45,7 +45,7 @@ public class StateLayoutConfig extends SemanticLayoutConfig{
     @Override
     protected IProperty<?>[] getAffectedOptions(final EObject semanticElem) {
         if (semanticElem instanceof State) {
-            return new IProperty<?>[] { LayoutOptions.SPACING };
+            return new IProperty<?>[] { LayoutOptions.ALGORITHM, LayoutOptions.SPACING };
         }
         return null;
     }
@@ -56,8 +56,13 @@ public class StateLayoutConfig extends SemanticLayoutConfig{
     @Override
     protected Object getSemanticValue(final EObject semanticElem,
             final LayoutOptionData<?> layoutOption) {
-        if (semanticElem instanceof State && layoutOption.equals(LayoutOptions.SPACING)) {
-            return 1f;
+        if (semanticElem instanceof State) {
+            if (layoutOption.equals(LayoutOptions.SPACING)) {
+                return 1f;
+            }
+            if (layoutOption.equals(LayoutOptions.ALGORITHM)) {
+                return "de.cau.cs.kieler.box";
+            }
         }
         return null;
     }
