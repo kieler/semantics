@@ -296,13 +296,14 @@ class SeqScl2SsaSeqScl {
 
 
 //---------------------------------------------------------------------------------------------
-// S E C O N D   V E R S I O N
+// N E W   V E R S I O N S
 //---------------------------------------------------------------------------------------------
 
         val newCond = SCL.createConditional
         val stmList = createNewStatementList
         val trueStms = conditional.statements
-       
+ 
+//C O N D I T I O N    E X P R E S S I O N        
         //transform the condition expression
         val newCondExp = conditional.expression.copy 
         //more than one ElementReferenceExpression
@@ -326,7 +327,8 @@ class SeqScl2SsaSeqScl {
        
         // create new conditional, the condition is the same as in the old one
         newCond.setExpression(newCondExp) 
-       
+
+//T R U E   S T A T E M E N T      
         // transform all assignments from the true case
         // until now (!): only assignments exists in true case, no other statements
         trueStms.forEach[ stm | 
@@ -335,24 +337,91 @@ class SeqScl2SsaSeqScl {
             //Add transformed assignment to the new SSA conditional
             newCond.statements.add(ssaAssignment)    
         ]       
-       
-        // compute Phi function
-        val stms = (computeInternalPhiFunction(ssaIndexMap, ssaIndexedMapSave, newCondExp.copy, targetProgram))
-       
-        newCond.elseStatements.addAll(stms)
-       
+        
+// -----------------------------------------------------------------------------------------------------
+//F I R S T   V E R S I O N 
+// original version with two condition
+//      
+//       //add the new SSA conditional the the return statement list
+//        stmList.add(newCond.createStatement) 
+//       
+//       // compute Phi function
+//       stmList.add(computePhiFunction(ssaIndexMap, ssaIndexedMapSave, newCondExp.copy, targetProgram))
+//       
+//       stmList
+//
+//F I R S T   V E R S I O N   E N D
+
+// -----------------------------------------------------------------------------------------------------
+// S E C O N D   V E R S I O N  
+// Just combine phi function and else statement
+//
+//        //compute Phi function
+//        val stms = (computeInternalPhiFunction(ssaIndexMap, ssaIndexedMapSave, conditional, targetProgram))
+//       
+//        newCond.elseStatements.addAll(stms)
+//
+//        //add the new SSA conditional the the return statement list
+//        stmList.add(newCond.createStatement) 
+//       
+//        stmList     
+// S E C O N D   V E R S I O N   E N D
+ 
+// -----------------------------------------------------------------------------------------------------
+// T H I R D   V E R S I O N  
+// optimized second Version, here only the variables inside the true case are checked 
+//    
+        //Variables could be assign more than one time in the true statement sequence(g1 = true; g1 = false),
+        //so only compute one phi function for one all assignments (definition g1__1, g1__2) 
+        val alreadyChecked = new ArrayList<String>
+        
+        newCond.statements.forEach[ stm |
+                    
+            val varName = ((((stm.instruction as Assignment).assignment as AssignmentExpression).varRef 
+                as ElementReferenceExpression).reference as VariableDefinition).name
+            
+            var hmKey = "" 
+            if(varName.contains("__")){
+                hmKey = varName.subSequence(0,varName.indexOf("__")).toString
+            }else{
+                //if it contains no '__' then it is an input/output variable
+                hmKey = varName
+            }
+            
+            var oldSSAIndex = ssaIndexedMapSave.get(hmKey)
+            var currentSSAIndex = ssaIndexMap.get(hmKey)
+            
+            //If the old variable was never assigned, then take pre value (__0)
+            if((oldSSAIndex == -1)){
+                oldSSAIndex = 0
+            }
+            
+            if(!alreadyChecked.contains(hmKey)){
+                //add current hashmap key to the visited ones
+                alreadyChecked.add(hmKey)
+
+                val newAssignment = SCL.createAssignment()
+                newAssignment.assignment = createAssignmentExpression(targetProgram.getDefinitionByNameAsElemRef
+                    (hmKey + "__" + currentSSAIndex),targetProgram.getDefinitionByNameAsElemRef(hmKey + "__" + oldSSAIndex))
+
+                newCond.elseStatements.add(newAssignment.createStatement)                        
+            }
+        ]
+        
         //add the new SSA conditional the the return statement list
         stmList.add(newCond.createStatement) 
        
         stmList
-       
+
+// T H I R D   V E R S I O N   E N D   
+    
     }
     
     //---------------------------------------------------------------------------------------------
     // S E C O N D   V E R S I O N
     //---------------------------------------------------------------------------------------------
     //Computes the Phi Function (that is a conditional)
-    def EList<Statement> computeInternalPhiFunction(HashMap<String,Integer> currentHm, HashMap<String,Integer> oldHm, Expression conditionExpression, Program targetProgram) {
+    def EList<Statement> computeInternalPhiFunction(HashMap<String,Integer> currentHm, HashMap<String,Integer> oldHm, Conditional condition, Program targetProgram) {
         
         val stms = SCL.createStatementSequence
         val elseStms = stms.statements
