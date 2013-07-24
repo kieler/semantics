@@ -148,8 +148,8 @@ class SCLCreateExtensions {
         varDef.setName(definition.getName());
         if (definition instanceof EventDefinition) {
             val eventDefinition = definition as EventDefinition;
-            varDef.setInput(eventDefinition.isInput());
-            varDef.setOutput(eventDefinition.isOutput());
+            varDef.setInput(eventDefinition.isInput);
+            varDef.setOutput(eventDefinition.isOutput);
             if (eventDefinition.varInitialValue != null) varDef.setInitialValue(eventDefinition.varInitialValue)
             
             if (eventDefinition.getType() != null) {
