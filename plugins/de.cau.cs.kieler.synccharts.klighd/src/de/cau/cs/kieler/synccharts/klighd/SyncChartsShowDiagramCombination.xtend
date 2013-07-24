@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.synccharts.klighd
 
-import de.cau.cs.kieler.core.kivi.AbstractCombination
 import de.cau.cs.kieler.core.model.triggers.PartTrigger
 import de.cau.cs.kieler.core.model.triggers.SelectionTrigger
 import de.cau.cs.kieler.klighd.LightDiagramServices

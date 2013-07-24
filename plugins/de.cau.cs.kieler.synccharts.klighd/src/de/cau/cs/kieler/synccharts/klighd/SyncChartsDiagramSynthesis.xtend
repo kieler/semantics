@@ -93,16 +93,8 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
         = TransformationOption::createCheckOption("Show signal declarations", false);
 
-// some options for testing purposes        
-//    private static val TransformationOption TEST
-//        = TransformationOption::createChoiceOption("TEST", ImmutableList.of("A", "B", "C"), "A");
-//    
-//    private static val TransformationOption TEST2
-//        = TransformationOption::createRangeOption("TEST2", Pair::of(0,100f), 30f);
-    
     override public getTransformationOptions() {
         return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS, SHOW_SIGNAL_DECLARATIONS);
-//        return ImmutableSet::of(SHOW_LABELS, TEST, SHOW_PRIORITY_LABELS, TEST2);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -177,7 +169,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
             val conditional = s.type == StateType::CONDITIONAL;
             val simpleState = s.signals.empty && s.regions.empty;
-            val cornerRadius = if (conditional) 10 else if (simpleState) 15 else 8;
+            val cornerRadius = if (conditional) 10 else if (simpleState) 17 else 8;
             val lineWidth = if (s.isInitial && s.isFinal) 2.1f else if (s.isInitial) 4 else 1;
 
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
@@ -217,7 +209,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.addText(s.label).putToLookUpWith(s) => [
                     it.fontSize = 11;
                     it.setGridPlacementData().setMaxCellHeightEx(40)
-                        .from(LEFT, 10, 0, TOP, 10, 0)
+                        .from(LEFT, 10, 0, TOP, 9f, 0)
                         .to(RIGHT, 10, 0, BOTTOM, 10, 0);
                 ];
                 
