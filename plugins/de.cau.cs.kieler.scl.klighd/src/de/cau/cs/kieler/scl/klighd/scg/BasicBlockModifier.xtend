@@ -24,8 +24,8 @@ import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.kiml.util.KimlUtil
 import de.cau.cs.kieler.klighd.IStyleModifier
+import de.cau.cs.kieler.klighd.IStyleModifier$StyleModificationContext
 import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klighd.StyleModificationContext
 import de.cau.cs.kieler.klighd.util.ModelingUtil
 import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
 import java.util.List
@@ -33,8 +33,8 @@ import java.util.List
 import static de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier.*
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
-import java.util.ArrayList
 import de.cau.cs.kieler.scl.basicblocks.BasicBlock
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 class BasicBlockModifier implements IStyleModifier {
     
@@ -98,7 +98,7 @@ class BasicBlockModifier implements IStyleModifier {
         shapeLayout.width = right - left        
         shapeLayout.xpos = left
         shapeLayout.ypos = top
-//        shapeLayout.setProperty(KlighdConstants::KLIGHD_SELECTION_UNPICKABLE, true)
+        shapeLayout.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true)
 
         node.KRendering.background = "red".color
 

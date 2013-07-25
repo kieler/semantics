@@ -6,22 +6,6 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="de.cau.cs.kieler.synccharts.text.actions.ui.CustomizedActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            default="true"
-            extensions="action"
-            id="de.cau.cs.kieler.synccharts.text.actions.Actions"
-            name="Actions Editor">
-        </editor>
-        <editor
-            class="de.cau.cs.kieler.synccharts.text.interfaces.ui.CustomizedInterfacesExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            default="true"
-            extensions="intfc"
-            id="de.cau.cs.kieler.synccharts.text.interfaces.Interface"
-            name="Interfaces Editor">
-        </editor>
-        <editor
               class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
               contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
               default="true"
@@ -33,15 +17,6 @@
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
-	    <handler
-            class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
-            commandId="org.eclipse.xtext.ui.editor.FindReferences">
-            <activeWhen>
-                <reference
-                    definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened">
-                </reference>
-            </activeWhen>
-        </handler>
         <handler
             class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
@@ -60,6 +35,26 @@
             </reference>
          </activeWhen>
       </handler>
+      	<!-- copy qualified name -->
+        <handler
+            class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
+            <activeWhen>
+				<reference definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened" />
+            </activeWhen>
+        </handler>
+        <handler
+            class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
+            <activeWhen>
+            	<and>
+            		<reference definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.XtextEditor.opened" />
+	                <iterate>
+						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
+					</iterate>
+				</and>
+            </activeWhen>
+        </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
         <definition id="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened">
@@ -72,19 +67,9 @@
                 </with>        
             </and>
         </definition>
-        <definition id="de.cau.cs.kieler.synccharts.text.interfaces.Interfaces.Editor.opened">
+        <definition id="de.cau.cs.kieler.synccharts.text.kits.Kits.XtextEditor.opened">
             <and>
-                <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
-                <with variable="activeEditor">
-                    <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="de.cau.cs.kieler.synccharts.text.interfaces.Interfaces" 
-                        forcePluginActivation="true"/>
-                </with>        
-            </and>
-        </definition>
-        <definition id="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened">
-            <and>
-                <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
+                <reference definitionId="isXtextEditorActive"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
                         value="de.cau.cs.kieler.synccharts.text.kits.Kits" 
@@ -118,13 +103,23 @@
         </page>
     </extension>
     <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.synccharts.text.kits.Kits"
+            name="Kits">
+            <keywordReference id="de.cau.cs.kieler.synccharts.text.kits.ui.keyword_Kits"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
+    <extension
         point="org.eclipse.ui.keywords">
         <keyword
             id="de.cau.cs.kieler.synccharts.text.actions.ui.keyword_Actions"
             label="Actions"/>
-        <keyword
-            id="de.cau.cs.kieler.synccharts.text.interfaces.ui.keyword_Interfaces"
-            label="Interfaces"/>
         <keyword
             id="de.cau.cs.kieler.synccharts.text.kits.ui.keyword_Kits"
             label="Kits"/>
@@ -133,18 +128,21 @@
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="de.cau.cs.kieler.synccharts.text.actions.Actions.validate"
-            name="Validate">
-      </command>
-      <command
-            description="Trigger expensive validation"
-            id="de.cau.cs.kieler.synccharts.text.interfaces.Interfaces.validate"
-            name="Validate">
-      </command>
-      <command
-            description="Trigger expensive validation"
             id="de.cau.cs.kieler.synccharts.text.kits.Kits.validate"
             name="Validate">
+      </command>
+      <!-- copy qualified name -->
+      <command
+            id="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
+            categoryId="org.eclipse.ui.category.edit"
+            description="Copy the qualified name for the selected element"
+            name="Copy Qualified Name">
+      </command>
+      <command
+            id="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName"
+            categoryId="org.eclipse.ui.category.edit"
+            description="Copy the qualified name for the selected element"
+            name="Copy Qualified Name">
       </command>
     </extension>
     <extension point="org.eclipse.ui.menus">
@@ -161,14 +159,36 @@
             </visibleWhen>
          </command>  
          </menuContribution>
-		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
-			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
-				<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened">
-                	</reference>
+         <!-- copy qualified name -->
+         <menuContribution locationURI="popup:#TextEditorContext?after=copy">
+         	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
+         		style="push" tooltip="Copy Qualified Name">
+            	<visibleWhen checkEnabled="false">
+                	<reference definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened" />
             	</visibleWhen>
+         	</command>  
+         </menuContribution>
+         <menuContribution locationURI="menu:edit?after=copy">
+         	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
+            	style="push" tooltip="Copy Qualified Name">
+            	<visibleWhen checkEnabled="false">
+                	<reference definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened" />
+            	</visibleWhen>
+         	</command>  
+         </menuContribution>
+         <menuContribution locationURI="popup:org.eclipse.xtext.ui.outline?after=additions">
+			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName" 
+				style="push" tooltip="Copy Qualified Name">
+         		<visibleWhen checkEnabled="false">
+	            	<and>
+	            		<reference definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.XtextEditor.opened" />
+						<iterate>
+							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
+						</iterate>
+					</and>
+				</visibleWhen>
 			</command>
-		</menuContribution>
+         </menuContribution>
          <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
@@ -222,8 +242,28 @@
             </parameter>
          </command>
      </menuContribution>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
+				<visibleWhen checkEnabled="false">
+                	<reference definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened">
+                	</reference>
+            	</visibleWhen>
+			</command>
+		</menuContribution>
 	</extension>
-
+	<extension point="org.eclipse.ui.handlers">
+	    <handler
+            class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            commandId="org.eclipse.xtext.ui.editor.FindReferences">
+            <activeWhen>
+                <reference
+                    definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+    </extension>   
 
 <!-- adding resource factories -->
 
@@ -234,31 +274,22 @@
 			type="action">
 		</parser>
 		<parser
-			class="de.cau.cs.kieler.synccharts.text.interfaces.ui.CustomizedInterfacesExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="intfc">
-		</parser>
-		<parser
 			class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="kits">
 		</parser>
-  <parser
-        class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsEmbeddedExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-        type="kitsem">
-  </parser>
-  <parser
-        class="de.cau.cs.kieler.synccharts.text.kitsState.ui.CustomizedKitsStateExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-        type="kitsState">
-  </parser>
+  		<parser
+        	class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsEmbeddedExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+	        type="kitsem">
+		</parser>
+		<parser
+        	class="de.cau.cs.kieler.synccharts.text.kitsState.ui.CustomizedKitsStateExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+	        type="kitsState">
+  		</parser>
 	</extension>
-	
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
             class="de.cau.cs.kieler.synccharts.text.actions.ui.CustomizedActionsExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="action">
-        </resourceServiceProvider>
-        <resourceServiceProvider
-            class="de.cau.cs.kieler.synccharts.text.interfaces.ui.CustomizedInterfacesExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-            uriExtension="intfc">
         </resourceServiceProvider>
         <resourceServiceProvider
             class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
@@ -267,19 +298,124 @@
     </extension>
 
 
+    <!-- marker definitions for de.cau.cs.kieler.synccharts.text.kits.Kits -->
+    <extension
+            id="kits.check.fast"
+            name="Kits Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="kits.check.normal"
+            name="Kits Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.normal"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="kits.check.expensive"
+            name="Kits Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.expensive"/>
+        <persistent value="true"/>
+    </extension>
 
+	<!-- Quick Outline -->
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler 
+			class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
+			<activeWhen>
+				<reference
+					definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+	<extension
+		point="org.eclipse.ui.commands">
+		<command
+			description="Open the quick outline."
+			id="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+			name="Quick Outline">
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:#TextEditorContext?after=group.open">
+			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+				style="push"
+				tooltip="Open Quick Outline">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
    <!-- quickfix marker resolution generator -->
-   <extension
+   <!-- extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
             class="de.cau.cs.kieler.synccharts.text.actions.ui.CustomizedActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
       <markerResolutionGenerator
-            class="de.cau.cs.kieler.synccharts.text.interfaces.ui.CustomizedInterfacesExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
-      </markerResolutionGenerator>
-      <markerResolutionGenerator
             class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
-   </extension>
+   </extension -->
+    <!-- quickfix marker resolution generator for de.cau.cs.kieler.synccharts.text.kits.Kits -->
+    <extension
+            point="org.eclipse.ui.ide.markerResolution">
+        <markerResolutionGenerator
+            class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.synccharts.text.kits.ui.kits.check.fast">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.synccharts.text.kits.ui.kits.check.normal">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.synccharts.text.kits.ui.kits.check.expensive">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+    </extension>
+   	<!-- Rename Refactoring -->
+	<extension point="org.eclipse.ui.handlers">
+		<handler 
+			class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
+			<activeWhen>
+				<reference
+					definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+    <extension point="org.eclipse.ui.menus">
+         <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+         <command commandId="org.eclipse.xtext.ui.refactoring.RenameElement"
+               style="push">
+            <visibleWhen checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.synccharts.text.kits.Kits.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+    </extension>
 
 </plugin>

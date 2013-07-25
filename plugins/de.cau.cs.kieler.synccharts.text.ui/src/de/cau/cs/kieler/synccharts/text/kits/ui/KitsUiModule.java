@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts.text.kits.ui;
 
+
 /**
  * Custom {@link com.google.inject.Module} contributing to the Kits editor.
  * 
@@ -46,6 +47,12 @@ public class KitsUiModule extends de.cau.cs.kieler.synccharts.text.kits.ui.Abstr
     /* the registration in KitsRuntimeModule will be overwritten by DefaultUIModule so it is here again */
     public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
         return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsIndentionInformation.class;
+    }
+    
+    /* enables rename of our 'Scope' elements that do not have a 'name' but an 'id' */
+    @SuppressWarnings("restriction")
+    public Class<? extends org.eclipse.xtext.ui.refactoring.IRenameStrategy> bindIRenameStrategy() {
+        return KitsRenameStrategy.class;
     }
 
 }
