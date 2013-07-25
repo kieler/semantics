@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER YAKINDU Editor
-Bundle-SymbolicName: de.cau.cs.kieler.yakindu.ui.editor
+Bundle-SymbolicName: de.cau.cs.kieler.yakindu.ui.editor;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
@@ -18,7 +18,9 @@ Require-Bundle: org.yakindu.sct.ui.editor;bundle-version="2.0.0",
  org.eclipse.gmf.runtime.diagram.ui.providers;bundle-version="1.5.0",
  org.eclipse.gmf.runtime.diagram.ui.printing.render;bundle-version="1.4.1",
  org.eclipse.gmf.runtime.diagram.ui.providers.ide;bundle-version="1.2.0",
- de.cau.cs.kieler.yakindu.sccharts.model.stext;bundle-version="0.1.0"
+ de.cau.cs.kieler.yakindu.sccharts.model.stext;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.model.gmf;bundle-version="0.2.2",
+ de.cau.cs.kieler.core;bundle-version="0.8.1"
 Import-Package: de.cau.cs.kieler.yakindu.model.sgraph.syncgraph,
  de.itemis.gmf.runtime.commons.parsers,
  org.eclipse.emf.databinding,
@@ -34,3 +36,5 @@ Export-Package: de.cau.cs.kieler.yakindu.ui.editor.assistent,
  de.cau.cs.kieler.yakindu.ui.editor.parts,
  de.cau.cs.kieler.yakindu.ui.editor.propertysheets,
  de.cau.cs.kieler.yakindu.ui.editor.module
+Bundle-Activator: de.cau.cs.kieler.yakindu.ui.editor.editor.SyncGraphDiagramEditorPlugin
+Bundle-ActivationPolicy: lazy

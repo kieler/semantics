@@ -202,7 +202,7 @@
       <option
             class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
             option="de.cau.cs.kieler.spacing"
-            value="1.0">
+            value="0.0">
       </option>
       <option
             class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
@@ -212,7 +212,7 @@
       <option
             class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
             option="de.cau.cs.kieler.sizeConstraint"
-            value="[MINIMUM_SIZE, DEFAULT_MINIMUM_SIZE]">
+            value="[MINIMUM_SIZE]">
       </option>
       <option
             class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
@@ -234,23 +234,27 @@
             option="de.cau.cs.kieler.direction"
             value="RIGHT">
       </option>
+      <option
+            class="de.cau.cs.kieler.yakindu.sgraph.syncgraph.SyncState"
+            option="de.cau.cs.kieler.sizeOptions"
+            value="DEFAULT_MINIMUM_SIZE">
+      </option>
       <semanticOption
-            class="org.yakindu.sct.model.sgraph.Scope"
-            config="de.cau.cs.kieler.synccharts.diagram.custom.HVLayoutConfig">
+            class="org.yakindu.sct.model.sgraph.Region"
+            config="de.cau.cs.kieler.yakindu.sccharts.ui.editor.layout.YakinduLayoutConfig">
       </semanticOption>
       <semanticOption
-            class="org.yakindu.sct.model.sgraph.Reaction"
-            config="de.cau.cs.kieler.synccharts.diagram.custom.ActionLayoutConfig">
-      </semanticOption>
-      <semanticOption
-            class="org.yakindu.sct.model.sgraph.Scope"
-            config="de.cau.cs.kieler.synccharts.diagram.custom.AnnotationsLayoutConfig">
-      </semanticOption>
-      <semanticOption
-            class="org.yakindu.sct.model.sgraph.Reaction"
-            config="de.cau.cs.kieler.synccharts.diagram.custom.AnnotationsLayoutConfig">
+            class="org.yakindu.sct.model.sgraph.State"
+            config="de.cau.cs.kieler.yakindu.sccharts.ui.editor.layout.YakinduLayoutConfig">
       </semanticOption>
    </extension>
+    <extension
+          point="de.cau.cs.kieler.kiml.ui.layoutManagers">
+       <manager
+             class="de.cau.cs.kieler.yakindu.sccharts.ui.editor.layout.YakinduDiagramLayoutManager"
+             priority="30">
+       </manager>
+    </extension>
 </plugin>
 
 	
