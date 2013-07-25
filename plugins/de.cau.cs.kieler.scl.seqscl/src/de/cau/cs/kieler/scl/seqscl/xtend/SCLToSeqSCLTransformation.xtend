@@ -86,7 +86,7 @@ class SCLToSeqSCLTransformation {
                 for (pred : predecessors) {
                     if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred) && !basicBlock.isParallelJoin) {ready = false}
                     if (basicBlock.isParallelJoin) {
-                        val guards = pred.getHead.basicBlocks.stripSurface
+                        val guards = pred.getHead.basicBlocks.getSurfaces
                         for (guard : guards) {
                             if (basicBlockPool.containsEqual(guard)) { 
                                 ready = false;
@@ -143,13 +143,14 @@ class SCLToSeqSCLTransformation {
                 val emptyExp = SText.createLogicalNotExpression;
                 val _parExp  = SText.createParenthesizedExpression
                 var Expression innerExp = null 
-                val guards = pred.getHead.basicBlocks.stripSurface
-                val predID = guards.head.basicBlockName;
+                val guards = pred.getHead.basicBlocks;
+                val surfaceGuards = guards.getSurfaces
+                val predID = surfaceGuards.head.basicBlockName;
                 innerExp = SText.createElementReferenceExpression as Expression
                 (innerExp as ElementReferenceExpression).setReference(program.getDefinitionByName(predID))
-                if (guards.size>1) {
-                    for(Integer i: 1..(guards.size - 1)) {
-                        var predIDi = guards.get(i).basicBlockName
+                if (surfaceGuards.size>1) {
+                    for(Integer i: 1..(surfaceGuards.size - 1)) {
+                        var predIDi = surfaceGuards.get(i).basicBlockName
                         val exp2 = createElementReferenceExpression(program.getDefinitionByName(predIDi))
                         innerExp = createOrExpression(innerExp, exp2)
                     } 
