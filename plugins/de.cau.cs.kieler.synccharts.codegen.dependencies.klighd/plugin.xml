@@ -2,11 +2,11 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="de.cau.cs.kieler.klighd.modelTransformations">
-      <transformation
-            class="de.cau.cs.kieler.klighd/de.cau.cs.kieler.klighd.transformations.GuiceBasedTransformationFactory:de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.xtend.DependencyDiagramSynthesis"
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.transformations.GuiceBasedTransformationFactory:de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.xtend.DependencyDiagramSynthesis"
             id="de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.xtend.DependencyDiagramSynthesis">
-      </transformation>
+      </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
