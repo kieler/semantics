@@ -77,7 +77,7 @@ class SCLBasicBlockExtensions {
         if (prevStatement.isConditional) return true
         if (prevStatement.isGoto) return true 
         if (SPLIT_BLOCKS_AT_DEPENDENCY) {
-            if ((prevStatement.isAssignment || prevStatement.isConditional) && prevStatement.getInstruction.hasConcurrentTargetDependencies) return true;
+//            if ((prevStatement.isAssignment || prevStatement.isConditional) && prevStatement.getInstruction.hasConcurrentTargetDependencies) return true;
             if ((statement.isAssignment || statement.isConditional) && statement.getInstruction.hasConcurrentTargetDependencies) return true;
         }
 
@@ -702,7 +702,17 @@ class SCLBasicBlockExtensions {
         newBlockList
     }
     
-    
+    def List<BasicBlock> getSurfaces(List<BasicBlock> basicBlocks) {
+        val newBlockList = new ArrayList<BasicBlock>;
+        
+        for(bb : basicBlocks) {
+            if (bb.isPauseSurface) {
+                newBlockList.add(bb)
+            }
+        }
+        
+        newBlockList
+    }    
 
     def boolean isASCSchedulable(Program program) {
         program.ASCPool.size == 0
@@ -729,7 +739,7 @@ class SCLBasicBlockExtensions {
                 for (pred : predecessors) {
                     if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred) && !basicBlock.isParallelJoin) {ready = false}
                     if (basicBlock.isParallelJoin) {
-                        val guards = pred.getHead.basicBlocks.stripSurface
+                        val guards = pred.getHead.basicBlocks.getSurfaces
                         for (guard : guards) {
                             if (basicBlockPool.containsEqual(guard)) { 
                                 ready = false;

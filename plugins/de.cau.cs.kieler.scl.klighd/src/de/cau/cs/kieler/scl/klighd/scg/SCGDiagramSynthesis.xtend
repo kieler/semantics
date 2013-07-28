@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scl.klighd.scg
 
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kgraph.KEdge
@@ -28,6 +29,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
@@ -36,19 +38,20 @@ import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.kiml.options.SizeConstraint
 import de.cau.cs.kieler.kiml.util.KimlUtil
+import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.TransformationOption
 import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
 import de.cau.cs.kieler.scl.SCLStandaloneSetup
 import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
+import de.cau.cs.kieler.scl.extensions.SCLDependencyExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
+import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
 import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 import de.cau.cs.kieler.scl.extensions.SCLStatementSequenceExtensions
-import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
@@ -58,7 +61,9 @@ import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.StatementSequence
 import java.util.ArrayList
+import java.util.Collection
 import java.util.HashMap
 import javax.inject.Inject
 import org.eclipse.emf.common.util.EList
@@ -66,10 +71,6 @@ import org.eclipse.xtext.serializer.ISerializer
 import org.yakindu.sct.model.stext.stext.Expression
 
 import static de.cau.cs.kieler.scl.klighd.scg.SCGDiagramSynthesis.*
-import de.cau.cs.kieler.scl.extensions.SCLDependencyExtensions
-import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
-import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.scl.klighd.scg.KRenderingUtil
 
 /*
  * This class extends the klighd diagram synthesis to draw scl program models in klighd.
@@ -126,6 +127,13 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     private static val SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS = "Draw SC Graph, dependencies && basic blocks";
     
     private static val String SCG_FILTER_NAME = "SC Graph Filter";
+
+    override getRecommendedLayoutOptions() {
+        return ImmutableMap::<IProperty<?>, Collection<?>>of(
+            LayoutOptions::SPACING, newArrayList(0, 200),
+            Properties::NODE_PLACER, NodePlacementStrategy::values
+        );
+    }
 
     /**
      * The class filter option definition that allows the user to customize the class diagram.
@@ -797,7 +805,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kDepthNode.KRendering.add(factory.createKLineWidth.of(2));
         kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
         if (PAUSEDEPTH_FIRST)
-        if (!instr.getStatement.hasAnnotation(SCLANNOTATION_DEPTH_INLINE))
+        if (!instr.getStatement.getProgram.hasGlobalParameter('inline', 'depth') &&
+            !instr.getStatement.hasAnnotation(SCLANNOTATION_DEPTH_INLINE))
             kDepthNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             
         // Add all nodes to their parents 

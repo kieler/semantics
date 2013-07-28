@@ -32,6 +32,7 @@ import org.yakindu.sct.model.sgraph.Statechart
 
 import de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCExtensions
 import java.util.List
+import java.util.EnumSet
 
 /**
  * @author ssm
@@ -57,11 +58,6 @@ class CoreToSCLTransformation {
     @Inject
     extension CoreToSCLOptimization
  
-    // Shortcut helper method to check for optimization flags. 
-    def boolean optimize(int oFlags, int optimization) {
-        oFlags.bitwiseAnd(optimization) > 0
-    }
-    
     //-------------------------------------------------------------------------
     //--          C O R E   TO   S C L -  T R A N S F O R M A T I O N        --
     //-------------------------------------------------------------------------
@@ -75,7 +71,7 @@ class CoreToSCLTransformation {
      * This method will create the declarations of the scl program and calls the function to transform 
      * the main state. Including regions and states will be transformed recursively.
      */ 
-    def Program transformCoreToSCL(Statechart rootStatechart, int optimizationFlags) {
+    def Program transformCoreToSCL(Statechart rootStatechart, EnumSet<SCLOptimizations> optimizations) {
         var targetProgram = SclFactory::eINSTANCE.createProgram();
 
         // Since yakindu statecharts begin with a region our main state is the first state in the first
@@ -87,12 +83,12 @@ class CoreToSCLTransformation {
 
         // Add all declarations of the main state to the declaration of the program.
         for(declaration : mainState.scopes.get(0).declarations) {
-           targetProgram.definitions.add(createVariableDeclaration(declaration));
+           targetProgram.definitions.add(createVariableDefinition(declaration));
         }
         
         // Create a list of statements for the main state (and all including regions and states) and
         // add them to the program.
-        var statements = transformCoreState(mainState, optimizationFlags)        
+        var statements = transformCoreState(mainState, optimizations)        
         targetProgram.statements.addAll(statements)
        
         targetProgram
@@ -104,7 +100,7 @@ class CoreToSCLTransformation {
      * The method calls the state transformation method for every state in this region and selected 
      * optimization are invoked. 
      */
-    def List<Statement> transformCoreRegion(Region region, int optimizationFlags) {
+    def List<Statement> transformCoreRegion(Region region, EnumSet<SCLOptimizations> optimizations) {
         var newStatements = createNewStatementList()
         
         // List of all states in this region. 
@@ -116,11 +112,11 @@ class CoreToSCLTransformation {
         // In order to execute the state position optimization all statement lists are stored in an array.
         var stateInstructions = new ArrayList<ArrayList<Statement>>
         for (state : states) {
-            stateInstructions.add(transformCoreState(state, optimizationFlags) as ArrayList<Statement>)
+            stateInstructions.add(transformCoreState(state, optimizations) as ArrayList<Statement>)
         }
         
         // If selected execute the state position optimization.
-        if (optimizationFlags.optimize(CoreToSCLOptimization::OPTIMIZE_STATEPOSITION)) {
+        if (optimizations.contains(SCLOptimizations::STATEPOSITION)) {
             stateInstructions = stateInstructions.optimizeStateSetPosition
         }
         
@@ -130,9 +126,9 @@ class CoreToSCLTransformation {
         }
         
         // Run optimizations if selected.
-        if (optimizationFlags.optimize(CoreToSCLOptimization::OPTIMIZE_GOTO)) 
+        if (optimizations.contains(SCLOptimizations::GOTO)) 
             newStatements = newStatements.optimizeGoto 
-        if (optimizationFlags.optimize(CoreToSCLOptimization::OPTIMIZE_LABEL)) 
+        if (optimizations.contains(SCLOptimizations::LABEL)) 
             newStatements = newStatements.optimizeLabel 
         
         newStatements
@@ -146,7 +142,7 @@ class CoreToSCLTransformation {
      * If it is not and if the state is not a final state, all transitions are transformed. 
      * If the state is a final state, nothing besides adding a label is done.
      */
-    def List<Statement> transformCoreState(SyncState state, int optimizationFlags) {
+    def List<Statement> transformCoreState(SyncState state, EnumSet<SCLOptimizations> optimizations) {
         var newStatements = createNewStatementList()
         
         // The ID of the state is its hierarchical name.
@@ -160,12 +156,12 @@ class CoreToSCLTransformation {
             // If there is only one region, the code of that region can be added without further processing.
             // If there are more regions, a parallel statement has to be created.
             if (state.getRegions().size<2) {
-                var regionInstructions =  transformCoreRegion(state.getRegions().head, optimizationFlags)
+                var regionInstructions =  transformCoreRegion(state.getRegions().head, optimizations)
                 newStatements.addAll(regionInstructions)
             } else {
                 var parallel = SclFactory::eINSTANCE.createParallel();
                 for(stateRegion : state.getRegions()) {
-                    val regionInstructions = transformCoreRegion(stateRegion, optimizationFlags)
+                    val regionInstructions = transformCoreRegion(stateRegion, optimizations)
                     parallel.getThreads().add(createSCLThread(regionInstructions))
                 }
                 newStatements.add(parallel.createStatement)
@@ -190,7 +186,7 @@ class CoreToSCLTransformation {
             if (!state.isFinal) {
                 // And the state is not a final state.
                 // Add statements of the transitions transformation.
-                newStatements.addAll(state.transformStateTransitions(optimizationFlags))
+                newStatements.addAll(state.transformStateTransitions(optimizations))
             } 
         } 
 
@@ -219,7 +215,7 @@ class CoreToSCLTransformation {
      * If the SELFLOOP OPTIMIZATION is selected and it is possible to swap the statement lists, the 
      * method for this optimization is called.
      */
-    def List<Statement> transformStateTransitions(SyncState state, int optimizationFlags) {
+    def List<Statement> transformStateTransitions(SyncState state, EnumSet<SCLOptimizations> optimizations) {
         var iS = createNewStatementList()
         
         // Create lists for all transitions, immediate transitions and transitions to self.
@@ -255,7 +251,7 @@ class CoreToSCLTransformation {
             // Trigger SELFLOOP OPTIMIZATION, if possible.
             // The optimization is possible, if there is already a default transition (already present or
             // added by the transformation) and there are only two transitions.
-            if (optimizationFlags.optimize(CoreToSCLOptimization::OPTIMIZE_SELFLOOP) &&
+            if (optimizations.contains(SCLOptimizations::SELFLOOP) &&
                ((transitions.size==2 && selfTransitions.size==1 && selfTransitions.head.trigger == null) 
 //                   ||
 //                (transitions.size==1 && selfTransitions.size!=1)
@@ -276,7 +272,7 @@ class CoreToSCLTransformation {
         
         // Same as above. If there are only two transitions and one of them is going to self, invoke
         // SELFLOOP OPTIMIZATION if selected.
-        if (optimizationFlags.optimize(CoreToSCLOptimization::OPTIMIZE_SELFLOOP) &&
+        if (optimizations.contains(SCLOptimizations::SELFLOOP) &&
            ((transitions.size==2 && selfTransitions.size==1 && selfTransitions.head.trigger == null) ||
             (transitions.size==1 && selfTransitions.size!=1))) {
                 

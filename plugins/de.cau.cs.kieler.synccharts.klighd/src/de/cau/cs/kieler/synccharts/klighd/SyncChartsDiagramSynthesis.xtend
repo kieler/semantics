@@ -85,13 +85,13 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     extension KColorExtensions
     
     private static val TransformationOption SHOW_LABELS
-        = TransformationOption::createCheckOption("Show transition labels", true);
+        = TransformationOption::createCheckOption("Transition labels", false);
         
     private static val TransformationOption SHOW_PRIORITY_LABELS
-        = TransformationOption::createCheckOption("Show transition priorities", false);
+        = TransformationOption::createCheckOption("Transition priorities", false);
 
     private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
-        = TransformationOption::createCheckOption("Show signal declarations", false);
+        = TransformationOption::createCheckOption("Signal declarations", false);
 
     override public getTransformationOptions() {
         return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS, SHOW_SIGNAL_DECLARATIONS);
@@ -251,7 +251,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         return t.createEdge().putToLookUpWith(t) => [ edge |
             edge.source = t.sourceState.node;
             edge.target = t.targetState.node;
-            edge.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             edge.addSpline(2) => [
                 it.addArrowDecorator() => [
                     if (t.isHistory) {
@@ -270,12 +270,15 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
             if (SHOW_LABELS.optionBooleanValue) {
                 scopeProvider.parent = t.sourceState;
-                val label = serializer.serialize(t.copy => [
-                    TMP_RES.contents += it;
-                ]);
-                TMP_RES.contents.clear;
-    
-                if (!label.empty) {
+                val String label =
+                    try {
+                        serializer.serialize(t.copy => [
+                            TMP_RES.contents += it;
+                        ]);
+                    } finally {
+                        TMP_RES.contents.clear;
+                    } 
+                if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
                         label, 11, KlighdConstants::DEFAULT_FONT_NAME
                     );
