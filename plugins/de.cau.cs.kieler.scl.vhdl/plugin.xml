@@ -7,7 +7,7 @@
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
                commandId="de.cau.cs.kieler.scl.vhdl.SCL2VHDL"
-               label="Transform to VHDL Code"
+               label="Transform SCL to VHDL"
                mnemonic="V"
                style="push">
             <visibleWhen>
