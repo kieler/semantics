@@ -313,8 +313,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_BASICBLOCKS ||
             SCGRAPH_FILTER.optionValue == SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS
         ) {
-            kExitNode.data += renderingFactory.createKRoundedBendsPolyline() => [
-                it.invisible = true
+            kExitNode.KRendering => [ //data += renderingFactory.createKRoundedBendsPolyline() => [
+                it.invisible = false;
                 it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
             ];       
             val bbDataHolder = new BasicBlockDataHolder()
