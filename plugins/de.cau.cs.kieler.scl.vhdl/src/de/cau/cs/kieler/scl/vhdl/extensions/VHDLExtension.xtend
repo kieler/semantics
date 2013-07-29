@@ -46,7 +46,7 @@ class VHDLExtension {
         ENTITY «entityName» IS
         PORT(
              tick : IN  std_logic;
-             reset : IN std_logic«if(!res.nullOrEmpty)';\n' + res»
+             reset : IN boolean«if(!res.nullOrEmpty)';\n' + res»
             );
         END «entityName»;
         '''

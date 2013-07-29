@@ -151,14 +151,14 @@ class SCL2VHDL {
     ARCHITECTURE behavior OF «name» IS
     
     --signal declaration
-    signal entry_int : boolean := false;
+    -- signal entry_int : boolean := false;
     
     begin
-    prog: process
+    p: process
     -- initial tick variables
-    variable notInitial : boolean := false;
-    variable notInitialDetect : boolean := true;
-    variable entry : boolean;
+    --variable notInitial : boolean := false;
+    --variable notInitialDetect : boolean := true;
+    --variable entry : boolean;
         
     --local in/out Variables
     «genarateLocalVariables(modelInputs)»
@@ -168,26 +168,24 @@ class SCL2VHDL {
     
     begin
     
-        -- do some stuff
         wait until rising_edge(tick);
-        --check for Integer value!?
-        if(reset = '1') then
+        if(reset = true) then
             --reset initial tick
-            notInitial := false;
-            notInitialDetect := true;
+            -- notInitial := false;
+            -- notInitialDetect := true;
                 
-            --check which of these variables must be set in each tick (!?) see ABO with O1,O2,A(out) and B(out)
             «setAllLocalVariables(modelInputs,false)» 
             «setAllLocalVariables(modelOutputs,false)»
             «setAllLocalVariables(modelLocalVariables,false)»
-        else
+        --else
+        end if;
             -- set initial tick
-            entry := not notInitial;
-            notInitial := notInitial or notInitialDetect;
+            -- entry := not notInitial;
+            -- notInitial := notInitial or notInitialDetect;
                 
             --update local variables
             «signalToVariable(modelInputs)»
-            GO_int := entry;
+            GO_int := reset;
             «setAllLocalVariables(modelOutputs,false)»
         
             --main program
@@ -195,8 +193,8 @@ class SCL2VHDL {
         
             --set outputs
             «variableToSignal(modelOutputs)»
-        end if;
-    end process prog;
+        --end if;
+    end process p;
         
     end behavior;
     '''
