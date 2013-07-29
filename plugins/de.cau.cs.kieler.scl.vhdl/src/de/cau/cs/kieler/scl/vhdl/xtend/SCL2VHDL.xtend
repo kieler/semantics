@@ -149,16 +149,9 @@ class SCL2VHDL {
     «generateEntity(modelInputs, modelOutputs, name)»
     
     ARCHITECTURE behavior OF «name» IS
-    
-    --signal declaration
-    -- signal entry_int : boolean := false;
-    
+        
     begin
     p: process
-    -- initial tick variables
-    --variable notInitial : boolean := false;
-    --variable notInitialDetect : boolean := true;
-    --variable entry : boolean;
         
     --local in/out Variables
     «genarateLocalVariables(modelInputs)»
@@ -170,30 +163,22 @@ class SCL2VHDL {
     
         wait until rising_edge(tick);
         if(reset = true) then
-            --reset initial tick
-            -- notInitial := false;
-            -- notInitialDetect := true;
                 
             «setAllLocalVariables(modelInputs,false)» 
             «setAllLocalVariables(modelOutputs,false)»
             «setAllLocalVariables(modelLocalVariables,false)»
-        --else
         end if;
-            -- set initial tick
-            -- entry := not notInitial;
-            -- notInitial := notInitial or notInitialDetect;
-                
-            --update local variables
-            «signalToVariable(modelInputs)»
-            GO_int := reset;
-            «setAllLocalVariables(modelOutputs,false)»
-        
-            --main program
-            «generateMainProcess(program.statements)»
-        
-            --set outputs
-            «variableToSignal(modelOutputs)»
-        --end if;
+            
+        --update local variables
+        «signalToVariable(modelInputs)»
+        GO_int := reset;
+        «setAllLocalVariables(modelOutputs,false)»
+    
+        --main program
+        «generateMainProcess(program.statements)»
+    
+        --set outputs
+        «variableToSignal(modelOutputs)»
     end process p;
         
     end behavior;

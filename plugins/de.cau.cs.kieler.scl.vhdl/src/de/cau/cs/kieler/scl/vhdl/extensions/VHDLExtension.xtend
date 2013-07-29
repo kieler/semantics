@@ -45,8 +45,10 @@ class VHDLExtension {
         '''
         ENTITY «entityName» IS
         PORT(
+            --control
              tick : IN  std_logic;
-             reset : IN boolean«if(!res.nullOrEmpty)';\n' + res»
+             reset : IN boolean;
+             term : OUT boolean«if(!res.nullOrEmpty)';\n' + res»
             );
         END «entityName»;
         '''
@@ -89,8 +91,10 @@ class VHDLExtension {
         '''
         COMPONENT «componentName»
         PORT(
+             --control
              tick : IN  std_logic;
-             reset : IN std_logic«if(!res.nullOrEmpty)';\n' + res»
+             reset : IN boolean;
+             term : OUT boolean«if(!res.nullOrEmpty)';\n' + res»
             );
         END COMPONENT;
         '''

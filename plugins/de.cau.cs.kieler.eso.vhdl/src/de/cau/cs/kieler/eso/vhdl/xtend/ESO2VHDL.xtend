@@ -60,6 +60,7 @@ import java.lang.Character
  * 
  */
 class ESO2VHDL {
+    boolean resetWasSet
     
     extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
          Guice::createInjector().getInstance(typeof(VHDLExtension))
@@ -216,8 +217,9 @@ class ESO2VHDL {
 	«modelOutputs.map( out |'''«generateVhdlSignalFromVariableWithInitialValue(out,"")»''').join('\n')»
 	
 	--Control«/* Generate control signals, every component (generated from SCL) need a tick and reset port */»
-	signal reset : std_logic := '0';
+	signal reset : boolean := false;
 	signal tick : std_logic := '0';
+	signal term : boolean := false;
 	constant tick_period : time := 100 ns;
 	
 	BEGIN«/* fill testbench with functionality */»
@@ -309,7 +311,8 @@ class ESO2VHDL {
 		'''
 		uut: «uutName» PORT MAP(
 			tick => tick,
-			reset => reset«if(!res.nullOrEmpty)',\n' + '''--Inputs'''+ '\n' + res»
+			reset => reset,
+			term => term«if(!res.nullOrEmpty)',\n' + '''--Inputs'''+ '\n' + res»
 		);
 	    '''
 	}
@@ -402,7 +405,8 @@ class ESO2VHDL {
 			
 			// at each new trace generate  the reset code which resets the model
 			simTick = "\n--NEW TRACE\n" + generateVhdlResetCode(wait)	//Reset on every new Trace
-
+            resetWasSet = true
+            
             // a counter, it contains the number of the current tick
 			tickCnt = 1
 			
@@ -444,13 +448,18 @@ class ESO2VHDL {
                         assert( «ass.name» = «ass.value» )
                             report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «ass.name» should have been «ass.value»"
                             severity ERROR;''' + '\n'
-                ].join('')
-								
+                ].join('')	
+				
 				// Compute code that is needed for one tick
 				// simTicks contains (at the end) the complete tick code for ONE trace
 				// add some additional comments 
 				simTick =  simTick + ("\n--".concat(" tick ").concat(tickCnt.toString).concat('\n')) 
-							+ setInputs + wait + asserts 
+							+ setInputs + wait + asserts
+							
+				if(resetWasSet){
+				    resetWasSet = false
+				    simTick = simTick + "reset <= false;\n"
+				}
 							
 				// the tick counter shows the current tick in the current trace
 				tickCnt = tickCnt + 1
@@ -516,7 +525,7 @@ class ESO2VHDL {
 	 * @return the VHDL code for a reset
 	 */
 	def String generateVhdlResetCode(String wait) { 
-		"reset <= '1';\n".concat(wait).concat("reset <= '0';\n");
+		"reset <= true;\n";//.concat(wait).concat("reset <= false;\n");
 	}
 	
 	/**
