@@ -45,12 +45,14 @@ class SCLToSeqSCLTransformation {
     extension de.cau.cs.kieler.scl.extensions.SCLStatementExtensions SCLStatementExtensions = 
          Guice::createInjector().getInstance(typeof(SCLStatementExtensions))
     
+    static val String RESETSIGNAL = 'RESET';
+    
     def Program transformSCLToSCLControlflow(Program program) {
         val targetProgram = SCL.createProgram()
         
         targetProgram.setName(program.getName + "_tick")
         targetProgram.definitions.addAll(program.definitions.copyAll)
-        targetProgram.definitions.add(createVariableDefinition('GO', 'boolean'))
+        targetProgram.definitions.add(createVariableDefinition(RESETSIGNAL, 'boolean'))
         
         var List<BasicBlock> basicBlocks = program.statements.head.getAllBasicBlocks
 
@@ -162,7 +164,7 @@ class SCLToSeqSCLTransformation {
                     if (guard.isExitBlock) {
                         var Expression exitExp = createElementReferenceExpression(program.getDefinitionByName(guard.basicBlockName))
                         if (guard.isConditionalExitBlock && !guard.isConditionalExitBlockTrue) {
-                            exitExp = exitExp.addAndExpression(guard.getConditionalExpression.copy.negate.transformExpression(program, sourceProgram)).addParanthesizedExpression    
+                            exitExp = exitExp.addAndExpression(guard.getConditionalExpression.copy.transformExpression(program, sourceProgram)).addParanthesizedExpression    
                         } 
                         termExp = termExp.addOrExpression(exitExp)
                         handleExp = handleExp.addOrExpression(exitExp.copy)
@@ -200,7 +202,7 @@ class SCLToSeqSCLTransformation {
         var Expression guardExpression = null        
          if (predecessors.size==0) {
             val expression = SText.createElementReferenceExpression
-            expression.setReference(program.getDefinitionByName('GO'))
+            expression.setReference(program.getDefinitionByName(RESETSIGNAL))
             guardExpression = expression
         } else if (predecessors.size==1) {
             var predID = predecessors.head.getBasicBlockName
@@ -254,7 +256,7 @@ class SCLToSeqSCLTransformation {
         
         if (predecessors.size!=0 && basicBlock.isEqual(sourceProgram.statements.head.getBasicBlockByHead(false))) {
             val expression = SText.createElementReferenceExpression
-            expression.setReference(program.getDefinitionByName('GO'))
+            expression.setReference(program.getDefinitionByName(RESETSIGNAL))
             
             if (guardExpression instanceof LogicalOrExpression || guardExpression instanceof LogicalAndExpression) {
                 guardExpression = createParanthesizedExpression(guardExpression)

@@ -26,13 +26,13 @@ import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncTransition
 import java.util.ArrayList
 import javax.inject.Inject
-import org.yakindu.sct.model.sgraph.Event
 import org.yakindu.sct.model.sgraph.Region
 import org.yakindu.sct.model.sgraph.Statechart
 
 import de.cau.cs.kieler.yakindu.sccharts.coresccharts.xtend.SCCExtensions
 import java.util.List
 import java.util.EnumSet
+import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.SCLOptimizations
 
 /**
  * @author ssm
