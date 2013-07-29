@@ -187,6 +187,13 @@ class BasicBlockModifier implements IStyleModifier {
     
     override modify(StyleModificationContext context) {
         System::out.println("MODIFIED2!")
+        
+        val KShapeLayout layoutData = (context.layoutData as KShapeLayout);
+        if (layoutData.xpos == 0f && layoutData.ypos == 0) {
+            return false;
+        }
+
+        
         val style = context.getStyle()
         val KNode node = ModelingUtil::eContainerOfType(style, typeof(KNode))
         val rootNode = node.eContainer as KNode
