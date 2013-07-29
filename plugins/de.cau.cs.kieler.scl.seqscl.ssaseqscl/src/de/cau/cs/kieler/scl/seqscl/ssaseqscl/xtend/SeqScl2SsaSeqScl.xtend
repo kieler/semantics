@@ -87,8 +87,12 @@ class SeqScl2SsaSeqScl {
         
         //add all variables
         program.definitions.forEach[ definition |
-             
-            if(definition.input){
+            
+            if(definition.input && definition.output){
+              
+                targetProgram.definitions.add(definition.copy)       
+            }
+            else if(definition.input){
                 
                 //Inputs are read only, so there are no SSA form needed
                 targetProgram.definitions.add(definition.copy)
@@ -106,7 +110,7 @@ class SeqScl2SsaSeqScl {
                 targetProgram.definitions.add(definition.copy)      
             }
             else{
-                if(definition.name.equals("GO")){
+                if(definition.name.equals("RESET")){
                     //add the initial GO, in hardware it will be used as input
                     targetProgram.definitions.add(definition.copy)
                 }else{
@@ -158,14 +162,22 @@ class SeqScl2SsaSeqScl {
         var ssaIndexedVarName = ""
         
         //Inputs are read only, there are no SSA variables
-        if(program.getDefinitionByName(varName).input){
+        if(program.getDefinitionByName(varName).input && ! program.getDefinitionByName(varName).output){
             ssaIndexedVarName = varName
-        }else if(varName.equals("GO")){
+        }
+//        else if(program.getDefinitionByName(varName).input && program.getDefinitionByName(varName).output){
+//            
+//        }
+        else if(varName.equals("RESET")){
             ssaIndexedVarName = varName
         }else{
            //if the ssa index still -1 then there was no assignment until now, return the pre variable
            if(ssaIndexMap.get(varName) == -1){
-               ssaIndexedVarName = varName + "__" + 0
+               if(program.getDefinitionByName(varName).input){
+                   ssaIndexedVarName = varName
+               }else{
+                    ssaIndexedVarName = varName + "__" + 0
+               }
 
                 //create pre variable if is does not exist
                if( targetProgram.getDefinitionByName(ssaIndexedVarName) == null){
@@ -391,9 +403,18 @@ class SeqScl2SsaSeqScl {
             var oldSSAIndex = ssaIndexedMapSave.get(hmKey)
             var currentSSAIndex = ssaIndexMap.get(hmKey)
             
+            var oldSSAIndex2 = ""
+//            var currentSSAIndex2 = ""
+                  
             //If the old variable was never assigned, then take pre value (__0)
             if((oldSSAIndex == -1)){
-                oldSSAIndex = 0
+                val definition = program.getDefinitionByName(hmKey)
+                if(definition.input){
+                    //variable is input output, so take the 
+                    oldSSAIndex2 = ""
+                }else{
+                   oldSSAIndex2 = "__0"
+                }
             }
             
             if(!alreadyChecked.contains(hmKey)){
@@ -402,7 +423,7 @@ class SeqScl2SsaSeqScl {
 
                 val newAssignment = SCL.createAssignment()
                 newAssignment.assignment = createAssignmentExpression(targetProgram.getDefinitionByNameAsElemRef
-                    (hmKey + "__" + currentSSAIndex),targetProgram.getDefinitionByNameAsElemRef(hmKey + "__" + oldSSAIndex))
+                    (hmKey + "__" + currentSSAIndex),targetProgram.getDefinitionByNameAsElemRef(hmKey + oldSSAIndex2))
 
                 newCond.elseStatements.add(newAssignment.createStatement)                        
             }
