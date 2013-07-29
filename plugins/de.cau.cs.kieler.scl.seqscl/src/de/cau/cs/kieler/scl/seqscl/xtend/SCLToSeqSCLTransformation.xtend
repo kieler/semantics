@@ -88,7 +88,7 @@ class SCLToSeqSCLTransformation {
                 for (pred : predecessors) {
                     if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred) && !basicBlock.isParallelJoin) {ready = false}
                     if (basicBlock.isParallelJoin) {
-                        val guards = pred.getHead.basicBlocks.getSurfaces
+                        val guards = pred.getHead.directBasicBlocks.getSurfaces
                         for (guard : guards) {
                             if (basicBlockPool.containsEqual(guard)) { 
                                 ready = false;
@@ -129,6 +129,7 @@ class SCLToSeqSCLTransformation {
             }
         }
         
+        Debug("No blocks left in pool: Program seems to be schedulable!");
         targetProgram
     }
     
@@ -145,7 +146,7 @@ class SCLToSeqSCLTransformation {
                 val emptyExp = SText.createLogicalNotExpression;
                 val _parExp  = SText.createParenthesizedExpression
                 var Expression innerExp = null 
-                val guards = pred.getHead.basicBlocks;
+                val guards = pred.getHead.directBasicBlocks;
                 val surfaceGuards = guards.getSurfaces
                 val predID = surfaceGuards.head.basicBlockName;
                 innerExp = SText.createElementReferenceExpression as Expression
