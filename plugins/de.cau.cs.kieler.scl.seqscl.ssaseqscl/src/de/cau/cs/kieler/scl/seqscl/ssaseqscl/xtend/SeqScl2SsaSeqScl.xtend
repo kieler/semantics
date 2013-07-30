@@ -403,7 +403,7 @@ class SeqScl2SsaSeqScl {
             var oldSSAIndex = ssaIndexedMapSave.get(hmKey)
             var currentSSAIndex = ssaIndexMap.get(hmKey)
             
-            var oldSSAIndex2 = ""
+            var oldSSAIndex2 = "__" + oldSSAIndex.toString
 //            var currentSSAIndex2 = ""
                   
             //If the old variable was never assigned, then take pre value (__0)
@@ -416,6 +416,12 @@ class SeqScl2SsaSeqScl {
                    oldSSAIndex2 = "__0"
                 }
             }
+            
+            //create pre variable if is does not exist
+           if( targetProgram.getDefinitionByName(hmKey + oldSSAIndex2) == null){
+                targetProgram.definitions.add(createVariableDefinition(hmKey + oldSSAIndex2, 'boolean'))
+                ssaIndexMap.put(varName,0) 
+           }
             
             if(!alreadyChecked.contains(hmKey)){
                 //add current hashmap key to the visited ones
