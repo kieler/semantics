@@ -71,13 +71,13 @@ class SeqScl2SsaSeqScl {
             }
             //nothing to do with other types, because there are no other types
         ]
-
+        
         //Assign all Pre Values
         assignSSAPreValues(targetProgram, program)
         
         //Assign Outputs
         assingSSAVariableToOutput(targetProgram, program)
-        
+
         return targetProgram
     }
     
@@ -103,7 +103,7 @@ class SeqScl2SsaSeqScl {
                 //get a feedback loop in hardware including a flip flop (register)
                 targetProgram.definitions.add(definition.copy)
                 targetProgram.getDefinitionByName(definition.name).setOutput(false)
-                targetProgram.getDefinitionByName(definition.name).name = definition.name + "__" + 0
+                targetProgram.getDefinitionByName(definition.name).name = definition.name + "_pre"
                 
                 //original output definition is also needed
                 //that will be the hardware output pin
@@ -127,22 +127,22 @@ class SeqScl2SsaSeqScl {
 
         val stmList = createNewStatementList
         
-        //create an assignment for every definition that has a '__0'
+        //create an assignment for every definition that has a '_0'
         targetProgram.definitions.forEach[ definition |
             
             val varName = definition.name
             
-            if(varName.contains("__0")){
+            if(definition.output && !definition.input){
                 
-                //get the hashmap key, the key has no '__x' extension
-                val hmKey = varName.subSequence(0,varName.indexOf("__")).toString
+                //get the hashmap key, the key has no '_x' extension
+//                val hmKey = varName.subSequence(0,varName.indexOf("_pre")).toString
                 
                 //get the latest assignment
-                val lastSSAIndexedVariable = getLastSSAIndexedVariableName(targetProgram, program, hmKey, ssaIndexMap)
+                val lastSSAIndexedVariable = getLastSSAIndexedVariableName(targetProgram, program, definition.name, ssaIndexMap)
                 
-                //assign the latest assignment to the pre value ('__0')
+                //assign the latest assignment to the pre value ('_0')
                 val assignment = SCL.createAssignment()
-                val assignmentExp = createAssignmentExpression(targetProgram.getDefinitionByNameAsElemRef(varName),
+                val assignmentExp = createAssignmentExpression(targetProgram.getDefinitionByNameAsElemRef(varName + "_pre"),
                     targetProgram.getDefinitionByNameAsElemRef(lastSSAIndexedVariable))
                 assignment.assignment = assignmentExp
 
@@ -176,17 +176,21 @@ class SeqScl2SsaSeqScl {
                if(program.getDefinitionByName(varName).input){
                    ssaIndexedVarName = varName
                }else{
-                    ssaIndexedVarName = varName + "__" + 0
+                   if(varName.contains("_pre")){
+                       ssaIndexedVarName = varName
+                   }else{
+                        ssaIndexedVarName = varName + "_pre"
+                   }
                }
 
                 //create pre variable if is does not exist
                if( targetProgram.getDefinitionByName(ssaIndexedVarName) == null){
                     targetProgram.definitions.add(createVariableDefinition(ssaIndexedVarName, 'boolean'))
-                    ssaIndexHashmap.put(varName,0) 
+                    ssaIndexHashmap.put(varName,-1) 
                }                
            }else{
                //return the last assignment
-               ssaIndexedVarName = varName + "__" + ssaIndexHashmap.get(varName)
+               ssaIndexedVarName = varName + "_" + ssaIndexHashmap.get(varName)
            }
         }
         
@@ -211,19 +215,33 @@ class SeqScl2SsaSeqScl {
         // --------------------------------------
         
         //get last SSA index
-        var int varSSAIndex = ssaIndexMap.get(vardef.name)
-        if(varSSAIndex == -1){
-            // if the index is lower than 0 than only the preValue __0 exists
+        var int varSSAIndex
+        var stringIndex = ""  
+        if(ssaIndexMap.get(vardef.name) == -1){
+            // if the index is lower than 0 than only the preValue _0 exists
             // for the new Variable change index to 1
-            varSSAIndex = 1
+            if(vardef.name.contains("_pre")){
+                varSSAIndex = -1
+                stringIndex = ""
+            }else{
+                varSSAIndex = 1
+                stringIndex = "_1"
+            }
         }else{
-            //Index is higher 0, just take the next higher one
-            varSSAIndex = varSSAIndex + 1
+            if(vardef.name.contains("_pre")){
+                stringIndex = ""
+                varSSAIndex = -1
+            }else{
+                //Index is higher 0, just take the next higher one
+                varSSAIndex = ssaIndexMap.get(vardef.name) + 1
+                stringIndex = "_" + varSSAIndex.toString
+            }
         }
                 
-        //create new variable with ssa index
-        val newSSAIndexedVariable = vardef.name + "__" + varSSAIndex
-        targetProgram.definitions.add(createVariableDefinition(newSSAIndexedVariable, 'boolean'))
+        //create new variable with ssa index, if it does not exist
+        val newSSAIndexedVariable = vardef.name + stringIndex
+        if(targetProgram.getDefinitionByNameAsElemRef(newSSAIndexedVariable) != null)
+            targetProgram.definitions.add(createVariableDefinition(newSSAIndexedVariable, 'boolean'))
           
         // --------------------------------------        
         // Compute right Operator Expression
@@ -245,8 +263,8 @@ class SeqScl2SsaSeqScl {
             (newAssignmentExpression.expression as ElementReferenceExpression).reference = targetProgram.getDefinitionByName(ssaVariable)
         }
            
-        //save current index here, because g2 = g2 || true should result in g2__1 = g2__0 || true
-        //if you assign it earlier it results in g2__1 = g2__1 || true that is false
+        //save current index here, because g2 = g2 || true should result in g2_1 = g2_0 || true
+        //if you assign it earlier it results in g2_1 = g2_1 || true that is false
         ssaIndexMap.put(vardef.name,varSSAIndex)   
            
         //Create new Assignment statement
@@ -384,7 +402,7 @@ class SeqScl2SsaSeqScl {
 // optimized second Version, here only the variables inside the true case are checked 
 //    
         //Variables could be assign more than one time in the true statement sequence(g1 = true; g1 = false),
-        //so only compute one phi function for one all assignments (definition g1__1, g1__2) 
+        //so only compute one phi function for one all assignments (definition g1_1, g1_2) 
         val alreadyChecked = new ArrayList<String>
         
         newCond.statements.forEach[ stm |
@@ -393,27 +411,27 @@ class SeqScl2SsaSeqScl {
                 as ElementReferenceExpression).reference as VariableDefinition).name
             
             var hmKey = "" 
-            if(varName.contains("__")){
-                hmKey = varName.subSequence(0,varName.indexOf("__")).toString
+            if(varName.contains("_")){
+                hmKey = varName.subSequence(0,varName.lastIndexOf("_")).toString
             }else{
-                //if it contains no '__' then it is an input/output variable
+                //if it contains no '_' then it is an input/output variable
                 hmKey = varName
             }
             
             var currentSSAIndex = ssaIndexMap.get(hmKey)
 //            var oldSSAIndex = ssaIndexedMapSave.get(hmKey)
 //            
-//            var oldSSAIndex2 = "__" + oldSSAIndex.toString
+//            var oldSSAIndex2 = "_" + oldSSAIndex.toString
 ////            var currentSSAIndex2 = ""
 //                  
-//            //If the old variable was never assigned, then take pre value (__0)
+//            //If the old variable was never assigned, then take pre value (_0)
 //            if((oldSSAIndex == -1)){
 //                val definition = program.getDefinitionByName(hmKey)
 //                if(definition.input){
 //                    //variable is input output, so take the 
 //                    oldSSAIndex2 = ""
 //                }else{
-//                   oldSSAIndex2 = "__0"
+//                   oldSSAIndex2 = "_0"
 //                }
 //            }
 //            
@@ -431,7 +449,7 @@ class SeqScl2SsaSeqScl {
 
                 val newAssignment = SCL.createAssignment()
                 newAssignment.assignment = createAssignmentExpression(targetProgram.getDefinitionByNameAsElemRef
-                    (hmKey + "__" + currentSSAIndex),targetProgram.getDefinitionByNameAsElemRef(oldSSAIndexVariable))
+                    (hmKey + "_" + currentSSAIndex),targetProgram.getDefinitionByNameAsElemRef(oldSSAIndexVariable))
 
                 newCond.elseStatements.add(newAssignment.createStatement)                        
             }
@@ -456,19 +474,19 @@ class SeqScl2SsaSeqScl {
         val elseStms = stms.statements
         
         //Variables could be assign more than one time in the true statement sequence(g1 = true; g1 = false),
-        //so only compute one phi function for one all assignments (definition g1__1, g1__2) 
+        //so only compute one phi function for one all assignments (definition g1_1, g1_2) 
         val alreadyChecked = new ArrayList<String>
         
         //check, for which variables a phi function must be computed  
         targetProgram.definitions.forEach[ definition |
             
-            //Compute hashmap key, the hashmap key is the variable name without '__' extension
+            //Compute hashmap key, the hashmap key is the variable name without '_' extension
             var hmKey = "" 
             val name = definition.name
-            if(name.contains("__")){
-                hmKey = name.subSequence(0,name.indexOf("__")).toString
+            if(name.contains("_")){
+                hmKey = name.subSequence(0,name.lastIndexOf("_")).toString
             }else{
-                //if it contains no '__' then it is an input/output variable
+                //if it contains no '_' then it is an input/output variable
                 hmKey = name
             }
                         
@@ -482,13 +500,13 @@ class SeqScl2SsaSeqScl {
                     //add current hashmap key to the visited ones
                     alreadyChecked.add(hmKey)
                                         
-                    //If the old variable was never assigned, then take pre value (__0)
+                    //If the old variable was never assigned, then take pre value (_0)
                     if((oldSSAIndex == -1)){
                         oldSSAIndex = 0
                     }
                     
                     //create the to possible assignments from the phi function
-                    val falsePhiAssignment = createSCLAssignment(targetProgram.getDefinitionByName(hmKey + "__" + currentSSAIndex),targetProgram.getDefinitionByName(hmKey + "__" + oldSSAIndex))
+                    val falsePhiAssignment = createSCLAssignment(targetProgram.getDefinitionByName(hmKey + "_" + currentSSAIndex),targetProgram.getDefinitionByName(hmKey + "_" + oldSSAIndex))
                     
                     //add them to the conditional
                     elseStms.add(falsePhiAssignment.createStatement)
@@ -517,19 +535,19 @@ class SeqScl2SsaSeqScl {
         tempHm.putAll(currentHm)
         
         //Variables could be assign more than one time in the true statement sequence(g1 = true; g1 = false),
-        //so only compute one phi function for one all assignments (definition g1__1, g1__2) 
+        //so only compute one phi function for one all assignments (definition g1_1, g1_2) 
         val alreadyChecked = new ArrayList<String>
         
         //check, for which variables a phi function must be computed  
         tempDefinitions.forEach[ definition |
             
-            //Compute hashmap key, the hashmap key is the variable name without '__' extension
+            //Compute hashmap key, the hashmap key is the variable name without '_' extension
             var hmKey = "" 
             val name = definition.name
-            if(name.contains("__")){
-                hmKey = name.subSequence(0,name.indexOf("__")).toString
+            if(name.contains("_")){
+                hmKey = name.subSequence(0,name.lastIndexOf("_")).toString
             }else{
-                //if it contains no '__' then it is an input/output variable
+                //if it contains no '_' then it is an input/output variable
                 hmKey = name
             }
                         
@@ -546,17 +564,17 @@ class SeqScl2SsaSeqScl {
                     //create new variable (new ssa index)
                     val int ssaIndex = currentSSAIndex + 1
                     currentHm.put(hmKey,ssaIndex)
-                    val phiVariable = hmKey + "__" + ssaIndex
+                    val phiVariable = hmKey + "_" + ssaIndex
                     targetProgram.definitions.add(createVariableDefinition(phiVariable, 'boolean'))
                     
-                    //If the old variable was never assigned, then take pre value (__0)
+                    //If the old variable was never assigned, then take pre value (_0)
                     if((oldSSAIndex == -1)){
                         oldSSAIndex = 0
                     }
                     
                     //create the to possible assignments from the phi function
-                    val truePhiAssignment = createSCLAssignment(targetProgram.getDefinitionByName(phiVariable),targetProgram.getDefinitionByName(hmKey + "__" + currentSSAIndex))
-                    val falsePhiAssignment = createSCLAssignment(targetProgram.getDefinitionByName(phiVariable),targetProgram.getDefinitionByName(hmKey + "__" + oldSSAIndex))
+                    val truePhiAssignment = createSCLAssignment(targetProgram.getDefinitionByName(phiVariable),targetProgram.getDefinitionByName(hmKey + "_" + currentSSAIndex))
+                    val falsePhiAssignment = createSCLAssignment(targetProgram.getDefinitionByName(phiVariable),targetProgram.getDefinitionByName(hmKey + "_" + oldSSAIndex))
                     
                     //add them to the conditional
                     phiFunc.statements.add(truePhiAssignment.createStatement)
