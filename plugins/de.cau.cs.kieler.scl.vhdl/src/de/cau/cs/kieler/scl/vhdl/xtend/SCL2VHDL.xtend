@@ -56,6 +56,14 @@ import org.eclipse.emf.common.util.EList
 import java.io.File
 import org.eclipse.emf.common.util.URI
 import de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension
+import java.util.HashMap
+import org.eclipse.emf.common.util.EList
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
+import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
+import de.cau.cs.kieler.scl.extensions.SCLCreateExtensions
+import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 
 /**
  * Transformation of SCL code into VHDL code.
@@ -66,7 +74,15 @@ class SCL2VHDL {
     
      extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
          Guice::createInjector().getInstance(typeof(VHDLExtension))
-         
+     extension de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions SCLFactoryExtensions = 
+         Guice::createInjector().getInstance(typeof(SCLFactoryExtensions))
+     extension de.cau.cs.kieler.scl.extensions.SCLCreateExtensions SCLCreateExtensions = 
+         Guice::createInjector().getInstance(typeof(SCLCreateExtensions))
+     extension de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions SCLExpressionExtensions = 
+         Guice::createInjector().getInstance(typeof(SCLExpressionExtensions))
+     extension de.cau.cs.kieler.scl.extensions.SCLStatementExtensions SCLStatementExtensions = 
+         Guice::createInjector().getInstance(typeof(SCLStatementExtensions))
+             
     String modelname
     
     // General method to create the c simulation interface.
@@ -128,7 +144,8 @@ class SCL2VHDL {
    
    def generateCode(Program program, String modelname){
        
-       //Get Input and Output from Model
+    //Get Input and Output from Model
+    val modelInOutsHm = new HashMap<String,String>()
     val modelInputs = new ArrayList<Variables>
     val modelOutputs = new ArrayList<Variables>
     val modelLocalVariables = new ArrayList<Variables>
@@ -136,14 +153,30 @@ class SCL2VHDL {
     val name = modelname
     val vars = program.definitions
     
-    vars.forEach[ variable | 
-        if(variable.input)                      
+    val newVariables = new ArrayList<VariableDefinition> 
+    
+    vars.forEach[ variable |        
+        if(variable.input && variable.output){
+            
+            val vari = variable.copy 
+            variable.setName(vari.name)
+            modelInputs.add(createVariableFromModel(vari, true, false))
+            newVariables.add(vari)
+            
+            val variableOutName = variable.name + "_out"
+            variable.setName(variableOutName)
+            modelOutputs.add(createVariableFromModel(variable, true, true))
+            modelInOutsHm.put(variable.name,variableOutName)
+        }
+        else if(variable.input)                      
              modelInputs.add(createVariableFromModel(variable, true, false)) 
-        if(variable.output)                   
+        else if(variable.output)                   
              modelOutputs.add(createVariableFromModel(variable, false, true)) 
-        if(!(variable.input || variable.output))
+        else if(!(variable.input || variable.output))
              modelLocalVariables.add(createVariableFromModel(variable, false, false)) 
         ]
+        
+        program.definitions.addAll(newVariables)
              
     '''
     «generateEntity(modelInputs, modelOutputs, name)»
@@ -164,15 +197,15 @@ class SCL2VHDL {
         wait until rising_edge(tick);
         if(reset = true) then
                 
-            «setAllLocalVariables(modelInputs,false)» 
+            «setAllLocalVariables(modelInputs,false)»
             «setAllLocalVariables(modelOutputs,false)»
             «setAllLocalVariables(modelLocalVariables,false)»
         end if;
             
         --update local variables
         «signalToVariable(modelInputs)»
-        GO_int := reset;
-        «setAllLocalVariables(modelOutputs,false)»
+        reset_int := reset;
+«««        «setAllLocalVariables(modelOutputs,false)»
     
         --main program
         «generateMainProcess(program.statements)»
@@ -220,7 +253,18 @@ class SCL2VHDL {
 
     def variableToSignal(ArrayList<Variables> variables) { 
         
-        val localVar = variables.map(lVar | '''«lVar.name» <= «lVar.name»_int;''').join('\n')
+        val localVar = variables.map[lVar | 
+        
+            // is it an input output variable
+            if(lVar.input && lVar.output){
+                //yes, set the output from such variable
+                var originalName = lVar.name.subSequence(0,lVar.name.indexOf("_out")).toString
+                '''«lVar.name» <= «originalName»_int;'''
+            }else{
+                '''«lVar.name» <= «lVar.name»_int;'''
+            }
+            
+        ].join('\n')
         
         //else must be an empty String, when not null is written into the file
         if(!(localVar.nullOrEmpty))
@@ -361,7 +405,7 @@ class SCL2VHDL {
 
    //not used
    def dispatch expand(Expression exp) {
-    '''«exp.toString»'''
+    '''«exp.expand»'''
    }  
    
    //not used     
@@ -374,7 +418,9 @@ class SCL2VHDL {
     '''
         if («condExp.condition.expand») then
             «condExp.trueCase.expand»
-        «if(condExp.falseCase != null){'''else«condExp.falseCase.expand»'''}»
+        else
+            «condExp.falseCase.expand»
+«««        «if(condExp.falseCase != null){'''else«condExp.falseCase.expand»'''}»
         end if;
     '''
    }
@@ -390,6 +436,7 @@ class SCL2VHDL {
    def dispatch expand(Conditional cond) {
         '''if («cond.expression.expand») then
               «cond.statements.map(stm | stm.expand).join('\n')»
+              «if(!cond.elseStatements.nullOrEmpty){"else\n" + cond.elseStatements.map(stm | stm.expand).join('\n')}»
             end if;'''
    }
    
