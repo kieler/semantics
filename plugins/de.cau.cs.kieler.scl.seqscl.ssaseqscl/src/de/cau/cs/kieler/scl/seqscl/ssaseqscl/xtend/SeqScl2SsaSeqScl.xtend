@@ -138,7 +138,7 @@ class SeqScl2SsaSeqScl {
                 val hmKey = varName.subSequence(0,varName.indexOf("__")).toString
                 
                 //get the latest assignment
-                val lastSSAIndexedVariable = getLastSSAIndexedVariableName(targetProgram, program, hmKey)
+                val lastSSAIndexedVariable = getLastSSAIndexedVariableName(targetProgram, program, hmKey, ssaIndexMap)
                 
                 //assign the latest assignment to the pre value ('__0')
                 val assignment = SCL.createAssignment()
@@ -157,7 +157,7 @@ class SeqScl2SsaSeqScl {
 
     //---------------------------------------------------------------------------------------------
     //returns the SSA name of the last assignment
-    def getLastSSAIndexedVariableName(Program targetProgram, Program program, String varName){
+    def getLastSSAIndexedVariableName(Program targetProgram, Program program, String varName, HashMap<String,Integer> ssaIndexHashmap){
         
         var ssaIndexedVarName = ""
         
@@ -172,7 +172,7 @@ class SeqScl2SsaSeqScl {
             ssaIndexedVarName = varName
         }else{
            //if the ssa index still -1 then there was no assignment until now, return the pre variable
-           if(ssaIndexMap.get(varName) == -1){
+           if(ssaIndexHashmap.get(varName) == -1){
                if(program.getDefinitionByName(varName).input){
                    ssaIndexedVarName = varName
                }else{
@@ -182,11 +182,11 @@ class SeqScl2SsaSeqScl {
                 //create pre variable if is does not exist
                if( targetProgram.getDefinitionByName(ssaIndexedVarName) == null){
                     targetProgram.definitions.add(createVariableDefinition(ssaIndexedVarName, 'boolean'))
-                    ssaIndexMap.put(varName,0) 
+                    ssaIndexHashmap.put(varName,0) 
                }                
            }else{
                //return the last assignment
-               ssaIndexedVarName = varName + "__" + ssaIndexMap.get(varName)
+               ssaIndexedVarName = varName + "__" + ssaIndexHashmap.get(varName)
            }
         }
         
@@ -236,12 +236,12 @@ class SeqScl2SsaSeqScl {
             //set all variable usages in the right operand to new SSA variable
             newAssignmentExpression.expression.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[eRefExp |
                   val varName = (eRefExp.reference as VariableDefinition).name
-                  val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName)
+                  val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)
                   eRefExp.reference = targetProgram.getDefinitionByName(ssaVariable)
             ]
         }else{ //right operator is only a variable expression, set this one to the current SSA index
             val varName = ((newAssignmentExpression.expression as ElementReferenceExpression).reference as VariableDefinition).name
-            val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName)
+            val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)
             (newAssignmentExpression.expression as ElementReferenceExpression).reference = targetProgram.getDefinitionByName(ssaVariable)
         }
            
@@ -324,12 +324,12 @@ class SeqScl2SsaSeqScl {
             //set all variable usages in the condition expression to the latest SSA variable
             newCondExp.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[exp |
                   val varName = (exp.reference as VariableDefinition).name
-                  val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName)                    
+                  val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)                    
                   exp.reference = targetProgram.getDefinitionByName(ssaVariable)
             ]
             }else{ //conditional expression has only one variable expression
                 val varName = ((newCondExp as ElementReferenceExpression).reference as VariableDefinition).name
-                val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName)
+                val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)
                 (newCondExp as ElementReferenceExpression).reference = targetProgram.getDefinitionByName(ssaVariable)
             }
        
@@ -400,28 +400,30 @@ class SeqScl2SsaSeqScl {
                 hmKey = varName
             }
             
-            var oldSSAIndex = ssaIndexedMapSave.get(hmKey)
             var currentSSAIndex = ssaIndexMap.get(hmKey)
+//            var oldSSAIndex = ssaIndexedMapSave.get(hmKey)
+//            
+//            var oldSSAIndex2 = "__" + oldSSAIndex.toString
+////            var currentSSAIndex2 = ""
+//                  
+//            //If the old variable was never assigned, then take pre value (__0)
+//            if((oldSSAIndex == -1)){
+//                val definition = program.getDefinitionByName(hmKey)
+//                if(definition.input){
+//                    //variable is input output, so take the 
+//                    oldSSAIndex2 = ""
+//                }else{
+//                   oldSSAIndex2 = "__0"
+//                }
+//            }
+//            
+//            //create pre variable if is does not exist
+//           if( targetProgram.getDefinitionByName(hmKey + oldSSAIndex2) == null){
+//                targetProgram.definitions.add(createVariableDefinition(hmKey + oldSSAIndex2, 'boolean'))
+//                ssaIndexMap.put(varName,0) 
+//           }
             
-            var oldSSAIndex2 = "__" + oldSSAIndex.toString
-//            var currentSSAIndex2 = ""
-                  
-            //If the old variable was never assigned, then take pre value (__0)
-            if((oldSSAIndex == -1)){
-                val definition = program.getDefinitionByName(hmKey)
-                if(definition.input){
-                    //variable is input output, so take the 
-                    oldSSAIndex2 = ""
-                }else{
-                   oldSSAIndex2 = "__0"
-                }
-            }
-            
-            //create pre variable if is does not exist
-           if( targetProgram.getDefinitionByName(hmKey + oldSSAIndex2) == null){
-                targetProgram.definitions.add(createVariableDefinition(hmKey + oldSSAIndex2, 'boolean'))
-                ssaIndexMap.put(varName,0) 
-           }
+            val oldSSAIndexVariable = getLastSSAIndexedVariableName(targetProgram, program, hmKey, ssaIndexedMapSave)
             
             if(!alreadyChecked.contains(hmKey)){
                 //add current hashmap key to the visited ones
@@ -429,7 +431,7 @@ class SeqScl2SsaSeqScl {
 
                 val newAssignment = SCL.createAssignment()
                 newAssignment.assignment = createAssignmentExpression(targetProgram.getDefinitionByNameAsElemRef
-                    (hmKey + "__" + currentSSAIndex),targetProgram.getDefinitionByNameAsElemRef(hmKey + oldSSAIndex2))
+                    (hmKey + "__" + currentSSAIndex),targetProgram.getDefinitionByNameAsElemRef(oldSSAIndexVariable))
 
                 newCond.elseStatements.add(newAssignment.createStatement)                        
             }
@@ -576,7 +578,7 @@ class SeqScl2SsaSeqScl {
             if(definition.output){
                 
                 //get the last assignment               
-                val lastAssignment = getLastSSAIndexedVariableName(targetProgram, program, definition.name)
+                val lastAssignment = getLastSSAIndexedVariableName(targetProgram, program, definition.name, ssaIndexMap)
                       
                 //create the assignment to the output variable
                 val assignment = SCL.createAssignment()
