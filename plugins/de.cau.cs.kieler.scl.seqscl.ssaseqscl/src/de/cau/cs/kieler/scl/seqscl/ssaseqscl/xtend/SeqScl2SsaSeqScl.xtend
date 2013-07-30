@@ -345,11 +345,11 @@ class SeqScl2SsaSeqScl {
                   val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)                    
                   exp.reference = targetProgram.getDefinitionByName(ssaVariable)
             ]
-            }else{ //conditional expression has only one variable expression
-                val varName = ((newCondExp as ElementReferenceExpression).reference as VariableDefinition).name
-                val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)
-                (newCondExp as ElementReferenceExpression).reference = targetProgram.getDefinitionByName(ssaVariable)
-            }
+        }else{ //conditional expression has only one variable expression
+            val varName = ((newCondExp as ElementReferenceExpression).reference as VariableDefinition).name
+            val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)
+            (newCondExp as ElementReferenceExpression).reference = targetProgram.getDefinitionByName(ssaVariable)
+        }
        
         //Safe Hashmap to see the changes which were made in the true case from the conditional
         val ssaIndexedMapSave = new HashMap<String,Integer>()
