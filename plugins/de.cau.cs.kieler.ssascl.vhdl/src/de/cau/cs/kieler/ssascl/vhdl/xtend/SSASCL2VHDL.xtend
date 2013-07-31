@@ -48,6 +48,8 @@ import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
 import de.cau.cs.kieler.scl.extensions.SCLCreateExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import java.util.HashMap
 
 class SSASCL2VHDL {
     
@@ -99,7 +101,6 @@ class SSASCL2VHDL {
        «/* Generate the tick function */»
        «generateCode(program, modelname)»
        
-       «generateHeader()»
        '''
     }
     
@@ -139,44 +140,58 @@ class SSASCL2VHDL {
         
     val name = modelname
     val vars = program.definitions
+    val newVariables = new ArrayList<VariableDefinition>
     
-    vars.forEach[ variable | 
-        if(variable.input)                      
+    vars.forEach[ variable |        
+        if(variable.input && variable.output){
+            
+            val vari = variable.copy 
+//            vari.setOutput(false)
+            modelInputs.add(createVariableFromModel(vari, true, false))
+            newVariables.add(vari)
+            
+            val variableOutName = variable.name + "_out"
+//            variable.setInput(false)
+            variable.setName(variableOutName)
+            modelOutputs.add(createVariableFromModel(variable, true, true))
+        }
+        else if(variable.input)                      
              modelInputs.add(createVariableFromModel(variable, true, false)) 
-        if(variable.output)                   
+        else if(variable.output)                   
              modelOutputs.add(createVariableFromModel(variable, false, true)) 
-        if(!(variable.input || variable.output))
-             modelLocalVariables.add(createVariableFromModel(variable, false, false)) 
+        else if(!(variable.input || variable.output))
+            if(!variable.name.equals("RESET"))
+                modelLocalVariables.add(createVariableFromModel(variable, false, false)) 
         ]
-             
+        program.definitions.addAll(newVariables)     
     '''
     «generateEntity(modelInputs, modelOutputs, name)»
     
     ARCHITECTURE behavior OF «name» IS
     
-    --signal declaration
-    signal entry_int : boolean := false;
+«««    --signal declaration  ---> is done via reset signal
+«««    signal entry_int : boolean := false;
     
-    --local in/out Signals
-    «genarateLocalVariables(modelInputs)»
-    «genarateLocalVariables(modelOutputs)»
+«««    --local in/out Signals
+«««    «genarateLocalVariables(modelInputs)»
+«««    «genarateLocalVariables(modelOutputs)»
     --local signals
     «genarateLocalVariables(modelLocalVariables)»
     
     begin
 
-        --update local signals
-        «signalToVariable(modelInputs)»
-        GO_int <= entry_int;
+«««        --update local signals ---> is not nedded use directly inputs
+«««        «signalToVariable(modelInputs)»
+«««        reset_int <= entry_int;
         
         --main program
         «generateMainProcess(program.statements,program)»
     
-        --set outputs
-        «intSignalToSignal(modelOutputs)»
-        
-        --tick process
-        «generateInitialTickProcess()»
+«««        --set outputs ---> not needed allready defined in SSA SCL
+«««        «intSignalToSignal(modelOutputs)»
+«««        
+«««        --tick process ---> not needed, is done via reset signal
+«««        «generateInitialTickProcess()»
         
         --generate Flips Flops
         «generateFlipFlops()»
@@ -188,11 +203,9 @@ class SSASCL2VHDL {
 
         '''
             flipflop: process
-            
-            
             begin
             wait until rising_edge(tick);
-                if(reset = '1') then
+                if(reset = true) then
                    «ffList.map[ instr |
                    val ass = instr.instruction as Assignment 
                    val assExp = ass.assignment as AssignmentExpression
@@ -204,12 +217,18 @@ class SSASCL2VHDL {
                     
                 ].join('\n')»
                 else
-                    «ffList.map[ ass | 
-                        '''«ass.expand»'''
-                    ].join('\n')»
+                   «ffList.map[ instr | 
+                        val varleft = (((instr.instruction.asAssignment.assignment as 
+                            AssignmentExpression).varRef as ElementReferenceExpression).reference) 
+                            as VariableDefinition
+                        val varright = (((instr.instruction.asAssignment.assignment as 
+                            AssignmentExpression).expression as ElementReferenceExpression).reference) 
+                            as VariableDefinition
+                        
+                        '''«varleft.name» <= «varright.name»;'''
+                   ].join('\n')»
                 end if;
             end process;
-            «generateHeader()»
         '''  
     }
    
@@ -223,7 +242,7 @@ class SSASCL2VHDL {
 
         begin
             wait until rising_edge(tick);
-            if(reset = '1') then
+            if(reset = true) then
                 u_notInitial := false;
                 u_notInitialDetect := true;
                 u_entry := false;
@@ -241,7 +260,7 @@ class SSASCL2VHDL {
 
     def genarateLocalVariables(ArrayList<Variables> variables) { 
         
-        val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"_int")»''').join('\n')
+        val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"")»''').join('\n')
         
         //else must be an empty String, when not null is written into the file
         if(!(localVar.nullOrEmpty))
@@ -284,17 +303,17 @@ class SSASCL2VHDL {
         
         vhdlCode = ''''''
         
-        stmList.forEach[stm | 
+        vhdlCode = stmList.map[stm | 
             
             if(stm.assignment){
                 val instr = stm.getInstruction 
                 val ass = instr as Assignment
-                vhdlCode = vhdlCode + (ass).transformAssignmentToVHDL(program).toString
+                '''«(ass).transformAssignmentToVHDL(program)»'''
             }
             else if(stm.conditional){
-                
+                '''«stm.expand»'''
             }
-        ]
+        ].join('\n')
         
         return vhdlCode
     }
@@ -309,16 +328,35 @@ class SSASCL2VHDL {
         val vardef = elemRefExp.reference as VariableDefinition
         val varName = vardef.name
         
-        if(varName.endsWith("0")){
+        if(varName.endsWith("_pre")){
             
             //it is an pre value, this assignment will be a ff later
-            ffList.add(assignment.createStatement)
+            ffList.add(assignment.copy.createStatement)
             //not longer needed
-            program.statements.remove(assignment)
+//            program.statements.remove(assignment)
         }else{
 
             //found normal assignment
-            vhdlCode = assignment.expand
+//            vhdlCode = assignment.expand + ";"
+            
+            var leftVar = ""
+            var rightVar = ''''''
+            
+            if(vardef.input && vardef.output){
+                leftVar = vardef.name + "_out"
+            }else{
+                leftVar = vardef.name
+            }
+            
+            if(!(assExp.expression instanceof ElementReferenceExpression)){
+                 rightVar = assExp.expression.expand
+            }else{ 
+                val vari = ((assExp.expression as ElementReferenceExpression).reference as VariableDefinition)
+                rightVar = vari.name
+            }
+            
+            vhdlCode = leftVar + " <= " + rightVar + ";"
+            
         }
         
         return vhdlCode
@@ -335,18 +373,65 @@ class SSASCL2VHDL {
    // Expand an conditional statement
    def dispatch expand(Conditional cond) {
 
-       var ifstm = ''''''
-
-       ifstm = ifstm + cond.statements.map( stm | '''«stm.expand» WHEN «cond.expression.expand»''').join(';\n')
-   
-       if(!(cond.elseStatements.nullOrEmpty))
-            ifstm = ifstm + ';\n' 
-        else 
-            ifstm = ifstm + '' 
-            
-       ifstm = ifstm + cond.elseStatements.map( stm | '''«stm.expand» WHEN not «cond.expression.expand»''').join(';\n')
+//       var ifstm = ''''''
+//
+//       ifstm = ifstm + cond.statements.map( stm | '''«stm.expand» WHEN «cond.expression.expand»;''').join('\n')
+//   
+////       if(!(cond.elseStatements.nullOrEmpty))
+////            ifstm = ifstm + ';\n' 
+////        else 
+////            ifstm = ifstm + '' 
+//       ifstm = ifstm + '\n'
+//            
+//       ifstm = ifstm + cond.elseStatements.map( stm | '''«stm.expand» WHEN not «cond.expression.expand»;''').join('\n')
        
-       return ifstm
+//              
+       
+       
+//       cond.statements.forEach[ stm | 
+//           
+//           val vari = (((stm.instruction.asAssignment.assignment as AssignmentExpression).varRef) as VariableDefinition)
+//           vari.name
+//           
+//       ].join('\n')
+       
+       
+       
+//       '''if («cond.expression.expand») then
+//              «cond.statements.map(stm | stm.expand).join('\n')»
+//              «if(!cond.elseStatements.nullOrEmpty){"else\n" + cond.elseStatements.map(stm | stm.expand).join('\n')}»
+//            end if;'''
+      
+      val conditionString = cond.expression.expand
+      
+      val trueCaseHm = new HashMap<String, Expression>
+      cond.statements.forEach[ stm | 
+          val vari = ((((stm.instruction.asAssignment.assignment as AssignmentExpression).varRef) as ElementReferenceExpression).reference) as VariableDefinition
+          val exp =  (stm.instruction.asAssignment.assignment as AssignmentExpression).expression.copy
+          trueCaseHm.put(vari.name, exp)
+      ]
+      
+      val bla = cond.elseStatements.map[ stm |
+          val vari = ((((stm.instruction.asAssignment.assignment as AssignmentExpression).varRef) as ElementReferenceExpression).reference) as VariableDefinition
+          val falseExp =  (stm.instruction.asAssignment.assignment as AssignmentExpression).expression.copy
+          val trueExp = trueCaseHm.get(vari.name)
+          trueCaseHm.remove(vari.name)
+          
+          if(trueExp != null){
+              '''«vari.name» <= «trueExp.expand» WHEN «conditionString» ELSE «falseExp.expand»;'''
+          }else{
+              //No matching true expression, transform only false case
+              '''«vari.name» <= «falseExp.expand» WHEN not «conditionString»»;'''
+          }         
+      ].join('\n')
+       
+       //If there are any assignments left in true case?
+          if(trueCaseHm.size > 0){
+              println("assignments left")
+          }
+       
+      return bla 
+
             
    }
    
@@ -377,7 +462,8 @@ class SSASCL2VHDL {
    
    // Expand a Variable Declaration, all internal signals have an "_int" at the end
    def dispatch expand(VariableDefinition vari) {
-    '''«vari.name»_int'''
+//    '''«if(vari.input && vari.output)vari.name + "_out" else if(vari.input) vari.name + "_int"  else vari.name»'''
+        vari.name
    }
    
    // Expand a Primitive Value Expression
