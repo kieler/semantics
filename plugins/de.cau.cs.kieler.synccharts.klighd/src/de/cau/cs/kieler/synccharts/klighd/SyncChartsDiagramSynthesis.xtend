@@ -85,24 +85,16 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     extension KColorExtensions
     
     private static val TransformationOption SHOW_LABELS
-        = TransformationOption::createCheckOption("Show transition labels", true);
+        = TransformationOption::createCheckOption("Transition labels", false);
         
     private static val TransformationOption SHOW_PRIORITY_LABELS
-        = TransformationOption::createCheckOption("Show transition priorities", false);
+        = TransformationOption::createCheckOption("Transition priorities", false);
 
     private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
-        = TransformationOption::createCheckOption("Show signal declarations", false);
+        = TransformationOption::createCheckOption("Signal declarations", false);
 
-// some options for testing purposes        
-//    private static val TransformationOption TEST
-//        = TransformationOption::createChoiceOption("TEST", ImmutableList.of("A", "B", "C"), "A");
-//    
-//    private static val TransformationOption TEST2
-//        = TransformationOption::createRangeOption("TEST2", Pair::of(0,100f), 30f);
-    
     override public getTransformationOptions() {
         return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS, SHOW_SIGNAL_DECLARATIONS);
-//        return ImmutableSet::of(SHOW_LABELS, TEST, SHOW_PRIORITY_LABELS, TEST2);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -177,7 +169,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
             val conditional = s.type == StateType::CONDITIONAL;
             val simpleState = s.signals.empty && s.regions.empty;
-            val cornerRadius = if (conditional) 10 else if (simpleState) 15 else 8;
+            val cornerRadius = if (conditional) 10 else if (simpleState) 17 else 8;
             val lineWidth = if (s.isInitial && s.isFinal) 2.1f else if (s.isInitial) 4 else 1;
 
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
@@ -217,7 +209,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.addText(s.label).putToLookUpWith(s) => [
                     it.fontSize = 11;
                     it.setGridPlacementData().setMaxCellHeightEx(40)
-                        .from(LEFT, 10, 0, TOP, 10, 0)
+                        .from(LEFT, 10, 0, TOP, 9f, 0)
                         .to(RIGHT, 10, 0, BOTTOM, 10, 0);
                 ];
                 
@@ -259,7 +251,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         return t.createEdge().putToLookUpWith(t) => [ edge |
             edge.source = t.sourceState.node;
             edge.target = t.targetState.node;
-            edge.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             edge.addSpline(2) => [
                 it.addArrowDecorator() => [
                     if (t.isHistory) {
@@ -278,12 +270,15 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
             if (SHOW_LABELS.optionBooleanValue) {
                 scopeProvider.parent = t.sourceState;
-                val label = serializer.serialize(t.copy => [
-                    TMP_RES.contents += it;
-                ]);
-                TMP_RES.contents.clear;
-    
-                if (!label.empty) {
+                val String label =
+                    try {
+                        serializer.serialize(t.copy => [
+                            TMP_RES.contents += it;
+                        ]);
+                    } finally {
+                        TMP_RES.contents.clear;
+                    } 
+                if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
                         label, 11, KlighdConstants::DEFAULT_FONT_NAME
                     );

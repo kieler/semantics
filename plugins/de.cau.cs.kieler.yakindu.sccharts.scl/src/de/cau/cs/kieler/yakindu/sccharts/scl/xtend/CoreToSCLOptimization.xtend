@@ -45,19 +45,6 @@ class CoreToSCLOptimization {
     @Inject
     extension SCLStatementExtensions
     
-    // Flags for the different optimizations.
-    // A description of each optimization is found at the beginning of the corresponding method.
-    public static int OPTIMIZE_NONE             = 0
-    public static int OPTIMIZE_GOTO             = 1
-    public static int OPTIMIZE_LABEL            = 2
-    public static int OPTIMIZE_SELFLOOP         = 4
-    public static int OPTIMIZE_STATEPOSITION    = 8
-    public static int OPTIMIZE_TRANSITIONONCE   = 16                // not implemented yet
-    public static int OPTIMIZE_TRANSITIONWTO    = 32                // not implemented yet
-    public static int OPTIMIZE_DEFAULT          = OPTIMIZE_GOTO + 
-                                                  OPTIMIZE_LABEL + 
-                                                  OPTIMIZE_SELFLOOP; 
-    
     /* OPTIMIZE_SELFLOOP
      *
      * Negates the expression of a conditional in the first list and swaps the statement lists of the 
@@ -91,7 +78,7 @@ class CoreToSCLOptimization {
         val newStatements = createNewStatementList()
         
         // Iterate through all statements
-        for(Integer i: 0..(statements.size - 1)) {
+        for(int i: 0..(statements.size - 1)) {
             // Since xtend does not know a common next or continue instruction
             // we are going to remember which instruction must be skipped. 
             var boolean skip = false
@@ -100,13 +87,13 @@ class CoreToSCLOptimization {
             // if the statement is a goto statement and has succeeding statements...
             if (statement.hasInstruction && statement.instruction instanceof Goto && i < statements.size - 1) {
                 // ... search the next instruction statement.
-                var Integer nextIndex = new Integer(i + 1)
-                var nextStatement = statements.get(nextIndex)
+//                var nextIndex = i + 1
+                var nextStatement = statements.get(i + 1)
 //                while ((nextIndex < statements.size - 1) && (nextStatement instanceof EmptyStatement)) { 
-                while ((nextIndex < statements.size - 1) && (nextStatement.label.nullOrEmpty)) { 
-                    nextIndex = nextIndex + 1;
-                    nextStatement = statements.get(nextIndex) 
-                }
+//                while ((nextIndex < statements.size - 1) && (nextStatement.label.nullOrEmpty)) { 
+//                    nextIndex = nextIndex + 1;
+//                    nextStatement = statements.get(nextIndex) 
+//                }
                 // If the succeeding instruction statement is the target statement of the goto jump,
                 // mark it as 'to be skipped'.
                 if (nextStatement!=null && nextStatement.label==statement.getInstruction.asGoto.targetLabel) { skip = true }  
