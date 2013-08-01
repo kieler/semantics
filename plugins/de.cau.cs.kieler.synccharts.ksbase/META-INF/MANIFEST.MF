@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SyncCharts KSBasE Extension
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.ksbase;singleton:=true
 Bundle-Version: 0.6.2.qualifier
-Bundle-Activator: de.cau.cs.kieler.synccharts.ksbase.SyncchartsKsbasePlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.ide;bundle-version="3.5.0",
@@ -16,8 +15,10 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.ksbase.ui,
  de.cau.cs.kieler.synccharts.diagram.custom,
- de.cau.cs.kieler.core.kivi
-Bundle-ActivationPolicy: lazy
+ de.cau.cs.kieler.core.kivi,
+ org.eclipse.xtend.lib;bundle-version="2.4.2"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.ksbase
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: de.cau.cs.kieler.synccharts.ksbase.SyncchartsKsbasePlugin
