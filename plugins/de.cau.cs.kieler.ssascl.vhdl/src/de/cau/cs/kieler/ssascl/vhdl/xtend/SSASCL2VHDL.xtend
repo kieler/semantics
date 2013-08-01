@@ -21,7 +21,7 @@ import org.yakindu.sct.model.stext.stext.BoolLiteral
 import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
-import org.yakindu.sct.model.stext.stext.ConditionalExpression
+//import org.yakindu.sct.model.stext.stext.ConditionalExpression
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import org.yakindu.sct.model.stext.stext.LogicalOrExpression
 import org.yakindu.sct.model.stext.stext.LogicalAndExpression
@@ -32,7 +32,7 @@ import org.yakindu.sct.model.stext.stext.NumericalAddSubtractExpression
 import org.yakindu.sct.model.stext.stext.NumericalMultiplyDivideExpression
 import org.yakindu.sct.model.stext.stext.ShiftExpression
 //import org.yakindu.sct.model.stext.stext.AssignmentOperator
-import org.yakindu.sct.model.stext.stext.AdditiveOperator
+//import org.yakindu.sct.model.stext.stext.AdditiveOperator
 
 import java.util.ArrayList
 import de.cau.cs.kieler.scl.vhdl.Variables
@@ -51,7 +51,10 @@ import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import java.util.HashMap
 
+import org.yakindu.sct.model.stext.stext.AssignmentOperator
+
 class SSASCL2VHDL {
+    Iterable<AssignmentExpression> temp
     
     Object vhdlCode
     
@@ -72,8 +75,12 @@ class SSASCL2VHDL {
     def transform (Program program, File modelFile) {
         
         ffList.clear
-        
         var String modelname
+        
+        addRegisterResetTomodel(program)
+        
+        replacePreByReg(program)
+        
         
         if(modelFile != null){
             val input = URI::createFileURI(modelFile.getName());
@@ -93,7 +100,7 @@ class SSASCL2VHDL {
                     modelname = "no_valid_name"
                 }
             }
-        } 
+        }
        
        '''
        «/* Generate the header */»
@@ -103,6 +110,103 @@ class SSASCL2VHDL {
        
        '''
     }
+    def replacePreByReg(Program program) { 
+        
+//        newCondExp.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[exp |
+//                  val varName = (exp.reference as VariableDefinition).name
+//                  val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)                    
+//                  exp.reference = targetProgram.getDefinitionByName(ssaVariable)
+//            ]
+        
+        program.statements.forEach[ instr |
+           
+            
+            if((instr.isAssignment )){
+                val assExp = (((instr.instruction as Assignment).assignment)as AssignmentExpression)
+                val varName = (((assExp.varRef as ElementReferenceExpression).reference) as VariableDefinition).name
+                if(varName.contains("_pre")){
+                    val newVarName = (varName.subSequence(0, varName.lastIndexOf("_pre")).toString) + "_reg"
+                    
+                    assExp.varRef = program.getDefinitionByNameAsElemRef(newVarName)
+                    
+                }
+                    
+            }
+            
+//            val varName = (assExp.varRef as VariableDefinition).name
+//            if(varName.contains("_pre")){
+//                
+//                val newVarName = (varName.subSequence(0,varName.lastIndexOf("_pre"))).toString + "_reg"
+//                assExp.varRef = (program.getDefinitionByName(newVarName) as ElementReferenceExpression)
+                
+//            }
+//          val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)                    
+//                  exp.reference = targetProgram.getDefinitionByName(ssaVariable)
+//            val variableprogram.getDefinitionByName(varName)
+
+
+        ]
+        
+        
+        
+    }
+
+    def addRegisterResetTomodel(Program program) { 
+        
+        val register = new ArrayList<VariableDefinition>
+        val newStms = new ArrayList<Statement>
+        val newElseStms = new ArrayList<Statement>
+        
+        val newCond = SCL.createConditional
+        val condExp = SCLExpressionExtensions.createElementReferenceExpression(program.getDefinitionByName("RESET"))
+        newCond.setExpression(condExp)
+        
+        val allPreDefs = new ArrayList<VariableDefinition> 
+        program.definitions.forEach[ definition  | if(definition.name.contains("_pre")) allPreDefs.add(definition.copy)  ]
+        
+        allPreDefs.forEach[ definition | 
+            val name = definition.name.subSequence(0, definition.name.lastIndexOf("_pre")).toString + "_reg"
+            val type = definition.type.name
+            program.definitions.add(createVariableDefinition(name, "boolean"))
+        ]
+  
+        allPreDefs.forEach[ definition | 
+//          BUG 383373, is already fixed            
+//          var assignmentExp = createAssignmentExpression(program.getDefinitionByNameAsElemRef(definition.name),
+//                  SText.createBoolLiteral.setValue(false) as Expression)
+
+            //add all O1_pre = false assignments
+            val newAssignment1 = SCL.createAssignment()
+            var assignmentExp = SText.createAssignmentExpression()
+            assignmentExp.setVarRef(program.getDefinitionByNameAsElemRef(definition.name))
+            assignmentExp.setOperator(AssignmentOperator::ASSIGN)
+            val bool = SText.createBoolLiteral
+            bool.setValue(false)
+            val primValExp = SText.createPrimitiveValueExpression
+            primValExp.setValue(bool)
+            assignmentExp.setExpression(primValExp)
+            newAssignment1.assignment = assignmentExp
+            newStms.add(newAssignment1.createStatement)
+            
+            //add all O1_pre = O1_reg assignments
+            val newAssignment = SCL.createAssignment()
+            newAssignment.assignment = createAssignmentExpression(program.getDefinitionByNameAsElemRef
+                (definition.name), program.getDefinitionByNameAsElemRef(definition.name.subSequence
+                    (0, definition.name.lastIndexOf("_pre")).toString + "_reg"))
+            newElseStms.add(newAssignment.createStatement)
+        ]
+        
+        newCond.statements.addAll(newStms)
+        newCond.elseStatements.addAll(newElseStms)
+        
+        val allStms = new ArrayList<Statement>
+        allStms.add(newCond.createStatement)
+        allStms.addAll(program.statements.copyAll)
+
+        program.statements.clear
+        program.statements.addAll(allStms)
+    }
+
     
     // -------------------------------------------------------------------------   
    
@@ -147,13 +251,14 @@ class SSASCL2VHDL {
             
             val vari = variable.copy 
 //            vari.setOutput(false)
-            modelInputs.add(createVariableFromModel(vari, true, false))
+            vari.name = vari.name + "_out"
+            modelOutputs.add(createVariableFromModel(vari, true, false))
             newVariables.add(vari)
             
-            val variableOutName = variable.name + "_out"
+//            val variableOutName = variable.name + "_out"
 //            variable.setInput(false)
-            variable.setName(variableOutName)
-            modelOutputs.add(createVariableFromModel(variable, true, true))
+//            variable.setName(variableOutName)
+            modelInputs.add(createVariableFromModel(variable, true, true))
         }
         else if(variable.input)                      
              modelInputs.add(createVariableFromModel(variable, true, false)) 
@@ -205,29 +310,16 @@ class SSASCL2VHDL {
             flipflop: process
             begin
             wait until rising_edge(tick);
-                if(reset = true) then
-                   «ffList.map[ instr |
-                   val ass = instr.instruction as Assignment 
-                   val assExp = ass.assignment as AssignmentExpression
-                   val elemRefExp = assExp.varRef as ElementReferenceExpression
-                   val vardef = elemRefExp.reference as VariableDefinition
-                   val varName = vardef.name
-                   
-                   '''«varName» <= false;'''
+               «ffList.map[ instr | 
+                    val varleft = (((instr.instruction.asAssignment.assignment as 
+                        AssignmentExpression).varRef as ElementReferenceExpression).reference) 
+                        as VariableDefinition
+                    val varright = (((instr.instruction.asAssignment.assignment as 
+                        AssignmentExpression).expression as ElementReferenceExpression).reference) 
+                        as VariableDefinition
                     
-                ].join('\n')»
-                else
-                   «ffList.map[ instr | 
-                        val varleft = (((instr.instruction.asAssignment.assignment as 
-                            AssignmentExpression).varRef as ElementReferenceExpression).reference) 
-                            as VariableDefinition
-                        val varright = (((instr.instruction.asAssignment.assignment as 
-                            AssignmentExpression).expression as ElementReferenceExpression).reference) 
-                            as VariableDefinition
-                        
-                        '''«varleft.name» <= «varright.name»;'''
-                   ].join('\n')»
-                end if;
+                    '''«varleft.name» <= «varright.name»;'''
+               ].join('\n')»
             end process;
         '''  
     }
@@ -328,7 +420,7 @@ class SSASCL2VHDL {
         val vardef = elemRefExp.reference as VariableDefinition
         val varName = vardef.name
         
-        if(varName.endsWith("_pre")){
+        if(varName.endsWith("_reg")){
             
             //it is an pre value, this assignment will be a ff later
             ffList.add(assignment.copy.createStatement)
@@ -373,35 +465,6 @@ class SSASCL2VHDL {
    // Expand an conditional statement
    def dispatch expand(Conditional cond) {
 
-//       var ifstm = ''''''
-//
-//       ifstm = ifstm + cond.statements.map( stm | '''«stm.expand» WHEN «cond.expression.expand»;''').join('\n')
-//   
-////       if(!(cond.elseStatements.nullOrEmpty))
-////            ifstm = ifstm + ';\n' 
-////        else 
-////            ifstm = ifstm + '' 
-//       ifstm = ifstm + '\n'
-//            
-//       ifstm = ifstm + cond.elseStatements.map( stm | '''«stm.expand» WHEN not «cond.expression.expand»;''').join('\n')
-       
-//              
-       
-       
-//       cond.statements.forEach[ stm | 
-//           
-//           val vari = (((stm.instruction.asAssignment.assignment as AssignmentExpression).varRef) as VariableDefinition)
-//           vari.name
-//           
-//       ].join('\n')
-       
-       
-       
-//       '''if («cond.expression.expand») then
-//              «cond.statements.map(stm | stm.expand).join('\n')»
-//              «if(!cond.elseStatements.nullOrEmpty){"else\n" + cond.elseStatements.map(stm | stm.expand).join('\n')}»
-//            end if;'''
-      
       val conditionString = cond.expression.expand
       
       val trueCaseHm = new HashMap<String, Expression>
@@ -411,7 +474,7 @@ class SSASCL2VHDL {
           trueCaseHm.put(vari.name, exp)
       ]
       
-      val bla = cond.elseStatements.map[ stm |
+      var bla = cond.elseStatements.map[ stm |
           val vari = ((((stm.instruction.asAssignment.assignment as AssignmentExpression).varRef) as ElementReferenceExpression).reference) as VariableDefinition
           val falseExp =  (stm.instruction.asAssignment.assignment as AssignmentExpression).expression.copy
           val trueExp = trueCaseHm.get(vari.name)
@@ -422,12 +485,13 @@ class SSASCL2VHDL {
           }else{
               //No matching true expression, transform only false case
               '''«vari.name» <= «falseExp.expand» WHEN not «conditionString»»;'''
-          }         
+          }    
+              
       ].join('\n')
-       
+
        //If there are any assignments left in true case?
           if(trueCaseHm.size > 0){
-              println("assignments left")
+              bla = bla + '''assignment left'''
           }
        
       return bla 
@@ -462,7 +526,9 @@ class SSASCL2VHDL {
    
    // Expand a Variable Declaration, all internal signals have an "_int" at the end
    def dispatch expand(VariableDefinition vari) {
-//    '''«if(vari.input && vari.output)vari.name + "_out" else if(vari.input) vari.name + "_int"  else vari.name»'''
+//    '''«if(vari.input && vari.output)vari.name + "_out" 
+//        else if(vari.input) vari.name + "_puup"  
+//        else vari.name»'''
         vari.name
    }
    
@@ -536,6 +602,21 @@ class SSASCL2VHDL {
    }
    
    // ------------------------------------------------------------------------- 
+   
+    // --------------------------------------------------------------------------------------------
+    // F R O M   S T E V E N   = >  A D D   T O   E X T E N S I O N S
+    //---------------------------------------------------------------------------------------------
+    def VariableDefinition getDefinitionByName(Program program, String name) {
+        program.definitions.filter(e | e.getName() == name).head
+    }
     
-    
+    // --------------------------------------------------------------------------------------------
+    // F R O M   S T E V E N   = >  A D D   T O   E X T E N S I O N S
+    //---------------------------------------------------------------------------------------------
+    def ElementReferenceExpression getDefinitionByNameAsElemRef(Program program, String name) {
+        val varRef = program.getDefinitionByName(name)
+        val expression = SText.createElementReferenceExpression
+        expression.setReference(varRef)
+        expression        
+    }
 }

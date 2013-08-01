@@ -19,11 +19,10 @@ import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
-
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 import de.cau.cs.kieler.ssascl.vhdl.xtend.SSASCL2VHDL;
 
 /**
@@ -34,7 +33,7 @@ public class VHDLGenerator extends AbstractModelFileHandler {
     
     private static Injector injector = new STextStandaloneSetup().createInjectorAndDoEMFRegistration();
     
-    public static final String TRANSFORMATIONCOMMAND = "de.cau.cs.kieler.scl.vhdl.SSASCL2VHDL";
+    public static final String TRANSFORMATIONCOMMAND = "de.cau.cs.kieler.ssascl.vhdl.SSASCL2VHDL";
 
     public VHDLGenerator() {
     }

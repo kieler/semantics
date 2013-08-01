@@ -5,14 +5,14 @@
          point="org.eclipse.ui.handlers">
       <handler
             class="de.cau.cs.kieler.ssascl.vhdl.VHDLGenerator"
-            commandId="de.cau.cs.kieler.scl.vhdl.SSASCL2VHDL">
+            commandId="de.cau.cs.kieler.ssascl.vhdl.SSASCL2VHDL">
       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
-            categoryId="de.cau.cs.kieler.yakindu.sccharts.scl.commands.category"
-            id="de.cau.cs.kieler.scl.vhdl.SSASCL2VHDL"
+            categoryId="de.cau.cs.kieler.yakindu.sccharts.coresccharts.commands.category"
+            id="de.cau.cs.kieler.ssascl.vhdl.SSASCL2VHDL"
             name="SSASCL2VHDL">
       </command>
    </extension>
@@ -21,7 +21,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
-               commandId="de.cau.cs.kieler.scl.vhdl.SSASCL2VHDL"
+               commandId="de.cau.cs.kieler.ssascl.vhdl.SSASCL2VHDL"
                label="Transform SSA Seq SCL to VHDL"
                mnemonic="V"
                style="push">
