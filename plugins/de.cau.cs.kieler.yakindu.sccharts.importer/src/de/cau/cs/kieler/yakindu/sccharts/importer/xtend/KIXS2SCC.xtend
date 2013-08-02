@@ -64,8 +64,8 @@ class KIXS2SCC {
         // Name the Y Statechart, get the name from the S root state
         mainState.setName(rootState.label);
         
-        val interface = rootState.serializeInterface;
-        mainState.setSpecification(interface);
+        val interfaceSpecification = rootState.serializeInterface;
+        mainState.setSpecification(interfaceSpecification);
         
         // First create all states
         for (region : rootState.regions) {
