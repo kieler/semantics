@@ -144,7 +144,7 @@ class SCLCreateExtensions {
     
     // Create a new VariableDeclaration or return an old one, if it already exists in the given context
     def VariableDefinition create varDef: SCL.createVariableDefinition()
-        createVariableDeclaration(Declaration definition) {
+        createVariableDefinition(Declaration definition) {
         varDef.setName(definition.getName());
         if (definition instanceof EventDefinition) {
             val eventDefinition = definition as EventDefinition;
@@ -208,7 +208,7 @@ class SCLCreateExtensions {
                         assignment.assignment = action.copy as AssignmentExpression
                     }
                     assignment.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [
-                        it.reference = (it.reference as Declaration).createVariableDeclaration();
+                        it.reference = (it.reference as Declaration).createVariableDefinition();
                     ]
 //                    ((assignment.assignment as AssignmentExpression).varRef as ElementReferenceExpression).reference = 
 //                        (((action as AssignmentExpression).varRef as ElementReferenceExpression).reference as Event).createVariableDeclaration();
@@ -267,7 +267,7 @@ class SCLCreateExtensions {
             if (reactionTrigger.expression != null) {
                 conditional.expression = reactionTrigger.expression.copy;
                 conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
-                    e.reference = (e.reference as Declaration).createVariableDeclaration;  ]
+                    e.reference = (e.reference as Declaration).createVariableDefinition;  ]
             }
         }
         

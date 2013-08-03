@@ -77,7 +77,7 @@ class SCLBasicBlockExtensions {
         if (prevStatement.isConditional) return true
         if (prevStatement.isGoto) return true 
         if (SPLIT_BLOCKS_AT_DEPENDENCY) {
-            if ((prevStatement.isAssignment || prevStatement.isConditional) && prevStatement.getInstruction.hasConcurrentTargetDependencies) return true;
+//            if ((prevStatement.isAssignment || prevStatement.isConditional) && prevStatement.getInstruction.hasConcurrentTargetDependencies) return true;
             if ((statement.isAssignment || statement.isConditional) && statement.getInstruction.hasConcurrentTargetDependencies) return true;
         }
 
@@ -320,11 +320,19 @@ class SCLBasicBlockExtensions {
     }
      
     def List<BasicBlock> getBasicBlocks(Statement statement) {
+        getBasicBlocks(statement, true)
+    } 
+    
+    def List<BasicBlock> getDirectBasicBlocks(Statement statement) {
+        getBasicBlocks(statement, false)
+    }
+     
+    def List<BasicBlock> getBasicBlocks(Statement statement, boolean hierarchical) {
         val basicBlocks = new ArrayList<BasicBlock>;
         val sseq = statement.getParentStatementSequence
         var c = 0
         for(stmt : sseq.statements) {
-            for(bb : stmt._getBasicBlocksByStatement) {
+            for(bb : stmt._getBasicBlocksByStatement(hierarchical)) {
                 if (!basicBlocks.containsEqual(bb)) basicBlocks.add(bb)
             }
             c = c + 1
@@ -332,7 +340,7 @@ class SCLBasicBlockExtensions {
         }
         if (sseq instanceof Conditional) {
             for(stmt : (sseq as Conditional).elseStatements) {
-                for(bb : stmt._getBasicBlocksByStatement) {
+                for(bb : stmt._getBasicBlocksByStatement(hierarchical)) {
                     if (!basicBlocks.containsEqual(bb)) basicBlocks.add(bb)
                 }
             }            
@@ -340,7 +348,7 @@ class SCLBasicBlockExtensions {
         basicBlocks
     }
     
-    def List<BasicBlock> _getBasicBlocksByStatement(Statement stmt) {
+    def List<BasicBlock> _getBasicBlocksByStatement(Statement stmt, boolean hierarchical) {
         val basicBlocks = new ArrayList<BasicBlock>
             val stmtBlock = stmt.getBasicBlockByAnyStatement
             if (stmtBlock != null && !basicBlocks.containsEqual(stmtBlock)) basicBlocks.add(stmtBlock)
@@ -364,7 +372,7 @@ class SCLBasicBlockExtensions {
                     } 
                 }
             }
-            if (stmt.hasInstruction && stmt.getInstruction instanceof Parallel)
+            if (stmt.hasInstruction && stmt.getInstruction instanceof Parallel && hierarchical)
                 // ignore blocks that are already in the list 
                 for (thread : (stmt.getInstruction as Parallel).threads) {
                     for (block : thread.statements.head.getBasicBlocks) {
@@ -702,8 +710,18 @@ class SCLBasicBlockExtensions {
         newBlockList
     }
     
+    def List<BasicBlock> getSurfaces(List<BasicBlock> basicBlocks) {
+        val newBlockList = new ArrayList<BasicBlock>;
+        
+        for(bb : basicBlocks) {
+            if (bb.isPauseSurface) {
+                newBlockList.add(bb)
+            }
+        }
+        
+        newBlockList
+    }    
     
-
     def boolean isASCSchedulable(Program program) {
         program.ASCPool.size == 0
     }
@@ -729,7 +747,7 @@ class SCLBasicBlockExtensions {
                 for (pred : predecessors) {
                     if (!pred.isPauseSurface && basicBlockPool.containsEqual(pred) && !basicBlock.isParallelJoin) {ready = false}
                     if (basicBlock.isParallelJoin) {
-                        val guards = pred.getHead.basicBlocks.stripSurface
+                        val guards = pred.getHead.basicBlocks.getSurfaces
                         for (guard : guards) {
                             if (basicBlockPool.containsEqual(guard)) { 
                                 ready = false;
@@ -756,6 +774,7 @@ class SCLBasicBlockExtensions {
             }
         }
                 
+        Debug("No blocks left in pool: Program seems to be schedulable!");
         basicBlockPool
     }
    

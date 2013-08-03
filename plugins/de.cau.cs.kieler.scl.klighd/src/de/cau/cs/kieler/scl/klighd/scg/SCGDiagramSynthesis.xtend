@@ -313,8 +313,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         if (SCGRAPH_FILTER.optionValue == SCGRAPH_AND_BASICBLOCKS ||
             SCGRAPH_FILTER.optionValue == SCGRAPH_DEPENDENCIES_AND_BASICBLOCKS
         ) {
-            kExitNode.data += renderingFactory.createKRoundedBendsPolyline() => [
-                it.invisible = true
+            kExitNode.KRendering => [ //data += renderingFactory.createKRoundedBendsPolyline() => [
+                it.invisible = false;
                 it.invisible.modifierId = "de.cau.cs.kieler.scl.klighd.scg.BasicBlockModifier"
             ];       
             val bbDataHolder = new BasicBlockDataHolder()
@@ -805,7 +805,8 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
         kDepthNode.KRendering.add(factory.createKLineWidth.of(2));
         kDepthNode.KRendering.add(factory.createKText.of("depth").putToLookUpWith(instr));
         if (PAUSEDEPTH_FIRST)
-        if (!instr.getStatement.hasAnnotation(SCLANNOTATION_DEPTH_INLINE))
+        if (!instr.getStatement.getProgram.hasGlobalParameter('inline', 'depth') &&
+            !instr.getStatement.hasAnnotation(SCLANNOTATION_DEPTH_INLINE))
             kDepthNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             
         // Add all nodes to their parents 
