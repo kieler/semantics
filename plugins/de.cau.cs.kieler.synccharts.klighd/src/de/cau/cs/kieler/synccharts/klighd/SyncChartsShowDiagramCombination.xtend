@@ -37,13 +37,17 @@ class SyncChartsShowDiagramCombination extends UpdateXtextModelKLighDCombination
     /**
      * The 'execute()' method, see doc of {@link AbstractCombination}.
      */    
-    def public void execute(PartTrigger$EditorState es, SelectionTrigger$SelectionState selectionState) {
+    def public void execute(PartTrigger$PartState es, SelectionTrigger$SelectionState selectionState) {
             
-        if (this.latestState() == es) {
-           //inputPath = es.getProperty(PartTrigger::EDITOR_INPUT_PATH) as IPath;
-           return; // do only react on selectionState
+        // do not react on partStates as well as on selectionStates in case
+        //  a view part has been deactivated recently, as an potentially out-dated selection
+        //  is currently about to be processed
+        // most certainly a "part activated" event will follow and subsequently a further
+        //  selection event if the selection of the newly active part is changed, too! 
+        if (this.latestState() == es || es.eventType == PartTrigger$EventType::VIEW_DEACTIVATED) {
+           return;
         }
-                
+        
         val selection = selectionState.selectedObjects;
         if (!selection.nullOrEmpty) {
             if (selection.size == 1 && typeof(IFile).isInstance(selection.get(0))) {
