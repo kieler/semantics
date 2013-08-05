@@ -54,10 +54,8 @@ import java.util.HashMap
 import org.yakindu.sct.model.stext.stext.AssignmentOperator
 
 class SSASCL2VHDL {
-    Iterable<AssignmentExpression> temp
     
     Object vhdlCode
-    
     
     extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
          Guice::createInjector().getInstance(typeof(VHDLExtension))
@@ -250,7 +248,7 @@ class SSASCL2VHDL {
         if(variable.input && variable.output){
             
             val vari = variable.copy 
-//            vari.setOutput(false)
+            vari.setInput(false)
             vari.name = vari.name + "_out"
             modelOutputs.add(createVariableFromModel(vari, true, false))
             newVariables.add(vari)
@@ -282,6 +280,7 @@ class SSASCL2VHDL {
 «««    «genarateLocalVariables(modelOutputs)»
     --local signals
     «genarateLocalVariables(modelLocalVariables)»
+    «addLocalSignalsForInputs(program.definitions)»
     
     begin
 
@@ -300,10 +299,45 @@ class SSASCL2VHDL {
         
         --generate Flips Flops
         «generateFlipFlops()»
+        
+        «generateInputRegister(program.definitions)»
     end behavior;
     '''
      
    }
+    def generateInputRegister(EList<VariableDefinition> variables) { 
+        
+        val inVars = variables.filter[ vari | vari.input ]
+        
+        var vhdlCode = '''
+            inputRegister: process
+            begin
+            wait until rising_edge(tick);
+               «inVars.map[ vari | 
+                    '''«vari.name»_int <= «vari.name»;'''
+               ].join('\n')»
+        '''
+        return vhdlCode = vhdlCode + '''   Reset_int <= RESET;''' + '\n' + '''end process;'''
+    }
+
+    def addLocalSignalsForInputs(EList<VariableDefinition> variables) { 
+        
+        val inVars = variables.filter[ vari | vari.input ]
+        
+        var vhdlCode = inVars.map[vari | '''signal «vari.name»_int : boolean := false;''' ].join('\n')
+        
+        return vhdlCode = vhdlCode + '\n' + "signal Reset_int : boolean := false;" + '\n'
+        
+//        val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"")»''').join('\n')
+        
+        //else must be an empty String, when not null is written into the file
+//        if(!(localVar.nullOrEmpty))
+//            return localVar + '\n'
+//        else 
+//            return ''''''
+        
+    }
+
     def generateFlipFlops() { 
 
         '''
@@ -436,6 +470,8 @@ class SSASCL2VHDL {
             
             if(vardef.input && vardef.output){
                 leftVar = vardef.name + "_out"
+            }else if(vardef.name == "RESET"){
+                leftVar = vardef.name + "_int"
             }else{
                 leftVar = vardef.name
             }
@@ -444,7 +480,13 @@ class SSASCL2VHDL {
                  rightVar = assExp.expression.expand
             }else{ 
                 val vari = ((assExp.expression as ElementReferenceExpression).reference as VariableDefinition)
-                rightVar = vari.name
+                if(vari.input || (vari.input && vari.output)){
+                    rightVar = vari.name + "_int"
+                }else if(vari.name.equals("RESET")){
+                    rightVar = vari.name + "_int"
+                 }else{
+                   rightVar = vari.name
+                }
             }
             
             vhdlCode = leftVar + " <= " + rightVar + ";"
@@ -526,10 +568,12 @@ class SSASCL2VHDL {
    
    // Expand a Variable Declaration, all internal signals have an "_int" at the end
    def dispatch expand(VariableDefinition vari) {
-//    '''«if(vari.input && vari.output)vari.name + "_out" 
-//        else if(vari.input) vari.name + "_puup"  
-//        else vari.name»'''
-        vari.name
+        
+        if(vari.input && vari.output) return vari.name + "_int" 
+        else if(vari.input) return vari.name + "_int"  
+        else if(vari.name == "RESET") return vari.name + "_int"
+        else return vari.name
+//        vari.name
    }
    
    // Expand a Primitive Value Expression
