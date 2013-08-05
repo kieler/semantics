@@ -279,13 +279,18 @@ class SSASCL2VHDL {
     «addLocalSignalsForInputs(program.definitions)»
     
     begin
-        --main program
+        -- -------------------------
+        -- main program
+        -- -------------------------
         «generateMainProcess(program.statements,program)»
         
-        --generate Flips Flops
+        -- -------------------------
+        -- registers
+        -- -------------------------
         «generateRegister()»
         
         «generateInputRegister(program.definitions)»
+        
     end behavior;
     '''
    }
@@ -330,7 +335,7 @@ class SSASCL2VHDL {
                 val ass = instr as Assignment
                 '''«(ass).transformAssignmentToVHDL(program)»'''
             }
-            //if ist is a conditional, expand the code to an vhdl code fragment
+            //if is is a conditional, expand the code to an vhdl code fragment
             else if(stm.conditional){
                 '''«stm.expand»'''
             }
@@ -344,7 +349,7 @@ class SSASCL2VHDL {
 
     //for every element in the register list the vhdl code for a register is created
     '''
-        flipflop: process
+        register: process
         begin
         wait until rising_edge(tick);
            «ffList.map[ instr | 
@@ -384,7 +389,7 @@ class SSASCL2VHDL {
     // transform assignemts to vhdl code
     def transformAssignmentToVHDL(Assignment assignment,Program program) { 
         
-        var vhdlCode = '''''' 
+        var vhdlCode = ''''''
         
         //Get variable name
         val assExp = assignment.assignment as AssignmentExpression
@@ -393,10 +398,11 @@ class SSASCL2VHDL {
         val varName = vardef.name
         
         if(varName.endsWith("_reg")){
-            //it is aregister assignament, for this assignment a register will be creaeted later
+            //it is a register assignment, for this assignment a register will be created later
             ffList.add(assignment.copy.createStatement)
+            vhdlCode = "--Assignment transformed to a register"
         }else{
-            // for all other stm crate a vhdl assignmetn
+            // for all other stm crate a vhdl assignment
             var leftVar = ""
             var rightVar = ''''''
             
@@ -405,7 +411,7 @@ class SSASCL2VHDL {
                 //if it is an input output variable, than the value should be assigned to the output
                 leftVar = vardef.name + "_out"
             }else if(vardef.name == "RESET"){
-                //if it is the local Reset signal, than use the regiter value from the RESET
+                //if it is the local Reset signal, than use the register value from the RESET
                 leftVar = vardef.name + "_int"
             }else{
                 //else take the variable name
