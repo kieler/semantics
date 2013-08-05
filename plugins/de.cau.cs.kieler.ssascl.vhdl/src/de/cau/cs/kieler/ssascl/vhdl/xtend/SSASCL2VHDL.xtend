@@ -349,7 +349,7 @@ class SSASCL2VHDL {
 
     //for every element in the register list the vhdl code for a register is created
     '''
-        register: process
+        registers: process
         begin
         wait until rising_edge(tick);
            «ffList.map[ instr | 
