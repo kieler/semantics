@@ -75,11 +75,13 @@ class SSASCL2VHDL {
         ffList.clear
         var String modelname
         
-        addRegisterResetTomodel(program)
+        //adds the workaround to reset regsters
+        addRegisterResetToModel(program)
         
+        //to use the register reset workaround, all _pre's must be replaced by _reg's
         replacePreByReg(program)
         
-        
+        //get the name for vhdl component from file name
         if(modelFile != null){
             val input = URI::createFileURI(modelFile.getName());
             modelname = input.toString
@@ -108,72 +110,65 @@ class SSASCL2VHDL {
        
        '''
     }
+    
+    // -------------------------------------------------------------------------   
+   
+   // all occurences of _pre variables on the left side of an expression must be replaced by the register output
+    // _reg
     def replacePreByReg(Program program) { 
-        
-//        newCondExp.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[exp |
-//                  val varName = (exp.reference as VariableDefinition).name
-//                  val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)                    
-//                  exp.reference = targetProgram.getDefinitionByName(ssaVariable)
-//            ]
-        
+          
+        //search in all instruction for an _pre on the left sida of an assignment an replaced it
+        // with the _reg variable
         program.statements.forEach[ instr |
-           
-            
             if((instr.isAssignment )){
                 val assExp = (((instr.instruction as Assignment).assignment)as AssignmentExpression)
                 val varName = (((assExp.varRef as ElementReferenceExpression).reference) as VariableDefinition).name
                 if(varName.contains("_pre")){
                     val newVarName = (varName.subSequence(0, varName.lastIndexOf("_pre")).toString) + "_reg"
                     
-                    assExp.varRef = program.getDefinitionByNameAsElemRef(newVarName)
-                    
-                }
-                    
+                    assExp.varRef = program.getDefinitionByNameAsElemRef(newVarName)                    
+                }      
             }
-            
-//            val varName = (assExp.varRef as VariableDefinition).name
-//            if(varName.contains("_pre")){
-//                
-//                val newVarName = (varName.subSequence(0,varName.lastIndexOf("_pre"))).toString + "_reg"
-//                assExp.varRef = (program.getDefinitionByName(newVarName) as ElementReferenceExpression)
-                
-//            }
-//          val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName, ssaIndexMap)                    
-//                  exp.reference = targetProgram.getDefinitionByName(ssaVariable)
-//            val variableprogram.getDefinitionByName(varName)
-
-
-        ]
-        
-        
-        
+        ] 
     }
 
-    def addRegisterResetTomodel(Program program) { 
+    // add register reset workaround to SCL Model
+    // register could not be reseted with the reset signals which also starts the transformed SCChart
+    // that results in register which always outputs false
+    // therefore create a reset bypass with an multiplexer, it bypasses the reset value (normaly false)
+    // around the register when the reset is present, otherwise the Mux put out the register value
+    def addRegisterResetToModel(Program program) { 
         
-        val register = new ArrayList<VariableDefinition>
+        // The register reset workaround results in an SCL conditional
+        // e.g: O_reg = RESET ? false : O_pre
         val newStms = new ArrayList<Statement>
         val newElseStms = new ArrayList<Statement>
         
         val newCond = SCL.createConditional
+        //Reset is the conditionals expression
         val condExp = SCLExpressionExtensions.createElementReferenceExpression(program.getDefinitionByName("RESET"))
         newCond.setExpression(condExp)
         
+        // The register reset workaround is needed for all variables which contains a _pre
+        // because they will be registers later
         val allPreDefs = new ArrayList<VariableDefinition> 
         program.definitions.forEach[ definition  | if(definition.name.contains("_pre")) allPreDefs.add(definition.copy)  ]
         
+        //add a _reg variable for each _pre variable to the model definition
         allPreDefs.forEach[ definition | 
             val name = definition.name.subSequence(0, definition.name.lastIndexOf("_pre")).toString + "_reg"
-            val type = definition.type.name
+//            val type = definition.type.name
             program.definitions.add(createVariableDefinition(name, "boolean"))
         ]
   
+        //
         allPreDefs.forEach[ definition | 
-//          BUG 383373, is already fixed            
+//          BUG 383373, is already fixed in newer xtend versions         
 //          var assignmentExp = createAssignmentExpression(program.getDefinitionByNameAsElemRef(definition.name),
 //                  SText.createBoolLiteral.setValue(false) as Expression)
 
-            //add all O1_pre = false assignments
+            //create the false assignment if the reset take place
+            // e.g: O1_pre = false
             val newAssignment1 = SCL.createAssignment()
             var assignmentExp = SText.createAssignmentExpression()
             assignmentExp.setVarRef(program.getDefinitionByNameAsElemRef(definition.name))
@@ -186,7 +181,8 @@ class SSASCL2VHDL {
             newAssignment1.assignment = assignmentExp
             newStms.add(newAssignment1.createStatement)
             
-            //add all O1_pre = O1_reg assignments
+            // create the assignment if the reset doesn't take place
+            // e.g: O1_pre = O1_reg
             val newAssignment = SCL.createAssignment()
             newAssignment.assignment = createAssignmentExpression(program.getDefinitionByNameAsElemRef
                 (definition.name), program.getDefinitionByNameAsElemRef(definition.name.subSequence
@@ -194,20 +190,23 @@ class SSASCL2VHDL {
             newElseStms.add(newAssignment.createStatement)
         ]
         
+        //build the conditional
+        // add the reset assignment
         newCond.statements.addAll(newStms)
+        //add the normal assignment
         newCond.elseStatements.addAll(newElseStms)
         
+        // The reset workaround must be placed at at the beginning of the SCL Model
+        // to keep the sequential SW program flow, in HW it doesen't matter where to place
         val allStms = new ArrayList<Statement>
         allStms.add(newCond.createStatement)
         allStms.addAll(program.statements.copyAll)
 
+        //add the new statement list to the program
         program.statements.clear
         program.statements.addAll(allStms)
     }
-
     
-    // -------------------------------------------------------------------------   
-   
    // Generate the header.
    def generateHeader() {
     '''
@@ -234,8 +233,7 @@ class SSASCL2VHDL {
    
    def generateCode(Program program, String modelname){
      
-     
-    //Get Input and Output from Model
+    // input, output and local variables from model
     val modelInputs = new ArrayList<Variables>
     val modelOutputs = new ArrayList<Variables>
     val modelLocalVariables = new ArrayList<Variables>
@@ -244,6 +242,7 @@ class SSASCL2VHDL {
     val vars = program.definitions
     val newVariables = new ArrayList<VariableDefinition>
     
+    //
     vars.forEach[ variable |        
         if(variable.input && variable.output){
             
@@ -253,9 +252,6 @@ class SSASCL2VHDL {
             modelOutputs.add(createVariableFromModel(vari, true, false))
             newVariables.add(vari)
             
-//            val variableOutName = variable.name + "_out"
-//            variable.setInput(false)
-//            variable.setName(variableOutName)
             modelInputs.add(createVariableFromModel(variable, true, true))
         }
         else if(variable.input)                      
@@ -267,124 +263,35 @@ class SSASCL2VHDL {
                 modelLocalVariables.add(createVariableFromModel(variable, false, false)) 
         ]
         program.definitions.addAll(newVariables)     
+    
+    
+    //The main vhdl code generation
+    // at first: create the entity
+    // then generate architecture which includes all needed local signals, the main functionality 
+    // and all needed registers
     '''
     «generateEntity(modelInputs, modelOutputs, name)»
     
     ARCHITECTURE behavior OF «name» IS
     
-«««    --signal declaration  ---> is done via reset signal
-«««    signal entry_int : boolean := false;
-    
-«««    --local in/out Signals
-«««    «genarateLocalVariables(modelInputs)»
-«««    «genarateLocalVariables(modelOutputs)»
     --local signals
-    «genarateLocalVariables(modelLocalVariables)»
+    «genarateLocalSignals(modelLocalVariables)»
     «addLocalSignalsForInputs(program.definitions)»
     
     begin
-
-«««        --update local signals ---> is not nedded use directly inputs
-«««        «signalToVariable(modelInputs)»
-«««        reset_int <= entry_int;
-        
         --main program
         «generateMainProcess(program.statements,program)»
-    
-«««        --set outputs ---> not needed allready defined in SSA SCL
-«««        «intSignalToSignal(modelOutputs)»
-«««        
-«««        --tick process ---> not needed, is done via reset signal
-«««        «generateInitialTickProcess()»
         
         --generate Flips Flops
-        «generateFlipFlops()»
+        «generateRegister()»
         
         «generateInputRegister(program.definitions)»
     end behavior;
     '''
-     
    }
-    def generateInputRegister(EList<VariableDefinition> variables) { 
-        
-        val inVars = variables.filter[ vari | vari.input ]
-        
-        var vhdlCode = '''
-            inputRegister: process
-            begin
-            wait until rising_edge(tick);
-               «inVars.map[ vari | 
-                    '''«vari.name»_int <= «vari.name»;'''
-               ].join('\n')»
-        '''
-        return vhdlCode = vhdlCode + '''   Reset_int <= RESET;''' + '\n' + '''end process;'''
-    }
-
-    def addLocalSignalsForInputs(EList<VariableDefinition> variables) { 
-        
-        val inVars = variables.filter[ vari | vari.input ]
-        
-        var vhdlCode = inVars.map[vari | '''signal «vari.name»_int : boolean := false;''' ].join('\n')
-        
-        return vhdlCode = vhdlCode + '\n' + "signal Reset_int : boolean := false;" + '\n'
-        
-//        val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"")»''').join('\n')
-        
-        //else must be an empty String, when not null is written into the file
-//        if(!(localVar.nullOrEmpty))
-//            return localVar + '\n'
-//        else 
-//            return ''''''
-        
-    }
-
-    def generateFlipFlops() { 
-
-        '''
-            flipflop: process
-            begin
-            wait until rising_edge(tick);
-               «ffList.map[ instr | 
-                    val varleft = (((instr.instruction.asAssignment.assignment as 
-                        AssignmentExpression).varRef as ElementReferenceExpression).reference) 
-                        as VariableDefinition
-                    val varright = (((instr.instruction.asAssignment.assignment as 
-                        AssignmentExpression).expression as ElementReferenceExpression).reference) 
-                        as VariableDefinition
-                    
-                    '''«varleft.name» <= «varright.name»;'''
-               ].join('\n')»
-            end process;
-        '''  
-    }
    
-    def generateInitialTickProcess() { 
-        
-        '''
-        initialTick: process
-        variable u_notInitial : boolean := false;
-        variable u_notInitialDetect : boolean := true;
-        variable u_entry : boolean;
-
-        begin
-            wait until rising_edge(tick);
-            if(reset = true) then
-                u_notInitial := false;
-                u_notInitialDetect := true;
-                u_entry := false;
-                
-            else
-                u_entry := not u_notInitial;
-                u_notInitial := u_notInitial or u_notInitialDetect;
-            
-                entry_int <= u_entry;
-            end if;
-        end process;
-
-        '''
-    }
-
-    def genarateLocalVariables(ArrayList<Variables> variables) { 
+    // generates local signals for the argument
+    def genarateLocalSignals(ArrayList<Variables> variables) { 
         
         val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"")»''').join('\n')
         
@@ -395,47 +302,35 @@ class SSASCL2VHDL {
             return ''''''
     }
     
-    def setAllLocalVariables(ArrayList<Variables> variables, boolean value) { 
+    // an internal signal as needed for every input register,
+    // to pass the value from the register to the logic
+    def addLocalSignalsForInputs(EList<VariableDefinition> variables) { 
         
-        variables.map[ variable | 
-            '''«variable.name + "_int"» <= «value»;'''
-        ].join('\n')
+        //Get all inputs
+        val inVars = variables.filter[ vari | vari.input ]
         
+        //generate signal vhdl code
+        var vhdlCode = inVars.map[vari | '''signal «vari.name»_int : boolean := false;''' ].join('\n')
+        
+        // every SCCHart has a RESET signal
+        return vhdlCode = vhdlCode + '\n' + "signal Reset_int : boolean := false;" + '\n'
     }
     
-   def signalToVariable(ArrayList<Variables> variables) { 
-        
-        val localVar = variables.map(lVar | '''«lVar.name»_int <= «lVar.name»;''').join('\n')
-        
-        //else must be an empty String, when not null is written into the file
-        if(!(localVar.nullOrEmpty))
-            return localVar + '\n'
-        else 
-            return ''''''
-    }
-    
-    def intSignalToSignal(ArrayList<Variables> variables) { 
-        
-        val localVar = variables.map(lVar | '''«lVar.name» <= «lVar.name»_int;''').join('\n')
-        
-        //else must be an empty String, when not null is written into the file
-        if(!(localVar.nullOrEmpty))
-            return localVar + '\n'
-        else 
-            return ''''''
-    }
-    
+    //generates the main functionality vhdl code
     def generateMainProcess(EList<Statement> stmList, Program program) { 
         
         vhdlCode = ''''''
         
+        //for every stm create vhdl code
         vhdlCode = stmList.map[stm | 
             
+            //if it is an assignment, create vhdl assignment
             if(stm.assignment){
                 val instr = stm.getInstruction 
                 val ass = instr as Assignment
                 '''«(ass).transformAssignmentToVHDL(program)»'''
             }
+            //if ist is a conditional, expand the code to an vhdl code fragment
             else if(stm.conditional){
                 '''«stm.expand»'''
             }
@@ -443,7 +338,50 @@ class SSASCL2VHDL {
         
         return vhdlCode
     }
+
+    // Generates the pause and output registers
+    def generateRegister() { 
+
+    //for every element in the register list the vhdl code for a register is created
+    '''
+        flipflop: process
+        begin
+        wait until rising_edge(tick);
+           «ffList.map[ instr | 
+                val varleft = (((instr.instruction.asAssignment.assignment as 
+                    AssignmentExpression).varRef as ElementReferenceExpression).reference) 
+                    as VariableDefinition
+                val varright = (((instr.instruction.asAssignment.assignment as 
+                    AssignmentExpression).expression as ElementReferenceExpression).reference) 
+                    as VariableDefinition
+                
+                '''«varleft.name» <= «varright.name»;'''
+           ].join('\n')»
+        end process;
+    '''  
+    }
+
+    // Generate input register
+   // the inputs signals must be stable during a tick period
+    def generateInputRegister(EList<VariableDefinition> variables) { 
+        
+        //get all input variables
+        val inVars = variables.filter[ vari | vari.input ]
+        
+        //generate the input register vhdl code
+        var vhdlCode = '''
+            inputRegister: process
+            begin
+            wait until rising_edge(tick);
+               «inVars.map[ vari | 
+                    '''«vari.name»_int <= «vari.name»;'''
+               ].join('\n')»
+        '''
+        //every SCCHart has a reset variable, the reset must also be stored
+        return vhdlCode = vhdlCode + '''   Reset_int <= RESET;''' + '\n' + '''end process;'''
+    }
     
+    // transform assignemts to vhdl code
     def transformAssignmentToVHDL(Assignment assignment,Program program) { 
         
         var vhdlCode = '''''' 
@@ -455,49 +393,50 @@ class SSASCL2VHDL {
         val varName = vardef.name
         
         if(varName.endsWith("_reg")){
-            
-            //it is an pre value, this assignment will be a ff later
+            //it is aregister assignament, for this assignment a register will be creaeted later
             ffList.add(assignment.copy.createStatement)
-            //not longer needed
-//            program.statements.remove(assignment)
         }else{
-
-            //found normal assignment
-//            vhdlCode = assignment.expand + ";"
-            
+            // for all other stm crate a vhdl assignmetn
             var leftVar = ""
             var rightVar = ''''''
             
+            // get left operator vhdl code
             if(vardef.input && vardef.output){
+                //if it is an input output variable, than the value should be assigned to the output
                 leftVar = vardef.name + "_out"
             }else if(vardef.name == "RESET"){
+                //if it is the local Reset signal, than use the regiter value from the RESET
                 leftVar = vardef.name + "_int"
             }else{
+                //else take the variable name
                 leftVar = vardef.name
             }
             
+            //get the vhdl code for the right operator
             if(!(assExp.expression instanceof ElementReferenceExpression)){
+                // if it is an complex assignment, expand it
                  rightVar = assExp.expression.expand
             }else{ 
+                // if it is only a variable, create vhdl code for this one
                 val vari = ((assExp.expression as ElementReferenceExpression).reference as VariableDefinition)
                 if(vari.input || (vari.input && vari.output)){
+                    //if it is an input or an input output take the register value from this input/input output
                     rightVar = vari.name + "_int"
                 }else if(vari.name.equals("RESET")){
+                    //do the same to the reset, take the register reset value 
                     rightVar = vari.name + "_int"
                  }else{
+                   // for all other variables take the name
                    rightVar = vari.name
                 }
             }
-            
-            vhdlCode = leftVar + " <= " + rightVar + ";"
-            
+            // create the vhdl assignment
+            vhdlCode = leftVar + " <= " + rightVar + ";" 
         }
-        
         return vhdlCode
     }
 
-    
-      //---------------------------------------------------------------------------
+   //---------------------------------------------------------------------------
    
    // Expand an Assignment
    def dispatch expand(Assignment assign){ 
@@ -509,14 +448,19 @@ class SSASCL2VHDL {
 
       val conditionString = cond.expression.expand
       
+      // create a Hashmap which contains the left hand variable name from the assignment as key and the right hand expression as value
+      // this is needed because we must find the corresponding else-case assignment
       val trueCaseHm = new HashMap<String, Expression>
       cond.statements.forEach[ stm | 
           val vari = ((((stm.instruction.asAssignment.assignment as AssignmentExpression).varRef) as ElementReferenceExpression).reference) as VariableDefinition
           val exp =  (stm.instruction.asAssignment.assignment as AssignmentExpression).expression.copy
           trueCaseHm.put(vari.name, exp)
       ]
-      
-      var bla = cond.elseStatements.map[ stm |
+      // create the conditional assignment
+      // e.g: if(g3) B = true else end if; will be transformed to
+      //      B <= true WHEN g3 ELSE B_pre
+      // we need the true assignment (B=true) from true case and the other case from the else case
+      var vhdlCode = cond.elseStatements.map[ stm |
           val vari = ((((stm.instruction.asAssignment.assignment as AssignmentExpression).varRef) as ElementReferenceExpression).reference) as VariableDefinition
           val falseExp =  (stm.instruction.asAssignment.assignment as AssignmentExpression).expression.copy
           val trueExp = trueCaseHm.get(vari.name)
@@ -531,14 +475,15 @@ class SSASCL2VHDL {
               
       ].join('\n')
 
-       //If there are any assignments left in true case?
-          if(trueCaseHm.size > 0){
-              bla = bla + '''assignment left'''
+       //If there are any assignments left in true case? then there where no corresponding statement
+          if(!trueCaseHm.empty){
+              vhdlCode = vhdlCode + '''assignment left'''
+             
+              // should not take place, because there are phi functions the always contain an assignment
+              // in both cases to the same variable   
           }
        
-      return bla 
-
-            
+      return vhdlCode      
    }
    
    // Expand an Assignment Expression

@@ -9,7 +9,7 @@ import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Assignment
-import org.yakindu.sct.model.stext.stext.Expression
+//import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import java.io.File
@@ -278,55 +278,9 @@ class SeqScl2SsaSeqScl {
     //---------------------------------------------------------------------------------------------^
     // transform conditional and compute phi function
     def List<Statement> computeSSAForConditional(Conditional conditional, Program targetProgram, Program program) { 
-       
-//       val newCond = SCL.createConditional
-//       val stmList = createNewStatementList
-//       val trueStms = conditional.statements
-//       
-//       //transform the condition expression
-//       val newCondExp = conditional.expression.copy 
-//       //more than one ElementReferenceExpression
-//       if(!(newCondExp instanceof ElementReferenceExpression)){
-//           
-//            //set all variable usages in the condition expression to the latest SSA variable
-//            newCondExp.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[exp |
-//                  val varName = (exp.reference as VariableDefinition).name
-//                  val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName)                    
-//                  exp.reference = targetProgram.getDefinitionByName(ssaVariable)
-//            ]
-//        }else{ //conditional expression has only one variable expression
-//            val varName = ((newCondExp as ElementReferenceExpression).reference as VariableDefinition).name
-//            val ssaVariable = getLastSSAIndexedVariableName(targetProgram, program, varName)
-//            (newCondExp as ElementReferenceExpression).reference = targetProgram.getDefinitionByName(ssaVariable)
-//        }
-//       
-//       //Safe Hashmap to see the changes which were made in the true case from the conditional
-//       val ssaIndexedMapSave = new HashMap<String,Integer>()
-//       ssaIndexedMapSave.putAll(ssaIndexMap)
-//       
-//       // create new conditional, the condition is the same as in the old one
-//       newCond.setExpression(newCondExp) 
-//       
-//       // transform all assignments from the true case
-//       // until now (!): only assignments exists in true case, no other statements
-//       trueStms.forEach[ stm | 
-//            val ssaAssignment = computeSSAForAssignment((stm as InstructionStatement).instruction as Assignment, targetProgram, program)
-//            
-//            //Add transformed assignment to the new SSA conditional
-//            newCond.statements.add(ssaAssignment)    
-//       ]       
-//       
-//        //add the new SSA conditional the the return statement list
-//        stmList.add(newCond.createStatement) 
-//       
-//       // compute Phi function
-//       stmList.add(computePhiFunction(ssaIndexMap, ssaIndexedMapSave, newCondExp.copy, targetProgram))
-//       
-//       stmList
-
 
 //---------------------------------------------------------------------------------------------
-// N E W   V E R S I O N S
+// N E W   V E R S I O N
 //---------------------------------------------------------------------------------------------
 
         val newCond = SCL.createConditional
@@ -369,35 +323,6 @@ class SeqScl2SsaSeqScl {
         ]       
         
 // -----------------------------------------------------------------------------------------------------
-//F I R S T   V E R S I O N 
-// original version with two condition
-//      
-//       //add the new SSA conditional the the return statement list
-//        stmList.add(newCond.createStatement) 
-//       
-//       // compute Phi function
-//       stmList.add(computePhiFunction(ssaIndexMap, ssaIndexedMapSave, newCondExp.copy, targetProgram))
-//       
-//       stmList
-
-//F I R S T   V E R S I O N   E N D
-
-// -----------------------------------------------------------------------------------------------------
-// S E C O N D   V E R S I O N  
-// Just combine phi function and else statement
-//
-//        //compute Phi function
-//        val stms = (computeInternalPhiFunction(ssaIndexMap, ssaIndexedMapSave, conditional, targetProgram))
-//       
-//        newCond.elseStatements.addAll(stms)
-//
-//        //add the new SSA conditional the the return statement list
-//        stmList.add(newCond.createStatement) 
-//       
-//        stmList     
-// S E C O N D   V E R S I O N   E N D
- 
-// -----------------------------------------------------------------------------------------------------
 // T H I R D   V E R S I O N  
 // optimized second Version, here only the variables inside the true case are checked 
 //    
@@ -419,27 +344,6 @@ class SeqScl2SsaSeqScl {
             }
             
             var currentSSAIndex = ssaIndexMap.get(hmKey)
-//            var oldSSAIndex = ssaIndexedMapSave.get(hmKey)
-//            
-//            var oldSSAIndex2 = "_" + oldSSAIndex.toString
-////            var currentSSAIndex2 = ""
-//                  
-//            //If the old variable was never assigned, then take pre value (_0)
-//            if((oldSSAIndex == -1)){
-//                val definition = program.getDefinitionByName(hmKey)
-//                if(definition.input){
-//                    //variable is input output, so take the 
-//                    oldSSAIndex2 = ""
-//                }else{
-//                   oldSSAIndex2 = "_0"
-//                }
-//            }
-//            
-//            //create pre variable if is does not exist
-//           if( targetProgram.getDefinitionByName(hmKey + oldSSAIndex2) == null){
-//                targetProgram.definitions.add(createVariableDefinition(hmKey + oldSSAIndex2, 'boolean'))
-//                ssaIndexMap.put(varName,0) 
-//           }
             
             val oldSSAIndexVariable = getLastSSAIndexedVariableName(targetProgram, program, hmKey, ssaIndexedMapSave)
             
@@ -464,129 +368,6 @@ class SeqScl2SsaSeqScl {
     
     }
     
-    //---------------------------------------------------------------------------------------------
-    // S E C O N D   V E R S I O N
-    //---------------------------------------------------------------------------------------------
-    //Computes the Phi Function (that is a conditional)
-    def EList<Statement> computeInternalPhiFunction(HashMap<String,Integer> currentHm, HashMap<String,Integer> oldHm, Conditional condition, Program targetProgram) {
-        
-        val stms = SCL.createStatementSequence
-        val elseStms = stms.statements
-        
-        //Variables could be assign more than one time in the true statement sequence(g1 = true; g1 = false),
-        //so only compute one phi function for one all assignments (definition g1_1, g1_2) 
-        val alreadyChecked = new ArrayList<String>
-        
-        //check, for which variables a phi function must be computed  
-        targetProgram.definitions.forEach[ definition |
-            
-            //Compute hashmap key, the hashmap key is the variable name without '_' extension
-            var hmKey = "" 
-            val name = definition.name
-            if(name.contains("_")){
-                hmKey = name.subSequence(0,name.lastIndexOf("_")).toString
-            }else{
-                //if it contains no '_' then it is an input/output variable
-                hmKey = name
-            }
-                        
-            var oldSSAIndex = oldHm.get(hmKey)
-            var currentSSAIndex = currentHm.get(hmKey)
-            
-            //if there are two different SSA index to the same variable, a phi function must be create
-            if(!alreadyChecked.contains(hmKey)){
-                if(oldSSAIndex < currentSSAIndex){
-                    
-                    //add current hashmap key to the visited ones
-                    alreadyChecked.add(hmKey)
-                                        
-                    //If the old variable was never assigned, then take pre value (_0)
-                    if((oldSSAIndex == -1)){
-                        oldSSAIndex = 0
-                    }
-                    
-                    //create the to possible assignments from the phi function
-                    val falsePhiAssignment = createSCLAssignment(targetProgram.getDefinitionByName(hmKey + "_" + currentSSAIndex),targetProgram.getDefinitionByName(hmKey + "_" + oldSSAIndex))
-                    
-                    //add them to the conditional
-                    elseStms.add(falsePhiAssignment.createStatement)
-                }
-            }
-        ]
-        
-        //return the phi function conditional
-        elseStms   
-    }
-        
-    //---------------------------------------------------------------------------------------------
-    //Computes the Phi Function (that is a conditional)
-    def Statement computePhiFunction(HashMap<String,Integer> currentHm, HashMap<String,Integer> oldHm, Expression conditionExpression, Program targetProgram) {
-        
-        val phiFunc = SCL.createConditional
-        
-        //The phi function has the same condition as the predecessor conditional
-        phiFunc.setExpression(conditionExpression)
-        
-        // make a copy from all definitions, because this function adds new definitions
-        val tempDefinitions = targetProgram.definitions.copyAll
-        
-        //copy current hashmap, because the original hashmap will be changed in this function
-        val tempHm = new HashMap<String,Integer>()
-        tempHm.putAll(currentHm)
-        
-        //Variables could be assign more than one time in the true statement sequence(g1 = true; g1 = false),
-        //so only compute one phi function for one all assignments (definition g1_1, g1_2) 
-        val alreadyChecked = new ArrayList<String>
-        
-        //check, for which variables a phi function must be computed  
-        tempDefinitions.forEach[ definition |
-            
-            //Compute hashmap key, the hashmap key is the variable name without '_' extension
-            var hmKey = "" 
-            val name = definition.name
-            if(name.contains("_")){
-                hmKey = name.subSequence(0,name.lastIndexOf("_")).toString
-            }else{
-                //if it contains no '_' then it is an input/output variable
-                hmKey = name
-            }
-                        
-            var oldSSAIndex = oldHm.get(hmKey)
-            var currentSSAIndex = tempHm.get(hmKey)
-            
-            //if there are two different SSA index to the same variable, a phi function must be create
-            if(!alreadyChecked.contains(hmKey)){
-                if(oldSSAIndex < currentSSAIndex){
-                    
-                    //add current hashmap key to the visited ones
-                    alreadyChecked.add(hmKey)
-                    
-                    //create new variable (new ssa index)
-                    val int ssaIndex = currentSSAIndex + 1
-                    currentHm.put(hmKey,ssaIndex)
-                    val phiVariable = hmKey + "_" + ssaIndex
-                    targetProgram.definitions.add(createVariableDefinition(phiVariable, 'boolean'))
-                    
-                    //If the old variable was never assigned, then take pre value (_0)
-                    if((oldSSAIndex == -1)){
-                        oldSSAIndex = 0
-                    }
-                    
-                    //create the to possible assignments from the phi function
-                    val truePhiAssignment = createSCLAssignment(targetProgram.getDefinitionByName(phiVariable),targetProgram.getDefinitionByName(hmKey + "_" + currentSSAIndex))
-                    val falsePhiAssignment = createSCLAssignment(targetProgram.getDefinitionByName(phiVariable),targetProgram.getDefinitionByName(hmKey + "_" + oldSSAIndex))
-                    
-                    //add them to the conditional
-                    phiFunc.statements.add(truePhiAssignment.createStatement)
-                    phiFunc.elseStatements.add(falsePhiAssignment.createStatement)
-                }
-            }
-        ]
-        
-        //return the phi function conditional
-        phiFunc.createStatement   
-    }
-
     //---------------------------------------------------------------------------------------------
     //take all output variables an assign the last (highest SSA index) assignment
     def assingSSAVariableToOutput(Program targetProgram, Program program) { 
