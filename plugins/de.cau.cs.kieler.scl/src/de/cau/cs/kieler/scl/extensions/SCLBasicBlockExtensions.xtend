@@ -320,11 +320,19 @@ class SCLBasicBlockExtensions {
     }
      
     def List<BasicBlock> getBasicBlocks(Statement statement) {
+        getBasicBlocks(statement, true)
+    } 
+    
+    def List<BasicBlock> getDirectBasicBlocks(Statement statement) {
+        getBasicBlocks(statement, false)
+    }
+     
+    def List<BasicBlock> getBasicBlocks(Statement statement, boolean hierarchical) {
         val basicBlocks = new ArrayList<BasicBlock>;
         val sseq = statement.getParentStatementSequence
         var c = 0
         for(stmt : sseq.statements) {
-            for(bb : stmt._getBasicBlocksByStatement) {
+            for(bb : stmt._getBasicBlocksByStatement(hierarchical)) {
                 if (!basicBlocks.containsEqual(bb)) basicBlocks.add(bb)
             }
             c = c + 1
@@ -332,7 +340,7 @@ class SCLBasicBlockExtensions {
         }
         if (sseq instanceof Conditional) {
             for(stmt : (sseq as Conditional).elseStatements) {
-                for(bb : stmt._getBasicBlocksByStatement) {
+                for(bb : stmt._getBasicBlocksByStatement(hierarchical)) {
                     if (!basicBlocks.containsEqual(bb)) basicBlocks.add(bb)
                 }
             }            
@@ -340,7 +348,7 @@ class SCLBasicBlockExtensions {
         basicBlocks
     }
     
-    def List<BasicBlock> _getBasicBlocksByStatement(Statement stmt) {
+    def List<BasicBlock> _getBasicBlocksByStatement(Statement stmt, boolean hierarchical) {
         val basicBlocks = new ArrayList<BasicBlock>
             val stmtBlock = stmt.getBasicBlockByAnyStatement
             if (stmtBlock != null && !basicBlocks.containsEqual(stmtBlock)) basicBlocks.add(stmtBlock)
@@ -364,7 +372,7 @@ class SCLBasicBlockExtensions {
                     } 
                 }
             }
-            if (stmt.hasInstruction && stmt.getInstruction instanceof Parallel)
+            if (stmt.hasInstruction && stmt.getInstruction instanceof Parallel && hierarchical)
                 // ignore blocks that are already in the list 
                 for (thread : (stmt.getInstruction as Parallel).threads) {
                     for (block : thread.statements.head.getBasicBlocks) {
@@ -713,7 +721,7 @@ class SCLBasicBlockExtensions {
         
         newBlockList
     }    
-
+    
     def boolean isASCSchedulable(Program program) {
         program.ASCPool.size == 0
     }
@@ -766,6 +774,7 @@ class SCLBasicBlockExtensions {
             }
         }
                 
+        Debug("No blocks left in pool: Program seems to be schedulable!");
         basicBlockPool
     }
    

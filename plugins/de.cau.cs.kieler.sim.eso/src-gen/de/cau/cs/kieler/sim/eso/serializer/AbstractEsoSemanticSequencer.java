@@ -198,7 +198,7 @@ public abstract class AbstractEsoSemanticSequencer extends AbstractDelegatingSem
 	
 	/**
 	 * Constraint:
-	 *     (input+=signal* output+=signal* extraInfos+=kvpair*)
+	 *     (input+=signal* output+=signal* extraInfos+=kvpair* extraInfosOutput+=kvpair*)
 	 */
 	protected void sequence_tick(EObject context, tick semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

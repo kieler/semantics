@@ -5,6 +5,7 @@ grammar InternalEso;
 
 options {
 	superClass=AbstractInternalAntlrParser;
+	backtrack=true;
 	
 }
 
@@ -34,6 +35,11 @@ import de.cau.cs.kieler.sim.eso.services.EsoGrammarAccess;
 
 @parser::members {
 
+/*
+  This grammar contains a lot of empty actions to work around a bug in ANTLR.
+  Otherwise the ANTLR tool will create synpreds that cannot be compiled in some rare cases.
+*/
+ 
  	private EsoGrammarAccess grammarAccess;
  	
     public InternalEsoParser(TokenStream input, EsoGrammarAccess grammarAccess) {
@@ -168,6 +174,9 @@ ruletick returns [EObject current=null]
     }
     @after { leaveRule(); }:
 ((
+	{ 
+	  /* */ 
+	}
     {
         $current = forceCreateModelElement(
             grammarAccess.getTickAccess().getTickAction_0(),
@@ -239,9 +248,39 @@ ruletick returns [EObject current=null]
 	    }
 
 )
-)*	otherlv_7=';' 
+)*(	otherlv_7='%%' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getTickAccess().getSemicolonKeyword_4());
+    	newLeafNode(otherlv_7, grammarAccess.getTickAccess().getPercentSignPercentSignKeyword_4_0());
+    }
+	otherlv_8='Output' 
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getTickAccess().getOutputKeyword_4_1());
+    }
+	otherlv_9=':' 
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getTickAccess().getColonKeyword_4_2());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTickAccess().getExtraInfosOutputKvpairParserRuleCall_4_3_0()); 
+	    }
+		lv_extraInfosOutput_10_0=rulekvpair		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTickRule());
+	        }
+       		add(
+       			$current, 
+       			"extraInfosOutput",
+        		lv_extraInfosOutput_10_0, 
+        		"kvpair");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*)?	otherlv_11=';' 
+    {
+    	newLeafNode(otherlv_11, grammarAccess.getTickAccess().getSemicolonKeyword_5());
     }
 )
 ;
@@ -389,6 +428,9 @@ rulekvpair returns [EObject current=null]
     }
     @after { leaveRule(); }:
 ((
+	{ 
+	  /* */ 
+	}
     {
         $current = forceCreateModelElement(
             grammarAccess.getKvpairAccess().getKvpairAction_0(),
@@ -416,9 +458,9 @@ rulekvpair returns [EObject current=null]
 	    }
 
 )
-)	otherlv_3=':' 
+)	otherlv_3='=' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getKvpairAccess().getColonKeyword_3());
+    	newLeafNode(otherlv_3, grammarAccess.getKvpairAccess().getEqualsSignKeyword_3());
     }
 (
 (
@@ -703,7 +745,7 @@ ruleEsoJson returns [EObject current=null]
 
 
 
-RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'&'|'*'|'='|'+'|'-'|'_');
+RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'&'|'*'|':'|'+'|'-'|'_');
 
 RULE_BOOL : ('true'|'false');
 
