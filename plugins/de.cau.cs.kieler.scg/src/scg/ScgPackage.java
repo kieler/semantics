@@ -287,13 +287,13 @@ public interface ScgPackage extends EPackage {
     int ASSIGNMENT__NEXT = NODE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Assignment</b></em>' attribute.
+     * The feature id for the '<em><b>Assignments</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__ASSIGNMENT = NODE_FEATURE_COUNT + 1;
+    int ASSIGNMENT__ASSIGNMENTS = NODE_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Assignment</em>' class.
@@ -601,15 +601,15 @@ public interface ScgPackage extends EPackage {
     EReference getAssignment_Next();
 
     /**
-     * Returns the meta object for the attribute '{@link scg.Assignment#getAssignment <em>Assignment</em>}'.
+     * Returns the meta object for the attribute '{@link scg.Assignment#getAssignments <em>Assignments</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Assignment</em>'.
-     * @see scg.Assignment#getAssignment()
+     * @return the meta object for the attribute '<em>Assignments</em>'.
+     * @see scg.Assignment#getAssignments()
      * @see #getAssignment()
      * @generated
      */
-    EAttribute getAssignment_Assignment();
+    EAttribute getAssignment_Assignments();
 
     /**
      * Returns the meta object for class '{@link scg.Fork <em>Fork</em>}'.
@@ -834,12 +834,12 @@ public interface ScgPackage extends EPackage {
         EReference ASSIGNMENT__NEXT = eINSTANCE.getAssignment_Next();
 
         /**
-         * The meta object literal for the '<em><b>Assignment</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Assignments</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
+        EAttribute ASSIGNMENT__ASSIGNMENTS = eINSTANCE.getAssignment_Assignments();
 
         /**
          * The meta object literal for the '{@link scg.impl.ForkImpl <em>Fork</em>}' class.

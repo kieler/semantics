@@ -266,7 +266,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getAssignment_Assignment() {
+    public EAttribute getAssignment_Assignments() {
         return (EAttribute)assignmentEClass.getEStructuralFeatures().get(1);
     }
 
@@ -387,7 +387,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         assignmentEClass = createEClass(ASSIGNMENT);
         createEReference(assignmentEClass, ASSIGNMENT__NEXT);
-        createEAttribute(assignmentEClass, ASSIGNMENT__ASSIGNMENT);
+        createEAttribute(assignmentEClass, ASSIGNMENT__ASSIGNMENTS);
 
         forkEClass = createEClass(FORK);
         createEReference(forkEClass, FORK__JOIN);
@@ -454,7 +454,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAssignment_Next(), this.getLink(), null, "next", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getAssignment_Assignment(), ecorePackage.getEString(), "Assignment", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getAssignment_Assignments(), ecorePackage.getEString(), "Assignments", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(forkEClass, Fork.class, "Fork", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getFork_Join(), this.getJoin(), this.getJoin_Fork(), "join", null, 1, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
