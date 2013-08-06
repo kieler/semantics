@@ -150,13 +150,22 @@ public interface EsoPackage extends EPackage
   int TICK__EXTRA_INFOS = 2;
 
   /**
+   * The feature id for the '<em><b>Extra Infos Output</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TICK__EXTRA_INFOS_OUTPUT = 3;
+
+  /**
    * The number of structural features of the '<em>tick</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TICK_FEATURE_COUNT = 3;
+  int TICK_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.sim.eso.eso.impl.signalImpl <em>signal</em>}' class.
@@ -468,6 +477,17 @@ public interface EsoPackage extends EPackage
   EReference gettick_ExtraInfos();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sim.eso.eso.tick#getExtraInfosOutput <em>Extra Infos Output</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Extra Infos Output</em>'.
+   * @see de.cau.cs.kieler.sim.eso.eso.tick#getExtraInfosOutput()
+   * @see #gettick()
+   * @generated
+   */
+  EReference gettick_ExtraInfosOutput();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.sim.eso.eso.signal <em>signal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -739,6 +759,14 @@ public interface EsoPackage extends EPackage
      * @generated
      */
     EReference TICK__EXTRA_INFOS = eINSTANCE.gettick_ExtraInfos();
+
+    /**
+     * The meta object literal for the '<em><b>Extra Infos Output</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TICK__EXTRA_INFOS_OUTPUT = eINSTANCE.gettick_ExtraInfosOutput();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.sim.eso.eso.impl.signalImpl <em>signal</em>}' class.

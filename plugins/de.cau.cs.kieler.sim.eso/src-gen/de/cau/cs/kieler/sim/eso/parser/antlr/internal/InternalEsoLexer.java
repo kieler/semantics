@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalEsoLexer extends Lexer {
+    public static final int T__20=20;
     public static final int RULE_BOOL=8;
     public static final int RULE_FLOAT=7;
     public static final int EOF=-1;
@@ -24,8 +25,8 @@ public class InternalEsoLexer extends Lexer {
     public static final int T__12=12;
     public static final int T__11=11;
     public static final int T__14=14;
-    public static final int T__13=13;
     public static final int RULE_SPECIAL=9;
+    public static final int T__13=13;
     public static final int RULE_ALPHANUMSPECIAL=4;
     public static final int RULE_INT=5;
     public static final int RULE_WS=10;
@@ -170,10 +171,11 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:17:7: ( '(' )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:17:9: '('
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:17:7: ( '%%' )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:17:9: '%%'
             {
-            match('('); 
+            match("%%"); 
+
 
             }
 
@@ -190,10 +192,10 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:18:7: ( ')' )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:18:9: ')'
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:18:7: ( '(' )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:18:9: '('
             {
-            match(')'); 
+            match('('); 
 
             }
 
@@ -210,11 +212,10 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:19:7: ( '%%' )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:19:9: '%%'
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:19:7: ( ')' )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:19:9: ')'
             {
-            match("%%"); 
-
+            match(')'); 
 
             }
 
@@ -226,15 +227,35 @@ public class InternalEsoLexer extends Lexer {
     }
     // $ANTLR end "T__19"
 
+    // $ANTLR start "T__20"
+    public final void mT__20() throws RecognitionException {
+        try {
+            int _type = T__20;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:20:7: ( '=' )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:20:9: '='
+            {
+            match('='); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__20"
+
     // $ANTLR start "RULE_SPECIAL"
     public final void mRULE_SPECIAL() throws RecognitionException {
         try {
             int _type = RULE_SPECIAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:706:14: ( ( ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-' | '_' ) )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:706:16: ( ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-' | '_' )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:748:14: ( ( ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | ':' | '+' | '-' | '_' ) )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:748:16: ( ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | ':' | '+' | '-' | '_' )
             {
-            if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='/')||input.LA(1)=='='||input.LA(1)=='@'||input.LA(1)=='_' ) {
+            if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='/')||input.LA(1)==':'||input.LA(1)=='@'||input.LA(1)=='_' ) {
                 input.consume();
 
             }
@@ -259,10 +280,10 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = RULE_BOOL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:708:11: ( ( 'true' | 'false' ) )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:708:13: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:750:11: ( ( 'true' | 'false' ) )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:750:13: ( 'true' | 'false' )
             {
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:708:13: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:750:13: ( 'true' | 'false' )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -280,7 +301,7 @@ public class InternalEsoLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:708:14: 'true'
+                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:750:14: 'true'
                     {
                     match("true"); 
 
@@ -288,7 +309,7 @@ public class InternalEsoLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:708:21: 'false'
+                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:750:21: 'false'
                     {
                     match("false"); 
 
@@ -314,10 +335,10 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:710:12: ( ( '+' | '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )+ )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:710:14: ( '+' | '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:752:12: ( ( '+' | '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )+ )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:752:14: ( '+' | '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )+
             {
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:710:14: ( '+' | '-' )?
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:752:14: ( '+' | '-' )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -343,7 +364,7 @@ public class InternalEsoLexer extends Lexer {
 
             }
 
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:710:25: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:752:25: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -357,7 +378,7 @@ public class InternalEsoLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:710:26: '0' .. '9'
+            	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:752:26: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -374,7 +395,7 @@ public class InternalEsoLexer extends Lexer {
             } while (true);
 
             match('.'); 
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:710:41: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:752:41: ( '0' .. '9' )+
             int cnt4=0;
             loop4:
             do {
@@ -388,7 +409,7 @@ public class InternalEsoLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:710:42: '0' .. '9'
+            	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:752:42: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -420,10 +441,10 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:712:10: ( ( '0' .. '9' )+ )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:712:12: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:754:10: ( ( '0' .. '9' )+ )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:754:12: ( '0' .. '9' )+
             {
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:712:12: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:754:12: ( '0' .. '9' )+
             int cnt5=0;
             loop5:
             do {
@@ -437,7 +458,7 @@ public class InternalEsoLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:712:13: '0' .. '9'
+            	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:754:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -469,10 +490,10 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = RULE_ALPHANUMSPECIAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:22: ( ( '0' .. '9' )* ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )* )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:24: ( '0' .. '9' )* ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )*
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:756:22: ( ( '0' .. '9' )* ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )* )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:756:24: ( '0' .. '9' )* ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )*
             {
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:24: ( '0' .. '9' )*
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:756:24: ( '0' .. '9' )*
             loop6:
             do {
                 int alt6=2;
@@ -485,7 +506,7 @@ public class InternalEsoLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:25: '0' .. '9'
+            	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:756:25: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -497,7 +518,7 @@ public class InternalEsoLexer extends Lexer {
                 }
             } while (true);
 
-            if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='/')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='/')||input.LA(1)==':'||(input.LA(1)>='@' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
 
             }
@@ -506,13 +527,13 @@ public class InternalEsoLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:69: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )*
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:756:69: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )*
             loop7:
             do {
                 int alt7=2;
                 int LA7_0 = input.LA(1);
 
-                if ( ((LA7_0>='#' && LA7_0<='$')||LA7_0=='&'||(LA7_0>='*' && LA7_0<='9')||LA7_0=='='||(LA7_0>='@' && LA7_0<='Z')||LA7_0=='_'||(LA7_0>='a' && LA7_0<='z')) ) {
+                if ( ((LA7_0>='#' && LA7_0<='$')||LA7_0=='&'||(LA7_0>='*' && LA7_0<=':')||(LA7_0>='@' && LA7_0<='Z')||LA7_0=='_'||(LA7_0>='a' && LA7_0<='z')) ) {
                     alt7=1;
                 }
 
@@ -521,7 +542,7 @@ public class InternalEsoLexer extends Lexer {
             	case 1 :
             	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:
             	    {
-            	    if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='9')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            	    if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<=':')||(input.LA(1)>='@' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
 
             	    }
@@ -555,10 +576,10 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -576,10 +597,10 @@ public class InternalEsoLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop8:
                     do {
                         int alt8=3;
@@ -595,7 +616,7 @@ public class InternalEsoLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -611,7 +632,7 @@ public class InternalEsoLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:66: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -636,10 +657,10 @@ public class InternalEsoLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop9:
                     do {
                         int alt9=3;
@@ -655,7 +676,7 @@ public class InternalEsoLexer extends Lexer {
 
                         switch (alt9) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -671,7 +692,7 @@ public class InternalEsoLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:716:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:758:137: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -714,10 +735,10 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:718:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:718:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:760:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:760:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:718:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:760:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt11=0;
             loop11:
             do {
@@ -767,8 +788,8 @@ public class InternalEsoLexer extends Lexer {
     // $ANTLR end "RULE_WS"
 
     public void mTokens() throws RecognitionException {
-        // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | RULE_SPECIAL | RULE_BOOL | RULE_FLOAT | RULE_INT | RULE_ALPHANUMSPECIAL | RULE_STRING | RULE_WS )
-        int alt12=16;
+        // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | RULE_SPECIAL | RULE_BOOL | RULE_FLOAT | RULE_INT | RULE_ALPHANUMSPECIAL | RULE_STRING | RULE_WS )
+        int alt12=17;
         alt12 = dfa12.predict(input);
         switch (alt12) {
             case 1 :
@@ -835,49 +856,56 @@ public class InternalEsoLexer extends Lexer {
                 }
                 break;
             case 10 :
-                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:64: RULE_SPECIAL
+                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:64: T__20
+                {
+                mT__20(); 
+
+                }
+                break;
+            case 11 :
+                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:70: RULE_SPECIAL
                 {
                 mRULE_SPECIAL(); 
 
                 }
                 break;
-            case 11 :
-                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:77: RULE_BOOL
+            case 12 :
+                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:83: RULE_BOOL
                 {
                 mRULE_BOOL(); 
 
                 }
                 break;
-            case 12 :
-                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:87: RULE_FLOAT
+            case 13 :
+                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:93: RULE_FLOAT
                 {
                 mRULE_FLOAT(); 
 
                 }
                 break;
-            case 13 :
-                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:98: RULE_INT
+            case 14 :
+                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:104: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 14 :
-                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:107: RULE_ALPHANUMSPECIAL
+            case 15 :
+                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:113: RULE_ALPHANUMSPECIAL
                 {
                 mRULE_ALPHANUMSPECIAL(); 
 
                 }
                 break;
-            case 15 :
-                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:128: RULE_STRING
+            case 16 :
+                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:134: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 16 :
-                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:140: RULE_WS
+            case 17 :
+                // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:1:146: RULE_WS
                 {
                 mRULE_WS(); 
 
@@ -891,83 +919,88 @@ public class InternalEsoLexer extends Lexer {
 
     protected DFA12 dfa12 = new DFA12(this);
     static final String DFA12_eotS =
-        "\2\uffff\1\16\1\uffff\1\23\1\16\3\uffff\1\26\2\16\1\26\1\31\3\uffff"+
-        "\1\16\2\uffff\2\16\1\uffff\2\16\1\uffff\6\16\1\45\2\16\1\50\1\16"+
-        "\1\uffff\1\52\1\16\1\uffff\1\50\1\uffff\1\54\1\uffff";
+        "\2\uffff\1\17\1\uffff\1\24\1\17\1\26\3\uffff\1\30\2\17\1\30\1\34"+
+        "\3\uffff\1\17\2\uffff\1\17\1\uffff\1\17\1\uffff\3\17\1\uffff\5\17"+
+        "\1\47\2\17\1\52\1\17\1\uffff\1\54\1\17\1\uffff\1\52\1\uffff\1\56"+
+        "\1\uffff";
     static final String DFA12_eofS =
-        "\55\uffff";
+        "\57\uffff";
     static final String DFA12_minS =
-        "\1\11\1\uffff\1\145\1\uffff\1\45\1\165\3\uffff\1\43\1\162\1\141"+
-        "\2\43\3\uffff\1\163\2\uffff\1\164\1\56\1\uffff\1\165\1\154\1\uffff"+
-        "\1\60\1\145\1\160\1\60\1\145\1\163\1\43\1\164\1\165\1\43\1\145\1"+
-        "\uffff\1\43\1\164\1\uffff\1\43\1\uffff\1\43\1\uffff";
+        "\1\11\1\uffff\1\145\1\uffff\1\45\1\165\1\43\3\uffff\1\43\1\162"+
+        "\1\141\2\43\3\uffff\1\163\2\uffff\1\164\1\uffff\1\56\1\uffff\1\165"+
+        "\1\154\1\60\1\uffff\1\145\1\160\1\60\1\145\1\163\1\43\1\164\1\165"+
+        "\1\43\1\145\1\uffff\1\43\1\164\1\uffff\1\43\1\uffff\1\43\1\uffff";
     static final String DFA12_maxS =
-        "\1\172\1\uffff\1\145\1\uffff\1\45\1\165\3\uffff\1\172\1\162\1\141"+
-        "\2\172\3\uffff\1\163\2\uffff\1\164\1\71\1\uffff\1\165\1\154\1\uffff"+
-        "\1\71\1\145\1\160\1\71\1\145\1\163\1\172\1\164\1\165\1\172\1\145"+
-        "\1\uffff\1\172\1\164\1\uffff\1\172\1\uffff\1\172\1\uffff";
+        "\1\172\1\uffff\1\145\1\uffff\1\45\1\165\1\172\3\uffff\1\172\1\162"+
+        "\1\141\2\172\3\uffff\1\163\2\uffff\1\164\1\uffff\1\71\1\uffff\1"+
+        "\165\1\154\1\71\1\uffff\1\145\1\160\1\71\1\145\1\163\1\172\1\164"+
+        "\1\165\1\172\1\145\1\uffff\1\172\1\164\1\uffff\1\172\1\uffff\1\172"+
+        "\1\uffff";
     static final String DFA12_acceptS =
-        "\1\uffff\1\1\1\uffff\1\3\2\uffff\1\6\1\7\1\10\5\uffff\1\16\1\17"+
-        "\1\20\1\uffff\1\11\1\4\2\uffff\1\12\2\uffff\1\15\13\uffff\1\14\2"+
-        "\uffff\1\13\1\uffff\1\2\1\uffff\1\5";
+        "\1\uffff\1\1\1\uffff\1\3\3\uffff\1\10\1\11\1\12\5\uffff\1\17\1"+
+        "\20\1\21\1\uffff\1\7\1\4\1\uffff\1\6\1\uffff\1\13\3\uffff\1\16\12"+
+        "\uffff\1\15\2\uffff\1\14\1\uffff\1\2\1\uffff\1\5";
     static final String DFA12_specialS =
-        "\55\uffff}>";
+        "\57\uffff}>";
     static final String[] DFA12_transitionS = {
-            "\2\20\2\uffff\1\20\22\uffff\1\20\1\1\1\17\2\14\1\4\1\14\1\17"+
-            "\1\7\1\10\1\14\1\11\1\14\1\11\2\14\12\15\1\6\1\3\1\uffff\1\14"+
-            "\2\uffff\1\14\16\16\1\5\13\16\4\uffff\1\14\1\uffff\5\16\1\13"+
-            "\13\16\1\2\1\16\1\12\6\16",
-            "",
-            "\1\21",
+            "\2\21\2\uffff\1\21\22\uffff\1\21\1\1\1\20\2\15\1\4\1\15\1\20"+
+            "\1\7\1\10\1\15\1\12\1\15\1\12\2\15\12\16\1\6\1\3\1\uffff\1\11"+
+            "\2\uffff\1\15\16\17\1\5\13\17\4\uffff\1\15\1\uffff\5\17\1\14"+
+            "\13\17\1\2\1\17\1\13\6\17",
             "",
             "\1\22",
-            "\1\24",
+            "",
+            "\1\23",
+            "\1\25",
+            "\2\17\1\uffff\1\17\3\uffff\21\17\5\uffff\33\17\4\uffff\1\17"+
+            "\1\uffff\32\17",
             "",
             "",
             "",
-            "\2\16\1\uffff\1\16\3\uffff\6\16\12\25\3\uffff\1\16\2\uffff"+
-            "\33\16\4\uffff\1\16\1\uffff\32\16",
-            "\1\27",
-            "\1\30",
-            "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
-            "\4\uffff\1\16\1\uffff\32\16",
-            "\2\16\1\uffff\1\16\3\uffff\4\16\1\32\1\16\12\15\3\uffff\1"+
-            "\16\2\uffff\33\16\4\uffff\1\16\1\uffff\32\16",
+            "\2\17\1\uffff\1\17\3\uffff\6\17\12\27\1\17\5\uffff\33\17\4"+
+            "\uffff\1\17\1\uffff\32\17",
+            "\1\31",
+            "\1\32",
+            "\2\17\1\uffff\1\17\3\uffff\21\17\5\uffff\33\17\4\uffff\1\17"+
+            "\1\uffff\32\17",
+            "\2\17\1\uffff\1\17\3\uffff\4\17\1\33\1\17\12\16\1\17\5\uffff"+
+            "\33\17\4\uffff\1\17\1\uffff\32\17",
             "",
             "",
             "",
-            "\1\33",
+            "\1\35",
             "",
-            "",
-            "\1\34",
-            "\1\35\1\uffff\12\25",
             "",
             "\1\36",
-            "\1\37",
             "",
-            "\12\40",
+            "\1\37\1\uffff\12\27",
+            "",
+            "\1\40",
             "\1\41",
-            "\1\42",
-            "\12\40",
+            "\12\42",
+            "",
             "\1\43",
             "\1\44",
-            "\2\16\1\uffff\1\16\3\uffff\6\16\12\40\3\uffff\1\16\2\uffff"+
-            "\33\16\4\uffff\1\16\1\uffff\32\16",
+            "\12\42",
+            "\1\45",
             "\1\46",
-            "\1\47",
-            "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
-            "\4\uffff\1\16\1\uffff\32\16",
+            "\2\17\1\uffff\1\17\3\uffff\6\17\12\42\1\17\5\uffff\33\17\4"+
+            "\uffff\1\17\1\uffff\32\17",
+            "\1\50",
             "\1\51",
-            "",
-            "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
-            "\4\uffff\1\16\1\uffff\32\16",
+            "\2\17\1\uffff\1\17\3\uffff\21\17\5\uffff\33\17\4\uffff\1\17"+
+            "\1\uffff\32\17",
             "\1\53",
             "",
-            "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
-            "\4\uffff\1\16\1\uffff\32\16",
+            "\2\17\1\uffff\1\17\3\uffff\21\17\5\uffff\33\17\4\uffff\1\17"+
+            "\1\uffff\32\17",
+            "\1\55",
             "",
-            "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
-            "\4\uffff\1\16\1\uffff\32\16",
+            "\2\17\1\uffff\1\17\3\uffff\21\17\5\uffff\33\17\4\uffff\1\17"+
+            "\1\uffff\32\17",
+            "",
+            "\2\17\1\uffff\1\17\3\uffff\21\17\5\uffff\33\17\4\uffff\1\17"+
+            "\1\uffff\32\17",
             ""
     };
 
@@ -1001,7 +1034,7 @@ public class InternalEsoLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | RULE_SPECIAL | RULE_BOOL | RULE_FLOAT | RULE_INT | RULE_ALPHANUMSPECIAL | RULE_STRING | RULE_WS );";
+            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | RULE_SPECIAL | RULE_BOOL | RULE_FLOAT | RULE_INT | RULE_ALPHANUMSPECIAL | RULE_STRING | RULE_WS );";
         }
     }
  

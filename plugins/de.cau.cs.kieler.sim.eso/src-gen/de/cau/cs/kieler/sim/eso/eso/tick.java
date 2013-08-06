@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.sim.eso.eso.tick#getInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sim.eso.eso.tick#getOutput <em>Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sim.eso.eso.tick#getExtraInfos <em>Extra Infos</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sim.eso.eso.tick#getExtraInfosOutput <em>Extra Infos Output</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,5 +74,21 @@ public interface tick extends EObject
    * @generated
    */
   EList<kvpair> getExtraInfos();
+
+  /**
+   * Returns the value of the '<em><b>Extra Infos Output</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.sim.eso.eso.kvpair}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Extra Infos Output</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Extra Infos Output</em>' containment reference list.
+   * @see de.cau.cs.kieler.sim.eso.eso.EsoPackage#gettick_ExtraInfosOutput()
+   * @model containment="true"
+   * @generated
+   */
+  EList<kvpair> getExtraInfosOutput();
 
 } // tick

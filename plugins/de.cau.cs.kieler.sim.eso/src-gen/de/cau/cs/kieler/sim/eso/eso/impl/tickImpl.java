@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sim.eso.eso.impl.tickImpl#getInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sim.eso.eso.impl.tickImpl#getOutput <em>Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sim.eso.eso.impl.tickImpl#getExtraInfos <em>Extra Infos</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sim.eso.eso.impl.tickImpl#getExtraInfosOutput <em>Extra Infos Output</em>}</li>
  * </ul>
  * </p>
  *
@@ -67,6 +68,16 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
    * @ordered
    */
   protected EList<kvpair> extraInfos;
+
+  /**
+   * The cached value of the '{@link #getExtraInfosOutput() <em>Extra Infos Output</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExtraInfosOutput()
+   * @generated
+   * @ordered
+   */
+  protected EList<kvpair> extraInfosOutput;
 
   /**
    * <!-- begin-user-doc -->
@@ -136,6 +147,20 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<kvpair> getExtraInfosOutput()
+  {
+    if (extraInfosOutput == null)
+    {
+      extraInfosOutput = new EObjectContainmentEList<kvpair>(kvpair.class, this, EsoPackage.TICK__EXTRA_INFOS_OUTPUT);
+    }
+    return extraInfosOutput;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -147,6 +172,8 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         return ((InternalEList<?>)getOutput()).basicRemove(otherEnd, msgs);
       case EsoPackage.TICK__EXTRA_INFOS:
         return ((InternalEList<?>)getExtraInfos()).basicRemove(otherEnd, msgs);
+      case EsoPackage.TICK__EXTRA_INFOS_OUTPUT:
+        return ((InternalEList<?>)getExtraInfosOutput()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -167,6 +194,8 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         return getOutput();
       case EsoPackage.TICK__EXTRA_INFOS:
         return getExtraInfos();
+      case EsoPackage.TICK__EXTRA_INFOS_OUTPUT:
+        return getExtraInfosOutput();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -194,6 +223,10 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         getExtraInfos().clear();
         getExtraInfos().addAll((Collection<? extends kvpair>)newValue);
         return;
+      case EsoPackage.TICK__EXTRA_INFOS_OUTPUT:
+        getExtraInfosOutput().clear();
+        getExtraInfosOutput().addAll((Collection<? extends kvpair>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -217,6 +250,9 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
       case EsoPackage.TICK__EXTRA_INFOS:
         getExtraInfos().clear();
         return;
+      case EsoPackage.TICK__EXTRA_INFOS_OUTPUT:
+        getExtraInfosOutput().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -237,6 +273,8 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         return output != null && !output.isEmpty();
       case EsoPackage.TICK__EXTRA_INFOS:
         return extraInfos != null && !extraInfos.isEmpty();
+      case EsoPackage.TICK__EXTRA_INFOS_OUTPUT:
+        return extraInfosOutput != null && !extraInfosOutput.isEmpty();
     }
     return super.eIsSet(featureID);
   }

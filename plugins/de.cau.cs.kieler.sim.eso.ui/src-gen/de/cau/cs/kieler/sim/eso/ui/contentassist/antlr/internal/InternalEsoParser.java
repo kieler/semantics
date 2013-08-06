@@ -22,8 +22,9 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalEsoParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ALPHANUMSPECIAL", "RULE_INT", "RULE_STRING", "RULE_FLOAT", "RULE_BOOL", "RULE_SPECIAL", "RULE_WS", "'!'", "'reset'", "';'", "'%'", "'Output'", "':'", "')'", "'%%'", "'('"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ALPHANUMSPECIAL", "RULE_INT", "RULE_STRING", "RULE_FLOAT", "RULE_BOOL", "RULE_SPECIAL", "RULE_WS", "'!'", "'reset'", "';'", "'%'", "'Output'", "':'", "'%%'", "')'", "'='", "'('"
     };
+    public static final int T__20=20;
     public static final int RULE_BOOL=8;
     public static final int RULE_FLOAT=7;
     public static final int EOF=-1;
@@ -36,8 +37,8 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
     public static final int T__12=12;
     public static final int T__11=11;
     public static final int T__14=14;
-    public static final int T__13=13;
     public static final int RULE_SPECIAL=9;
+    public static final int T__13=13;
     public static final int RULE_ALPHANUMSPECIAL=4;
     public static final int RULE_INT=5;
     public static final int RULE_WS=10;
@@ -1478,7 +1479,7 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( (LA4_0==RULE_ALPHANUMSPECIAL||(LA4_0>=13 && LA4_0<=14)||LA4_0==18) ) {
+                if ( (LA4_0==RULE_ALPHANUMSPECIAL||(LA4_0>=13 && LA4_0<=14)||LA4_0==17) ) {
                     alt4=1;
                 }
 
@@ -1858,8 +1859,14 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
                 int alt7=2;
                 int LA7_0 = input.LA(1);
 
-                if ( (LA7_0==18) ) {
-                    alt7=1;
+                if ( (LA7_0==17) ) {
+                    int LA7_1 = input.LA(2);
+
+                    if ( (LA7_1==RULE_ALPHANUMSPECIAL) ) {
+                        alt7=1;
+                    }
+
+
                 }
 
 
@@ -1904,17 +1911,22 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__Group__4"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:677:1: rule__Tick__Group__4 : rule__Tick__Group__4__Impl ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:677:1: rule__Tick__Group__4 : rule__Tick__Group__4__Impl rule__Tick__Group__5 ;
     public final void rule__Tick__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:681:1: ( rule__Tick__Group__4__Impl )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:682:2: rule__Tick__Group__4__Impl
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:681:1: ( rule__Tick__Group__4__Impl rule__Tick__Group__5 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:682:2: rule__Tick__Group__4__Impl rule__Tick__Group__5
             {
             pushFollow(FOLLOW_rule__Tick__Group__4__Impl_in_rule__Tick__Group__41380);
             rule__Tick__Group__4__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_rule__Tick__Group__5_in_rule__Tick__Group__41383);
+            rule__Tick__Group__5();
 
             state._fsp--;
 
@@ -1937,21 +1949,42 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__Group__4__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:688:1: rule__Tick__Group__4__Impl : ( ';' ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:689:1: rule__Tick__Group__4__Impl : ( ( rule__Tick__Group_4__0 )? ) ;
     public final void rule__Tick__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:692:1: ( ( ';' ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:693:1: ( ';' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:693:1: ( ( ( rule__Tick__Group_4__0 )? ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:694:1: ( ( rule__Tick__Group_4__0 )? )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:693:1: ( ';' )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:694:1: ';'
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:694:1: ( ( rule__Tick__Group_4__0 )? )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:695:1: ( rule__Tick__Group_4__0 )?
             {
-             before(grammarAccess.getTickAccess().getSemicolonKeyword_4()); 
-            match(input,13,FOLLOW_13_in_rule__Tick__Group__4__Impl1408); 
-             after(grammarAccess.getTickAccess().getSemicolonKeyword_4()); 
+             before(grammarAccess.getTickAccess().getGroup_4()); 
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:696:1: ( rule__Tick__Group_4__0 )?
+            int alt8=2;
+            int LA8_0 = input.LA(1);
+
+            if ( (LA8_0==17) ) {
+                alt8=1;
+            }
+            switch (alt8) {
+                case 1 :
+                    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:696:2: rule__Tick__Group_4__0
+                    {
+                    pushFollow(FOLLOW_rule__Tick__Group_4__0_in_rule__Tick__Group__4__Impl1410);
+                    rule__Tick__Group_4__0();
+
+                    state._fsp--;
+
+
+                    }
+                    break;
+
+            }
+
+             after(grammarAccess.getTickAccess().getGroup_4()); 
 
             }
 
@@ -1973,22 +2006,92 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Tick__Group__4__Impl"
 
 
+    // $ANTLR start "rule__Tick__Group__5"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:706:1: rule__Tick__Group__5 : rule__Tick__Group__5__Impl ;
+    public final void rule__Tick__Group__5() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:710:1: ( rule__Tick__Group__5__Impl )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:711:2: rule__Tick__Group__5__Impl
+            {
+            pushFollow(FOLLOW_rule__Tick__Group__5__Impl_in_rule__Tick__Group__51441);
+            rule__Tick__Group__5__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__Group__5"
+
+
+    // $ANTLR start "rule__Tick__Group__5__Impl"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:717:1: rule__Tick__Group__5__Impl : ( ';' ) ;
+    public final void rule__Tick__Group__5__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:721:1: ( ( ';' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:722:1: ( ';' )
+            {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:722:1: ( ';' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:723:1: ';'
+            {
+             before(grammarAccess.getTickAccess().getSemicolonKeyword_5()); 
+            match(input,13,FOLLOW_13_in_rule__Tick__Group__5__Impl1469); 
+             after(grammarAccess.getTickAccess().getSemicolonKeyword_5()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__Group__5__Impl"
+
+
     // $ANTLR start "rule__Tick__Group_2__0"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:717:1: rule__Tick__Group_2__0 : rule__Tick__Group_2__0__Impl rule__Tick__Group_2__1 ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:748:1: rule__Tick__Group_2__0 : rule__Tick__Group_2__0__Impl rule__Tick__Group_2__1 ;
     public final void rule__Tick__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:721:1: ( rule__Tick__Group_2__0__Impl rule__Tick__Group_2__1 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:722:2: rule__Tick__Group_2__0__Impl rule__Tick__Group_2__1
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:752:1: ( rule__Tick__Group_2__0__Impl rule__Tick__Group_2__1 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:753:2: rule__Tick__Group_2__0__Impl rule__Tick__Group_2__1
             {
-            pushFollow(FOLLOW_rule__Tick__Group_2__0__Impl_in_rule__Tick__Group_2__01449);
+            pushFollow(FOLLOW_rule__Tick__Group_2__0__Impl_in_rule__Tick__Group_2__01512);
             rule__Tick__Group_2__0__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__Tick__Group_2__1_in_rule__Tick__Group_2__01452);
+            pushFollow(FOLLOW_rule__Tick__Group_2__1_in_rule__Tick__Group_2__01515);
             rule__Tick__Group_2__1();
 
             state._fsp--;
@@ -2012,20 +2115,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__Group_2__0__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:729:1: rule__Tick__Group_2__0__Impl : ( '%' ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:760:1: rule__Tick__Group_2__0__Impl : ( '%' ) ;
     public final void rule__Tick__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:733:1: ( ( '%' ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:734:1: ( '%' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:764:1: ( ( '%' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:765:1: ( '%' )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:734:1: ( '%' )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:735:1: '%'
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:765:1: ( '%' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:766:1: '%'
             {
              before(grammarAccess.getTickAccess().getPercentSignKeyword_2_0()); 
-            match(input,14,FOLLOW_14_in_rule__Tick__Group_2__0__Impl1480); 
+            match(input,14,FOLLOW_14_in_rule__Tick__Group_2__0__Impl1543); 
              after(grammarAccess.getTickAccess().getPercentSignKeyword_2_0()); 
 
             }
@@ -2049,21 +2152,21 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__Group_2__1"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:748:1: rule__Tick__Group_2__1 : rule__Tick__Group_2__1__Impl rule__Tick__Group_2__2 ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:779:1: rule__Tick__Group_2__1 : rule__Tick__Group_2__1__Impl rule__Tick__Group_2__2 ;
     public final void rule__Tick__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:752:1: ( rule__Tick__Group_2__1__Impl rule__Tick__Group_2__2 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:753:2: rule__Tick__Group_2__1__Impl rule__Tick__Group_2__2
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:783:1: ( rule__Tick__Group_2__1__Impl rule__Tick__Group_2__2 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:784:2: rule__Tick__Group_2__1__Impl rule__Tick__Group_2__2
             {
-            pushFollow(FOLLOW_rule__Tick__Group_2__1__Impl_in_rule__Tick__Group_2__11511);
+            pushFollow(FOLLOW_rule__Tick__Group_2__1__Impl_in_rule__Tick__Group_2__11574);
             rule__Tick__Group_2__1__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__Tick__Group_2__2_in_rule__Tick__Group_2__11514);
+            pushFollow(FOLLOW_rule__Tick__Group_2__2_in_rule__Tick__Group_2__11577);
             rule__Tick__Group_2__2();
 
             state._fsp--;
@@ -2087,20 +2190,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__Group_2__1__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:760:1: rule__Tick__Group_2__1__Impl : ( 'Output' ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:791:1: rule__Tick__Group_2__1__Impl : ( 'Output' ) ;
     public final void rule__Tick__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:764:1: ( ( 'Output' ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:765:1: ( 'Output' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:795:1: ( ( 'Output' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:796:1: ( 'Output' )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:765:1: ( 'Output' )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:766:1: 'Output'
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:796:1: ( 'Output' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:797:1: 'Output'
             {
              before(grammarAccess.getTickAccess().getOutputKeyword_2_1()); 
-            match(input,15,FOLLOW_15_in_rule__Tick__Group_2__1__Impl1542); 
+            match(input,15,FOLLOW_15_in_rule__Tick__Group_2__1__Impl1605); 
              after(grammarAccess.getTickAccess().getOutputKeyword_2_1()); 
 
             }
@@ -2124,21 +2227,21 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__Group_2__2"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:779:1: rule__Tick__Group_2__2 : rule__Tick__Group_2__2__Impl rule__Tick__Group_2__3 ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:810:1: rule__Tick__Group_2__2 : rule__Tick__Group_2__2__Impl rule__Tick__Group_2__3 ;
     public final void rule__Tick__Group_2__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:783:1: ( rule__Tick__Group_2__2__Impl rule__Tick__Group_2__3 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:784:2: rule__Tick__Group_2__2__Impl rule__Tick__Group_2__3
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:814:1: ( rule__Tick__Group_2__2__Impl rule__Tick__Group_2__3 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:815:2: rule__Tick__Group_2__2__Impl rule__Tick__Group_2__3
             {
-            pushFollow(FOLLOW_rule__Tick__Group_2__2__Impl_in_rule__Tick__Group_2__21573);
+            pushFollow(FOLLOW_rule__Tick__Group_2__2__Impl_in_rule__Tick__Group_2__21636);
             rule__Tick__Group_2__2__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__Tick__Group_2__3_in_rule__Tick__Group_2__21576);
+            pushFollow(FOLLOW_rule__Tick__Group_2__3_in_rule__Tick__Group_2__21639);
             rule__Tick__Group_2__3();
 
             state._fsp--;
@@ -2162,20 +2265,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__Group_2__2__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:791:1: rule__Tick__Group_2__2__Impl : ( ':' ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:822:1: rule__Tick__Group_2__2__Impl : ( ':' ) ;
     public final void rule__Tick__Group_2__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:795:1: ( ( ':' ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:796:1: ( ':' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:826:1: ( ( ':' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:827:1: ( ':' )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:796:1: ( ':' )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:797:1: ':'
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:827:1: ( ':' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:828:1: ':'
             {
              before(grammarAccess.getTickAccess().getColonKeyword_2_2()); 
-            match(input,16,FOLLOW_16_in_rule__Tick__Group_2__2__Impl1604); 
+            match(input,16,FOLLOW_16_in_rule__Tick__Group_2__2__Impl1667); 
              after(grammarAccess.getTickAccess().getColonKeyword_2_2()); 
 
             }
@@ -2199,16 +2302,16 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__Group_2__3"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:810:1: rule__Tick__Group_2__3 : rule__Tick__Group_2__3__Impl ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:841:1: rule__Tick__Group_2__3 : rule__Tick__Group_2__3__Impl ;
     public final void rule__Tick__Group_2__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:814:1: ( rule__Tick__Group_2__3__Impl )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:815:2: rule__Tick__Group_2__3__Impl
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:845:1: ( rule__Tick__Group_2__3__Impl )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:846:2: rule__Tick__Group_2__3__Impl
             {
-            pushFollow(FOLLOW_rule__Tick__Group_2__3__Impl_in_rule__Tick__Group_2__31635);
+            pushFollow(FOLLOW_rule__Tick__Group_2__3__Impl_in_rule__Tick__Group_2__31698);
             rule__Tick__Group_2__3__Impl();
 
             state._fsp--;
@@ -2232,35 +2335,35 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__Group_2__3__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:821:1: rule__Tick__Group_2__3__Impl : ( ( rule__Tick__OutputAssignment_2_3 )* ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:852:1: rule__Tick__Group_2__3__Impl : ( ( rule__Tick__OutputAssignment_2_3 )* ) ;
     public final void rule__Tick__Group_2__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:825:1: ( ( ( rule__Tick__OutputAssignment_2_3 )* ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:826:1: ( ( rule__Tick__OutputAssignment_2_3 )* )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:856:1: ( ( ( rule__Tick__OutputAssignment_2_3 )* ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:857:1: ( ( rule__Tick__OutputAssignment_2_3 )* )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:826:1: ( ( rule__Tick__OutputAssignment_2_3 )* )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:827:1: ( rule__Tick__OutputAssignment_2_3 )*
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:857:1: ( ( rule__Tick__OutputAssignment_2_3 )* )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:858:1: ( rule__Tick__OutputAssignment_2_3 )*
             {
              before(grammarAccess.getTickAccess().getOutputAssignment_2_3()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:828:1: ( rule__Tick__OutputAssignment_2_3 )*
-            loop8:
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:859:1: ( rule__Tick__OutputAssignment_2_3 )*
+            loop9:
             do {
-                int alt8=2;
-                int LA8_0 = input.LA(1);
+                int alt9=2;
+                int LA9_0 = input.LA(1);
 
-                if ( (LA8_0==RULE_ALPHANUMSPECIAL) ) {
-                    alt8=1;
+                if ( (LA9_0==RULE_ALPHANUMSPECIAL) ) {
+                    alt9=1;
                 }
 
 
-                switch (alt8) {
+                switch (alt9) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:828:2: rule__Tick__OutputAssignment_2_3
+            	    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:859:2: rule__Tick__OutputAssignment_2_3
             	    {
-            	    pushFollow(FOLLOW_rule__Tick__OutputAssignment_2_3_in_rule__Tick__Group_2__3__Impl1662);
+            	    pushFollow(FOLLOW_rule__Tick__OutputAssignment_2_3_in_rule__Tick__Group_2__3__Impl1725);
             	    rule__Tick__OutputAssignment_2_3();
 
             	    state._fsp--;
@@ -2270,7 +2373,7 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop8;
+            	    break loop9;
                 }
             } while (true);
 
@@ -2296,22 +2399,345 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Tick__Group_2__3__Impl"
 
 
+    // $ANTLR start "rule__Tick__Group_4__0"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:877:1: rule__Tick__Group_4__0 : rule__Tick__Group_4__0__Impl rule__Tick__Group_4__1 ;
+    public final void rule__Tick__Group_4__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:881:1: ( rule__Tick__Group_4__0__Impl rule__Tick__Group_4__1 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:882:2: rule__Tick__Group_4__0__Impl rule__Tick__Group_4__1
+            {
+            pushFollow(FOLLOW_rule__Tick__Group_4__0__Impl_in_rule__Tick__Group_4__01764);
+            rule__Tick__Group_4__0__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_rule__Tick__Group_4__1_in_rule__Tick__Group_4__01767);
+            rule__Tick__Group_4__1();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__Group_4__0"
+
+
+    // $ANTLR start "rule__Tick__Group_4__0__Impl"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:889:1: rule__Tick__Group_4__0__Impl : ( '%%' ) ;
+    public final void rule__Tick__Group_4__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:893:1: ( ( '%%' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:894:1: ( '%%' )
+            {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:894:1: ( '%%' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:895:1: '%%'
+            {
+             before(grammarAccess.getTickAccess().getPercentSignPercentSignKeyword_4_0()); 
+            match(input,17,FOLLOW_17_in_rule__Tick__Group_4__0__Impl1795); 
+             after(grammarAccess.getTickAccess().getPercentSignPercentSignKeyword_4_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__Group_4__0__Impl"
+
+
+    // $ANTLR start "rule__Tick__Group_4__1"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:908:1: rule__Tick__Group_4__1 : rule__Tick__Group_4__1__Impl rule__Tick__Group_4__2 ;
+    public final void rule__Tick__Group_4__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:912:1: ( rule__Tick__Group_4__1__Impl rule__Tick__Group_4__2 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:913:2: rule__Tick__Group_4__1__Impl rule__Tick__Group_4__2
+            {
+            pushFollow(FOLLOW_rule__Tick__Group_4__1__Impl_in_rule__Tick__Group_4__11826);
+            rule__Tick__Group_4__1__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_rule__Tick__Group_4__2_in_rule__Tick__Group_4__11829);
+            rule__Tick__Group_4__2();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__Group_4__1"
+
+
+    // $ANTLR start "rule__Tick__Group_4__1__Impl"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:920:1: rule__Tick__Group_4__1__Impl : ( 'Output' ) ;
+    public final void rule__Tick__Group_4__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:924:1: ( ( 'Output' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:925:1: ( 'Output' )
+            {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:925:1: ( 'Output' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:926:1: 'Output'
+            {
+             before(grammarAccess.getTickAccess().getOutputKeyword_4_1()); 
+            match(input,15,FOLLOW_15_in_rule__Tick__Group_4__1__Impl1857); 
+             after(grammarAccess.getTickAccess().getOutputKeyword_4_1()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__Group_4__1__Impl"
+
+
+    // $ANTLR start "rule__Tick__Group_4__2"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:939:1: rule__Tick__Group_4__2 : rule__Tick__Group_4__2__Impl rule__Tick__Group_4__3 ;
+    public final void rule__Tick__Group_4__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:943:1: ( rule__Tick__Group_4__2__Impl rule__Tick__Group_4__3 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:944:2: rule__Tick__Group_4__2__Impl rule__Tick__Group_4__3
+            {
+            pushFollow(FOLLOW_rule__Tick__Group_4__2__Impl_in_rule__Tick__Group_4__21888);
+            rule__Tick__Group_4__2__Impl();
+
+            state._fsp--;
+
+            pushFollow(FOLLOW_rule__Tick__Group_4__3_in_rule__Tick__Group_4__21891);
+            rule__Tick__Group_4__3();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__Group_4__2"
+
+
+    // $ANTLR start "rule__Tick__Group_4__2__Impl"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:951:1: rule__Tick__Group_4__2__Impl : ( ':' ) ;
+    public final void rule__Tick__Group_4__2__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:955:1: ( ( ':' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:956:1: ( ':' )
+            {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:956:1: ( ':' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:957:1: ':'
+            {
+             before(grammarAccess.getTickAccess().getColonKeyword_4_2()); 
+            match(input,16,FOLLOW_16_in_rule__Tick__Group_4__2__Impl1919); 
+             after(grammarAccess.getTickAccess().getColonKeyword_4_2()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__Group_4__2__Impl"
+
+
+    // $ANTLR start "rule__Tick__Group_4__3"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:970:1: rule__Tick__Group_4__3 : rule__Tick__Group_4__3__Impl ;
+    public final void rule__Tick__Group_4__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:974:1: ( rule__Tick__Group_4__3__Impl )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:975:2: rule__Tick__Group_4__3__Impl
+            {
+            pushFollow(FOLLOW_rule__Tick__Group_4__3__Impl_in_rule__Tick__Group_4__31950);
+            rule__Tick__Group_4__3__Impl();
+
+            state._fsp--;
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__Group_4__3"
+
+
+    // $ANTLR start "rule__Tick__Group_4__3__Impl"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:981:1: rule__Tick__Group_4__3__Impl : ( ( rule__Tick__ExtraInfosOutputAssignment_4_3 )* ) ;
+    public final void rule__Tick__Group_4__3__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:985:1: ( ( ( rule__Tick__ExtraInfosOutputAssignment_4_3 )* ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:986:1: ( ( rule__Tick__ExtraInfosOutputAssignment_4_3 )* )
+            {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:986:1: ( ( rule__Tick__ExtraInfosOutputAssignment_4_3 )* )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:987:1: ( rule__Tick__ExtraInfosOutputAssignment_4_3 )*
+            {
+             before(grammarAccess.getTickAccess().getExtraInfosOutputAssignment_4_3()); 
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:988:1: ( rule__Tick__ExtraInfosOutputAssignment_4_3 )*
+            loop10:
+            do {
+                int alt10=2;
+                int LA10_0 = input.LA(1);
+
+                if ( (LA10_0==17) ) {
+                    alt10=1;
+                }
+
+
+                switch (alt10) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:988:2: rule__Tick__ExtraInfosOutputAssignment_4_3
+            	    {
+            	    pushFollow(FOLLOW_rule__Tick__ExtraInfosOutputAssignment_4_3_in_rule__Tick__Group_4__3__Impl1977);
+            	    rule__Tick__ExtraInfosOutputAssignment_4_3();
+
+            	    state._fsp--;
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop10;
+                }
+            } while (true);
+
+             after(grammarAccess.getTickAccess().getExtraInfosOutputAssignment_4_3()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__Group_4__3__Impl"
+
+
     // $ANTLR start "rule__Signal__Group__0"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:846:1: rule__Signal__Group__0 : rule__Signal__Group__0__Impl rule__Signal__Group__1 ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1006:1: rule__Signal__Group__0 : rule__Signal__Group__0__Impl rule__Signal__Group__1 ;
     public final void rule__Signal__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:850:1: ( rule__Signal__Group__0__Impl rule__Signal__Group__1 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:851:2: rule__Signal__Group__0__Impl rule__Signal__Group__1
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1010:1: ( rule__Signal__Group__0__Impl rule__Signal__Group__1 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1011:2: rule__Signal__Group__0__Impl rule__Signal__Group__1
             {
-            pushFollow(FOLLOW_rule__Signal__Group__0__Impl_in_rule__Signal__Group__01701);
+            pushFollow(FOLLOW_rule__Signal__Group__0__Impl_in_rule__Signal__Group__02016);
             rule__Signal__Group__0__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__Signal__Group__1_in_rule__Signal__Group__01704);
+            pushFollow(FOLLOW_rule__Signal__Group__1_in_rule__Signal__Group__02019);
             rule__Signal__Group__1();
 
             state._fsp--;
@@ -2335,23 +2761,23 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__Group__0__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:858:1: rule__Signal__Group__0__Impl : ( ( rule__Signal__NameAssignment_0 ) ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1018:1: rule__Signal__Group__0__Impl : ( ( rule__Signal__NameAssignment_0 ) ) ;
     public final void rule__Signal__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:862:1: ( ( ( rule__Signal__NameAssignment_0 ) ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:863:1: ( ( rule__Signal__NameAssignment_0 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1022:1: ( ( ( rule__Signal__NameAssignment_0 ) ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1023:1: ( ( rule__Signal__NameAssignment_0 ) )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:863:1: ( ( rule__Signal__NameAssignment_0 ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:864:1: ( rule__Signal__NameAssignment_0 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1023:1: ( ( rule__Signal__NameAssignment_0 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1024:1: ( rule__Signal__NameAssignment_0 )
             {
              before(grammarAccess.getSignalAccess().getNameAssignment_0()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:865:1: ( rule__Signal__NameAssignment_0 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:865:2: rule__Signal__NameAssignment_0
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1025:1: ( rule__Signal__NameAssignment_0 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1025:2: rule__Signal__NameAssignment_0
             {
-            pushFollow(FOLLOW_rule__Signal__NameAssignment_0_in_rule__Signal__Group__0__Impl1731);
+            pushFollow(FOLLOW_rule__Signal__NameAssignment_0_in_rule__Signal__Group__0__Impl2046);
             rule__Signal__NameAssignment_0();
 
             state._fsp--;
@@ -2382,21 +2808,21 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__Group__1"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:875:1: rule__Signal__Group__1 : rule__Signal__Group__1__Impl rule__Signal__Group__2 ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1035:1: rule__Signal__Group__1 : rule__Signal__Group__1__Impl rule__Signal__Group__2 ;
     public final void rule__Signal__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:879:1: ( rule__Signal__Group__1__Impl rule__Signal__Group__2 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:880:2: rule__Signal__Group__1__Impl rule__Signal__Group__2
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1039:1: ( rule__Signal__Group__1__Impl rule__Signal__Group__2 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1040:2: rule__Signal__Group__1__Impl rule__Signal__Group__2
             {
-            pushFollow(FOLLOW_rule__Signal__Group__1__Impl_in_rule__Signal__Group__11761);
+            pushFollow(FOLLOW_rule__Signal__Group__1__Impl_in_rule__Signal__Group__12076);
             rule__Signal__Group__1__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__Signal__Group__2_in_rule__Signal__Group__11764);
+            pushFollow(FOLLOW_rule__Signal__Group__2_in_rule__Signal__Group__12079);
             rule__Signal__Group__2();
 
             state._fsp--;
@@ -2420,31 +2846,31 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__Group__1__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:887:1: rule__Signal__Group__1__Impl : ( ( rule__Signal__ValuedAssignment_1 )? ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1047:1: rule__Signal__Group__1__Impl : ( ( rule__Signal__ValuedAssignment_1 )? ) ;
     public final void rule__Signal__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:891:1: ( ( ( rule__Signal__ValuedAssignment_1 )? ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:892:1: ( ( rule__Signal__ValuedAssignment_1 )? )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1051:1: ( ( ( rule__Signal__ValuedAssignment_1 )? ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1052:1: ( ( rule__Signal__ValuedAssignment_1 )? )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:892:1: ( ( rule__Signal__ValuedAssignment_1 )? )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:893:1: ( rule__Signal__ValuedAssignment_1 )?
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1052:1: ( ( rule__Signal__ValuedAssignment_1 )? )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1053:1: ( rule__Signal__ValuedAssignment_1 )?
             {
              before(grammarAccess.getSignalAccess().getValuedAssignment_1()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:894:1: ( rule__Signal__ValuedAssignment_1 )?
-            int alt9=2;
-            int LA9_0 = input.LA(1);
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1054:1: ( rule__Signal__ValuedAssignment_1 )?
+            int alt11=2;
+            int LA11_0 = input.LA(1);
 
-            if ( (LA9_0==19) ) {
-                alt9=1;
+            if ( (LA11_0==20) ) {
+                alt11=1;
             }
-            switch (alt9) {
+            switch (alt11) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:894:2: rule__Signal__ValuedAssignment_1
+                    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1054:2: rule__Signal__ValuedAssignment_1
                     {
-                    pushFollow(FOLLOW_rule__Signal__ValuedAssignment_1_in_rule__Signal__Group__1__Impl1791);
+                    pushFollow(FOLLOW_rule__Signal__ValuedAssignment_1_in_rule__Signal__Group__1__Impl2106);
                     rule__Signal__ValuedAssignment_1();
 
                     state._fsp--;
@@ -2478,16 +2904,16 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__Group__2"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:904:1: rule__Signal__Group__2 : rule__Signal__Group__2__Impl ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1064:1: rule__Signal__Group__2 : rule__Signal__Group__2__Impl ;
     public final void rule__Signal__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:908:1: ( rule__Signal__Group__2__Impl )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:909:2: rule__Signal__Group__2__Impl
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1068:1: ( rule__Signal__Group__2__Impl )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1069:2: rule__Signal__Group__2__Impl
             {
-            pushFollow(FOLLOW_rule__Signal__Group__2__Impl_in_rule__Signal__Group__21822);
+            pushFollow(FOLLOW_rule__Signal__Group__2__Impl_in_rule__Signal__Group__22137);
             rule__Signal__Group__2__Impl();
 
             state._fsp--;
@@ -2511,31 +2937,31 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__Group__2__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:915:1: rule__Signal__Group__2__Impl : ( ( rule__Signal__Group_2__0 )? ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1075:1: rule__Signal__Group__2__Impl : ( ( rule__Signal__Group_2__0 )? ) ;
     public final void rule__Signal__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:919:1: ( ( ( rule__Signal__Group_2__0 )? ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:920:1: ( ( rule__Signal__Group_2__0 )? )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1079:1: ( ( ( rule__Signal__Group_2__0 )? ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1080:1: ( ( rule__Signal__Group_2__0 )? )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:920:1: ( ( rule__Signal__Group_2__0 )? )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:921:1: ( rule__Signal__Group_2__0 )?
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1080:1: ( ( rule__Signal__Group_2__0 )? )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1081:1: ( rule__Signal__Group_2__0 )?
             {
              before(grammarAccess.getSignalAccess().getGroup_2()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:922:1: ( rule__Signal__Group_2__0 )?
-            int alt10=2;
-            int LA10_0 = input.LA(1);
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1082:1: ( rule__Signal__Group_2__0 )?
+            int alt12=2;
+            int LA12_0 = input.LA(1);
 
-            if ( ((LA10_0>=RULE_INT && LA10_0<=RULE_BOOL)) ) {
-                alt10=1;
+            if ( ((LA12_0>=RULE_INT && LA12_0<=RULE_BOOL)) ) {
+                alt12=1;
             }
-            switch (alt10) {
+            switch (alt12) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:922:2: rule__Signal__Group_2__0
+                    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1082:2: rule__Signal__Group_2__0
                     {
-                    pushFollow(FOLLOW_rule__Signal__Group_2__0_in_rule__Signal__Group__2__Impl1849);
+                    pushFollow(FOLLOW_rule__Signal__Group_2__0_in_rule__Signal__Group__2__Impl2164);
                     rule__Signal__Group_2__0();
 
                     state._fsp--;
@@ -2569,21 +2995,21 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__Group_2__0"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:938:1: rule__Signal__Group_2__0 : rule__Signal__Group_2__0__Impl rule__Signal__Group_2__1 ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1098:1: rule__Signal__Group_2__0 : rule__Signal__Group_2__0__Impl rule__Signal__Group_2__1 ;
     public final void rule__Signal__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:942:1: ( rule__Signal__Group_2__0__Impl rule__Signal__Group_2__1 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:943:2: rule__Signal__Group_2__0__Impl rule__Signal__Group_2__1
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1102:1: ( rule__Signal__Group_2__0__Impl rule__Signal__Group_2__1 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1103:2: rule__Signal__Group_2__0__Impl rule__Signal__Group_2__1
             {
-            pushFollow(FOLLOW_rule__Signal__Group_2__0__Impl_in_rule__Signal__Group_2__01886);
+            pushFollow(FOLLOW_rule__Signal__Group_2__0__Impl_in_rule__Signal__Group_2__02201);
             rule__Signal__Group_2__0__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__Signal__Group_2__1_in_rule__Signal__Group_2__01889);
+            pushFollow(FOLLOW_rule__Signal__Group_2__1_in_rule__Signal__Group_2__02204);
             rule__Signal__Group_2__1();
 
             state._fsp--;
@@ -2607,23 +3033,23 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__Group_2__0__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:950:1: rule__Signal__Group_2__0__Impl : ( ( rule__Signal__ValAssignment_2_0 ) ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1110:1: rule__Signal__Group_2__0__Impl : ( ( rule__Signal__ValAssignment_2_0 ) ) ;
     public final void rule__Signal__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:954:1: ( ( ( rule__Signal__ValAssignment_2_0 ) ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:955:1: ( ( rule__Signal__ValAssignment_2_0 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1114:1: ( ( ( rule__Signal__ValAssignment_2_0 ) ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1115:1: ( ( rule__Signal__ValAssignment_2_0 ) )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:955:1: ( ( rule__Signal__ValAssignment_2_0 ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:956:1: ( rule__Signal__ValAssignment_2_0 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1115:1: ( ( rule__Signal__ValAssignment_2_0 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1116:1: ( rule__Signal__ValAssignment_2_0 )
             {
              before(grammarAccess.getSignalAccess().getValAssignment_2_0()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:957:1: ( rule__Signal__ValAssignment_2_0 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:957:2: rule__Signal__ValAssignment_2_0
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1117:1: ( rule__Signal__ValAssignment_2_0 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1117:2: rule__Signal__ValAssignment_2_0
             {
-            pushFollow(FOLLOW_rule__Signal__ValAssignment_2_0_in_rule__Signal__Group_2__0__Impl1916);
+            pushFollow(FOLLOW_rule__Signal__ValAssignment_2_0_in_rule__Signal__Group_2__0__Impl2231);
             rule__Signal__ValAssignment_2_0();
 
             state._fsp--;
@@ -2654,16 +3080,16 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__Group_2__1"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:967:1: rule__Signal__Group_2__1 : rule__Signal__Group_2__1__Impl ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1127:1: rule__Signal__Group_2__1 : rule__Signal__Group_2__1__Impl ;
     public final void rule__Signal__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:971:1: ( rule__Signal__Group_2__1__Impl )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:972:2: rule__Signal__Group_2__1__Impl
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1131:1: ( rule__Signal__Group_2__1__Impl )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1132:2: rule__Signal__Group_2__1__Impl
             {
-            pushFollow(FOLLOW_rule__Signal__Group_2__1__Impl_in_rule__Signal__Group_2__11946);
+            pushFollow(FOLLOW_rule__Signal__Group_2__1__Impl_in_rule__Signal__Group_2__12261);
             rule__Signal__Group_2__1__Impl();
 
             state._fsp--;
@@ -2687,20 +3113,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__Group_2__1__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:978:1: rule__Signal__Group_2__1__Impl : ( ')' ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1138:1: rule__Signal__Group_2__1__Impl : ( ')' ) ;
     public final void rule__Signal__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:982:1: ( ( ')' ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:983:1: ( ')' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1142:1: ( ( ')' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1143:1: ( ')' )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:983:1: ( ')' )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:984:1: ')'
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1143:1: ( ')' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1144:1: ')'
             {
              before(grammarAccess.getSignalAccess().getRightParenthesisKeyword_2_1()); 
-            match(input,17,FOLLOW_17_in_rule__Signal__Group_2__1__Impl1974); 
+            match(input,18,FOLLOW_18_in_rule__Signal__Group_2__1__Impl2289); 
              after(grammarAccess.getSignalAccess().getRightParenthesisKeyword_2_1()); 
 
             }
@@ -2724,21 +3150,21 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__0"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1001:1: rule__Kvpair__Group__0 : rule__Kvpair__Group__0__Impl rule__Kvpair__Group__1 ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1161:1: rule__Kvpair__Group__0 : rule__Kvpair__Group__0__Impl rule__Kvpair__Group__1 ;
     public final void rule__Kvpair__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1005:1: ( rule__Kvpair__Group__0__Impl rule__Kvpair__Group__1 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1006:2: rule__Kvpair__Group__0__Impl rule__Kvpair__Group__1
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1165:1: ( rule__Kvpair__Group__0__Impl rule__Kvpair__Group__1 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1166:2: rule__Kvpair__Group__0__Impl rule__Kvpair__Group__1
             {
-            pushFollow(FOLLOW_rule__Kvpair__Group__0__Impl_in_rule__Kvpair__Group__02009);
+            pushFollow(FOLLOW_rule__Kvpair__Group__0__Impl_in_rule__Kvpair__Group__02324);
             rule__Kvpair__Group__0__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__Kvpair__Group__1_in_rule__Kvpair__Group__02012);
+            pushFollow(FOLLOW_rule__Kvpair__Group__1_in_rule__Kvpair__Group__02327);
             rule__Kvpair__Group__1();
 
             state._fsp--;
@@ -2762,21 +3188,21 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__0__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1013:1: rule__Kvpair__Group__0__Impl : ( () ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1173:1: rule__Kvpair__Group__0__Impl : ( () ) ;
     public final void rule__Kvpair__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1017:1: ( ( () ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1018:1: ( () )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1177:1: ( ( () ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1178:1: ( () )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1018:1: ( () )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1019:1: ()
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1178:1: ( () )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1179:1: ()
             {
              before(grammarAccess.getKvpairAccess().getKvpairAction_0()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1020:1: ()
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1022:1: 
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1180:1: ()
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1182:1: 
             {
             }
 
@@ -2799,21 +3225,21 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__1"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1032:1: rule__Kvpair__Group__1 : rule__Kvpair__Group__1__Impl rule__Kvpair__Group__2 ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1192:1: rule__Kvpair__Group__1 : rule__Kvpair__Group__1__Impl rule__Kvpair__Group__2 ;
     public final void rule__Kvpair__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1036:1: ( rule__Kvpair__Group__1__Impl rule__Kvpair__Group__2 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1037:2: rule__Kvpair__Group__1__Impl rule__Kvpair__Group__2
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1196:1: ( rule__Kvpair__Group__1__Impl rule__Kvpair__Group__2 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1197:2: rule__Kvpair__Group__1__Impl rule__Kvpair__Group__2
             {
-            pushFollow(FOLLOW_rule__Kvpair__Group__1__Impl_in_rule__Kvpair__Group__12070);
+            pushFollow(FOLLOW_rule__Kvpair__Group__1__Impl_in_rule__Kvpair__Group__12385);
             rule__Kvpair__Group__1__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__Kvpair__Group__2_in_rule__Kvpair__Group__12073);
+            pushFollow(FOLLOW_rule__Kvpair__Group__2_in_rule__Kvpair__Group__12388);
             rule__Kvpair__Group__2();
 
             state._fsp--;
@@ -2837,20 +3263,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__1__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1044:1: rule__Kvpair__Group__1__Impl : ( '%%' ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1204:1: rule__Kvpair__Group__1__Impl : ( '%%' ) ;
     public final void rule__Kvpair__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1048:1: ( ( '%%' ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1049:1: ( '%%' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1208:1: ( ( '%%' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1209:1: ( '%%' )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1049:1: ( '%%' )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1050:1: '%%'
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1209:1: ( '%%' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1210:1: '%%'
             {
              before(grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_1()); 
-            match(input,18,FOLLOW_18_in_rule__Kvpair__Group__1__Impl2101); 
+            match(input,17,FOLLOW_17_in_rule__Kvpair__Group__1__Impl2416); 
              after(grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_1()); 
 
             }
@@ -2874,21 +3300,21 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__2"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1063:1: rule__Kvpair__Group__2 : rule__Kvpair__Group__2__Impl rule__Kvpair__Group__3 ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1223:1: rule__Kvpair__Group__2 : rule__Kvpair__Group__2__Impl rule__Kvpair__Group__3 ;
     public final void rule__Kvpair__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1067:1: ( rule__Kvpair__Group__2__Impl rule__Kvpair__Group__3 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1068:2: rule__Kvpair__Group__2__Impl rule__Kvpair__Group__3
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1227:1: ( rule__Kvpair__Group__2__Impl rule__Kvpair__Group__3 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1228:2: rule__Kvpair__Group__2__Impl rule__Kvpair__Group__3
             {
-            pushFollow(FOLLOW_rule__Kvpair__Group__2__Impl_in_rule__Kvpair__Group__22132);
+            pushFollow(FOLLOW_rule__Kvpair__Group__2__Impl_in_rule__Kvpair__Group__22447);
             rule__Kvpair__Group__2__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__Kvpair__Group__3_in_rule__Kvpair__Group__22135);
+            pushFollow(FOLLOW_rule__Kvpair__Group__3_in_rule__Kvpair__Group__22450);
             rule__Kvpair__Group__3();
 
             state._fsp--;
@@ -2912,23 +3338,23 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__2__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1075:1: rule__Kvpair__Group__2__Impl : ( ( rule__Kvpair__KeyAssignment_2 ) ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1235:1: rule__Kvpair__Group__2__Impl : ( ( rule__Kvpair__KeyAssignment_2 ) ) ;
     public final void rule__Kvpair__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1079:1: ( ( ( rule__Kvpair__KeyAssignment_2 ) ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1080:1: ( ( rule__Kvpair__KeyAssignment_2 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1239:1: ( ( ( rule__Kvpair__KeyAssignment_2 ) ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1240:1: ( ( rule__Kvpair__KeyAssignment_2 ) )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1080:1: ( ( rule__Kvpair__KeyAssignment_2 ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1081:1: ( rule__Kvpair__KeyAssignment_2 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1240:1: ( ( rule__Kvpair__KeyAssignment_2 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1241:1: ( rule__Kvpair__KeyAssignment_2 )
             {
              before(grammarAccess.getKvpairAccess().getKeyAssignment_2()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1082:1: ( rule__Kvpair__KeyAssignment_2 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1082:2: rule__Kvpair__KeyAssignment_2
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1242:1: ( rule__Kvpair__KeyAssignment_2 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1242:2: rule__Kvpair__KeyAssignment_2
             {
-            pushFollow(FOLLOW_rule__Kvpair__KeyAssignment_2_in_rule__Kvpair__Group__2__Impl2162);
+            pushFollow(FOLLOW_rule__Kvpair__KeyAssignment_2_in_rule__Kvpair__Group__2__Impl2477);
             rule__Kvpair__KeyAssignment_2();
 
             state._fsp--;
@@ -2959,21 +3385,21 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__3"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1092:1: rule__Kvpair__Group__3 : rule__Kvpair__Group__3__Impl rule__Kvpair__Group__4 ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1252:1: rule__Kvpair__Group__3 : rule__Kvpair__Group__3__Impl rule__Kvpair__Group__4 ;
     public final void rule__Kvpair__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1096:1: ( rule__Kvpair__Group__3__Impl rule__Kvpair__Group__4 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1097:2: rule__Kvpair__Group__3__Impl rule__Kvpair__Group__4
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1256:1: ( rule__Kvpair__Group__3__Impl rule__Kvpair__Group__4 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1257:2: rule__Kvpair__Group__3__Impl rule__Kvpair__Group__4
             {
-            pushFollow(FOLLOW_rule__Kvpair__Group__3__Impl_in_rule__Kvpair__Group__32192);
+            pushFollow(FOLLOW_rule__Kvpair__Group__3__Impl_in_rule__Kvpair__Group__32507);
             rule__Kvpair__Group__3__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__Kvpair__Group__4_in_rule__Kvpair__Group__32195);
+            pushFollow(FOLLOW_rule__Kvpair__Group__4_in_rule__Kvpair__Group__32510);
             rule__Kvpair__Group__4();
 
             state._fsp--;
@@ -2997,21 +3423,21 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__3__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1104:1: rule__Kvpair__Group__3__Impl : ( ':' ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1264:1: rule__Kvpair__Group__3__Impl : ( '=' ) ;
     public final void rule__Kvpair__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1108:1: ( ( ':' ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1109:1: ( ':' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1268:1: ( ( '=' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1269:1: ( '=' )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1109:1: ( ':' )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1110:1: ':'
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1269:1: ( '=' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1270:1: '='
             {
-             before(grammarAccess.getKvpairAccess().getColonKeyword_3()); 
-            match(input,16,FOLLOW_16_in_rule__Kvpair__Group__3__Impl2223); 
-             after(grammarAccess.getKvpairAccess().getColonKeyword_3()); 
+             before(grammarAccess.getKvpairAccess().getEqualsSignKeyword_3()); 
+            match(input,19,FOLLOW_19_in_rule__Kvpair__Group__3__Impl2538); 
+             after(grammarAccess.getKvpairAccess().getEqualsSignKeyword_3()); 
 
             }
 
@@ -3034,16 +3460,16 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__4"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1123:1: rule__Kvpair__Group__4 : rule__Kvpair__Group__4__Impl ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1283:1: rule__Kvpair__Group__4 : rule__Kvpair__Group__4__Impl ;
     public final void rule__Kvpair__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1127:1: ( rule__Kvpair__Group__4__Impl )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1128:2: rule__Kvpair__Group__4__Impl
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1287:1: ( rule__Kvpair__Group__4__Impl )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1288:2: rule__Kvpair__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Kvpair__Group__4__Impl_in_rule__Kvpair__Group__42254);
+            pushFollow(FOLLOW_rule__Kvpair__Group__4__Impl_in_rule__Kvpair__Group__42569);
             rule__Kvpair__Group__4__Impl();
 
             state._fsp--;
@@ -3067,23 +3493,23 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__4__Impl"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1134:1: rule__Kvpair__Group__4__Impl : ( ( rule__Kvpair__ValueAssignment_4 ) ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1294:1: rule__Kvpair__Group__4__Impl : ( ( rule__Kvpair__ValueAssignment_4 ) ) ;
     public final void rule__Kvpair__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1138:1: ( ( ( rule__Kvpair__ValueAssignment_4 ) ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1139:1: ( ( rule__Kvpair__ValueAssignment_4 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1298:1: ( ( ( rule__Kvpair__ValueAssignment_4 ) ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1299:1: ( ( rule__Kvpair__ValueAssignment_4 ) )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1139:1: ( ( rule__Kvpair__ValueAssignment_4 ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1140:1: ( rule__Kvpair__ValueAssignment_4 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1299:1: ( ( rule__Kvpair__ValueAssignment_4 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1300:1: ( rule__Kvpair__ValueAssignment_4 )
             {
              before(grammarAccess.getKvpairAccess().getValueAssignment_4()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1141:1: ( rule__Kvpair__ValueAssignment_4 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1141:2: rule__Kvpair__ValueAssignment_4
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1301:1: ( rule__Kvpair__ValueAssignment_4 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1301:2: rule__Kvpair__ValueAssignment_4
             {
-            pushFollow(FOLLOW_rule__Kvpair__ValueAssignment_4_in_rule__Kvpair__Group__4__Impl2281);
+            pushFollow(FOLLOW_rule__Kvpair__ValueAssignment_4_in_rule__Kvpair__Group__4__Impl2596);
             rule__Kvpair__ValueAssignment_4();
 
             state._fsp--;
@@ -3114,20 +3540,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tracelist__TracesAssignment"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1162:1: rule__Tracelist__TracesAssignment : ( ruletrace ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1322:1: rule__Tracelist__TracesAssignment : ( ruletrace ) ;
     public final void rule__Tracelist__TracesAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1166:1: ( ( ruletrace ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1167:1: ( ruletrace )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1326:1: ( ( ruletrace ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1327:1: ( ruletrace )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1167:1: ( ruletrace )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1168:1: ruletrace
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1327:1: ( ruletrace )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1328:1: ruletrace
             {
              before(grammarAccess.getTracelistAccess().getTracesTraceParserRuleCall_0()); 
-            pushFollow(FOLLOW_ruletrace_in_rule__Tracelist__TracesAssignment2326);
+            pushFollow(FOLLOW_ruletrace_in_rule__Tracelist__TracesAssignment2641);
             ruletrace();
 
             state._fsp--;
@@ -3155,20 +3581,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Trace__TicksAssignment_3"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1177:1: rule__Trace__TicksAssignment_3 : ( ruletick ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1337:1: rule__Trace__TicksAssignment_3 : ( ruletick ) ;
     public final void rule__Trace__TicksAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1181:1: ( ( ruletick ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1182:1: ( ruletick )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1341:1: ( ( ruletick ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1342:1: ( ruletick )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1182:1: ( ruletick )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1183:1: ruletick
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1342:1: ( ruletick )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1343:1: ruletick
             {
              before(grammarAccess.getTraceAccess().getTicksTickParserRuleCall_3_0()); 
-            pushFollow(FOLLOW_ruletick_in_rule__Trace__TicksAssignment_32357);
+            pushFollow(FOLLOW_ruletick_in_rule__Trace__TicksAssignment_32672);
             ruletick();
 
             state._fsp--;
@@ -3196,20 +3622,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__InputAssignment_1"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1192:1: rule__Tick__InputAssignment_1 : ( rulesignal ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1352:1: rule__Tick__InputAssignment_1 : ( rulesignal ) ;
     public final void rule__Tick__InputAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1196:1: ( ( rulesignal ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1197:1: ( rulesignal )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1356:1: ( ( rulesignal ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1357:1: ( rulesignal )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1197:1: ( rulesignal )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1198:1: rulesignal
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1357:1: ( rulesignal )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1358:1: rulesignal
             {
              before(grammarAccess.getTickAccess().getInputSignalParserRuleCall_1_0()); 
-            pushFollow(FOLLOW_rulesignal_in_rule__Tick__InputAssignment_12388);
+            pushFollow(FOLLOW_rulesignal_in_rule__Tick__InputAssignment_12703);
             rulesignal();
 
             state._fsp--;
@@ -3237,20 +3663,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__OutputAssignment_2_3"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1207:1: rule__Tick__OutputAssignment_2_3 : ( rulesignal ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1367:1: rule__Tick__OutputAssignment_2_3 : ( rulesignal ) ;
     public final void rule__Tick__OutputAssignment_2_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1211:1: ( ( rulesignal ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1212:1: ( rulesignal )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1371:1: ( ( rulesignal ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1372:1: ( rulesignal )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1212:1: ( rulesignal )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1213:1: rulesignal
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1372:1: ( rulesignal )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1373:1: rulesignal
             {
              before(grammarAccess.getTickAccess().getOutputSignalParserRuleCall_2_3_0()); 
-            pushFollow(FOLLOW_rulesignal_in_rule__Tick__OutputAssignment_2_32419);
+            pushFollow(FOLLOW_rulesignal_in_rule__Tick__OutputAssignment_2_32734);
             rulesignal();
 
             state._fsp--;
@@ -3278,20 +3704,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Tick__ExtraInfosAssignment_3"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1222:1: rule__Tick__ExtraInfosAssignment_3 : ( rulekvpair ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1382:1: rule__Tick__ExtraInfosAssignment_3 : ( rulekvpair ) ;
     public final void rule__Tick__ExtraInfosAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1226:1: ( ( rulekvpair ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1227:1: ( rulekvpair )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1386:1: ( ( rulekvpair ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1387:1: ( rulekvpair )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1227:1: ( rulekvpair )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1228:1: rulekvpair
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1387:1: ( rulekvpair )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1388:1: rulekvpair
             {
              before(grammarAccess.getTickAccess().getExtraInfosKvpairParserRuleCall_3_0()); 
-            pushFollow(FOLLOW_rulekvpair_in_rule__Tick__ExtraInfosAssignment_32450);
+            pushFollow(FOLLOW_rulekvpair_in_rule__Tick__ExtraInfosAssignment_32765);
             rulekvpair();
 
             state._fsp--;
@@ -3318,21 +3744,62 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Tick__ExtraInfosAssignment_3"
 
 
+    // $ANTLR start "rule__Tick__ExtraInfosOutputAssignment_4_3"
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1397:1: rule__Tick__ExtraInfosOutputAssignment_4_3 : ( rulekvpair ) ;
+    public final void rule__Tick__ExtraInfosOutputAssignment_4_3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1401:1: ( ( rulekvpair ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1402:1: ( rulekvpair )
+            {
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1402:1: ( rulekvpair )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1403:1: rulekvpair
+            {
+             before(grammarAccess.getTickAccess().getExtraInfosOutputKvpairParserRuleCall_4_3_0()); 
+            pushFollow(FOLLOW_rulekvpair_in_rule__Tick__ExtraInfosOutputAssignment_4_32796);
+            rulekvpair();
+
+            state._fsp--;
+
+             after(grammarAccess.getTickAccess().getExtraInfosOutputKvpairParserRuleCall_4_3_0()); 
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Tick__ExtraInfosOutputAssignment_4_3"
+
+
     // $ANTLR start "rule__Signal__NameAssignment_0"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1237:1: rule__Signal__NameAssignment_0 : ( RULE_ALPHANUMSPECIAL ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1412:1: rule__Signal__NameAssignment_0 : ( RULE_ALPHANUMSPECIAL ) ;
     public final void rule__Signal__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1241:1: ( ( RULE_ALPHANUMSPECIAL ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1242:1: ( RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1416:1: ( ( RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1417:1: ( RULE_ALPHANUMSPECIAL )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1242:1: ( RULE_ALPHANUMSPECIAL )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1243:1: RULE_ALPHANUMSPECIAL
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1417:1: ( RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1418:1: RULE_ALPHANUMSPECIAL
             {
              before(grammarAccess.getSignalAccess().getNameALPHANUMSPECIALTerminalRuleCall_0_0()); 
-            match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Signal__NameAssignment_02481); 
+            match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Signal__NameAssignment_02827); 
              after(grammarAccess.getSignalAccess().getNameALPHANUMSPECIALTerminalRuleCall_0_0()); 
 
             }
@@ -3356,24 +3823,24 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__ValuedAssignment_1"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1252:1: rule__Signal__ValuedAssignment_1 : ( ( '(' ) ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1427:1: rule__Signal__ValuedAssignment_1 : ( ( '(' ) ) ;
     public final void rule__Signal__ValuedAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1256:1: ( ( ( '(' ) ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1257:1: ( ( '(' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1431:1: ( ( ( '(' ) ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1432:1: ( ( '(' ) )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1257:1: ( ( '(' ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1258:1: ( '(' )
-            {
-             before(grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1259:1: ( '(' )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1260:1: '('
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1432:1: ( ( '(' ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1433:1: ( '(' )
             {
              before(grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0()); 
-            match(input,19,FOLLOW_19_in_rule__Signal__ValuedAssignment_12517); 
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1434:1: ( '(' )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1435:1: '('
+            {
+             before(grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0()); 
+            match(input,20,FOLLOW_20_in_rule__Signal__ValuedAssignment_12863); 
              after(grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0()); 
 
             }
@@ -3401,23 +3868,23 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Signal__ValAssignment_2_0"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1275:1: rule__Signal__ValAssignment_2_0 : ( ( rule__Signal__ValAlternatives_2_0_0 ) ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1450:1: rule__Signal__ValAssignment_2_0 : ( ( rule__Signal__ValAlternatives_2_0_0 ) ) ;
     public final void rule__Signal__ValAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1279:1: ( ( ( rule__Signal__ValAlternatives_2_0_0 ) ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1280:1: ( ( rule__Signal__ValAlternatives_2_0_0 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1454:1: ( ( ( rule__Signal__ValAlternatives_2_0_0 ) ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1455:1: ( ( rule__Signal__ValAlternatives_2_0_0 ) )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1280:1: ( ( rule__Signal__ValAlternatives_2_0_0 ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1281:1: ( rule__Signal__ValAlternatives_2_0_0 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1455:1: ( ( rule__Signal__ValAlternatives_2_0_0 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1456:1: ( rule__Signal__ValAlternatives_2_0_0 )
             {
              before(grammarAccess.getSignalAccess().getValAlternatives_2_0_0()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1282:1: ( rule__Signal__ValAlternatives_2_0_0 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1282:2: rule__Signal__ValAlternatives_2_0_0
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1457:1: ( rule__Signal__ValAlternatives_2_0_0 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1457:2: rule__Signal__ValAlternatives_2_0_0
             {
-            pushFollow(FOLLOW_rule__Signal__ValAlternatives_2_0_0_in_rule__Signal__ValAssignment_2_02556);
+            pushFollow(FOLLOW_rule__Signal__ValAlternatives_2_0_0_in_rule__Signal__ValAssignment_2_02902);
             rule__Signal__ValAlternatives_2_0_0();
 
             state._fsp--;
@@ -3448,20 +3915,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__KeyAssignment_2"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1291:1: rule__Kvpair__KeyAssignment_2 : ( RULE_ALPHANUMSPECIAL ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1466:1: rule__Kvpair__KeyAssignment_2 : ( RULE_ALPHANUMSPECIAL ) ;
     public final void rule__Kvpair__KeyAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1295:1: ( ( RULE_ALPHANUMSPECIAL ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1296:1: ( RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1470:1: ( ( RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1471:1: ( RULE_ALPHANUMSPECIAL )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1296:1: ( RULE_ALPHANUMSPECIAL )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1297:1: RULE_ALPHANUMSPECIAL
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1471:1: ( RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1472:1: RULE_ALPHANUMSPECIAL
             {
              before(grammarAccess.getKvpairAccess().getKeyALPHANUMSPECIALTerminalRuleCall_2_0()); 
-            match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__KeyAssignment_22589); 
+            match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__KeyAssignment_22935); 
              after(grammarAccess.getKvpairAccess().getKeyALPHANUMSPECIALTerminalRuleCall_2_0()); 
 
             }
@@ -3485,23 +3952,23 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__ValueAssignment_4"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1306:1: rule__Kvpair__ValueAssignment_4 : ( ( rule__Kvpair__ValueAlternatives_4_0 ) ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1481:1: rule__Kvpair__ValueAssignment_4 : ( ( rule__Kvpair__ValueAlternatives_4_0 ) ) ;
     public final void rule__Kvpair__ValueAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1310:1: ( ( ( rule__Kvpair__ValueAlternatives_4_0 ) ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1311:1: ( ( rule__Kvpair__ValueAlternatives_4_0 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1485:1: ( ( ( rule__Kvpair__ValueAlternatives_4_0 ) ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1486:1: ( ( rule__Kvpair__ValueAlternatives_4_0 ) )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1311:1: ( ( rule__Kvpair__ValueAlternatives_4_0 ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1312:1: ( rule__Kvpair__ValueAlternatives_4_0 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1486:1: ( ( rule__Kvpair__ValueAlternatives_4_0 ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1487:1: ( rule__Kvpair__ValueAlternatives_4_0 )
             {
              before(grammarAccess.getKvpairAccess().getValueAlternatives_4_0()); 
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1313:1: ( rule__Kvpair__ValueAlternatives_4_0 )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1313:2: rule__Kvpair__ValueAlternatives_4_0
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1488:1: ( rule__Kvpair__ValueAlternatives_4_0 )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1488:2: rule__Kvpair__ValueAlternatives_4_0
             {
-            pushFollow(FOLLOW_rule__Kvpair__ValueAlternatives_4_0_in_rule__Kvpair__ValueAssignment_42620);
+            pushFollow(FOLLOW_rule__Kvpair__ValueAlternatives_4_0_in_rule__Kvpair__ValueAssignment_42966);
             rule__Kvpair__ValueAlternatives_4_0();
 
             state._fsp--;
@@ -3532,20 +3999,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EsoInt__ValueAssignment"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1322:1: rule__EsoInt__ValueAssignment : ( RULE_INT ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1497:1: rule__EsoInt__ValueAssignment : ( RULE_INT ) ;
     public final void rule__EsoInt__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1326:1: ( ( RULE_INT ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1327:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1501:1: ( ( RULE_INT ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1502:1: ( RULE_INT )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1327:1: ( RULE_INT )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1328:1: RULE_INT
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1502:1: ( RULE_INT )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1503:1: RULE_INT
             {
              before(grammarAccess.getEsoIntAccess().getValueINTTerminalRuleCall_0()); 
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__EsoInt__ValueAssignment2653); 
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__EsoInt__ValueAssignment2999); 
              after(grammarAccess.getEsoIntAccess().getValueINTTerminalRuleCall_0()); 
 
             }
@@ -3569,20 +4036,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EsoString__ValueAssignment"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1337:1: rule__EsoString__ValueAssignment : ( RULE_STRING ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1512:1: rule__EsoString__ValueAssignment : ( RULE_STRING ) ;
     public final void rule__EsoString__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1341:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1342:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1516:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1517:1: ( RULE_STRING )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1342:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1343:1: RULE_STRING
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1517:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1518:1: RULE_STRING
             {
              before(grammarAccess.getEsoStringAccess().getValueSTRINGTerminalRuleCall_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__EsoString__ValueAssignment2684); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__EsoString__ValueAssignment3030); 
              after(grammarAccess.getEsoStringAccess().getValueSTRINGTerminalRuleCall_0()); 
 
             }
@@ -3606,20 +4073,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EsoFloat__ValueAssignment"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1352:1: rule__EsoFloat__ValueAssignment : ( RULE_FLOAT ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1527:1: rule__EsoFloat__ValueAssignment : ( RULE_FLOAT ) ;
     public final void rule__EsoFloat__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1356:1: ( ( RULE_FLOAT ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1357:1: ( RULE_FLOAT )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1531:1: ( ( RULE_FLOAT ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1532:1: ( RULE_FLOAT )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1357:1: ( RULE_FLOAT )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1358:1: RULE_FLOAT
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1532:1: ( RULE_FLOAT )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1533:1: RULE_FLOAT
             {
              before(grammarAccess.getEsoFloatAccess().getValueFLOATTerminalRuleCall_0()); 
-            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_rule__EsoFloat__ValueAssignment2715); 
+            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_rule__EsoFloat__ValueAssignment3061); 
              after(grammarAccess.getEsoFloatAccess().getValueFLOATTerminalRuleCall_0()); 
 
             }
@@ -3643,20 +4110,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EsoBool__ValueAssignment"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1367:1: rule__EsoBool__ValueAssignment : ( RULE_BOOL ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1542:1: rule__EsoBool__ValueAssignment : ( RULE_BOOL ) ;
     public final void rule__EsoBool__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1371:1: ( ( RULE_BOOL ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1372:1: ( RULE_BOOL )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1546:1: ( ( RULE_BOOL ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1547:1: ( RULE_BOOL )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1372:1: ( RULE_BOOL )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1373:1: RULE_BOOL
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1547:1: ( RULE_BOOL )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1548:1: RULE_BOOL
             {
              before(grammarAccess.getEsoBoolAccess().getValueBOOLTerminalRuleCall_0()); 
-            match(input,RULE_BOOL,FOLLOW_RULE_BOOL_in_rule__EsoBool__ValueAssignment2746); 
+            match(input,RULE_BOOL,FOLLOW_RULE_BOOL_in_rule__EsoBool__ValueAssignment3092); 
              after(grammarAccess.getEsoBoolAccess().getValueBOOLTerminalRuleCall_0()); 
 
             }
@@ -3680,20 +4147,20 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__EsoJson__ValueAssignment"
-    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1382:1: rule__EsoJson__ValueAssignment : ( RULE_ALPHANUMSPECIAL ) ;
+    // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1557:1: rule__EsoJson__ValueAssignment : ( RULE_ALPHANUMSPECIAL ) ;
     public final void rule__EsoJson__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1386:1: ( ( RULE_ALPHANUMSPECIAL ) )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1387:1: ( RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1561:1: ( ( RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1562:1: ( RULE_ALPHANUMSPECIAL )
             {
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1387:1: ( RULE_ALPHANUMSPECIAL )
-            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1388:1: RULE_ALPHANUMSPECIAL
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1562:1: ( RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.eso.ui/src-gen/de/cau/cs/kieler/sim/eso/ui/contentassist/antlr/internal/InternalEso.g:1563:1: RULE_ALPHANUMSPECIAL
             {
              before(grammarAccess.getEsoJsonAccess().getValueALPHANUMSPECIALTerminalRuleCall_0()); 
-            match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__EsoJson__ValueAssignment2777); 
+            match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__EsoJson__ValueAssignment3123); 
              after(grammarAccess.getEsoJsonAccess().getValueALPHANUMSPECIALTerminalRuleCall_0()); 
 
             }
@@ -3766,76 +4233,91 @@ public class InternalEsoParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Trace__Group__1__Impl_in_rule__Trace__Group__1930 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_rule__Trace__Group__2_in_rule__Trace__Group__1933 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_rule__Trace__Group__1__Impl961 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__Group__2__Impl_in_rule__Trace__Group__2992 = new BitSet(new long[]{0x0000000000046010L});
+    public static final BitSet FOLLOW_rule__Trace__Group__2__Impl_in_rule__Trace__Group__2992 = new BitSet(new long[]{0x0000000000026010L});
     public static final BitSet FOLLOW_rule__Trace__Group__3_in_rule__Trace__Group__2995 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_13_in_rule__Trace__Group__2__Impl1023 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Trace__Group__3__Impl_in_rule__Trace__Group__31054 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__TicksAssignment_3_in_rule__Trace__Group__3__Impl1083 = new BitSet(new long[]{0x0000000000046012L});
-    public static final BitSet FOLLOW_rule__Trace__TicksAssignment_3_in_rule__Trace__Group__3__Impl1095 = new BitSet(new long[]{0x0000000000046012L});
-    public static final BitSet FOLLOW_rule__Tick__Group__0__Impl_in_rule__Tick__Group__01136 = new BitSet(new long[]{0x0000000000046010L});
+    public static final BitSet FOLLOW_rule__Trace__TicksAssignment_3_in_rule__Trace__Group__3__Impl1083 = new BitSet(new long[]{0x0000000000026012L});
+    public static final BitSet FOLLOW_rule__Trace__TicksAssignment_3_in_rule__Trace__Group__3__Impl1095 = new BitSet(new long[]{0x0000000000026012L});
+    public static final BitSet FOLLOW_rule__Tick__Group__0__Impl_in_rule__Tick__Group__01136 = new BitSet(new long[]{0x0000000000026010L});
     public static final BitSet FOLLOW_rule__Tick__Group__1_in_rule__Tick__Group__01139 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group__1__Impl_in_rule__Tick__Group__11197 = new BitSet(new long[]{0x0000000000046010L});
+    public static final BitSet FOLLOW_rule__Tick__Group__1__Impl_in_rule__Tick__Group__11197 = new BitSet(new long[]{0x0000000000026010L});
     public static final BitSet FOLLOW_rule__Tick__Group__2_in_rule__Tick__Group__11200 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__InputAssignment_1_in_rule__Tick__Group__1__Impl1227 = new BitSet(new long[]{0x0000000000000012L});
-    public static final BitSet FOLLOW_rule__Tick__Group__2__Impl_in_rule__Tick__Group__21258 = new BitSet(new long[]{0x0000000000046010L});
+    public static final BitSet FOLLOW_rule__Tick__Group__2__Impl_in_rule__Tick__Group__21258 = new BitSet(new long[]{0x0000000000026010L});
     public static final BitSet FOLLOW_rule__Tick__Group__3_in_rule__Tick__Group__21261 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__Group_2__0_in_rule__Tick__Group__2__Impl1288 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group__3__Impl_in_rule__Tick__Group__31319 = new BitSet(new long[]{0x0000000000046010L});
+    public static final BitSet FOLLOW_rule__Tick__Group__3__Impl_in_rule__Tick__Group__31319 = new BitSet(new long[]{0x0000000000026010L});
     public static final BitSet FOLLOW_rule__Tick__Group__4_in_rule__Tick__Group__31322 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__ExtraInfosAssignment_3_in_rule__Tick__Group__3__Impl1349 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_rule__Tick__Group__4__Impl_in_rule__Tick__Group__41380 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_13_in_rule__Tick__Group__4__Impl1408 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group_2__0__Impl_in_rule__Tick__Group_2__01449 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_rule__Tick__Group_2__1_in_rule__Tick__Group_2__01452 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_rule__Tick__Group_2__0__Impl1480 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group_2__1__Impl_in_rule__Tick__Group_2__11511 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_rule__Tick__Group_2__2_in_rule__Tick__Group_2__11514 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_rule__Tick__Group_2__1__Impl1542 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group_2__2__Impl_in_rule__Tick__Group_2__21573 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__Tick__Group_2__3_in_rule__Tick__Group_2__21576 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_rule__Tick__Group_2__2__Impl1604 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group_2__3__Impl_in_rule__Tick__Group_2__31635 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__OutputAssignment_2_3_in_rule__Tick__Group_2__3__Impl1662 = new BitSet(new long[]{0x0000000000000012L});
-    public static final BitSet FOLLOW_rule__Signal__Group__0__Impl_in_rule__Signal__Group__01701 = new BitSet(new long[]{0x00000000000801E0L});
-    public static final BitSet FOLLOW_rule__Signal__Group__1_in_rule__Signal__Group__01704 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__NameAssignment_0_in_rule__Signal__Group__0__Impl1731 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group__1__Impl_in_rule__Signal__Group__11761 = new BitSet(new long[]{0x00000000000801E0L});
-    public static final BitSet FOLLOW_rule__Signal__Group__2_in_rule__Signal__Group__11764 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__ValuedAssignment_1_in_rule__Signal__Group__1__Impl1791 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group__2__Impl_in_rule__Signal__Group__21822 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_2__0_in_rule__Signal__Group__2__Impl1849 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_2__0__Impl_in_rule__Signal__Group_2__01886 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_rule__Signal__Group_2__1_in_rule__Signal__Group_2__01889 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__ValAssignment_2_0_in_rule__Signal__Group_2__0__Impl1916 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_2__1__Impl_in_rule__Signal__Group_2__11946 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_rule__Signal__Group_2__1__Impl1974 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__Group__0__Impl_in_rule__Kvpair__Group__02009 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_rule__Kvpair__Group__1_in_rule__Kvpair__Group__02012 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__Group__1__Impl_in_rule__Kvpair__Group__12070 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__Kvpair__Group__2_in_rule__Kvpair__Group__12073 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_rule__Kvpair__Group__1__Impl2101 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__Group__2__Impl_in_rule__Kvpair__Group__22132 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_rule__Kvpair__Group__3_in_rule__Kvpair__Group__22135 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__KeyAssignment_2_in_rule__Kvpair__Group__2__Impl2162 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__Group__3__Impl_in_rule__Kvpair__Group__32192 = new BitSet(new long[]{0x00000000000001F0L});
-    public static final BitSet FOLLOW_rule__Kvpair__Group__4_in_rule__Kvpair__Group__32195 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_rule__Kvpair__Group__3__Impl2223 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__Group__4__Impl_in_rule__Kvpair__Group__42254 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__ValueAssignment_4_in_rule__Kvpair__Group__4__Impl2281 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruletrace_in_rule__Tracelist__TracesAssignment2326 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruletick_in_rule__Trace__TicksAssignment_32357 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulesignal_in_rule__Tick__InputAssignment_12388 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulesignal_in_rule__Tick__OutputAssignment_2_32419 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulekvpair_in_rule__Tick__ExtraInfosAssignment_32450 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Signal__NameAssignment_02481 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_19_in_rule__Signal__ValuedAssignment_12517 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__ValAlternatives_2_0_0_in_rule__Signal__ValAssignment_2_02556 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__KeyAssignment_22589 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__ValueAlternatives_4_0_in_rule__Kvpair__ValueAssignment_42620 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__EsoInt__ValueAssignment2653 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__EsoString__ValueAssignment2684 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_FLOAT_in_rule__EsoFloat__ValueAssignment2715 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_BOOL_in_rule__EsoBool__ValueAssignment2746 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__EsoJson__ValueAssignment2777 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__ExtraInfosAssignment_3_in_rule__Tick__Group__3__Impl1349 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_rule__Tick__Group__4__Impl_in_rule__Tick__Group__41380 = new BitSet(new long[]{0x0000000000026010L});
+    public static final BitSet FOLLOW_rule__Tick__Group__5_in_rule__Tick__Group__41383 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group_4__0_in_rule__Tick__Group__4__Impl1410 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group__5__Impl_in_rule__Tick__Group__51441 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_13_in_rule__Tick__Group__5__Impl1469 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group_2__0__Impl_in_rule__Tick__Group_2__01512 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_rule__Tick__Group_2__1_in_rule__Tick__Group_2__01515 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_14_in_rule__Tick__Group_2__0__Impl1543 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group_2__1__Impl_in_rule__Tick__Group_2__11574 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_rule__Tick__Group_2__2_in_rule__Tick__Group_2__11577 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_15_in_rule__Tick__Group_2__1__Impl1605 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group_2__2__Impl_in_rule__Tick__Group_2__21636 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__Tick__Group_2__3_in_rule__Tick__Group_2__21639 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_rule__Tick__Group_2__2__Impl1667 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group_2__3__Impl_in_rule__Tick__Group_2__31698 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__OutputAssignment_2_3_in_rule__Tick__Group_2__3__Impl1725 = new BitSet(new long[]{0x0000000000000012L});
+    public static final BitSet FOLLOW_rule__Tick__Group_4__0__Impl_in_rule__Tick__Group_4__01764 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_rule__Tick__Group_4__1_in_rule__Tick__Group_4__01767 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_rule__Tick__Group_4__0__Impl1795 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group_4__1__Impl_in_rule__Tick__Group_4__11826 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_rule__Tick__Group_4__2_in_rule__Tick__Group_4__11829 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_15_in_rule__Tick__Group_4__1__Impl1857 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group_4__2__Impl_in_rule__Tick__Group_4__21888 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_rule__Tick__Group_4__3_in_rule__Tick__Group_4__21891 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_rule__Tick__Group_4__2__Impl1919 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group_4__3__Impl_in_rule__Tick__Group_4__31950 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__ExtraInfosOutputAssignment_4_3_in_rule__Tick__Group_4__3__Impl1977 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_rule__Signal__Group__0__Impl_in_rule__Signal__Group__02016 = new BitSet(new long[]{0x00000000001001E0L});
+    public static final BitSet FOLLOW_rule__Signal__Group__1_in_rule__Signal__Group__02019 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__NameAssignment_0_in_rule__Signal__Group__0__Impl2046 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group__1__Impl_in_rule__Signal__Group__12076 = new BitSet(new long[]{0x00000000001001E0L});
+    public static final BitSet FOLLOW_rule__Signal__Group__2_in_rule__Signal__Group__12079 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__ValuedAssignment_1_in_rule__Signal__Group__1__Impl2106 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group__2__Impl_in_rule__Signal__Group__22137 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_2__0_in_rule__Signal__Group__2__Impl2164 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_2__0__Impl_in_rule__Signal__Group_2__02201 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_2__1_in_rule__Signal__Group_2__02204 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__ValAssignment_2_0_in_rule__Signal__Group_2__0__Impl2231 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__Group_2__1__Impl_in_rule__Signal__Group_2__12261 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_18_in_rule__Signal__Group_2__1__Impl2289 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__Group__0__Impl_in_rule__Kvpair__Group__02324 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_rule__Kvpair__Group__1_in_rule__Kvpair__Group__02327 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__Group__1__Impl_in_rule__Kvpair__Group__12385 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__Kvpair__Group__2_in_rule__Kvpair__Group__12388 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_rule__Kvpair__Group__1__Impl2416 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__Group__2__Impl_in_rule__Kvpair__Group__22447 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_rule__Kvpair__Group__3_in_rule__Kvpair__Group__22450 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__KeyAssignment_2_in_rule__Kvpair__Group__2__Impl2477 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__Group__3__Impl_in_rule__Kvpair__Group__32507 = new BitSet(new long[]{0x00000000000001F0L});
+    public static final BitSet FOLLOW_rule__Kvpair__Group__4_in_rule__Kvpair__Group__32510 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_rule__Kvpair__Group__3__Impl2538 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__Group__4__Impl_in_rule__Kvpair__Group__42569 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__ValueAssignment_4_in_rule__Kvpair__Group__4__Impl2596 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruletrace_in_rule__Tracelist__TracesAssignment2641 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruletick_in_rule__Trace__TicksAssignment_32672 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulesignal_in_rule__Tick__InputAssignment_12703 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulesignal_in_rule__Tick__OutputAssignment_2_32734 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulekvpair_in_rule__Tick__ExtraInfosAssignment_32765 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulekvpair_in_rule__Tick__ExtraInfosOutputAssignment_4_32796 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Signal__NameAssignment_02827 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_20_in_rule__Signal__ValuedAssignment_12863 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Signal__ValAlternatives_2_0_0_in_rule__Signal__ValAssignment_2_02902 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__KeyAssignment_22935 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__ValueAlternatives_4_0_in_rule__Kvpair__ValueAssignment_42966 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__EsoInt__ValueAssignment2999 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__EsoString__ValueAssignment3030 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_FLOAT_in_rule__EsoFloat__ValueAssignment3061 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_BOOL_in_rule__EsoBool__ValueAssignment3092 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__EsoJson__ValueAssignment3123 = new BitSet(new long[]{0x0000000000000002L});
 
 }
