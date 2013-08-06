@@ -75,11 +75,11 @@ class SSASCL2VHDL {
         ffList.clear
         var String modelname
         
-        //adds the workaround to reset regsters
-        addRegisterResetToModel(program)
+        //adds the workaround to reset registers
+//        addRegisterResetToModel(program)
         
         //to use the register reset workaround, all _pre's must be replaced by _reg's
-        replacePreByReg(program)
+//        replacePreByReg(program)
         
         //get the name for vhdl component from file name
         if(modelFile != null){
@@ -291,6 +291,7 @@ class SSASCL2VHDL {
         
         «generateInputRegister(program.definitions)»
         
+        «generateBootRegister()»
     end behavior;
     '''
    }
@@ -319,8 +320,8 @@ class SSASCL2VHDL {
         
         // every SCCHart has a RESET signal
         return vhdlCode = vhdlCode + '\n' + "signal Reset_int : boolean := false;" + '\n'
+                                          + "signal RUNNING_int : boolean := false;" + '\n'
     }
-    
     //generates the main functionality vhdl code
     def generateMainProcess(EList<Statement> stmList, Program program) { 
         
@@ -349,20 +350,31 @@ class SSASCL2VHDL {
 
     //for every element in the register list the vhdl code for a register is created
     '''
-        registers: process
-        begin
-        wait until rising_edge(tick);
-           «ffList.map[ instr | 
+    registers: process
+    begin
+    wait until rising_edge(tick);
+        if(reset = true) then
+            «ffList.map[ instr | 
+                val varleft = (((instr.instruction.asAssignment.assignment as 
+                AssignmentExpression).varRef as ElementReferenceExpression).reference) 
+                as VariableDefinition
+                
+                '''«varleft.name» <= false;'''
+                
+            ].join('\n')»
+        else
+            «ffList.map[ instr | 
                 val varleft = (((instr.instruction.asAssignment.assignment as 
                     AssignmentExpression).varRef as ElementReferenceExpression).reference) 
                     as VariableDefinition
                 val varright = (((instr.instruction.asAssignment.assignment as 
                     AssignmentExpression).expression as ElementReferenceExpression).reference) 
                     as VariableDefinition
-                
+        
                 '''«varleft.name» <= «varright.name»;'''
-           ].join('\n')»
-        end process;
+            ].join('\n')»
+        end if;
+    end process;
     '''  
     }
 
@@ -374,19 +386,38 @@ class SSASCL2VHDL {
         val inVars = variables.filter[ vari | vari.input ]
         
         //generate the input register vhdl code
-        var vhdlCode = '''
-            inputRegister: process
-            begin
-            wait until rising_edge(tick);
-               «inVars.map[ vari | 
-                    '''«vari.name»_int <= «vari.name»;'''
-               ].join('\n')»
         '''
-        //every SCCHart has a reset variable, the reset must also be stored
-        return vhdlCode = vhdlCode + '''   Reset_int <= RESET;''' + '\n' + '''end process;'''
+        inputRegister: process
+        begin
+        wait until rising_edge(tick);
+            if(reset = true) then
+                «inVars.map[ vari | '''«vari.name»_int <= false;'''].join('\n')»
+            else
+                «inVars.map[ vari | '''«vari.name»_int <= «vari.name»;'''].join('\n')»
+            end if;
+        end process;
+        '''
     }
     
-    // transform assignemts to vhdl code
+    def generateBootRegister() { 
+        
+        //generate the boot register vhdl code
+        '''
+        bootRegister: process
+        begin
+        wait until rising_edge(tick);
+            if(reset = true) then
+                Reset_int <= true;
+                RUNNING_int <= false;
+            else
+                Reset_int <= reset;
+                RUNNING_int <= Reset_int;
+            end if;
+        end process;
+        '''
+    }
+    
+    // transform assignments to vhdl code
     def transformAssignmentToVHDL(Assignment assignment,Program program) { 
         
         var vhdlCode = ''''''
@@ -397,7 +428,7 @@ class SSASCL2VHDL {
         val vardef = elemRefExp.reference as VariableDefinition
         val varName = vardef.name
         
-        if(varName.endsWith("_reg")){
+        if(varName.endsWith("_pre")){
             //it is a register assignment, for this assignment a register will be created later
             ffList.add(assignment.copy.createStatement)
             vhdlCode = "--Assignment transformed to a register"
@@ -430,7 +461,8 @@ class SSASCL2VHDL {
                     rightVar = vari.name + "_int"
                 }else if(vari.name.equals("RESET")){
                     //do the same to the reset, take the register reset value 
-                    rightVar = vari.name + "_int"
+//                    rightVar = vari.name + "_int"
+                    rightVar = "RUNNING_int"
                  }else{
                    // for all other variables take the name
                    rightVar = vari.name
