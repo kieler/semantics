@@ -167,6 +167,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getNode_IsInitial() {
+        return (EAttribute)nodeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getConditional() {
         return conditionalEClass;
     }
@@ -372,6 +381,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         // Create classes and their features
         nodeEClass = createEClass(NODE);
         createEReference(nodeEClass, NODE__INCOMING);
+        createEAttribute(nodeEClass, NODE__IS_INITIAL);
 
         conditionalEClass = createEClass(CONDITIONAL);
         createEReference(conditionalEClass, CONDITIONAL__THEN);
@@ -439,6 +449,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         // Initialize classes, features, and operations; add parameters
         initEClass(nodeEClass, Node.class, "Node", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getNode_Incoming(), this.getLink(), this.getLink_Target(), "incoming", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getNode_IsInitial(), ecorePackage.getEBoolean(), "isInitial", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getConditional_Then(), this.getLink(), null, "then", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

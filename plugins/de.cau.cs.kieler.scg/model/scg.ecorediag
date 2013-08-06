@@ -3,6 +3,10 @@
   <children xmi:type="notation:Node" xmi:id="_4Pv4AP5-EeKl4r-nR2-lSw" type="1001">
     <children xmi:type="notation:Node" xmi:id="_4Pv4A_5-EeKl4r-nR2-lSw" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_4Pv4BP5-EeKl4r-nR2-lSw" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_vNGSUP6rEeKVqZizyQhtJw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="scg.ecore#//Node/isInitial"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_vNGSUf6rEeKVqZizyQhtJw"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_4Pv4Bf5-EeKl4r-nR2-lSw"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_4Pv4Bv5-EeKl4r-nR2-lSw"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_4Pv4B_5-EeKl4r-nR2-lSw"/>
@@ -251,7 +255,7 @@
       <layoutConstraint xmi:type="notation:Location" xmi:id="_YQDy1f5_EeKl4r-nR2-lSw" x="2" y="-27"/>
     </children>
     <children xmi:type="notation:Node" xmi:id="_YQDy1v5_EeKl4r-nR2-lSw" type="4012">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_YQDy1_5_EeKl4r-nR2-lSw" x="10" y="10"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_YQDy1_5_EeKl4r-nR2-lSw" x="-2" y="13"/>
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_YQDy0f5_EeKl4r-nR2-lSw" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_YQDy0v5_EeKl4r-nR2-lSw" fontColor="4210752" fontHeight="10"/>

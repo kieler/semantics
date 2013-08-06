@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link scg.Node#getIncoming <em>Incoming</em>}</li>
+ *   <li>{@link scg.Node#isIsInitial <em>Is Initial</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,5 +40,31 @@ public interface Node extends EObject {
      * @generated
      */
     EList<Link> getIncoming();
+
+    /**
+     * Returns the value of the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Is Initial</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Is Initial</em>' attribute.
+     * @see #setIsInitial(boolean)
+     * @see scg.ScgPackage#getNode_IsInitial()
+     * @model
+     * @generated
+     */
+    boolean isIsInitial();
+
+    /**
+     * Sets the value of the '{@link scg.Node#isIsInitial <em>Is Initial</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Is Initial</em>' attribute.
+     * @see #isIsInitial()
+     * @generated
+     */
+    void setIsInitial(boolean value);
 
 } // Node

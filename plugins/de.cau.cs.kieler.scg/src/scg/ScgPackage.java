@@ -76,13 +76,22 @@ public interface ScgPackage extends EPackage {
     int NODE__INCOMING = 0;
 
     /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__IS_INITIAL = 1;
+
+    /**
      * The number of structural features of the '<em>Node</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int NODE_FEATURE_COUNT = 1;
+    int NODE_FEATURE_COUNT = 2;
 
     /**
      * The number of operations of the '<em>Node</em>' class.
@@ -111,6 +120,15 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
     int CONDITIONAL__INCOMING = NODE__INCOMING;
+
+    /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__IS_INITIAL = NODE__IS_INITIAL;
 
     /**
      * The feature id for the '<em><b>Then</b></em>' containment reference.
@@ -177,6 +195,15 @@ public interface ScgPackage extends EPackage {
     int SURFACE__INCOMING = NODE__INCOMING;
 
     /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SURFACE__IS_INITIAL = NODE__IS_INITIAL;
+
+    /**
      * The feature id for the '<em><b>Depth</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -221,6 +248,15 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
     int DEPTH__INCOMING = NODE__INCOMING;
+
+    /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPTH__IS_INITIAL = NODE__IS_INITIAL;
 
     /**
      * The feature id for the '<em><b>Surface</b></em>' reference.
@@ -278,6 +314,15 @@ public interface ScgPackage extends EPackage {
     int ASSIGNMENT__INCOMING = NODE__INCOMING;
 
     /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__IS_INITIAL = NODE__IS_INITIAL;
+
+    /**
      * The feature id for the '<em><b>Next</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -333,6 +378,15 @@ public interface ScgPackage extends EPackage {
     int FORK__INCOMING = NODE__INCOMING;
 
     /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FORK__IS_INITIAL = NODE__IS_INITIAL;
+
+    /**
      * The feature id for the '<em><b>Join</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -386,6 +440,15 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
     int JOIN__INCOMING = NODE__INCOMING;
+
+    /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JOIN__IS_INITIAL = NODE__IS_INITIAL;
 
     /**
      * The feature id for the '<em><b>Fork</b></em>' reference.
@@ -482,6 +545,17 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
     EReference getNode_Incoming();
+
+    /**
+     * Returns the meta object for the attribute '{@link scg.Node#isIsInitial <em>Is Initial</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Is Initial</em>'.
+     * @see scg.Node#isIsInitial()
+     * @see #getNode()
+     * @generated
+     */
+    EAttribute getNode_IsInitial();
 
     /**
      * Returns the meta object for class '{@link scg.Conditional <em>Conditional</em>}'.
@@ -736,6 +810,14 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
         EReference NODE__INCOMING = eINSTANCE.getNode_Incoming();
+
+        /**
+         * The meta object literal for the '<em><b>Is Initial</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute NODE__IS_INITIAL = eINSTANCE.getNode_IsInitial();
 
         /**
          * The meta object literal for the '{@link scg.impl.ConditionalImpl <em>Conditional</em>}' class.
