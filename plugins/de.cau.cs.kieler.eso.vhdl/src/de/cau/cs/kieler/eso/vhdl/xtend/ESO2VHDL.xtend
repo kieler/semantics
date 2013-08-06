@@ -458,7 +458,7 @@ class ESO2VHDL {
 							
 				if(resetWasSet){
 				    resetWasSet = false
-				    simTick = simTick + "reset <= false;\n"
+				    simTick = simTick //+ "reset <= false;\n"
 				}
 							
 				// the tick counter shows the current tick in the current trace
@@ -525,7 +525,7 @@ class ESO2VHDL {
 	 * @return the VHDL code for a reset
 	 */
 	def String generateVhdlResetCode(String wait) { 
-		"reset <= true;\n";//.concat(wait).concat("reset <= false;\n");
+		"reset <= true;\n".concat(wait).concat("reset <= false;\n");
 	}
 	
 	/**
