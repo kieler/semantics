@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link scg.Node#getPrevious <em>Previous</em>}</li>
+ *   <li>{@link scg.Node#getIncoming <em>Incoming</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,19 +23,21 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Node extends EObject {
     /**
-     * Returns the value of the '<em><b>Previous</b></em>' reference list.
-     * The list contents are of type {@link scg.Node}.
+     * Returns the value of the '<em><b>Incoming</b></em>' reference list.
+     * The list contents are of type {@link scg.Link}.
+     * It is bidirectional and its opposite is '{@link scg.Link#getTarget <em>Target</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Previous</em>' reference isn't clear,
+     * If the meaning of the '<em>Incoming</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Previous</em>' reference list.
-     * @see scg.ScgPackage#getNode_Previous()
-     * @model
+     * @return the value of the '<em>Incoming</em>' reference list.
+     * @see scg.ScgPackage#getNode_Incoming()
+     * @see scg.Link#getTarget
+     * @model opposite="target"
      * @generated
      */
-    EList<Node> getPrevious();
+    EList<Link> getIncoming();
 
 } // Node

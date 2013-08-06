@@ -3,14 +3,12 @@
 package scg.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import scg.Assignment;
-import scg.Node;
+import scg.Link;
 import scg.ScgPackage;
 
 /**
@@ -29,14 +27,14 @@ import scg.ScgPackage;
  */
 public class AssignmentImpl extends NodeImpl implements Assignment {
     /**
-     * The cached value of the '{@link #getNext() <em>Next</em>}' reference.
+     * The cached value of the '{@link #getNext() <em>Next</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getNext()
      * @generated
      * @ordered
      */
-    protected Node next;
+    protected Link next;
 
     /**
      * The default value of the '{@link #getAssignment() <em>Assignment</em>}' attribute.
@@ -82,15 +80,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Node getNext() {
-        if (next != null && next.eIsProxy()) {
-            InternalEObject oldNext = (InternalEObject)next;
-            next = (Node)eResolveProxy(oldNext);
-            if (next != oldNext) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.ASSIGNMENT__NEXT, oldNext, next));
-            }
-        }
+    public Link getNext() {
         return next;
     }
 
@@ -99,20 +89,33 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Node basicGetNext() {
-        return next;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setNext(Node newNext) {
-        Node oldNext = next;
+    public NotificationChain basicSetNext(Link newNext, NotificationChain msgs) {
+        Link oldNext = next;
         next = newNext;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__NEXT, oldNext, next));
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__NEXT, oldNext, newNext);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setNext(Link newNext) {
+        if (newNext != next) {
+            NotificationChain msgs = null;
+            if (next != null)
+                msgs = ((InternalEObject)next).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__NEXT, null, msgs);
+            if (newNext != null)
+                msgs = ((InternalEObject)newNext).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__NEXT, null, msgs);
+            msgs = basicSetNext(newNext, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__NEXT, newNext, newNext));
     }
 
     /**
@@ -142,11 +145,24 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * @generated
      */
     @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case ScgPackage.ASSIGNMENT__NEXT:
+                return basicSetNext(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case ScgPackage.ASSIGNMENT__NEXT:
-                if (resolve) return getNext();
-                return basicGetNext();
+                return getNext();
             case ScgPackage.ASSIGNMENT__ASSIGNMENT:
                 return getAssignment();
         }
@@ -162,7 +178,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case ScgPackage.ASSIGNMENT__NEXT:
-                setNext((Node)newValue);
+                setNext((Link)newValue);
                 return;
             case ScgPackage.ASSIGNMENT__ASSIGNMENT:
                 setAssignment((String)newValue);
@@ -180,7 +196,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     public void eUnset(int featureID) {
         switch (featureID) {
             case ScgPackage.ASSIGNMENT__NEXT:
-                setNext((Node)null);
+                setNext((Link)null);
                 return;
             case ScgPackage.ASSIGNMENT__ASSIGNMENT:
                 setAssignment(ASSIGNMENT_EDEFAULT);

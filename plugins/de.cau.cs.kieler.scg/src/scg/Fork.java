@@ -51,19 +51,19 @@ public interface Fork extends Node {
     void setJoin(Join value);
 
     /**
-     * Returns the value of the '<em><b>Next</b></em>' reference list.
-     * The list contents are of type {@link scg.Node}.
+     * Returns the value of the '<em><b>Next</b></em>' containment reference list.
+     * The list contents are of type {@link scg.Link}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Next</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Next</em>' reference list.
+     * @return the value of the '<em>Next</em>' containment reference list.
      * @see scg.ScgPackage#getFork_Next()
-     * @model
+     * @model containment="true"
      * @generated
      */
-    EList<Node> getNext();
+    EList<Link> getNext();
 
 } // Fork

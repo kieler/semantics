@@ -67,13 +67,13 @@ public interface ScgPackage extends EPackage {
     int NODE = 0;
 
     /**
-     * The feature id for the '<em><b>Previous</b></em>' reference list.
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int NODE__PREVIOUS = 0;
+    int NODE__INCOMING = 0;
 
     /**
      * The number of structural features of the '<em>Node</em>' class.
@@ -104,16 +104,16 @@ public interface ScgPackage extends EPackage {
     int CONDITIONAL = 1;
 
     /**
-     * The feature id for the '<em><b>Previous</b></em>' reference list.
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONDITIONAL__PREVIOUS = NODE__PREVIOUS;
+    int CONDITIONAL__INCOMING = NODE__INCOMING;
 
     /**
-     * The feature id for the '<em><b>Then</b></em>' reference.
+     * The feature id for the '<em><b>Then</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -122,7 +122,7 @@ public interface ScgPackage extends EPackage {
     int CONDITIONAL__THEN = NODE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Else</b></em>' reference.
+     * The feature id for the '<em><b>Else</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -168,13 +168,13 @@ public interface ScgPackage extends EPackage {
     int SURFACE = 2;
 
     /**
-     * The feature id for the '<em><b>Previous</b></em>' reference list.
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SURFACE__PREVIOUS = NODE__PREVIOUS;
+    int SURFACE__INCOMING = NODE__INCOMING;
 
     /**
      * The feature id for the '<em><b>Depth</b></em>' reference.
@@ -214,13 +214,13 @@ public interface ScgPackage extends EPackage {
     int DEPTH = 3;
 
     /**
-     * The feature id for the '<em><b>Previous</b></em>' reference list.
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DEPTH__PREVIOUS = NODE__PREVIOUS;
+    int DEPTH__INCOMING = NODE__INCOMING;
 
     /**
      * The feature id for the '<em><b>Surface</b></em>' reference.
@@ -269,16 +269,16 @@ public interface ScgPackage extends EPackage {
     int ASSIGNMENT = 4;
 
     /**
-     * The feature id for the '<em><b>Previous</b></em>' reference list.
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__PREVIOUS = NODE__PREVIOUS;
+    int ASSIGNMENT__INCOMING = NODE__INCOMING;
 
     /**
-     * The feature id for the '<em><b>Next</b></em>' reference.
+     * The feature id for the '<em><b>Next</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -324,13 +324,13 @@ public interface ScgPackage extends EPackage {
     int FORK = 5;
 
     /**
-     * The feature id for the '<em><b>Previous</b></em>' reference list.
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FORK__PREVIOUS = NODE__PREVIOUS;
+    int FORK__INCOMING = NODE__INCOMING;
 
     /**
      * The feature id for the '<em><b>Join</b></em>' reference.
@@ -342,7 +342,7 @@ public interface ScgPackage extends EPackage {
     int FORK__JOIN = NODE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Next</b></em>' reference list.
+     * The feature id for the '<em><b>Next</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -379,13 +379,13 @@ public interface ScgPackage extends EPackage {
     int JOIN = 6;
 
     /**
-     * The feature id for the '<em><b>Previous</b></em>' reference list.
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int JOIN__PREVIOUS = NODE__PREVIOUS;
+    int JOIN__INCOMING = NODE__INCOMING;
 
     /**
      * The feature id for the '<em><b>Fork</b></em>' reference.
@@ -397,7 +397,7 @@ public interface ScgPackage extends EPackage {
     int JOIN__FORK = NODE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Next</b></em>' reference.
+     * The feature id for the '<em><b>Next</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -425,6 +425,44 @@ public interface ScgPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link scg.impl.LinkImpl <em>Link</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see scg.impl.LinkImpl
+     * @see scg.impl.ScgPackageImpl#getLink()
+     * @generated
+     */
+    int LINK = 7;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__TARGET = 0;
+
+    /**
+     * The number of structural features of the '<em>Link</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK_FEATURE_COUNT = 1;
+
+    /**
+     * The number of operations of the '<em>Link</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK_OPERATION_COUNT = 0;
+
+
+    /**
      * Returns the meta object for class '{@link scg.Node <em>Node</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -435,15 +473,15 @@ public interface ScgPackage extends EPackage {
     EClass getNode();
 
     /**
-     * Returns the meta object for the reference list '{@link scg.Node#getPrevious <em>Previous</em>}'.
+     * Returns the meta object for the reference list '{@link scg.Node#getIncoming <em>Incoming</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Previous</em>'.
-     * @see scg.Node#getPrevious()
+     * @return the meta object for the reference list '<em>Incoming</em>'.
+     * @see scg.Node#getIncoming()
      * @see #getNode()
      * @generated
      */
-    EReference getNode_Previous();
+    EReference getNode_Incoming();
 
     /**
      * Returns the meta object for class '{@link scg.Conditional <em>Conditional</em>}'.
@@ -456,10 +494,10 @@ public interface ScgPackage extends EPackage {
     EClass getConditional();
 
     /**
-     * Returns the meta object for the reference '{@link scg.Conditional#getThen <em>Then</em>}'.
+     * Returns the meta object for the containment reference '{@link scg.Conditional#getThen <em>Then</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Then</em>'.
+     * @return the meta object for the containment reference '<em>Then</em>'.
      * @see scg.Conditional#getThen()
      * @see #getConditional()
      * @generated
@@ -467,10 +505,10 @@ public interface ScgPackage extends EPackage {
     EReference getConditional_Then();
 
     /**
-     * Returns the meta object for the reference '{@link scg.Conditional#getElse <em>Else</em>}'.
+     * Returns the meta object for the containment reference '{@link scg.Conditional#getElse <em>Else</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Else</em>'.
+     * @return the meta object for the containment reference '<em>Else</em>'.
      * @see scg.Conditional#getElse()
      * @see #getConditional()
      * @generated
@@ -552,10 +590,10 @@ public interface ScgPackage extends EPackage {
     EClass getAssignment();
 
     /**
-     * Returns the meta object for the reference '{@link scg.Assignment#getNext <em>Next</em>}'.
+     * Returns the meta object for the containment reference '{@link scg.Assignment#getNext <em>Next</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Next</em>'.
+     * @return the meta object for the containment reference '<em>Next</em>'.
      * @see scg.Assignment#getNext()
      * @see #getAssignment()
      * @generated
@@ -595,10 +633,10 @@ public interface ScgPackage extends EPackage {
     EReference getFork_Join();
 
     /**
-     * Returns the meta object for the reference list '{@link scg.Fork#getNext <em>Next</em>}'.
+     * Returns the meta object for the containment reference list '{@link scg.Fork#getNext <em>Next</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Next</em>'.
+     * @return the meta object for the containment reference list '<em>Next</em>'.
      * @see scg.Fork#getNext()
      * @see #getFork()
      * @generated
@@ -627,15 +665,36 @@ public interface ScgPackage extends EPackage {
     EReference getJoin_Fork();
 
     /**
-     * Returns the meta object for the reference '{@link scg.Join#getNext <em>Next</em>}'.
+     * Returns the meta object for the containment reference '{@link scg.Join#getNext <em>Next</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Next</em>'.
+     * @return the meta object for the containment reference '<em>Next</em>'.
      * @see scg.Join#getNext()
      * @see #getJoin()
      * @generated
      */
     EReference getJoin_Next();
+
+    /**
+     * Returns the meta object for class '{@link scg.Link <em>Link</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Link</em>'.
+     * @see scg.Link
+     * @generated
+     */
+    EClass getLink();
+
+    /**
+     * Returns the meta object for the reference '{@link scg.Link#getTarget <em>Target</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Target</em>'.
+     * @see scg.Link#getTarget()
+     * @see #getLink()
+     * @generated
+     */
+    EReference getLink_Target();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -671,12 +730,12 @@ public interface ScgPackage extends EPackage {
         EClass NODE = eINSTANCE.getNode();
 
         /**
-         * The meta object literal for the '<em><b>Previous</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Incoming</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference NODE__PREVIOUS = eINSTANCE.getNode_Previous();
+        EReference NODE__INCOMING = eINSTANCE.getNode_Incoming();
 
         /**
          * The meta object literal for the '{@link scg.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -689,7 +748,7 @@ public interface ScgPackage extends EPackage {
         EClass CONDITIONAL = eINSTANCE.getConditional();
 
         /**
-         * The meta object literal for the '<em><b>Then</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Then</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -697,7 +756,7 @@ public interface ScgPackage extends EPackage {
         EReference CONDITIONAL__THEN = eINSTANCE.getConditional_Then();
 
         /**
-         * The meta object literal for the '<em><b>Else</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Else</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -767,7 +826,7 @@ public interface ScgPackage extends EPackage {
         EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
         /**
-         * The meta object literal for the '<em><b>Next</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Next</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -801,7 +860,7 @@ public interface ScgPackage extends EPackage {
         EReference FORK__JOIN = eINSTANCE.getFork_Join();
 
         /**
-         * The meta object literal for the '<em><b>Next</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Next</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -827,12 +886,30 @@ public interface ScgPackage extends EPackage {
         EReference JOIN__FORK = eINSTANCE.getJoin_Fork();
 
         /**
-         * The meta object literal for the '<em><b>Next</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Next</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference JOIN__NEXT = eINSTANCE.getJoin_Next();
+
+        /**
+         * The meta object literal for the '{@link scg.impl.LinkImpl <em>Link</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see scg.impl.LinkImpl
+         * @see scg.impl.ScgPackageImpl#getLink()
+         * @generated
+         */
+        EClass LINK = eINSTANCE.getLink();
+
+        /**
+         * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LINK__TARGET = eINSTANCE.getLink_Target();
 
     }
 

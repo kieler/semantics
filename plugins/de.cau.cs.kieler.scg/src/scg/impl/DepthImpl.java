@@ -4,14 +4,11 @@ package scg.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import scg.Depth;
-import scg.Node;
+import scg.Link;
 import scg.ScgPackage;
 import scg.Surface;
 
@@ -48,7 +45,7 @@ public class DepthImpl extends NodeImpl implements Depth {
      * @generated
      * @ordered
      */
-    protected Node next;
+    protected Link next;
 
     /**
      * <!-- begin-user-doc -->
@@ -134,10 +131,10 @@ public class DepthImpl extends NodeImpl implements Depth {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Node getNext() {
+    public Link getNext() {
         if (next != null && next.eIsProxy()) {
             InternalEObject oldNext = (InternalEObject)next;
-            next = (Node)eResolveProxy(oldNext);
+            next = (Link)eResolveProxy(oldNext);
             if (next != oldNext) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.DEPTH__NEXT, oldNext, next));
@@ -151,7 +148,7 @@ public class DepthImpl extends NodeImpl implements Depth {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Node basicGetNext() {
+    public Link basicGetNext() {
         return next;
     }
 
@@ -160,8 +157,8 @@ public class DepthImpl extends NodeImpl implements Depth {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setNext(Node newNext) {
-        Node oldNext = next;
+    public void setNext(Link newNext) {
+        Link oldNext = next;
         next = newNext;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.DEPTH__NEXT, oldNext, next));
@@ -227,7 +224,7 @@ public class DepthImpl extends NodeImpl implements Depth {
                 setSurface((Surface)newValue);
                 return;
             case ScgPackage.DEPTH__NEXT:
-                setNext((Node)newValue);
+                setNext((Link)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -245,7 +242,7 @@ public class DepthImpl extends NodeImpl implements Depth {
                 setSurface((Surface)null);
                 return;
             case ScgPackage.DEPTH__NEXT:
-                setNext((Node)null);
+                setNext((Link)null);
                 return;
         }
         super.eUnset(featureID);

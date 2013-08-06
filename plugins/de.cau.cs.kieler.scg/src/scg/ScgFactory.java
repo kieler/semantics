@@ -85,6 +85,15 @@ public interface ScgFactory extends EFactory {
     Join createJoin();
 
     /**
+     * Returns a new object of class '<em>Link</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Link</em>'.
+     * @generated
+     */
+    Link createLink();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
