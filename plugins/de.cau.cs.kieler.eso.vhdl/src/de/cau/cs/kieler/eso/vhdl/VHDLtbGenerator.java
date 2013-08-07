@@ -71,7 +71,7 @@ public class VHDLtbGenerator extends AbstractModelFileHandler {
         //it must have the same name and it must place in the same folder as the ESO file
         //ESO core generation: test.eso transforms to test.core.eso therefore two times removeFileExtension
         java.io.File ioFile = file.getFullPath().removeFileExtension()
-                .removeFileExtension().addFileExtension("scl").toFile();
+                .removeFileExtension().removeFileExtension().addFileExtension("scl").toFile();
         
         if (commandString.equals(TRANSFORMATIONCOMMAND)) {
             CharSequence transformed = (new ESO2VHDL())
