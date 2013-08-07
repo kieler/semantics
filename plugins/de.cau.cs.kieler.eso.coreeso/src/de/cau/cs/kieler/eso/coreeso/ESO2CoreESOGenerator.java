@@ -44,7 +44,7 @@ private static Injector injector = new STextStandaloneSetup().createInjectorAndD
     }
 
     public String ModelHandlerFileExtensionTransformed() {
-            return "core.eso";
+            return "core.vhdl.eso";
     }
 
     public String ModelHandlerDiagramEditorID() {
