@@ -62,6 +62,8 @@ import de.cau.cs.kieler.eso.vhdl.xtend.ESO2VHDL;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.seqscl.xtend.SCLToSeqSCLTransformation;
 import de.cau.cs.kieler.scl.vhdl.xtend.SCL2VHDL;
+import de.cau.cs.kieler.scl.seqscl.ssaseqscl.xtend.SeqScl2SsaSeqScl;
+import de.cau.cs.kieler.ssascl.vhdl.xtend.SSASCL2VHDL;
 import de.cau.cs.kieler.sim.eso.eso.tracelist;
 
 import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
@@ -296,7 +298,15 @@ public  class SCLVHDLAutomatedJUnitTest {
         
         // Transform SCL model into VHDL file and save it
         Program seqSCL = (new SCLToSeqSCLTransformation().transformSCLToSCLControlflow((Program)sclModel));
-        CharSequence sclVhdlModel = (new SCL2VHDL().transform(seqSCL, modelFilePath.toFile()));
+        
+        //Transform without SSA
+//        CharSequence sclVhdlModel = (new SCL2VHDL().transform(seqSCL, modelFilePath.toFile()));
+        
+        //Transform with SSA
+        Program sclSSAModel = (new SeqScl2SsaSeqScl().doTransform(seqSCL, modelFilePath.toFile()));
+        CharSequence sclVhdlModel = (new SSASCL2VHDL().transform(sclSSAModel, modelFilePath.toFile()));
+        
+        //Save vhdl file
         IPath vhdlPath = new Path(relativeTempPath + modelFilePath.removeFileExtension()
                 .addFileExtension("vhd").lastSegment());
         createWorkspaceFile(vhdlPath, sclVhdlModel.toString());

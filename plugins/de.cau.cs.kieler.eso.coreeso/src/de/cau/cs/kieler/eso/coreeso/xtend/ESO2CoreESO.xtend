@@ -78,10 +78,10 @@ class ESO2CoreESO {
 					
 					//add an variable (extra Info)
                     //pure signal transformation
-					newTick.extraInfos.add(newKvpair(out.name, true))
+					newTick.extraInfosOutput.add(newKvpair(out.name, true))
 					if(out.valued){
 					    //valued signal transformation
-						newTick.extraInfos.add(newKvpair(out.name + "_value", out.^val))
+						newTick.extraInfosOutput.add(newKvpair(out.name + "_value", out.^val))
 					}
 				]
 				//add new generated tick to new trace
