@@ -234,9 +234,9 @@ class SSASCL2VHDL {
    def generateCode(Program program, String modelname){
      
     // input, output and local variables from model
-    val modelInputs = new ArrayList<Variables>
-    val modelOutputs = new ArrayList<Variables>
-    val modelLocalVariables = new ArrayList<Variables>
+    val modelInputs = new ArrayList<VariableDefinition>
+    val modelOutputs = new ArrayList<VariableDefinition>
+    val modelLocalVariables = new ArrayList<VariableDefinition>
         
     val name = modelname
     val vars = program.definitions
@@ -249,18 +249,25 @@ class SSASCL2VHDL {
             val vari = variable.copy 
             vari.setInput(false)
             vari.name = vari.name + "_out"
-            modelOutputs.add(createVariableFromModel(vari, true, false))
+//            modelOutputs.add(createVariableFromModel(vari, true, false))
+            modelOutputs.add(vari)
             newVariables.add(vari)
             
-            modelInputs.add(createVariableFromModel(variable, true, true))
+//            modelInputs.add(createVariableFromModel(variable, true, true))
+            modelInputs.add(variable)
         }
-        else if(variable.input)                      
-             modelInputs.add(createVariableFromModel(variable, true, false)) 
-        else if(variable.output)                   
-             modelOutputs.add(createVariableFromModel(variable, false, true)) 
-        else if(!(variable.input || variable.output))
-            if(!variable.name.equals("RESET"))
-                modelLocalVariables.add(createVariableFromModel(variable, false, false)) 
+        else if(variable.input){                     
+//             modelInputs.add(createVariableFromModel(variable, true, false)) 
+             modelInputs.add(variable) 
+        }else if(variable.output){                   
+//             modelOutputs.add(createVariableFromModel(variable, false, true))
+             modelOutputs.add(variable) 
+        }else if(!(variable.input || variable.output)){
+            if(!variable.name.equals("RESET")){
+//                modelLocalVariables.add(createVariableFromModel(variable, false, false))
+                modelLocalVariables.add(variable)
+            }
+        } 
         ]
         program.definitions.addAll(newVariables)     
     
@@ -297,7 +304,7 @@ class SSASCL2VHDL {
    }
    
     // generates local signals for the argument
-    def genarateLocalSignals(ArrayList<Variables> variables) { 
+    def genarateLocalSignals(ArrayList<VariableDefinition> variables) { 
         
         val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"")»''').join('\n')
         

@@ -7,6 +7,7 @@ import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import org.yakindu.sct.model.stext.stext.impl.BoolLiteralImpl
 import org.yakindu.sct.model.stext.stext.impl.IntLiteralImpl
 import java.util.ArrayList
+import org.yakindu.base.types.Type
 
 class VHDLExtension {
     
@@ -27,7 +28,7 @@ class VHDLExtension {
      * 
      * @return a String which contains VHDL code for the entity declaration
      */
-    def generateEntity(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String entityName) { 
+    def generateEntity(ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray, String entityName) { 
     
 //        //compute the component 
 //        //e.g. A_in : IN boolean;       
@@ -71,7 +72,7 @@ class VHDLExtension {
      * 
      * @return a String which contains VHDL code for the component declaration
      */
-    def generateComponent(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String componentName) { 
+    def generateComponent(ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray, String componentName) { 
     
 //        // compute the component input and output ports including its type  
 //        // e.g. A_in : IN boolean;      
@@ -115,7 +116,7 @@ class VHDLExtension {
      * @return VHDL code which contains the input and output signal declaration
      * 
      */
-    def getInputOutputDeclaration(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray){
+    def getInputOutputDeclaration(ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray){
         
         // compute the component input and output ports including its type  
         // e.g. A_in : IN boolean;      
@@ -145,7 +146,7 @@ class VHDLExtension {
      * @return the VHDl code for a signal declaration
      *             
      */
-    def generateVhdlSignalFromVariableWithInitialValue(Variables variable, String nameExtension) { 
+    def generateVhdlSignalFromVariableWithInitialValue(VariableDefinition variable, String nameExtension) { 
         
         return "signal " + generateNameAndType(variable, nameExtension)            
     }
@@ -163,7 +164,7 @@ class VHDLExtension {
      * @return the VHDl code for a variable declaration
      *             
      */
-    def generateVhdlVariabelFromVariableWithInitialValue(Variables variable, String nameExtension) { 
+    def generateVhdlVariabelFromVariableWithInitialValue(VariableDefinition variable, String nameExtension) { 
         
         return "variable " + generateNameAndType(variable, nameExtension)           
     }
@@ -183,13 +184,27 @@ class VHDLExtension {
      * 
      * @return a name, type, initial value string
      */
-    def generateNameAndType(Variables variable, String nameExtension){
-        val value = variable.value
-        if(value instanceof Integer){
-            return variable.name + nameExtension + " : integer range 31 downto 0 := " + value.toString + ";"
+    def generateNameAndType(VariableDefinition variable, String nameExtension){
+        val type = variable.type.name
+        if(type == "integer"){
+            var String value
+            if(variable.initialValue == null){
+                value = "0" 
+            }else{
+                value = variable.initialValue.toString
+            }
+            return variable.name + nameExtension + " : integer range 31 downto 0 := " + value + ";"
         }
-        else if(value instanceof Boolean)
-            return variable.name + nameExtension + " : boolean := " + value.toString + ";"    
+        else if(type == "boolean"){
+            var String value
+            if(variable.initialValue == null){
+                value = "false" 
+            }else{
+                value = variable.initialValue.toString
+            }
+            return variable.name + nameExtension + " : boolean := " + value + ";"
+            
+        }    
     }
     
     
@@ -202,12 +217,12 @@ class VHDLExtension {
      * 
      * @return the VHDL type
      */
-    def getTypeString(Variables v) { 
+    def getTypeString(VariableDefinition v) { 
         
-        val value = v.value
-        if(value instanceof Integer)
+//        val value = v.value
+        if(v.type.name == "integer" )
             return "integer range 31 downto 0"
-        else if(value instanceof Boolean){
+        else if(v.type.name == "boolean"){
             return "boolean"
         }
     }

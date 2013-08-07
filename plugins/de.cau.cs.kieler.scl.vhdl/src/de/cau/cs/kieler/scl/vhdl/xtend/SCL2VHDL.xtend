@@ -145,10 +145,10 @@ class SCL2VHDL {
    def generateCode(Program program, String modelname){
        
     //Get Input and Output from Model
-    val modelInOutsHm = new HashMap<String,String>()
-    val modelInputs = new ArrayList<Variables>
-    val modelOutputs = new ArrayList<Variables>
-    val modelLocalVariables = new ArrayList<Variables>
+//    val modelInOutsHm = new HashMap<String,String>()
+    val modelInputs = new ArrayList<VariableDefinition>
+    val modelOutputs = new ArrayList<VariableDefinition>
+    val modelLocalVariables = new ArrayList<VariableDefinition>
         
     val name = modelname
     val vars = program.definitions
@@ -160,20 +160,21 @@ class SCL2VHDL {
             
             val vari = variable.copy 
             variable.setName(vari.name)
-            modelInputs.add(createVariableFromModel(vari, true, false))
+            modelInputs.add(vari)
             newVariables.add(vari)
             
             val variableOutName = variable.name + "_out"
             variable.setName(variableOutName)
-            modelOutputs.add(createVariableFromModel(variable, true, true))
-            modelInOutsHm.put(variable.name,variableOutName)
+//            variable.setInput(false)
+            modelOutputs.add(variable)
+//            modelInOutsHm.put(variable.name,variableOutName)
         }
         else if(variable.input)                      
-             modelInputs.add(createVariableFromModel(variable, true, false)) 
+             modelInputs.add(variable) 
         else if(variable.output)                   
-             modelOutputs.add(createVariableFromModel(variable, false, true)) 
+             modelOutputs.add(variable) 
         else if(!(variable.input || variable.output))
-             modelLocalVariables.add(createVariableFromModel(variable, false, false)) 
+             modelLocalVariables.add(variable) 
         ]
         
         program.definitions.addAll(newVariables)
@@ -182,6 +183,8 @@ class SCL2VHDL {
     «generateEntity(modelInputs, modelOutputs, name)»
     
     ARCHITECTURE behavior OF «name» IS
+    
+    signal reset_reg : boolean := false;
         
     begin
     p: process
@@ -200,28 +203,51 @@ class SCL2VHDL {
             «setAllLocalVariables(modelInputs,false)»
             «setAllLocalVariables(modelOutputs,false)»
             «setAllLocalVariables(modelLocalVariables,false)»
-        end if;
+        else
             
-        --update local variables
-        «signalToVariable(modelInputs)»
-        reset_int := reset;
-«««        «setAllLocalVariables(modelOutputs,false)»
-    
-        --main program
-        «generateMainProcess(program.statements)»
-    
-        --set outputs
-        «variableToSignal(modelOutputs)»
+            --update local variables
+            «signalToVariable(modelInputs)»
+            reset_int := reset_reg;
+        
+            --main program
+            «generateMainProcess(program.statements)»
+        
+            --set outputs
+            «variableToSignal(modelOutputs)»
+        end if;
     end process p;
+        
+        «generateBootRegister()»
         
     end behavior;
     '''
        
    }
-    def setAllLocalVariables(ArrayList<Variables> variables, boolean value) { 
+    def generateBootRegister() { 
+        
+        '''
+        bootRegister: process
+        begin
+            wait until rising_edge(tick);
+            if(reset = true) then
+                reset_reg <= true;
+             else
+                reset_reg <= reset;
+             end if;
+        end process;
+        ''' 
+    }
+
+    def setAllLocalVariables(ArrayList<VariableDefinition> variables, boolean value) { 
         
         variables.map[ variable | 
-            '''«variable.name + "_int"» := «value»;'''
+            if(variable.input || variable.output){
+                '''«variable.name + "_int"» := «value»;'''
+            }else if(variable.name.equals("RESET")){
+                 '''«variable.name + "_int"» := «value»;'''   
+            }else{
+                '''«variable.name» := «value»;'''
+            }
         ].join('\n')
         
     }
@@ -251,7 +277,7 @@ class SCL2VHDL {
 //     '''
 //    }
 
-    def variableToSignal(ArrayList<Variables> variables) { 
+    def variableToSignal(ArrayList<VariableDefinition> variables) { 
         
         val localVar = variables.map[lVar | 
         
@@ -273,7 +299,7 @@ class SCL2VHDL {
             return ''''''
     }
 
-    def signalToVariable(ArrayList<Variables> variables) { 
+    def signalToVariable(ArrayList<VariableDefinition> variables) { 
         
         val localVar = variables.map(lVar | '''«lVar.name»_int := «lVar.name»;''').join('\n')
         
@@ -290,21 +316,28 @@ class SCL2VHDL {
         vhdlCode  
     }
 
-    def genarateLocalSignals(ArrayList<Variables> variables) { 
-        
-        val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"_int")»''').join('\n')
-        
-        //else must be an empty String, when not null is written into the file
-        if(!(localVar.nullOrEmpty))
-            return localVar + '\n'
-        else 
-            return ''''''
-    }
+//    def genarateLocalSignals(ArrayList<VariableDefinition> variables) { 
+//        
+//        val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"_int")»''').join('\n')
+//        
+//        //else must be an empty String, when not null is written into the file
+//        if(!(localVar.nullOrEmpty))
+//            return localVar + '\n'
+//        else 
+//            return ''''''
+//    }
     
-    def genarateLocalVariables(ArrayList<Variables> variables) { 
+    def genarateLocalVariables(ArrayList<VariableDefinition> variables) { 
         
-        val localVar = variables.map(lVar | '''«generateVhdlVariabelFromVariableWithInitialValue(lVar,"_int")»''').join('\n')
-        
+        val localVar = variables.map[lVar | 
+            if(lVar.input || lVar.output){
+                '''«generateVhdlVariabelFromVariableWithInitialValue(lVar,"_int")»'''
+            }else if(lVar.name.equals("RESET")){
+                '''«generateVhdlVariabelFromVariableWithInitialValue(lVar,"_int")»'''
+            }else{
+                '''«generateVhdlVariabelFromVariableWithInitialValue(lVar,"")»'''
+            }
+        ].join('\n')
         //else must be an empty String, when not null is written into the file
         if(!(localVar.nullOrEmpty))
             return localVar + '\n'
@@ -467,7 +500,13 @@ class SCL2VHDL {
    
    // Expand a Variable Declaration, all internal signals have an "_int" at the end
    def dispatch expand(VariableDefinition vari) {
-    '''«vari.name»_int'''
+        if(vari.input || vari.output){
+            '''«vari.name»_int'''
+        }else if(vari.name.equals("RESET")){
+            '''«vari.name»_int'''
+        }else{
+            '''«vari.name»'''
+        }
    }
    
    // Expand a Primitive Value Expression

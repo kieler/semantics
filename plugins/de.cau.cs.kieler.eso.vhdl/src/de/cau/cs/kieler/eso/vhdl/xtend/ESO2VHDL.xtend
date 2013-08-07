@@ -36,6 +36,9 @@ import de.cau.cs.kieler.sim.eso.eso.kvpair
 import de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension
 import java.io.File
 import java.lang.Character
+import de.cau.cs.kieler.sim.eso.eso.EsoFactory
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * This class transforms a given core ESO tracelist to a VHDL testbench.
@@ -60,7 +63,7 @@ import java.lang.Character
  * 
  */
 class ESO2VHDL {
-    boolean resetWasSet
+//    boolean resetWasSet
     
     extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
          Guice::createInjector().getInstance(typeof(VHDLExtension))
@@ -135,6 +138,9 @@ class ESO2VHDL {
         // load the proper SCL model
        	var sclModel = loadModel(modelFile)
        	
+       	//eliminate input outputs
+       	transformInputOutputs(tl.traces, sclModel.definitions)
+       	
        	'''
 		«/* Generate the header */»
 		«generateHeader()»
@@ -142,6 +148,26 @@ class ESO2VHDL {
 		«createEntity(tl.traces, modelname, sclModel.definitions)»
        	'''
    	}
+   	
+   	
+    def transformInputOutputs(EList<trace> traces, EList<VariableDefinition> modelVariables) { 
+        
+        traces.forEach[ trace |
+            trace.ticks.forEach[ tick |
+                tick.extraInfosOutput.forEach[ output |
+                    modelVariables.forEach[ vari |
+                        if(vari.name.equals(output.key)){
+                            if(vari.input && vari.output){
+                                output.key = output.key + "_out"
+                            } 
+                        }
+                    ] 
+                ]
+            ]
+        ]
+        
+    }
+
 
    // -------------------------------------------------------------------------   
    /**
@@ -189,13 +215,21 @@ class ESO2VHDL {
    	def createEntity(EList<trace> esoTracelist, String entityName, EList<VariableDefinition> vars){
 
     // Store input and output variables from SCL model
-    val modelInputs = new ArrayList<Variables>
-    val modelOutputs = new ArrayList<Variables>
+    val modelInputs = new ArrayList<VariableDefinition>
+    val modelOutputs = new ArrayList<VariableDefinition>
     
     // Get Input and Output from Model and save them
     vars.forEach[ variable | 
-    	if(variable.input) {modelInputs.add(createVariableFromModel(variable, true, false))}
-		if(variable.output){modelOutputs.add(createVariableFromModel(variable, false, true))}
+    	if(variable.input && variable.output){
+    	    modelInputs.add(variable)
+    	    var tempVar = variable.copy
+    	    tempVar.name = variable.name + "_out"
+    	    modelOutputs.add(tempVar)
+    	} else if(variable.input) {
+    	    modelInputs.add(variable)
+    	} else if(variable.output){
+    	    modelOutputs.add(variable)
+    	}
 		// local variables (variable.input == false and variable.output == false) not needed here
 		// modelInput and modelOutput are mainly used to generate VHDL interfaces
     ]
@@ -293,7 +327,7 @@ class ESO2VHDL {
      * 
      * @return a String which contains VHDL code for the component declaration
      */
-	def generateUUT(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String uutName) {
+	def generateUUT(ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray, String uutName) {
 		 
 		// compute the mapping from the component to local signals
 		// e.g. A_in => A_in (the component signal name and the local single name are equal)
@@ -354,7 +388,7 @@ class ESO2VHDL {
      * 
      * @return a String which contains VHDL code for the simulation process
      */
-	def generateSimulation(EList<trace> esoTracelist, ArrayList<Variables> inputArray, ArrayList<Variables> outputArray) { 
+	def generateSimulation(EList<trace> esoTracelist, ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray) { 
 	
 	'''
 	-- Stimulus process
@@ -362,8 +396,7 @@ class ESO2VHDL {
 	begin		
 		wait for 1 ps;
 		
-		--sim Process
-		«/* generate the setting inputs and test output routines */»
+		--simulation process
 		«generateSimulationAssertions(esoTracelist, inputArray, outputArray)»
 		wait;
 	end process;
@@ -388,7 +421,7 @@ class ESO2VHDL {
      * 
      * @return a String which contains VHDL code for the assertions for all ticks
      */
-	def generateSimulationAssertions(EList<trace> esoTracelist, ArrayList<Variables> inputArray, ArrayList<Variables> outputArray) { 
+	def generateSimulationAssertions(EList<trace> esoTracelist, ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray) { 
 		
 		// VHDL code which waits a certain time
 		val String wait = '''wait for tick_period;''' + '\n' 
@@ -405,7 +438,7 @@ class ESO2VHDL {
 			
 			// at each new trace generate  the reset code which resets the model
 			simTick = "\n--NEW TRACE\n" + generateVhdlResetCode(wait)	//Reset on every new Trace
-            resetWasSet = true
+//            resetWasSet = true
             
             // a counter, it contains the number of the current tick
 			tickCnt = 1
@@ -419,14 +452,14 @@ class ESO2VHDL {
 			    // compute which variables must be set with which value
 			    // Variables which are listed in the ESO file in that tick will be set to this value
 			    // all other variables must be set absent
-			    val ArrayList<Variables> allInputs = computeValidVariabeles(inputArray, tick.extraInfos)
+			    val ArrayList<kvpair> allInputs = computeValidVariabeles(inputArray, tick.extraInfos)
 			    
-			    setInputs = setInputs
+//			    setInputs = setInputs
 			    
 			    // Generate VHDL code 
-				setInputs = setInputs + allInputs.map[ in |
-                    '''«in.name» <= «in.value»'''+ (';\n')
-                ].join('')				
+				setInputs = setInputs + allInputs.map[ kvp |
+                    '''«kvp.key» <= «kvp.valueFromKvPair»;'''
+                ].join('\n')				
 					
 				// if setInputs is null or empty, set it to an empty string, otherwise if it is null
 				// there will be a null written in the VHDL code.					
@@ -437,29 +470,28 @@ class ESO2VHDL {
 				// all outputs which are mentioned in the current tick in the ESO file are tested 
 				// according to their mentioned value, all unmentioned values must be set to absent,
 				// but only the 'present' variables, because the value from a variable would not be changed
-				val ArrayList<Variables> allAssertions = computeValidVariabeles(outputArray, tick.extraInfos)
+				val ArrayList<kvpair> allAssertions = computeValidVariabeles(outputArray, tick.extraInfosOutput)
 				
 				// Generate VHDL code
 				// The assertion contains the following failing info: in which trace, in which tick, 
 				// which signal and the expected value
 				asserts = ""
-                asserts = asserts + allAssertions.map[ ass |
+                asserts = asserts + allAssertions.map[ kvp |
                     '''
-                        assert( «ass.name» = «ass.value» )
-                            report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «ass.name» should have been «ass.value»"
-                            severity ERROR;''' + '\n'
-                ].join('')	
+                        assert( «kvp.key» = «kvp.valueFromKvPair» )
+                            report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «kvp.key» should have been «kvp.valueFromKvPair»"
+                            severity ERROR;''' + ''
+                ].join('\n')	
 				
 				// Compute code that is needed for one tick
 				// simTicks contains (at the end) the complete tick code for ONE trace
 				// add some additional comments 
-				simTick =  simTick + ("\n--".concat(" tick ").concat(tickCnt.toString).concat('\n')) 
-							+ setInputs + wait + asserts
+				simTick =  simTick + ("\n--" + " tick " + tickCnt.toString + '\n')+ setInputs + '\n' + wait + asserts + '\n'
 							
-				if(resetWasSet){
-				    resetWasSet = false
-				    simTick = simTick //+ "reset <= false;\n"
-				}
+//				if(resetWasSet){
+//				    resetWasSet = false
+//				    simTick = simTick //+ "reset <= false;\n"
+//				}
 							
 				// the tick counter shows the current tick in the current trace
 				tickCnt = tickCnt + 1
@@ -605,8 +637,8 @@ class ESO2VHDL {
      * @return a list which contains all variables that should be set or tested to a specific value 
      * 
      */
-    def ArrayList<Variables> computeValidVariabeles(ArrayList<Variables> variableList, EList<kvpair> extraInfos) { 
-         val asserts = new ArrayList<Variables>
+    def ArrayList<kvpair> computeValidVariabeles(ArrayList<VariableDefinition> variableList, EList<kvpair> extraInfos) { 
+         val asserts = new ArrayList<kvpair>
          allreadyAdded = false
          
          // check for all variables if they should be set in the current tick 
@@ -618,7 +650,7 @@ class ESO2VHDL {
                  extraInfos.forEach[ kvp |
                      if(variable.name.equals(kvp.key)){
                          //variable appears in current tick, set it according to the appearance
-                         asserts.add(new Variables(kvp.key,false,false,getValueFromKvPair(kvp)))
+                         asserts.add(kvp)
                          
                          //The current tested variable was set already 
                          allreadyAdded = true
@@ -634,7 +666,12 @@ class ESO2VHDL {
                  // (make an assertion). A valued Signal e.g. F(6) is transformed to F and F_value,
                  // F must be set/test to/for absent only
                  if(!(variable.name.contains("_value"))){
-                    asserts.add(new Variables(variable.name,false,false,false))
+                     val kvp = EsoFactory::eINSTANCE.createkvpair
+                     val boolValue = EsoFactory::eINSTANCE.createEsoBool
+                     boolValue.setValue(false)
+                     kvp.setKey(variable.name)
+                     kvp.setValue(boolValue)
+                     asserts.add(kvp)
                  }    
              }
              
